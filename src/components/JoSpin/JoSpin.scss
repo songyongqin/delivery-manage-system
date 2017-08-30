@@ -1,0 +1,43 @@
+$blur-value:3px;
+
+
+.spin-wrapper{
+  width: 100%;
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+  &.spinning{
+    user-select: none;
+  }
+  .spin-dot{
+    user-select: none;
+    position: absolute;
+    z-index: 111;
+    border-radius: 3px;
+    text-align: center;
+    top:250px;
+    left:50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+  .spin-cover{
+    position: relative;
+    z-index: 11;
+    position: absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+  }
+}
+
+
+.blur {
+  filter:blur($blur-value);
+  -webkit-filter:blur($blur-value);
+  -moz-filter:blur($blur-value);
+  -ms-filter:blur($blur-value);
+  -o-filter:blur($blur-value);
+
+
+  //filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
+}

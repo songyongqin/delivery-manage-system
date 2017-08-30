@@ -1,0 +1,47 @@
+$default-color:#108ee9;
+$fail-color:#f46e65;
+.base-btn{
+  box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+  background: $default-color;
+  position: relative;
+  display: inline-block;
+  border: 1px solid $default-color;
+  color: #ffffff;
+  letter-spacing: 1px;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin: 0 10px;
+  border-radius: 0;
+  transition:box-shadow 0.3s;
+  &:not([disabled]):hover{
+    background-color: lighten($default-color, 5%);
+  }
+  &:disabled{
+    cursor:not-allowed;
+    background: #f7f7f7;
+    border:1px solid rgb(217, 217, 217);
+    color:rgba(0,0,0,.25);
+    box-shadow: 0 0 0 transparent;
+
+
+  }
+  &:focus{
+    outline: none;
+  }
+
+  //&.bordered{
+  //  background-color: transparent;
+  //  border: 2px solid $default-color;
+  //  padding: 8px 0;
+  //  &:not([disabled]):hover{
+  //    background-color: $default-color;
+  //    border-color: transparent;
+  //  }
+  //}
+  &.danger-btn{
+    background: $fail-color;
+    &:not([disabled]):hover{
+      background-color: lighten($fail-color, 5%);
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "entry": "src/index.js",
+  "theme": {
+      "@primary-color": "#108ee9",
+      "@link-color": "#108ee9",
+      "@border-radius-base": "2px",
+      "@font-size-base": "16px",
+      "@line-height-base": "1.2"
+    },
+  "autoprefixer": null,
+  "proxy": {
+    "/": {
+      "target": "https://www.easy-mock.com/mock/59a391db960a33213da0e8df/acs/",
+      "changeOrigin": true
+    }
+  },
+  "env": {
+    "development": {
+      "extraBabelPlugins": [
+        "dva-hmr",
+        "transform-runtime",
+        "babel-plugin-dynamic-import-webpack",
+        "transform-decorators-legacy",
+        ["import", { "libraryName": "antd", "style": true }]
+      ]
+    },
+    "production": {
+      "extraBabelPlugins": [
+        "transform-runtime",
+        "babel-plugin-dynamic-import-webpack",
+        "transform-decorators-legacy",
+        ["import", { "libraryName": "antd", "style": true }]
+      ]
+    }
+  }
+}

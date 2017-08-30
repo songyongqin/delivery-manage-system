@@ -1,0 +1,63 @@
+@import '../../styles/var';
+
+
+.table{
+  :global{
+    .ant-table-row{
+      &:hover{
+        td{
+          background: transparent;
+        }
+      }
+    }
+    tr.ant-table-expanded-row, tr.ant-table-expanded-row:hover {
+      background: transparent;
+      td{
+        background: transparent;
+      }
+    }
+  }
+}
+
+.light{
+  //background:white;
+
+  :global{
+    .ant-table-thead>tr>th{
+      background: $bg-color-level-1;
+    }
+    .ant-table-row{
+      td{
+        border-color:black;
+      }
+    }
+    tr.ant-table-expanded-row, tr.ant-table-expanded-row:hover {
+      //color:$txt-color;
+      td{
+        border-color:black;
+      }
+    }
+  }
+}
+
+.dark{
+  :global{
+    .ant-table-thead>tr>th{
+      background: $bg-color-level-1-dark;
+      color:white;
+    }
+    .ant-table-row{
+      color:$txt-color-dark;
+    }
+    tr.ant-table-expanded-row, tr.ant-table-expanded-row:hover {
+      color:$txt-color-dark;
+    }
+  }
+}
+
+.title{
+  margin-bottom:10px;
+}
+.title-dark{
+  color:white;
+}

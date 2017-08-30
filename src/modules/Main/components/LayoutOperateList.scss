@@ -1,0 +1,26 @@
+@import '../../../styles/var';
+.layout-operate-list{
+  list-style: none;
+  .item{
+    display: inline-block;
+    padding-left:25px;
+    font-size: 18px;
+    *{
+      color:$primary-color;
+    }
+  }
+  .item-active{
+    *{
+      color:$primary-color;
+    }
+  }
+}
+
+.layout-operate-list-dark{
+  .item{
+    *{
+      color:$txt-color-dark;
+    }
+  }
+
+}

@@ -1,0 +1,29 @@
+.table :global .ant-table-row:hover td {
+  background: transparent; }
+.table :global tr.ant-table-expanded-row, .table :global tr.ant-table-expanded-row:hover {
+  background: transparent; }
+  .table :global tr.ant-table-expanded-row td, .table :global tr.ant-table-expanded-row:hover td {
+    background: transparent; }
+
+.light :global .ant-table-thead > tr > th {
+  background: white; }
+.light :global .ant-table-row td {
+  border-color: black; }
+.light :global tr.ant-table-expanded-row td, .light :global tr.ant-table-expanded-row:hover td {
+  border-color: black; }
+
+.dark :global .ant-table-thead > tr > th {
+  background: #252d47;
+  color: white; }
+.dark :global .ant-table-row {
+  color: #b7c1cc; }
+.dark :global tr.ant-table-expanded-row, .dark :global tr.ant-table-expanded-row:hover {
+  color: #b7c1cc; }
+
+.title {
+  margin-bottom: 10px; }
+
+.title-dark {
+  color: white; }
+
+/*# sourceMappingURL=EnhanciveTable.css.map */
