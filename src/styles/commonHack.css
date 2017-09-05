@@ -12,5 +12,15 @@ body :global .txt-color-light {
   color: rgba(0, 0, 0, 0.85); }
 body :global .txt-color-dark {
   color: #b7c1cc; }
+body :global .expanded-row-dark {
+  background: #252d47;
+  border-color: transparent; }
+  body :global .expanded-row-dark :global .ant-card-head {
+    background: transparent;
+    border-color: #1c233b; }
+  body :global .expanded-row-dark :global .ant-card-head-title {
+    color: white; }
+body :global .expanded-row-card-item {
+  margin-bottom: 10px; }
 
 /*# sourceMappingURL=commonHack.css.map */

@@ -1,6 +1,6 @@
 import dva from 'dva';
 import './index.css';
-import './commonHack.css';
+import './styles/commonHack.css';
 import router from './router';
 import { useRouterHistory } from 'dva/router';
 import { createHashHistory } from 'history';
@@ -12,6 +12,7 @@ import extraEffectsOptions from './configs/ExtraEffectsOptions';
 
 import LayoutModel from './models/LayoutModel';
 import AnalyseEventModel from './modules/Analyse_Event/Model';
+import AnalyseAttackChainModel from './modules/Analyse_AttackChain/Model';
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -23,6 +24,7 @@ const app = dva({
 // app.model(HomeModel);
 app.model(LayoutModel);
 app.model(AnalyseEventModel);
+app.model(AnalyseAttackChainModel);
 
 combineExtraLoadingWtithApp(app);
 combineExtraEffectsWithApp(app,extraEffectsOptions);

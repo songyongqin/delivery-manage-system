@@ -10,7 +10,7 @@
   "autoprefixer": null,
   "proxy": {
     "/": {
-      "target": "https://www.easy-mock.com/mock/59a391db960a33213da0e8df/acs/",
+      "target": "http://127.0.0.1:7300/mock/59aceff89b1b9039308834b0/acs/",
       "changeOrigin": true
     }
   },

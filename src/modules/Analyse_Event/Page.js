@@ -2,116 +2,19 @@ import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
-import QueryForm from './QueryForm';
+import QueryForm from '../../components/QueryForm';
 import {queryContainerGenerator} from '../../utils/containerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
-import JoTag from '../../components/JoTag'
 import * as tools from '../../utils/tools.js';
-import tableColumnsGenerator from '../../utils/tableColumnsGenerator';
-
-const rowsRenderer={
-  description:value=>{
-    try{
-      return <div>
-        {
-          value.map((i,index)=>{
-            return <div key={`${index}-des`}
-                        style={{marginBottom:"8px"}}>
-              <JoTag color={index%2===0?"#87d068":"#f50"}>
-                {i}
-              </JoTag>
-            </div>
-          })
-        }
-      </div>
-    }catch(e){
-      console.info(e);
-    }
-  }
-}
-
-const getColumns=({filtersOptions={},queryFilters,tableTextConfig})=>{
-
-  const renderer={...rowsRenderer};
-
-  const translateRows=["attackStage","action","level","actionStatus"];
-
-  translateRows.forEach(k=>{
-    let targetFilter=tableTextConfig.filter[k]||{};
-    renderer[k]=value=>{
-      return value in targetFilter?targetFilter[value]:value;
-    }
-  })
-
-  const result=tableColumnsGenerator({
-    keys:["attackStage","action","level","actionStatus","counts","description","attackTimes"],
-    titleTextConfig:tableTextConfig.title,
-    filterTextConfig:tableTextConfig.filter,
-    filterOptions:filtersOptions,
-    filteredValue:queryFilters,
-    renderer
-  })
-
-  return result;
-
-};
-
-const getExpandedRowRender=({isDark,tableTextConfig})=>{
-  const {expandedRow}=tableTextConfig;
-  return (records)=>{
-
-    const classes=classnames({
-      [styles["expanded-row-dark"]]:isDark
-    });
-
-    const {details=[],advice}=records;
-    return (
-      <Card title={tools.getKeyText("title",expandedRow)}
-            className={classes}>
-        <table>
-          <tbody>
-          <tr>
-            <td style={{padding:"10px 0px",width:"80px"}}>
-              {tools.getKeyText("details",expandedRow.rows)}
-            </td>
-            <td style={{padding:"10px 0px"}}>
-              <div>
-                {details.map((d,index)=>{
-                  return <JoTag key={'item-'+index} color="#87d068">
-                    {d}
-                  </JoTag>
-                })}
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td style={{padding:"10px 0px",width:"80px"}}>
-              {tools.getKeyText("advice",expandedRow.rows)}
-            </td>
-            <td style={{padding:"10px 0px"}}>
-              <JoTag color="#f50">{advice}</JoTag>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </Card>
-    );
-  };
-};
-
-const NAMESPACE="analyseEvent";
+import * as tableConfig from './components/TableConfig';
+import {statisticDataindexes,statisticsTextConfig,tableTextConfig} from './ConstConfig';
+import {NAMESPACE} from './ConstConfig'
 
 function mapStateToProps(state) {
-
-  const {layoutConfig,languageConfig,commonLayout}=state.layout;
-
+  const {commonLayout}=state.layout;
   return {
-    filtersOptions:layoutConfig.filters[NAMESPACE],
-    icons:layoutConfig.icons[NAMESPACE],
     commonLayout,
-    tableTextConfig:languageConfig["zh-cn"].tableTextConfig[NAMESPACE],
-    pageTextConfig:languageConfig.pageTextConfig[NAMESPACE],
   }
 }
 
@@ -160,9 +63,9 @@ class Page extends React.Component{
   };
   getStatisticResultPanel=()=>{
 
-    const {commonLayout,pageTextConfig,icons}=this.props,
+    const {commonLayout}=this.props,
           {statistics}=this.props[NAMESPACE].queryResults,
-          {title,units,items}=pageTextConfig.statistics;
+          {title,units,items,icons}=statisticsTextConfig;
 
     const listClasses=classnames({
       [styles["statistic-list"]]:true,
@@ -179,7 +82,6 @@ class Page extends React.Component{
       ["secondary-title-dark"]:commonLayout.darkTheme,
     });
 
-    const keys=Object.keys(statistics);
     const spanConfig={lg:{span:4},md:{span:8},sm:{span:12},xs:{span:24}};
 
 
@@ -189,7 +91,7 @@ class Page extends React.Component{
         <Row type="flex"
              justify="space-between"
              className={listClasses}>
-          {keys.map(k=>{
+          {statisticDataindexes.map(k=>{
 
             let titleClasses=classnames({
               ["txt-color-dark"]:commonLayout.darkTheme,
@@ -202,9 +104,11 @@ class Page extends React.Component{
                    className={styles["statistic-item-wrapper"]}>
                 <div className={itemClasses}>
                     <span className={styles["statistic-item-icon"]}>
-                      {icons.statistics[k]}
+                      {icons[k]}
                     </span>
-                    <p className={styles["counts"]}>{statistics[k]}{units[k]}</p>
+                    <p className={styles["counts"]}>
+                      {statistics[k]}{units[k]}
+                    </p>
                     <h3 className={titleClasses}>
                       {tools.getKeyText(k,items)}
                     </h3>
@@ -218,13 +122,14 @@ class Page extends React.Component{
   };
   getDataResultPanel=()=>{
 
-    const {filtersOptions,tableTextConfig,commonLayout}=this.props;
+    const {commonLayout}=this.props;
     const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
+
     const tableProps={
       onChange:this.tableOnChange,
-      columns:getColumns({filtersOptions,queryFilters,tableTextConfig}),
-      expandedRowRender:getExpandedRowRender({isDark:commonLayout.darkTheme,tableTextConfig}),
+      columns:tableConfig.getColumns({queryFilters}),
+      expandedRowRender:tableConfig.getExpandedRowRender({isDark:commonLayout.darkTheme}),
       dataSource:data.map((i,index)=>{
         return {
           ...i,
@@ -232,7 +137,6 @@ class Page extends React.Component{
         }
       })
     };
-
 
     const paginationProps={
       total:queryResults.total,
@@ -242,7 +146,7 @@ class Page extends React.Component{
 
     return (
       <div key="results-panel">
-        <EnhanciveTable title={tableTextConfig.tableTitle}
+        <EnhanciveTable title={tableTextConfig.title}
                         tableProps={tableProps}
                         isDark={commonLayout.darkTheme}
                         paginationProps={paginationProps}/>

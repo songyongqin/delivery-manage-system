@@ -1,4 +1,4 @@
-@import "./styles/_var.scss";
+@import "var";
 
 body{
   :global{
@@ -30,6 +30,27 @@ body{
     .txt-color-dark{
       color:$txt-color-dark;
     }
+
+
+    .expanded-row-dark{
+      background: $bg-color-level-1-dark;
+      border-color:transparent;
+      :global{
+        .ant-card-head{
+          background: transparent;
+          border-color:$bg-color-level-3-dark;
+        }
+        .ant-card-head-title{
+          color:white;
+
+        }
+      }
+    }
+
+    .expanded-row-card-item{
+      margin-bottom:10px;
+    }
+
   }
 
 

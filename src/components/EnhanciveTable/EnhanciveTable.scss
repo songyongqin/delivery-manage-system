@@ -16,6 +16,9 @@
         background: transparent;
       }
     }
+    .ant-table-placeholder{
+      background: transparent;
+    }
   }
 }
 
@@ -37,6 +40,9 @@
         border-color:black;
       }
     }
+    .ant-table-placeholder{
+      color:$txt-color;
+    }
   }
 }
 
@@ -50,6 +56,9 @@
       color:$txt-color-dark;
     }
     tr.ant-table-expanded-row, tr.ant-table-expanded-row:hover {
+      color:$txt-color-dark;
+    }
+    .ant-table-placeholder{
       color:$txt-color-dark;
     }
   }

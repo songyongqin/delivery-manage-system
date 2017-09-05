@@ -9,21 +9,38 @@ import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
 
 moment.locale('zh-cn');
 
-const NAMESPACE="main";
+const NAMESPACE="analyseAttackChain";
 
 const baseModel={
   namespace: NAMESPACE,
   state: {
-
-  },
-  effects:{
-    * test({payload,resolve},{callWithExtra}) {
-      console.info("test")
+    queryFilters:{
+      timestampRange:[],
+      attackStage:["invade","install","control","intention"],
+      limit:20,
+      page:1,
+    },
+    queryResults:{
+      total:0,
+      data:[]
     }
+  },
+};
+
+const payloadFilter=(payload)=>{
+  return {
+    total:payload.total,
+    data:payload.data,
   }
 };
 
+const queryService=service.query;
 
+export default queryModelGenerator({
+  model:baseModel,
+  payloadFilter,
+  callConfig:commonCallConfig,
+  queryService,
+  initPath:"/analyse/attack-chain"
+});
 
-
-export default baseModel;

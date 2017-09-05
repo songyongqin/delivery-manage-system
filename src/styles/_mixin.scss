@@ -1,0 +1,12 @@
+@import './var';
+
+@mixin common-page{
+  padding:15px;
+  background: $bg-color-level-1;
+  color:$txt-color;
+}
+
+@mixin common-page-dark{
+  background: $bg-color-level-1-dark;
+  color:$txt-color-dark;
+}

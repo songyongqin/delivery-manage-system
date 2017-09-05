@@ -4,6 +4,8 @@
   background: transparent; }
   .table :global tr.ant-table-expanded-row td, .table :global tr.ant-table-expanded-row:hover td {
     background: transparent; }
+.table :global .ant-table-placeholder {
+  background: transparent; }
 
 .light :global .ant-table-thead > tr > th {
   background: white; }
@@ -11,6 +13,8 @@
   border-color: black; }
 .light :global tr.ant-table-expanded-row td, .light :global tr.ant-table-expanded-row:hover td {
   border-color: black; }
+.light :global .ant-table-placeholder {
+  color: rgba(0, 0, 0, 0.85); }
 
 .dark :global .ant-table-thead > tr > th {
   background: #252d47;
@@ -18,6 +22,8 @@
 .dark :global .ant-table-row {
   color: #b7c1cc; }
 .dark :global tr.ant-table-expanded-row, .dark :global tr.ant-table-expanded-row:hover {
+  color: #b7c1cc; }
+.dark :global .ant-table-placeholder {
   color: #b7c1cc; }
 
 .title {

@@ -7,15 +7,6 @@
   background: #252d47;
   color: #b7c1cc; }
 
-.expanded-row-dark {
-  background: #252d47;
-  border-color: transparent; }
-  .expanded-row-dark :global .ant-card-head {
-    background: transparent;
-    border-color: #1c233b; }
-  .expanded-row-dark :global .ant-card-head-title {
-    color: white; }
-
 .statistic-list {
   padding: 0 0 20px;
   margin-left: -5px;

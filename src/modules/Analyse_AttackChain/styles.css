@@ -1,3 +1,10 @@
+.page {
+  padding: 15px;
+  background: white;
+  color: rgba(0, 0, 0, 0.85); }
 
+.page-dark {
+  background: #252d47;
+  color: #b7c1cc; }
 
 /*# sourceMappingURL=styles.css.map */

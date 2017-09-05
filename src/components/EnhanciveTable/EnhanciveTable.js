@@ -12,7 +12,9 @@ export default ({title=null,tableProps={},paginationProps={},loading=false,pagin
     [styles["dark"]]:isDark,
     [styles["light"]]:!isDark,
     [styles["table"]]:true,
+    [tableProps.className]:!!tableProps.className
   });
+
 
   const titleClasses=classnames({
     ["secondary-title"]:true,
@@ -29,10 +31,10 @@ export default ({title=null,tableProps={},paginationProps={},loading=false,pagin
             :
             null
         }
-        <Table className={classes}
-               pagination={false}
+        <Table pagination={false}
                bordered={false}
-               {...tableProps} />
+               {...tableProps}
+               className={classes}/>
         {
           pagination
             ?
