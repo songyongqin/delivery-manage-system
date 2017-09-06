@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,KAAK;EACH,OAAO,EAAE,IAAI;EACb,gBAAU;IACR,WAAW,EAAE,OAAO;IACpB,KAAK,EAAE,GAAG;IACV,MAAM,EAAE,GAAG",
+"sources": ["TableConfig.scss"],
+"names": [],
+"file": "TableConfig.css"
+}
