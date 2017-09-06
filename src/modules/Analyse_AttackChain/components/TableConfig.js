@@ -8,6 +8,7 @@ import constConfig,{stageRowDataIndexes,rowDataIndexes} from '../ConstConfig';
 import {Icon,Switch,Card,Timeline} from 'antd';
 import classnames from 'classnames';
 import * as tools from '../../../utils/tools';
+import TimeLabel from '../../../components/TImesLabel';
 
 const {tableTextConfig}=constConfig;
 
@@ -19,12 +20,17 @@ const stageRowRenderer=(value)=>{
       })}
     </div>
   )
-}
+};
 
+const attackTimesRenderer=value=>{
+  return <TimeLabel times={value}/>
+};
 
 export const getColumns=({queryFilters,getCheckboxOnChange})=>{
 
-  const renderer={},
+  const renderer={
+          attackTimes:attackTimesRenderer
+    },
         titleRenderer={};
 
 
@@ -42,14 +48,13 @@ export const getColumns=({queryFilters,getCheckboxOnChange})=>{
                 onChange={getCheckboxOnChange(i)} />
       </div>
     )
-  })
+  });
 
-  const result=tableColumnsGenerator({
+  return tableColumnsGenerator({
     keys:rowDataIndexes,
     titleTextConfig:{...tableTextConfig.rowTitles,...titleRenderer},
     renderer
-  })
-  return result;
+  });
 
 };
 

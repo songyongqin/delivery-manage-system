@@ -27,7 +27,7 @@ export const filterRowDataIndexes=[
   ACTION_DATAINDEX,
   LEVEL_DATAINDEX,
   ACTIONSTATUS_DATAINDEX
-]
+];
 
 export const rowDataIndexes=[
   ...filterRowDataIndexes,
@@ -57,27 +57,27 @@ export const tableTextConfig={
       [ADVICE_DATAINDEX]:"修补建议"
     }
   },
-}
+};
 /**************************************************
  * statistic
  **************************************************/
-const STATISTICS_TITLE="威胁事件分类"
+const STATISTICS_TITLE="威胁事件分类";
 
 const _COUNTS_DATAINDEX="counts",
       HIGHEVENTS_DATAINDEX='highEvents',
       EXPLOITS_DATAINDEX="exploits",
       TOOLS_DATAINDEX="tools",
       THREATINFOS_DATAINDEX="threatInfos",
-      FALLHOST_DATAINDEX="fallHosts"
+      FALLHOST_DATAINDEX="fallHosts";
 
-export const statisticDataindexes=[
+export const statisticDataIndexes=[
   _COUNTS_DATAINDEX,
   HIGHEVENTS_DATAINDEX,
   EXPLOITS_DATAINDEX,
   TOOLS_DATAINDEX,
   THREATINFOS_DATAINDEX,
   FALLHOST_DATAINDEX
-]
+];
 
 
 export const statisticsTextConfig={
@@ -106,6 +106,6 @@ export const statisticsTextConfig={
     [THREATINFOS_DATAINDEX]: <JoIcon type="filetext1"/>,
     [FALLHOST_DATAINDEX]: <JoIcon type="iconfontdesktop"/>
   }
-}
+};
 
 

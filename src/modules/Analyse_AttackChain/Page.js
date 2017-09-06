@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge,Timeline,Checkbox,Switch } from 'antd';
-import QueryForm from '../../components/QueryForm';
+import QueryForm from '../../components/TimestampForm';
 import {queryContainerGenerator} from '../../utils/containerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
@@ -103,6 +103,7 @@ class Page extends React.Component{
       total:queryResults.total,
       current:queryFilters.page,
       onChange:this.pageOnChange,
+      pageSize:queryFilters.limit,
     };
 
     return (

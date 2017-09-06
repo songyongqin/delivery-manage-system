@@ -21,7 +21,7 @@ export default class JoSpin extends React.Component{
         spinning:newProps.spinning
       })
     }else{
-      setTimeout(()=>{
+      this.timer=setTimeout(()=>{
         this.setState({
           spinning:newProps.spinning
         })
@@ -31,6 +31,9 @@ export default class JoSpin extends React.Component{
 
     }
 
+  }
+  componentWillUnmount=()=>{
+    clearTimeout(this.timer);
   }
   render=()=>{
     const {children,className="",style={}}=this.props;

@@ -4,7 +4,7 @@
 import React from 'react';
 import {Icon} from 'antd';
 
-export default ({keys=[],titleTextConfig={},filterTextConfig={},filterOptions={},filteredValue={},renderer={}})=>{
+export default ({keys=[],titleTextConfig={},filterTextConfig={},filterOptions={},filteredValue={},renderer={},extraProps={}})=>{
 
   return keys.map(k=>{
 
@@ -30,6 +30,13 @@ export default ({keys=[],titleTextConfig={},filterTextConfig={},filterOptions={}
 
       column.filteredValue=filteredValue[k];
       column.filterIcon=<Icon type="filter" style={{color:"#108ee9"}}/>
+    }
+
+    if(k in extraProps){
+      column={
+        ...column,
+        ...extraProps[k]
+      }
     }
 
     return column;

@@ -6,7 +6,7 @@ import {Tag as AntTag,Tooltip} from 'antd';
 
 const Tag =(props)=>{
   let children=props.children,
-    value=""
+      value="";
   if(typeof children === 'string'){
     if(children.length>60){
       value=<Tooltip title={<span>{children}</span>}>

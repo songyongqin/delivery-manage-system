@@ -3,6 +3,16 @@
  */
 import Icon from '../components/JoIcon';
 
+
+const OVERVIEW_PATH="/overview",
+      ANALYSE_PATH="/analyse",
+      ANALYSE_EVENT_PATH="/analyse/event",
+      ANALYSE_ATTACK_CHAIN_PATH="/analyse/attack-chain",
+      ANALYSE_FALL_HOST_PATH="/analyse/fall-host",
+      ANALYSE_RANKING_PATH="/analyse/ranking",
+      ANALYSE_THREAT_DISTRIBUTION="/analyse/threat-distribution",
+      ANALYSE_OVERALL="/analyse/overall";
+
 export default {
   "overview":{
     order:1,

@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
-import QueryForm from '../../components/QueryForm';
+import QueryForm from '../../components/TimestampForm';
 import {queryContainerGenerator} from '../../utils/containerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import * as tools from '../../utils/tools.js';
 import * as tableConfig from './components/TableConfig';
-import {statisticDataindexes,statisticsTextConfig,tableTextConfig} from './ConstConfig';
+import {statisticDataIndexes,statisticsTextConfig,tableTextConfig} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig'
 
 function mapStateToProps(state) {
@@ -91,12 +91,12 @@ class Page extends React.Component{
         <Row type="flex"
              justify="space-between"
              className={listClasses}>
-          {statisticDataindexes.map(k=>{
+          {statisticDataIndexes.map(k=>{
 
             let titleClasses=classnames({
               ["txt-color-dark"]:commonLayout.darkTheme,
               [styles["title"]]:true,
-            })
+            });
 
             return (
               <Col {...spanConfig}
@@ -120,6 +120,9 @@ class Page extends React.Component{
       </div>
     )
   };
+  onFilter=(value)=>{
+    this.onQuery({mergeCounts:value})
+  };
   getDataResultPanel=()=>{
 
     const {commonLayout}=this.props;
@@ -128,7 +131,7 @@ class Page extends React.Component{
 
     const tableProps={
       onChange:this.tableOnChange,
-      columns:tableConfig.getColumns({queryFilters}),
+      columns:tableConfig.getColumns({queryFilters,onSubmit:this.onFilter}),
       expandedRowRender:tableConfig.getExpandedRowRender({isDark:commonLayout.darkTheme}),
       dataSource:data.map((i,index)=>{
         return {
@@ -142,10 +145,11 @@ class Page extends React.Component{
       total:queryResults.total,
       current:queryFilters.page,
       onChange:this.pageOnChange,
+      pageSize:queryFilters.limit,
     };
 
     return (
-      <div key="results-panel">
+      <div key={"results-panel"+lastReqTime}>
         <EnhanciveTable title={tableTextConfig.title}
                         tableProps={tableProps}
                         isDark={commonLayout.darkTheme}

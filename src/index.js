@@ -13,6 +13,8 @@ import extraEffectsOptions from './configs/ExtraEffectsOptions';
 import LayoutModel from './models/LayoutModel';
 import AnalyseEventModel from './modules/Analyse_Event/Model';
 import AnalyseAttackChainModel from './modules/Analyse_AttackChain/Model';
+import AnalyseFallHostModel from './modules/Analyse_FallHost/Model';
+
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -25,6 +27,7 @@ const app = dva({
 app.model(LayoutModel);
 app.model(AnalyseEventModel);
 app.model(AnalyseAttackChainModel);
+app.model(AnalyseFallHostModel);
 
 combineExtraLoadingWtithApp(app);
 combineExtraEffectsWithApp(app,extraEffectsOptions);

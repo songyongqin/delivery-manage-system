@@ -4,12 +4,13 @@
 import React from 'react';
 import tableColumnsGenerator from '../../../utils/tableColumnsGenerator';
 import JoTag from '../../../components/JoTag';
-import {Icon,Switch,Card,Timeline} from 'antd';
+import {Icon,Switch,Card,Timeline,InputNumber,Button} from 'antd';
 import classnames from 'classnames';
 import * as tools from '../../../utils/tools';
 import commonConstConfig from '../../../configs/ConstConfig';
 import {filterRowDataIndexes,rowDataIndexes,tableTextConfig} from '../ConstConfig';
-
+import FilterInputNumber from '../../../components/FilterInputNumber/FilterInputNumber';
+import TimeLabel from '../../../components/TImesLabel';
 
 const rowsRenderer={
   description:value=>{
@@ -29,10 +30,15 @@ const rowsRenderer={
     }catch(e){
       console.info(e);
     }
+  },
+  attackTimes:value=>{
+    return <TimeLabel times={value}/>
   }
-}
+};
 
-export const getColumns=({queryFilters})=>{
+
+
+export const getColumns=({queryFilters,onSubmit})=>{
 
   const renderer={...rowsRenderer},
         filterOptions={};
@@ -45,20 +51,26 @@ export const getColumns=({queryFilters})=>{
     renderer[k]=value=>{
       return value in targetFilter?targetFilter[value]:value;
     }
-  })
+  });
 
 
-
-  const result=tableColumnsGenerator({
+  return tableColumnsGenerator({
     keys:rowDataIndexes,
     titleTextConfig:tableTextConfig.rowTitles,
     filterTextConfig:commonConstConfig.textConfig,
     filterOptions:filterOptions,
     filteredValue:queryFilters,
-    renderer
-  })
+    renderer,
+    extraProps:{
+      counts:{
+        filterIcon:<Icon type="filter" style={{color:"#108ee9"}}/>,
+        filterDropdown: <FilterInputNumber  textConfig={{label:"归并次数阈值设置"}}
+                                            defaultValue={queryFilters.mergeCounts}
+                                            onSubmit={onSubmit}/>
 
-  return result;
+      }
+    }
+  });
 
 };
 
