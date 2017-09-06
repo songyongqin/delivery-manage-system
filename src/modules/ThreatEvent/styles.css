@@ -1,0 +1,23 @@
+.page {
+  padding: 15px;
+  background: white;
+  color: rgba(0, 0, 0, 0.85);
+  background: #F1F1F1;
+  padding: 30px; }
+  .page :global .ant-tabs-tab-active {
+    color: #108ee9; }
+  .page .threat-event-item-wrapper {
+    max-height: 600px;
+    overflow-y: scroll;
+    padding-right: 30px; }
+
+.page-dark {
+  background: #252d47;
+  color: #b7c1cc;
+  background: #1c233b; }
+  .page-dark :global .ant-tabs-tab {
+    color: #b7c1cc; }
+  .page-dark :global .ant-tabs-tab-active {
+    color: #108ee9; }
+
+/*# sourceMappingURL=styles.css.map */

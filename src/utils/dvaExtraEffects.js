@@ -109,7 +109,6 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
     }catch(e){
 
       console.error(e.message);
-
       throw e;
 
     }finally {

@@ -21,6 +21,10 @@ export default ({title=null,tableProps={},paginationProps={},loading=false,pagin
     ["secondary-title-dark"]:isDark,
   });
 
+  const paginationClasses=classnames({
+    [styles["pagination-dark"]]:isDark
+  })
+
   return (
     <div style={{height:"100%",width:"100%"}}>
       <Spin spinning={loading}>
@@ -40,8 +44,8 @@ export default ({title=null,tableProps={},paginationProps={},loading=false,pagin
             ?
             <Pagination style={{marginTop:"15px"}}
                         showTotal={(total, range)=>
-                          <div>共找到&nbsp;
-                            <JoTag color={isDark?"#108ee9":"#108ee9"} >
+                          <div className={paginationClasses}>共找到&nbsp;
+                            <JoTag color={"#108ee9"} >
                               {paginationProps.total}
                             </JoTag>
                             个结果

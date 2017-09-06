@@ -28,6 +28,10 @@ import SysConfig from './modules/SysConfig/Page';
 import Manager from './modules/Manager/Page';
 import ManagerDevice from './modules/Manager_Device/Page';
 import ManagerVirtual from './modules/Manager_Virtual/Page';
+
+
+import ThreatEvent from './modules/ThreatEvent/Page';
+
 function RouterConfig({ history ,app }) {
 
   // const registerModel=getRegisterModel(app);
@@ -60,8 +64,14 @@ function RouterConfig({ history ,app }) {
           <Route path="virtual-machine" components={ManagerVirtual}/>
         </Route>
 
+
+        <Route path="threat-event" components={ThreatEvent}>
+
+        </Route>
+
         {/*<Redirect from="*" to="error"/>*/}
       </Route>
+
     </Router>
   );
 }

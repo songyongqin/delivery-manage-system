@@ -48,12 +48,4 @@
 .statistic-list-dark .statistic-item {
   background: #252d47; }
 
-.modal :global .ant-modal-content {
-  background: #F1F1F1; }
-
-.modal-dark :global .ant-modal-content {
-  background: #1c233b; }
-.modal-dark :global .ant-modal-close-x {
-  color: #b7c1cc; }
-
 /*# sourceMappingURL=styles.css.map */

@@ -1,15 +1,18 @@
 import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
-import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
+import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge,Modal } from 'antd';
 import QueryForm from '../../components/TimestampForm';
 import {queryContainerGenerator} from '../../utils/containerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import * as tools from '../../utils/tools.js';
 import * as tableConfig from './components/TableConfig';
-import {statisticDataIndexes,statisticsTextConfig,tableTextConfig} from './ConstConfig';
+import {statisticDataIndexes,statisticsTextConfig,tableTextConfig,haveDetailsDataIndexes} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig'
+import JoIcon from '../../components/JoIcon';
+import {Link} from 'dva/router';
+import ThreatEvent from '../ThreatEvent/Page';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -25,6 +28,20 @@ function mapStateToProps(state) {
 class Page extends React.Component{
   constructor(props) {
     super(props);
+    this.state={
+      visible:false,
+      activeKey:null,
+    }
+  }
+  switchModal=()=>{
+    this.setState({
+      visible:!this.state.visible
+    })
+  }
+  setActiveKey=(key)=>{
+    this.setState({
+      activeKey:key,
+    })
   }
   onQuery=(payload)=>{
 
@@ -98,20 +115,43 @@ class Page extends React.Component{
               [styles["title"]]:true,
             });
 
+            let haveDetails=haveDetailsDataIndexes.indexOf(k)!==-1;
+
+            let clickHandle=haveDetails
+              ?
+              ()=>{
+              this.switchModal();
+              this.setActiveKey(k);
+              }
+              :
+              null;
+
+
             return (
               <Col {...spanConfig}
                    key={'item-'+k}
                    className={styles["statistic-item-wrapper"]}>
-                <div className={itemClasses}>
-                    <span className={styles["statistic-item-icon"]}>
-                      {icons[k]}
-                    </span>
-                    <p className={styles["counts"]}>
-                      {statistics[k]}{units[k]}
-                    </p>
-                    <h3 className={titleClasses}>
-                      {tools.getKeyText(k,items)}
-                    </h3>
+                <div style={haveDetails?{"cursor":"pointer"}:null}
+                     className={itemClasses}
+                     onClick={clickHandle}>
+                <span className={styles["statistic-item-icon"]}>
+                  {icons[k]}
+                </span>
+                  <p className={styles["counts"]}>
+                    {statistics[k]}{units[k]}
+                  </p>
+                  <h3 className={titleClasses}>
+                    {tools.getKeyText(k,items)}
+                  </h3>
+                  {
+                    haveDetails
+                      ?
+                      <span className={styles["statistic-item-check-details"]}>
+                        <JoIcon type="ellipsis1"/>
+                      </span>
+                      :
+                      null
+                  }
                 </div>
               </Col>
             )
@@ -159,10 +199,17 @@ class Page extends React.Component{
   };
   render=()=> {
 
+    const {queryFilters}=this.props[NAMESPACE];
+
     const pageClasses=classnames({
       // [styles["page"]]:true,
       // [styles["page-dark"]]:this.props.commonLayout.darkTheme
     });
+
+    const modalClasses=classnames({
+      [styles["modal"]]:true,
+      [styles["modal-dark"]]:this.props.commonLayout.darkTheme
+    })
 
     return (
       <div className={pageClasses}>
@@ -172,7 +219,16 @@ class Page extends React.Component{
             this.getResultsPanel(),
           ])}
         </JoSpin>
-
+        <Modal width={"90%"}
+               className={modalClasses}
+               style={{top:"80px"}}
+               key={`${this.state.visible}-modal-threat-event`}
+               footer={null}
+               visible={this.state.visible}
+               onCancel={this.switchModal}>
+          <ThreatEvent defaultActiveKey={this.state.activeKey}
+                       timestampRange={queryFilters.timestampRange}/>
+        </Modal>
       </div>
     )
   }

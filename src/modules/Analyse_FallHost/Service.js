@@ -7,7 +7,7 @@ export async function query(payload) {
   /*
    * 转换参数格式
    * */
-  let {timestampRange}=payload;
+  let {timestampRange,ip}=payload;
 
   payload={
     ...payload,
@@ -15,6 +15,10 @@ export async function query(payload) {
 
   if(timestampRange.length!==0){
     payload.timestampRange=tools.momentToTimestamp(timestampRange)
+  }
+
+  if(ip===null||ip.trim().length===0){
+    delete payload.ip;
   }
 
   const options= {

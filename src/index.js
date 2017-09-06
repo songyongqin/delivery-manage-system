@@ -14,6 +14,9 @@ import LayoutModel from './models/LayoutModel';
 import AnalyseEventModel from './modules/Analyse_Event/Model';
 import AnalyseAttackChainModel from './modules/Analyse_AttackChain/Model';
 import AnalyseFallHostModel from './modules/Analyse_FallHost/Model';
+import ThreatEventExploitModel from './modules/ThreatEvent_Exploit/Model'
+import ThreatEventToolModel from './modules/ThreatEvent_Tool/Model';
+import ThreatEventThreatInfoModel from './modules/ThreatEvent_ThreatInfo/Model';
 
 // 1. Initialize
 const app = dva({
@@ -28,6 +31,9 @@ app.model(LayoutModel);
 app.model(AnalyseEventModel);
 app.model(AnalyseAttackChainModel);
 app.model(AnalyseFallHostModel);
+app.model(ThreatEventExploitModel);
+app.model(ThreatEventToolModel);
+app.model(ThreatEventThreatInfoModel);
 
 combineExtraLoadingWtithApp(app);
 combineExtraEffectsWithApp(app,extraEffectsOptions);

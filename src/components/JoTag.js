@@ -18,7 +18,7 @@ const Tag =(props)=>{
   }else{
     value=children;
   }
-  return <AntTag style={{cursor:"text",borderRadius:"4px"}}
+  return <AntTag style={{cursor:"text",borderRadius:"4px",margin:"0 5px 5px 0"}}
                  {...props}
                  children={value}/>
 };

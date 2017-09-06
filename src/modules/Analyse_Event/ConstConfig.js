@@ -79,6 +79,11 @@ export const statisticDataIndexes=[
   FALLHOST_DATAINDEX
 ];
 
+export const haveDetailsDataIndexes=[
+  EXPLOITS_DATAINDEX,
+  TOOLS_DATAINDEX,
+  THREATINFOS_DATAINDEX,
+]
 
 export const statisticsTextConfig={
   title:STATISTICS_TITLE,

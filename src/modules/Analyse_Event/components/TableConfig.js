@@ -83,6 +83,7 @@ export const getExpandedRowRender=({isDark})=>{
     });
 
     const {details=[],advice}=records;
+
     return (
       <Card title={tools.getKeyText("title",expandedRow)}
             className={classes}>

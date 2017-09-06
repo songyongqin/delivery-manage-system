@@ -71,23 +71,3 @@
     background: $bg-color-level-1-dark;
   }
 }
-
-
-.modal{
-  :global{
-    .ant-modal-content{
-      background: $bg-color-level-3;
-    }
-  }
-}
-
-.modal-dark{
-  :global{
-    .ant-modal-content{
-      background: $bg-color-level-3-dark;
-    }
-    .ant-modal-close-x{
-      color:$txt-color-dark;
-    }
-  }
-}

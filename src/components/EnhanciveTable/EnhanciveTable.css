@@ -26,6 +26,9 @@
 .dark :global .ant-table-placeholder {
   color: #b7c1cc; }
 
+.pagination-dark {
+  color: #b7c1cc; }
+
 .title {
   margin-bottom: 10px; }
 
