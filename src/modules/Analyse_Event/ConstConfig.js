@@ -67,8 +67,13 @@ const _COUNTS_DATAINDEX="counts",
       HIGHEVENTS_DATAINDEX='highEvents',
       EXPLOITS_DATAINDEX="exploits",
       TOOLS_DATAINDEX="tools",
-      THREATINFOS_DATAINDEX="threatInfos",
-      FALLHOST_DATAINDEX="fallHosts";
+      THREATINFOS_DATAINDEX="threatInfos";
+
+export const  FALLHOST_DATAINDEX="fallHosts";
+
+
+
+
 
 export const statisticDataIndexes=[
   _COUNTS_DATAINDEX,

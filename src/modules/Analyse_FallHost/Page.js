@@ -46,12 +46,12 @@ class Page extends React.Component{
 
     return (
       <div key={"query-panel"} style={{margin:"15px 0"}}>
-        <div style={{display:"inline-block",marginRight:"30px"}}>
-          <QueryForm defaultValue={queryFilters}
-                     key={"query-timestamp"+lastReqTime}
-                     onSubmit={this.onQuery}/>
-        </div>
-        <div style={{display:"inline-block"}}>
+          {this.props.getContainerHeader({
+            routes:this.props.routes,
+            queryFilters,
+            onQuery:this.onQuery
+          })}
+        <div style={{display:"inline-block",marginBottom:"10px"}}>
           <QueryIPForm key={"query-ip"+lastReqTime}
                        onSubmit={this.onQuery}
                        defaultValue={queryFilters}/>

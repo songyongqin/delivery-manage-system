@@ -8,7 +8,6 @@
   color: #b7c1cc; }
 
 .statistic-list {
-  padding: 0 0 20px;
   margin-left: -5px;
   margin-right: -5px; }
   .statistic-list .counts {
@@ -41,7 +40,7 @@
       border-radius: 50%;
       background: #108ee9;
       line-height: 30px;
-      font-size: 24px;
+      font-size: 18px;
       cursor: pointer;
       color: white; }
 

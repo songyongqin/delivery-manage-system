@@ -15,7 +15,6 @@
     left: 50%;
     transform: translateX(-50%) translateY(-50%); }
   .spin-wrapper .spin-cover {
-    position: relative;
     z-index: 11;
     position: absolute;
     top: 0;

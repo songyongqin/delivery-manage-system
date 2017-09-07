@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {createMapDispatchWithPromise} from './dvaExtraDispatch'
-import {WithAnimateRender} from '../components/HOSComponents/HOSComponents';
+import {WithAnimateRender,WithContainerHeader} from '../components/HOSComponents/HOSComponents';
 import { connect } from 'dva';
 
 function defaultMapStateToProps(state) {
@@ -82,14 +82,14 @@ export const queryContainerGenerator=({
 
     @connect(wrappedMapStateProps,wrappedMapDispatchToProps)
     @WithAnimateRender
+    @WithContainerHeader
     class QueryContainer extends React.Component{
       displayName=`QueryContainer_${namespace}`;
       constructor(props){
         super(props);
       }
-
       render=()=>{
-        return <WrappedComponent {...this.props} />
+        return <WrappedComponent {...this.props}/>
       }
     }
 

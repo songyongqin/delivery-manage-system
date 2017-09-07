@@ -2,17 +2,17 @@ import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge,Modal } from 'antd';
-import QueryForm from '../../components/TimestampForm';
 import {queryContainerGenerator} from '../../utils/containerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import * as tools from '../../utils/tools.js';
 import * as tableConfig from './components/TableConfig';
-import {statisticDataIndexes,statisticsTextConfig,tableTextConfig,haveDetailsDataIndexes} from './ConstConfig';
+import {statisticDataIndexes,statisticsTextConfig,tableTextConfig,haveDetailsDataIndexes,FALLHOST_DATAINDEX} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig'
 import JoIcon from '../../components/JoIcon';
 import {Link} from 'dva/router';
 import ThreatEvent from '../ThreatEvent/Page';
+import { routerRedux } from 'dva/router';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -62,9 +62,12 @@ class Page extends React.Component{
     const {queryFilters}=this.props[NAMESPACE];
 
     return (
-      <div key="query-panel" style={{margin:"15px 0"}}>
-        <QueryForm defaultValue={queryFilters}
-                   onSubmit={this.onQuery}/>
+      <div key="query-panel" style={{marginTop:"15px"}}>
+        {this.props.getContainerHeader({
+          routes:this.props.routes,
+          queryFilters,
+          onQuery:this.onQuery
+        })}
       </div>
     )
   };
@@ -115,7 +118,8 @@ class Page extends React.Component{
               [styles["title"]]:true,
             });
 
-            let haveDetails=haveDetailsDataIndexes.indexOf(k)!==-1;
+            let haveDetails=haveDetailsDataIndexes.indexOf(k)!==-1,
+                isFallHosts=k===FALLHOST_DATAINDEX;
 
             let clickHandle=haveDetails
               ?
@@ -126,12 +130,21 @@ class Page extends React.Component{
               :
               null;
 
+            clickHandle=isFallHosts
+              ?
+              ()=>{
+                this.props.dispatch(routerRedux.push("/analyse/fall-host"))
+              }
+              :
+              clickHandle;
+
+            let itemStyles=(haveDetails||isFallHosts)?{"cursor":"pointer"}:null
 
             return (
               <Col {...spanConfig}
                    key={'item-'+k}
                    className={styles["statistic-item-wrapper"]}>
-                <div style={haveDetails?{"cursor":"pointer"}:null}
+                <div style={itemStyles}
                      className={itemClasses}
                      onClick={clickHandle}>
                 <span className={styles["statistic-item-icon"]}>
@@ -148,6 +161,15 @@ class Page extends React.Component{
                       ?
                       <span className={styles["statistic-item-check-details"]}>
                         <JoIcon type="ellipsis1"/>
+                      </span>
+                      :
+                      null
+                  }
+                  {
+                    isFallHosts
+                      ?
+                      <span className={styles["statistic-item-check-details"]}>
+                        <JoIcon type="link2"/>
                       </span>
                       :
                       null
@@ -209,7 +231,7 @@ class Page extends React.Component{
     const modalClasses=classnames({
       [styles["modal"]]:true,
       [styles["modal-dark"]]:this.props.commonLayout.darkTheme
-    })
+    });
 
     return (
       <div className={pageClasses}>

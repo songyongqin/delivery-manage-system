@@ -43,7 +43,6 @@ export async function post(payload) {
   if(timestampRange.length!==0){
     payload.timestampRange=tools.momentToTimestamp(timestampRange)
   }
-
   const options= {
     method: 'POST',
     headers: {

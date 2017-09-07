@@ -7,15 +7,20 @@ import {Menu,Affix} from 'antd';
 import {Link} from 'dva/router';
 import QueueAnim from 'rc-queue-anim'
 import styles from './HOSComponents.css';
+import JoBreadcrumb from '../JoBreadcrumb/JoBreadcrumb';
+import QueryForm from '../TimestampForm';
+import Icon from '../JoIcon';
+import {connect} from 'dva';
+import {Row,Col} from 'antd';
 const SubMenu = Menu.SubMenu;
 const Item=Menu.Item;
 const MenuItemGroup = Menu.ItemGroup;
 export const WithStateHandle=(WrappedComponent,initState={loading:{},visible:{}})=>{
   return class extends React.Component{
-    constructor(props) {
-      super(props);
-      this.state=initState;
-    }
+    // constructor(props) {
+    //   super(props);
+    //   this.state=initState;
+    // }
     getStateHandle=(stateType)=>{
       return (state,value)=>{
         return ()=>{
@@ -27,7 +32,7 @@ export const WithStateHandle=(WrappedComponent,initState={loading:{},visible:{}}
           })
         }
       }
-    }
+    };
     render() {
       return (
         <WrappedComponent {...this.props} getStateHandle={this.getStateHandle}/>
@@ -48,9 +53,9 @@ export const WithStateHandle=(WrappedComponent,initState={loading:{},visible:{}}
 
 export const WithMenus=(WrappedComponent)=>{
   return class extends React.Component{
-    constructor(props) {
-      super(props);
-    }
+    // constructor(props) {
+    //   super(props);
+    // }
     getMenus=(items,selectedKeys,defaultOpenKeys)=>{
       if(items.constructor!==[].constructor){
         throw new Error(`items should type of array`);
@@ -138,9 +143,9 @@ export const WithDefaultValueHandle=(WrappedComponent)=>{
 
 export const WithAnimateRender=(WrappedComponent)=>{
   return class extends React.Component{
-    constructor(props) {
-      super(props);
-    }
+    // constructor(props) {
+    //   super(props);
+    // }
     animateRender=(childrens,options={})=>{
 
       const {isAnimate=true,className,duration=1000,type="right"}=options;
@@ -160,9 +165,75 @@ export const WithAnimateRender=(WrappedComponent)=>{
         </QueueAnim>
       )
 
-    }
+    };
     render() {
       return <WrappedComponent {...this.props} animateRender={this.animateRender} />
     }
   }
+};
+
+function mapStateToProps(state) {
+  return {
+    commonLayout:state.layout.commonLayout,
+    languageConfig:state.layout.languageConfig
+  }
 }
+
+
+export const WithBreadcrumb=(WrappedComponent)=>{
+
+  @connect(mapStateToProps)
+  class WrapperComponent extends React.Component{
+    getBreadcrumb=(routes)=>{
+
+      const {languageConfig,commonLayout}=this.props;
+      const {language,darkTheme}=commonLayout;
+      const {routes:routesTitleConfig}=languageConfig[language];
+
+      return (
+        <JoBreadcrumb routes={routes}
+                      isDark={darkTheme}
+                      routesTitleConfig={routesTitleConfig}
+                      title={<Icon type="home4"/>}/>
+      )
+    };
+    render=()=>{
+      return (
+        <WrappedComponent {...this.props} getBreadcrumb={this.getBreadcrumb}/>
+      )
+    }
+  }
+
+  return WrapperComponent;
+};
+
+
+
+export const WithContainerHeader=(WrappedComponent)=>{
+
+  @WithBreadcrumb
+  class WrapperComponent extends React.Component{
+    getContainerHeader=({routes,onQuery,queryFilters})=>{
+      return (
+        <div style={{overflow:"hidden"}}>
+          <div style={{float:"left"}}>
+            {this.props.getBreadcrumb(routes)}
+          </div>
+          <div style={{float:"right"}}>
+            <QueryForm defaultValue={queryFilters}
+                       onSubmit={onQuery}/>
+          </div>
+        </div>
+      )
+    };
+    render=()=>{
+      return (
+        <WrappedComponent {...this.props} getContainerHeader={this.getContainerHeader}/>
+      )
+    }
+  }
+
+
+  return WrapperComponent;
+
+};

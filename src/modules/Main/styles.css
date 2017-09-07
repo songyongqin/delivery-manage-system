@@ -65,7 +65,7 @@
   right: 0;
   bottom: 0;
   transition: left 0.3s;
-  padding: 30px; }
+  padding: 0 30px 30px; }
 
 .content-wrapper-common {
   left: 220px; }

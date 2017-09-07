@@ -15,18 +15,18 @@ export default class JoSpin extends React.Component{
     }
   }
   componentWillReceiveProps=(newProps)=>{
-
     if(newProps.spinning===true){
+
       this.setState({
         spinning:newProps.spinning
       })
+
     }else{
+      
       this.timer=setTimeout(()=>{
         this.setState({
           spinning:newProps.spinning
         })
-        // this.shouldFadeIn=(newProps.spinning===false)&&(newProps.spinning!=this.props.spinning);
-
       },500)
 
     }

@@ -56,14 +56,17 @@ class Page extends React.Component{
 
       this.onQuery({attackStage:newAttackStage})
     }
-  }
+  };
   getQueryPanel=()=>{
 
     const {queryFilters}=this.props[NAMESPACE];
     return (
       <div key="query-panel" style={{margin:"15px 0"}}>
-        <QueryForm defaultValue={queryFilters}
-                   onSubmit={this.onQuery}/>
+        {this.props.getContainerHeader({
+          routes:this.props.routes,
+          queryFilters,
+          onQuery:this.onQuery
+        })}
       </div>
     )
   };

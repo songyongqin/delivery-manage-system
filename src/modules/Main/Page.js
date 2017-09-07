@@ -74,9 +74,8 @@ class Page extends React.Component{
   };
 
   getContent=()=>{
-    const {languageConfig,commonLayout}=this.props;
-    const {navMini,language,darkTheme}=commonLayout;
-    const {routes:routesTitleConfig}=languageConfig[language];
+    const {commonLayout}=this.props;
+    const {navMini}=commonLayout;
 
     let classes=classnames({
       [styles["content-wrapper"]]:true,
@@ -86,10 +85,6 @@ class Page extends React.Component{
 
     return (
       <div className={classes}>
-        <JoBreadcrumb routes={this.props.routes}
-                      isDark={darkTheme}
-                      routesTitleConfig={routesTitleConfig}
-                      title={<Icon type="home4"/>}/>
         <div className={styles["main-children-wrapper"]}>
           {this.props.children}
         </div>
