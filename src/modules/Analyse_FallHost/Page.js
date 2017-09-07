@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
 import QueryForm from '../../components/TimestampForm';
 import QueryIPForm from './components/QueryIPForm';
-import {queryContainerGenerator} from '../../utils/containerGenerator';
+import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import * as tableConfig from './components/TableConfig';

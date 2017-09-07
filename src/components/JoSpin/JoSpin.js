@@ -22,7 +22,7 @@ export default class JoSpin extends React.Component{
       })
 
     }else{
-      
+
       this.timer=setTimeout(()=>{
         this.setState({
           spinning:newProps.spinning

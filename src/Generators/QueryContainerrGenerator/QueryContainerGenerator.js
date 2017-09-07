@@ -2,8 +2,8 @@
  * Created by 13944 on 2017/8/13.
  */
 import React from 'react';
-import {createMapDispatchWithPromise} from './dvaExtraDispatch'
-import {WithAnimateRender,WithContainerHeader} from '../components/HOSComponents/HOSComponents';
+import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
+import {WithAnimateRender,WithContainerHeader} from '../../components/HOSComponents/HOSComponents';
 import { connect } from 'dva';
 
 function defaultMapStateToProps(state) {

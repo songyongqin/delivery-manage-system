@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
-import {queryContainerGenerator} from '../../utils/containerGenerator';
+import {queryContainerGenerator} from '../QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import ThreatEventOperationPanel from '../../components/ThreatEventOperationPanel';
