@@ -6,6 +6,8 @@
     background: transparent; }
 .table :global .ant-table-placeholder {
   background: transparent; }
+.table :global .ant-table-row-expand-icon {
+  color: rgba(0, 0, 0, 0.85); }
 
 .light :global .ant-table-thead > tr > th {
   background: white; }
@@ -15,6 +17,8 @@
   border-color: black; }
 .light :global .ant-table-placeholder {
   color: rgba(0, 0, 0, 0.85); }
+.light.inverse-color :global .ant-table-thead > tr > th {
+  background: #F1F1F1; }
 
 .dark :global .ant-table-thead > tr > th {
   background: #252d47;
@@ -25,6 +29,8 @@
   color: #b7c1cc; }
 .dark :global .ant-table-placeholder {
   color: #b7c1cc; }
+.dark.inverse-color :global .ant-table-thead > tr > th {
+  background: #1c233b; }
 
 .pagination-dark {
   color: #b7c1cc; }
@@ -34,5 +40,8 @@
 
 .title-dark {
   color: white; }
+
+.expanded {
+  cursor: pointer; }
 
 /*# sourceMappingURL=EnhanciveTable.css.map */

@@ -61,6 +61,11 @@ export const queryContainerGenerator=({
             ...payload,
           }
         })
+      },
+      queryInit:()=>{
+        return dispatch({
+          type:`${namespace}/queryInit`,
+        })
       }
     }
   }

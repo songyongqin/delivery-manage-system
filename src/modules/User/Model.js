@@ -37,13 +37,13 @@ const baseModel={
         );
 
         if(res.status===1){
-
-          tools.setTemp("userData",res.payload);
+          const userData={...res.payload,userAccount:payload.userAccount}
+          tools.setTemp("userData",userData);
 
           yield put({
             type:"setUserData",
             payload:{
-              ...res.payload||{}
+              ...userData
             }
           })
           // yield put(routerRedux.push('/'));

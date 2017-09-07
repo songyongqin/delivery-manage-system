@@ -6,12 +6,68 @@ import styles from './EnhanciveTable.css';
 import React from 'react';
 import classnames from 'classnames';
 import JoTag from '../../components/JoTag';
-export default ({title=null,tableProps={},paginationProps={},loading=false,pagination=true,isDark=true})=>{
+/*
+* 控制列展开属性，点击列时可展开
+* */
+class ExpandControlTable extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state={
+      expandedRowKeys:[]
+    }
+  }
+  onRowClick=(record)=>{
+    this.handleExpanededRowKeys(record.key);
+  }
+  onExpand=(expanded,record)=>{
+    this.handleExpanededRowKeys(record.key);
+  }
+  handleExpanededRowKeys=(key)=>{
+    const {expandedRowKeys}=this.state;
+
+    let keyIndex=expandedRowKeys.indexOf(key);
+
+    if(keyIndex===-1){
+      return this.setState({
+        expandedRowKeys:[...expandedRowKeys,key]
+      })
+    }
+
+    this.setState({
+      expandedRowKeys:[
+        ...expandedRowKeys.slice(0,keyIndex),
+        ...expandedRowKeys.slice(keyIndex+1)]
+    })
+
+  }
+  render=()=>{
+
+
+
+    return (
+      <Table pagination={false}
+             rowClassName={()=>{
+               if(this.props.expandedRowRender){
+                 return styles["expanded"];
+               }
+             }}
+             bordered={false}
+             onRowClick={this.onRowClick}
+             onExpand={this.onExpand}
+             {...this.props}
+             expandedRowKeys={this.state.expandedRowKeys}/>
+    )
+  }
+}
+
+
+export default ({inverse=false,title=null,tableProps={},paginationProps={},loading=false,pagination=true,isDark=true})=>{
 
   const classes=classnames({
     [styles["dark"]]:isDark,
     [styles["light"]]:!isDark,
     [styles["table"]]:true,
+    [styles["inverse-color"]]:inverse,
     [tableProps.className]:!!tableProps.className
   });
 
@@ -25,6 +81,7 @@ export default ({title=null,tableProps={},paginationProps={},loading=false,pagin
     [styles["pagination-dark"]]:isDark
   })
 
+
   return (
     <div style={{height:"100%",width:"100%"}}>
       <Spin spinning={loading}>
@@ -35,10 +92,7 @@ export default ({title=null,tableProps={},paginationProps={},loading=false,pagin
             :
             null
         }
-        <Table pagination={false}
-               bordered={false}
-               {...tableProps}
-               className={classes}/>
+        <ExpandControlTable {...tableProps} className={classes}/>
         {
           pagination
             ?
@@ -57,3 +111,6 @@ export default ({title=null,tableProps={},paginationProps={},loading=false,pagin
     </div>
   )
 }
+
+
+

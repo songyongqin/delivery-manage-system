@@ -1,14 +1,12 @@
 import React from 'react';
-import styles from './styles.css'
 import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
-import QueryForm from '../../components/TimestampForm';
 import QueryIPForm from './components/QueryIPForm';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import * as tableConfig from './components/TableConfig';
-import {statisticDataindexes,statisticsTextConfig,tableTextConfig} from './ConstConfig';
+import {tableTextConfig} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig'
 
 function mapStateToProps(state) {
@@ -27,7 +25,6 @@ class Page extends React.Component{
     super(props);
   }
   onQuery=(payload)=>{
-    console.info(payload);
     this.props.query({
       ...this.props[NAMESPACE].queryFilters||[],
       ...payload||{},

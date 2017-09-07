@@ -1,20 +1,21 @@
 import React from 'react';
 import styles from './styles.css'
-import { Menu, Button,Breadcrumb,Spin,Modal,Table,BackTop } from 'antd';
+import { Menu, Button,Breadcrumb,Spin,Modal,Table,BackTop,Dropdown,Icon} from 'antd';
 import classnames from 'classnames';
 import Nav from './components/Nav';
-import LayoutOperateList from './components/LayoutIOperateList';
-
-
+import LayoutOperateList from './components/LayoutIOperateList'
 import { connect } from 'dva';
 import {createMapDispatchWithPromise} from "../../utils/dvaExtraDispatch";
+import {tableTextConfig} from '../UserManager/ConstConfig';
+
 
 function mapStateToProps(state) {
   return {
     layout:state.layout,
     commonLayout:state.layout.commonLayout,
     routeConfig:state.layout.routeConfig,
-    languageConfig:state.layout.languageConfig
+    languageConfig:state.layout.languageConfig,
+    userData:state.user.userData
   }
 }
 
@@ -137,17 +138,52 @@ class Page extends React.Component{
         <div className={styles["header-left"]}>
           {this.getLayoutOperateList()}
         </div>
-        <div className={styles["header-right"]}>
-          <a onClick={this.props.deleteSign}
-             style={{marginRight:"15px"}}>SIGN OUT</a>
-        </div>
+        {this.getHeaderRight()}
         <h1 className={styles["title"]}>
           {languageConfig[language].title}
         </h1>
       </header>
     )
   };
+  getHeaderRight=()=>{
 
+    const {userAccount,role}=this.props.userData;
+
+    const menu = (
+      <Menu>
+        <Menu.ItemGroup key="message" title={
+          <div style={{padding:"5px 10px"}}>
+            <span style={{color:"#108ee9",fontWeight:"900"}}>{userAccount}</span>
+            <span>{tableTextConfig.enums.role[role]}</span>
+          </div>
+        }>
+        </Menu.ItemGroup>
+        <Menu.Item key="modify-password">
+          <a>
+            <Icon type="lock"/>&nbsp;&nbsp;修改密码
+          </a>
+        </Menu.Item>
+        <Menu.Item key="sign-out">
+          <a onClick={this.props.deleteSign}>
+            <Icon type="logout"/>&nbsp;&nbsp;注销
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
+
+    return (
+      <div className={styles["header-right"]}>
+
+        <span>欢迎回来，</span>
+        <Dropdown overlay={menu}>
+          <a style={{color:"#108EE9"}}>
+            {userAccount}
+             <Icon type="down" />
+          </a>
+        </Dropdown>
+      </div>
+    )
+  }
   render=()=>{
 
     const {darkTheme}=this.props.commonLayout;

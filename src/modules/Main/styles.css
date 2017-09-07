@@ -33,7 +33,8 @@
   .header .header-left {
     float: left; }
   .header .header-right {
-    float: right; }
+    float: right;
+    margin-right: 20px; }
 
 .header-dark {
   box-shadow: none;

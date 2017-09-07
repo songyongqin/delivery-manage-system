@@ -19,8 +19,12 @@
     .ant-table-placeholder{
       background: transparent;
     }
+    .ant-table-row-expand-icon{
+      color:$txt-color;
+    }
   }
 }
+
 
 .light{
   //background:white;
@@ -44,6 +48,14 @@
       color:$txt-color;
     }
   }
+
+  &.inverse-color{
+    :global{
+      .ant-table-thead>tr>th{
+        background: $bg-color-level-3;
+      }
+    }
+  }
 }
 
 .dark{
@@ -62,6 +74,13 @@
       color:$txt-color-dark;
     }
   }
+  &.inverse-color{
+    :global{
+      .ant-table-thead>tr>th{
+        background: $bg-color-level-3-dark;
+      }
+    }
+  }
 }
 
 .pagination-dark{
@@ -73,4 +92,8 @@
 }
 .title-dark{
   color:white;
+}
+
+.expanded{
+  cursor: pointer;
 }

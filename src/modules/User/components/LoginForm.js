@@ -4,7 +4,6 @@
 import React from 'react';
 import styles from './LoginForm.css';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import { routerRedux } from 'dva/router';
 import classnames from 'classnames';
 const FormItem = Form.Item;
 
@@ -31,7 +30,7 @@ class WrappedForm extends React.Component {
     return (
       <Form className={formClasses}>
         <FormItem required={false}>
-          {getFieldDecorator('username', {
+          {getFieldDecorator('userAccount', {
             rules: [{ required: true, message: '不能为空' }],
           })(
             <Input disabled={loading}
@@ -42,7 +41,7 @@ class WrappedForm extends React.Component {
           )}
         </FormItem>
         <FormItem required={false}>
-          {getFieldDecorator('password', {
+          {getFieldDecorator('userPassword', {
             rules: [{ required: true, message: '请输入您的密码' }],
           })(
             <Input className={styles["input"]}

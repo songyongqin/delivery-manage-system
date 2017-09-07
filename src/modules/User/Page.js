@@ -8,7 +8,6 @@ import classnames from 'classnames';
 import LoginForm from './components/LoginForm';
 import {Alert} from 'antd';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
-import AsyncButton from '../../components/AsyncButton/AsyncButton';
 
 
 function mapStateToProps(state) {

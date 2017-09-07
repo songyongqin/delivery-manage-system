@@ -17,7 +17,9 @@ import AnalyseFallHostModel from './modules/Analyse_FallHost/Model';
 import ThreatEventExploitModel from './modules/ThreatEvent_Exploit/Model'
 import ThreatEventToolModel from './modules/ThreatEvent_Tool/Model';
 import ThreatEventThreatInfoModel from './modules/ThreatEvent_ThreatInfo/Model';
+import UserManagerModel from './modules/UserManager/Model';
 import UserModel from './modules/User/Model';
+
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -35,6 +37,7 @@ app.model(ThreatEventExploitModel);
 app.model(ThreatEventToolModel);
 app.model(ThreatEventThreatInfoModel);
 app.model(UserModel);
+app.model(UserManagerModel)
 
 combineExtraLoadingWtithApp(app);
 combineExtraEffectsWithApp(app,extraEffectsOptions);
