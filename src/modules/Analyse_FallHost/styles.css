@@ -1,10 +1,10 @@
 .page {
   padding: 15px;
-  background: white;
+  background: #F1F1F1;
   color: rgba(0, 0, 0, 0.85); }
 
 .page-dark {
-  background: #252d47;
+  background: #1c233b;
   color: #b7c1cc; }
 
 .statistic-list {

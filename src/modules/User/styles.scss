@@ -1,0 +1,57 @@
+@import "../../styles/var";
+@import "../../styles/mixin";
+
+
+
+.page{
+  @include common-page();
+  height: 100%;
+  position: relative;
+}
+
+.page-dark{
+  @include common-page-dark();
+}
+
+.login-modal{
+  width: 340px;
+  position: absolute;
+  top:140px;
+  left:50%;
+  //transform: translateX(-50%);
+  margin-left:-170px;
+}
+
+.login-modal-form{
+  width: 100%;
+  background: $bg-color-level-1;
+  padding:30px 30px 20px;
+}
+
+.login-modal-form-dark{
+  background: $bg-color-level-1-dark;
+
+}
+
+.title{
+  color:$txt-color;
+  position: relative;
+  font-size: 24px;
+  margin-bottom: 30px;
+  padding:10px 0;
+  display: inline-block;
+  &:after{
+    content:"";
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height: 2px;
+    background: $primary-color;
+
+  }
+}
+
+.title-dark{
+  color:$txt-color-dark;
+}

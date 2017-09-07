@@ -1,0 +1,24 @@
+.form label:after {
+  content: none; }
+.form .lbl {
+  color: rgba(0, 0, 0, 0.85);
+  display: inline-block;
+  margin-bottom: 5px; }
+.form .btn, .form .input {
+  height: 40px; }
+  .form .btn :global .ant-input-prefix, .form .input :global .ant-input-prefix {
+    color: #108ee9; }
+.form :global .ant-input {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(0, 0, 0, 0.85);
+  padding: 10px;
+  height: 40px; }
+  .form :global .ant-input::placeholder {
+    color: #cccccc; }
+
+.form-dark :global .ant-input {
+  color: #b7c1cc; }
+  .form-dark :global .ant-input::placeholder {
+    color: #cccccc; }
+
+/*# sourceMappingURL=LoginForm.css.map */

@@ -2,12 +2,9 @@ import React from 'react';
 import styles from './styles.css'
 import { Menu, Button,Breadcrumb,Spin,Modal,Table,BackTop } from 'antd';
 import classnames from 'classnames';
-import Icon from '../../components/JoIcon';
 import Nav from './components/Nav';
 import LayoutOperateList from './components/LayoutIOperateList';
-import JoBreadcrumb from '../../components/JoBreadcrumb/JoBreadcrumb';
-import JoSpin from '../../components/JoSpin/JoSpin';
-import CopyToClipboard from 'react-copy-to-clipboard';
+
 
 import { connect } from 'dva';
 import {createMapDispatchWithPromise} from "../../utils/dvaExtraDispatch";
@@ -29,6 +26,14 @@ function mapDispatchToProps(dispatch,ownProps) {
         type:"layout/setCommonLayout",
         payload:{
           ...payload
+        }
+      })
+    },
+    deleteSign:(payload)=>{
+      return dispatch({
+        type:"user/deleteSign",
+        payload:{
+          ...payload,
         }
       })
     }
@@ -133,6 +138,8 @@ class Page extends React.Component{
           {this.getLayoutOperateList()}
         </div>
         <div className={styles["header-right"]}>
+          <a onClick={this.props.deleteSign}
+             style={{marginRight:"15px"}}>SIGN OUT</a>
         </div>
         <h1 className={styles["title"]}>
           {languageConfig[language].title}
@@ -147,7 +154,9 @@ class Page extends React.Component{
 
     const pageClasses=classnames({
       [styles["page"]]:true,
-      [styles["page-dark"]]:darkTheme
+      [styles["page-dark"]]:darkTheme,
+      ["animated"]:true,
+      ["fadeIn"]:true,
     });
 
 

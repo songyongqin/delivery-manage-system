@@ -5,6 +5,8 @@ import { Router, Route, IndexRedirect ,Redirect} from 'dva/router';
 
 import Main from './modules/Main/Page';
 
+import Login from './modules/User/Page';
+
 import Overview from './modules/Overview/Page';
 
 import Analyse from './modules/Analyse/Page';
@@ -38,8 +40,12 @@ function RouterConfig({ history ,app }) {
 
   return (
     <Router history={history} >
+      <Route path="/login" component={Login}></Route>
+
+
       <Route path="/"
              components={Main}>
+
         <IndexRedirect to="overview"/>
         <Route path="overview" components={Overview}/>
         <Route path="analyse" components={Analyse}>

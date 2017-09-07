@@ -1,0 +1,52 @@
+@import "../../../styles/var";
+
+.form{
+  label:after{
+    content:none;
+  }
+  .lbl{
+    color:$txt-color;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  .btn,.input{
+    //border-radius: 30px;
+    height: 40px;
+    :global{
+      .ant-input-prefix{
+        color:$primary-color;
+      }
+    }
+  }
+  :global{
+    .ant-input{
+      //border-radius: 30px;
+      background: rgba(255,255,255,0.1) !important;
+      color:$txt-color;
+      padding:10px;
+      height: 40px;
+      &::placeholder{
+        color:#cccccc;
+      }
+    }
+
+  }
+
+}
+
+
+.form-dark{
+
+  :global{
+    .ant-input{
+      //border-radius: 30px;
+      color:$txt-color-dark;
+
+      &::placeholder{
+        color:#cccccc;
+      }
+    }
+
+  }
+
+}

@@ -2,11 +2,11 @@
 
 @mixin common-page{
   padding:15px;
-  background: $bg-color-level-1;
+  background: $bg-color-level-3;
   color:$txt-color;
 }
 
 @mixin common-page-dark{
-  background: $bg-color-level-1-dark;
+  background: $bg-color-level-3-dark;
   color:$txt-color-dark;
 }
