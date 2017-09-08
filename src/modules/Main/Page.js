@@ -49,6 +49,9 @@ class Page extends React.Component{
     this.state={
       loading:false,
     }
+
+    document.body.style.overflowX="hidden";
+    
   }
 
   createSetCommonLayoutHandle=(type,value)=>{
