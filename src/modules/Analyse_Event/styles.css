@@ -29,7 +29,11 @@
     text-align: center;
     padding-top: 15px;
     margin-bottom: 30px;
-    position: relative; }
+    position: relative;
+    transition: transform 0.3s; }
+    .statistic-list .statistic-item:hover {
+      transform: scale(1.1);
+      z-index: 11; }
     .statistic-list .statistic-item .statistic-item-check-details {
       position: absolute;
       height: 30px;

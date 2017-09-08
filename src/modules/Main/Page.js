@@ -66,6 +66,8 @@ class Page extends React.Component{
     const classes=classnames({
         [styles["nav-wrapper"]]:true,
         [styles["nav-wrapper-mini"]]:navMini,
+        ["animated"]:true,
+        ["fadeInLeft"]:true,
       });
 
     return (
@@ -88,6 +90,8 @@ class Page extends React.Component{
       [styles["content-wrapper"]]:true,
       [styles["content-wrapper-common"]]:!navMini,
       [styles["content-wrapper-expand"]]:navMini,
+      ["animated"]:true,
+      ["fadeInRight"]:true,
     });
 
     return (
@@ -132,6 +136,8 @@ class Page extends React.Component{
     const headerClasses=classnames({
       [styles["header"]]:true,
       [styles["header-dark"]]:darkTheme,
+      ["animated"]:true,
+      ["fadeInDown"]:true,
     });
 
     return (

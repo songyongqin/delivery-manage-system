@@ -17,10 +17,10 @@ const Item=Menu.Item;
 const MenuItemGroup = Menu.ItemGroup;
 export const WithStateHandle=(WrappedComponent,initState={loading:{},visible:{}})=>{
   return class extends React.Component{
-    // constructor(props) {
-    //   super(props);
-    //   this.state=initState;
-    // }
+    constructor(props) {
+      super(props);
+      this.state=initState;
+    }
     getStateHandle=(stateType)=>{
       return (state,value)=>{
         return ()=>{
@@ -53,9 +53,6 @@ export const WithStateHandle=(WrappedComponent,initState={loading:{},visible:{}}
 
 export const WithMenus=(WrappedComponent)=>{
   return class extends React.Component{
-    // constructor(props) {
-    //   super(props);
-    // }
     getMenus=(items,selectedKeys,defaultOpenKeys)=>{
       if(items.constructor!==[].constructor){
         throw new Error(`items should type of array`);
@@ -143,12 +140,9 @@ export const WithDefaultValueHandle=(WrappedComponent)=>{
 
 export const WithAnimateRender=(WrappedComponent)=>{
   return class extends React.Component{
-    // constructor(props) {
-    //   super(props);
-    // }
     animateRender=(childrens,options={})=>{
 
-      const {isAnimate=true,className,duration=1000,type="right"}=options;
+      const {isAnimate=true,className,type="bottom",interval=200}=options;
 
 
       if(!isAnimate){
@@ -158,9 +152,7 @@ export const WithAnimateRender=(WrappedComponent)=>{
       }
 
       return (
-        <QueueAnim type={type}
-                   className={className}
-                   duration={duration}>
+        <QueueAnim {...options} type={type} interval={interval}>
           {childrens}
         </QueueAnim>
       )

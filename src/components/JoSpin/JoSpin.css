@@ -1,8 +1,7 @@
 .spin-wrapper {
   width: 100%;
   position: relative;
-  background: transparent;
-  overflow: hidden; }
+  background: transparent; }
   .spin-wrapper.spinning {
     user-select: none; }
   .spin-wrapper .spin-dot {

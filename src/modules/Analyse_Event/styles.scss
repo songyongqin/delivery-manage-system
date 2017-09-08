@@ -47,6 +47,11 @@
     padding-top:15px;
     margin-bottom: 30px;
     position: relative;
+    transition: transform 0.3s;
+    &:hover{
+      transform: scale(1.1);
+      z-index: 11;
+    }
     .statistic-item-check-details{
       position: absolute;
       height: 30px;

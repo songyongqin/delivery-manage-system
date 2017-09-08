@@ -71,16 +71,6 @@ class Page extends React.Component{
       </div>
     )
   };
-  getResultsPanel=()=>{
-
-
-    return (
-      <div key="results-panel">
-        {this.getStatisticResultPanel()}
-        {this.getDataResultPanel()}
-      </div>
-    )
-  };
   getStatisticResultPanel=()=>{
 
     const {commonLayout}=this.props,
@@ -89,7 +79,9 @@ class Page extends React.Component{
 
     const listClasses=classnames({
       [styles["statistic-list"]]:true,
-      [styles["statistic-list-dark"]]:commonLayout.darkTheme
+      [styles["statistic-list-dark"]]:commonLayout.darkTheme,
+      ["ant-row-flex"]:true,
+      ["ant-row-flex-space-between"]:true,
     });
 
     const itemClasses=classnames({
@@ -104,81 +96,82 @@ class Page extends React.Component{
 
     const spanConfig={lg:{span:4},md:{span:8},sm:{span:12},xs:{span:24}};
 
+    const statisticItems=statisticDataIndexes.map(k=>{
 
-    return (
-      <div>
-        <h2 className={titleClasses}>{title}</h2>
-        <Row type="flex"
-             justify="space-between"
-             className={listClasses}>
-          {statisticDataIndexes.map(k=>{
+        let titleClasses=classnames({
+          ["txt-color-dark"]:commonLayout.darkTheme,
+          [styles["title"]]:true,
+        });
 
-            let titleClasses=classnames({
-              ["txt-color-dark"]:commonLayout.darkTheme,
-              [styles["title"]]:true,
-            });
+        let haveDetails=haveDetailsDataIndexes.indexOf(k)!==-1,
+          isFallHosts=k===FALLHOST_DATAINDEX;
 
-            let haveDetails=haveDetailsDataIndexes.indexOf(k)!==-1,
-                isFallHosts=k===FALLHOST_DATAINDEX;
+        let clickHandle=haveDetails
+          ?
+          ()=>{
+            this.switchModal();
+            this.setActiveKey(k);
+          }
+          :
+          null;
 
-            let clickHandle=haveDetails
-              ?
-              ()=>{
-              this.switchModal();
-              this.setActiveKey(k);
-              }
-              :
-              null;
+        clickHandle=isFallHosts
+          ?
+          ()=>{
+            this.props.dispatch(routerRedux.push("/analyse/fall-host"))
+          }
+          :
+          clickHandle;
 
-            clickHandle=isFallHosts
-              ?
-              ()=>{
-                this.props.dispatch(routerRedux.push("/analyse/fall-host"))
-              }
-              :
-              clickHandle;
+        let itemStyles=(haveDetails||isFallHosts)?{"cursor":"pointer"}:null
 
-            let itemStyles=(haveDetails||isFallHosts)?{"cursor":"pointer"}:null
-
-            return (
-              <Col {...spanConfig}
-                   key={'item-'+k}
-                   className={styles["statistic-item-wrapper"]}>
-                <div style={itemStyles}
-                     className={itemClasses}
-                     onClick={clickHandle}>
+        return (
+          <Col {...spanConfig}
+               key={'item-'+k}
+               className={styles["statistic-item-wrapper"]}>
+            <div style={itemStyles}
+                 className={itemClasses}
+                 onClick={clickHandle}>
                 <span className={styles["statistic-item-icon"]}>
                   {icons[k]}
                 </span>
-                  <p className={styles["counts"]}>
-                    {statistics[k]}{units[k]}
-                  </p>
-                  <h3 className={titleClasses}>
-                    {tools.getKeyText(k,items)}
-                  </h3>
-                  {
-                    haveDetails
-                      ?
-                      <span className={styles["statistic-item-check-details"]}>
+              <p className={styles["counts"]}>
+                {statistics[k]}{units[k]}
+              </p>
+              <h3 className={titleClasses}>
+                {tools.getKeyText(k,items)}
+              </h3>
+              {
+                haveDetails
+                  ?
+                  <span className={styles["statistic-item-check-details"]}>
                         <JoIcon type="ellipsis1"/>
                       </span>
-                      :
-                      null
-                  }
-                  {
-                    isFallHosts
-                      ?
-                      <span className={styles["statistic-item-check-details"]}>
+                  :
+                  null
+              }
+              {
+                isFallHosts
+                  ?
+                  <span className={styles["statistic-item-check-details"]}>
                         <JoIcon type="link2"/>
                       </span>
-                      :
-                      null
-                  }
-                </div>
-              </Col>
-            )
-          })}
-        </Row>
+                  :
+                  null
+              }
+            </div>
+          </Col>
+        )
+      }
+    )
+
+
+    return (
+      <div key="statistic-panel">
+        <h2 className={titleClasses}>{title}</h2>
+        <div className={listClasses}>
+          {statisticItems}
+        </div>
       </div>
     )
   };
@@ -211,8 +204,9 @@ class Page extends React.Component{
     };
 
     return (
-      <div key={"results-panel"+lastReqTime}>
+      <div key={"results-panel"}>
         <EnhanciveTable title={tableTextConfig.title}
+                        key={"table"+lastReqTime}
                         tableProps={tableProps}
                         isDark={commonLayout.darkTheme}
                         paginationProps={paginationProps}/>
@@ -238,7 +232,8 @@ class Page extends React.Component{
         <JoSpin spinning={this.props.queryLoading}>
           {this.props.animateRender([
             this.getQueryPanel(),
-            this.getResultsPanel(),
+            this.getStatisticResultPanel(),
+            this.getDataResultPanel(),
           ])}
         </JoSpin>
         <Modal width={"90%"}
