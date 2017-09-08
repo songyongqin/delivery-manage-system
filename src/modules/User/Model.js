@@ -79,23 +79,37 @@ const baseModel={
       if(!user.signin){
         yield put(routerRedux.push('/login'));
       }
-    },
 
+    },
+    *checkAdmin({payload},{call,put,select}){
+      const user=yield select(state=>state.user);
+
+      if(!user.userData.isAdmin){
+        yield put(routerRedux.push('/'));
+      }
+
+    },
   },
   subscriptions: {
     setup({ history, dispatch }) {
       // 监听 history 变化，当进入 `/` 时触发 `load` action
       return history.listen(({ pathname }) => {
+
         if(pathname==="/login"){
-          dispatch({
+          return dispatch({
             type:"redirect"
-          });
-        }else{
-          dispatch({
-            type:"checkLogin"
           });
         }
 
+        if(pathname==="/sys-config"){
+          return dispatch({
+            type:"checkAdmin"
+          })
+        }
+
+        dispatch({
+          type:"checkLogin"
+        });
 
       });
     },
