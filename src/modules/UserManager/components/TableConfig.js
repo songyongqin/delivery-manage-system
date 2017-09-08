@@ -27,10 +27,10 @@ const roleRenderer=value=><JoTag >{tableTextConfig.enums.role[value]}</JoTag>
 
 const freezeRenderer=value=>{
   if(value===IS_FREEZE){
-    return <JoTag color="red">{tableTextConfig.enums.freeze[value]}</JoTag>
+    return <JoTag color="blue">{tableTextConfig.enums.freeze[value]}</JoTag>
   }
   if(value===IS_NOT_FREEZE){
-    return <JoTag color="blue">{tableTextConfig.enums.freeze[value]}</JoTag>
+    return <JoTag color="green">{tableTextConfig.enums.freeze[value]}</JoTag>
   }
 }
 
