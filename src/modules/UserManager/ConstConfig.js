@@ -116,7 +116,7 @@ export const limitPanelTextConfig={
     title:LIMIT_REPORT_TITLE,
     rows:{
       [LIMIT_ATTACK_DATAINDEX]:"攻击信息统计",
-      [LIMIT_CHART_DATAINDEX]:"图标信息统计"
+      [LIMIT_CHART_DATAINDEX]:"图表信息统计"
     }
   }
 }

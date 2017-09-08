@@ -8,6 +8,7 @@ import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import ThreatEventOperationPanel from '../../components/ThreatEventOperationPanel';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
+import * as tools from '../../utils/tools';
 
 export default ({tableConfig,formTextConfig,namespace})=>{
   const NAMESPACE=namespace;
@@ -16,6 +17,7 @@ export default ({tableConfig,formTextConfig,namespace})=>{
     const {commonLayout}=state.layout;
     return {
       commonLayout,
+      exportLoading:state.loading[`${NAMESPACE}/post`]
     }
   }
 
@@ -63,7 +65,10 @@ export default ({tableConfig,formTextConfig,namespace})=>{
       this.onQuery({...payload,page:1})
     }
     onExport=()=>{
-      this.props.post({timestampRange:this.props.timestampRange})
+      this.props.post({timestampRange:this.props.timestampRange}).then(result=>{
+        
+        tools.download(result);
+      })
     }
     getQueryPanel=()=>{
 
@@ -121,9 +126,11 @@ export default ({tableConfig,formTextConfig,namespace})=>{
     };
     render=()=> {
 
+      const {queryLoading,exportLoading}=this.props;
+
       return (
         <div>
-          <JoSpin spinning={this.props.queryLoading}>
+          <JoSpin spinning={queryLoading||exportLoading}>
             {this.getQueryPanel()}
             {this.getResultsPanel()}
           </JoSpin>

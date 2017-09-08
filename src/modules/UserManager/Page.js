@@ -128,8 +128,8 @@ class Page extends React.Component{
     return this.props.putUser({
         ...payload,
       })
-      .then(this.putUserSuccessCallback)
       .then(this.switchModal)
+      .then(this.putUserSuccessCallback)
   }
   putUserSuccessCallback=()=>{
 
@@ -144,8 +144,8 @@ class Page extends React.Component{
     return this.props.postUser({
       ...payload,
     })
-      .then(this.postUserSuccessCallback)
       .then(this.switchCreateUsreModal)
+      .then(this.postUserSuccessCallback)
   }
   postUserSuccessCallback=()=>{
 
@@ -164,18 +164,22 @@ class Page extends React.Component{
       ["expanded-row-dark"]:commonLayout.darkTheme
     });
 
+    const titleContent=(
+      <div style={{width:"100%",position:"relative"}}>
+        {tableTextConfig.title}
+        <Button icon="plus"
+                type="primary"
+                onClick={this.switchCreateUsreModal}
+                className={styles["btn-create"]}>
+          添加新用户
+        </Button>
+      </div>
+    );
+
     return (
       <Card key="results-panel"
             className={classes}
-            title={<div style={{width:"100%",position:"relative"}}>
-              {tableTextConfig.title}
-                <Button icon="plus"
-                        type="primary"
-                        onClick={this.switchCreateUsreModal}
-                        className={styles["btn-create"]}>
-                  添加新用户
-                </Button>
-            </div>}>
+            title={titleContent}>
         {this.getDataResultPanel()}
       </Card>
     )
@@ -231,7 +235,7 @@ class Page extends React.Component{
     };
 
     return (
-      <div key={"results-panel"+lastReqTime}>
+      <div key={"results-panel"}>
         <EnhanciveTable tableProps={tableProps}
                         inverse={true}
                         isDark={commonLayout.darkTheme}
@@ -254,6 +258,7 @@ class Page extends React.Component{
       ["modal"]:true,
       ["modal-dark"]:isDark
     });
+
     return (
       <div className={pageClasses}>
         <JoSpin spinning={queryLoading||putUserLoading||putUserConfigLoading}>
@@ -268,6 +273,7 @@ class Page extends React.Component{
                key={`user-limit-${this.state.visible}`}
                className={modalClasses}
                width={340}
+               style={{top:"180px"}}
                footer={null}
                onCancel={this.switchModal}>
           <LimitPanel data={this.state.activeUser}

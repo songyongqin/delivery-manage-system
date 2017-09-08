@@ -15,7 +15,6 @@ export const callConfig={
   withArgsCombiner:true,
   withStatusHandle:true,
   withLoading:true,
-  withTime:true,
 }
 
 
