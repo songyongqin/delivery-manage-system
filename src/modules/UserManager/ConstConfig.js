@@ -4,13 +4,17 @@
 
 import React from 'react';
 import JoIcon from '../../components/JoIcon';
-
+import {
+  ROLE_DATAINDEX as COMMON_ROLE_DATAINDEX,
+  ADMIN_ROLE as COMMON_ADMIN_DATAINDEX,
+  COMMON_USER_ROLE as COMMON_COMMON_USER_ROLE
+} from '../../configs/ConstConfig';
 
 export const NAMESPACE="userManager";
 /**************************************************
  * table
  **************************************************/
-export const  ROLE_DATAINDEX="role",
+export const  ROLE_DATAINDEX=COMMON_ROLE_DATAINDEX,
               USERACCOUNT_DATAINDEX="userAccount",
               FREEZE_DATAINDEX="freeze";
 
@@ -34,7 +38,8 @@ const TABLE_TITLE= <span><JoIcon type="team"/>&nbsp;用户列表</span>
 
 export const IS_FREEZE=1,IS_NOT_FREEZE=0;
 
-export const ADMIN_ROLE=1,COMMON_USER_ROLE=2;
+export const  ADMIN_ROLE=COMMON_ADMIN_DATAINDEX,
+              COMMON_USER_ROLE=COMMON_COMMON_USER_ROLE;
 
 const FREEZE_BUTTON="解除该用户冻结";
 const LIMIT_BUTTON="管理该用户权限"

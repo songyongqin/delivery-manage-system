@@ -63,7 +63,6 @@ export default {
     title:"威胁预警",
     link:"/early-warning",
     icon: <Icon type="bells"/>,
-    adminOnly:true,
     items:{
       "email":{
         order:1,

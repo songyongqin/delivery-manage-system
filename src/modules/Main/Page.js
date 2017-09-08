@@ -60,7 +60,7 @@ class Page extends React.Component{
   };
 
   getNav=()=>{
-    const {languageConfig,commonLayout,routeConfig}=this.props;
+    const {languageConfig,commonLayout,routeConfig,userData}=this.props;
     const {navMini,language,darkTheme}=commonLayout;
 
     const classes=classnames({
@@ -73,6 +73,7 @@ class Page extends React.Component{
         <Nav isMini={navMini}
              activeKey={window.location.hash.substr(1)}
              isDark={darkTheme}
+             isAdmin={userData.isAdmin}
              routeConfig={routeConfig}
              titleConfig={languageConfig[language].routes}/>
       </div>

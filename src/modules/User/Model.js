@@ -6,6 +6,7 @@ import * as service from './Service';
 import { routerRedux } from 'dva/router';
 import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
 import * as tools from '../../utils/tools';
+import {ADMIN_ROLE,ROLE_DATAINDEX,USERACCOUNT_DATAINDEX} from '../../configs/ConstConfig';
 moment.locale('zh-cn');
 
 const NAMESPACE="user";
@@ -37,7 +38,14 @@ const baseModel={
         );
 
         if(res.status===1){
-          const userData={...res.payload,userAccount:payload.userAccount}
+
+
+          const userData={
+            ...res.payload,
+            userAccount:payload[USERACCOUNT_DATAINDEX],
+            isAdmin:res.payload[ROLE_DATAINDEX]===ADMIN_ROLE
+          }
+
           tools.setTemp("userData",userData);
 
           yield put({
@@ -46,7 +54,7 @@ const baseModel={
               ...userData
             }
           })
-          // yield put(routerRedux.push('/'));
+
           resolve&&resolve();
         }
 

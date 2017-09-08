@@ -62,7 +62,16 @@ const getMenu=(routeConfig,isAdmin=true,activeKeys,isOuter)=>{
 
 
 
-export default ({className,style={},isMini=false,isDark=false,titleConfig,activeKey="",routeConfig})=>{
+export default ({
+                  className,
+                  style={},
+                  isMini=false,
+                  isDark=false,
+                  titleConfig,
+                  activeKey="",
+                  routeConfig,
+                  isAdmin=false,
+})=>{
 
   const classes=classnames({
     [styles["nav"]]:true,
@@ -107,7 +116,7 @@ export default ({className,style={},isMini=false,isDark=false,titleConfig,active
       <Menu mode={isMini?"vertical":"inline"}
             style={{height:"100%",width:"100%"}}
             theme="dark">
-        {getMenu(config,true,activeKeys,true)}
+        {getMenu(config,isAdmin,activeKeys,true)}
       </Menu>
     </nav>
   )

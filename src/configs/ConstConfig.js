@@ -81,3 +81,7 @@ export default {
     actionStatus:actionStatusTextConfig
   }
 }
+
+export const ROLE_DATAINDEX="role";
+export const ADMIN_ROLE=1,COMMON_USER_ROLE=2;
+export const USERACCOUNT_DATAINDEX="userAccount";
