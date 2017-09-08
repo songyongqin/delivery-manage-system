@@ -3,19 +3,21 @@
 
 .table{
   :global{
-    .ant-table-row{
-      &:hover{
-        td{
-          background: transparent;
-        }
-      }
-    }
-    tr.ant-table-expanded-row, tr.ant-table-expanded-row:hover {
+    //.ant-table-row{
+    //  &:hover{
+    //    td{
+    //      background: #ecf6fd;
+    //    }
+    //  }
+    //}
+    tr.ant-table-expanded-row {
       background: transparent;
       td{
         background: transparent;
       }
     }
+
+
     .ant-table-placeholder{
       background: transparent;
     }
@@ -60,6 +62,13 @@
 
 .dark{
   :global{
+    .ant-table-row{
+      &:hover{
+        td{
+          background: rgba(0,0,0,0.5)
+        }
+      }
+    }
     .ant-table-thead>tr>th{
       background: $bg-color-level-1-dark;
       color:white;

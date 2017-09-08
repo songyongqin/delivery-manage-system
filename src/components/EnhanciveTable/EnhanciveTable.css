@@ -1,8 +1,6 @@
-.table :global .ant-table-row:hover td {
+.table :global tr.ant-table-expanded-row {
   background: transparent; }
-.table :global tr.ant-table-expanded-row, .table :global tr.ant-table-expanded-row:hover {
-  background: transparent; }
-  .table :global tr.ant-table-expanded-row td, .table :global tr.ant-table-expanded-row:hover td {
+  .table :global tr.ant-table-expanded-row td {
     background: transparent; }
 .table :global .ant-table-placeholder {
   background: transparent; }
@@ -20,6 +18,8 @@
 .light.inverse-color :global .ant-table-thead > tr > th {
   background: #F1F1F1; }
 
+.dark :global .ant-table-row:hover td {
+  background: rgba(0, 0, 0, 0.5); }
 .dark :global .ant-table-thead > tr > th {
   background: #252d47;
   color: white; }
