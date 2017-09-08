@@ -66,7 +66,7 @@ export default ({tableConfig,formTextConfig,namespace})=>{
     }
     onExport=()=>{
       this.props.post({timestampRange:this.props.timestampRange}).then(result=>{
-        
+
         tools.download(result);
       })
     }
