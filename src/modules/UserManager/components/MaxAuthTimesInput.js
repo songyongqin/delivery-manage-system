@@ -23,7 +23,6 @@ export default class extends React.Component {
 
   constructor(props) {
     super(props);
-    console.info(props.defaultValue);
     this.state={
       number:{
         value:props.defaultValue||10

@@ -50,6 +50,33 @@ body{
       margin-bottom:10px;
     }
 
+    .modal{
+      :global{
+        .ant-modal-content{
+          background: $bg-color-level-3;
+        }
+      }
+    }
+
+    .modal-dark{
+      :global{
+        .ant-modal-content{
+          background: $bg-color-level-3-dark;
+        }
+        .ant-modal-header{
+          background: $bg-color-level-1-dark;
+          border-color:$bg-color-level-1-dark;
+        }
+        .ant-modal-title{
+          color:$txt-color-dark;
+        }
+        .ant-modal-close-x{
+          color:$txt-color-dark;
+        }
+      }
+    }
+
+
   }
 
 

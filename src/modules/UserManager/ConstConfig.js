@@ -10,9 +10,9 @@ export const NAMESPACE="userManager";
 /**************************************************
  * table
  **************************************************/
-const ROLE_DATAINDEX="role",
-      USERACCOUNT_DATAINDEX="userAccount",
-      FREEZE_DATAINDEX="freeze";
+export const  ROLE_DATAINDEX="role",
+              USERACCOUNT_DATAINDEX="userAccount",
+              FREEZE_DATAINDEX="freeze";
 
 
 
@@ -24,17 +24,17 @@ export const LIMIT_CHART_DATAINDEX="chart";
 export const OPREATION_ROW_KEY="operation"
 
 export const rowDataIndexes=[
-  ROLE_DATAINDEX,
   USERACCOUNT_DATAINDEX,
+  ROLE_DATAINDEX,
   FREEZE_DATAINDEX,
 ];
 
 const TABLE_TITLE= <span><JoIcon type="team"/>&nbsp;用户列表</span>
 
 
-const  IS_FREEZE=1,IS_NOT_FREEZE=0;
+export const IS_FREEZE=1,IS_NOT_FREEZE=0;
 
-const ADMIN_ROLE=1,COMMON_USER_ROLE=2;
+export const ADMIN_ROLE=1,COMMON_USER_ROLE=2;
 
 const FREEZE_BUTTON="解除该用户冻结";
 const LIMIT_BUTTON="管理该用户权限"
@@ -90,3 +90,33 @@ export const configPanelTextConfig={
 }
 
 
+const LIMIT_TITLE=<span><JoIcon type="setting"/>&nbsp;用户权限设置</span>
+
+const LIMIT_BASIC_TITLE="基础信息";
+
+
+const LIMIT_REPORT_TITLE="威胁报告"
+
+export const IS_OPEN_VALUE=1;
+export const IS_NOT_OPEN_VALUE=0;
+export const limitRowDataIndexes=[
+  LIMIT_ATTACK_DATAINDEX,
+  LIMIT_CHART_DATAINDEX
+]
+
+export const limitPanelTextConfig={
+  title:LIMIT_TITLE,
+  basic:{
+    title:LIMIT_BASIC_TITLE,
+    rows:{
+      [USERACCOUNT_DATAINDEX]:"用户账号",
+    }
+  },
+  threat:{
+    title:LIMIT_REPORT_TITLE,
+    rows:{
+      [LIMIT_ATTACK_DATAINDEX]:"攻击信息统计",
+      [LIMIT_CHART_DATAINDEX]:"图标信息统计"
+    }
+  }
+}

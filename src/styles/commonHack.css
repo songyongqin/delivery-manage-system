@@ -22,5 +22,16 @@ body :global .expanded-row-dark {
     color: white; }
 body :global .expanded-row-card-item {
   margin-bottom: 10px; }
+body :global .modal :global .ant-modal-content {
+  background: #F1F1F1; }
+body :global .modal-dark :global .ant-modal-content {
+  background: #1c233b; }
+body :global .modal-dark :global .ant-modal-header {
+  background: #252d47;
+  border-color: #252d47; }
+body :global .modal-dark :global .ant-modal-title {
+  color: #b7c1cc; }
+body :global .modal-dark :global .ant-modal-close-x {
+  color: #b7c1cc; }
 
 /*# sourceMappingURL=commonHack.css.map */

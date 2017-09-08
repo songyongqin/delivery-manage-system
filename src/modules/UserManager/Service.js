@@ -46,3 +46,18 @@ export async function putUserConfig(payload) {
   };
   return request(httpApi.USER_CONFIG, options);
 }
+
+
+export async function putUser(payload) {
+  /*
+   * 转换参数格式
+   * */
+  const options= {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body:JSON.stringify(payload)
+  };
+  return request(httpApi.USER, options);
+}

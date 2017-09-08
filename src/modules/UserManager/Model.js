@@ -10,6 +10,15 @@ import {NAMESPACE} from './ConstConfig';
 moment.locale('zh-cn');
 
 
+
+export const callConfig={
+  withArgsCombiner:true,
+  withStatusHandle:true,
+  withLoading:true,
+  withTime:true,
+}
+
+
 const baseModel={
   namespace: NAMESPACE,
   state: {
@@ -24,16 +33,28 @@ const baseModel={
     }
   },
   effects:{
+    *putUser({resolve,payload},{callWithExtra,put}) {
+
+      const res=yield callWithExtra(
+        service.putUser,
+        {...payload||{}},
+        callConfig
+      )
+
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+      }
+    },
     *getUserConfig({resolve},{callWithExtra,put}) {
       const res=yield callWithExtra(
         service.getUserConfig,
         {},
-        commonCallConfig
+        callConfig
       )
 
       if(res.status===1){
         yield put({
-          type:"setQueryFilters",
+          type:"setQueryResults",
           payload:{
             ...res.payload
           }
@@ -46,7 +67,7 @@ const baseModel={
       const res=yield callWithExtra(
         service.putUserConfig,
         {...payload||{}},
-        commonCallConfig
+        callConfig
       )
 
       if(res.status===1){

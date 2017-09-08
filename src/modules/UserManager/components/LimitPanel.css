@@ -1,0 +1,19 @@
+.panel .table {
+  width: 100%;
+  border-collapse: collapse; }
+  .panel .table tr {
+    background: white; }
+  .panel .table td {
+    padding: 10px; }
+  .panel .table td:last-child {
+    text-align: right; }
+.panel .title {
+  text-align: center;
+  margin-bottom: 5px; }
+
+.panel-dark {
+  color: #b7c1cc; }
+  .panel-dark .table tr {
+    background: #252d47; }
+
+/*# sourceMappingURL=LimitPanel.css.map */

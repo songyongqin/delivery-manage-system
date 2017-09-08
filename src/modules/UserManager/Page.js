@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
-import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge,message as Message} from 'antd';
+import { Menu, Button,Icon,Row,Col,Card,message as Message,Modal} from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
@@ -10,12 +10,14 @@ import * as tableConfig from './components/TableConfig';
 import {tableTextConfig,configPanelTextConfig} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig';
 import MaxAuthTimesInput from './components/MaxAuthTimesInput';
+import LimitPanel from './components/LimitPanel';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
   return {
     commonLayout,
-    putUserConfigLoading:state.loading["userManager/putUserConfig"]
+    putUserConfigLoading:state.loading["userManager/putUserConfig"],
+    putUserLoading:state.loading["userManager/putUser"],
   }
 }
 
@@ -27,9 +29,20 @@ function mapDispatchToProps(dispatch) {
         type:"userManager/getUserConfig"
       })
     },
-    putUserConfig:()=>{
+    putUserConfig:(payload)=>{
       return dispatch({
-        type:"userManager/putUserConfig"
+        type:"userManager/putUserConfig",
+        payload:{
+          ...payload
+        }
+      })
+    },
+    putUser:(payload)=>{
+      return dispatch({
+        type:"userManager/putUser",
+        payload:{
+          ...payload
+        }
       })
     }
   }
@@ -43,10 +56,27 @@ function mapDispatchToProps(dispatch) {
 class Page extends React.Component{
   constructor(props) {
     super(props);
+    this.state={
+      activeUser:null,
+      visible:false,
+    }
   }
   componentDidMount=()=>{
     this.props.queryInit();
     this.props.getUserConfig();
+  }
+  switchModal=()=>{
+    this.setState({
+      visible:!this.state.visible
+    })
+  }
+  getButtonLimitHandle=(activeUser)=>{
+    return ()=>{
+      this.setState({
+        activeUser,
+      })
+      this.switchModal();
+    }
   }
   onQuery=(payload)=>{
     this.props.query({
@@ -58,11 +88,39 @@ class Page extends React.Component{
     this.onQuery({page:current})
   };
   putUserConfig=(value)=>{
+
     this.props.putUserConfig({
-      maxAuthTimes:value,
-    }).then(result=>{
-      this.props.getUserConfig();
-      Message.success(configPanelTextConfig.notification)
+      maxAuthTimes:value
+    }).then(this.putUserConfigSuccessCallback)
+
+  }
+  putUserConfigSuccessCallback=()=>{
+    Message.success(configPanelTextConfig.notification)
+    this.props.getUserConfig();
+  }
+  getPutUserHandle=(payload)=>{
+    return ()=>{
+
+      this.props.putUser({
+        ...payload,
+      }).then(this.putUserSuccessCallback)
+
+    }
+  }
+  putUserHandle=(payload)=>{
+    return this.props.putUser({
+        ...payload,
+      })
+      .then(this.putUserSuccessCallback)
+      .then(this.switchModal)
+  }
+  putUserSuccessCallback=()=>{
+
+    Message.success(configPanelTextConfig.notification)
+
+    this.props.query({
+      ...this.props[NAMESPACE].queryFilters,
+      current:1
     })
   }
   getResultsPanel=()=>{
@@ -107,9 +165,14 @@ class Page extends React.Component{
     const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
 
+    const handle={
+      freeze:this.getPutUserHandle,
+      limit:this.getButtonLimitHandle,
+    }
+
     const tableProps={
       onChange:this.tableOnChange,
-      columns:tableConfig.getColumns(),
+      columns:tableConfig.getColumns({handle}),
       dataSource:data.map((i,index)=>{
         return {
           ...i,
@@ -141,15 +204,36 @@ class Page extends React.Component{
       // [styles["page-dark"]]:this.props.commonLayout.darkTheme
     });
 
+    const {queryLoading,putUserLoading,putUserConfigLoading,commonLayout}=this.props;
+
+    const isDark=commonLayout.darkTheme;
+
+    const modalClasses=classnames({
+      ["modal"]:true,
+      ["modal-dark"]:isDark
+    });
+
     return (
       <div className={pageClasses}>
-        <JoSpin spinning={this.props.queryLoading}>
+        <JoSpin spinning={queryLoading||putUserLoading||putUserConfigLoading}>
           {this.props.animateRender([
             this.getConfigPanel(),
             this.getResultsPanel(),
           ])}
         </JoSpin>
 
+        <Modal title={configPanelTextConfig.title}
+               visible={this.state.visible}
+               key={`user-limit-${this.state.visible}`}
+               className={modalClasses}
+               width={340}
+               footer={null}
+               onCancel={this.switchModal}>
+          <LimitPanel data={this.state.activeUser}
+                      onSubmit={this.putUserHandle}
+                      loading={putUserLoading}
+                      isDark={isDark}/>
+        </Modal>
       </div>
     )
   }
