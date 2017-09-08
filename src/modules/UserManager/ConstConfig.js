@@ -80,13 +80,13 @@ const CONFIG_BUTTON="保存修改"
 
 const CONFIG_DESCRIPTION="用户最大尝试连接数"
 
-const NOTIFICATION_MESSAGE="修改成功"
+const CONFIG_NOTIFICATION_MESSAGE="修改成功"
 
 export const configPanelTextConfig={
   title:CONFIG_TITLE,
   description:CONFIG_DESCRIPTION,
   button:CONFIG_BUTTON,
-  notification:NOTIFICATION_MESSAGE
+  notification:CONFIG_NOTIFICATION_MESSAGE
 }
 
 
@@ -119,4 +119,13 @@ export const limitPanelTextConfig={
       [LIMIT_CHART_DATAINDEX]:"图标信息统计"
     }
   }
+}
+
+const CREATE_USER_TITLE=<span><JoIcon type="plus2"/>&nbsp;添加新用户</span>
+
+const CREATE_NOTIFICATION_MESSAGE="添加成功"
+
+export const createUserPanelTextConfig={
+  title:CREATE_USER_TITLE,
+  notification:CREATE_NOTIFICATION_MESSAGE
 }

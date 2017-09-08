@@ -61,3 +61,18 @@ export async function putUser(payload) {
   };
   return request(httpApi.USER, options);
 }
+
+export async function postUser(payload) {
+  /*
+   * 转换参数格式
+   * */
+
+  const options= {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body:JSON.stringify(payload)
+  };
+  return request(httpApi.USER, options);
+}

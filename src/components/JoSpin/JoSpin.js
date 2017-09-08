@@ -12,6 +12,7 @@ export default class JoSpin extends React.Component{
     this.shouldFadeIn=false;
     this.state={
       spinning:props.spinning,
+      style:{}
     }
   }
   componentWillReceiveProps=(newProps)=>{
@@ -31,10 +32,20 @@ export default class JoSpin extends React.Component{
 
     }
 
+
+    if(this.target.offsetHeight>=500){
+      this.setState({
+        style:{top:"220px"}
+      })
+    }
+
+
+
   }
   componentWillUnmount=()=>{
     clearTimeout(this.timer);
   }
+
   render=()=>{
     const {children,className="",style={}}=this.props;
     const {spinning}=this.state;
@@ -46,29 +57,31 @@ export default class JoSpin extends React.Component{
       ["fadeIn"]:this.shouldFadeIn,
     })
 
-      return (
-        <div className={classes} style={style}>
-          {
-            spinning
-              ?
-              <div className={styles["spin-dot"]}>
-                <JoLoadingEffect/>
-              </div>
-              :
-              null
-          }
-          {
-            spinning
+    return (
+      <div className={classes} style={style}>
+        {
+          spinning
             ?
-            <div className={styles["spin-cover"]}/>
+            <div  style={this.state.style}
+                  className={styles["spin-dot"]}>
+              <JoLoadingEffect/>
+            </div>
             :
             null
-          }
-          <div className={spinning?styles["blur"]:""}>
-            {children}
-          </div>
+        }
+        {
+          spinning
+          ?
+          <div className={styles["spin-cover"]}/>
+          :
+          null
+        }
+        <div className={spinning?styles["blur"]:""}
+             ref={target=>this.target=target}>
+          {children}
         </div>
-      )
+      </div>
+    )
 
 
 

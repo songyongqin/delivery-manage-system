@@ -112,6 +112,9 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
       throw e;
 
     }finally {
+
+      yield  delay(500)
+
       if(withLoading){
         yield put({
           type:"loading/endLoading",
@@ -125,10 +128,19 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
           type:"setTime"
         })
       }
+
+
       return result;
     }
 
   }
+}
+function delay(times) {
+  return new Promise((resolve)=>{
+    setTimeout(function () {
+      resolve();
+    },times)
+  })
 }
 
 

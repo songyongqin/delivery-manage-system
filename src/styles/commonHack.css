@@ -33,5 +33,7 @@ body :global .modal-dark :global .ant-modal-title {
   color: #b7c1cc; }
 body :global .modal-dark :global .ant-modal-close-x {
   color: #b7c1cc; }
+body :global .ant-card-head-title {
+  width: 100%; }
 
 /*# sourceMappingURL=commonHack.css.map */

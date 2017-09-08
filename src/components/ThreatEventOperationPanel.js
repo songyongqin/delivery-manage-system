@@ -6,7 +6,7 @@ import QueryForm from './QueryForm/QueryForm'
 import LimitSelectForm from './LimitSelectForm/Form';
 import {Button} from "antd";
 
-export default ({queryFilters,isDark,formTextConfig,handle={}})=>{
+export default ({queryFilters,isDark,formTextConfig,handle={},loading})=>{
   return (
     <div style={{margin:"15px 0"}}>
       <div style={{display:"inline-block",marginRight:"30px"}}>
@@ -14,6 +14,7 @@ export default ({queryFilters,isDark,formTextConfig,handle={}})=>{
                    textConfig={{
                      placeholder:formTextConfig.placeholder
                    }}
+                   loading={loading}
                    onSubmit={handle.onQuery}/>
       </div>
       <div style={{display:"inline-block"}}>

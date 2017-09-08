@@ -42,6 +42,9 @@ export default class extends React.Component {
     if(this.state.number.validateStatus==="error"){
       return;
     }
+    if(this.props.loading){
+      return;
+    }
     this.props.onSubmit&&this.props.onSubmit(this.state.number.value)
   };
   onKeyDown=(e)=>{

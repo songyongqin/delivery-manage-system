@@ -53,3 +53,10 @@
     background: $bg-color-level-1-dark;
   }
 }
+
+.btn-create{
+  position: absolute;
+  right:0;
+  top:50%;
+  transform: translateY(-50%);
+}

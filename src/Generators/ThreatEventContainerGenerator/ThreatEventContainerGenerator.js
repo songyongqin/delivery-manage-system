@@ -76,6 +76,7 @@ export default ({tableConfig,formTextConfig,namespace})=>{
                                           onSelectChange:this.onSelectChange,
                                           onExport:this.onExport
                                         }}
+                                        loading={this.props.queryLoading}
                                         isDark={commonLayout.darkTheme}
                                         queryFilters={queryFilters}
                                         formTextConfig={formTextConfig}/>

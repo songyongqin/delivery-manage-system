@@ -45,6 +45,17 @@ const baseModel={
         resolve&&resolve(res.payload);
       }
     },
+    *postUser({resolve,payload},{callWithExtra}) {
+      const res=yield callWithExtra(
+        service.postUser,
+        {...payload||{}},
+        callConfig
+      )
+
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+      }
+    },
     *getUserConfig({resolve},{callWithExtra,put}) {
       const res=yield callWithExtra(
         service.getUserConfig,

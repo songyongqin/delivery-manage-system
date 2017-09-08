@@ -182,3 +182,12 @@ export const jsonToQueryStringImprove=(jsonObject)=>{
 export const getKeyText=(key,textConfig={})=>{
   return key in textConfig?textConfig[key]:key;
 };
+
+
+export function delay(times) {
+  return new Promise((resolve)=>{
+    setTimeout(function () {
+      resolve();
+    },times)
+  })
+}

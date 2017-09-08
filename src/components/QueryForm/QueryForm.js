@@ -10,6 +10,10 @@ class QueryForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
+      if(this.props.loading){
+        return;
+      }
+
       if(!err){
         this.props.onSubmit&&this.props.onSubmit(values);
       }

@@ -7,10 +7,12 @@ import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
 import * as tableConfig from './components/TableConfig';
-import {tableTextConfig,configPanelTextConfig} from './ConstConfig';
+import {tableTextConfig,configPanelTextConfig,createUserPanelTextConfig} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig';
 import MaxAuthTimesInput from './components/MaxAuthTimesInput';
 import LimitPanel from './components/LimitPanel';
+import CreateUserPanel from './components/CreateUserPanel';
+
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -18,6 +20,7 @@ function mapStateToProps(state) {
     commonLayout,
     putUserConfigLoading:state.loading["userManager/putUserConfig"],
     putUserLoading:state.loading["userManager/putUser"],
+    postUserLoading:state.loading["userManager/postUser"]
   }
 }
 
@@ -44,6 +47,14 @@ function mapDispatchToProps(dispatch) {
           ...payload
         }
       })
+    },
+    postUser:(payload)=>{
+      return dispatch({
+        type:"userManager/postUser",
+        payload:{
+          ...payload,
+        }
+      })
     }
   }
 }
@@ -59,6 +70,7 @@ class Page extends React.Component{
     this.state={
       activeUser:null,
       visible:false,
+      createUserVisible:false,
     }
   }
   componentDidMount=()=>{
@@ -68,6 +80,11 @@ class Page extends React.Component{
   switchModal=()=>{
     this.setState({
       visible:!this.state.visible
+    })
+  }
+  switchCreateUsreModal=()=>{
+    this.setState({
+      createUserVisible:!this.state.createUserVisible
     })
   }
   getButtonLimitHandle=(activeUser)=>{
@@ -123,6 +140,23 @@ class Page extends React.Component{
       current:1
     })
   }
+  postUserHandle=(payload)=>{
+    return this.props.postUser({
+      ...payload,
+    })
+      .then(this.postUserSuccessCallback)
+      .then(this.switchCreateUsreModal)
+  }
+  postUserSuccessCallback=()=>{
+
+    Message.success(createUserPanelTextConfig.notification)
+
+    this.props.query({
+      ...this.props[NAMESPACE].queryFilters,
+      current:1
+    })
+
+  }
   getResultsPanel=()=>{
     const {commonLayout}=this.props;
 
@@ -133,7 +167,15 @@ class Page extends React.Component{
     return (
       <Card key="results-panel"
             className={classes}
-            title={tableTextConfig.title}>
+            title={<div style={{width:"100%",position:"relative"}}>
+              {tableTextConfig.title}
+                <Button icon="plus"
+                        type="primary"
+                        onClick={this.switchCreateUsreModal}
+                        className={styles["btn-create"]}>
+                  添加新用户
+                </Button>
+            </div>}>
         {this.getDataResultPanel()}
       </Card>
     )
@@ -204,7 +246,7 @@ class Page extends React.Component{
       // [styles["page-dark"]]:this.props.commonLayout.darkTheme
     });
 
-    const {queryLoading,putUserLoading,putUserConfigLoading,commonLayout}=this.props;
+    const {queryLoading,putUserLoading,putUserConfigLoading,commonLayout,postUserLoading}=this.props;
 
     const isDark=commonLayout.darkTheme;
 
@@ -212,7 +254,6 @@ class Page extends React.Component{
       ["modal"]:true,
       ["modal-dark"]:isDark
     });
-
     return (
       <div className={pageClasses}>
         <JoSpin spinning={queryLoading||putUserLoading||putUserConfigLoading}>
@@ -234,6 +275,20 @@ class Page extends React.Component{
                       loading={putUserLoading}
                       isDark={isDark}/>
         </Modal>
+
+
+        <Modal title={createUserPanelTextConfig.title}
+               visible={this.state.createUserVisible}
+               key={`create-user-${this.state.createUserVisible}`}
+               style={{top:"180px"}}
+               className={modalClasses}
+               footer={null}
+               onCancel={this.switchCreateUsreModal}>
+          <CreateUserPanel isDark={isDark}
+                           loading={postUserLoading}
+                           onSubmit={this.postUserHandle}/>
+        </Modal>
+
       </div>
     )
   }
