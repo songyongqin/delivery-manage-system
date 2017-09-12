@@ -25,7 +25,7 @@ export const LIMIT_ATTACK_DATAINDEX="attack";
 export const LIMIT_CHART_DATAINDEX="chart";
 
 
-export const OPREATION_ROW_KEY="operation"
+export const OPERATION_ROW_KEY="operation"
 
 export const rowDataIndexes=[
   USERACCOUNT_DATAINDEX,
@@ -51,7 +51,7 @@ export const tableTextConfig={
     [USERACCOUNT_DATAINDEX]:"用户账号",
     [ROLE_DATAINDEX]:"用户类型",
     [FREEZE_DATAINDEX]:"用户状态",
-    [OPREATION_ROW_KEY]:"操作"
+    [OPERATION_ROW_KEY]:"操作"
   },
   enums:{
     freeze:{

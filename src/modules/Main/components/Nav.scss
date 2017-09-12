@@ -138,11 +138,11 @@
       background: $primary-color;
     }
     &:hover{
-      background: rgba(0,0,0,0.5) !important;
+      background: #0F131E !important;
     }
     .secondary-active{
       position: relative;
-      background: rgba(0,0,0,0.5) !important;
+      background: #0F131E !important;
       &:before{
         content:"";
         position: absolute;

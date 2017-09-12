@@ -6,6 +6,13 @@ import moment from 'moment';
 import * as service from './Service';
 import {queryModelGenerator} from '../../utils/dvaModelGenerator';
 import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
+import {statisticDataIndexes} from './ConstConfig';
+
+const initStatistic={};
+
+statisticDataIndexes.forEach(i=>{
+  initStatistic[i]=0;
+});
 
 moment.locale('zh-cn');
 
@@ -26,9 +33,7 @@ const baseModel={
     },
     queryResults:{
       total:0,
-      statistics:{
-
-      },
+      statistics:initStatistic,
       data:[]
     }
   },

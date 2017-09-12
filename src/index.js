@@ -7,7 +7,7 @@ import { createHashHistory } from 'history';
 
 import {combineExtraEffectsWithApp} from './utils/dvaExtraEffects';
 import {combineExtraReducersWithApp} from './utils/dvaExtraReducers';
-import combineExtraLoadingWtithApp from './utils/dvaExtraLoading'
+import combineExtraLoadingWithApp from './utils/dvaExtraLoading'
 import extraEffectsOptions from './configs/ExtraEffectsOptions';
 
 import LayoutModel from './models/LayoutModel';
@@ -19,6 +19,8 @@ import ThreatEventToolModel from './modules/ThreatEvent_Tool/Model';
 import ThreatEventThreatInfoModel from './modules/ThreatEvent_ThreatInfo/Model';
 import UserManagerModel from './modules/UserManager/Model';
 import UserModel from './modules/User/Model';
+import EarlyWarningEmailReceiveModel from './modules/EarlyWarning_EmailReceive/Model';
+import EarlyWarningEmailSendModel from './modules/EarlyWarning_EmailSend/Model';
 
 // 1. Initialize
 const app = dva({
@@ -37,9 +39,11 @@ app.model(ThreatEventExploitModel);
 app.model(ThreatEventToolModel);
 app.model(ThreatEventThreatInfoModel);
 app.model(UserModel);
-app.model(UserManagerModel)
+app.model(UserManagerModel);
+app.model(EarlyWarningEmailReceiveModel);
+app.model(EarlyWarningEmailSendModel);
 
-combineExtraLoadingWtithApp(app);
+combineExtraLoadingWithApp(app);
 combineExtraEffectsWithApp(app,extraEffectsOptions);
 combineExtraReducersWithApp(app);
 // 4. Router

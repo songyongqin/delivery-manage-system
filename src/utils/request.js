@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch';
+import requestExtraOptionsHandle from '../configs/requestExtraOptionsHandle';
 
 function parseJSON(response) {
   return response.json();
@@ -22,7 +23,10 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
-  return fetch(url, options)
+
+  const finalOptions=requestExtraOptionsHandle(url.split("?")[0],options);
+
+  return fetch(url, finalOptions)
     .then(checkStatus)
     .then(parseJSON)
     .then(data => ( data ))

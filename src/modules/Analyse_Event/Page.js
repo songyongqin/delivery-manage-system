@@ -13,6 +13,7 @@ import JoIcon from '../../components/JoIcon';
 import {Link} from 'dva/router';
 import ThreatEvent from '../ThreatEvent/Page';
 import { routerRedux } from 'dva/router';
+import CountUp from 'react-countup';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -136,7 +137,14 @@ class Page extends React.Component{
                   {icons[k]}
                 </span>
               <p className={styles["counts"]}>
-                {statistics[k]}{units[k]}
+                <CountUp start={0}
+                         end={statistics[k]}
+                         separator={","}
+                         useGrouping={true}
+                         duration={1}
+                         delay={0}
+                         suffix={units[k]}/>
+                {/*{statistics[k]}{units[k]}*/}
               </p>
               <h3 className={titleClasses}>
                 {tools.getKeyText(k,items)}
@@ -163,7 +171,7 @@ class Page extends React.Component{
           </Col>
         )
       }
-    )
+    );
 
 
     return (

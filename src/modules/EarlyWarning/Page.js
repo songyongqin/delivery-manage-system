@@ -1,21 +1,16 @@
 import React from 'react';
 import styles from './styles.css'
-import { Menu, Button,Breadcrumb } from 'antd';
+import { Menu, Button,Breadcrumb,Tabs,Card } from 'antd';
+import {connect} from 'dva';
+import classnames from 'classnames';
+
 
 class Page extends React.Component{
-  constructor(props) {
-    super(props);
-
-  }
-
-  render=()=>{
-
-
-
-
+  render=()=> {
+    
     return (
       <div >
-        EarlyWarning
+        {this.props.children}
       </div>
     )
   }

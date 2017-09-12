@@ -73,7 +73,9 @@ export const queryModelGenerator=({
           type:"setQueryResults",
           payload:filteredPayload,
         })
-
+        yield put({
+          type:"setTime"
+        })
         resolve&&resolve(filteredPayload);
       }
 

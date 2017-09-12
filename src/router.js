@@ -19,7 +19,7 @@ import AnalyseThreatDistribution from './modules/Analyse_ThreatDistribution/Page
 import AnalyseOverall from './modules/Analyse_Overall/Page';
 
 import EarlyWarning from './modules/EarlyWarning/Page';
-import EarlyWarningEmail from './modules/EarlyWarning_Email/Page';
+import EarlyWarningEmail from './modules/EarlyWarning_Email/Page'
 
 import Report from './modules/Report/Page';
 

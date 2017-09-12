@@ -229,3 +229,23 @@ export const WithContainerHeader=(WrappedComponent)=>{
   return WrapperComponent;
 
 };
+
+
+export const WithModal=(WrappedComponent)=>{
+  class WrapperComponent extends React.Component{
+    state={
+
+    }
+    modalHandle=(type,value)=>{
+
+    }
+    getModal=()=>{
+
+    }
+    render=()=>{
+      return (
+        <WrappedComponent modalHandle={this.state.modalHandle}/>
+      )
+    }
+  }
+}

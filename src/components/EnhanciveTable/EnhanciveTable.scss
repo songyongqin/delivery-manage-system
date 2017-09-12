@@ -1,6 +1,5 @@
 @import '../../styles/var';
 
-
 .table{
   :global{
     //.ant-table-row{
@@ -49,6 +48,9 @@
     .ant-table-placeholder{
       color:$txt-color;
     }
+    tr.ant-table-expanded-row:hover{
+      background: #ecf6fd;
+    }
   }
 
   &.inverse-color{
@@ -61,6 +63,7 @@
 }
 
 .dark{
+
   :global{
     .ant-table-row{
       &:hover{
@@ -68,6 +71,9 @@
           background: rgba(0,0,0,0.5)
         }
       }
+    }
+    tr.ant-table-expanded-row:hover{
+      background: rgba(0,0,0,0.5);
     }
     .ant-table-thead>tr>th{
       background: $bg-color-level-1-dark;
@@ -105,4 +111,14 @@
 
 .expanded{
   cursor: pointer;
+}
+
+.table-gapped.light{
+  table{
+    border-spacing:0 10px;
+    td{
+      background: $bg-color-level-1;
+      border-color:transparent;
+    }
+  }
 }

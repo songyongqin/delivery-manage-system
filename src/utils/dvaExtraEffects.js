@@ -8,11 +8,11 @@ const combineExtraEffects=(model,options={},extraSagaEffects={})=>{
 
   Object.keys(options).forEach(select=>{
     isFunction(options[select],select);
-  })
+  });
 
   const {effects={}}=model;
 
-  const wrappedEffects={}
+  const wrappedEffects={};
 
   Object.keys(effects).forEach(key=>{
     wrappedEffects[key]=function *(action,sagaEffects) {
@@ -27,10 +27,10 @@ const combineExtraEffects=(model,options={},extraSagaEffects={})=>{
           return createExtraCall(action,sagaEffects,config,options)(serviceFn,args);
         },
         ...extraSagaEffects
-      }
+      };
       yield effects[key](action, extraSagaEffects);
     }
-  })
+  });
 
   return {
     ...model,
@@ -113,7 +113,7 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
 
     }finally {
 
-      yield  delay(500)
+      yield  delay(500);
 
       if(withLoading){
         yield put({
@@ -130,8 +130,9 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
       }
 
 
-      return result;
     }
+
+    return result;
 
   }
 }

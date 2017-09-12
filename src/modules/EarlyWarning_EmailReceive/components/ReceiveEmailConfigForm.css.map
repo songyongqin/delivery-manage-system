@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAII,gCAAa;EACX,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAC,IAAI;;AAKd,KAAK;EACH,KAAK,ECKS,OAAgB;EDJ9B,SAAS,EAAE,KAAK;EAChB,cAAc,EAAE,KAAK;;AAMjB,wGAA2C;EACzC,KAAK,ECJG,OAAgB",
+"sources": ["ReceiveEmailConfigForm.scss","../../../styles/_var.scss"],
+"names": [],
+"file": "ReceiveEmailConfigForm.css"
+}

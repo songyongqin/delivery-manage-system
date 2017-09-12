@@ -15,10 +15,14 @@
   border-color: black; }
 .light :global .ant-table-placeholder {
   color: rgba(0, 0, 0, 0.85); }
+.light :global tr.ant-table-expanded-row:hover {
+  background: #ecf6fd; }
 .light.inverse-color :global .ant-table-thead > tr > th {
   background: #F1F1F1; }
 
 .dark :global .ant-table-row:hover td {
+  background: rgba(0, 0, 0, 0.5); }
+.dark :global tr.ant-table-expanded-row:hover {
   background: rgba(0, 0, 0, 0.5); }
 .dark :global .ant-table-thead > tr > th {
   background: #252d47;
@@ -43,5 +47,11 @@
 
 .expanded {
   cursor: pointer; }
+
+.table-gapped.light table {
+  border-spacing: 0 10px; }
+  .table-gapped.light table td {
+    background: white;
+    border-color: transparent; }
 
 /*# sourceMappingURL=EnhanciveTable.css.map */

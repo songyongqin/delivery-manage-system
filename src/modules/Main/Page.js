@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './styles.css'
-import { Menu, Button,Breadcrumb,Spin,Modal,Table,BackTop,Dropdown,Icon} from 'antd';
+import { Menu, Button,Breadcrumb,Spin,Modal,Table,BackTop,Dropdown,Icon,message as Message} from 'antd';
 import classnames from 'classnames';
 import Nav from './components/Nav';
 import LayoutOperateList from './components/LayoutIOperateList'
 import { connect } from 'dva';
 import {createMapDispatchWithPromise} from "../../utils/dvaExtraDispatch";
 import {tableTextConfig} from '../UserManager/ConstConfig';
-
+import {modifyPasswordTextConfig} from './ConstConfig';
+import ModifyPasswordForm from './components/ModifyPasswordForm';
 
 function mapStateToProps(state) {
   return {
@@ -15,7 +16,8 @@ function mapStateToProps(state) {
     commonLayout:state.layout.commonLayout,
     routeConfig:state.layout.routeConfig,
     languageConfig:state.layout.languageConfig,
-    userData:state.user.userData
+    userData:state.user.userData,
+    putPasswordLoading:state.loading["user/putPassword"]
   }
 }
 
@@ -37,6 +39,14 @@ function mapDispatchToProps(dispatch,ownProps) {
           ...payload,
         }
       })
+    },
+    putPassword:(payload)=>{
+      return dispatch({
+        type:"user/putPassword",
+        payload:{
+          ...payload,
+        }
+      })
     }
   }
 }
@@ -48,12 +58,17 @@ class Page extends React.Component{
     super(props);
     this.state={
       loading:false,
+      modifyPassword:false
     }
 
     document.body.style.overflowX="hidden";
-    
-  }
 
+  }
+  switchModal=()=>{
+    this.setState({
+      modifyPassword:!this.state.modifyPassword
+    })
+  }
   createSetCommonLayoutHandle=(type,value)=>{
     return ()=>{
       this.props.setCommonLayout({
@@ -94,7 +109,8 @@ class Page extends React.Component{
       [styles["content-wrapper-common"]]:!navMini,
       [styles["content-wrapper-expand"]]:navMini,
       ["animated"]:true,
-      ["fadeInRight"]:true,
+      ["zoomIn"]:true,
+      ["fadeIn"]:true,
     });
 
     return (
@@ -169,7 +185,7 @@ class Page extends React.Component{
         }>
         </Menu.ItemGroup>
         <Menu.Item key="modify-password">
-          <a>
+          <a onClick={this.switchModal}>
             <Icon type="lock"/>&nbsp;&nbsp;修改密码
           </a>
         </Menu.Item>
@@ -194,23 +210,48 @@ class Page extends React.Component{
       </div>
     )
   }
+  modifyPasswordHandle=(payload)=>{
+    this.props.putPassword(payload)
+      .then(result=>{
+
+        Message.success(modifyPasswordTextConfig.notification)
+        this.switchModal();
+      })
+  }
   render=()=>{
 
     const {darkTheme}=this.props.commonLayout;
 
+    const isDark=darkTheme;
+
     const pageClasses=classnames({
       [styles["page"]]:true,
-      [styles["page-dark"]]:darkTheme,
+      [styles["page-dark"]]:isDark,
       ["animated"]:true,
       ["fadeIn"]:true,
     });
 
+    const modalClasses=classnames({
+      ["modal"]:true,
+      ["modal-dark"]:isDark
+    });
 
     return (
       <div className={pageClasses}>
         {this.getHeader()}
         {this.getNav()}
         {this.getContent()}
+        <Modal visible={this.state.modifyPassword}
+               key={`${this.state.modifyPassword}-modify-password`}
+               footer={null}
+               className={modalClasses}
+               onCancel={this.switchModal}
+               style={{top:"200px"}}
+               title={modifyPasswordTextConfig.title}>
+          <ModifyPasswordForm isDark={isDark}
+                              loading={this.props.putPasswordLoading}
+                              onSubmit={this.modifyPasswordHandle}/>
+        </Modal>
       </div>
     )
   }

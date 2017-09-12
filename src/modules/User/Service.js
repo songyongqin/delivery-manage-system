@@ -25,3 +25,16 @@ export async function postSign(payload) {
   };
   return request(httpApi.USER_SIGN, options);
 }
+
+
+export async function putPassowrd(payload) {
+
+  const options= {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body:JSON.stringify(payload)
+  };
+  return request(httpApi.USER_PASSWORD, options);
+}

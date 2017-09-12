@@ -11,6 +11,12 @@ moment.locale('zh-cn');
 
 const NAMESPACE="user";
 
+const callConfig={
+  withArgsCombiner:true,
+  withStatusHandle:true,
+  withLoading:true,
+}
+
 const baseModel={
   namespace: NAMESPACE,
   state: {
@@ -30,6 +36,19 @@ const baseModel={
     }
   },
   effects:{
+    *putPassword({payload,resolve},{callWithExtra}) {
+
+        const res=yield callWithExtra(
+          service.putPassowrd,
+          {...payload||{}},
+          callConfig
+        );
+
+        if(res.status===1){
+          resolve&&resolve();
+        }
+
+    },
     *postSign({payload,resolve},{callWithExtra,put}) {
         const res=yield callWithExtra(
           service.postSign,

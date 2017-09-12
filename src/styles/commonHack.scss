@@ -2,6 +2,10 @@
 
 body{
   :global{
+    .lbl-dark{
+      color:$txt-color-dark;
+    }
+
     .ant-calendar-range .ant-calendar-in-range-cell:before{
       //background: $primary-color;
       //color:white;
