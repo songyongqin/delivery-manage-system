@@ -96,13 +96,13 @@ class WrappedForm extends React.Component {
           {
             isAdmin
               ?
-              <span className={isDark?"lbl-dark":null}>
+              <a className={isDark?"lbl-dark":null}>
                 <Icon
                   type="minus-circle-o"
                   disabled={keys.length === 1}
                   onClick={() => this.remove(index)}
                 />
-              </span>
+              </a>
               :
               null
           }
@@ -151,23 +151,35 @@ class WrappedForm extends React.Component {
           )}
         </FormItem>
         {formItems}
-        <FormItem {...formItemLayoutWithOutLabel}
-                  colon={false}>
-          <Button type="dashed"
-                  onClick={this.add}
-                  disabled={loading||!isAdmin}
-                  style={{ width: '90%' }}>
-            <Icon type="plus" /> 添加新的提醒邮箱
-          </Button>
-        </FormItem>
-        <FormItem {...formItemLayoutWithOutLabel}
-                  colon={false}>
-          <Button type="primary"
-                  disabled={loading||!isAdmin}
-                  icon="save"
-                  onClick={this.handleSubmit}
-                  size="large">保存</Button>
-        </FormItem>
+        {
+          isAdmin
+          ?
+          <FormItem {...formItemLayoutWithOutLabel}
+                    colon={false}>
+            <Button type="dashed"
+                    onClick={this.add}
+                    disabled={loading||!isAdmin}
+                    style={{ width: '90%' }}>
+              <Icon type="plus" /> 添加新的提醒邮箱
+            </Button>
+          </FormItem>
+          :
+          null
+        }
+        {
+          isAdmin
+            ?
+            <FormItem {...formItemLayoutWithOutLabel}
+                      colon={false}>
+              <Button type="primary"
+                      disabled={loading||!isAdmin}
+                      icon="save"
+                      onClick={this.handleSubmit}
+                      size="large">保存</Button>
+            </FormItem>
+            :
+            null
+        }
       </Form>
     )
 
@@ -175,7 +187,7 @@ class WrappedForm extends React.Component {
       ?
       formContent
       :
-      <Tooltip title="非管理员无法进行修改" >
+      <Tooltip title="非管理员无法进行修改" trigger={["hover","click"]}>
         {formContent}
       </Tooltip>
   }

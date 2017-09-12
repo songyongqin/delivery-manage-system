@@ -98,7 +98,7 @@ class WrappedForm extends React.Component {
     })
 
     return (
-      <Form style={{maxWidth:"650px"}}>
+      <Form style={{maxWidth:"650px",paddingTop:"15px"}}>
         <FormItem
           required={false}
           {...formItemLayout}
@@ -152,17 +152,11 @@ class WrappedForm extends React.Component {
           )}
         </FormItem>
         <FormItem
+          style={{position:'relative'}}
           required={false}
           {...formItemLayout}
           colon={false}
-          label={<span className={lblClasses}>
-            发送服务器地址&nbsp;
-            <Tooltip title={referenceEmailTextConfig.referenceEmailTitle}>
-              <a onClick={this.switchModal}>
-                <Icon type="question-circle-o"/>
-              </a>
-            </Tooltip>
-          </span>}>
+          label={<span className={lblClasses}>发送服务器地址&nbsp;</span>}>
           {getFieldDecorator('sendServer', {
             initialValue:defaultValue.sendServer,
             rules: [
@@ -171,8 +165,13 @@ class WrappedForm extends React.Component {
               },
             ],
           })(
-            <Input disabled={loading}/>
+            <Input disabled={loading} />
           )}
+          <Tooltip title={referenceEmailTextConfig.referenceEmailTitle}>
+            <a onClick={this.switchModal} style={{position:"absolute",right:"-25px"}}>
+              <Icon type="question-circle-o"/>
+            </a>
+          </Tooltip>
         </FormItem>
         <FormItem
           required={false}

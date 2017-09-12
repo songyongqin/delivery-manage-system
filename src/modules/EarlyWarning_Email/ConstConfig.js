@@ -7,7 +7,7 @@ import {level as commonLevel,levelTextConfig} from '../../configs/ConstConfig'
 
 export const NAMESPACE="earylyWarningEmail"
 
-export const RECEIVE_EMAIL_CONFIG_TITLE=<span><Icon type="mail"/>&nbsp;接受告警邮箱配置</span>;
+export const RECEIVE_EMAIL_CONFIG_TITLE=<span><Icon type="mail"/>&nbsp;接收告警邮箱配置</span>;
 
 export const SEND_CONFIG_TITLE=<span><JoIcon type="setting"/>&nbsp;发送告警邮箱配置</span>;
 
