@@ -96,7 +96,7 @@ class WrappedForm extends React.Component {
           {
             isAdmin
               ?
-              <a className={isDark?"lbl-dark":null}>
+              <a>
                 <Icon
                   type="minus-circle-o"
                   disabled={keys.length === 1}
