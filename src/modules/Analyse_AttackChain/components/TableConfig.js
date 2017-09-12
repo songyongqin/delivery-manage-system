@@ -8,7 +8,7 @@ import constConfig,{stageRowDataIndexes,rowDataIndexes} from '../ConstConfig';
 import {Icon,Switch,Card,Timeline,Row,Col} from 'antd';
 import classnames from 'classnames';
 import * as tools from '../../../utils/tools';
-import TimeLabel from '../../../components/TImesLabel';
+import TimeLabel from '../../../components/TimesLabel';
 import styles from './TableConfig.css';
 
 const {tableTextConfig}=constConfig;

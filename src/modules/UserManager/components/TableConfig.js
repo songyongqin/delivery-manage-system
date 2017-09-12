@@ -10,7 +10,7 @@ import * as tools from '../../../utils/tools';
 import {
   rowDataIndexes,
   tableTextConfig,
-  OPREATION_ROW_KEY,
+  OPERATION_ROW_KEY,
   ROLE_DATAINDEX,
   USERACCOUNT_DATAINDEX,
   FREEZE_DATAINDEX,
@@ -36,8 +36,8 @@ const freezeRenderer=value=>{
 
 const getOperationColumn=({handle={}}={})=>{
   return {
-    title:tableTextConfig.rowTitles[OPREATION_ROW_KEY],
-    key:OPREATION_ROW_KEY,
+    title:tableTextConfig.rowTitles[OPERATION_ROW_KEY],
+    key:OPERATION_ROW_KEY,
     render:records=>{
       if(records.role===ADMIN_ROLE){
         return

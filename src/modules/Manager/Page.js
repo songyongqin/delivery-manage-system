@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './styles.css'
 import { Menu, Button,Breadcrumb } from 'antd';
 
 class Page extends React.Component{
@@ -9,16 +8,17 @@ class Page extends React.Component{
   }
 
   render=()=>{
-
+    const {children}=this.props;
 
 
 
     return (
       <div >
-        Manager
+        {children}
       </div>
     )
   }
 }
 
 export default Page;
+

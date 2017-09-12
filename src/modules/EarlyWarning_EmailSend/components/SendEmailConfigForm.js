@@ -54,6 +54,7 @@ class WrappedForm extends React.Component {
       if (err) {
         return
       }
+      values.ssl=values.ssl?1:0;
       onSubmit&&onSubmit(values);
     });
   }

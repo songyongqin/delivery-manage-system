@@ -85,3 +85,45 @@ export default {
 export const ROLE_DATAINDEX="role";
 export const ADMIN_ROLE=1,COMMON_USER_ROLE=2;
 export const USERACCOUNT_DATAINDEX="userAccount";
+
+/*********************************************************************/
+
+const SSH_SERVICE="SSHService",
+      TELNET_SERVICE="TelnetService",
+      DATABASE_SERVICE="DatabaseService",
+      INDUSTRIAL_CONTROL_SERVICE="IndustrialControlService";
+
+
+export const services=[SSH_SERVICE,TELNET_SERVICE,DATABASE_SERVICE,INDUSTRIAL_CONTROL_SERVICE]
+
+
+export const servicesTextConfig={
+  [SSH_SERVICE]:"SSH服务",
+  [TELNET_SERVICE]:"Telnet服务",
+  [DATABASE_SERVICE]:"数据库服务",
+  [INDUSTRIAL_CONTROL_SERVICE]:"工控服务"
+}
+
+
+const HIGH_INTERATION="highInteraction";
+const LOW_INTERACTION="lowInteration";
+
+export const interactions=[HIGH_INTERATION,LOW_INTERACTION];
+
+export const interactionsTextConfig={
+  [HIGH_INTERATION]:"高交互",
+  [LOW_INTERACTION]:"低交互"
+}
+
+const WIN7_SYS="win7";
+const WIN_XP_SYS="winxp";
+const NEO_KYLIN_SYS="neoKylin";
+
+
+export const systems=[WIN7_SYS,WIN_XP_SYS,NEO_KYLIN_SYS];
+
+export const systemsTextConfig={
+  [WIN_XP_SYS]:"Windows 7",
+  [WIN_XP_SYS]:"Windows XP",
+  [NEO_KYLIN_SYS]:"中标麒麟"
+}

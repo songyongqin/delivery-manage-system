@@ -21,7 +21,8 @@ const baseModel={
   namespace: NAMESPACE,
   state: {
     signin:!!tools.getTemp("userData"),
-    userData:tools.getTemp("userData")||{}
+    userData:tools.getTemp("userData")||{},
+    productType:tools.getTemp("productType")||{standalone:0}
   },
   reducers:{
     setUserData(preState,{payload}) {
@@ -36,6 +37,7 @@ const baseModel={
     }
   },
   effects:{
+
     *putPassword({payload,resolve},{callWithExtra}) {
 
         const res=yield callWithExtra(
@@ -49,7 +51,7 @@ const baseModel={
         }
 
     },
-    *postSign({payload,resolve},{callWithExtra,put}) {
+    *postSign({payload,resolve},{callWithExtra,put,take}) {
         const res=yield callWithExtra(
           service.postSign,
           {...payload||{}},
@@ -57,7 +59,6 @@ const baseModel={
         );
 
         if(res.status===1){
-
 
           const userData={
             ...res.payload,
@@ -74,6 +75,21 @@ const baseModel={
             }
           })
 
+        }
+
+        const productTypeRes=yield callWithExtra(
+          service.getProductType,
+          {},
+          {
+            withStatusHandle:true,
+          }
+        )
+
+        if(productTypeRes.status===1){
+          tools.setTemp("productType",productTypeRes.payload);
+        }
+
+        if(res.status===1){
           resolve&&resolve();
         }
 

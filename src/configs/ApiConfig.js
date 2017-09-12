@@ -3,6 +3,7 @@
  */
 export default {
   http:{
+    PRODUCT_TYPE:"/product-type",
     USER_SIGN:"/user/sign",
     USER_PASSWORD:"/user/password",
     USER:"/user",
@@ -14,6 +15,8 @@ export default {
     DEVICE_CONTROL:"/device/control",
     DEVICE_NODE:"/device/node",
 
+    DEVICE_CONTROL_DISK:"/device/control/disk",
+    DEVICE_NODE_DISK:"/device/node/disk",
 
     VIRTUAL_MACHINE:"/virtual-machine",
 

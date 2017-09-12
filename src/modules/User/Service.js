@@ -38,3 +38,14 @@ export async function putPassowrd(payload) {
   };
   return request(httpApi.USER_PASSWORD, options);
 }
+
+
+export async function getProductType(payload) {
+  const options= {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  };
+  return request(httpApi.PRODUCT_TYPE, options);
+}

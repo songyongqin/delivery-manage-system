@@ -21,7 +21,8 @@ import UserManagerModel from './modules/UserManager/Model';
 import UserModel from './modules/User/Model';
 import EarlyWarningEmailReceiveModel from './modules/EarlyWarning_EmailReceive/Model';
 import EarlyWarningEmailSendModel from './modules/EarlyWarning_EmailSend/Model';
-
+import ManagerDeviceControlDiskModel from './modules/Manager_Device_Control_Disk/Model';
+import ManagerDeviceControlModel from  './modules/Manager_Device_Control/Model';
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -42,6 +43,8 @@ app.model(UserModel);
 app.model(UserManagerModel);
 app.model(EarlyWarningEmailReceiveModel);
 app.model(EarlyWarningEmailSendModel);
+app.model(ManagerDeviceControlDiskModel);
+app.model(ManagerDeviceControlModel)
 
 combineExtraLoadingWithApp(app);
 combineExtraEffectsWithApp(app,extraEffectsOptions);

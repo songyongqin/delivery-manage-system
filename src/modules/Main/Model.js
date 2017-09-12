@@ -17,9 +17,7 @@ const baseModel={
 
   },
   effects:{
-    * test({payload,resolve},{callWithExtra}) {
-      console.info("test")
-    }
+
   }
 };
 
