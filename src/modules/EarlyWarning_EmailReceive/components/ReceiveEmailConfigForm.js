@@ -96,11 +96,13 @@ class WrappedForm extends React.Component {
           {
             isAdmin
               ?
-              <Icon
-                type="minus-circle-o"
-                disabled={keys.length === 1}
-                onClick={() => this.remove(index)}
-              />
+              <span className={isDark?"lbl-dark":null}>
+                <Icon
+                  type="minus-circle-o"
+                  disabled={keys.length === 1}
+                  onClick={() => this.remove(index)}
+                />
+              </span>
               :
               null
           }
