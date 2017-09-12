@@ -126,11 +126,11 @@ class Page extends React.Component{
   getLayoutOperateList=()=>{
 
     const {darkTheme,navMini,language}=this.props.commonLayout;
-
+    console.info(language);
     const status={
       nav:navMini,
       theme:darkTheme,
-      lang:language,
+      lang:language==="zh-cn",
     };
 
     const handle={
