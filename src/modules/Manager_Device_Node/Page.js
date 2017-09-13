@@ -22,29 +22,58 @@ class Page extends React.Component{
   constructor(props) {
     super(props);
   }
+  onQuery=(payload)=>{
+    this.props.query({
+      ...this.props[NAMESPACE].queryFilters||[],
+      ...payload||{},
+    });
+
+  };
+  pageOnChange=(current)=>{
+    this.onQuery({page:current})
+  };
   getResultsPanel=()=>{
 
     const {commonLayout,userData}=this.props;
-    const {queryResults,lastReqTime}=this.props[NAMESPACE];
+    const {queryResults,lastReqTime,queryFilters}=this.props[NAMESPACE];
+
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.info(selectedRows);
+      },
+
+    };
+
+
     const tableProps={
       onChange:this.tableOnChange,
       columns:tableConfig.getColumns({
-        isDark:commonLayout.darkTheme,
-        isAdmin:userData.isAdmin
+        isAdmin:userData.isAdmin,
+        isDark:commonLayout.darkTheme
       }),
-      dataSource:[
-        {
-          ...queryResults,
-          key:"device-control"
+      dataSource:queryResults.data.map((i,index)=>{
+        return {
+          ...i,
+          key:`item-${index}-${lastReqTime}`
         }
-      ]
+      }),
+      rowSelection,
+      className:styles["table"]
     };
+
+    const paginationProps={
+      total:queryResults.total,
+      current:queryFilters.page,
+      onChange:this.pageOnChange,
+      pageSize:queryFilters.limit,
+    };
+
     return (
         <EnhanciveTable key={`${lastReqTime}-device-table`}
                         inverse={true}
                         tableProps={tableProps}
-                        isDark={commonLayout.darkTheme}
-                        pagination={false}/>
+                        paginationProps={paginationProps}
+                        isDark={commonLayout.darkTheme}/>
     )
   };
   render=()=> {

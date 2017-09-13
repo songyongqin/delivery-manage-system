@@ -35,7 +35,7 @@ export default class extends React.Component {
     onSubmit&&onSubmit({threshold:parseInt(value)})
   }
   render() {
-    const {defaultValue,isDark,loading}=this.props;
+    const {defaultValue,isDark,loading,disabled}=this.props;
     const classes=classnames({
       ["lbl-dark"]:isDark
     })
@@ -43,7 +43,7 @@ export default class extends React.Component {
       <div className={classes}>
         <span>&nbsp;自动清理磁盘阈值设置&nbsp;</span>
         <Select style={{width:"100px"}}
-                disabled={loading}
+                disabled={loading||disabled}
                 defaultValue={defaultValue+""}
                 onChange={this.handleChange}>
           {

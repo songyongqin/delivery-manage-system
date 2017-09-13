@@ -28,7 +28,16 @@ const combineExtraEffects=(model,options={},extraSagaEffects={})=>{
         },
         ...extraSagaEffects
       };
-      yield effects[key](action, extraSagaEffects);
+      if(effects[key] instanceof  Array){
+        yield effects[key][0](action, extraSagaEffects);
+      }else{
+        yield effects[key](action, extraSagaEffects);
+      }
+
+    }
+
+    if(effects[key] instanceof  Array){
+      wrappedEffects[key]=[wrappedEffects[key],...effects[key].slice(1)]
     }
   });
 

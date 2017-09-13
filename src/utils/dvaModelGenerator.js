@@ -57,7 +57,7 @@ export const queryModelGenerator=({
 
   const wrappedEffects={
     ...effects,
-    *query({resolve,payload},{put,callWithExtra,select}) {
+    query:[function*({resolve,payload},{put,callWithExtra,select}) {
 
       const res=yield callWithExtra(
         queryService,
@@ -79,7 +79,7 @@ export const queryModelGenerator=({
         resolve&&resolve(filteredPayload);
       }
 
-    },
+    },{ type: 'throttle', ms: 1000 },{ type: 'takeLatest' }],
     *queryInit({resolve,payload},{put,select}) {
       const state=yield select(state=>state[namespace]);
       const queryFilters=state[keyConfig.queryFilters];

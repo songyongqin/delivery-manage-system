@@ -15,11 +15,13 @@ import {
   LICENCE_STATUS_DATAINDEX,
   OPERATION_ROW_KEY,
   LICENCE_VALID_VALUE
-}from '../../Manager_Device/ConstConfig';
+}from '../ConstConfig';
 import {Progress,Row,Col,Badge,Button} from 'antd'
 import JoTag from '../../../components/JoTag';
 import TimesLabel from '../../../components/TimesLabel';
+import styles from './TableConfig.css';
 import moment from 'moment';
+import classnames from 'classnames';
 
 const diskPerRenderer=value=>{
   return <div style={{textAlign:"center"}}>
@@ -30,13 +32,9 @@ const diskPerRenderer=value=>{
 }
 
 const devicePropsRender=value=>{
-  return <Row>
-    {value.map(v=>{
-      return <Col key={v} style={{textAlign:"center"}}>
-        <JoTag color="#108ee9">{devicePropsTextConfig[v]}</JoTag>
-      </Col>
-    })}
-  </Row>
+  return <div style={{textAlign:"center"}}>
+    <JoTag color="#108ee9">{devicePropsTextConfig[value]}</JoTag>
+  </div>
 }
 
 
@@ -60,28 +58,60 @@ const licenceValueRenderer=(value,isDark)=>{
 const getTimeFormat=time=>moment(time*1000).format("YYYY-MM-DD");
 
 const getLiencenRenderer=isDark=>value=>(
-    <div style={{textAlign:"center"}}>
+    <div style={{textAlign:"center"}} >
       {licenceValueRenderer(value[LICENCE_STATUS_VALUE_DATAINDEX],isDark)}
       <br/><br/>
-      <span>授权到期时间:&nbsp;</span>
-      <JoTag color="#108ee9">
-        {getTimeFormat(value[LICENCE_STATUS_EXPIRATION_DATAINDEX])}
-      </JoTag>
+      {
+        value[LICENCE_STATUS_VALUE_DATAINDEX]!==LICENCE_NULL_VALUE
+        ?
+        <span>授权到期时间:&nbsp;</span>
+        :
+        null
+      }
+      {
+        value[LICENCE_STATUS_VALUE_DATAINDEX]!==LICENCE_NULL_VALUE
+        ?
+        <JoTag color="#108ee9">
+          {getTimeFormat(value[LICENCE_STATUS_EXPIRATION_DATAINDEX])}
+        </JoTag>
+        :
+        null
+      }
     </div>
 )
 
-const getOperationRenderer=({isAdimin})=>{
-  return records=>(
-    <div style={{textAlign:"center"}}>
-      <a disabled={records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX]===LICENCE_VALID_VALUE}>
-        授权
-      </a>
-      <br/>
-      <a>检查升级</a>
-      <br/>
-      <a>磁盘清理</a>
-    </div>
-  )
+const getOperationRenderer=({isAdmin})=>{
+  return records=>{
+    const isLicence=records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX]===LICENCE_VALID_VALUE;
+    return (
+      <div style={{textAlign:"center"}} className={styles["operation-list"]}>
+        <Button type="primary"
+                icon="unlock"
+                disabled={isLicence||!isAdmin}
+                className={styles["operation-item"]}>
+          授权
+        </Button>
+        <br/>
+        <Button type="primary"
+                icon="reload"
+                disabled={!isAdmin}
+                className={styles["operation-item"]}>
+          检查升级
+        </Button>
+        <br/>
+        <Button type="danger"
+                icon="delete"
+                disabled={!isAdmin}
+                className={classnames({
+                  [styles["operation-item"]]:true,
+                  [styles["btn-danger"]]:true,
+                })}>
+          磁盘清理
+        </Button>
+      </div>
+    )
+
+  }
 }
 
 export const getColumns=({isDark,isAdmin,handle})=>{
@@ -111,7 +141,6 @@ export const getColumns=({isDark,isAdmin,handle})=>{
     renderer,
 
   });
-
   return [
     ...columns,
     {

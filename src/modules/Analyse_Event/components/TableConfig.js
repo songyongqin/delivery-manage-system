@@ -14,13 +14,18 @@ import TimeLabel from '../../../components/TimesLabel';
 
 const rowsRenderer={
   description:value=>{
+
+    const color="#108ee9";
+
     try{
       return <div>
         {
           value.map((i,index)=>{
             return <div key={`${index}-des`}
                         style={{marginBottom:"8px"}}>
-              <JoTag color={index%2===0?"#87d068":"#f50"}>
+              <JoTag color={color}
+                     // color={index%2===0?"#87d068":"#f50"}
+              >
                 {i}
               </JoTag>
             </div>
@@ -96,7 +101,7 @@ export const getExpandedRowRender=({isDark})=>{
             <td style={{padding:"10px 0px"}}>
               <div>
                 {details.map((d,index)=>{
-                  return <JoTag key={'item-'+index} color="#87d068">
+                  return <JoTag key={'item-'+index} color="#108ee9">
                     {d}
                   </JoTag>
                 })}
@@ -108,7 +113,7 @@ export const getExpandedRowRender=({isDark})=>{
               {tools.getKeyText("advice",expandedRow.rows)}
             </td>
             <td style={{padding:"10px 0px"}}>
-              <JoTag color="#f50">{advice}</JoTag>
+              <JoTag color="#108ee9">{advice}</JoTag>
             </td>
           </tr>
           </tbody>
