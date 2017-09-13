@@ -11,6 +11,7 @@ import commonConstConfig from '../../../configs/ConstConfig';
 import {filterRowDataIndexes,rowDataIndexes,tableTextConfig} from '../ConstConfig';
 import FilterInputNumber from '../../../components/FilterInputNumber/FilterInputNumber';
 import TimeLabel from '../../../components/TimesLabel';
+import CountUp from 'react-countup';
 
 const rowsRenderer={
   description:value=>{
@@ -38,6 +39,14 @@ const rowsRenderer={
   },
   attackTimes:value=>{
     return <TimeLabel times={value}/>
+  },
+  counts:value=>{
+    return <CountUp start={0}
+                    end={value}
+                    separator={","}
+                    useGrouping={true}
+                    duration={1}
+                    delay={0}/>
   }
 };
 
