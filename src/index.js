@@ -26,7 +26,7 @@ import ManagerDeviceControlDiskModel from './modules/Manager_Device_Control_Disk
 import ManagerDeviceControlModel from  './modules/Manager_Device_Control/Model';
 import ManagerDeviceNodeDiskModel from './modules/Manager_Device_Node_Disk/Model';
 import ManagerDeviceNodeModel from './modules/Manager_Device_Node/Model';
-
+import ManagerDeviceVMModel from './modules/Manager_Virtual/Model'
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -52,7 +52,7 @@ app.model(ManagerDeviceControlDiskModel);
 app.model(ManagerDeviceControlModel);
 app.model(ManagerDeviceNodeDiskModel);
 app.model(ManagerDeviceNodeModel);
-
+app.model(ManagerDeviceVMModel);
 // combineExtraLoadingWithApp(app);
 combineExtraEffectsWithApp(app,extraEffectsOptions);
 combineExtraReducersWithApp(app);

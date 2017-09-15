@@ -8,6 +8,8 @@ import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import * as tableConfig from './components/TableConfig';
 import {tableTextConfig} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig'
+import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
+import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -20,37 +22,29 @@ function mapStateToProps(state) {
   namespace:NAMESPACE,
   mapStateToProps,
 })
+@WithOnQuery(NAMESPACE)
+@WithPageOnChange(NAMESPACE)
 class Page extends React.Component{
   constructor(props) {
     super(props);
   }
-  onQuery=(payload)=>{
-    this.props.query({
-      ...this.props[NAMESPACE].queryFilters||[],
-      ...payload||{},
-    });
-
-  };
-  pageOnChange=(current)=>{
-    this.onQuery({page:current})
-  };
   tableOnChange=(pagination, filters, sorter)=>{
-    this.onQuery({...filters})
+    this.props.onQuery({...filters})
   };
   getQueryPanel=()=>{
-
+    const {onQuery,routes}=this.props;
     const {queryFilters,lastReqTime}=this.props[NAMESPACE];
 
     return (
       <div key={"query-panel"} style={{margin:"15px 0"}}>
           {this.props.getContainerHeader({
-            routes:this.props.routes,
+            routes,
             queryFilters,
-            onQuery:this.onQuery
+            onQuery,
           })}
         <div style={{display:"inline-block",marginBottom:"10px"}}>
           <QueryIPForm key={"query-ip"+lastReqTime}
-                       onSubmit={this.onQuery}
+                       onSubmit={onQuery}
                        defaultValue={queryFilters}/>
         </div>
       </div>
@@ -69,14 +63,14 @@ class Page extends React.Component{
   };
   getDataResultPanel=()=>{
 
-    const {commonLayout}=this.props;
+    const {commonLayout,pageOnChange}=this.props;
     const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
-
+    const isDark=commonLayout.darkTheme;
     const tableProps={
       onChange:this.tableOnChange,
       columns:tableConfig.getColumns({queryFilters,onSubmit:this.onFilter}),
-      expandedRowRender:tableConfig.getExpandedRowRender({isDark:commonLayout.darkTheme}),
+      expandedRowRender:tableConfig.getExpandedRowRender({isDark}),
       dataSource:data.map((i,index)=>{
         return {
           ...i,
@@ -88,7 +82,7 @@ class Page extends React.Component{
     const paginationProps={
       total:queryResults.total,
       current:queryFilters.page,
-      onChange:this.pageOnChange,
+      onChange:pageOnChange,
       pageSize:queryFilters.limit,
     };
 
@@ -96,7 +90,7 @@ class Page extends React.Component{
       <div key={"results-panel"+lastReqTime}>
         <EnhanciveTable title={tableTextConfig.title}
                         tableProps={tableProps}
-                        isDark={commonLayout.darkTheme}
+                        isDark={isDark}
                         paginationProps={paginationProps}/>
       </div>
     )

@@ -9,6 +9,8 @@ import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import ThreatEventOperationPanel from '../../components/ThreatEventOperationPanel';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
 import * as tools from '../../utils/tools';
+import WithOnQuery from '../QueryContainerDecorator/WithOnQuery';
+import WithPageOnChange from '../QueryContainerDecorator/WithPageOnChangeQuery';
 
 export default ({tableConfig,formTextConfig,namespace})=>{
   const NAMESPACE=namespace;
@@ -40,21 +42,12 @@ export default ({tableConfig,formTextConfig,namespace})=>{
     mapStateToProps,
     mapDispatchToProps:createMapDispatchWithPromise(mapDispatchToProps)
   })
+  @WithOnQuery(NAMESPACE)
+  @WithPageOnChange(NAMESPACE)
   class Page extends React.Component{
     constructor(props) {
       super(props);
     }
-    onQuery=(payload)=>{
-
-      this.props.query({
-        ...this.props[NAMESPACE].queryFilters||[],
-        ...payload||{},
-      });
-
-    };
-    pageOnChange=(current)=>{
-      this.onQuery({page:current})
-    };
     componentDidMount=()=>{
       this.props.query({
         timestampRange:this.props.timestampRange,
@@ -62,7 +55,7 @@ export default ({tableConfig,formTextConfig,namespace})=>{
       })
     }
     onSelectChange=(payload)=>{
-      this.onQuery({...payload,page:1})
+      this.props.onQuery({...payload,page:1})
     }
     onExport=()=>{
       this.props.post({timestampRange:this.props.timestampRange}).then(result=>{
@@ -71,13 +64,13 @@ export default ({tableConfig,formTextConfig,namespace})=>{
       })
     }
     getQueryPanel=()=>{
-
+      const {onQuery}=this.props;
       const {queryFilters}=this.props[NAMESPACE];
       const {commonLayout}=this.props;
 
       return <ThreatEventOperationPanel key="query-panel"
                                         handle={{
-                                          onQuery:this.onQuery,
+                                          onQuery,
                                           onSelectChange:this.onSelectChange,
                                           onExport:this.onExport
                                         }}
@@ -95,7 +88,7 @@ export default ({tableConfig,formTextConfig,namespace})=>{
     };
     getDataResultPanel=()=>{
 
-      const {commonLayout}=this.props;
+      const {commonLayout,pageOnChange}=this.props;
       const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
       const {data}=queryResults;
 
@@ -112,7 +105,7 @@ export default ({tableConfig,formTextConfig,namespace})=>{
       const paginationProps={
         total:queryResults.total,
         current:queryFilters.page,
-        onChange:this.pageOnChange,
+        onChange:pageOnChange,
         pageSize:queryFilters.limit,
       };
 

@@ -55,6 +55,9 @@ const routesZHCN={
         },
         "virtual-machine":{
           title:"虚拟蜜罐管理"
+        },
+        "mirror":{
+          title:"镜像管理"
         }
       }
     }
@@ -112,6 +115,9 @@ const routesENUS={
       },
       "virtual-machine":{
         title:"HONEYPOT"
+      },
+      "mirror":{
+        title:"MIRROR"
       }
     }
   }

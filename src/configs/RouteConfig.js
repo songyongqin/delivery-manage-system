@@ -105,6 +105,11 @@ export default {
         order:2,
         link:"/honeypot-manager/virtual-machine",
         title:"虚拟蜜罐管理"
+      },
+      "mirror":{
+        order:2,
+        link:"/honeypot-manager/mirror",
+        title:"镜像管理"
       }
     }
   }

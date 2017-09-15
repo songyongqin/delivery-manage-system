@@ -14,6 +14,8 @@ import {Link} from 'dva/router';
 import ThreatEvent from '../ThreatEvent/Page';
 import { routerRedux } from 'dva/router';
 import CountUp from 'react-countup';
+import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
+import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -26,6 +28,8 @@ function mapStateToProps(state) {
   namespace:NAMESPACE,
   mapStateToProps,
 })
+@WithOnQuery(NAMESPACE)
+@WithPageOnChange(NAMESPACE)
 class Page extends React.Component{
   constructor(props) {
     super(props);
@@ -44,30 +48,19 @@ class Page extends React.Component{
       activeKey:key,
     })
   }
-  onQuery=(payload)=>{
-
-    this.props.query({
-      ...this.props[NAMESPACE].queryFilters||[],
-      ...payload||{},
-    });
-
-  };
-  pageOnChange=(current)=>{
-    this.onQuery({page:current})
-  };
   tableOnChange=(pagination, filters, sorter)=>{
-    this.onQuery({...filters})
+    this.props.onQuery({...filters})
   };
   getQueryPanel=()=>{
-
+    const {routes,onQuery}=this.props;
     const {queryFilters}=this.props[NAMESPACE];
 
     return (
       <div key="query-panel" style={{marginTop:"15px"}}>
         {this.props.getContainerHeader({
-          routes:this.props.routes,
+          routes,
           queryFilters,
-          onQuery:this.onQuery
+          onQuery
         })}
       </div>
     )
@@ -144,7 +137,6 @@ class Page extends React.Component{
                          duration={1}
                          delay={0}
                          suffix={units[k]}/>
-                {/*{statistics[k]}{units[k]}*/}
               </p>
               <h3 className={titleClasses}>
                 {tools.getKeyText(k,items)}
@@ -184,10 +176,10 @@ class Page extends React.Component{
     )
   };
   onFilter=(value)=>{
-    this.onQuery({mergeCounts:value})
+    this.props.onQuery({mergeCounts:value})
   };
   getDataResultPanel=()=>{
-
+    const {pageOnChange}=this.props;
     const {commonLayout}=this.props;
     const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
@@ -207,7 +199,7 @@ class Page extends React.Component{
     const paginationProps={
       total:queryResults.total,
       current:queryFilters.page,
-      onChange:this.pageOnChange,
+      onChange:pageOnChange,
       pageSize:queryFilters.limit,
     };
 

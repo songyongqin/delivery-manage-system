@@ -38,11 +38,11 @@ export const queryContainerGenerator=({
   /*
   * */
   function wrappedMapStateProps(state) {
-
+    // console.info(state.loading.effects);
     return {
       ...mapStateToProps(state),
       [namespace]:state[namespace],
-      queryLoading:state.loading[`${namespace}/query`],
+      queryLoading:state.loading.effects[`${namespace}/query`],
       lastReqTime:state[namespace].lastReqTime
     }
   }

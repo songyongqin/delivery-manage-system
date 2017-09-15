@@ -30,7 +30,7 @@ import SysConfig from './modules/SysConfig/Page';
 import Manager from './modules/Manager/Page';
 import ManagerDevice from './modules/Manager_Device/Page';
 import ManagerVirtual from './modules/Manager_Virtual/Page';
-
+import ManagerMirror from './modules/Manager_Mirror/Page';
 
 import ThreatEvent from './modules/ThreatEvent/Page';
 
@@ -68,6 +68,7 @@ function RouterConfig({ history ,app }) {
           <IndexRedirect to="device"/>
           <Route path="device" components={ManagerDevice}/>
           <Route path="virtual-machine" components={ManagerVirtual}/>
+          <Route path="mirror" components={ManagerMirror}/>
         </Route>
 
 

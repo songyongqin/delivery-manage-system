@@ -5,6 +5,9 @@ import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import * as tableConfig from '../Manager_Device/components/TableConfig';
 import {NAMESPACE} from './ConstConfig'
 import styles from './styles.css';
+import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
+import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
+
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -18,20 +21,12 @@ function mapStateToProps(state) {
   namespace:NAMESPACE,
   mapStateToProps,
 })
+@WithOnQuery(NAMESPACE)
+@WithPageOnChange(NAMESPACE)
 class Page extends React.Component{
   constructor(props) {
     super(props);
   }
-  onQuery=(payload)=>{
-    this.props.query({
-      ...this.props[NAMESPACE].queryFilters||[],
-      ...payload||{},
-    });
-
-  };
-  pageOnChange=(current)=>{
-    this.onQuery({page:current})
-  };
   getResultsPanel=()=>{
 
     const {commonLayout,userData}=this.props;
@@ -46,7 +41,6 @@ class Page extends React.Component{
 
 
     const tableProps={
-      onChange:this.tableOnChange,
       columns:tableConfig.getColumns({
         isAdmin:userData.isAdmin,
         isDark:commonLayout.darkTheme
@@ -64,7 +58,7 @@ class Page extends React.Component{
     const paginationProps={
       total:queryResults.total,
       current:queryFilters.page,
-      onChange:this.pageOnChange,
+      onChange:this.props.pageOnChange,
       pageSize:queryFilters.limit,
     };
 

@@ -6,7 +6,8 @@ import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
 import * as tableConfig from  './components/TableConfig';
-
+import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
+import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
 
 import {NAMESPACE} from './ConstConfig';
 
@@ -24,21 +25,13 @@ function mapStateToProps(state) {
   namespace:NAMESPACE,
   mapStateToProps,
 })
+@WithOnQuery(NAMESPACE)
+@WithPageOnChange(NAMESPACE)
 class Page extends React.Component{
   constructor(props) {
     super(props);
   }
-  onQuery=(payload)=>{
 
-    this.props.query({
-      ...this.props[NAMESPACE].queryFilters||[],
-      ...payload||{},
-    });
-
-  };
-  pageOnChange=(current)=>{
-    this.onQuery({page:current})
-  };
   getCheckboxOnChange=(value)=>{
     return (checked)=>{
       const {attackStage}=this.props[NAMESPACE].queryFilters;
@@ -53,18 +46,18 @@ class Page extends React.Component{
 
       let newAttackStage=Object.keys(attackStageMap).filter(k=>attackStageMap[k]);
 
-      this.onQuery({attackStage:newAttackStage})
+      this.props.onQuery({attackStage:newAttackStage})
     }
   };
   getQueryPanel=()=>{
-
+    const {onQuery,routes}=this.props;
     const {queryFilters}=this.props[NAMESPACE];
     return (
       <div key="query-panel" style={{margin:"15px 0"}}>
         {this.props.getContainerHeader({
-          routes:this.props.routes,
+          routes,
           queryFilters,
-          onQuery:this.onQuery
+          onQuery
         })}
       </div>
     )
@@ -78,13 +71,13 @@ class Page extends React.Component{
     )
   };
   getDataResultPanel=()=>{
+    const {pageOnChange}=this.props;
 
     const {commonLayout}=this.props;
     const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
 
     const tableProps={
-      onChange:this.tableOnChange,
       columns:tableConfig.getColumns({
         queryFilters,
         getCheckboxOnChange:this.getCheckboxOnChange
@@ -100,11 +93,10 @@ class Page extends React.Component{
       })
     };
 
-
     const paginationProps={
       total:queryResults.total,
       current:queryFilters.page,
-      onChange:this.pageOnChange,
+      onChange:pageOnChange,
       pageSize:queryFilters.limit,
     };
 
