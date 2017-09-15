@@ -4,6 +4,18 @@
 /*
 *
 * */
+const WITH_TIME_TYPE="withTime"
+
+
+function *extraEffectCreator(effectCreator,{put}) {
+  if(effectCreator.some(i=>i.type===WITH_TIME_TYPE)){
+    yield put({
+      type:"setTime"
+    })
+  }
+}
+
+
 const combineExtraEffects=(model,options={},extraSagaEffects={})=>{
 
   Object.keys(options).forEach(select=>{
@@ -15,6 +27,10 @@ const combineExtraEffects=(model,options={},extraSagaEffects={})=>{
   const wrappedEffects={};
 
   Object.keys(effects).forEach(key=>{
+
+    const hasEffectCreator=effects[key] instanceof  Array;
+    const effectCreatorList=hasEffectCreator?effects[key].slice(1):[];
+
     wrappedEffects[key]=function *(action,sagaEffects) {
       const extraSagaEffects={
         ...sagaEffects,
@@ -28,16 +44,16 @@ const combineExtraEffects=(model,options={},extraSagaEffects={})=>{
         },
         ...extraSagaEffects
       };
-      if(effects[key] instanceof  Array){
+      if(hasEffectCreator){
         yield effects[key][0](action, extraSagaEffects);
+        yield extraEffectCreator(effectCreatorList,sagaEffects);
       }else{
         yield effects[key](action, extraSagaEffects);
       }
-
     }
 
-    if(effects[key] instanceof  Array){
-      wrappedEffects[key]=[wrappedEffects[key],...effects[key].slice(1)]
+    if(hasEffectCreator){
+      wrappedEffects[key]=[wrappedEffects[key],...effectCreatorList]
     }
   });
 
@@ -90,14 +106,14 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
 
       }
 
-      if(withLoading){
-        yield put({
-          type:"loading/startLoading",
-          payload:{
-            type:action.type
-          }
-        })
-      }
+      // if(withLoading){
+      //   yield put({
+      //     type:"loading/startLoading",
+      //     payload:{
+      //       type:action.type
+      //     }
+      //   })
+      // }
 
       if(withArgsCombiner){
         isFunction(argsCombiner,"argsCombiner");
@@ -122,21 +138,21 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
 
     }finally {
 
-      yield  delay(500);
+      // yield  delay(500);
 
-      if(withLoading){
-        yield put({
-          type:"loading/endLoading",
-          payload:{
-            type:action.type
-          }
-        })
-      }
-      if(withTime){
-        yield put({
-          type:"setTime"
-        })
-      }
+      // if(withLoading){
+      //   yield put({
+      //     type:"loading/endLoading",
+      //     payload:{
+      //       type:action.type
+      //     }
+      //   })
+      // }
+      // if(withTime){
+      //   yield put({
+      //     type:"setTime"
+      //   })
+      // }
 
 
     }

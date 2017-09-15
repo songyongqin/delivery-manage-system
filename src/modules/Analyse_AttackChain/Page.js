@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge,Timeline,Checkbox,Switch } from 'antd';
-import QueryForm from '../../components/TimestampForm';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/JoSpin';
 import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';

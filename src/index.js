@@ -1,6 +1,7 @@
 import dva from 'dva';
 import './index.css';
 import './styles/commonHack.css';
+import createLoading from 'dva-loading'
 import router from './router';
 import { useRouterHistory } from 'dva/router';
 import { createHashHistory } from 'history';
@@ -31,6 +32,7 @@ const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
 });
 
+app.use(createLoading({effects:true}));
 
 // 3. Model
 // app.model(MainModel);
@@ -51,9 +53,11 @@ app.model(ManagerDeviceControlModel);
 app.model(ManagerDeviceNodeDiskModel);
 app.model(ManagerDeviceNodeModel);
 
-combineExtraLoadingWithApp(app);
+// combineExtraLoadingWithApp(app);
 combineExtraEffectsWithApp(app,extraEffectsOptions);
 combineExtraReducersWithApp(app);
+
+
 // 4. Router
 app.router(router);
 

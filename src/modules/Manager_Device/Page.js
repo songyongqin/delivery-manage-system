@@ -17,17 +17,18 @@ import {NAMESPACE as MANAGER_DEVICE_NODE_NAMESPACE} from '../Manager_Device_Node
 
 function  mapStateToProps(state) {
   const {commonLayout}=state.layout;
-  const {loading}=state;
+  const {effects:effectsLoading}=state.loading;
+
   return {
     commonLayout,
     userData:state.user.userData,
     productType:state.user.productType,
-    controlLoading:loading[`${MANAGER_DEVICE_DISK_NAMESPACE}/query`]
-    ||loading[`${MANAGER_DEVICE_DISK_NAMESPACE}/put`]
-    ||loading[`${MANAGER_DEVICE_NAMESPACE}/query`],
-    nodeLoading:loading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/query`]
-    ||loading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/put`]
-    ||loading[`${MANAGER_DEVICE_NODE_NAMESPACE}/query`]
+    controlLoading:effectsLoading[`${MANAGER_DEVICE_DISK_NAMESPACE}/query`]
+    ||effectsLoading[`${MANAGER_DEVICE_DISK_NAMESPACE}/put`]
+    ||effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/query`],
+    nodeLoading:effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/query`]
+    ||effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/put`]
+    ||effectsLoading[`${MANAGER_DEVICE_NODE_NAMESPACE}/query`]
   }
 }
 

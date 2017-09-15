@@ -15,7 +15,7 @@ function mapStateToProps(state) {
   return {
     commonLayout,
     userData:state.user.userData,
-    putLoading:state.loading[`${NAMESPACE}/put`]
+    putLoading:state.loading.effects[`${NAMESPACE}/put`]
   }
 }
 
@@ -48,7 +48,6 @@ class Page extends React.Component{
     if(queryLoading||putLoading){
       return;
     }
-    console.info(payload);
     return this.props.put(payload)
       .then(result=>{
         Message.success(textConfig.notification);

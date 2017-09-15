@@ -17,7 +17,7 @@ export default ({tableConfig,formTextConfig,namespace})=>{
     const {commonLayout}=state.layout;
     return {
       commonLayout,
-      exportLoading:state.loading[`${NAMESPACE}/post`]
+      exportLoading:state.loading.effects[`${NAMESPACE}/post`]
     }
   }
 

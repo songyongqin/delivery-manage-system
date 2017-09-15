@@ -18,9 +18,9 @@ function mapStateToProps(state) {
   const {commonLayout}=state.layout;
   return {
     commonLayout,
-    putUserConfigLoading:state.loading["userManager/putUserConfig"],
-    putUserLoading:state.loading["userManager/putUser"],
-    postUserLoading:state.loading["userManager/postUser"]
+    putUserConfigLoading:state.loading.effects["userManager/putUserConfig"],
+    putUserLoading:state.loading.effects["userManager/putUser"],
+    postUserLoading:state.loading.effects["userManager/postUser"]
   }
 }
 

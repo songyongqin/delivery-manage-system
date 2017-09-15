@@ -73,13 +73,13 @@ export const queryModelGenerator=({
           type:"setQueryResults",
           payload:filteredPayload,
         })
-        yield put({
-          type:"setTime"
-        })
+        // yield put({
+        //   type:"setTime"
+        // })
         resolve&&resolve(filteredPayload);
       }
 
-    },{ type: 'throttle', ms: 1000 },{ type: 'takeLatest' }],
+    },{ type: 'throttle', ms: 1000 },{ type: 'takeLatest' },{type:"withTime"}],
     *queryInit({resolve,payload},{put,select}) {
       const state=yield select(state=>state[namespace]);
       const queryFilters=state[keyConfig.queryFilters];

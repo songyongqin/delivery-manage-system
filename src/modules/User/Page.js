@@ -16,7 +16,7 @@ function mapStateToProps(state) {
 
   return {
     commonLayout,
-    loading:state.loading["user/postSign"]
+    loading:state.loading.effects["user/postSign"]
   }
 }
 
