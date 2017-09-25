@@ -75,21 +75,18 @@ const baseModel={
             }
           })
 
-        }
+          const productTypeRes=yield callWithExtra(
+            service.getProductType,
+            {},
+            {
+              withStatusHandle:true,
+            }
+          )
 
-        const productTypeRes=yield callWithExtra(
-          service.getProductType,
-          {},
-          {
-            withStatusHandle:true,
+          if(productTypeRes.status===1){
+            tools.setTemp("productType",productTypeRes.payload);
           }
-        )
 
-        if(productTypeRes.status===1){
-          tools.setTemp("productType",productTypeRes.payload);
-        }
-
-        if(res.status===1){
           resolve&&resolve();
         }
 
