@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
+import { Menu,Button,Table,Icon,Row,Col,Card,Modal } from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../components/EnhanciveTable/index';
@@ -10,13 +10,14 @@ import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageO
 import {WithBreadcrumb} from '../../components/HOSComponents/index'
 import styles from './styles.css'
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
-
+import CreateHoneypotForm from './components/CreateHoneypotForm';
 
 import {
   tableTextConfig,
   NAMESPACE,
   HOST_IP_DATAINDEX,
   HONEYPOT_IP_DATAINDEX,
+  HONEYPOT_NAME_DATAINDEX,
 } from './ConstConfig';
 
 
@@ -39,7 +40,12 @@ function mapDispatchToProps(dispatch) {
      return dispatch({
        type:`${NAMESPACE}/getVMIpList`
      })
-   }
+   },
+    getVMNameList:()=>{
+      return dispatch({
+        type:`${NAMESPACE}/getVMNameList`
+      })
+    },
 
   }
 }
@@ -60,7 +66,14 @@ class Page extends React.Component{
     this.state={
       [HOST_IP_DATAINDEX]:[],
       [HONEYPOT_IP_DATAINDEX]:[],
+      [HONEYPOT_NAME_DATAINDEX]:[],
+      visible:false,
     }
+  }
+  switchModal=()=>{
+    this.setState({
+      visible:!this.state.visible
+    })
   }
   componentDidMount=()=>{
 
@@ -69,6 +82,7 @@ class Page extends React.Component{
       this.getVMIpList();
     }
     this.getNodeIpList();
+    this.getVMNameList();
   }
   getNodeIpList=()=>{
     this.props.getNodeIpList().then(result=>{
@@ -81,6 +95,13 @@ class Page extends React.Component{
     this.props.getVMIpList({hostIp}).then(result=>{
       this.setState({
         [HONEYPOT_IP_DATAINDEX]:result,
+      })
+    })
+  }
+  getVMNameList=()=>{
+    this.props.getVMNameList().then(result=>{
+      this.setState({
+        [HONEYPOT_NAME_DATAINDEX]:result,
       })
     })
   }
@@ -162,12 +183,12 @@ class Page extends React.Component{
     const classes=classnames({
       ["card-dark"]:commonLayout.darkTheme
     });
-
     return (
       <div key={"results-panel"}>
         <Card title={"虚拟蜜罐"}
               className={classes}>
           <Button style={{marginBottom:"15px"}}
+                  onClick={this.switchModal}
                   type="primary"
                   icon="plus">创建蜜罐</Button>
           <EnhanciveTable title={tableTextConfig.title}
@@ -181,9 +202,19 @@ class Page extends React.Component{
   };
   render=()=> {
 
+    const {commonLayout}=this.props;
+
+    const isDark=commonLayout.darkTheme;
+
+
     const pageClasses=classnames({
       // [styles["page"]]:true,
       // [styles["page-dark"]]:this.props.commonLayout.darkTheme
+    });
+
+    const modalClasses=classnames({
+      ["modal"]:true,
+      ["modal-dark"]:isDark
     });
 
     return (
@@ -194,7 +225,18 @@ class Page extends React.Component{
             this.getResultsPanel(),
           ])}
         </JoSpin>
-
+        <Modal title={<p><Icon type="plus"/>&nbsp;创建新的蜜罐</p>}
+               visible={this.state.visible}
+               className={modalClasses}
+               onCancel={this.switchModal}
+               footer={null}
+               width={700}>
+          <CreateHoneypotForm isDark={isDark}
+                              options={{
+            [HONEYPOT_NAME_DATAINDEX]:this.state[HONEYPOT_NAME_DATAINDEX],
+            [HOST_IP_DATAINDEX]:this.state[HOST_IP_DATAINDEX]
+          }}/>
+        </Modal>
       </div>
     )
   }

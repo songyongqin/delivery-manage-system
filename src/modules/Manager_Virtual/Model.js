@@ -56,6 +56,16 @@ const baseModel={
       if(res.status===1){
         resolve&&resolve(res.payload)
       }
+    },
+    *getVMNameList({resolve},{callWithExtra}) {
+      const res=yield callWithExtra(
+        service.getVMNameList,
+        {},
+        commonCallConfig
+      )
+      if(res.status===1){
+        resolve&&resolve(res.payload)
+      }
     }
   }
 };

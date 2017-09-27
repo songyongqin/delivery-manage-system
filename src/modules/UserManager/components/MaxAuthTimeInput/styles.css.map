@@ -1,7 +1,7 @@
 {
 "version": 3,
 "mappings": "AACA,MAAM;EACJ,KAAK,EAAE,IAAI;EACX,OAAO,EAAC,IAAI;;AAGd,SAAS;EACP,KAAK,ECUS,OAAgB",
-"sources": ["MaxAuthTimesInput.scss","../../../styles/_var.scss"],
+"sources": ["MaxAuthTimesInput.scss","../../../../styles/_var.scss"],
 "names": [],
 "file": "MaxAuthTimesInput.css"
 }

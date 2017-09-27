@@ -6,12 +6,12 @@ import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../components/EnhanciveTable/index';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
-import * as tableConfig from './components/TableConfig';
+import * as tableConfig from './components/TableConfig/index';
 import {tableTextConfig,configPanelTextConfig,createUserPanelTextConfig} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig';
-import MaxAuthTimesInput from './components/MaxAuthTimesInput';
-import LimitPanel from './components/LimitPanel';
-import CreateUserPanel from './components/CreateUserPanel';
+import MaxAuthTimesInput from './components/MaxAuthTimeInput/index';
+import LimitPanel from './components/LimitForm/index';
+import CreateUserPanel from './components/CreateUserForm/index';
 import {WithBreadcrumb} from '../../components/HOSComponents/index'
 
 

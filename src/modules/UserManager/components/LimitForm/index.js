@@ -3,10 +3,10 @@
  */
 import React from 'react';
 import {Switch,Row,Col,Icon,Button} from 'antd';
-import JoTag from '../../../components/JoTag';
+import JoTag from '../../../../components/JoTag';
 import classnames from 'classnames';
-import styles from './LimitPanel.css';
-import JoSpin from '../../../components/JoSpin/index';
+import styles from './styles.css';
+import JoSpin from '../../../../components/JoSpin/index';
 
 
 import {
@@ -14,7 +14,7 @@ import {
   limitRowDataIndexes,
   IS_OPEN_VALUE,
   IS_NOT_OPEN_VALUE
-} from '../ConstConfig';
+} from '../../ConstConfig';
 
 export default class extends React.Component{
   constructor(props) {

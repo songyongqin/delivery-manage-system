@@ -87,7 +87,7 @@ class Page extends React.Component{
         ["animated"]:true,
         ["fadeInLeft"]:true,
       });
-
+    console.info(routeConfig)
     return (
       <div className={classes}>
         <Nav isMini={navMini}
@@ -244,6 +244,7 @@ class Page extends React.Component{
         <Modal visible={this.state.modifyPassword}
                key={`${this.state.modifyPassword}-modify-password`}
                footer={null}
+               maskClosable={true}
                className={modalClasses}
                onCancel={this.switchModal}
                style={{top:"200px"}}

@@ -2,11 +2,11 @@
  * Created by jojo on 2017/9/5.
  */
 import React from 'react';
-import tableColumnsGenerator from '../../../utils/tableColumnsGenerator';
-import JoTag from '../../../components/JoTag';
+import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
+import JoTag from '../../../../components/JoTag';
 import {Icon,Switch,Card,Timeline,InputNumber,Button} from 'antd';
 import classnames from 'classnames';
-import * as tools from '../../../utils/tools';
+import * as tools from '../../../../utils/tools';
 import {
   rowDataIndexes,
   tableTextConfig,
@@ -18,8 +18,8 @@ import {
   COMMON_USER_ROLE,
   IS_NOT_FREEZE,
   IS_FREEZE
-} from '../ConstConfig';
-import {} from '../ConstConfig';
+} from '../../ConstConfig';
+import {} from '../../ConstConfig';
 
 
 const roleRenderer=value=><JoTag >{tableTextConfig.enums.role[value]}</JoTag>

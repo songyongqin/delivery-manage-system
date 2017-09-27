@@ -1,7 +1,7 @@
 {
 "version": 3,
 "mappings": "AAKE,aAAM;EACJ,KAAK,EAAE,IAAI;EACX,eAAe,EAAE,QAAQ;EACzB,gBAAE;IACA,UAAU,ECPE,KAAgB;EDS9B,gBAAE;IACA,OAAO,EAAC,IAAI;EAEd,2BAAa;IACX,UAAU,EAAE,KAAK;AAGrB,aAAM;EACJ,UAAU,EAAE,MAAM;EAClB,aAAa,EAAC,GAAG;;AAIrB,WAAW;EACT,KAAK,ECRS,OAAgB;EDU5B,qBAAE;IACA,UAAU,ECjBO,OAAa",
-"sources": ["LimitPanel.scss","../../../styles/_var.scss"],
+"sources": ["LimitPanel.scss","../../../../styles/_var.scss"],
 "names": [],
 "file": "LimitPanel.css"
 }

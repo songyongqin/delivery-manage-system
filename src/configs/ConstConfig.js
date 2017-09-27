@@ -123,7 +123,7 @@ export const  WIN7_SYS="win7",
 export const systems=[WIN7_SYS,WIN_XP_SYS,NEO_KYLIN_SYS];
 
 export const systemsTextConfig={
-  [WIN_XP_SYS]:"Windows 7",
+  [WIN7_SYS]:"Windows 7",
   [WIN_XP_SYS]:"Windows XP",
   [NEO_KYLIN_SYS]:"中标麒麟"
 }

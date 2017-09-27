@@ -93,6 +93,9 @@ const routesENUS={
       }
     }
   },
+  "user-manager":{
+    title:"USER MANAGER"
+  },
   "early-warning":{
     title:"WARNING",
     items:{

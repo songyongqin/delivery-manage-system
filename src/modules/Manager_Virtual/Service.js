@@ -35,3 +35,15 @@ export async function getVMIpList(payload) {
   };
   return request(httpApi.OCCUPYING_VM_IP+tools.jsonToQueryStringImprove(payload), options);
 }
+
+
+export async function getVMNameList() {
+
+  const options= {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    }
+  };
+  return request(httpApi.OCCUPYING_VM_NAME, options);
+}

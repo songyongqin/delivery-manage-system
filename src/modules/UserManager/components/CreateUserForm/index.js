@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
-import styles from './CreateUserPanel.css';
+import styles from './styles.css';
 import classnames from 'classnames';
 const FormItem = Form.Item;
 
@@ -99,10 +99,7 @@ class WrappedForm extends React.Component {
               required: true, message: '用户账号不能为空',
             },
             {
-              max:12,message:"长度必须在6-12之间"
-            },
-            {
-              min:6,message:"长度必须在6-12之间"
+              pattern:/^[a-zA-Z0-9]{6,12}$/,message:"长度必须在6-12之间 只能由大小写字母和数字组成"
             }
           ]
         },
@@ -111,7 +108,7 @@ class WrappedForm extends React.Component {
       {
         props:{
           ...commonProps,
-          label:<span className={lblClasses}>用户名称</span>
+          label:<span className={lblClasses}>用户密码</span>
         },
         filed:{
           name:"userPassword",
@@ -120,10 +117,7 @@ class WrappedForm extends React.Component {
               required: true, message: '密码不能为空',
             },
             {
-              max:12,message:"长度必须在6-12之间"
-            },
-            {
-              min:6,message:"长度必须在6-12之间"
+              pattern:/^[a-zA-Z0-9]{6,12}$/,message:"长度必须在6-12之间 只能由大小写字母和数字组成"
             }
           ]
         },
@@ -133,7 +127,7 @@ class WrappedForm extends React.Component {
       {
         props:{
           ...commonProps,
-          label:<span className={lblClasses}>用户名称</span>
+          label:<span className={lblClasses}>确认密码</span>
         },
         filed:{
           name:"confirm",

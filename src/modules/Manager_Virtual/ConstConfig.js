@@ -64,3 +64,21 @@ export const honeypotStatusTextConfig={
   [STATUS_RUNNING_VALUE]:"正在运行",
   [STATUS_STOP_VALUE]:"已关机"
 }
+
+
+export const VCPUS_DATAINDEX="vcpus",
+              RAM_DATAINDEX="ram",
+              GATEWAY_DATAINDEX="gateway",
+              AUTH_DATAINDEX="auth";
+
+
+export const honeypotTextConfig={
+  ...tableTextConfig.colTitles,
+  [VCPUS_DATAINDEX]:"蜜罐虚拟CPU数",
+  [RAM_DATAINDEX]:"蜜罐运行内存",
+  [GATEWAY_DATAINDEX]:"蜜罐网关",
+  [INTERCATION_DATAINDEX]:"蜜罐类型",
+  [SYSTEM_DATAINDEX]:"操作系统",
+  [SERVICES_DATAINDEX]:"服务支持",
+  [AUTH_DATAINDEX]:"802.1x认证"
+}
