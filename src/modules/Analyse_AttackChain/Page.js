@@ -3,8 +3,8 @@ import styles from './styles.css'
 import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge,Timeline,Checkbox,Switch } from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
-import JoSpin from '../../components/JoSpin/JoSpin';
-import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
+import JoSpin from '../../components/JoSpin/index';
+import EnhanciveTable from '../../components/EnhanciveTable/index';
 import * as tableConfig from  './components/TableConfig';
 import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';

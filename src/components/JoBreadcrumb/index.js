@@ -2,7 +2,7 @@
  * Created by jojo on 2017/8/23.
  */
 import React from 'react';
-import styles from './JoBreadcrumb.css';
+import styles from './styles.css';
 import {Link} from 'dva/router'
 // import JoIcon from '../'
 import classnames from 'classnames';

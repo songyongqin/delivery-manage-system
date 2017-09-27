@@ -1,6 +1,6 @@
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, DatePicker } from 'antd';
 import React from 'react';
-import styles from './QueryForm.css';
+import styles from './styles.css';
 const FormItem = Form.Item;
 
 class QueryForm extends React.Component {

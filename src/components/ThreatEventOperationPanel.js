@@ -2,8 +2,8 @@
  * Created by jojo on 2017/9/6.
  */
 import React from 'react';
-import QueryForm from './QueryForm/QueryForm'
-import LimitSelectForm from './LimitSelectForm/Form';
+import QueryForm from './QueryForm/index'
+import LimitSelectForm from './LimitSelectForm/index';
 import {Button} from "antd";
 
 export default ({queryFilters,isDark,formTextConfig,handle={},loading})=>{

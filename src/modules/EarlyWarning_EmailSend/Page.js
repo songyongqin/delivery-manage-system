@@ -4,7 +4,7 @@ import { Menu, Button,Breadcrumb,Tabs,Card ,message as Message} from 'antd';
 import {connect} from 'dva';
 import classnames from 'classnames';
 import {textConfig,NAMESPACE} from './ConstConfig'
-import JoSpin from '../../components/JoSpin/JoSpin';
+import JoSpin from '../../components/JoSpin/index';
 import SendEmailConfigForm from './components/SendEmailConfigForm';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'

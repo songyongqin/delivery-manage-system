@@ -24,8 +24,8 @@ const baseModel={
   namespace: NAMESPACE,
   state: {
     queryFilters:{
-      [HOST_IP_DATAINDEX]:null,
-      [HONEYPOT_IP_DATAINDEX]:null,
+      [HOST_IP_DATAINDEX]:[],
+      [HONEYPOT_IP_DATAINDEX]:[],
       [HONEYPOT_TYPE_ROW_KEY]:[],
       [HONEYPOT_STATUS_DATAINDEX]:[],
       limit:20,
@@ -36,6 +36,28 @@ const baseModel={
       data:[]
     }
   },
+  effects:{
+    *getVMIpList({resolve,payload},{callWithExtra}) {
+      const res=yield callWithExtra(
+        service.getVMIpList,
+        {...payload||{}},
+        commonCallConfig
+      )
+      if(res.status===1){
+        resolve&&resolve(res.payload)
+      }
+    },
+    *getNodeIpList({resolve},{callWithExtra}) {
+      const res=yield callWithExtra(
+        service.getNodeIpList,
+        {},
+        commonCallConfig
+      )
+      if(res.status===1){
+        resolve&&resolve(res.payload)
+      }
+    }
+  }
 };
 
 const payloadFilter=(payload)=>{

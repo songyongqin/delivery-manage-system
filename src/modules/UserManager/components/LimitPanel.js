@@ -6,7 +6,7 @@ import {Switch,Row,Col,Icon,Button} from 'antd';
 import JoTag from '../../../components/JoTag';
 import classnames from 'classnames';
 import styles from './LimitPanel.css';
-import JoSpin from '../../../components/JoSpin/JoSpin';
+import JoSpin from '../../../components/JoSpin/index';
 
 
 import {

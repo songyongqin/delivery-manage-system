@@ -50,6 +50,21 @@ body{
       }
     }
 
+    .card-dark{
+      background: $bg-color-level-1-dark;
+      border-color:transparent;
+      :global{
+        .ant-card-head{
+          background: transparent;
+          border-color:$bg-color-level-3-dark;
+        }
+        .ant-card-head-title{
+          color:white;
+
+        }
+      }
+    }
+
     .expanded-row-card-item{
       margin-bottom:10px;
     }
@@ -85,6 +100,23 @@ body{
     }
   }
 
+  .btn-danger{
+    border-color:#d73435;
+    background: #d73435;
+    color:white;
+    &:disabled{
+      color: rgba(0, 0, 0, 0.25);
+      background-color: #f7f7f7;
+      border-color: #d9d9d9;
+    }
+
+  }
+  .ant-dropdown-menu-item-disabled{
+    cursor: not-allowed;
+    a{
+      cursor: not-allowed;
+    }
+  }
 
 }
 

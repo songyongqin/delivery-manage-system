@@ -2,7 +2,7 @@
  * Created by 13944 on 2017/8/6.
  */
 import {Table,Pagination,Spin} from 'antd'
-import styles from './EnhanciveTable.css';
+import styles from './styles.css';
 import React from 'react';
 import classnames from 'classnames';
 import JoTag from '../../components/JoTag';

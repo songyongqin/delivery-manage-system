@@ -7,7 +7,7 @@ import { Form,  Icon } from 'antd';
 import {level,textConfig} from '../ConstConfig';
 import styles from './ReceiveEmailConfigForm.css';
 import classnames from 'classnames';
-import {WithDefaultValueHandle} from '../../../components/HOSComponents/HOSComponents'
+import {WithDefaultValueHandle} from '../../../components/HOSComponents/index'
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 
@@ -107,7 +107,6 @@ class WrappedForm extends React.Component {
         </FormItem>
       );
     });
-    console.info(defaultValue.level)
     return (
       <Form style={{maxWidth:"600px",paddingBottom:"300px"}}>
         <FormItem {...formItemLayout}

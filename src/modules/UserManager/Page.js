@@ -3,8 +3,8 @@ import styles from './styles.css'
 import classnames from 'classnames';
 import { Menu, Button,Icon,Row,Col,Card,message as Message,Modal} from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
-import JoSpin from '../../components/JoSpin/JoSpin';
-import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
+import JoSpin from '../../components/JoSpin/index';
+import EnhanciveTable from '../../components/EnhanciveTable/index';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
 import * as tableConfig from './components/TableConfig';
 import {tableTextConfig,configPanelTextConfig,createUserPanelTextConfig} from './ConstConfig';
@@ -12,6 +12,7 @@ import {NAMESPACE} from './ConstConfig';
 import MaxAuthTimesInput from './components/MaxAuthTimesInput';
 import LimitPanel from './components/LimitPanel';
 import CreateUserPanel from './components/CreateUserPanel';
+import {WithBreadcrumb} from '../../components/HOSComponents/index'
 
 
 function mapStateToProps(state) {
@@ -59,6 +60,8 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+
+@WithBreadcrumb
 @queryContainerGenerator({
   namespace:NAMESPACE,
   mapStateToProps,
@@ -177,11 +180,12 @@ class Page extends React.Component{
     );
 
     return (
-      <Card key="results-panel"
-            className={classes}
-            title={titleContent}>
-        {this.getDataResultPanel()}
-      </Card>
+      <div key="results-panel">
+        <Card className={classes}
+              title={titleContent}>
+          {this.getDataResultPanel()}
+        </Card>
+      </div>
     )
   };
   getConfigPanel=()=>{
@@ -193,16 +197,18 @@ class Page extends React.Component{
     });
 
     return (
-        <Card key={`config-panel`}
-              title={configPanelTextConfig.title}
-              className={classes}
-              style={{marginBottom:"15px"}}>
+      <div key={`config-panel`}>
+        <Card
+          title={configPanelTextConfig.title}
+          className={classes}
+          style={{marginBottom:"15px"}}>
           <MaxAuthTimesInput textConfig={{label:configPanelTextConfig.description}}
                              loading={this.props.putUserConfigLoading}
                              onSubmit={this.putUserConfig}
                              deafultValue={queryResults.maxAuthTimes}
                              isDark={commonLayout.darkTheme}/>
         </Card>
+      </div>
     )
   }
   getDataResultPanel=()=>{
@@ -243,6 +249,13 @@ class Page extends React.Component{
       </div>
     )
   };
+  getBreadcrumb=()=>{
+    return (
+      <div key="bread-crumb" style={{margin:"15px 0"}}>
+        {this.props.getBreadcrumb(this.props.routes)}
+      </div>
+    )
+  }
   render=()=> {
 
     const pageClasses=classnames({
@@ -263,6 +276,7 @@ class Page extends React.Component{
       <div className={pageClasses}>
         <JoSpin spinning={queryLoading||putUserLoading||putUserConfigLoading}>
           {this.props.animateRender([
+            this.getBreadcrumb(),
             this.getConfigPanel(),
             this.getResultsPanel(),
           ])}

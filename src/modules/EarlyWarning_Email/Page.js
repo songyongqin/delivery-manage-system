@@ -5,7 +5,7 @@ import {
   RECEIVE_EMAIL_CONFIG_TITLE,
   SEND_CONFIG_TITLE
 } from './ConstConfig';
-import {WithAnimateRender,WithBreadcrumb} from '../../components/HOSComponents/HOSComponents'
+import {WithAnimateRender,WithBreadcrumb} from '../../components/HOSComponents/index'
 import {connect} from 'dva';
 import classnames from 'classnames';
 import EmailReceive from '../EarlyWarning_EmailReceive/Page';

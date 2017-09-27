@@ -6,8 +6,8 @@ import React from 'react';
 import {Menu,Affix} from 'antd';
 import {Link} from 'dva/router';
 import QueueAnim from 'rc-queue-anim'
-import styles from './HOSComponents.css';
-import JoBreadcrumb from '../JoBreadcrumb/JoBreadcrumb';
+import styles from './styles.css';
+import JoBreadcrumb from '../JoBreadcrumb/index';
 import QueryForm from '../TimestampForm';
 import Icon from '../JoIcon';
 import {connect} from 'dva';

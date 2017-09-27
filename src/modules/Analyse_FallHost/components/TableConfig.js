@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import * as tools from '../../../utils/tools';
 import commonConstConfig from '../../../configs/ConstConfig';
 import {filterRowDataIndexes,rowDataIndexes,tableTextConfig} from '../ConstConfig';
-import FilterInputNumber from '../../../components/FilterInputNumber/FilterInputNumber';
+import FilterInputNumber from '../../../components/FilterInputNumber/index';
 import TimeLabel from '../../../components/TimesLabel';
 
 const rowsRenderer={

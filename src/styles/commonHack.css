@@ -22,6 +22,14 @@ body :global .expanded-row-dark {
     border-color: #1c233b; }
   body :global .expanded-row-dark :global .ant-card-head-title {
     color: white; }
+body :global .card-dark {
+  background: #252d47;
+  border-color: transparent; }
+  body :global .card-dark :global .ant-card-head {
+    background: transparent;
+    border-color: #1c233b; }
+  body :global .card-dark :global .ant-card-head-title {
+    color: white; }
 body :global .expanded-row-card-item {
   margin-bottom: 10px; }
 body :global .modal :global .ant-modal-content {
@@ -37,5 +45,17 @@ body :global .modal-dark :global .ant-modal-close-x {
   color: #b7c1cc; }
 body :global .ant-card-head-title {
   width: 100%; }
+body .btn-danger {
+  border-color: #d73435;
+  background: #d73435;
+  color: white; }
+  body .btn-danger:disabled {
+    color: rgba(0, 0, 0, 0.25);
+    background-color: #f7f7f7;
+    border-color: #d9d9d9; }
+body .ant-dropdown-menu-item-disabled {
+  cursor: not-allowed; }
+  body .ant-dropdown-menu-item-disabled a {
+    cursor: not-allowed; }
 
 /*# sourceMappingURL=commonHack.css.map */

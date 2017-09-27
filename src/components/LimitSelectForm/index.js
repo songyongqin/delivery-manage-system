@@ -1,6 +1,6 @@
 import { Form, Input, Tooltip, Icon, Cascader, Select } from 'antd';
 import React from 'react';
-import styles from './Form.css';
+import styles from './styles.css';
 const Option = Select.Option;
 
 

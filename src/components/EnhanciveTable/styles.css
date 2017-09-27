@@ -10,9 +10,9 @@
 .light :global .ant-table-thead > tr > th {
   background: white; }
 .light :global .ant-table-row td {
-  border-color: black; }
+  border-color: #c8c8c8; }
 .light :global tr.ant-table-expanded-row td, .light :global tr.ant-table-expanded-row:hover td {
-  border-color: black; }
+  border-color: #c8c8c8; }
 .light :global .ant-table-placeholder {
   color: rgba(0, 0, 0, 0.85); }
 .light :global tr.ant-table-expanded-row:hover {
@@ -54,4 +54,4 @@
     background: white;
     border-color: transparent; }
 
-/*# sourceMappingURL=EnhanciveTable.css.map */
+/*# sourceMappingURL=styles.css.map */

@@ -2,10 +2,10 @@
  * Created by jojo on 2017/8/24.
  */
 import React from 'react';
-import styles from './JoSpin.css';
+import styles from './styles.css';
 import {Icon} from 'antd';
 import classnames from 'classnames';
-import JoLoadingEffect from '../JoLoadingEffect/JoLoadingEffect';
+import JoLoadingEffect from '../JoLoadingEffect/index';
 export default class JoSpin extends React.Component{
   constructor(props) {
     super(props);

@@ -9,7 +9,7 @@ import {
   SYS_CONFIG_MONITOR,
   SYS_CONFIG_USER_MANAGER
 } from './ConstConfig';
-import {WithAnimateRender,WithBreadcrumb} from '../../components/HOSComponents/HOSComponents'
+import {WithAnimateRender,WithBreadcrumb} from '../../components/HOSComponents/index'
 import {connect} from 'dva';
 import classnames from 'classnames';
 import UserManager from '../UserManager/Page';
@@ -56,9 +56,7 @@ class Page extends React.Component{
     )
   }
   getPane=(key)=>{
-    if(key===SYS_CONFIG_USER_MANAGER){
-      return <UserManager/>
-    }
+
     if(key===SYS_CONFIG_MONITOR){
       return
     }

@@ -2,7 +2,7 @@
  * Created by jojo on 2017/8/24.
  */
 
-import styles from './JoLoadingEffect.css'
+import styles from './styles.css'
 
 export default ()=>{
   return (

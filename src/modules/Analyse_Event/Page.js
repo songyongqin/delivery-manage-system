@@ -3,8 +3,8 @@ import styles from './styles.css'
 import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge,Modal } from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
-import JoSpin from '../../components/JoSpin/JoSpin';
-import EnhanciveTable from '../../components/EnhanciveTable/EnhanciveTable';
+import JoSpin from '../../components/JoSpin/index';
+import EnhanciveTable from '../../components/EnhanciveTable/index';
 import * as tools from '../../utils/tools.js';
 import * as tableConfig from './components/TableConfig';
 import {statisticDataIndexes,statisticsTextConfig,tableTextConfig,haveDetailsDataIndexes,FALLHOST_DATAINDEX} from './ConstConfig';

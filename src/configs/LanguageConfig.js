@@ -47,6 +47,9 @@ const routesZHCN={
     "sys-config":{
       title:"系统配置"
     },
+    "user-manager":{
+      title:"用户管理"
+    },
     "honeypot-manager":{
       title:"蜜罐管理",
       items:{

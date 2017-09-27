@@ -3,7 +3,7 @@ import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Butto
 import classnames from 'classnames';
 import styles from './SendEmailConfigForm.css';
 import {referenceEmailTextConfig,referTableDataIndexes} from '../ConstConfig';
-import EnhanciveTable from '../../../components/EnhanciveTable/EnhanciveTable';
+import EnhanciveTable from '../../../components/EnhanciveTable/index';
 import tableColumsGenerator from '../../../utils/tableColumnsGenerator'
 
 const getColumns=()=>{

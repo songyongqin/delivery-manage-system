@@ -9,6 +9,30 @@ import classnames from 'classnames';
 const FormItem = Form.Item;
 
 
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 6 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 14 },
+  },
+};
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 14,
+      offset: 6,
+    },
+  },
+};
+
+
 @Form.create()
 class WrappedForm extends React.Component {
   state = {
@@ -54,104 +78,91 @@ class WrappedForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const {isDark,loading}=this.props;
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-      },
-    };
-    const tailFormItemLayout = {
-      wrapperCol: {
-        xs: {
-          span: 24,
-          offset: 0,
-        },
-        sm: {
-          span: 14,
-          offset: 6,
-        },
-      },
-    };
+
 
     const lblClasses=classnames({
       [styles["lbl-dark"]]:isDark
     })
 
+    const commonProps={...formItemLayout,colon:false,hasFeedback:true}
+
+    const items=[
+      {
+        props:{
+          ...commonProps,
+          label:<span className={lblClasses}>用户名称</span>
+        },
+        filed:{
+          name:"userAccount",
+          rules:[
+            {
+              required: true, message: '用户账号不能为空',
+            },
+            {
+              max:12,message:"长度必须在6-12之间"
+            },
+            {
+              min:6,message:"长度必须在6-12之间"
+            }
+          ]
+        },
+        component:<Input disabled={loading}/>
+      },
+      {
+        props:{
+          ...commonProps,
+          label:<span className={lblClasses}>用户名称</span>
+        },
+        filed:{
+          name:"userPassword",
+          rules:[
+            {
+              required: true, message: '密码不能为空',
+            },
+            {
+              max:12,message:"长度必须在6-12之间"
+            },
+            {
+              min:6,message:"长度必须在6-12之间"
+            }
+          ]
+        },
+        component:<Input disabled={loading}
+                          type="password" />
+      },
+      {
+        props:{
+          ...commonProps,
+          label:<span className={lblClasses}>用户名称</span>
+        },
+        filed:{
+          name:"confirm",
+          rules: [
+            {
+              required: true, message: '请再次确密码',
+            },
+            {
+              validator: this.checkPassword,
+            }
+          ],
+        },
+        component:<Input type="password"
+                          disabled={loading}
+                          onBlur={this.handleConfirmBlur}
+                          onPressEnter={this.handleSubmit} />
+      }
+    ]
+
 
     return (
       <Form >
-        <FormItem
-          {...formItemLayout}
-          colon={false}
-          label={<span className={lblClasses}>用户名称</span>}
-          hasFeedback
-        >
-          {getFieldDecorator('userAccount', {
-            rules: [
-              {
-                required: true, message: '用户账号不能为空',
-              },
-              {
-                max:12,message:"长度必须在6-12之间"
-              },
-              {
-                min:6,message:"长度必须在6-12之间"
-              }
-            ],
-          })(
-            <Input disabled={loading}/>
-          )}
-        </FormItem>
-        <FormItem
-          colon={false}
-          {...formItemLayout}
-          label={<span className={lblClasses}>密码</span>}
-          hasFeedback
-        >
-          {getFieldDecorator('userPassword', {
-            rules: [
-              {
-                required: true, message: '密码不能为空',
-              },
-              {
-                max:12,message:"长度必须在6-12之间"
-              },
-              {
-                min:6,message:"长度必须在6-12之间"
-              },
-              {
-                validator: this.checkConfirm,
-              }
-              ],
-          })(
-            <Input disabled={loading}
-                   type="password" />
-          )}
-        </FormItem>
-        <FormItem
-          colon={false}
-          {...formItemLayout}
-          label={<span className={lblClasses}>确认密码</span>}
-          hasFeedback
-        >
-          {getFieldDecorator('confirm', {
-            rules: [{
-              required: true, message: '请再次确密码',
-            }, {
-              validator: this.checkPassword,
-            }],
-          })(
-            <Input type="password"
-                   disabled={loading}
-                   onBlur={this.handleConfirmBlur}
-                   onPressEnter={this.handleSubmit} />
-          )}
-        </FormItem>
-
+        {
+          items.map(i=><FormItem key={i.filed.name} {...i.props}>
+            {
+              getFieldDecorator(i.filed.name,{rules:i.filed.rules})(i.component)
+            }
+          </FormItem>)
+        }
         <FormItem {...tailFormItemLayout}>
           <Button type="primary"
                   loading={loading}

@@ -36,13 +36,13 @@
     }
     .ant-table-row{
       td{
-        border-color:black;
+        border-color:rgb(200,200,200);
       }
     }
     tr.ant-table-expanded-row, tr.ant-table-expanded-row:hover {
       //color:$txt-color;
       td{
-        border-color:black;
+        border-color:rgb(200,200,200);
       }
     }
     .ant-table-placeholder{
@@ -96,6 +96,8 @@
       }
     }
   }
+
+
 }
 
 .pagination-dark{

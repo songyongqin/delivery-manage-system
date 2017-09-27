@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Button,Card,Dropdown } from 'antd';
-import {WithBreadcrumb,WithAnimateRender} from '../../components/HOSComponents/HOSComponents'
+import {WithBreadcrumb,WithAnimateRender} from '../../components/HOSComponents/index'
 import ControlDisk from '../Manager_Device_Control_Disk/Page';
 import DeviceControl from '../Manager_Device_Control/Page';
 import NodeDisk from '../Manager_Device_Node_Disk/Page';
@@ -9,7 +9,7 @@ import DeviceNode from '../Manager_Device_Node/Page';
 import {CONTROL_PANEL_TITLE,NODE_PANEL_TITLE} from './ConstConfig'
 import classnames from 'classnames';
 import {connect} from 'dva';
-import JoSpin from '../../components/JoSpin/JoSpin';
+import JoSpin from '../../components/JoSpin/index';
 import {NAMESPACE as MANAGER_DEVICE_NAMESPACE} from '../Manager_Device_Control/ConstConfig'
 import {NAMESPACE as MANAGER_DEVICE_DISK_NAMESPACE} from '../Manager_Device_Control_Disk/ConstConfig';
 import {NAMESPACE as MANAGER_DEVICE_NODE_DISK_NAMESPACE} from '../Manager_Device_Node_Disk/ConstConfig'
@@ -64,24 +64,24 @@ class Page extends React.Component{
     const {commonLayout,controlLoading}=this.props;
 
     const classes=classnames({
-      ["expanded-row-dark"]:commonLayout.darkTheme
+      ["card-dark"]:commonLayout.darkTheme
     });
 
     return (
-      <Card className={classes}
-            key="control-panel"
-            title={CONTROL_PANEL_TITLE}
-            style={{marginTop:"15px"}}>
-        <JoSpin spinning={controlLoading}>
-          <div>
-            <ControlDisk/>
-
-          </div>
-          <div style={{marginTop:"15px"}}>
-            <DeviceControl/>
-          </div>
-        </JoSpin>
-      </Card>
+      <div key="control-panel">
+        <Card className={classes}
+              title={CONTROL_PANEL_TITLE}
+              style={{marginTop:"15px"}}>
+          <JoSpin spinning={controlLoading}>
+            <div>
+              <ControlDisk/>
+            </div>
+            <div style={{marginTop:"15px"}}>
+              <DeviceControl/>
+            </div>
+          </JoSpin>
+        </Card>
+      </div>
     )
   }
   getNodePanel=()=>{
@@ -101,26 +101,27 @@ class Page extends React.Component{
       </Menu>
     );
     return (
-      <Card className={classes}
-            key="node-panel"
-            title={NODE_PANEL_TITLE}
-            style={{marginTop:"15px"}}>
-        <JoSpin spinning={nodeLoading}>
-          <div style={{overflow:"hidden"}}>
-            <div style={{display:"inline-block"}}>
-              <NodeDisk/>
+      <div key="node-panel">
+        <Card className={classes}
+              title={NODE_PANEL_TITLE}
+              style={{marginTop:"15px"}}>
+          <JoSpin spinning={nodeLoading}>
+            <div style={{overflow:"hidden"}}>
+              <div style={{display:"inline-block"}}>
+                <NodeDisk/>
+              </div>
+              <div style={{display:"inline-block",marginLeft:"15px"}}>
+                <Dropdown.Button overlay={menu} type="primary">
+                  批量授权
+                </Dropdown.Button>
+              </div>
             </div>
-            <div style={{display:"inline-block",marginLeft:"15px"}}>
-              <Dropdown.Button overlay={menu} type="primary">
-                批量授权
-              </Dropdown.Button>
+            <div style={{marginTop:"15px"}}>
+              <DeviceNode/>
             </div>
-          </div>
-          <div style={{marginTop:"15px"}}>
-            <DeviceNode/>
-          </div>
-        </JoSpin>
-      </Card>
+          </JoSpin>
+        </Card>
+      </div>
     )
   }
   render=()=>{

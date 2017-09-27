@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
-import {WithAnimateRender,WithContainerHeader} from '../../components/HOSComponents/HOSComponents';
+import {WithAnimateRender,WithContainerHeader} from '../../components/HOSComponents/index';
 import { connect } from 'dva';
 
 function defaultMapStateToProps(state) {

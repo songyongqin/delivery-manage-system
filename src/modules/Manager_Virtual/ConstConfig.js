@@ -14,9 +14,10 @@ export const  ID_DATAINDEX="id",
               HONEYPOT_IP_DATAINDEX="honeypotIp",
               HONEYPOT_NAME_DATAINDEX="honeypotName",
               HONEYPOT_STATUS_DATAINDEX="honeypotStatus",
-              INTERCATION_DATAINDEX="interation",
+              INTERCATION_DATAINDEX="interaction",
               SERVICES_DATAINDEX="services",
-              SYSTEM_DATAINDEX="system";
+              SYSTEM_DATAINDEX="system",
+              PORTS_DATAINDEX="ports";
 
 export const HONEYPOT_TYPE_ROW_KEY='honeypotType';
 export const OPERATION_ROW_KEY="operation";
@@ -26,25 +27,29 @@ export const tableRowDataIndexes=[
   HONEYPOT_IP_DATAINDEX,
   HONEYPOT_NAME_DATAINDEX,
   HONEYPOT_TYPE_ROW_KEY,
+  SERVICES_DATAINDEX,
+  PORTS_DATAINDEX,
   HONEYPOT_STATUS_DATAINDEX,
   OPERATION_ROW_KEY
 ]
 
 export const tableTextConfig={
-  rowTitles:{
+  colTitles:{
     [HOST_IP_DATAINDEX]:"主机IP",
     [HONEYPOT_IP_DATAINDEX]:"蜜罐IP",
     [HONEYPOT_NAME_DATAINDEX]:"蜜罐名称",
     [HONEYPOT_TYPE_ROW_KEY]:"蜜罐类型",
     [HONEYPOT_STATUS_DATAINDEX]:"蜜罐状态",
-    [OPERATION_ROW_KEY]:"操作"
+    [OPERATION_ROW_KEY]:"操作",
+    [SERVICES_DATAINDEX]:"服务支持",
+    [PORTS_DATAINDEX]:"端口支持"
   }
 }
 
-const STATUS_ERROR_VALUE=-2,
-      STATUS_LICENCE_OVERDUE=-1,
-      STATUS_STOP_VALUE=0,
-      STATUS_RUNNING_VALUE=1;
+export const  STATUS_ERROR_VALUE=-2,
+              STATUS_LICENCE_OVERDUE=-1,
+              STATUS_STOP_VALUE=0,
+              STATUS_RUNNING_VALUE=1;
 
 export const honeypotStatusValues=[
   STATUS_RUNNING_VALUE,

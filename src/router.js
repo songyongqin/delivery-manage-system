@@ -34,6 +34,8 @@ import ManagerMirror from './modules/Manager_Mirror/Page';
 
 import ThreatEvent from './modules/ThreatEvent/Page';
 
+import UserManager from './modules/UserManager/Page';
+
 function RouterConfig({ history ,app }) {
 
   // const registerModel=getRegisterModel(app);
@@ -70,6 +72,8 @@ function RouterConfig({ history ,app }) {
           <Route path="virtual-machine" components={ManagerVirtual}/>
           <Route path="mirror" components={ManagerMirror}/>
         </Route>
+        
+        <Route path="user-manager" components={UserManager}/>
 
 
         <Route path="threat-event" components={ThreatEvent}>

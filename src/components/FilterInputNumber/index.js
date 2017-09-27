@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {InputNumber,Button,Form} from 'antd';
-import styles from './FilterInputNumber.css';
+import styles from './styles.css';
 const FormItem = Form.Item;
 
 function validatePrimeNumber(number) {

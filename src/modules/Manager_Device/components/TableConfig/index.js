@@ -2,7 +2,7 @@
  * Created by jojo on 2017/9/5.
  */
 import React from 'react';
-import tableColumnsGenerator from '../../../utils/tableColumnsGenerator';
+import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
 import {
   deviceRowDataIndexes,
   tableTextConfig,
@@ -15,11 +15,11 @@ import {
   LICENCE_STATUS_DATAINDEX,
   OPERATION_ROW_KEY,
   LICENCE_VALID_VALUE
-}from '../ConstConfig';
-import {Progress,Row,Col,Badge,Button} from 'antd'
-import JoTag from '../../../components/JoTag';
-import TimesLabel from '../../../components/TimesLabel';
-import styles from './TableConfig.css';
+}from '../../ConstConfig';
+import {Progress,Row,Col,Badge,Button,Dropdown,Icon,Menu} from 'antd'
+import JoTag from '../../../../components/JoTag';
+import TimesLabel from '../../../../components/TimesLabel';
+import styles from './styles.css';
 import moment from 'moment';
 import classnames from 'classnames';
 
@@ -82,32 +82,34 @@ const getLiencenRenderer=isDark=>value=>(
 
 const getOperationRenderer=({isAdmin})=>{
   return records=>{
-    const isLicence=records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX]===LICENCE_VALID_VALUE;
+    const isLicence=records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX]===LICENCE_VALID_VALUE,
+          menu=(
+            <Menu>
+              <Menu.Item disabled={isLicence||!isAdmin}>
+                <span>
+                  <Icon type="unlock"/>&nbsp;授权
+                </span>
+              </Menu.Item>
+              <Menu.Item  disabled={!isAdmin}>
+                <span>
+                  <Icon type="reload"/>&nbsp;检查升级
+                </span>
+              </Menu.Item>
+              <Menu.Item  disabled={!isAdmin}>
+                <span>
+                  <Icon type="delete"/>&nbsp;磁盘清理
+                </span>
+              </Menu.Item>
+            </Menu>
+          )
+
+
+
     return (
-      <div style={{textAlign:"center"}} className={styles["operation-list"]}>
-        <Button type="primary"
-                icon="unlock"
-                disabled={isLicence||!isAdmin}
-                className={styles["operation-item"]}>
-          授权
-        </Button>
-        <br/>
-        <Button type="primary"
-                icon="reload"
-                disabled={!isAdmin}
-                className={styles["operation-item"]}>
-          检查升级
-        </Button>
-        <br/>
-        <Button type="danger"
-                icon="delete"
-                disabled={!isAdmin}
-                className={classnames({
-                  [styles["operation-item"]]:true,
-                  [styles["btn-danger"]]:true,
-                })}>
-          磁盘清理
-        </Button>
+      <div style={{textAlign:"center"}}>
+        <Dropdown overlay={menu}>
+          <Button icon="ellipsis" />
+        </Dropdown>
       </div>
     )
 

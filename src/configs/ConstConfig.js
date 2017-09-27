@@ -88,7 +88,7 @@ export const USERACCOUNT_DATAINDEX="userAccount";
 
 /*********************************************************************/
 
-const SSH_SERVICE="SSHService",
+export const SSH_SERVICE="SSHService",
       TELNET_SERVICE="TelnetService",
       DATABASE_SERVICE="DatabaseService",
       INDUSTRIAL_CONTROL_SERVICE="IndustrialControlService";
@@ -105,8 +105,8 @@ export const servicesTextConfig={
 }
 
 
-const HIGH_INTERATION="highInteraction";
-const LOW_INTERACTION="lowInteration";
+export const  HIGH_INTERATION="highInteraction",
+              LOW_INTERACTION="lowInteration";
 
 export const interactions=[HIGH_INTERATION,LOW_INTERACTION];
 
@@ -115,9 +115,9 @@ export const interactionsTextConfig={
   [LOW_INTERACTION]:"低交互"
 }
 
-const WIN7_SYS="win7";
-const WIN_XP_SYS="winxp";
-const NEO_KYLIN_SYS="neoKylin";
+export const  WIN7_SYS="win7",
+              WIN_XP_SYS="winxp",
+              NEO_KYLIN_SYS="neoKylin";
 
 
 export const systems=[WIN7_SYS,WIN_XP_SYS,NEO_KYLIN_SYS];
@@ -127,3 +127,4 @@ export const systemsTextConfig={
   [WIN_XP_SYS]:"Windows XP",
   [NEO_KYLIN_SYS]:"中标麒麟"
 }
+

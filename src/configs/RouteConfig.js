@@ -90,6 +90,12 @@ export default {
     adminOnly:true,
     icon: <Icon type="setting"/>
   },
+  "user-manager":{
+    title:"用户管理",
+    link:"/user-manager",
+    adminOnly:true,
+    icon: <Icon type="team"/>
+  },
   "honeypot-manager":{
     order:7,
     title:"蜜罐管理",
