@@ -1,4 +1,4 @@
-@import "../../../styles/var";
+@import "../../../../styles/_var";
 
 .form{
   label:after{
@@ -12,6 +12,7 @@
   .btn,.input{
     //border-radius: 30px;
     height: 40px;
+
     :global{
       .ant-input-prefix{
         color:$primary-color;
@@ -22,9 +23,11 @@
     .ant-input{
       //border-radius: 30px;
       background: rgba(255,255,255,0.1) !important;
+      background: transparent;
       color:$txt-color;
       padding:10px;
       height: 40px;
+
       &::placeholder{
         color:#cccccc;
       }

@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Menu,Button,Table,Icon,Row,Col,Card,Modal } from 'antd';
+import { Menu,Button,Table,Icon,Row,Col,Card,Modal,Dropdown } from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../components/EnhanciveTable/index';
@@ -68,6 +68,7 @@ class Page extends React.Component{
       [HONEYPOT_IP_DATAINDEX]:[],
       [HONEYPOT_NAME_DATAINDEX]:[],
       visible:false,
+      selectedRows:[],
     }
   }
   switchModal=()=>{
@@ -137,6 +138,11 @@ class Page extends React.Component{
   onFilter=(value)=>{
     this.onQuery({attackCounts:value})
   };
+  setSelectedRows=(selectedRows)=>{
+    this.setState({
+      selectedRows
+    })
+  }
   getDataResultPanel=()=>{
 
     const {commonLayout,pageOnChange}=this.props;
@@ -151,7 +157,7 @@ class Page extends React.Component{
 
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
-        console.info(selectedRows);
+        this.setSelectedRows(selectedRows);
       },
     };
 
@@ -180,6 +186,14 @@ class Page extends React.Component{
     };
 
 
+    const menu = (
+      <Menu >
+        <Menu.Item key="poweroff">批量关机</Menu.Item>
+        <Menu.Item key="delete">批量删除蜜罐</Menu.Item>
+        <Menu.Item key="reload">批量还原蜜罐镜像</Menu.Item>
+      </Menu>
+    );
+
     const classes=classnames({
       ["card-dark"]:commonLayout.darkTheme
     });
@@ -191,6 +205,13 @@ class Page extends React.Component{
                   onClick={this.switchModal}
                   type="primary"
                   icon="plus">创建蜜罐</Button>
+
+          <Dropdown.Button style={{marginLeft:"20px"}}
+                           disabled={this.state.selectedRows.length===0}
+                           overlay={menu}
+                           type="primary">
+            批量开机
+          </Dropdown.Button>
           <EnhanciveTable title={tableTextConfig.title}
                           tableProps={tableProps}
                           inverse={true}

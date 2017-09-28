@@ -34,7 +34,7 @@ import {
   interactions,
 } from '../../../../configs/ConstConfig';
 
-import {Progress,Row,Col,Badge,Button,Popover,Tooltip,Menu,Dropdown,Icon} from 'antd'
+import {Progress,Row,Col,Badge,Button,Popover,Tooltip,Menu,Dropdown,Icon,Popconfirm,Modal} from 'antd'
 import JoTag from '../../../../components/JoTag';
 import classnames from 'classnames';
 import * as tools from '../../../../utils/tools';
@@ -180,24 +180,24 @@ const getOperationRenderer=(handle)=>(value,records)=>{
         menu=(
           <Menu>
             <Menu.Item disabled={isRunning||isLicenceOverdue}>
-              <span>
-                <Icon type="login"/>&nbsp;开机
-              </span>
+              <div>
+                  <Icon type="login"/>&nbsp;开机
+              </div>
             </Menu.Item>
             <Menu.Item  disabled={isStop||isLicenceOverdue}>
-              <span>
-                <Icon type="poweroff"/>&nbsp;关机
-              </span>
+              <div>
+                  <Icon type="poweroff"/>&nbsp;关机
+              </div>
             </Menu.Item>
             <Menu.Item>
-              <span>
+              <div>
                 <Icon type="delete"/>&nbsp; 删除蜜罐
-              </span>
+              </div>
             </Menu.Item>
             <Menu.Item disabled={isLicenceOverdue}>
-              <span>
+              <div>
                 <Icon type="reload"/>&nbsp; 还原初始蜜罐
-              </span>
+              </div>
             </Menu.Item>
           </Menu>
         )

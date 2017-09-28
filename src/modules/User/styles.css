@@ -3,7 +3,8 @@
   background: #F1F1F1;
   color: rgba(0, 0, 0, 0.85);
   height: 100%;
-  position: relative; }
+  position: relative;
+  background: white; }
 
 .page-dark {
   background: #1c233b;
@@ -12,9 +13,9 @@
 .login-modal {
   width: 340px;
   position: absolute;
-  top: 140px;
+  top: 40%;
   left: 50%;
-  margin-left: -170px; }
+  transform: translateY(-50%) translateX(-50%); }
 
 .login-modal-form {
   width: 100%;
@@ -22,7 +23,7 @@
   padding: 30px 30px 20px; }
 
 .login-modal-form-dark {
-  background: #252d47; }
+  background: #1c233b; }
 
 .title {
   color: rgba(0, 0, 0, 0.85);

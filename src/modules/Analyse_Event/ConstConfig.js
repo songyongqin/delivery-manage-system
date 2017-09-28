@@ -10,7 +10,7 @@ export const NAMESPACE="analyseEvent";
 /**************************************************
  * table
  **************************************************/
-const ATTACKSTAGE_DATAINDEX="attackStage",
+export const ATTACKSTAGE_DATAINDEX="attackStage",
       ACTION_DATAINDEX="action",
       LEVEL_DATAINDEX="level",
       ACTIONSTATUS_DATAINDEX="actionStatus",
@@ -41,7 +41,7 @@ const TABLE_TITLE="威胁事件分析",
 
 export const tableTextConfig={
   title:TABLE_TITLE,
-  rowTitles:{
+  colTitles:{
     [ATTACKSTAGE_DATAINDEX]:"攻击阶段",
     [ACTION_DATAINDEX]:"行为",
     [LEVEL_DATAINDEX]:"威胁等级",

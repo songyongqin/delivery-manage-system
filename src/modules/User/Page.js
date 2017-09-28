@@ -5,7 +5,7 @@ import React from 'react';
 import styles from './styles.css';
 import {connect} from 'dva';
 import classnames from 'classnames';
-import LoginForm from './components/LoginForm';
+import LoginForm from './components/LoginForm/index';
 import {Alert} from 'antd';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
 

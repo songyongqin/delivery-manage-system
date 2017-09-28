@@ -2,7 +2,7 @@
  * Created by jojo on 2017/9/1.
  */
 import React from 'react';
-import styles from './LoginForm.css';
+import styles from './styles.css';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import classnames from 'classnames';
 const FormItem = Form.Item;
@@ -35,7 +35,7 @@ class WrappedForm extends React.Component {
           })(
             <Input disabled={loading}
                    prefix={<Icon type="user" style={{ fontSize: 13 }} />}
-                   autoComplete="xxxxx"
+                   autoComplete="off"
                    className={styles["input"]}
                    placeholder="用户名" />
           )}
@@ -47,7 +47,7 @@ class WrappedForm extends React.Component {
             <Input className={styles["input"]}
                    prefix={<Icon type="lock" style={{ fontSize: 13 }} />}
                    type="password"
-                   autoComplete="xxxxx"
+                   autoComplete="off"
                    disabled={loading}
                    onPressEnter={this.handleSubmit}
                    placeholder="密码" />

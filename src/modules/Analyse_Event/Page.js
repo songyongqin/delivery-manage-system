@@ -6,7 +6,7 @@ import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../components/EnhanciveTable/index';
 import * as tools from '../../utils/tools.js';
-import * as tableConfig from './components/TableConfig';
+import * as tableConfig from './components/TableConfig/index';
 import {statisticDataIndexes,statisticsTextConfig,tableTextConfig,haveDetailsDataIndexes,FALLHOST_DATAINDEX} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig'
 import JoIcon from '../../components/JoIcon';

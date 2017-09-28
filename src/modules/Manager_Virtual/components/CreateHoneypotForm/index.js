@@ -365,7 +365,8 @@ class WrappedForm extends React.Component {
           )}
         </FormItem>
         <FormItem  {...commonProps}
-                    required={false}
+                   required={false}
+                   hasFeedback={false}
                    label={<Label className={lblClasses}
                                  keyName={AUTH_DATAINDEX}/>}>
           {

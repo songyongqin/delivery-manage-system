@@ -7,19 +7,20 @@
   @include common-page();
   height: 100%;
   position: relative;
+  background: $bg-color-level-1;
 }
 
 .page-dark{
   @include common-page-dark();
 }
 
+
 .login-modal{
   width: 340px;
   position: absolute;
-  top:140px;
+  top:40%;
   left:50%;
-  //transform: translateX(-50%);
-  margin-left:-170px;
+  transform: translateY(-50%) translateX(-50%);
 }
 
 .login-modal-form{
@@ -29,7 +30,7 @@
 }
 
 .login-modal-form-dark{
-  background: $bg-color-level-1-dark;
+  background: $bg-color-level-3-dark;
 
 }
 

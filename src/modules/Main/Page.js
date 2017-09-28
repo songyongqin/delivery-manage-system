@@ -53,7 +53,6 @@ function mapDispatchToProps(dispatch,ownProps) {
 
 @connect(mapStateToProps,createMapDispatchWithPromise(mapDispatchToProps))
 class Page extends React.Component{
-
   constructor(props) {
     super(props);
     this.state={
@@ -87,7 +86,6 @@ class Page extends React.Component{
         ["animated"]:true,
         ["fadeInLeft"]:true,
       });
-    console.info(routeConfig)
     return (
       <div className={classes}>
         <Nav isMini={navMini}

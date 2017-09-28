@@ -41,7 +41,7 @@ export const levelTextConfig={
 /*
 *  操作状态枚举值
 * */
-const ACTIONSTATUS_SUCCESS=1,
+export const ACTIONSTATUS_SUCCESS=1,
       ACTIONSTATUS_FAIL=0,
       ACTIONSTATUS_UNKNOW=-1;
 

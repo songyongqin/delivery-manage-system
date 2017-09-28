@@ -10,6 +10,7 @@
     color: #108ee9; }
 .form :global .ant-input {
   background: rgba(255, 255, 255, 0.1) !important;
+  background: transparent;
   color: rgba(0, 0, 0, 0.85);
   padding: 10px;
   height: 40px; }
@@ -21,4 +22,4 @@
   .form-dark :global .ant-input::placeholder {
     color: #cccccc; }
 
-/*# sourceMappingURL=LoginForm.css.map */
+/*# sourceMappingURL=styles.css.map */

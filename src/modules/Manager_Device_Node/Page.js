@@ -34,7 +34,7 @@ class Page extends React.Component{
 
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
-        console.info(selectedRows);
+        this.props.setSelectedRows(selectedRows)
       },
     };
 

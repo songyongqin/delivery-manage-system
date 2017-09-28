@@ -38,7 +38,9 @@ function  mapStateToProps(state) {
 class Page extends React.Component{
   constructor(props) {
     super(props);
-
+    this.state={
+      selectedRows:[],
+    }
   }
   getBreadcrumb=()=>{
     return (
@@ -84,6 +86,11 @@ class Page extends React.Component{
       </div>
     )
   }
+  setSelectedRows=(selectedRows)=>{
+    this.setState({
+      selectedRows
+    })
+  }
   getNodePanel=()=>{
 
     const {commonLayout,nodeLoading,productType}=this.props;
@@ -111,13 +118,15 @@ class Page extends React.Component{
                 <NodeDisk/>
               </div>
               <div style={{display:"inline-block",marginLeft:"15px"}}>
-                <Dropdown.Button overlay={menu} type="primary">
+                <Dropdown.Button overlay={menu}
+                                 disabled={this.state.selectedRows.length===0}
+                                 type="primary">
                   批量授权
                 </Dropdown.Button>
               </div>
             </div>
             <div style={{marginTop:"15px"}}>
-              <DeviceNode/>
+              <DeviceNode setSelectedRows={this.setSelectedRows}/>
             </div>
           </JoSpin>
         </Card>
