@@ -130,7 +130,7 @@ export const getColumns=({isDark,isAdmin,handle})=>{
 
   const finalTitleTextConfig={};
 
-  Object.entries(tableTextConfig.rowTitles).forEach(i=>{
+  Object.entries(tableTextConfig.colTitles).forEach(i=>{
     finalTitleTextConfig[i[0]]= <p style={{textAlign:"center"}}>
       {i[1]}
     </p>
@@ -143,16 +143,21 @@ export const getColumns=({isDark,isAdmin,handle})=>{
     renderer,
 
   });
-  return [
-    ...columns,
-    {
-      title:<p style={{textAlign:"center"}}>
-        {tableTextConfig.rowTitles[OPERATION_ROW_KEY]}
-      </p>,
-      key:OPERATION_ROW_KEY,
-      render:getOperationRenderer({isAdmin,handle})
-    }
-  ]
+
+  return isAdmin
+    ?
+    [
+      ...columns,
+      {
+        title:<p style={{textAlign:"center"}}>
+          {tableTextConfig.colTitles[OPERATION_ROW_KEY]}
+        </p>,
+        key:OPERATION_ROW_KEY,
+        render:getOperationRenderer({isAdmin,handle})
+      }
+    ]
+    :
+    columns
 
 };
 

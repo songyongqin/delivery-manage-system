@@ -266,9 +266,15 @@ export const getColumns=({
       }
     }
   });
-  return [
-    ...columns,
-  ]
+
+  return isAdmin
+    ?
+    columns
+    :
+    [
+      ...columns.slice(0,columns.length-1),
+    ]
+
 
 };
 

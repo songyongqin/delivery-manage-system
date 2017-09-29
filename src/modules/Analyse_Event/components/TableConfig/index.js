@@ -22,7 +22,7 @@ import CountUp from 'react-countup';
 import {
   ACTIONSTATUS_SUCCESS,
   ACTIONSTATUS_FAIL,
-  ACTIONSTATUS_UNKNOW
+  ACTIONSTATUS_UNKNOW,
 } from '../../../../configs/ConstConfig';
 
 const rowsRenderer={

@@ -10,9 +10,9 @@
 :global .lbl-dark .ant-badge-status-text {
   color: #b7c1cc; }
 
-.table td:nth-child(1) {
+.table-selectable td:nth-child(1) {
   border-right: 1px solid #cccccc; }
-.table :global .ant-table-selection-column {
+.table-selectable :global .ant-table-selection-column {
   border-right: 1px solid #cccccc; }
 
 /*# sourceMappingURL=styles.css.map */

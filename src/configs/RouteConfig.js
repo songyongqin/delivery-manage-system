@@ -77,12 +77,6 @@ export default {
     link:"/report",
     icon: <Icon type="filetext1"/>
   },
-  "handle":{
-    order:5,
-    title:"威胁处理",
-    link:"/handle",
-    icon: <Icon type="tool"/>
-  },
   "sys-config":{
     order:6,
     title:"系统配置",

@@ -43,7 +43,7 @@ export const deviceRowDataIndexes=[
 
 
 export const tableTextConfig={
-  rowTitles:{
+  colTitles:{
     [HOST_IP_DATAINDEX]:"主机IP",
     [DISK_PER_DATAINDEX]:"磁盘占用情况",
     [DEVICE_PROPS_DATAINDEX]:"设备属性",

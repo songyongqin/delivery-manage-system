@@ -3,20 +3,20 @@
 import ApiConfig from './ApiConfig'
 import * as tools from '../utils/tools';
 
+
 const httpApi=ApiConfig.http;
 
-const openApi=[
+const openApiList=[
   {
     url:httpApi.USER_SIGN,
     method:"POST"
   }
 ];
 
+
 export default (url,options)=>{
 
-  const isOpen=openApi.some(i=>{
-    return i.url===url&&i.method===options.method
-  });
+  const isOpen=openApiList.some(i=>i.url===url&&i.method===options.method);
 
   if(isOpen){
     return options;

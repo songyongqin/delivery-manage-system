@@ -5,7 +5,6 @@ import ControlDisk from '../Manager_Device_Control_Disk/Page';
 import DeviceControl from '../Manager_Device_Control/Page';
 import NodeDisk from '../Manager_Device_Node_Disk/Page';
 import DeviceNode from '../Manager_Device_Node/Page';
-
 import {CONTROL_PANEL_TITLE,NODE_PANEL_TITLE} from './ConstConfig'
 import classnames from 'classnames';
 import {connect} from 'dva';
@@ -63,11 +62,12 @@ class Page extends React.Component{
   }
   getControlPanel=()=>{
 
-    const {commonLayout,controlLoading}=this.props;
-
+    const {commonLayout,controlLoading,userData}=this.props;
+    const {isAdmin}=userData;
     const classes=classnames({
       ["card-dark"]:commonLayout.darkTheme
     });
+
 
     return (
       <div key="control-panel">
@@ -75,9 +75,15 @@ class Page extends React.Component{
               title={CONTROL_PANEL_TITLE}
               style={{marginTop:"15px"}}>
           <JoSpin spinning={controlLoading}>
-            <div>
-              <ControlDisk/>
-            </div>
+            {
+              isAdmin
+                ?
+                <div>
+                  <ControlDisk/>
+                </div>
+                :
+                null
+            }
             <div style={{marginTop:"15px"}}>
               <DeviceControl/>
             </div>
@@ -93,20 +99,26 @@ class Page extends React.Component{
   }
   getNodePanel=()=>{
 
-    const {commonLayout,nodeLoading,productType}=this.props;
+    const {commonLayout,nodeLoading,productType,userData}=this.props;
+
+    /*是否为单机版本*/
     if(productType.standalone===1){
       return;
     }
 
+    const {isAdmin}=userData;
+
     const classes=classnames({
       ["expanded-row-dark"]:commonLayout.darkTheme
     });
+
     const menu = (
       <Menu >
         <Menu.Item key="clear">批量磁盘清理</Menu.Item>
         <Menu.Item key="update">批量检查更新</Menu.Item>
       </Menu>
     );
+
     return (
       <div key="node-panel">
         <Card className={classes}
@@ -114,16 +126,29 @@ class Page extends React.Component{
               style={{marginTop:"15px"}}>
           <JoSpin spinning={nodeLoading}>
             <div style={{overflow:"hidden"}}>
-              <div style={{display:"inline-block"}}>
-                <NodeDisk/>
-              </div>
-              <div style={{display:"inline-block",marginLeft:"15px"}}>
-                <Dropdown.Button overlay={menu}
-                                 disabled={this.state.selectedRows.length===0}
-                                 type="primary">
-                  批量授权
-                </Dropdown.Button>
-              </div>
+              {
+                isAdmin
+                  ?
+                  <div style={{display:"inline-block"}}>
+                    <NodeDisk/>
+                  </div>
+                  :
+                  null
+              }
+              {
+                isAdmin
+                  ?
+                  <div style={{display:"inline-block",marginLeft:"15px"}}>
+                    <Dropdown.Button overlay={menu}
+                                     disabled={this.state.selectedRows.length===0}
+                                     type="primary">
+                      批量授权
+                    </Dropdown.Button>
+                  </div>
+
+                  :
+                  null
+              }
             </div>
             <div style={{marginTop:"15px"}}>
               <DeviceNode setSelectedRows={this.setSelectedRows}/>

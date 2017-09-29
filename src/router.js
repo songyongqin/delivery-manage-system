@@ -23,7 +23,6 @@ import EarlyWarningEmail from './modules/EarlyWarning_Email/Page'
 
 import Report from './modules/Report/Page';
 
-import Handle from './modules/Handle/Page';
 
 import SysConfig from './modules/SysConfig/Page';
 
@@ -64,7 +63,6 @@ function RouterConfig({ history ,app }) {
           <Route path="email" components={EarlyWarningEmail}/>
         </Route>
         <Route path="report" components={Report}/>
-        <Route path="handle" components={Handle}/>
         <Route path="sys-config" components={SysConfig}/>
         <Route path="honeypot-manager" components={Manager}>
           <IndexRedirect to="device"/>
@@ -72,7 +70,7 @@ function RouterConfig({ history ,app }) {
           <Route path="virtual-machine" components={ManagerVirtual}/>
           <Route path="mirror" components={ManagerMirror}/>
         </Route>
-        
+
         <Route path="user-manager" components={UserManager}/>
 
 

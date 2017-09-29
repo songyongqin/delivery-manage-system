@@ -46,17 +46,11 @@ export const tableTextConfig={
   }
 }
 
-export const  STATUS_ERROR_VALUE=-2,
-              STATUS_LICENCE_OVERDUE=-1,
-              STATUS_STOP_VALUE=0,
-              STATUS_RUNNING_VALUE=1;
+export const  STATUS_ERROR_VALUE="abnormal",
+              STATUS_LICENCE_OVERDUE="overdue",
+              STATUS_STOP_VALUE="off",
+              STATUS_RUNNING_VALUE="run";
 
-export const honeypotStatusValues=[
-  STATUS_RUNNING_VALUE,
-  STATUS_STOP_VALUE,
-  STATUS_LICENCE_OVERDUE,
-  STATUS_ERROR_VALUE,
-]
 
 export const honeypotStatusTextConfig={
   [STATUS_ERROR_VALUE]:"异常",
@@ -65,6 +59,7 @@ export const honeypotStatusTextConfig={
   [STATUS_STOP_VALUE]:"已关机"
 }
 
+export const honeypotStatusValues=Object.keys(honeypotStatusTextConfig);
 
 export const VCPUS_DATAINDEX="vcpus",
               RAM_DATAINDEX="ram",

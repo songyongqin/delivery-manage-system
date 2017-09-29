@@ -26,6 +26,7 @@ function mapStateToProps(state) {
   const {commonLayout}=state.layout;
   return {
     commonLayout,
+    userData:state.user.userData,
   }
 }
 
@@ -145,30 +146,28 @@ class Page extends React.Component{
   }
   getDataResultPanel=()=>{
 
-    const {commonLayout,pageOnChange}=this.props;
+    const {commonLayout,pageOnChange,userData}=this.props;
     const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
-    const isDark=commonLayout.darkTheme;
+    const isDark=commonLayout.darkTheme,
+          {isAdmin}=userData;
 
     const filterOptions={
       [HOST_IP_DATAINDEX]:this.state[HOST_IP_DATAINDEX],
       [HONEYPOT_IP_DATAINDEX]:this.state[HONEYPOT_IP_DATAINDEX]
     };
 
-    const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {
-        this.setSelectedRows(selectedRows);
-      },
-    };
-
 
     const tableProps={
-      rowSelection,
-      className:styles["table"],
+      className:classnames({
+        [styles["table"]]:true,
+        [styles["table-selectable"]]:isAdmin
+      }),
       onChange:this.tableOnChange,
       columns:tableConfig.getColumns({
         filterOptions,
         queryFilters,
+        isAdmin,
         onSubmit:this.onFilter}),
       dataSource:data.map((i,index)=>{
         return {
@@ -177,6 +176,14 @@ class Page extends React.Component{
         }
       })
     };
+
+    if(isAdmin){
+      tableProps.rowSelection= {
+        onChange: (selectedRowKeys, selectedRows) => {
+          this.setSelectedRows(selectedRows);
+        },
+      };
+    }
 
     const paginationProps={
       total:queryResults.total,
@@ -201,17 +208,29 @@ class Page extends React.Component{
       <div key={"results-panel"}>
         <Card title={"虚拟蜜罐"}
               className={classes}>
-          <Button style={{marginBottom:"15px"}}
-                  onClick={this.switchModal}
-                  type="primary"
-                  icon="plus">创建蜜罐</Button>
+          {
+            isAdmin
+              ?
+              <Button style={{marginBottom:"15px"}}
+                      onClick={this.switchModal}
+                      type="primary"
+                      icon="plus">创建蜜罐</Button>
+              :
+              null
+          }
+          {
+            isAdmin
+              ?
+              <Dropdown.Button style={{marginLeft:"20px"}}
+                               disabled={this.state.selectedRows.length===0}
+                               overlay={menu}
+                               type="primary">
+                批量开机
+              </Dropdown.Button>
+              :
+              null
+          }
 
-          <Dropdown.Button style={{marginLeft:"20px"}}
-                           disabled={this.state.selectedRows.length===0}
-                           overlay={menu}
-                           type="primary">
-            批量开机
-          </Dropdown.Button>
           <EnhanciveTable title={tableTextConfig.title}
                           tableProps={tableProps}
                           inverse={true}

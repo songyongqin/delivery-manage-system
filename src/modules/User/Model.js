@@ -125,6 +125,9 @@ const baseModel={
   subscriptions: {
     setup({ history, dispatch }) {
       // 监听 history 变化，当进入 `/` 时触发 `load` action
+
+      const adminOnlyRoutes=["/sys-config","/user-manager"];
+
       return history.listen(({ pathname }) => {
 
         if(pathname==="/login"){
@@ -133,7 +136,7 @@ const baseModel={
           });
         }
 
-        if(pathname==="/sys-config"){
+        if(adminOnlyRoutes.includes(pathname)){
           return dispatch({
             type:"checkAdmin"
           })

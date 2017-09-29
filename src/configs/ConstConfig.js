@@ -30,13 +30,14 @@ const HIGH="high",
       MIDDLE="middle",
       LOW="low";
 
-export const level=[HIGH,MIDDLE,LOW];
 
 export const levelTextConfig={
   [HIGH]:"高危",
   [MIDDLE]:"中危",
   [LOW]:"低危"
 };
+
+export const level=Object.keys(levelTextConfig)
 /***********************************************************************************************************/
 /*
 *  操作状态枚举值
@@ -45,22 +46,69 @@ export const ACTIONSTATUS_SUCCESS=1,
       ACTIONSTATUS_FAIL=0,
       ACTIONSTATUS_UNKNOW=-1;
 
-export const actionStatus=[
-  ACTIONSTATUS_SUCCESS,
-  ACTIONSTATUS_FAIL,
-  ACTIONSTATUS_UNKNOW
-];
+
 
 export const actionStatusTextConfig={
   [ACTIONSTATUS_SUCCESS]:"成功",
   [ACTIONSTATUS_FAIL]:"失败",
   [ACTIONSTATUS_UNKNOW]:"未知"
 };
+
+export const actionStatus=Object.keys(actionStatusTextConfig)
 /***********************************************************************************************************/
 
+export const  ORT_SCAN = "port scan",
+              BURTE_FORCE_3306 = "burte force 3306",
+              BURTE_FORCE_3389 = "burte force 3389",
+              CONNECT_3306 = "connect 3306",
+              CONNECT_3389 = "connect 3389",
+              CONNECT_22 = "connect 22",
+              CONNECT_445 = "connect 445",
+              CONNECT_23 = "connect 23",
+              LOGON_3306 = "logon 3306",
+              LOGON_3389 ="logon 3389",
+              LOGON_22 ="logon 22",
+              MYSQL_SHELLCODE_INJECTION = "mysql shellcode injection",
+              MYSQL_REMOTE_CODE_EXECUTE = "mysql remote code execute",
+              SMB_SESSION_SETUP = "smb session setup",
+              EXPLOIT_ETERNALBLUE = "Exploit EternalBlue",
+              ETERNALBLUE_REMOTE_CODE_EXECUTE = "EternalBlue remote code execute",
+              DOWNLOAD = "download",
+              SET_REGISTRY_AUTORUN = "set registry autorun",
+              SELF_DELETING_APPLICATION = "self-deleting application",
+              PUT_APPICATION_TO_SYSTEM_PATH = "put appication to system path",
+              BUFFER_OVERFLOW = "buffer overflow",
+              CONNECT_TO_C2_SERVER = "connect to c&c server",
+              HACHER_INPUT_COMMAND = "hacher input command"
 
-const action=[];
 
+export const actionTextConfig={
+ [ORT_SCAN]:"端口扫描" ,
+ [BURTE_FORCE_3306 ]:"爆破:3306",
+ [BURTE_FORCE_3389]:"爆破:3389",
+ [CONNECT_3306]:"连接:3306",
+ [CONNECT_3389]:"连接:3389",
+ [CONNECT_22]:"连接:22",
+ [CONNECT_445]:"连接:445",
+ [CONNECT_23]:"连接:23",
+ [LOGON_3306]:"登录:3306",
+ [LOGON_3389]:"登录:3389",
+ [LOGON_22]:"登录:22",
+ [MYSQL_SHELLCODE_INJECTION]:"3306注入shellcode",
+ [MYSQL_REMOTE_CODE_EXECUTE]:" mysql远程代码执行",
+ [SMB_SESSION_SETUP]:"SMB建立会话",
+ [EXPLOIT_ETERNALBLUE]:"SMB永恒之蓝,远程注入",
+ [ETERNALBLUE_REMOTE_CODE_EXECUTE]:"永恒之蓝远程代码执行",
+ [DOWNLOAD]:"下载",
+ [SET_REGISTRY_AUTORUN]:"设置注册表自启动" ,
+ [SELF_DELETING_APPLICATION]:"程序自删除",
+ [PUT_APPICATION_TO_SYSTEM_PATH]:"释放EXE至系统路径",
+ [BUFFER_OVERFLOW]:"缓冲区溢出攻击",
+ [CONNECT_TO_C2_SERVER]:"连接c2服务器",
+ [HACHER_INPUT_COMMAND]:"黑客远程攻击命令输入"
+}
+
+const action=Object.keys(actionTextConfig);
 /***********************************************************************************************************/
 
 
@@ -78,7 +126,8 @@ export default {
   textConfig:{
     attackStage:attackStageTextConfig,
     level:levelTextConfig,
-    actionStatus:actionStatusTextConfig
+    actionStatus:actionStatusTextConfig,
+    action:actionTextConfig,
   }
 }
 
@@ -94,7 +143,6 @@ export const SSH_SERVICE="SSHService",
       INDUSTRIAL_CONTROL_SERVICE="IndustrialControlService";
 
 
-export const services=[SSH_SERVICE,TELNET_SERVICE,DATABASE_SERVICE,INDUSTRIAL_CONTROL_SERVICE]
 
 
 export const servicesTextConfig={
@@ -105,22 +153,24 @@ export const servicesTextConfig={
 }
 
 
+export const services=Object.keys(servicesTextConfig);
+
 export const  HIGH_INTERATION="highInteraction",
               LOW_INTERACTION="lowInteration";
 
-export const interactions=[HIGH_INTERATION,LOW_INTERACTION];
 
 export const interactionsTextConfig={
   [HIGH_INTERATION]:"高交互",
   [LOW_INTERACTION]:"低交互"
 }
 
+export const interactions=Object.keys(interactionsTextConfig);
+
+
 export const  WIN7_SYS="win7",
               WIN_XP_SYS="winxp",
               NEO_KYLIN_SYS="neoKylin";
 
-
-export const systems=[WIN7_SYS,WIN_XP_SYS,NEO_KYLIN_SYS];
 
 export const systemsTextConfig={
   [WIN7_SYS]:"Windows 7",
@@ -128,3 +178,4 @@ export const systemsTextConfig={
   [NEO_KYLIN_SYS]:"中标麒麟"
 }
 
+export const systems=Object.keys(systemsTextConfig);

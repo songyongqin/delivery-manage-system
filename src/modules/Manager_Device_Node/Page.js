@@ -7,7 +7,7 @@ import {NAMESPACE} from './ConstConfig'
 import styles from './styles.css';
 import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
-
+import classnames from 'classnames';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -31,17 +31,11 @@ class Page extends React.Component{
 
     const {commonLayout,userData}=this.props;
     const {queryResults,lastReqTime,queryFilters}=this.props[NAMESPACE];
-
-    const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {
-        this.props.setSelectedRows(selectedRows)
-      },
-    };
-
+    const {isAdmin}=userData;
 
     const tableProps={
       columns:tableConfig.getColumns({
-        isAdmin:userData.isAdmin,
+        isAdmin,
         isDark:commonLayout.darkTheme
       }),
       dataSource:queryResults.data.map((i,index)=>{
@@ -50,9 +44,19 @@ class Page extends React.Component{
           key:`item-${index}-${lastReqTime}`
         }
       }),
-      rowSelection,
-      className:styles["table"]
+      className:classnames({
+        [styles["table-selectable"]]:isAdmin
+      })
     };
+
+
+    if(isAdmin){
+      tableProps.rowSelection={
+        onChange: (selectedRowKeys, selectedRows) => {
+          this.props.setSelectedRows(selectedRows)
+        },
+      };
+    }
 
     const paginationProps={
       total:queryResults.total,

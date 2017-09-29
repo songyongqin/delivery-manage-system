@@ -7,12 +7,14 @@ import * as service from './Service';
 import {queryModelGenerator} from '../../utils/dvaModelGenerator';
 import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
 import {NAMESPACE} from './ConstConfig';
+import * as tools from '../../utils/tools';
 moment.locale('zh-cn');
 
 export const callConfig={
   withStatusHandle:true,
   withLoading:true,
 }
+
 
 
 const baseModel={
@@ -51,10 +53,11 @@ const payloadFilter=(payload)=>{
 
 const queryService=service.query;
 
+
 export default queryModelGenerator({
   model:baseModel,
   payloadFilter,
   callConfig:commonCallConfig,
   queryService,
-  initPath:"/early-warning/email"
+  // initPath:"/early-warning/email"
 });

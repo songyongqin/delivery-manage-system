@@ -56,5 +56,5 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig:commonCallConfig,
   queryService,
-  initPath:"/early-warning/email"
+  // initPath:"/early-warning/email"
 });
