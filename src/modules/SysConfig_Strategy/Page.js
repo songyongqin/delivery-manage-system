@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './styles.css'
 import { Menu, Button,Breadcrumb } from 'antd';
 
 class Page extends React.Component{
@@ -8,11 +9,16 @@ class Page extends React.Component{
   }
 
   render=()=>{
-    const {children}=this.props;
 
-    return children
+
+
+
+    return (
+      <div >
+        Strategy
+      </div>
+    )
   }
 }
 
 export default Page;
-

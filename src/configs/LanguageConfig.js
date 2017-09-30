@@ -45,7 +45,18 @@ const routesZHCN={
       title:"威胁处理",
     },
     "sys-config":{
-      title:"系统配置"
+      title:"系统配置",
+      items:{
+        "network":{
+          title:"网络设置",
+        },
+        "monitor":{
+          title:"自我监控",
+        },
+        "strategy":{
+          title:"策略配置",
+        }
+      }
     },
     "user-manager":{
       title:"用户管理"
@@ -111,7 +122,18 @@ const routesENUS={
     title:"HANDLE",
   },
   "sys-config":{
-    title:"SYSTEM CONFIG"
+    title:"SYSTEM CONFIG",
+    items:{
+      "network":{
+        title:"NETWORK",
+      },
+      "monitor":{
+        title:"MONITOR",
+      },
+      "strategy":{
+        title:"STRATEGY",
+      }
+    }
   },
   "honeypot-manager":{
     title:"MANAGER",

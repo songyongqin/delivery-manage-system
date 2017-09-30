@@ -25,6 +25,10 @@ import Report from './modules/Report/Page';
 
 
 import SysConfig from './modules/SysConfig/Page';
+import SysConfigNetwork from './modules/SysConfig_Network/Page';
+import SysConfigMonitor from './modules/SysConfig_Monitor/Page';
+import SysConfigStrategy from './modules/SysConfig_Strategy/Page';
+
 
 import Manager from './modules/Manager/Page';
 import ManagerDevice from './modules/Manager_Device/Page';
@@ -34,6 +38,7 @@ import ManagerMirror from './modules/Manager_Mirror/Page';
 import ThreatEvent from './modules/ThreatEvent/Page';
 
 import UserManager from './modules/UserManager/Page';
+
 
 function RouterConfig({ history ,app }) {
 
@@ -63,7 +68,11 @@ function RouterConfig({ history ,app }) {
           <Route path="email" components={EarlyWarningEmail}/>
         </Route>
         <Route path="report" components={Report}/>
-        <Route path="sys-config" components={SysConfig}/>
+        <Route path="sys-config" components={SysConfig}>
+          <Route path="network" components={SysConfigNetwork}/>
+          <Route path="monitor" components={SysConfigMonitor}/>
+          <Route path="strategy" components={SysConfigStrategy}/>
+        </Route>
         <Route path="honeypot-manager" components={Manager}>
           <IndexRedirect to="device"/>
           <Route path="device" components={ManagerDevice}/>

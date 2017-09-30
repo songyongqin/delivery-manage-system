@@ -35,6 +35,9 @@ export default {
 
     ANALYSE_ATTACK_CHAIN:"/analyse/attack-chain",
     ANALYSE_FALL_HOST:"/analyse/fall-host",
-    ANALYSE_RANKING:"/analyse/ranking"
+    ANALYSE_RANKING:"/analyse/ranking",
+
+
+    SYS_CONFIG_NETWORK:"/sys-config/network",
   }
 }

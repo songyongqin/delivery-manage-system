@@ -82,7 +82,21 @@ export default {
     title:"系统配置",
     link:"/sys-config",
     adminOnly:true,
-    icon: <Icon type="setting"/>
+    icon: <Icon type="setting"/>,
+    items:{
+      "network":{
+        title:"网络设置",
+        link:"/sys-config/network",
+      },
+      "monitor":{
+        title:"自我监控",
+        link:"/sys-config/monitor",
+      },
+      "strategy":{
+        title:"策略配置",
+        link:"/sys-config/strategy",
+      }
+    }
   },
   "user-manager":{
     title:"用户管理",

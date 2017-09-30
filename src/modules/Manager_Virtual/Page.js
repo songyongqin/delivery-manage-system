@@ -204,6 +204,7 @@ class Page extends React.Component{
     const classes=classnames({
       ["card-dark"]:commonLayout.darkTheme
     });
+
     return (
       <div key={"results-panel"}>
         <Card title={"虚拟蜜罐"}

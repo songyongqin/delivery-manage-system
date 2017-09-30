@@ -137,10 +137,10 @@ export const USERACCOUNT_DATAINDEX="userAccount";
 
 /*********************************************************************/
 
-export const SSH_SERVICE="SSHService",
-      TELNET_SERVICE="TelnetService",
-      DATABASE_SERVICE="DatabaseService",
-      INDUSTRIAL_CONTROL_SERVICE="IndustrialControlService";
+export const  SSH_SERVICE="SSH",
+              TELNET_SERVICE="TELNET",
+              DATABASE_SERVICE="DatabaseServer",
+              INDUSTRIAL_CONTROL_SERVICE="IndustrialControl";
 
 
 
@@ -155,8 +155,8 @@ export const servicesTextConfig={
 
 export const services=Object.keys(servicesTextConfig);
 
-export const  HIGH_INTERATION="highInteraction",
-              LOW_INTERACTION="lowInteration";
+export const  HIGH_INTERATION="HighInteraction",
+              LOW_INTERACTION="LowInteration";
 
 
 export const interactionsTextConfig={
@@ -167,15 +167,23 @@ export const interactionsTextConfig={
 export const interactions=Object.keys(interactionsTextConfig);
 
 
-export const  WIN7_SYS="win7",
-              WIN_XP_SYS="winxp",
-              NEO_KYLIN_SYS="neoKylin";
+export const  WIN_7_SYS="Windows7",
+              WIN_XP_SYS="WindowsXp",
+              NEO_KYLIN_SYS="NeoKylin",
+              WIN_7_SCADA="Windows7Scada",
+              CENT_OS_65="CentOS65",
+              CENT_OS_72="CentOS72",
+              UBUNTU_1604="Ubuntu1604";
 
 
 export const systemsTextConfig={
-  [WIN7_SYS]:"Windows 7",
+  [WIN_7_SYS]:"Windows 7",
   [WIN_XP_SYS]:"Windows XP",
-  [NEO_KYLIN_SYS]:"中标麒麟"
+  [NEO_KYLIN_SYS]:"中标麒麟",
+  [WIN_7_SCADA]:"Windows 7 Scada",
+  [CENT_OS_65]:"CentOS 6.5",
+  [CENT_OS_72]:"CentOS 7.2",
+  [UBUNTU_1604]:"Ubantu 16.04"
 }
 
 export const systems=Object.keys(systemsTextConfig);

@@ -59,7 +59,7 @@ class Page extends React.Component{
     )
   };
   onFilter=(value)=>{
-    this.onQuery({attackCounts:value})
+    this.props.onQuery({attackCounts:value})
   };
   getDataResultPanel=()=>{
 

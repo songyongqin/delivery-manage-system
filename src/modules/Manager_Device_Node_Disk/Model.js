@@ -49,7 +49,7 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig:commonCallConfig,
   queryService,
-  initPath:"/honeypot-manager/device"
+  // initPath:"/honeypot-manager/device"
 });
 
 

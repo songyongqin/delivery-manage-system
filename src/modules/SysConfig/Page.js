@@ -70,21 +70,8 @@ class Page extends React.Component{
   }
   render=()=> {
 
-    const pageClasses=classnames({
-      [styles["page"]]:true,
-      [styles["page-dark"]]:this.props.commonLayout.darkTheme
-    })
 
-    return (
-      <div className={pageClasses}>
-        {
-          this.props.animateRender([
-            this.getBreadcrumb(),
-            this.getTabsPanel(),
-          ])
-        }
-      </div>
-    )
+    return this.props.children;
   }
 }
 

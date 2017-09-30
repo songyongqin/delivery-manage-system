@@ -157,7 +157,9 @@ const honeypotStatusRenderer=value=>{
 
     if(i===STATUS_ERROR_VALUE){
       return data.push(<Tooltip title={ERROR_TIP}>
-        {tools.getKeyText(i,honeypotStatusTextConfig)}
+        <span style={{cursor:"pointer"}}>
+          {tools.getKeyText(i,honeypotStatusTextConfig)}
+        </span>
       </Tooltip>)
     }
     data.push(tools.getKeyText(i,honeypotStatusTextConfig))

@@ -6,7 +6,12 @@ import moment from 'moment';
 import * as service from './Service';
 import {queryModelGenerator} from '../../utils/dvaModelGenerator';
 import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
-import {NAMESPACE} from './ConstConfig';
+import {
+  NAMESPACE,
+  DNS_DATAINDEX,
+  ADAPTER_LIST_DATAINDEX
+} from './ConstConfig';
+
 moment.locale('zh-cn');
 
 export const callConfig={
@@ -14,12 +19,14 @@ export const callConfig={
   withLoading:true,
 }
 
-
 const baseModel={
   namespace: NAMESPACE,
   state: {
+    queryFilters:{
+    },
     queryResults:{
-      threshold:0
+      [DNS_DATAINDEX]:"",
+      [ADAPTER_LIST_DATAINDEX]:[]
     }
   },
   effects:{
@@ -29,6 +36,7 @@ const baseModel={
         {...payload||{}},
         callConfig
       )
+
       if(res.status===1){
         resolve&&resolve(res.payload);
       }
@@ -38,18 +46,17 @@ const baseModel={
 
 const payloadFilter=(payload)=>{
   return {
-    threshold:payload
+    [DNS_DATAINDEX]:payload[DNS_DATAINDEX],
+    [ADAPTER_LIST_DATAINDEX]:payload[ADAPTER_LIST_DATAINDEX]
   }
 };
 
-const queryService=service.query;
+const queryService=service.get;
 
 export default queryModelGenerator({
   model:baseModel,
   payloadFilter,
   callConfig:commonCallConfig,
   queryService,
-  // initPath:"/honeypot-manager/device"
+  // initPath:"/sys-config/network"
 });
-
-
