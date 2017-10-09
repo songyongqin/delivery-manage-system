@@ -40,5 +40,10 @@ export default {
 
 
     SYS_CONFIG_NETWORK:"/sys-config/network",
+    SYS_CONFIG_STRATEGY:"/sys-config/strategy",
+    SYS_CONFIG_STRATEGY_APPLY:"/sys-config/strategy/apply",
+    SYS_CONFIG_STRATEGY_THREATNAME:"/sys-config/strategy/threatname",
+    SYS_CONFIG_STRATEGY_RULE:"/sys-config/strategy/rule",
+    SYS_CONFIG_STRATEGY_WHITELIST:"/sys-config/strategy/white-list"
   }
 }

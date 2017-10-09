@@ -96,7 +96,7 @@ class WrappedForm extends React.Component {
           {
             isAdmin
               ?
-              <a>
+              <a style={{color:"#d73435"}}>
                 <Icon
                   type="minus-circle-o"
                   disabled={keys.length === 1}

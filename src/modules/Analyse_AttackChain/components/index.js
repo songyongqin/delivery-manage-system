@@ -9,7 +9,7 @@ import {Icon,Switch,Card,Timeline,Row,Col} from 'antd';
 import classnames from 'classnames';
 import * as tools from '../../../utils/tools';
 import TimeLabel from '../../../components/TimesLabel';
-import styles from './TableConfig.css';
+import styles from './styles.css';
 
 const {tableTextConfig}=constConfig;
 

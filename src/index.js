@@ -8,7 +8,6 @@ import { createHashHistory } from 'history';
 
 import {combineExtraEffectsWithApp} from './utils/dvaExtraEffects';
 import {combineExtraReducersWithApp} from './utils/dvaExtraReducers';
-import combineExtraLoadingWithApp from './utils/dvaExtraLoading'
 import extraEffectsOptions from './configs/ExtraEffectsOptions';
 
 import MainModel from './modules/Main/Model';
@@ -29,7 +28,7 @@ import ManagerDeviceNodeDiskModel from './modules/Manager_Device_Node_Disk/Model
 import ManagerDeviceNodeModel from './modules/Manager_Device_Node/Model';
 import ManagerDeviceVMModel from './modules/Manager_Virtual/Model'
 import SysConfigNetworkModel from './modules/SysConfig_Network/Model';
-
+import StrategyModel from './modules/SysConfig_Strategy_Strategy/Model';
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -57,7 +56,7 @@ app.model(ManagerDeviceNodeDiskModel);
 app.model(ManagerDeviceNodeModel);
 app.model(ManagerDeviceVMModel);
 app.model(SysConfigNetworkModel);
-
+app.model(StrategyModel);
 // combineExtraLoadingWithApp(app);
 combineExtraEffectsWithApp(app,extraEffectsOptions);
 combineExtraReducersWithApp(app);

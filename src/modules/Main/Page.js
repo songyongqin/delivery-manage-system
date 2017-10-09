@@ -227,7 +227,7 @@ class Page extends React.Component{
       })
   }
   render=()=>{
-    
+
     // if(!this.props[NAMESPACE].isInit){
     //   return null;
     // }

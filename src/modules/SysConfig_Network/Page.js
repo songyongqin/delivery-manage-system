@@ -61,7 +61,7 @@ class Page extends React.Component{
     this.props.get();
   }
   getBreadcrumb=()=>{
-    return <div key="breadcrumb-panel">
+    return <div key="breadcrumb-panel" style={{margin:"15px 0"}}>
       {this.props.getBreadcrumb(this.props.routes)}
     </div>
   }
