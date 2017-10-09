@@ -3,6 +3,7 @@
  */
 export default {
   http:{
+    FRONT_END_CONFIG:"/front-end-config",
     PRODUCT_TYPE:"/product-type",
     USER_SIGN:"/user/sign",
     USER_PASSWORD:"/user/password",

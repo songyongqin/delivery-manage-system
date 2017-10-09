@@ -11,6 +11,7 @@ import {combineExtraReducersWithApp} from './utils/dvaExtraReducers';
 import combineExtraLoadingWithApp from './utils/dvaExtraLoading'
 import extraEffectsOptions from './configs/ExtraEffectsOptions';
 
+import MainModel from './modules/Main/Model';
 import LayoutModel from './models/LayoutModel';
 import AnalyseEventModel from './modules/Analyse_Event/Model';
 import AnalyseAttackChainModel from './modules/Analyse_AttackChain/Model';
@@ -37,7 +38,7 @@ const app = dva({
 app.use(createLoading({effects:true}));
 
 // 3. Model
-// app.model(MainModel);
+app.model(MainModel);
 // app.model(HomeModel);
 app.model(LayoutModel);
 app.model(AnalyseEventModel);

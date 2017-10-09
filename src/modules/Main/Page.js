@@ -10,8 +10,12 @@ import {tableTextConfig} from '../UserManager/ConstConfig';
 import {modifyPasswordTextConfig} from './ConstConfig';
 import ModifyPasswordForm from './components/ModifyPasswordForm';
 
+
+const NAMESPACE="main";
+
 function mapStateToProps(state) {
   return {
+    [NAMESPACE]:state[NAMESPACE],
     layout:state.layout,
     commonLayout:state.layout.commonLayout,
     routeConfig:state.layout.routeConfig,
@@ -47,7 +51,10 @@ function mapDispatchToProps(dispatch,ownProps) {
           ...payload,
         }
       })
-    }
+    },
+    initConfig:()=>dispatch({
+      type:"main/query"
+    })
   }
 }
 
@@ -62,6 +69,9 @@ class Page extends React.Component{
 
     document.body.style.overflowX="hidden";
 
+  }
+  componentDidMount=()=>{
+    // this.props.initConfig();
   }
   switchModal=()=>{
     this.setState({
@@ -217,7 +227,14 @@ class Page extends React.Component{
       })
   }
   render=()=>{
+    
+    // if(!this.props[NAMESPACE].isInit){
+    //   return null;
+    // }
 
+    if(this.props.location.pathname==="/login"){
+      return this.props.children;
+    }
     const {darkTheme}=this.props.commonLayout;
 
     const isDark=darkTheme;

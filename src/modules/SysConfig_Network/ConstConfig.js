@@ -24,6 +24,10 @@ export const adapterTextConfig={
   // [ADPATER_STATUS_DATAINDEX]:"adapterStatus"
 }
 
+export const dnsTextConfig={
+  [DNS_DATAINDEX]:""
+}
+
 
 export const  STATUS_CONNECT=1,
               STATUS_UN_CONNECT=0

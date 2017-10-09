@@ -46,11 +46,11 @@ function RouterConfig({ history ,app }) {
 
   return (
     <Router history={history} >
-      <Route path="/login" component={Login}></Route>
 
 
       <Route path="/"
              components={Main}>
+        <Route path="/login" component={Login}/>
 
         <IndexRedirect to="overview"/>
         <Route path="overview" components={Overview}/>
@@ -69,6 +69,7 @@ function RouterConfig({ history ,app }) {
         </Route>
         <Route path="report" components={Report}/>
         <Route path="sys-config" components={SysConfig}>
+          <IndexRedirect to="network"/>
           <Route path="network" components={SysConfigNetwork}/>
           <Route path="monitor" components={SysConfigMonitor}/>
           <Route path="strategy" components={SysConfigStrategy}/>

@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './styles.css'
 import {
   Menu,
   Button,
@@ -22,11 +21,15 @@ import {
   adapterStatusTextConfig,
   STATUS_UN_CONNECT,
   STATUS_CONNECT,
+  DNS_DATAINDEX
 } from './ConstConfig'
 import {connect} from 'dva';
 import NetworkForm from './components/NetworkForm';
+import DNSForm from './components/DNSForm';
 import JoSpin from '../../components/JoSpin';
 import classnames from 'classnames';
+
+
 
 const mapStateToProps=state=>({
   [NAMESPACE]:state[NAMESPACE],
@@ -45,6 +48,7 @@ const mapDispatchToProps=dispatch=>({
   })
 })
 
+const ADAPTER="adapter";
 
 @connect(mapStateToProps,createMapDispatchWithPromise(mapDispatchToProps))
 @WithBreadcrumb
@@ -62,9 +66,17 @@ class Page extends React.Component{
     </div>
   }
 
-  getPutHandle=mac=>payload=>this.props.put({
-    [ADAPTER_MAC_DATAINDEX]:mac,
-    ...(payload||{})
+  dnsPutHandle=payload=>this.props.put({
+    [DNS_DATAINDEX]:payload
+  })
+    .then(Message.success.call(null,"保存成功"))
+    .then(this.props.get.call(this))
+
+  getAdparterPutHandle=mac=>payload=>this.props.put({
+    [ADAPTER]:{
+      [ADAPTER_MAC_DATAINDEX]:mac,
+      ...(payload||{})
+    }
   })
     .then(Message.success.call(null,"保存成功"))
     .then(this.props.get.call(this))
@@ -88,7 +100,10 @@ class Page extends React.Component{
         <JoSpin spinning={putLoading||getLoading}>
           <Card title={DNS_CONFIG_TITLE} style={{margin:"15px 0"}} className={classes}>
 
-
+            <DNSForm isDark={isDark}
+                     loading={putLoading}
+                     defaultValue={{[DNS_DATAINDEX]:queryResults[DNS_DATAINDEX]}}
+                     onSubmit={this.dnsPutHandle}/>
           </Card>
           <Card title={DNS_NETWORK_TITLE} className={classes}>
             {queryResults[ADAPTER_LIST_DATAINDEX].map((i,index)=>(
@@ -108,7 +123,7 @@ class Page extends React.Component{
                 <NetworkForm isDark={isDark}
                              loading={putLoading}
                              defaultValue={i}
-                             onSubmit={this.getPutHandle(i[ADAPTER_MAC_DATAINDEX])}/>
+                             onSubmit={this.getAdparterPutHandle(i[ADAPTER_MAC_DATAINDEX])}/>
               </div>
             ))}
           </Card>

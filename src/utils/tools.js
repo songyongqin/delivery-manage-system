@@ -63,6 +63,7 @@ export const createSetResultsReducer=(stateType)=>{
   return (preState,{payload})=>{
     return {
       ...preState,
+      isInit:true,
       [stateType]:{
         ...preState[stateType]||{},
         ...payload||{},

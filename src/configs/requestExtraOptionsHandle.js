@@ -25,7 +25,7 @@ export default (url,options)=>{
   let token=null;
 
   try{
-    token=tools.getTemp("userData").token
+    token=(tools.getTemp("userData")||{}).token
   }catch(e){
     throw e;
   }
