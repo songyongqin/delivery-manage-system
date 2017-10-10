@@ -1,3 +1,17 @@
+.table :global .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body {
+  background: transparent;
+  margin-top: 20px; }
+.table :global .ant-table-fixed-header .ant-table-scroll .ant-table-header {
+  overflow: hidden;
+  z-index: 11;
+  position: relative; }
+.table :global .ant-table-small .ant-table-header table {
+  border: none;
+  padding: 0; }
+.table :global .ant-table-small {
+  border: none; }
+.table :global .ant-table-small .ant-table-header {
+  background: transparent; }
 .table :global tr.ant-table-expanded-row {
   background: transparent; }
   .table :global tr.ant-table-expanded-row td {

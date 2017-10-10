@@ -72,4 +72,32 @@
 .content-wrapper-expand {
   left: 80px; }
 
+.expand-page {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  z-index: 11;
+  width: 400px;
+  background: white;
+  color: rgba(0, 0, 0, 0.85);
+  transition: transform 0.3s;
+  transform: translateX(800px);
+  padding: 15px;
+  overflow: hidden; }
+
+.expand-page-dark {
+  background: #1f263d;
+  color: #b7c1cc; }
+
+.expanded {
+  transform: translateX(0); }
+
+.content {
+  transition: width 0.3s;
+  width: 100%; }
+
+.content-shrink {
+  width: calc(100% - 400px ); }
+
 /*# sourceMappingURL=styles.css.map */

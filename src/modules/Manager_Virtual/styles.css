@@ -1,9 +1,4 @@
 .table :global .ant-table-thead > tr > th {
   text-align: center; }
 
-.table-selectable td:nth-child(1) {
-  border-right: 1px solid #cccccc; }
-.table-selectable :global .ant-table-selection-column {
-  border-right: 1px solid #cccccc; }
-
 /*# sourceMappingURL=styles.css.map */

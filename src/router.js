@@ -27,7 +27,7 @@ import Report from './modules/Report/Page';
 import SysConfig from './modules/SysConfig/Page';
 import SysConfigNetwork from './modules/SysConfig_Network/Page';
 import SysConfigMonitor from './modules/SysConfig_Monitor/Page';
-import SysConfigStrategy from './modules/SysConfig_Strategy/Page';
+import SysConfigStrategy from './modules/SysConfig_Strategy_Strategy/Page';
 
 
 import Manager from './modules/Manager/Page';

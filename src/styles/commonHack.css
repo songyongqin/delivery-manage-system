@@ -45,11 +45,11 @@ body :global .modal-dark :global .ant-modal-close-x {
   color: #b7c1cc; }
 body :global .ant-card-head-title {
   width: 100%; }
-body button.btn-danger {
+body .btn-danger {
   border-color: #d73435;
   background: #d73435;
   color: white; }
-  body button.btn-danger:disabled {
+  body .btn-danger:disabled {
     color: rgba(0, 0, 0, 0.25);
     background-color: #f7f7f7;
     border-color: #d9d9d9; }

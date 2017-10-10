@@ -29,6 +29,7 @@ import ManagerDeviceNodeModel from './modules/Manager_Device_Node/Model';
 import ManagerDeviceVMModel from './modules/Manager_Virtual/Model'
 import SysConfigNetworkModel from './modules/SysConfig_Network/Model';
 import StrategyModel from './modules/SysConfig_Strategy_Strategy/Model';
+import StrategyThreatnameModel from './modules/SysConfig_Strategy_Threatname/Model';
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -57,10 +58,11 @@ app.model(ManagerDeviceNodeModel);
 app.model(ManagerDeviceVMModel);
 app.model(SysConfigNetworkModel);
 app.model(StrategyModel);
-// combineExtraLoadingWithApp(app);
+app.model(StrategyThreatnameModel);
+
+
 combineExtraEffectsWithApp(app,extraEffectsOptions);
 combineExtraReducersWithApp(app);
-
 
 // 4. Router
 app.router(router);

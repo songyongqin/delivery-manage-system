@@ -10,12 +10,12 @@
 
 
 .table-selectable{
-  td:nth-child(1){
-    border-right:1px solid #cccccc;
-  }
-  :global{
-    .ant-table-selection-column{
-      border-right:1px solid #cccccc;
-    }
-  }
+  //td:nth-child(1){
+  //  border-right:1px solid #cccccc;
+  //}
+  //:global{
+  //  .ant-table-selection-column{
+  //    border-right:1px solid #cccccc;
+  //  }
+  //}
 }
