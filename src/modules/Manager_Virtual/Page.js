@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { Menu,Button,Table,Icon,Row,Col,Card,Modal,Dropdown } from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
-import EnhanciveTable from '../../components/EnhanciveTable/index';
+import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
 import * as tableConfig from './components/TableConfig/index';
 import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';

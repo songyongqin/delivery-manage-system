@@ -194,3 +194,13 @@ export function delay(times) {
     },times)
   })
 }
+
+
+export function curry(...args) {
+  args=args||[]
+
+  let fn=args[0],
+      rest=[...args.slice(1)];
+
+  return ()=>fn(rest);
+}

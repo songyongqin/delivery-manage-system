@@ -20,10 +20,11 @@ import {
 
 import {Button,Switch,Icon,Select,Tooltip} from 'antd'
 
-const getRenderer=({getDelHandle})=>({
+const getRenderer=({getDelHandle,getLevelOnChangeHandle})=>({
 
-  [THREAT_NAME_LEVEL_DATAINDEX]:value=>(
-    <Select defaultValue={value}
+  [THREAT_NAME_LEVEL_DATAINDEX]:(value,records,index)=>(
+    <Select value={value}
+            onChange={getLevelOnChangeHandle(index)}
             size="large"
             style={{width:"100px"}}>
       {levels.map((i,index)=>(
@@ -35,11 +36,11 @@ const getRenderer=({getDelHandle})=>({
     </Select>
   ),
 
-  [THREAT_NAME_USER_DEFINED_DATAINDEX]:value=>value===USER_DEFINED_VALUE&&
+  [THREAT_NAME_USER_DEFINED_DATAINDEX]:(value,records,index)=>value===USER_DEFINED_VALUE&&
   <Tooltip title="删除该条威胁行为"
            arrowPointAtCenter
            placement="topLeft">
-    <a style={{color:"#d73435"}}>
+    <a style={{color:"#d73435"}} onClick={getDelHandle(index)}>
       <Icon type="minus-circle" />
     </a>
   </Tooltip>
@@ -47,10 +48,10 @@ const getRenderer=({getDelHandle})=>({
 
 
 
-export const getColumns=()=>tableColumnsGenerator({
+export const getColumns=({getDelHandle,getLevelOnChangeHandle})=>tableColumnsGenerator({
   keys:dataIndexes,
   titleTextConfig:textConfig,
-  renderer:getRenderer({}),
+  renderer:getRenderer({getDelHandle,getLevelOnChangeHandle}),
   extraProps:{
     [THREAT_NAME_LEVEL_DATAINDEX]:{
       width:"45%"

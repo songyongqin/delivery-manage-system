@@ -53,10 +53,12 @@ class WrappedForm extends React.Component {
       }
 
       let _values={};
+
       Object.keys(values).forEach(i=>_values[i]=values[i].trim())
       onSubmit&&onSubmit({
         ..._values,
-        [THREAT_NAME_USER_DEFINED_DATAINDEX]:USER_DEFINED_VALUE
+        [THREAT_NAME_USER_DEFINED_DATAINDEX]:USER_DEFINED_VALUE,
+        [THREAT_NAME_KEY_DATAINDEX]:window.btoa(values[THREAT_NAME_NAME_DATAINDEX])
       });
 
     });
@@ -98,6 +100,9 @@ class WrappedForm extends React.Component {
             },
             {
               validator:this.checkInput,
+            },
+            {
+              whitespace:true,message:"攻击行为不能为空"
             }
           ]
         },
@@ -145,11 +150,11 @@ class WrappedForm extends React.Component {
                   icon="plus"
                   onClick={this.handleSubmit}>添加</Button>
 
-          <Button type="danger"
-                  loading={loading}
-                  style={{marginLeft:"15px"}}
-                  icon="close"
-                  onClick={this.props.onCancel}>取消</Button>
+          {/*<Button type="danger"*/}
+                  {/*loading={loading}*/}
+                  {/*style={{marginLeft:"15px"}}*/}
+                  {/*icon="close"*/}
+                  {/*onClick={this.props.onCancel}>取消</Button>*/}
         </FormItem>
       </Form>
     );

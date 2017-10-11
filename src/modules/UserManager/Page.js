@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { Menu, Button,Icon,Row,Col,Card,message as Message,Modal} from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
-import EnhanciveTable from '../../components/EnhanciveTable/index';
+import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
 import * as tableConfig from './components/TableConfig/index';
 import {tableTextConfig,configPanelTextConfig,createUserPanelTextConfig} from './ConstConfig';

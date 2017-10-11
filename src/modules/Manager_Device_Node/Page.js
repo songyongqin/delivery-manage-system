@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
-import EnhanciveTable from '../../components/EnhanciveTable/index';
+import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
 import * as tableConfig from '../Manager_Device/components/TableConfig/index';
 import {NAMESPACE} from './ConstConfig'
 import styles from './styles.css';

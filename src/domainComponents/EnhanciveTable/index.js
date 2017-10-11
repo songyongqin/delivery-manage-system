@@ -6,9 +6,11 @@ import styles from './styles.css';
 import React from 'react';
 import classnames from 'classnames';
 import JoTag from '../../components/JoTag';
+import {connect} from 'dva';
 /*
 * 控制列展开属性，点击列时可展开
 * */
+
 class ExpandControlTable extends React.Component{
   constructor(props) {
     super(props);
@@ -61,7 +63,10 @@ class ExpandControlTable extends React.Component{
 }
 
 
-export default ({inverse=false,title=null,tableProps={},paginationProps={},loading=false,pagination=true,isDark=true})=>{
+
+
+
+const EnhanciveTable=({inverse=false,title=null,tableProps={},paginationProps={},loading=false,pagination=true,isDark=true})=>{
 
   const classes=classnames({
     [styles["dark"]]:isDark,
@@ -112,5 +117,9 @@ export default ({inverse=false,title=null,tableProps={},paginationProps={},loadi
   )
 }
 
+const mapStateToProps=state=>({
+  isDark:state.layout.commonLayout.darkTheme
+})
 
 
+export default connect(mapStateToProps)(EnhanciveTable)

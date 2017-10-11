@@ -8,7 +8,7 @@ import JoSpin from '../../components/JoSpin/index';
 import ReceiveEmailConfigForm from './components/ReceiveEmailConfigForm';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
-
+import * as tools from '../../utils/tools';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -49,9 +49,7 @@ class Page extends React.Component{
       return;
     }
     return this.props.put(payload)
-      .then(result=>{
-        Message.success(textConfig.notification);
-      })
+      .then(tools.curry(Message.success,textConfig.notification))
   }
   getConfigPanel=()=>{
 

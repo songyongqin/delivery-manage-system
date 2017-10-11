@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge,Timeline,Checkbox,Switch } from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
-import EnhanciveTable from '../../components/EnhanciveTable/index';
+import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
 import * as tableConfig from  './components/index';
 import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';

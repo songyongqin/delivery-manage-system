@@ -1,20 +1,23 @@
 import React from 'react';
 import styles from './styles.css'
-import {Menu,Button,Breadcrumb,Popover,Icon,Tooltip} from 'antd';
-import {WithAnimateRender,WithBreadcrumb} from '../../components/HOSComponents/index'
+import {Menu,Button,Breadcrumb,Popover,Icon,Tooltip,message as Message} from 'antd';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
 import JoSpin from '../../components/JoSpin';
 import {connect} from 'dva';
 import classnames from 'classnames';
 import CreateForm from './components/CreateForm';
-
 import {
   NAMESPACE,
-  THREAT_NAME_NAME_DATAINDEX
-
+  THREAT_NAME_NAME_DATAINDEX,
+  THREAT_NAME_LEVEL_DATAINDEX,
 } from './ConstConfig'
 import * as tableConfig from './components/TableConfig';
-import EnhanciveTable from '../../components/EnhanciveTable';
+import EnhanciveTable from '../../domainComponents/EnhanciveTable';
+import Modal from '../../domainComponents/Modal'
+import * as tools from '../../utils/tools';
+
+const {curry}=tools;
+/******************************************/
 
 const mapStateToProps=state=>{
   const effectLoading=state.loading.effects;
@@ -27,6 +30,7 @@ const mapStateToProps=state=>{
   }
 
 }
+/******************************************/
 
 const mapDispatchToProps=dispatch=>({
   get:()=>dispatch({
@@ -36,39 +40,52 @@ const mapDispatchToProps=dispatch=>({
     type:`${NAMESPACE}/put`,
     payload,
   }),
+  add:payload=>dispatch({
+    type:`${NAMESPACE}/add`,
+    payload
+  }),
+  del:payload=>dispatch({
+    type:`${NAMESPACE}/del`,
+    payload
+  }),
+  modify:payload=>dispatch({
+    type:`${NAMESPACE}/modify`,
+    payload
+  })
 })
 
+/******************************************/
 
 @connect(mapStateToProps,createMapDispatchWithPromise(mapDispatchToProps))
 class Page extends React.Component{
   constructor(props) {
     super(props);
     this.state={
-      newItems:[],
       createVisible:false,
     }
   }
+  /******************************************/
   onCreateHandle=(values)=>{
-
-    let _newItems=this.state.newItems;
-
-    _newItems.unshift(values)
-
-    this.setState({newItems:_newItems});
+    this.props.add(values)
     this.switchCreatePopover();
   }
+  /******************************************/
   switchCreatePopover=()=>this.setState({createVisible:!this.state.createVisible})
+  /******************************************/
   componentDidMount=()=> {
     this.props.get();
     this.addScroll();
     addAutoResizeTableScrollHeight(this.addScroll);
   }
+  /******************************************/
   componentWillUnmount=()=>{
     removeAutoResizeTableScrollHeight(this.addScroll);
   }
+  /******************************************/
   componentDidUpdate=()=>{
     this.addScroll();
   }
+  /******************************************/
   addScroll=()=>{
     const $target = $(`.ant-table-body`);
     $target.niceScroll({
@@ -79,15 +96,26 @@ class Page extends React.Component{
     });
     $target[0].style.maxHeight=$("#strategy-expand-page")[0].offsetHeight-160+"px";
   }
+  /******************************************/
+  getDelHandle=index=>()=>this.props.del({index})
+  /******************************************/
+  getLevelOnChangeHandle=index=>value=>this.props.modify({index,[THREAT_NAME_LEVEL_DATAINDEX]:value})
+  /******************************************/
+  putThreatnameHandle=()=>this.props.put()
+    .then(curry(Message.success,"保存成功"))
+    .then(this.props.get)
+  /******************************************/
   render=()=>{
     const {commonLayout}=this.props;
     const {queryResults,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
     const isDark=commonLayout.darkTheme;
-    const finalData=[...this.state.newItems,...data];
+    const {getDelHandle,getLevelOnChangeHandle}=this;
     const tableProps={
-      columns:tableConfig.getColumns(),
-      dataSource:finalData.map((i,index)=>({
+
+      columns:tableConfig.getColumns({getDelHandle,getLevelOnChangeHandle}),
+
+      dataSource:data.map((i,index)=>({
         ...i,
         key:`item-${index}-${lastReqTime}`
       })),
@@ -95,8 +123,20 @@ class Page extends React.Component{
       size:"small"
     };
 
+
     return (
       <div>
+        <Modal visible={this.state.createVisible}
+               onCancel={this.switchCreatePopover}
+               footer={null}
+               title={<p><Icon type="plus"/>&nbsp;添加攻击行为</p>}>
+          <CreateForm onSubmit={this.onCreateHandle}
+                      isDark={isDark}
+                      key={`${this.state.createVisible}-create-form`}
+                      threatnameList={data.map(i=>i[THREAT_NAME_NAME_DATAINDEX])}/>
+        </Modal>
+
+
         <JoSpin spinning={this.props.loading}>
           <h4  className={classnames({
             [styles["title"]]:true,
@@ -104,41 +144,21 @@ class Page extends React.Component{
           })}>
             <Icon type="setting"/> 威胁等级配置
           </h4>
+
           <div style={{marginBottom:"15px"}}>
-            <Popover placement="bottom"
-                     trigger={"click"}
-                     visible={this.state.createVisible}
-                     content={<div style={{width:"400px",paddingTop:"20px"}}>
-                       <CreateForm onSubmit={this.onCreateHandle}
-                                   key={`${this.state.createVisible}-create-form`}
-                                   onCancel={this.switchCreatePopover}
-                                   threatnameList={finalData.map(i=>i[THREAT_NAME_NAME_DATAINDEX])}/>
-                     </div>}
-                     title={<p><Icon type="plus"/>&nbsp;添加攻击行为</p>}>
-              <Button type="primary"
-                      onClick={this.switchCreatePopover}
-                      icon="plus">
-                添加
-              </Button>
-            </Popover>
             <Button type="primary"
+                    onClick={this.switchCreatePopover}
+                    icon="plus">
+              添加
+            </Button>
+            <Button type="primary"
+                    onClick={this.putThreatnameHandle}
                     style={{
                       marginLeft:"15px"
                     }}
                     icon="save">
               保存
             </Button>
-            {/*<Button type="danger"*/}
-                    {/*icon="close"*/}
-                    {/*style={{*/}
-                      {/*marginLeft:"15px",*/}
-                      {/*// borderColor:"#d73435",*/}
-                      {/*// background:"#d73435",*/}
-                      {/*// color:"white"*/}
-                    {/*}}*/}
-                    {/*className="btn-danger">*/}
-              {/*取消*/}
-            {/*</Button>*/}
             <Tooltip title="撤销/重新加载" placement="bottomLeft">
               <Button  style={{float:"right"}}
                        type="primary"
@@ -146,8 +166,9 @@ class Page extends React.Component{
                        icon="reload"/>
             </Tooltip>
           </div>
+
+
           <EnhanciveTable tableProps={tableProps}
-                          isDark={isDark}
                           inverse={true}
                           pagination={false}/>
 
@@ -159,7 +180,7 @@ class Page extends React.Component{
 
 export default Page;
 
-
+/******************************************/
 
 function addAutoResizeTableScrollHeight(callback) {
   window.addEventListener("resize",callback)

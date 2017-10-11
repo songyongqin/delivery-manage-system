@@ -20,7 +20,7 @@ import {Button,Switch,Icon} from 'antd'
 
 function getRenderer({getUsefulOnChangeHandle,}) {
   return {
-    [TOTAL_DATAINDEX]:value=><CountUp  start={0}
+    [TOTAL_DATAINDEX]:value=><CountUp  start={value}
                                        end={value}
                                        separator={","}
                                        useGrouping={true}

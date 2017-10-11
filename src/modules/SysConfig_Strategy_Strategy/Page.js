@@ -4,7 +4,6 @@ import {
   Menu,
   Button,
   Breadcrumb,
-  Card,
   Icon,
   message as Message,
   Popover
@@ -15,7 +14,8 @@ import JoSpin from '../../components/JoSpin';
 import {connect} from 'dva';
 import classnames from 'classnames';
 import * as tableConfig from './components/TableConfig';
-import EnhanciveTable from '../../components/EnhanciveTable';
+import EnhanciveTable from '../../domainComponents/EnhanciveTable';
+import Card from '../../domainComponents/Card';
 import {
   NAMESPACE,
   USERFUL_VALUE,
@@ -25,7 +25,9 @@ import {
 import {NAMESPACE as RULE_NAMESPACE} from '../SysConfig_Strategy_Rule/ConstConfig';
 import {NAMESPACE　as THREAT_NAME_NAMESPACE} from '../SysConfig_Strategy_Threatname/ConstConfig';
 import StrategyThreatnameModule from '../SysConfig_Strategy_Threatname/Page';
+import * as tools from '../../utils/tools';
 
+const {curry}=tools;
 
 const CardTitle=({selectedRows=[],createPutStrategy,applyHandle,switchExpandPage})=>(
   <div style={{overflow:"hidden"}}>
@@ -135,19 +137,21 @@ class Page extends React.Component{
     [protocolType]:value?USERFUL_VALUE:UN_USEFUL_VALUE
   })
     .then(this.props.get)
+    .catch(this.props.get)
 
   createPutStrategy=value=>()=>{
     let payload={};
     this.state.selectedRows.forEach(i=>payload[i[PROTOCOLTYPE_DATAINDEX]]=value)
     this.props.put(payload)
-      .then(Message.success.call(null,"修改成功"))
+      .then(curry(Message.success,"修改成功"))
       .then(this.props.get)
       .then(this.initSelected)
   }
 
   applyHandle=()=>this.props.apply()
-    .then(Message.success.call(null,"应用成功"))
+    .then(curry(Message.success,"应用成功"))
     .then(this.props.get)
+
 
   initSelected=()=>this.setState({
     selectedRows:[]
@@ -155,12 +159,10 @@ class Page extends React.Component{
 
   getContentPanel=()=>{
 
-    const {commonLayout}=this.props;
     const {queryResults,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
     const {getUsefulOnChangeHandle,createPutStrategy,applyHandle,switchExpandPage}=this;
     const {selectedRows} =this.state;
-    const isDark=commonLayout.darkTheme;
 
     const tableProps={
       columns:tableConfig.getColumns({
@@ -180,19 +182,14 @@ class Page extends React.Component{
                            switchExpandPage={switchExpandPage}
                            createPutStrategy={createPutStrategy}/>
 
-    const classes=classnames({
-      ["card-dark"]:isDark
-    });
-
 
     return (
      <div key="content-panel" style={{padding:"15px 0"}}>
-        <Card title={title}
-              className={classes}>
+        <Card title={title}>
           <EnhanciveTable title={null}
+                          key={`${lastReqTime}-table`}
                           inverse={true}
                           tableProps={tableProps}
-                          isDark={isDark}
                           pagination={false}/>
         </Card>
      </div>

@@ -20,7 +20,7 @@ export const textConfig={
 
 export const dataIndexes=Object.keys(textConfig);
 
-export const  LEVEL_HIGH="level",
+export const  LEVEL_HIGH="high",
   LEVEL_MIDDLE="middle",
   LEVEL_LOW="low"
 

@@ -5,7 +5,7 @@ import React from 'react';
 import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
 import {queryContainerGenerator} from '../QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
-import EnhanciveTable from '../../components/EnhanciveTable/index';
+import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
 import ThreatEventOperationPanel from '../../components/ThreatEventOperationPanel';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
 import * as tools from '../../utils/tools';
