@@ -22,12 +22,22 @@ import {
   UN_USEFUL_VALUE,
   PROTOCOLTYPE_DATAINDEX,
 } from './ConstConfig'
+import {
+  THREAT_NAME_NAME_DATAINDEX,
+  THREAT_NAME_KEY_DATAINDEX,
+} from '../SysConfig_Strategy_Threatname/ConstConfig'
+import {
+  RULE_THREAT_TYPE_DATAINDEX,
+  NAMESPACE as RULE_NAMESPACE
+} from '../SysConfig_Strategy_Rule/ConstConfig'
 import StrategyThreatnameModule from '../SysConfig_Strategy_Threatname/Page';
 import * as tools from '../../utils/tools';
+import RuleForm from '../SysConfig_Strategy_Rule/components/RuleForm';
+import Modal from '../../domainComponents/Modal';
 
 const {curry}=tools;
 
-const CardTitle=({selectedRows=[],createPutStrategy,applyHandle,switchExpandPage})=>(
+const CardTitle=({selectedRows=[],createPutStrategy,applyHandle,switchExpandPage,switchCreateModal})=>(
   <div style={{overflow:"hidden"}}>
     <div style={{float:"left"}}>
       <Button.Group>
@@ -45,6 +55,7 @@ const CardTitle=({selectedRows=[],createPutStrategy,applyHandle,switchExpandPage
       </Button.Group>
       <Button type="primary"
               icon="plus"
+              onClick={switchCreateModal}
               style={{marginLeft:"15px"}}>
         新增特征
       </Button>
@@ -75,7 +86,8 @@ const mapStateToProps=state=>{
     commonLayout:state.layout.commonLayout,
     loading:effectLoading[`${NAMESPACE}/query`]||
     effectLoading[`${NAMESPACE}/put`]||
-    effectLoading[`${NAMESPACE}/apply`]
+    effectLoading[`${NAMESPACE}/apply`],
+    postRuleLoaidng:effectLoading[`${RULE_NAMESPACE}/post`]
   }
 
 }
@@ -88,8 +100,15 @@ const mapDispatchToProps=dispatch=>({
     type:`${NAMESPACE}/put`,
     payload,
   }),
+  postRule:payload=>dispatch({
+    type:`${RULE_NAMESPACE}/post`,
+    payload,
+  }),
   apply:()=>dispatch({
     type:`${NAMESPACE}/apply`
+  }),
+  getThreatname:()=>dispatch({
+    type:`${NAMESPACE}/getThreatname`
   })
 })
 
@@ -106,9 +125,11 @@ class Page extends React.Component{
     this.state={
       selectedRows:[],
       expanded:true,
-      expandedRowIndexes:[0],
+      expandedRowIndexes:[],
+      threatnames:[],
+      createVisible:false,
+      isFormDependInit:false,
     }
-
   }
   /***************************************/
   getExpandRowOnChange=index=>()=>this.state.expandedRowIndexes.includes(index)
@@ -145,6 +166,15 @@ class Page extends React.Component{
 
   componentDidMount=()=>{
     this.props.get();
+    this.props.getThreatname().then(result=>{
+      this.setState({
+        threatnames:result.map(i=>({
+          text:i[THREAT_NAME_NAME_DATAINDEX],
+          value:i[THREAT_NAME_KEY_DATAINDEX]
+        })),
+        isFormDependInit:true,
+      })
+    });
   }
 
   setSelectedRows=(selectedRows)=>this.setState({
@@ -179,6 +209,16 @@ class Page extends React.Component{
   initSelected=()=>this.setState({
     selectedRows:[]
   })
+
+  switchCreateModal=()=>this.setState({
+    createVisible:!this.state.createVisible,
+  })
+
+  onSubmit=payload=>this.props.postRule(payload)
+    .then(curry(Message.success,"添加成功"))
+    .then(this.switchCreateModal)
+    .then(this.props.get)
+
   getContentPanel=()=>{
 
     const {queryResults,lastReqTime}=this.props[NAMESPACE];
@@ -189,7 +229,9 @@ class Page extends React.Component{
       applyHandle,
       switchExpandPage,
       getExpandRowOnChange,
+      switchCreateModal
     }=this;
+
     const {selectedRows,expandedRowIndexes} =this.state;
     const tableProps={
       expandIconAsCell:false,
@@ -211,6 +253,7 @@ class Page extends React.Component{
 
     const title=<CardTitle selectedRows={selectedRows}
                            applyHandle={applyHandle}
+                           switchCreateModal={switchCreateModal}
                            switchExpandPage={switchExpandPage}
                            createPutStrategy={createPutStrategy}/>
 
@@ -231,9 +274,17 @@ class Page extends React.Component{
   render=()=>{
 
 
-    const {commonLayout}=this.props,
+    const {commonLayout,postRuleLoading}=this.props,
           isDark=commonLayout.darkTheme,
-          {expanded}=this.state
+          {
+            expanded,
+            threatnames,
+            createVisible,
+            isFormDependInit
+          }=this.state
+
+    const {queryResults}=this.props[NAMESPACE];
+    const {data}=queryResults;
 
     const expandPageClasses=classnames({
       [styles["expand-page"]]:true,
@@ -263,6 +314,21 @@ class Page extends React.Component{
               }
             </JoSpin>
           </div>
+          <Modal visible={createVisible}
+                 isDark={isDark}
+                 onCancel={this.switchCreateModal}
+                 key={`${createVisible}-modal-visible`}
+                 footer={null}
+                 title={<p><Icon type="plus"/>&nbsp;新增特征</p>}>
+            <JoSpin spinning={postRuleLoading}>
+                <RuleForm onSubmit={this.onSubmit}
+                          isDark={isDark}
+                          protocolTypes={data.map(i=>i[PROTOCOLTYPE_DATAINDEX])}
+                          threatTypes={threatnames}/>
+
+
+            </JoSpin>
+          </Modal>
         </div>
     )
   }

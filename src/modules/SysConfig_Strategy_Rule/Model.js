@@ -37,6 +37,17 @@ const baseModel={
         resolve&&resolve(res.payload);
       }
     },
+    *post({resolve,payload},{callWithExtra}) {
+      const res=yield callWithExtra(
+        service.post,
+        {...payload||{}},
+        callConfig
+      )
+
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+      }
+    },
     *delete({resolve,payload},{callWithExtra}) {
       const res=yield callWithExtra(
         service._delete,

@@ -36,6 +36,16 @@ const baseModel={
         resolve&&resolve(res.payload);
       }
     },
+    *getThreatname({resolve,payload},{callWithExtra}) {
+      const res=yield callWithExtra(
+        service.getThreatname,
+        {...payload||{}},
+        callConfig
+      )
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+      }
+    },
     *apply({resolve,payload},{callWithExtra}) {
       const res=yield callWithExtra(
         service.apply,

@@ -65,15 +65,21 @@ class WrappedForm extends React.Component {
       })
 
       _values[RULE_DATAINDEX]=rule;
-
+      _values[RULE_DESCRIPTION]=_values[RULE_DESCRIPTION]||""
       onSubmit&&onSubmit(_values);
     });
   }
   componentDidMount=()=>{
-    this.setRuleItems(this.props[RULE_PROTOCOLTYPE_DATAINDEX])
+    this.setRuleItems(this.props[RULE_PROTOCOLTYPE_DATAINDEX]||this.props.protocolTypes[0])
+  }
+  componentWillReceiveProps=newProps=>{
+    const {isCreate=true}=this.props;
+    if(isCreate){
+      this.setRuleItems(newProps.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX))
+    }
   }
   setRuleItems=(protocolType)=>this.setState({
-    ruleItems:ruleItemsConfig[protocolType]
+    ruleItems:ruleItemsConfig[protocolType]||[]
   })
   onChange=value=>this.setRuleItems(value);
 
@@ -106,7 +112,7 @@ class WrappedForm extends React.Component {
         component:(
           <Select size="large"
                   onChange={this.onChange}
-                  style={{width:"100px"}}>
+                  style={{width:"140px"}}>
             {protocolTypes.map((i,index)=>(
               <Select.Option value={i}
                              key={`${index}-item`}>
@@ -129,11 +135,11 @@ class WrappedForm extends React.Component {
         },
         filed:{
           name:RULE_THREAT_TYPE_DATAINDEX,
-          initialValue:defaultValue[RULE_THREAT_TYPE_DATAINDEX]
+          initialValue:defaultValue[RULE_THREAT_TYPE_DATAINDEX]||(threatTypes[0].value)
         },
         component:(
           <Select size="large"
-                  style={{width:"100px"}}>
+                  style={{width:"140px"}}>
             {threatTypes.map((i,index)=>(
               <Select.Option value={i.value}
                              key={`${index}-item`}>
