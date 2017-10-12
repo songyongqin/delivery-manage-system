@@ -4,6 +4,8 @@
 import React from 'react';
 import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
 import CountUp from 'react-countup';
+import Card from '../../../../domainComponents/Card';
+import StrategyRule from '../../../SysConfig_Strategy_Rule/Page';
 
 import {
   dataIndexes,
@@ -18,7 +20,7 @@ import {
 
 import {Button,Switch,Icon} from 'antd'
 
-function getRenderer({getUsefulOnChangeHandle,}) {
+function getRenderer({getUsefulOnChangeHandle,getExpandRowOnChange}) {
   return {
     [TOTAL_DATAINDEX]:value=><CountUp  start={value}
                                        end={value}
@@ -26,17 +28,37 @@ function getRenderer({getUsefulOnChangeHandle,}) {
                                        useGrouping={true}
                                        duration={1}
                                        delay={0}/>,
-    [USEFUL_DATAINDEX]:(value,records)=><Switch  checkedChildren={<Icon type="check" />}
-                                                 onChange={getUsefulOnChangeHandle(records[PROTOCOLTYPE_DATAINDEX])}
-                                                 unCheckedChildren={<Icon type="cross" />}
-                                                 defaultChecked={value===USERFUL_VALUE}/>,
-    [STRATEGY_OPERATION_KEY]:(value,records)=><Button type="primary">配置</Button>
+
+    [USEFUL_DATAINDEX]:(value,records)=>(
+      <Switch  checkedChildren={<Icon type="check" />}
+               onChange={getUsefulOnChangeHandle(records[PROTOCOLTYPE_DATAINDEX])}
+               unCheckedChildren={<Icon type="cross" />}
+               defaultChecked={value===USERFUL_VALUE}/>
+    ),
+
+    [STRATEGY_OPERATION_KEY]:(value,records,index)=>(
+      <Button type="primary"
+              onClick={getExpandRowOnChange(index)}>
+        配置
+      </Button>
+    )
   }
 
 }
 
-export const getColumns=({getUsefulOnChangeHandle}={})=>tableColumnsGenerator({
-  keys:dataIndexes,
-  titleTextConfig:textConfig,
-  renderer:getRenderer({getUsefulOnChangeHandle}),
-})
+export const getColumns=({getUsefulOnChangeHandle,getExpandRowOnChange}={})=>
+  tableColumnsGenerator({
+    keys:dataIndexes,
+    titleTextConfig:textConfig,
+    renderer:getRenderer({getUsefulOnChangeHandle,getExpandRowOnChange}),
+  })
+
+
+export const getExpandedRowRenderer=({expandedRowIndexes})=>(records,index)=>(
+  <div style={{marginLeft:"40px"}}>
+    <StrategyRule key={`${expandedRowIndexes.includes(index)}-rule-item`}
+                  {...{
+                      [PROTOCOLTYPE_DATAINDEX]:records[PROTOCOLTYPE_DATAINDEX]}
+                    }/>
+  </div>
+)

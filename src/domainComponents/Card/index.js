@@ -15,6 +15,7 @@ const WithConnectCard=(props)=>{
   return <Card {...finalProps} className={classnames({
     [props.className||""]:true,
     ["card-dark"]:props.isDark,
+    ["card"]:true,
   })}/>
 
 }

@@ -21,7 +21,8 @@ const baseModel={
     queryFilters:{
     },
     queryResults:{
-      data:[]
+      data:[],
+      total:0,
     }
   },
   effects:{
@@ -35,13 +36,35 @@ const baseModel={
       if(res.status===1){
         resolve&&resolve(res.payload);
       }
-    }
+    },
+    *delete({resolve,payload},{callWithExtra}) {
+      const res=yield callWithExtra(
+        service._delete,
+        {...payload||{}},
+        callConfig
+      )
+
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+      }
+    },
+    *getThreatname({resolve,payload},{callWithExtra}) {
+      const res=yield callWithExtra(
+        service.getThreatname,
+        {...payload||{}},
+        callConfig
+      )
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+      }
+    },
   }
 };
 
 const payloadFilter=(payload)=>{
   return {
-    data:payload
+    data:payload.data,
+    total:payload.total,
   }
 };
 
@@ -52,6 +75,5 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig:commonCallConfig,
   queryService,
-  initPath:"/sys-config/strategy"
 });
 

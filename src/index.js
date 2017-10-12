@@ -30,6 +30,7 @@ import ManagerDeviceVMModel from './modules/Manager_Virtual/Model'
 import SysConfigNetworkModel from './modules/SysConfig_Network/Model';
 import StrategyModel from './modules/SysConfig_Strategy_Strategy/Model';
 import StrategyThreatnameModel from './modules/SysConfig_Strategy_Threatname/Model';
+import StrategyRuleModel from './modules/SysConfig_Strategy_Rule/Model';
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -59,7 +60,7 @@ app.model(ManagerDeviceVMModel);
 app.model(SysConfigNetworkModel);
 app.model(StrategyModel);
 app.model(StrategyThreatnameModel);
-
+app.model(StrategyRuleModel);
 
 combineExtraEffectsWithApp(app,extraEffectsOptions);
 combineExtraReducersWithApp(app);

@@ -22,8 +22,6 @@ import {
   UN_USEFUL_VALUE,
   PROTOCOLTYPE_DATAINDEX,
 } from './ConstConfig'
-import {NAMESPACE as RULE_NAMESPACE} from '../SysConfig_Strategy_Rule/ConstConfig';
-import {NAMESPACE　as THREAT_NAME_NAMESPACE} from '../SysConfig_Strategy_Threatname/ConstConfig';
 import StrategyThreatnameModule from '../SysConfig_Strategy_Threatname/Page';
 import * as tools from '../../utils/tools';
 
@@ -57,7 +55,6 @@ const CardTitle=({selectedRows=[],createPutStrategy,applyHandle,switchExpandPage
               icon="save">
         应用
       </Button>
-
       {/*<Button type="primary"*/}
               {/*onClick={switchExpandPage}*/}
               {/*style={{marginLeft:"15px"}}*/}
@@ -78,10 +75,6 @@ const mapStateToProps=state=>{
     commonLayout:state.layout.commonLayout,
     loading:effectLoading[`${NAMESPACE}/query`]||
     effectLoading[`${NAMESPACE}/put`]||
-    effectLoading[`${RULE_NAMESPACE}/query`]||
-    effectLoading[`${RULE_NAMESPACE}/put`]||
-    // effectLoading[`${THREAT_NAME_NAMESPACE}/query`]||
-    // effectLoading[`${THREAT_NAME_NAMESPACE}/put`]||
     effectLoading[`${NAMESPACE}/apply`]
   }
 
@@ -100,6 +93,10 @@ const mapDispatchToProps=dispatch=>({
   })
 })
 
+const getTableRowKey=(index,lastReqTime)=>`item-${index}-${lastReqTime}`
+
+
+
 @connect(mapStateToProps,createMapDispatchWithPromise(mapDispatchToProps))
 @WithAnimateRender
 @WithBreadcrumb
@@ -109,9 +106,30 @@ class Page extends React.Component{
     this.state={
       selectedRows:[],
       expanded:true,
+      expandedRowIndexes:[0],
     }
 
   }
+  /***************************************/
+  getExpandRowOnChange=index=>()=>this.state.expandedRowIndexes.includes(index)
+    ?
+    this.removeExpandedRow(index)
+    :
+    this.addExpandedRow(index)
+  /***************************************/
+  addExpandedRow=index=>this.setState({
+    expandedRowIndexes:[...this.state.expandedRowIndexes,index]
+  })
+  /***************************************/
+  removeExpandedRow=index=>this.setState({
+    expandedRowIndexes:this.state.expandedRowIndexes.filter(i=>i!==index)
+  })
+  /***************************************/
+  clearExpandRow=()=>this.setState({
+    expandedRowIndexes:[]
+  })
+  /***************************************/
+
   switchExpandPage=()=>{
     this.setState({
       expanded:!this.state.expanded
@@ -133,13 +151,18 @@ class Page extends React.Component{
     selectedRows
   })
 
-  getUsefulOnChangeHandle=protocolType=>value=>this.props.put({
-    [protocolType]:value?USERFUL_VALUE:UN_USEFUL_VALUE
-  })
-    .then(this.props.get)
-    .catch(this.props.get)
+  getUsefulOnChangeHandle=protocolType=>value=>{
+
+    this.clearExpandRow()
+    this.props.put({
+      [protocolType]:value?USERFUL_VALUE:UN_USEFUL_VALUE
+    })
+      .then(this.props.get)
+      .catch(this.props.get)
+  }
 
   createPutStrategy=value=>()=>{
+    this.clearExpandRow();
     let payload={};
     this.state.selectedRows.forEach(i=>payload[i[PROTOCOLTYPE_DATAINDEX]]=value)
     this.props.put(payload)
@@ -156,25 +179,34 @@ class Page extends React.Component{
   initSelected=()=>this.setState({
     selectedRows:[]
   })
-
   getContentPanel=()=>{
 
     const {queryResults,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
-    const {getUsefulOnChangeHandle,createPutStrategy,applyHandle,switchExpandPage}=this;
-    const {selectedRows} =this.state;
-
+    const {
+      getUsefulOnChangeHandle,
+      createPutStrategy,
+      applyHandle,
+      switchExpandPage,
+      getExpandRowOnChange,
+    }=this;
+    const {selectedRows,expandedRowIndexes} =this.state;
     const tableProps={
+      expandIconAsCell:false,
+      expandIconColumnIndex:-1,
+      expandedRowKeys:expandedRowIndexes.map(index=>getTableRowKey(index,lastReqTime)),
       columns:tableConfig.getColumns({
-        getUsefulOnChangeHandle
+        getUsefulOnChangeHandle,
+        getExpandRowOnChange,
       }),
       dataSource:data.map((i,index)=>({
         ...i,
-        key:`item-${index}-${lastReqTime}`
+        key: getTableRowKey(index,lastReqTime)
       })),
       rowSelection:{
         onChange: (selectedRowKeys, selectedRows) =>this.setSelectedRows(selectedRows)
-      }
+      },
+      expandedRowRender:tableConfig.getExpandedRowRenderer({expandedRowIndexes})
     };
 
     const title=<CardTitle selectedRows={selectedRows}
@@ -187,6 +219,7 @@ class Page extends React.Component{
      <div key="content-panel" style={{padding:"15px 0"}}>
         <Card title={title}>
           <EnhanciveTable title={null}
+                          expanded={false}
                           key={`${lastReqTime}-table`}
                           inverse={true}
                           tableProps={tableProps}

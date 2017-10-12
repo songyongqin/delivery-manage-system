@@ -66,7 +66,7 @@ class ExpandControlTable extends React.Component{
 
 
 
-const EnhanciveTable=({inverse=false,title=null,tableProps={},paginationProps={},loading=false,pagination=true,isDark=true})=>{
+const EnhanciveTable=({expanded=true,inverse=false,title=null,tableProps={},paginationProps={},loading=false,pagination=true,isDark=true})=>{
 
   const classes=classnames({
     [styles["dark"]]:isDark,
@@ -97,7 +97,20 @@ const EnhanciveTable=({inverse=false,title=null,tableProps={},paginationProps={}
             :
             null
         }
-        <ExpandControlTable {...tableProps} className={classes}/>
+        {
+          expanded
+            ?
+            <ExpandControlTable {...tableProps}
+                                className={classes}
+                                bordered={false}/>
+            :
+            <Table bordered={false}
+                   pagination={false}
+                   {...tableProps}
+                   className={classes} />
+        }
+
+
         {
           pagination
             ?

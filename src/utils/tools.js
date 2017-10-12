@@ -204,3 +204,6 @@ export function curry(...args) {
 
   return ()=>fn(rest);
 }
+
+
+export const getTableRowKey=(index,lastReqTime)=>`item-${index}-${lastReqTime}`

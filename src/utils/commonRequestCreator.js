@@ -11,7 +11,7 @@ const commonHeader={
 
 export default {
 
-  get:(url)=>async ()=>request(url, {
+  get:(url,withQuery=false)=>async payload=>request(url+tools.jsonToQueryString(payload), {
     method: 'GET',
     headers: commonHeader
   }),
@@ -29,7 +29,7 @@ export default {
   }),
 
 
-  delete:(url)=>async ()=>request(url, {
+  delete:(url,withQuery=false)=>async payload=>request(url+tools.jsonToQueryString(payload), {
     method:"delete",
     headers: commonHeader,
   })

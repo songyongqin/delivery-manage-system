@@ -13,7 +13,7 @@ export const  THREAT_NAME_KEY_DATAINDEX="key",
 
 export const textConfig={
   [THREAT_NAME_NAME_DATAINDEX]:"攻击行为",
-  [THREAT_NAME_LEVEL_DATAINDEX]:"威胁行为",
+  [THREAT_NAME_LEVEL_DATAINDEX]:"威胁等级",
   [THREAT_NAME_USER_DEFINED_DATAINDEX]:""
 }
 
