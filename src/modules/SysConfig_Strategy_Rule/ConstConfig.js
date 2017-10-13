@@ -70,3 +70,6 @@ export const ruleItemsConfig={
   [FTP]:[SOURCE_IP_PORT,TARGET_IP_PORT],
   [SMTP_POP3]:[REVEICER,SENDER,THEME],
 }
+
+
+

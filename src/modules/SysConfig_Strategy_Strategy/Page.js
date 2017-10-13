@@ -127,7 +127,7 @@ class Page extends React.Component{
       expanded:true,
       expandedRowIndexes:[],
       threatnames:[],
-      createVisible:false,
+      createVisible:true,
       isFormDependInit:false,
     }
   }

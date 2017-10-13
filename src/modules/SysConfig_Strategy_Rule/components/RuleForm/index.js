@@ -15,6 +15,8 @@ import {
   ruleItemsConfig,
 } from '../../ConstConfig'
 import * as tools from '../../../../utils/tools';
+import ruleItemCheckConfig from './ruleItemCheckConfig';
+
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
@@ -45,7 +47,12 @@ class WrappedForm extends React.Component {
   constructor(props) {
     super(props)
     this.state={
-      ruleItems:[]
+      ruleItems:[],
+      checkerStatus:{
+        // sourceIpPort:{
+        //   status:"error"
+        // }
+      }
     }
   }
   handleSubmit = (e) => {
@@ -69,26 +76,59 @@ class WrappedForm extends React.Component {
       onSubmit&&onSubmit(_values);
     });
   }
+
   componentDidMount=()=>{
     this.setRuleItems(this.props[RULE_PROTOCOLTYPE_DATAINDEX]||this.props.protocolTypes[0])
   }
+
   componentWillReceiveProps=newProps=>{
     const {isCreate=true}=this.props;
     if(isCreate){
       this.setRuleItems(newProps.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX))
     }
   }
+
   setRuleItems=(protocolType)=>this.setState({
     ruleItems:ruleItemsConfig[protocolType]||[]
   })
+
   onChange=value=>this.setRuleItems(value);
 
+  getRuleCheckConfirm=dataIndex=>()=>{
+    setTimeout(()=>{
+      try{
+        const activeProtocolType=this.props.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)||
+                                 this.props[RULE_PROTOCOLTYPE_DATAINDEX];
+        
+        ruleItemCheckConfig&&ruleItemCheckConfig[activeProtocolType]({
+            dataIndex,
+            setCheckStatus:this.setCheckerStatus,
+            props:this.props
+        })
+
+      }catch(e){
+
+      }
+    })
+
+  }
+  setCheckerStatus=(dataIndex,status,help)=>{
+    this.setState({
+      checkerStatus:{
+        ...this.state.checkerStatus,
+        [dataIndex]:{
+          status,
+          help,
+        }
+      }
+    })
+  }
   render() {
     const { getFieldDecorator} = this.props.form;
     const {isDark,loading,defaultValue={},isCreate=true}=this.props;
     const protocolTypes=this.props.protocolTypes||[];
     const threatTypes=this.props.threatTypes||[];
-    const ruleItems=this.state.ruleItems;
+    const {ruleItems,checkerStatus}=this.state;
 
     const lblClasses=classnames({
       [styles["lbl-dark"]]:isDark
@@ -103,7 +143,9 @@ class WrappedForm extends React.Component {
         props:{
           ...commonProps,
           hasFeedback:false,
-          label:<span className={lblClasses}>{tools.getKeyText(RULE_PROTOCOLTYPE_DATAINDEX,textConfig)}</span>
+          label:<span className={lblClasses}>
+            {tools.getKeyText(RULE_PROTOCOLTYPE_DATAINDEX,textConfig)}
+            </span>
         },
         filed:{
           name:RULE_PROTOCOLTYPE_DATAINDEX,
@@ -135,7 +177,7 @@ class WrappedForm extends React.Component {
         },
         filed:{
           name:RULE_THREAT_TYPE_DATAINDEX,
-          initialValue:defaultValue[RULE_THREAT_TYPE_DATAINDEX]||(threatTypes[0].value)
+          initialValue:defaultValue[RULE_THREAT_TYPE_DATAINDEX]||((threatTypes[0]||{}).value)
         },
         component:(
           <Select size="large"
@@ -153,15 +195,23 @@ class WrappedForm extends React.Component {
         props:{
           ...commonProps,
           required:index===0,
+          validateStatus:(checkerStatus[r]||{}).status,
+          help:(checkerStatus[r]||{}).help,
           label:index===0?<span className={lblClasses}>{tools.getKeyText(RULE_DATAINDEX,textConfig)}</span>:" "
         },
         filed:{
           name:r,
-          initialValue:(defaultValue[RULE_DATAINDEX]||{})[r]
+          initialValue:(defaultValue[RULE_DATAINDEX]||{})[r],
+          // rules:[
+          //   {
+          //     validator: this.getRuleCheckConfirm(r),
+          //   },
+          // ]
         },
         component:(
           <Input disabled={loading}
                  key={`${r}-${index}`}
+                 onChange={this.getRuleCheckConfirm(r)}
                  placeholder={tools.getKeyText(r,ruleItemPlaceholder)}/>
         )
       })),
