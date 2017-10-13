@@ -187,3 +187,11 @@ export const systemsTextConfig={
 }
 
 export const systems=Object.keys(systemsTextConfig);
+
+
+/******************************/
+
+export const  STAND_ALONE="standalone",
+              DISTRIBUTION="distribution",
+              IDS="ids",
+              NODE="node"

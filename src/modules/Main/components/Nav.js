@@ -6,17 +6,30 @@ import { Menu} from 'antd';
 import styles from './Nav.css';
 import classnames from 'classnames';
 import {Link} from 'dva/router';
-
+import {
+  IDS,
+  NODE,
+  DISTRIBUTION,
+  STAND_ALONE,
+} from '../../../configs/ConstConfig'
 const SubMenu = Menu.SubMenu;
 const Item=Menu.Item;
 
 
-const getItem=(item,isAdmin=false,activeKeys,isOuter)=>{
-  const {adminOnly,items,link,icon,title}=item;
+const getItem=(item,isAdmin=false,activeKeys,isOuter,productType)=>{
+  const {adminOnly,items,link,icon,title,idsHide,nodeHide}=item;
   if(adminOnly&&!isAdmin){
-
     return null;
   }
+  console.info(link,productType,idsHide,nodeHide)
+  if(productType===IDS&&idsHide){
+    return null;
+  }
+  if(productType===NODE&&nodeHide){
+    return null;
+  }
+
+
   const classes=classnames({
     [styles["item"]]:true,
     [styles["active"]]:activeKeys.indexOf(link)!==-1&&isOuter,
@@ -35,7 +48,7 @@ const getItem=(item,isAdmin=false,activeKeys,isOuter)=>{
       <SubMenu key={link}
                className={classes}
                title={subMenuTitle}>
-      {getMenu(items,isAdmin,activeKeys)}
+      {getMenu(items,isAdmin,activeKeys,false,productType)}
     </SubMenu>
     )
   }
@@ -50,11 +63,11 @@ const getItem=(item,isAdmin=false,activeKeys,isOuter)=>{
 
 };
 
-const getMenu=(routeConfig,isAdmin=true,activeKeys,isOuter)=>{
+const getMenu=(routeConfig,isAdmin=true,activeKeys,isOuter,productType)=>{
  const keys=Object.keys(routeConfig);
 
  return keys.map(k=>{
-   return getItem(routeConfig[k],isAdmin,activeKeys,isOuter)
+   return getItem(routeConfig[k],isAdmin,activeKeys,isOuter,productType)
  })
 
 
@@ -71,7 +84,10 @@ export default ({
                   activeKey="",
                   routeConfig,
                   isAdmin=false,
+                  productType
 })=>{
+
+
 
   const classes=classnames({
     [styles["nav"]]:true,
@@ -116,7 +132,7 @@ export default ({
       <Menu mode={isMini?"vertical":"inline"}
             style={{height:"100%",width:"100%"}}
             theme="dark">
-        {getMenu(config,isAdmin,activeKeys,true)}
+        {getMenu(config,isAdmin,activeKeys,true,productType)}
       </Menu>
     </nav>
   )

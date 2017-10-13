@@ -14,6 +14,8 @@ import ModifyPasswordForm from './components/ModifyPasswordForm';
 const NAMESPACE="main";
 
 function mapStateToProps(state) {
+
+
   return {
     [NAMESPACE]:state[NAMESPACE],
     layout:state.layout,
@@ -21,7 +23,8 @@ function mapStateToProps(state) {
     routeConfig:state.layout.routeConfig,
     languageConfig:state.layout.languageConfig,
     userData:state.user.userData,
-    putPasswordLoading:state.loading["user/putPassword"]
+    putPasswordLoading:state.loading["user/putPassword"],
+    productType:state.user.productType.type,
   }
 }
 
@@ -102,6 +105,7 @@ class Page extends React.Component{
              activeKey={window.location.hash.substr(1)}
              isDark={darkTheme}
              isAdmin={userData.isAdmin}
+             productType={this.props.productType}
              routeConfig={routeConfig}
              titleConfig={languageConfig[language].routes}/>
       </div>

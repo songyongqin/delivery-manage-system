@@ -3,7 +3,6 @@
  */
 import Icon from '../components/JoIcon';
 
-
 const OVERVIEW_PATH="/overview",
       ANALYSE_PATH="/analyse",
       ANALYSE_EVENT_PATH="/analyse/event",
@@ -12,6 +11,17 @@ const OVERVIEW_PATH="/overview",
       ANALYSE_RANKING_PATH="/analyse/ranking",
       ANALYSE_THREAT_DISTRIBUTION="/analyse/threat-distribution",
       ANALYSE_OVERALL="/analyse/overall";
+
+
+
+import * as tools from '../utils/tools';
+import {
+  IDS
+} from '../configs/ConstConfig'
+
+
+const producType=(tools.getTemp("productType")||{}).type
+
 
 export default {
   "overview":{
@@ -29,7 +39,8 @@ export default {
       "event":{
         order:1,
         title:"事件分析",
-        link:"/analyse/event"
+        link:"/analyse/event",
+
       },
       "attack-chain":{
         order:2,
@@ -44,12 +55,14 @@ export default {
       "ranking":{
         order:4,
         link:"/analyse/ranking",
-        title:"图表分析"
+        title:"图表分析",
+        nodeHide:true,
       },
       "threat-distribution":{
         order:5,
         link:"/analyse/threat-distribution",
-        title:"威胁分布"
+        title:"威胁分布",
+        nodeHide:true,
       },
       "overall":{
         order:6,
@@ -63,6 +76,8 @@ export default {
     title:"威胁预警",
     link:"/early-warning",
     icon: <Icon type="bells"/>,
+    nodeHide:true,
+    idsHide:true,
     items:{
       "email":{
         order:1,
@@ -75,6 +90,8 @@ export default {
     order:4,
     title:"威胁报告",
     link:"/report",
+    nodeHide:true,
+    idsHide:true,
     icon: <Icon type="filetext1"/>
   },
   "sys-config":{
@@ -95,6 +112,8 @@ export default {
       "strategy":{
         title:"策略配置",
         link:"/sys-config/strategy",
+        nodeHide:true,
+        idsHide:true,
       }
     }
   },
@@ -102,28 +121,31 @@ export default {
     title:"用户管理",
     link:"/user-manager",
     adminOnly:true,
+    nodeHide:true,
     icon: <Icon type="team"/>
   },
-  "honeypot-manager":{
+  "manager":{
     order:7,
-    title:"蜜罐管理",
-    link:"/honeypot-manager",
+    // title:producType===IDS?"流量监测管理":"蜜罐管理",
+    link:"/manager",
     icon: <Icon type="database2"/>,
     items:{
       device:{
         order:1,
-        link:"/honeypot-manager/device",
+        link:"/manager/device",
         title:"设备管理"
       },
       "virtual-machine":{
         order:2,
-        link:"/honeypot-manager/virtual-machine",
-        title:"虚拟蜜罐管理"
+        link:"/manager/virtual-machine",
+        title:"虚拟蜜罐管理",
+        idsHide:true,
       },
       "mirror":{
         order:2,
-        link:"/honeypot-manager/mirror",
-        title:"镜像管理"
+        link:"/manager/mirror",
+        title:"镜像管理",
+        idsHide:true,
       }
     }
   }

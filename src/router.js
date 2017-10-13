@@ -74,7 +74,7 @@ function RouterConfig({ history ,app }) {
           <Route path="monitor" components={SysConfigMonitor}/>
           <Route path="strategy" components={SysConfigStrategy}/>
         </Route>
-        <Route path="honeypot-manager" components={Manager}>
+        <Route path="manager" components={Manager}>
           <IndexRedirect to="device"/>
           <Route path="device" components={ManagerDevice}/>
           <Route path="virtual-machine" components={ManagerVirtual}/>

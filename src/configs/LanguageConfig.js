@@ -1,7 +1,11 @@
 /**
  * Created by jojo on 2017/8/23.
  */
-
+import * as tools from '../utils/tools';
+import {
+  IDS
+} from '../configs/ConstConfig'
+const producType=(tools.getTemp("productType")||{}).type
 
 const routesZHCN={
     "overview":{
@@ -61,8 +65,8 @@ const routesZHCN={
     "user-manager":{
       title:"用户管理"
     },
-    "honeypot-manager":{
-      title:"蜜罐管理",
+    "manager":{
+      title:producType===IDS?"流量监测管理":"蜜罐管理",
       items:{
         "device":{
           title:"设备管理"
@@ -155,14 +159,13 @@ const routesENUS={
 
 
 
-
 export default {
   "en-us":{
     title:"ATTACK CAPTURE SYSTEM",
     routes:routesENUS,
   },
   "zh-cn":{
-    title:"安天捕风蜜罐系统",
+    title:producType===IDS?"安天捕风蜜罐流量监测系统":"安天捕风蜜罐系统",
     routes:routesZHCN,
 
   }

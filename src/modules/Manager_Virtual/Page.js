@@ -27,6 +27,7 @@ function mapStateToProps(state) {
   return {
     commonLayout,
     userData:state.user.userData,
+    productType:state.user.productType.type,
   }
 }
 
@@ -161,7 +162,7 @@ class Page extends React.Component{
     const tableProps={
       className:classnames({
         [styles["table"]]:true,
-        [styles["table-selectable"]]:isAdmin
+        // [styles["table-selectable"]]:isAdmin
       }),
       onChange:this.tableOnChange,
       columns:tableConfig.getColumns({

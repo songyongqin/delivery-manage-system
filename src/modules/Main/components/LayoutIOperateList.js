@@ -32,13 +32,13 @@ export default ({status={},handle={},isDark})=>{
           }
         </a>
       </li>
-      <li className={styles["item"]} key="lang">
-        <a onClick={handle.lang}>
-          {
-            status.lang?"EN":"ZH"
-          }
-        </a>
-      </li>
+      {/*<li className={styles["item"]} key="lang">*/}
+        {/*<a onClick={handle.lang}>*/}
+          {/*{*/}
+            {/*status.lang?"EN":"ZH"*/}
+          {/*}*/}
+        {/*</a>*/}
+      {/*</li>*/}
     </ul>
   )
 }

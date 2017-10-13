@@ -6,7 +6,13 @@ import * as service from './Service';
 import { routerRedux } from 'dva/router';
 import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
 import * as tools from '../../utils/tools';
-import {ADMIN_ROLE,ROLE_DATAINDEX,USERACCOUNT_DATAINDEX} from '../../configs/ConstConfig';
+import {
+  ADMIN_ROLE,
+  ROLE_DATAINDEX,
+  USERACCOUNT_DATAINDEX,
+  IDS,
+  NODE,
+} from '../../configs/ConstConfig';
 moment.locale('zh-cn');
 
 const NAMESPACE="user";
@@ -22,7 +28,7 @@ const baseModel={
   state: {
     signin:!!tools.getTemp("userData"),
     userData:tools.getTemp("userData")||{},
-    productType:tools.getTemp("productType")||{standalone:0}
+    productType:tools.getTemp("productType")||{standalone:0,type:"distribution"}
   },
   reducers:{
     setUserData(preState,{payload}) {
@@ -102,6 +108,9 @@ const baseModel={
       }
 
     },
+    *redirectMain({payload},{call,put,select}){
+        yield put(routerRedux.push('/'));
+    },
     /*
      *
      * */
@@ -128,6 +137,27 @@ const baseModel={
 
       const adminOnlyRoutes=["/sys-config","/user-manager"];
 
+      const idsRouteBlackList=[
+        "/honeypot-manager/mirror",
+        "/honeypot-manager/virtual-machine",
+        "/sys-config/strategy",
+        "/report",
+        // "/analyse/ranking",
+        // "/analyse/threat-distribution",
+        "/early-warning",
+      ];
+
+      const nodeRouteBlackList=[
+        "/analyse/ranking",
+        "/analyse/threat-distribution",
+        "/early-warning",
+        "/report",
+        "/sys-config/strategy",
+        "/user-manager",
+      ];
+
+      const producType=(tools.getTemp("productType")||{}).type
+
       return history.listen(({ pathname }) => {
 
         if(pathname==="/login"){
@@ -136,11 +166,24 @@ const baseModel={
           });
         }
 
+        if(nodeRouteBlackList.includes(pathname)&&producType===NODE){
+          return dispatch({
+            type:"redirectMain"
+          });
+        }
+
+        if(idsRouteBlackList.includes(pathname)&&producType===IDS){
+          return dispatch({
+            type:"redirectMain"
+          });
+        }
+
         if(adminOnlyRoutes.includes(pathname)){
           return dispatch({
             type:"checkAdmin"
           })
         }
+
 
         dispatch({
           type:"checkLogin"
