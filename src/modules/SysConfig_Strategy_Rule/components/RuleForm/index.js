@@ -55,26 +55,43 @@ class WrappedForm extends React.Component {
       }
     }
   }
+
+
   handleSubmit = (e) => {
     e.preventDefault();
     const {onSubmit,form}=this.props;
     const {ruleItems}=this.state;
-    form.validateFieldsAndScroll((err, values) => {
-      if (err) {
-        return
-      }
-      let _values={...values},
-          rule={};
 
-      ruleItems.forEach(i=>{
-        rule[i]=(values[i]||"")
-        delete _values[i];
+    const ERROR="error";
+
+
+    Promise.all(ruleItems.map(i=>this.getRuleCheckConfirm(i)())).then(result=>{
+      setTimeout(()=>{
+        form.validateFieldsAndScroll((err, values) => {
+          if (err) {
+            return
+          }
+
+          if(Object.values(this.state.checkerStatus).some(i=>i.status===ERROR)){
+            return;
+          }
+
+          let _values={...values},
+            rule={};
+
+          ruleItems.forEach(i=>{
+            rule[i]=(values[i]||"")
+            delete _values[i];
+          })
+
+          _values[RULE_DATAINDEX]=rule;
+          _values[RULE_DESCRIPTION]=_values[RULE_DESCRIPTION]||""
+          onSubmit&&onSubmit(_values);
+        });
       })
+    })
 
-      _values[RULE_DATAINDEX]=rule;
-      _values[RULE_DESCRIPTION]=_values[RULE_DESCRIPTION]||""
-      onSubmit&&onSubmit(_values);
-    });
+
   }
 
   componentDidMount=()=>{
@@ -89,27 +106,33 @@ class WrappedForm extends React.Component {
   }
 
   setRuleItems=(protocolType)=>this.setState({
-    ruleItems:ruleItemsConfig[protocolType]||[]
+    ruleItems:ruleItemsConfig[protocolType]||[],
+    checkerStatus:{}
   })
 
   onChange=value=>this.setRuleItems(value);
 
   getRuleCheckConfirm=dataIndex=>()=>{
-    setTimeout(()=>{
-      try{
-        const activeProtocolType=this.props.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)||
-                                 this.props[RULE_PROTOCOLTYPE_DATAINDEX];
-        
-        ruleItemCheckConfig&&ruleItemCheckConfig[activeProtocolType]({
+    return new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+        try{
+          const activeProtocolType=this.props.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)||
+            this.props[RULE_PROTOCOLTYPE_DATAINDEX];
+
+          ruleItemCheckConfig&&ruleItemCheckConfig[activeProtocolType]({
             dataIndex,
             setCheckStatus:this.setCheckerStatus,
             props:this.props
-        })
+          })
 
-      }catch(e){
+          resolve();
 
-      }
+        }catch(e){
+
+        }
+      })
     })
+
 
   }
   setCheckerStatus=(dataIndex,status,help)=>{

@@ -127,7 +127,7 @@ class Page extends React.Component{
       expanded:true,
       expandedRowIndexes:[],
       threatnames:[],
-      createVisible:true,
+      createVisible:false,
       isFormDependInit:false,
     }
   }
@@ -280,7 +280,6 @@ class Page extends React.Component{
             expanded,
             threatnames,
             createVisible,
-            isFormDependInit
           }=this.state
 
     const {queryResults}=this.props[NAMESPACE];

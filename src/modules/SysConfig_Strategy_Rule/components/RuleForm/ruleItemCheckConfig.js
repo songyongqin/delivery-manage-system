@@ -68,6 +68,8 @@ export default {
 
   [HTTP]:checkerDecorator(({props,setCheckStatus})=>{
     let urlValue=props.form.getFieldValue(URL);
+        urlValue=urlValue||"";
+
     urlValue.trim().length===0
       ?
       setCheckStatus(URL,"error","不能为空")
