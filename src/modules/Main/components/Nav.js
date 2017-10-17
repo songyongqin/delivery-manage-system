@@ -21,7 +21,6 @@ const getItem=(item,isAdmin=false,activeKeys,isOuter,productType)=>{
   if(adminOnly&&!isAdmin){
     return null;
   }
-  console.info(link,productType,idsHide,nodeHide)
   if(productType===IDS&&idsHide){
     return null;
   }

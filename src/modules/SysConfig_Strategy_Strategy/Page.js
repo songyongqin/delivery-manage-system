@@ -66,12 +66,12 @@ const CardTitle=({selectedRows=[],createPutStrategy,applyHandle,switchExpandPage
               icon="save">
         应用
       </Button>
-      {/*<Button type="primary"*/}
-              {/*onClick={switchExpandPage}*/}
-              {/*style={{marginLeft:"15px"}}*/}
-              {/*icon="setting">*/}
-        {/*威胁等级配置*/}
-      {/*</Button>*/}
+      <Button type="primary"
+              onClick={switchExpandPage}
+              style={{marginLeft:"15px"}}
+              icon="setting">
+        威胁等级配置
+      </Button>
     </div>
   </div>
 )

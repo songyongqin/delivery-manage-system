@@ -21,9 +21,9 @@ import {
 } from '../../ConstConfig'
 
 
-const ipPortReg=/^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9]):\d{0,5}$/
+const ipReg=/((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/
 const emailReg=/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/
-
+const numberReg=/^[0-9]*$/;
 const checkerDecorator=fn=>(args)=>{
   try{
     fn(args)
@@ -32,7 +32,24 @@ const checkerDecorator=fn=>(args)=>{
   }
 }
 
-const ipPortTypeChecker=checkerDecorator(({props,setCheckStatus,dataIndex})=>{
+const isNumberStr=(str)=>numberReg.test(str);
+
+const isIpPort=(str="")=>{
+  const items=str.split(":");
+  if(items.length>2||items.length===0){
+    return false;
+  }
+  if(!ipReg.test(items[0])){
+    return false;
+  }
+  let port=items[1];
+  if(isNumberStr(port)&&parseInt(port)>=0&&parseInt(port)<=65535){
+    return true;
+  }
+  return false;
+}
+
+const ipPortTypeChecker=checkerDecorator(({dataIndex,props,setCheckStatus,checkerStatus})=>{
   let souceIpPort=props.form.getFieldValue(SOURCE_IP_PORT),
     targetIpPort=props.form.getFieldValue(TARGET_IP_PORT);
 
@@ -42,21 +59,20 @@ const ipPortTypeChecker=checkerDecorator(({props,setCheckStatus,dataIndex})=>{
   let isSourceEmpty=souceIpPort.trim().length===0,
       isTargetEmpty=targetIpPort.trim().length===0;
 
-
-
   if(isSourceEmpty&&isTargetEmpty){
     setCheckStatus(TARGET_IP_PORT,"error","至少填写一项")
     setCheckStatus(SOURCE_IP_PORT,"error","至少填写一项")
+    return;
   }else {
     setCheckStatus(TARGET_IP_PORT,"","")
     setCheckStatus(SOURCE_IP_PORT,"","")
   }
 
-  if((!ipPortReg.test(souceIpPort))&&!isSourceEmpty){
+  if((!isIpPort(souceIpPort))&&!isSourceEmpty){
     setCheckStatus(SOURCE_IP_PORT,"error","请输入正确的IP:PORT")
   }
 
-  if((!ipPortReg.test(targetIpPort))&&!isTargetEmpty){
+  if((!isIpPort(targetIpPort))&&!isTargetEmpty){
     setCheckStatus(TARGET_IP_PORT,"error","请输入正确的IP:PORT")
   }
 
@@ -117,7 +133,6 @@ export default {
       setCheckStatus(THEME,"","")
     }
 
-    console.info(emailReg.test(receiver))
 
     if((!emailReg.test(receiver))&&!isReceiverEmpty){
       setCheckStatus(REVEICER,"error","请输入正确的邮箱")

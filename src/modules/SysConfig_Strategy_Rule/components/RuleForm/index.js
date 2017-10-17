@@ -99,16 +99,21 @@ class WrappedForm extends React.Component {
   }
 
   componentWillReceiveProps=newProps=>{
-    const {isCreate=true}=this.props;
-    if(isCreate){
+    const {isCreate=true,form}=this.props;
+    const isChangeProtocol=newProps.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)!==form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)
+    if(isCreate&&isChangeProtocol){
       this.setRuleItems(newProps.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX))
     }
   }
 
-  setRuleItems=(protocolType)=>this.setState({
-    ruleItems:ruleItemsConfig[protocolType]||[],
-    checkerStatus:{}
-  })
+  setRuleItems=(protocolType)=>{
+
+
+    this.setState({
+      ruleItems:ruleItemsConfig[protocolType]||[],
+      checkerStatus:{}
+    })
+  }
 
   onChange=value=>this.setRuleItems(value);
 
@@ -118,11 +123,11 @@ class WrappedForm extends React.Component {
         try{
           const activeProtocolType=this.props.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)||
             this.props[RULE_PROTOCOLTYPE_DATAINDEX];
-
           ruleItemCheckConfig&&ruleItemCheckConfig[activeProtocolType]({
             dataIndex,
             setCheckStatus:this.setCheckerStatus,
-            props:this.props
+            props:this.props,
+            checkerStatus:this.state.checkerStatus
           })
 
           resolve();
@@ -133,17 +138,20 @@ class WrappedForm extends React.Component {
       })
     })
 
-
   }
   setCheckerStatus=(dataIndex,status,help)=>{
-    this.setState({
-      checkerStatus:{
-        ...this.state.checkerStatus,
-        [dataIndex]:{
-          status,
-          help,
-        }
+
+    const {checkerStatus}=this.state;
+    const _checkerStatus={
+      ...checkerStatus,
+      [dataIndex]:{
+        status,
+        help
       }
+    }
+
+    this.setState({
+      checkerStatus:_checkerStatus
     })
   }
   render() {
@@ -266,11 +274,19 @@ class WrappedForm extends React.Component {
           </FormItem>)
         }
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary"
-                  loading={loading}
-                  icon="plus"
-                  onClick={this.handleSubmit}>添加</Button>
-
+          {
+            isCreate
+              ?
+              <Button type="primary"
+                      loading={loading}
+                      icon="plus"
+                      onClick={this.handleSubmit}>添加</Button>
+              :
+              <Button type="primary"
+                      loading={loading}
+                      icon="save"
+                      onClick={this.handleSubmit}>保存</Button>
+          }
           {/*<Button type="danger"*/}
                   {/*loading={loading}*/}
                   {/*style={{marginLeft:"15px"}}*/}
