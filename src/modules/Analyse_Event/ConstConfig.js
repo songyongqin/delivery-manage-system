@@ -21,6 +21,18 @@ export const ATTACKSTAGE_DATAINDEX="attackStage",
       DETAILS_DATAINDEX="details",
       ADVICE_DATAINDEX="advice";
 
+export const PERCEPTION_DATAINDEX="perception",
+              SOURCE_DATAINDEX="source",
+              HONEYPOT_NAME_DATAINDEX="honeypotName",
+              MAC_DATAINDEX="mac"
+
+export const HONEYPOT_SOURCE="honeypot",
+             IDS_SOURCE="ids"
+
+export const sourceTextConfig={
+  [HONEYPOT_SOURCE]:"蜜罐",
+  [IDS_SOURCE]:"入侵检测模块"
+}
 
 export const filterRowDataIndexes=[
   ATTACKSTAGE_DATAINDEX,
@@ -54,7 +66,10 @@ export const tableTextConfig={
     title:EXPANDED_ROW_TITLE,
     rows:{
       [DETAILS_DATAINDEX]:"详情",
-      [ADVICE_DATAINDEX]:"修补建议"
+      [ADVICE_DATAINDEX]:"修补建议",
+      [SOURCE_DATAINDEX]:"感知来源",
+      [MAC_DATAINDEX]:"感知威胁设备MAC地址",
+      [HONEYPOT_NAME_DATAINDEX]:"感知威胁蜜罐名称"
     }
   },
 };

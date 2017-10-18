@@ -14,6 +14,15 @@ import {
   tableTextConfig,
   COUNTS_DATAINDEX,
   ACTIONSTATUS_DATAINDEX,
+  SOURCE_DATAINDEX,
+  PERCEPTION_DATAINDEX,
+  HONEYPOT_NAME_DATAINDEX,
+  MAC_DATAINDEX,
+  DETAILS_DATAINDEX,
+  ADVICE_DATAINDEX,
+  HONEYPOT_SOURCE,
+  IDS_SOURCE,
+  sourceTextConfig
 } from '../../ConstConfig';
 import FilterInputNumber from '../../../../components/FilterInputNumber/index';
 import TimeLabel from '../../../../components/TimesLabel';
@@ -109,8 +118,8 @@ export const getColumns=({queryFilters,onSubmit})=>tableColumnsGenerator({
   }
 });
 
-const nth1TdStyle={padding:"10px 0px",width:"80px"},
-      nth2TdStyle={padding:"10px 0px"}
+const nth1TdStyle={padding:"10px",width:"120px",textAlign:"center"},
+      nth2TdStyle={padding:"10px"}
 export const getExpandedRowRender=({isDark})=>{
   const {expandedRow}=tableTextConfig;
   return (records)=>{
@@ -121,33 +130,86 @@ export const getExpandedRowRender=({isDark})=>{
 
     const {details=[],advice}=records;
 
+    const source=records[PERCEPTION_DATAINDEX][SOURCE_DATAINDEX],
+          honeypotName=records[PERCEPTION_DATAINDEX][HONEYPOT_NAME_DATAINDEX],
+          mac=records[PERCEPTION_DATAINDEX][MAC_DATAINDEX];
+    console.info(records[PERCEPTION_DATAINDEX],HONEYPOT_SOURCE,IDS_SOURCE);
+
     return (
       <Card title={tools.getKeyText("title",expandedRow)}
             className={classes}>
         <table>
           <tbody>
+
           <tr>
             <td style={nth1TdStyle}>
-              {tools.getKeyText("details",expandedRow.rows)}
+              {tools.getKeyText(DETAILS_DATAINDEX,expandedRow.rows)}
             </td>
             <td style={nth2TdStyle}>
               <div>
                 {details.map((d,index)=>{
-                  return <JoTag key={'item-'+index} color="#108ee9">
+                  return <JoTag key={'item-'+index}
+                                style={{marginBottom:"0"}}
+                                color="#108ee9">
                     {d}
                   </JoTag>
                 })}
               </div>
             </td>
           </tr>
+
           <tr>
             <td style={nth1TdStyle}>
-              {tools.getKeyText("advice",expandedRow.rows)}
+              {tools.getKeyText(ADVICE_DATAINDEX,expandedRow.rows)}
             </td>
             <td style={nth2TdStyle}>
               <JoTag color="#108ee9">{advice}</JoTag>
             </td>
           </tr>
+
+          <tr>
+            <td style={nth1TdStyle}>
+              {tools.getKeyText(SOURCE_DATAINDEX,expandedRow.rows)}
+            </td>
+
+            <td style={nth2TdStyle}>
+              <JoTag color="#108ee9">
+                {
+                  tools.getKeyText(source,sourceTextConfig)
+                }
+              </JoTag>
+            </td>
+          </tr>
+
+          {
+            source===HONEYPOT_SOURCE
+            ?
+              <tr>
+                <td style={nth1TdStyle}>
+                  {tools.getKeyText(HONEYPOT_NAME_DATAINDEX,expandedRow.rows)}
+                </td>
+                <td style={nth2TdStyle}>
+                  <JoTag color="#108ee9">{honeypotName}</JoTag>
+                </td>
+              </tr>
+              :
+              null
+          }
+
+          {
+            source===IDS_SOURCE
+              ?
+              <tr>
+                <td style={nth1TdStyle}>
+                  {tools.getKeyText(MAC_DATAINDEX,expandedRow.rows)}
+                </td>
+                <td style={nth2TdStyle}>
+                  <JoTag color="#108ee9">{mac}</JoTag>
+                </td>
+              </tr>
+              :
+              null
+          }
           </tbody>
         </table>
       </Card>

@@ -85,6 +85,6 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig:commonCallConfig,
   queryService,
-  initPath:"/honeypot-manager/virtual-machine"
+  initPath:"/manager/virtual-machine"
 });
 
