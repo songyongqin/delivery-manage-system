@@ -141,6 +141,7 @@ const baseModel={
         "/honeypot-manager/mirror",
         "/honeypot-manager/virtual-machine",
         "/sys-config/strategy",
+        "/sys-config/white-list",
         "/report",
         // "/analyse/ranking",
         // "/analyse/threat-distribution",
@@ -153,6 +154,7 @@ const baseModel={
         "/early-warning",
         "/report",
         "/sys-config/strategy",
+        "/sys-config/white-list",
         "/user-manager",
       ];
 
