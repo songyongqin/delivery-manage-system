@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, Switch,Modal,Popover } from 'antd';
+import {Popconfirm, Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, Switch,Modal,Popover } from 'antd';
 import classnames from 'classnames';
-import styles from './SendEmailConfigForm.css';
-import {referenceEmailTextConfig,referTableDataIndexes} from '../ConstConfig';
-import EnhanciveTable from '../../../domainComponents/EnhanciveTable/index';
-import tableColumsGenerator from '../../../utils/tableColumnsGenerator'
+import styles from './styles.css';
+import {referenceEmailTextConfig,referTableDataIndexes} from '../../ConstConfig';
+import EnhanciveTable from '../../../../domainComponents/EnhanciveTable/index';
+import tableColumsGenerator from '../../../../utils/tableColumnsGenerator'
 
 const getColumns=()=>{
   return tableColumsGenerator({
@@ -204,11 +204,23 @@ class WrappedForm extends React.Component {
           )}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary"
-                  loading={loading}
-                  icon="save"
-                  style={{marginRight:"10px"}}
-                  onClick={this.handleSubmit}>保存</Button>
+
+          <Popconfirm title={
+            <p>
+              请先测试邮件服务器，若发送邮件服务器未连接成功，
+              <br/>
+              则会导致发件箱无法发送告警邮件
+            </p>
+          }
+                      onConfirm={this.handleSubmit}>
+            <Button type="primary"
+                    loading={loading}
+                    size="large"
+                    icon="save"
+                    style={{marginRight:"10px"}}>
+              保存
+            </Button>
+          </Popconfirm>
           <Button type="primary"
                   loading={loading}
                   icon="mail">测试邮件服务</Button>

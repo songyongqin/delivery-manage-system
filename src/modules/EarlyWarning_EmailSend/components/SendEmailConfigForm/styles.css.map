@@ -1,7 +1,7 @@
 {
 "version": 3,
 "mappings": "AAII,oIAAgE;EAC9D,UAAU,ECMO,OAAa;EDL9B,KAAK,ECWK,OAAgB",
-"sources": ["SendEmailConfigForm.scss","../../../styles/_var.scss"],
+"sources": ["SendEmailConfigForm.scss","../../../../styles/_var.scss"],
 "names": [],
 "file": "SendEmailConfigForm.css"
 }
