@@ -59,6 +59,9 @@ const routesZHCN={
         },
         "strategy":{
           title:"策略配置",
+        },
+        "white-list":{
+          title:"白名单策略配置"
         }
       }
     },

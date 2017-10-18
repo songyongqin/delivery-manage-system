@@ -39,6 +39,8 @@ import ThreatEvent from './modules/ThreatEvent/Page';
 
 import UserManager from './modules/UserManager/Page';
 
+import WhiteList from './modules/SysConfig_Strategy_WhiteList/Page';
+
 
 function RouterConfig({ history ,app }) {
 
@@ -73,6 +75,7 @@ function RouterConfig({ history ,app }) {
           <Route path="network" components={SysConfigNetwork}/>
           <Route path="monitor" components={SysConfigMonitor}/>
           <Route path="strategy" components={SysConfigStrategy}/>
+          <Route path="white-list" components={WhiteList}/>
         </Route>
         <Route path="manager" components={Manager}>
           <IndexRedirect to="device"/>

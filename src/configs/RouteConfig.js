@@ -114,6 +114,12 @@ export default {
         link:"/sys-config/strategy",
         nodeHide:true,
         idsHide:true,
+      },
+      "white-list":{
+        title:"白名单策略配置",
+        link:"/sys-config/white-list",
+        nodeHide:true,
+        idsHide:true,
       }
     }
   },
