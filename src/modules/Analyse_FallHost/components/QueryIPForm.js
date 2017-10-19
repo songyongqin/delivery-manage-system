@@ -1,10 +1,7 @@
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, DatePicker } from 'antd';
 import React from 'react';
-
-const ipReg=new RegExp("^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
-  +"(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
-  +"(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
-  +"(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$");
+import * as tools from '../../../utils/tools';
+const {ipReg}=tools
 
 const FormItem = Form.Item;
 
