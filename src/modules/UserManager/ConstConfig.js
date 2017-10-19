@@ -16,21 +16,30 @@ export const NAMESPACE="userManager";
  **************************************************/
 export const  ROLE_DATAINDEX=COMMON_ROLE_DATAINDEX,
               USERACCOUNT_DATAINDEX="userAccount",
-              FREEZE_DATAINDEX="freeze";
-
+              FREEZE_DATAINDEX="freeze",
+              DEPARTMENT_DATAINDEX="department",
+              EMAIL_DATAINDEX="Email",
+              PHONE_NUMBER_DATAINDEX="phoneNumber",
+              USER_NAME_DATAINDEX="userName",
+              REMARK_DATAINDEX="remark",
+              USER_PASSWORD_DATAINDEX="userPassword"
 
 
 export const LIMIT_DATAINDEX="limit";
 export const LIMIT_ATTACK_DATAINDEX="attack";
 export const LIMIT_CHART_DATAINDEX="chart";
 
-
 export const OPERATION_ROW_KEY="operation"
 
 export const rowDataIndexes=[
   USERACCOUNT_DATAINDEX,
+  USER_NAME_DATAINDEX,
   ROLE_DATAINDEX,
   FREEZE_DATAINDEX,
+  DEPARTMENT_DATAINDEX,
+  EMAIL_DATAINDEX,
+  PHONE_NUMBER_DATAINDEX,
+  REMARK_DATAINDEX
 ];
 
 const TABLE_TITLE= <span><JoIcon type="team"/>&nbsp;用户列表</span>
@@ -42,7 +51,7 @@ export const  ADMIN_ROLE=COMMON_ADMIN_DATAINDEX,
               COMMON_USER_ROLE=COMMON_COMMON_USER_ROLE;
 
 const FREEZE_BUTTON="解除该用户冻结";
-const LIMIT_BUTTON="管理该用户权限"
+const LIMIT_BUTTON="编辑"
 const CREATE_BUTTON="添加用户";
 
 export const tableTextConfig={
@@ -51,7 +60,13 @@ export const tableTextConfig={
     [USERACCOUNT_DATAINDEX]:"用户账号",
     [ROLE_DATAINDEX]:"用户类型",
     [FREEZE_DATAINDEX]:"用户状态",
-    [OPERATION_ROW_KEY]:"操作"
+    [OPERATION_ROW_KEY]:"操作",
+    [DEPARTMENT_DATAINDEX]:"所属部门",
+    [EMAIL_DATAINDEX]:"Email",
+    [PHONE_NUMBER_DATAINDEX]:"联系电话",
+    [USER_NAME_DATAINDEX]:"姓名",
+    [REMARK_DATAINDEX]:"备注",
+    [USER_PASSWORD_DATAINDEX]:"密码"
   },
   enums:{
     freeze:{
@@ -67,7 +82,9 @@ export const tableTextConfig={
   operation:{
     freeze:FREEZE_BUTTON,
     limit:LIMIT_BUTTON,
-    create:CREATE_BUTTON
+    create:CREATE_BUTTON,
+    delete:"删除",
+    reset:"重置密码"
   }
 };
 /*
@@ -95,7 +112,7 @@ export const configPanelTextConfig={
 }
 
 
-const LIMIT_TITLE=<span><JoIcon type="setting"/>&nbsp;用户权限设置</span>
+const LIMIT_TITLE=<span><JoIcon type="edit1"/>&nbsp;用户信息修改</span>
 
 const LIMIT_BASIC_TITLE="基础信息";
 

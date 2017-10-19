@@ -4,7 +4,7 @@
 import React from 'react';
 import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
 import JoTag from '../../../../components/JoTag';
-import {Icon,Switch,Card,Timeline,InputNumber,Button} from 'antd';
+import {Icon,Switch,Card,Timeline,InputNumber,Button,Menu,Dropdown,Tooltip} from 'antd';
 import classnames from 'classnames';
 import * as tools from '../../../../utils/tools';
 import {
@@ -19,10 +19,17 @@ import {
   IS_NOT_FREEZE,
   IS_FREEZE
 } from '../../ConstConfig';
-import {} from '../../ConstConfig';
 
+const tipTextConfig={
+  [ADMIN_ROLE]:"管理员唯一且拥有最高权限",
+  [COMMON_USER_ROLE]:"普通用户仅具有查看威胁权限，无管理权限"
+}
 
-const roleRenderer=value=><JoTag >{tableTextConfig.enums.role[value]}</JoTag>
+const roleRenderer=value=>(
+  <Tooltip title={tipTextConfig[value]}>
+    <JoTag >{tableTextConfig.enums.role[value]}</JoTag>
+  </Tooltip>
+)
 
 
 const freezeRenderer=value=>{
@@ -48,25 +55,55 @@ const getOperationColumn=({handle={}}={})=>{
         freeze:IS_NOT_FREEZE
       }
 
-      const buttonFreeze=(
-        <Button onClick={handle.freeze(freezePayload)}
-                disabled={records.freeze===IS_NOT_FREEZE}>
-          {tableTextConfig.operation.freeze}
-        </Button>
+
+      const menu=(
+        <Menu>
+
+          <Menu.Item disabled={records.freeze===IS_NOT_FREEZE}>
+            <p onClick={records.freeze===IS_NOT_FREEZE
+              ?
+              null
+              :
+              handle.freeze(freezePayload)}>
+              <Icon type="unlock"/>
+              &nbsp;
+              {tableTextConfig.operation.freeze}
+            </p>
+          </Menu.Item>
+
+          <Menu.Item >
+            <p onClick={handle.limit(records)}>
+              <Icon type="edit"/>
+              &nbsp;
+              {tableTextConfig.operation.limit}
+            </p>
+          </Menu.Item>
+
+          <Menu.Item >
+            <p onClick={handle.getDelUserHandle(records[USERACCOUNT_DATAINDEX])}>
+              <Icon type="delete"/>
+              &nbsp;
+              {tableTextConfig.operation.delete}
+            </p>
+          </Menu.Item>
+
+          <Menu.Item >
+            <p onClick={handle.getPatchUserHandle(records[USERACCOUNT_DATAINDEX])}>
+              <Icon type="reload"/>
+              &nbsp;
+              {tableTextConfig.operation.reset}
+            </p>
+          </Menu.Item>
+        </Menu>
       )
 
-      const buttonLimit=(
-        <Button onClick={handle.limit(records)}
-                type="primary">
-          {tableTextConfig.operation.limit}
-        </Button>
-      )
 
       return (
-        <Button.Group>
-          {buttonFreeze}
-          {buttonLimit}
-        </Button.Group>
+        <div>
+          <Dropdown overlay={menu}>
+            <Button icon="ellipsis" />
+          </Dropdown>
+        </div>
       )
     }
   }

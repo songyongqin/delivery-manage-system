@@ -1,6 +1,8 @@
 import request from '../../utils/request';
 import ApiConfig from '../../configs/ApiConfig';
 import * as tools from '../../utils/tools';
+import commonRequestCreator from '../../utils/commonRequestCreator';
+
 const httpApi=ApiConfig.http;
 
 export async function query(payload) {
@@ -76,3 +78,7 @@ export async function postUser(payload) {
   };
   return request(httpApi.USER, options);
 }
+
+export const _delete=commonRequestCreator.delete(httpApi.USER);
+
+export const patch=commonRequestCreator.patch(httpApi.USER)

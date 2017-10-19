@@ -30,7 +30,13 @@ export default {
 
 
   delete:(url,withQuery=false)=>async payload=>request(url+tools.jsonToQueryString(payload), {
-    method:"delete",
+    method:"DELETE",
     headers: commonHeader,
-  })
+  }),
+
+  patch:(url)=>async payload=>request(url, {
+    method: 'PATCH',
+    headers: commonHeader,
+    body:JSON.stringify(payload||{})
+  }),
 }

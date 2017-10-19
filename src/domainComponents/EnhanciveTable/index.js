@@ -104,8 +104,7 @@ const EnhanciveTable=({expanded=true,inverse=false,title=null,tableProps={},pagi
                                 className={classes}
                                 bordered={false}/>
             :
-            <Table bordered={false}
-                   pagination={false}
+            <Table pagination={false}
                    {...tableProps}
                    className={classes} />
         }

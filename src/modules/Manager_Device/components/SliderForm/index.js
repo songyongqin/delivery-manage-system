@@ -35,10 +35,9 @@ class WrappedForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const {isDark,loading,defaultValue={},style}=this.props;
-    console.info(defaultValue);
     return (
       <Form style={{
-        width:"800px",
+        width:"560px",
         background:"white",
         padding:"15px 15px 0",
         boxShadow:"0 1px 6px rgba(0, 0, 0, 0.2)",

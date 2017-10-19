@@ -7,13 +7,13 @@ import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
 import * as tableConfig from './components/TableConfig/index';
-import {tableTextConfig,configPanelTextConfig,createUserPanelTextConfig} from './ConstConfig';
+import {tableTextConfig,configPanelTextConfig,createUserPanelTextConfig,limitPanelTextConfig} from './ConstConfig';
 import {NAMESPACE} from './ConstConfig';
 import MaxAuthTimesInput from './components/MaxAuthTimeInput/index';
 import LimitPanel from './components/LimitForm/index';
-import CreateUserPanel from './components/CreateUserForm/index';
+import UserForm from './components/UserForm/index';
 import {WithBreadcrumb} from '../../components/HOSComponents/index'
-
+import * as tools from '../../utils/tools';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -30,12 +30,12 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     getUserConfig:()=>{
       return dispatch({
-        type:"userManager/getUserConfig"
+        type:`${NAMESPACE}/getUserConfig`
       })
     },
     putUserConfig:(payload)=>{
       return dispatch({
-        type:"userManager/putUserConfig",
+        type:`${NAMESPACE}/putUserConfig`,
         payload:{
           ...payload
         }
@@ -43,7 +43,7 @@ function mapDispatchToProps(dispatch) {
     },
     putUser:(payload)=>{
       return dispatch({
-        type:"userManager/putUser",
+        type:`${NAMESPACE}/putUser`,
         payload:{
           ...payload
         }
@@ -51,12 +51,24 @@ function mapDispatchToProps(dispatch) {
     },
     postUser:(payload)=>{
       return dispatch({
-        type:"userManager/postUser",
+        type:`${NAMESPACE}/postUser`,
         payload:{
           ...payload,
         }
       })
-    }
+    },
+    deleteUser:payload=>dispatch({
+      type:`${NAMESPACE}/deleteUser`,
+      payload:{
+        ...payload,
+      }
+    }),
+    patchUser:payload=>dispatch({
+      type:`${NAMESPACE}/patchUser`,
+      payload:{
+        ...payload,
+      }
+    })
   }
 }
 
@@ -108,7 +120,6 @@ class Page extends React.Component{
     this.onQuery({page:current})
   };
   putUserConfig=(value)=>{
-
     this.props.putUserConfig({
       maxAuthTimes:value
     }).then(this.putUserConfigSuccessCallback)
@@ -120,7 +131,6 @@ class Page extends React.Component{
   }
   getPutUserHandle=(payload)=>{
     return ()=>{
-
       this.props.putUser({
         ...payload,
       }).then(this.putUserSuccessCallback)
@@ -135,13 +145,8 @@ class Page extends React.Component{
       .then(this.putUserSuccessCallback)
   }
   putUserSuccessCallback=()=>{
-
     Message.success(configPanelTextConfig.notification)
-
-    this.props.query({
-      ...this.props[NAMESPACE].queryFilters,
-      current:1
-    })
+    this.initQuery()
   }
   postUserHandle=(payload)=>{
     return this.props.postUser({
@@ -151,15 +156,27 @@ class Page extends React.Component{
       .then(this.postUserSuccessCallback)
   }
   postUserSuccessCallback=()=>{
-
     Message.success(createUserPanelTextConfig.notification)
-
-    this.props.query({
-      ...this.props[NAMESPACE].queryFilters,
-      current:1
-    })
-
+    this.initQuery()
   }
+
+  getPatchUserHandle=userAccount=>()=>this.props.patchUser({
+    userAccountList:[userAccount]
+  })
+    .then(tools.curry(Message.success,"重置成功"))
+    .then(this.initQuery)
+
+
+  getDelUserHandle=userAccount=>()=>this.props.deleteUser({
+    userAccount
+  })
+    .then(tools.curry(Message.success,"删除成功"))
+    .then(this.initQuery)
+
+  initQuery=()=>{
+    this.onQuery({page:1})
+  }
+
   getResultsPanel=()=>{
     const {commonLayout}=this.props;
 
@@ -216,10 +233,12 @@ class Page extends React.Component{
     const {commonLayout}=this.props;
     const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
     const {data}=queryResults;
-
+    const {getPatchUserHandle,getDelUserHandle}=this;
     const handle={
       freeze:this.getPutUserHandle,
       limit:this.getButtonLimitHandle,
+      getPatchUserHandle,
+      getDelUserHandle
     }
 
     const tableProps={
@@ -282,31 +301,29 @@ class Page extends React.Component{
           ])}
         </JoSpin>
 
-        <Modal title={configPanelTextConfig.title}
+        <Modal title={limitPanelTextConfig.title}
                visible={this.state.visible}
                key={`user-limit-${this.state.visible}`}
                className={modalClasses}
-               width={340}
-               style={{top:"180px"}}
                footer={null}
                onCancel={this.switchModal}>
-          <LimitPanel data={this.state.activeUser}
-                      onSubmit={this.putUserHandle}
-                      loading={putUserLoading}
-                      isDark={isDark}/>
+          <UserForm isDark={isDark}
+                    defaultValue={this.state.activeUser}
+                    isCreate={false}
+                    loading={putUserLoading}
+                    onSubmit={this.putUserHandle}/>
         </Modal>
 
 
         <Modal title={createUserPanelTextConfig.title}
                visible={this.state.createUserVisible}
                key={`create-user-${this.state.createUserVisible}`}
-               style={{top:"180px"}}
                className={modalClasses}
                footer={null}
                onCancel={this.switchCreateUsreModal}>
-          <CreateUserPanel isDark={isDark}
-                           loading={postUserLoading}
-                           onSubmit={this.postUserHandle}/>
+          <UserForm isDark={isDark}
+                    loading={postUserLoading}
+                    onSubmit={this.postUserHandle}/>
         </Modal>
 
       </div>

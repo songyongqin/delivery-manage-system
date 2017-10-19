@@ -44,6 +44,26 @@ const baseModel={
         resolve&&resolve(res.payload);
       }
     },
+    *deleteUser({resolve,payload},{callWithExtra,put}) {
+      const res=yield callWithExtra(
+        service._delete,
+        {...payload||{}},
+        callConfig
+      )
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+      }
+    },
+    *patchUser({resolve,payload},{callWithExtra,put}) {
+      const res=yield callWithExtra(
+        service.patch,
+        {...payload||{}},
+        callConfig
+      )
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+      }
+    },
     *postUser({resolve,payload},{callWithExtra}) {
       const res=yield callWithExtra(
         service.postUser,
