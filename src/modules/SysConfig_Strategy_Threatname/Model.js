@@ -86,6 +86,21 @@ const baseModel={
         resolve&&resolve(res.payload);
       }
     },
+    *post({resolve,payload={}},{callWithExtra,select,put}) {
+      const res=yield callWithExtra(
+        service.post,
+        payload,
+        callConfig
+      )
+
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+        yield put({
+          type:"add",
+          payload,
+        })
+      }
+    },
   }
 };
 

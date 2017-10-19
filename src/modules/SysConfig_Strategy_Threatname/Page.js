@@ -41,7 +41,7 @@ const mapDispatchToProps=dispatch=>({
     payload,
   }),
   add:payload=>dispatch({
-    type:`${NAMESPACE}/add`,
+    type:`${NAMESPACE}/post`,
     payload
   }),
   del:payload=>dispatch({
