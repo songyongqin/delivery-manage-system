@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAIA,SAAS;EACP,KAAK,ECYS,OAAgB",
+"sources": ["CreateUserPanel.scss","../../../../styles/_var.scss"],
+"names": [],
+"file": "CreateUserPanel.css"
+}

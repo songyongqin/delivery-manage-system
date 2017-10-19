@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
-import { Menu, Button,Icon,Row,Col,Card,message as Message,Modal} from 'antd';
+import { Menu, Button,Icon,Row,Col,message as Message,Modal} from 'antd';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
@@ -13,8 +13,9 @@ import MaxAuthTimesInput from './components/MaxAuthTimeInput/index';
 import LimitPanel from './components/LimitForm/index';
 import UserForm from './components/UserForm/index';
 import {WithBreadcrumb} from '../../components/HOSComponents/index'
+import IpLimit from '../UserManager_IPLimit/Page';
 import * as tools from '../../utils/tools';
-
+import Card from '../../domainComponents/Card';
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
   return {
@@ -275,6 +276,13 @@ class Page extends React.Component{
       </div>
     )
   }
+  getLimitPanel=()=>{
+    return (
+      <div key="ip-limit" style={{marginBottom:"15px"}}>
+        <IpLimit/>
+      </div>
+    )
+  }
   render=()=> {
 
     const pageClasses=classnames({
@@ -297,6 +305,7 @@ class Page extends React.Component{
           {this.props.animateRender([
             this.getBreadcrumb(),
             this.getConfigPanel(),
+            this.getLimitPanel(),
             this.getResultsPanel(),
           ])}
         </JoSpin>

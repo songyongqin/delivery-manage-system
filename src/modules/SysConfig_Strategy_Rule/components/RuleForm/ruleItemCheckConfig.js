@@ -20,8 +20,9 @@ import {
   ruleItemPlaceholder
 } from '../../ConstConfig'
 
+import * as tools from '../../../../utils/tools'
 
-const ipReg=/((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/
+const ipReg=tools.ipReg
 const emailReg=/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/
 const numberReg=/^[0-9]*$/;
 const checkerDecorator=fn=>(args)=>{

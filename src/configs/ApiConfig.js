@@ -10,6 +10,8 @@ export default {
     USER:"/user",
     USER_CONFIG:"/user/config",
 
+    USER_IP_LIMIT:"/user/ip-limit",
+
     WARNING_EMAIL:"/warning/email",
     WARNING_EMAIL_CONFIG:"/warning/email/config",
 

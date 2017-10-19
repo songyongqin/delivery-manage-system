@@ -5,6 +5,7 @@ import moment from 'moment';
 
 export const domainRegWithChinese=/^[0-9a-zA-Z\u4e00-\u9faf]+[0-9a-zA-Z\u4e00-\u9faf\.-]*\.[0-9a-zA-Z\u4e00-\u9faf]+$/
 
+export const ipReg=/^((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/
 
 export const judgeIP=(str_ip="")=>{
   let ipReg=new RegExp("^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."

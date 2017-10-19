@@ -32,6 +32,7 @@ import StrategyModel from './modules/SysConfig_Strategy_Strategy/Model';
 import StrategyThreatnameModel from './modules/SysConfig_Strategy_Threatname/Model';
 import StrategyRuleModel from './modules/SysConfig_Strategy_Rule/Model';
 import WhiteListModel from './modules/SysConfig_Strategy_WhiteList/Model';
+import IPLimitModel from './modules/UserManager_IPLimit/Model';
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -63,7 +64,7 @@ app.model(StrategyModel);
 app.model(StrategyThreatnameModel);
 app.model(StrategyRuleModel);
 app.model(WhiteListModel);
-
+app.model(IPLimitModel);
 combineExtraEffectsWithApp(app,extraEffectsOptions);
 combineExtraReducersWithApp(app);
 
