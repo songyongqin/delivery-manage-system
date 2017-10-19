@@ -185,16 +185,33 @@ class Page extends React.Component{
   };
   getHeaderRight=()=>{
 
-    const {userAccount,role}=this.props.userData;
+    const {userAccount,role,isAdmin}=this.props.userData;
+
+    const tipTextConfig={
+      admin:"说明：管理员属于授权用户,可对系统所有界面进行查看和操作",
+      common:"说明：普通用户属于非授权用户，可对系统部分界面进行查看和操作"
+    }
 
     const menu = (
       <Menu>
         <Menu.ItemGroup key="message" title={
           <div style={{padding:"5px 10px"}}>
             <span style={{color:"#108ee9",fontWeight:"900"}}>{userAccount}</span>
+            &nbsp;&nbsp;
             <span>{tableTextConfig.enums.role[role]}</span>
           </div>
         }>
+        </Menu.ItemGroup>
+        <Menu.ItemGroup key="tip">
+          <p style={{
+            maxWidth:"240px",
+            overflow:"hidden",
+            wordBreak:"break-all",
+            padding:"5px",
+            color:"#cccccc"
+          }}>
+            {isAdmin?tipTextConfig.admin:tipTextConfig.common}
+          </p>
         </Menu.ItemGroup>
         <Menu.Item key="modify-password">
           <a onClick={this.switchModal}>
