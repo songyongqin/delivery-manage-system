@@ -8,14 +8,15 @@ import JoSpin from '../../components/JoSpin/index';
 import SendEmailConfigForm from './components/SendEmailConfigForm/index';
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
-
+import * as tools from '../../utils/tools';
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
   return {
     commonLayout,
     userData:state.user.userData,
-    putLoading:state.loading.effects[`${NAMESPACE}/put`]
+    loading:state.loading.effects[`${NAMESPACE}/put`]||
+    state.loading.effects[`${NAMESPACE}/test`]
   }
 }
 
@@ -25,6 +26,12 @@ function mapDispatchToProps(dispatch) {
     put:(payload)=>{
       return dispatch({
         type:`${NAMESPACE}/put`,
+        payload,
+      })
+    },
+    test:(payload)=>{
+      return dispatch({
+        type:`${NAMESPACE}/test`,
         payload,
       })
     }
@@ -53,6 +60,15 @@ class Page extends React.Component{
         Message.success(textConfig.notification);
       })
   }
+  onTest=payload=>{
+    const {queryLoading,putLoading}=this.props;
+    if(queryLoading||putLoading){
+      return;
+    }
+    return this.props.test(payload)
+      .then(tools.curry(Message.success,"邮件服务器连接成功，可正常发送邮件"))
+      .catch(tools.curry(Message.error,"邮件服务器连接不成功，请检查发件箱设置或当前网络环境"))
+  }
   getConfigPanel=()=>{
 
     const {commonLayout}=this.props;
@@ -62,13 +78,14 @@ class Page extends React.Component{
     return (
       <SendEmailConfigForm key={`receive-from`}
                            onSubmit={this.putConfig}
+                           onTest={this.onTest}
                            isDark={commonLayout.darkTheme}
                            defaultValue={queryResults}/>
     )
   }
   render=()=> {
 
-    const {putLoading}=this.props;
+    const {loading}=this.props;
 
     const pageClasses=classnames({
       [styles["page"]]:true,
@@ -76,7 +93,7 @@ class Page extends React.Component{
     })
     return (
       <div className={pageClasses}>
-        <JoSpin spinning={this.props.queryLoading||putLoading}>
+        <JoSpin spinning={this.props.queryLoading||loading}>
           {this.getConfigPanel()}
         </JoSpin>
       </div>

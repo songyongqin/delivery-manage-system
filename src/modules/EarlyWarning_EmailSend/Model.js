@@ -37,7 +37,18 @@ const baseModel={
       if(res.status===1){
         resolve&&resolve(res.payload);
       }
-    }
+    },
+    *test({resolve,payload},{callWithExtra}) {
+      const res=yield callWithExtra(
+        service.testEmail,
+        {...payload||{}},
+        callConfig
+      )
+
+      if(res.status===1){
+        resolve&&resolve(res.payload);
+      }
+    },
   }
 };
 

@@ -26,7 +26,8 @@ const mapStateToProps=state=>{
     [NAMESPACE]:state[NAMESPACE],
     commonLayout:state.layout.commonLayout,
     loading:effectLoading[`${NAMESPACE}/query`]||
-    effectLoading[`${NAMESPACE}/put`]
+    effectLoading[`${NAMESPACE}/put`]||
+    effectLoading[`${NAMESPACE}/post`]
   }
 
 }

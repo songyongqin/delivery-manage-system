@@ -12,6 +12,8 @@ export default {
 
     USER_IP_LIMIT:"/user/ip-limit",
 
+    TEST_EMAIL:"/warning/email/test",
+
     WARNING_EMAIL:"/warning/email",
     WARNING_EMAIL_CONFIG:"/warning/email/config",
 

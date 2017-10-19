@@ -58,6 +58,17 @@ class WrappedForm extends React.Component {
       onSubmit&&onSubmit(values);
     });
   }
+  handleTest = (e) => {
+    e.preventDefault();
+    const {onTest,form}=this.props;
+    form.validateFieldsAndScroll((err, values) => {
+      if (err) {
+        return
+      }
+      values.ssl=values.ssl?1:0;
+      onTest&&onTest(values);
+    });
+  }
   switchModal=()=>{
     this.setState({
       visible:!this.state.visible
@@ -222,6 +233,7 @@ class WrappedForm extends React.Component {
             </Button>
           </Popconfirm>
           <Button type="primary"
+                  onClick={this.handleTest}
                   loading={loading}
                   icon="mail">测试邮件服务</Button>
         </FormItem>

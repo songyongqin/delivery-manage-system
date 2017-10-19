@@ -2,29 +2,11 @@ import request from '../../utils/request';
 import ApiConfig from '../../configs/ApiConfig';
 import * as tools from '../../utils/tools';
 const httpApi=ApiConfig.http;
+import commonRequestCreator from '../../utils/commonRequestCreator';
 
-export async function query() {
+export const testEmail=commonRequestCreator.post(httpApi.TEST_EMAIL)
 
+export const query=commonRequestCreator.get(httpApi.WARNING_EMAIL_CONFIG)
 
-  const options= {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-  return request(httpApi.WARNING_EMAIL_CONFIG, options);
-}
+export const put=commonRequestCreator.put(httpApi.WARNING_EMAIL_CONFIG)
 
-
-export async function put(payload) {
-
-  const options= {
-    method: 'PUT',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-    body:JSON.stringify(payload)
-  };
-
-  return request(httpApi.WARNING_EMAIL_CONFIG, options);
-}

@@ -124,7 +124,7 @@ class Page extends React.Component{
     super(props);
     this.state={
       selectedRows:[],
-      expanded:true,
+      expanded:false,
       expandedRowIndexes:[],
       threatnames:[],
       createVisible:false,
