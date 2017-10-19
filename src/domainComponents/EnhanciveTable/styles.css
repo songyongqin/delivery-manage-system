@@ -34,7 +34,7 @@
 .light.inverse-color :global .ant-table-thead > tr > th {
   background: #F1F1F1; }
 
-.dark :global .ant-table-row:hover td {
+.dark :global .ant-table-row:hover > td {
   background: rgba(0, 0, 0, 0.5); }
 .dark :global tr.ant-table-expanded-row:hover {
   background: rgba(0, 0, 0, 0.5); }

@@ -133,7 +133,6 @@ export const getExpandedRowRender=({isDark})=>{
     const source=records[PERCEPTION_DATAINDEX][SOURCE_DATAINDEX],
           honeypotName=records[PERCEPTION_DATAINDEX][HONEYPOT_NAME_DATAINDEX],
           mac=records[PERCEPTION_DATAINDEX][MAC_DATAINDEX];
-    console.info(records[PERCEPTION_DATAINDEX],HONEYPOT_SOURCE,IDS_SOURCE);
 
     return (
       <Card title={tools.getKeyText("title",expandedRow)}

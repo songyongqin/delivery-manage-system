@@ -86,7 +86,7 @@
   :global{
     .ant-table-row{
       &:hover{
-        td{
+        &>td{
           background: rgba(0,0,0,0.5)
         }
       }

@@ -90,7 +90,6 @@ export const getExpandedRowRender=({isDark})=>{
                 attackTime=i[ATTACKTIMES_DATAINDEX]||[],
                 source=i[SOURCE_DATAINDEX]
 
-            console.info(source);
 
             return (
               <table key={`${index}-table`} className={styles["expanded-table"]}>

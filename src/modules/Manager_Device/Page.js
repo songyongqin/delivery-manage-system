@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Button,Card,Dropdown } from 'antd';
+import { Menu, Button,Card,Dropdown,Select } from 'antd';
 import {WithBreadcrumb,WithAnimateRender} from '../../components/HOSComponents/index'
 import ControlDisk from '../Manager_Device_Control_Disk/Page';
 import DeviceControl from '../Manager_Device_Control/Page';
@@ -107,7 +107,7 @@ class Page extends React.Component{
     }
 
     const {isAdmin}=userData;
-
+    const isDark=commonLayout.darkTheme;
     const classes=classnames({
       ["expanded-row-dark"]:commonLayout.darkTheme
     });

@@ -22,10 +22,7 @@ class WrappedForm extends React.Component {
         return
       }
 
-      onSubmit&&onSubmit({
-        userAccount:values.userAccount,
-        userPassword:values.userPassword
-      });
+      onSubmit&&onSubmit(values);
 
     });
   }

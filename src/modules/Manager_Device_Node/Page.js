@@ -8,6 +8,7 @@ import styles from './styles.css';
 import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
 import classnames from 'classnames';
+import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
 
 function mapStateToProps(state) {
   const {commonLayout}=state.layout;
@@ -17,9 +18,19 @@ function mapStateToProps(state) {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    get:payload=>dispatch({
+      type:`${NAMESPACE}/query`,
+      payload,
+    })
+  }
+}
+
 @queryContainerGenerator({
   namespace:NAMESPACE,
   mapStateToProps,
+  mapDispatchToProps:createMapDispatchWithPromise(mapDispatchToProps)
 })
 @WithOnQuery(NAMESPACE)
 @WithPageOnChange(NAMESPACE)
@@ -27,6 +38,7 @@ class Page extends React.Component{
   constructor(props) {
     super(props);
   }
+  onSubmit=payload=>this.props.get(payload)
   getResultsPanel=()=>{
 
     const {commonLayout,userData}=this.props;
@@ -36,7 +48,9 @@ class Page extends React.Component{
     const tableProps={
       columns:tableConfig.getColumns({
         isAdmin,
-        isDark:commonLayout.darkTheme
+        queryFilters,
+        isDark:commonLayout.darkTheme,
+        onSubmit:this.onSubmit,
       }),
       dataSource:queryResults.data.map((i,index)=>{
         return {

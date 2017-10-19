@@ -7,7 +7,7 @@ import * as service from './Service';
 import {queryModelGenerator} from '../../utils/dvaModelGenerator';
 import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
 import {NAMESPACE} from './ConstConfig';
-
+import {DISK_PER_DATAINDEX} from '../Manager_Device/ConstConfig'
 moment.locale('zh-cn');
 
 const baseModel={
@@ -16,6 +16,7 @@ const baseModel={
     queryFilters:{
       limit:20,
       page:1,
+      [DISK_PER_DATAINDEX]:0,
     },
     queryResults:{
       total:0,

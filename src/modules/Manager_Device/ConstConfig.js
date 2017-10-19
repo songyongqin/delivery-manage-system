@@ -24,7 +24,15 @@ export const  HOST_IP_DATAINDEX="hostIp",
 
 
               LICENCE_STATUS_VALUE_DATAINDEX="value",
-              LICENCE_STATUS_EXPIRATION_DATAINDEX="expiration"
+              LICENCE_STATUS_EXPIRATION_DATAINDEX="expiration",
+
+
+              LIBRARY_VERSION_LIST_DATAINDEX="libraryVersionList",
+
+
+              ENGINE_VERSION_LIST_DATAINDEX="engineVersionList",
+
+              CONNECT_STATUS_DATAINDEX="connectStatus"
 
 
 
@@ -36,9 +44,10 @@ export const deviceRowDataIndexes=[
   DISK_PER_DATAINDEX,
   DEVICE_PROPS_DATAINDEX,
   LICENCE_STATUS_DATAINDEX,
+  CONNECT_STATUS_DATAINDEX,
   APPLIACTION_VERSION_DATAINDEX,
-  LIBRARY_VERSION_DATAINDEX,
-
+  LIBRARY_VERSION_LIST_DATAINDEX,
+  ENGINE_VERSION_LIST_DATAINDEX
 ]
 
 
@@ -50,8 +59,19 @@ export const tableTextConfig={
     [LICENCE_STATUS_DATAINDEX]:"授权状态",
     [APPLIACTION_VERSION_DATAINDEX]:"程序版本",
     [LIBRARY_VERSION_DATAINDEX]:"库版本",
-    [OPERATION_ROW_KEY]:"操作"
+    [OPERATION_ROW_KEY]:"操作",
+    [LIBRARY_VERSION_LIST_DATAINDEX]:"库版本",
+    [ENGINE_VERSION_LIST_DATAINDEX]:"引擎版本",
+    [CONNECT_STATUS_DATAINDEX]:"连接状态"
   }
+}
+
+export const CONNECT=1,
+             CONNECT_ERROR=-1;
+
+export const connectTextConfig={
+  [CONNECT]:"连接正常",
+  [CONNECT_ERROR]:"连接异常"
 }
 
 const PROP_NODE="node",
@@ -78,3 +98,7 @@ export const licenceValueTextConfig={
   [LICENCE_VALID_VALUE]:"已授权",
   [LICENCE_NULL_VALUE]:"未授权"
 }
+
+
+export const VERSION_DATAINDEX="version",
+             NAME_DATAINDEX="name";

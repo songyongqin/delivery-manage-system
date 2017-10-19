@@ -30,7 +30,8 @@ class Page extends React.Component{
       onChange:this.tableOnChange,
       columns:tableConfig.getColumns({
         isDark:commonLayout.darkTheme,
-        isAdmin:userData.isAdmin
+        isAdmin:userData.isAdmin,
+        isNode:false,
       }),
       dataSource:[
         {

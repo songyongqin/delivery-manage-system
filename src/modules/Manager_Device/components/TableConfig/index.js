@@ -14,7 +14,15 @@ import {
   LICENCE_NULL_VALUE,
   LICENCE_STATUS_DATAINDEX,
   OPERATION_ROW_KEY,
-  LICENCE_VALID_VALUE
+  LICENCE_VALID_VALUE,
+  CONNECT_STATUS_DATAINDEX,
+  LIBRARY_VERSION_LIST_DATAINDEX,
+  connectTextConfig,
+  CONNECT,
+  ENGINE_VERSION_LIST_DATAINDEX,
+  VERSION_DATAINDEX,
+  NAME_DATAINDEX,
+  DISK_PER_DATAINDEX,
 }from '../../ConstConfig';
 import {Progress,Row,Col,Badge,Button,Dropdown,Icon,Menu} from 'antd'
 import JoTag from '../../../../components/JoTag';
@@ -22,6 +30,8 @@ import TimesLabel from '../../../../components/TimesLabel';
 import styles from './styles.css';
 import moment from 'moment';
 import classnames from 'classnames';
+import * as tools from '../../../../utils/tools';
+import SliderForm from '../SliderForm';
 
 const diskPerRenderer=value=>{
   return <div style={{textAlign:"center"}}>
@@ -83,19 +93,20 @@ const getLiencenRenderer=isDark=>value=>(
 const getOperationRenderer=({isAdmin})=>{
   return records=>{
     const isLicence=records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX]===LICENCE_VALID_VALUE,
+          isConnect=records[CONNECT_STATUS_DATAINDEX]===CONNECT,
           menu=(
             <Menu>
-              <Menu.Item disabled={isLicence||!isAdmin}>
+              <Menu.Item disabled={isLicence||!isAdmin||!isConnect}>
                 <span>
                   <Icon type="unlock"/>&nbsp;授权
                 </span>
               </Menu.Item>
-              <Menu.Item  disabled={!isAdmin}>
+              <Menu.Item  disabled={!isAdmin||!isConnect}>
                 <span>
                   <Icon type="reload"/>&nbsp;检查升级
                 </span>
               </Menu.Item>
-              <Menu.Item  disabled={!isAdmin}>
+              <Menu.Item  disabled={!isAdmin||!isConnect}>
                 <span>
                   <Icon type="delete"/>&nbsp;磁盘清理
                 </span>
@@ -116,7 +127,32 @@ const getOperationRenderer=({isAdmin})=>{
   }
 }
 
-export const getColumns=({isDark,isAdmin,handle})=>{
+const getVersionListRenderer=dataIndex=>value=>{
+  value=value||[];
+  return (
+    <table className={styles["version-table"]}>
+      <tbody>
+      {
+        value.map((i,index)=>(
+          <tr key={`${index}-row`}>
+            <td>
+              {i[NAME_DATAINDEX]}
+            </td>
+            <td>
+              <JoTag color="#108ee9"
+                     style={{marginBottom:"0"}}>
+                {i[VERSION_DATAINDEX]}
+              </JoTag>
+            </td>
+          </tr>
+        ))
+      }
+      </tbody>
+    </table>
+  );
+}
+
+export const getColumns=({isDark,isAdmin,handle,isNode=true,queryFilters={},onSubmit})=>{
 
   const renderer={
     diskPer:diskPerRenderer,
@@ -124,25 +160,84 @@ export const getColumns=({isDark,isAdmin,handle})=>{
     deviceProps:devicePropsRender,
     applicationVersion:tagRenderer,
     libraryVersion:tagRenderer,
-    licenceStatus:getLiencenRenderer(isDark)
+    licenceStatus:getLiencenRenderer(isDark),
+    [CONNECT_STATUS_DATAINDEX]:value=>(
+      <div style={{textAlign:"center"}}>
+        {
+          value===CONNECT
+          ?
+          <Badge className={isDark?"lbl-dark":null}
+                 status="success"
+                 text={tools.getKeyText(value,connectTextConfig)}/>
+          :
+          <Badge className={isDark?"lbl-dark":null}
+                 status="error"
+                 text={tools.getKeyText(value,connectTextConfig)}/>
+        }
+      </div>
+    ),
+    [LIBRARY_VERSION_LIST_DATAINDEX]:getVersionListRenderer(LIBRARY_VERSION_LIST_DATAINDEX),
+    [ENGINE_VERSION_LIST_DATAINDEX]:getVersionListRenderer(ENGINE_VERSION_LIST_DATAINDEX)
   }
 
 
   const finalTitleTextConfig={};
 
   Object.entries(tableTextConfig.colTitles).forEach(i=>{
-    finalTitleTextConfig[i[0]]= <p style={{textAlign:"center"}}>
-      {i[1]}
-    </p>
+
+    if(i[0]===DISK_PER_DATAINDEX&&isNode){
+      finalTitleTextConfig[i[0]]= (
+        <p style={{textAlign:"center",display:"inline-block",width:"60%"}}>
+          {i[1]}
+        </p>
+      )
+    }else{
+      finalTitleTextConfig[i[0]]= (
+        <p style={{textAlign:"center"}}>
+          {i[1]}
+        </p>
+      )
+    }
+
+
   })
 
 
-  const columns=tableColumnsGenerator({
+  const extraProps=
+    isNode
+      ?
+      {
+        [DISK_PER_DATAINDEX]:{
+          filterIcon:<Icon type="filter"
+                       style={{
+                         color:"#108ee9",
+                       }}/>,
+          filterDropdown:  <SliderForm defaultValue={queryFilters}
+                                       onSubmit={onSubmit}/>
+        }
+      }
+      :
+      {}
+
+
+  let columns=tableColumnsGenerator({
     keys:deviceRowDataIndexes,
     titleTextConfig:finalTitleTextConfig,
     renderer,
-
+    extraProps
   });
+
+  const CONNCET_ROW_INDEX=4
+
+  columns=isNode
+    ?
+    columns
+    :
+    [
+      ...columns.slice(0,CONNCET_ROW_INDEX),
+      ...columns.slice(CONNCET_ROW_INDEX+1)
+    ]
+
 
   return isAdmin
     ?
