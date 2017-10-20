@@ -4,6 +4,7 @@
 import React from 'react';
 import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
 import * as tools from '../../../../utils/tools';
+import {Popconfirm} from 'antd';
 
 import {
   THREAT_NAME_LEVEL_DATAINDEX,
@@ -14,7 +15,7 @@ import {
   levelTextConfig,
   dataIndexes,
   levels,
-  USER_DEFINED_VALUE
+  USER_DEFINED_VALUE,
 }from '../../ConstConfig';
 
 
@@ -37,13 +38,14 @@ const getRenderer=({getDelHandle,getLevelOnChangeHandle})=>({
   ),
 
   [THREAT_NAME_USER_DEFINED_DATAINDEX]:(value,records,index)=>value===USER_DEFINED_VALUE&&
-  <Tooltip title="删除该条威胁行为"
-           arrowPointAtCenter
-           placement="topLeft">
-    <a style={{color:"#d73435"}} onClick={getDelHandle(index)}>
-      <Icon type="minus-circle" />
-    </a>
-  </Tooltip>
+    <Popconfirm title="确定要删除该条威胁行为吗？"
+                placement="topLeft"
+                onConfirm={getDelHandle(index,records[THREAT_NAME_KEY_DATAINDEX])}>
+      <a style={{color:"#d73435"}} >
+        <Icon type="minus-circle" />
+      </a>
+    </Popconfirm>
+
 })
 
 

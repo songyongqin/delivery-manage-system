@@ -27,7 +27,8 @@ const mapStateToProps=state=>{
     commonLayout:state.layout.commonLayout,
     loading:effectLoading[`${NAMESPACE}/query`]||
     effectLoading[`${NAMESPACE}/put`]||
-    effectLoading[`${NAMESPACE}/post`]
+    effectLoading[`${NAMESPACE}/post`]||
+    effectLoading[`${NAMESPACE}/delete`]
   }
 
 }
@@ -52,7 +53,11 @@ const mapDispatchToProps=dispatch=>({
   modify:payload=>dispatch({
     type:`${NAMESPACE}/modify`,
     payload
-  })
+  }),
+  delete:payload=>dispatch({
+    type:`${NAMESPACE}/delete`,
+    payload
+  }),
 })
 
 /******************************************/
@@ -98,7 +103,7 @@ class Page extends React.Component{
     $target[0].style.maxHeight=$("#strategy-expand-page")[0].offsetHeight-160+"px";
   }
   /******************************************/
-  getDelHandle=index=>()=>this.props.del({index})
+  getDelHandle=(index,key)=>()=>this.props.delete({index});
   /******************************************/
   getLevelOnChangeHandle=index=>value=>this.props.modify({index,[THREAT_NAME_LEVEL_DATAINDEX]:value})
   /******************************************/

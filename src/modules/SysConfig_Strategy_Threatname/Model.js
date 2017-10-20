@@ -74,6 +74,28 @@ const baseModel={
     }
   },
   effects:{
+    *delete({resolve,payload},{callWithExtra,select,put}) {
+      const data=yield select(state=>state[NAMESPACE].queryResults.data)
+      let {index}=payload,
+          {key}=data[index];
+      const res=yield callWithExtra(
+        service._delete,
+        {
+          key
+        },
+        callConfig
+      )
+
+      if(res.status===1){
+        yield put({
+          type:`del`,
+          payload:{
+            index,
+          }
+        })
+        resolve&&resolve(res.payload);
+      }
+    },
     *put({resolve,payload},{callWithExtra,select}) {
       const data=yield select(state=>state[NAMESPACE].queryResults.data)
       const res=yield callWithExtra(
