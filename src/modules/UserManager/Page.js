@@ -1,72 +1,72 @@
 import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
-import { Menu, Button,Icon,Row,Col,message as Message,Modal} from 'antd';
-import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
+import { Menu, Button, Icon, Row, Col, message as Message, Modal } from 'antd';
+import { queryContainerGenerator } from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
-import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
+import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import * as tableConfig from './components/TableConfig/index';
-import {tableTextConfig,configPanelTextConfig,createUserPanelTextConfig,limitPanelTextConfig} from './ConstConfig';
-import {NAMESPACE} from './ConstConfig';
+import { tableTextConfig, configPanelTextConfig, createUserPanelTextConfig, limitPanelTextConfig } from './ConstConfig';
+import { NAMESPACE } from './ConstConfig';
 import MaxAuthTimesInput from './components/MaxAuthTimeInput/index';
 import LimitPanel from './components/LimitForm/index';
 import UserForm from './components/UserForm/index';
-import {WithBreadcrumb} from '../../components/HOSComponents/index'
+import { WithBreadcrumb } from '../../components/HOSComponents/index'
 import IpLimit from '../UserManager_IPLimit/Page';
 import * as tools from '../../utils/tools';
 import Card from '../../domainComponents/Card';
 function mapStateToProps(state) {
-  const {commonLayout}=state.layout;
+  const { commonLayout } = state.layout;
   return {
     commonLayout,
-    putUserConfigLoading:state.loading.effects["userManager/putUserConfig"],
-    putUserLoading:state.loading.effects["userManager/putUser"],
-    postUserLoading:state.loading.effects["userManager/postUser"]
+    putUserConfigLoading: state.loading.effects["userManager/putUserConfig"],
+    putUserLoading: state.loading.effects["userManager/putUser"],
+    postUserLoading: state.loading.effects["userManager/postUser"]
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    getUserConfig:()=>{
+    getUserConfig: () => {
       return dispatch({
-        type:`${NAMESPACE}/getUserConfig`
+        type: `${NAMESPACE}/getUserConfig`
       })
     },
-    putUserConfig:(payload)=>{
+    putUserConfig: (payload) => {
       return dispatch({
-        type:`${NAMESPACE}/putUserConfig`,
-        payload:{
+        type: `${NAMESPACE}/putUserConfig`,
+        payload: {
           ...payload
         }
       })
     },
-    putUser:(payload)=>{
+    putUser: (payload) => {
       return dispatch({
-        type:`${NAMESPACE}/putUser`,
-        payload:{
+        type: `${NAMESPACE}/putUser`,
+        payload: {
           ...payload
         }
       })
     },
-    postUser:(payload)=>{
+    postUser: (payload) => {
       return dispatch({
-        type:`${NAMESPACE}/postUser`,
-        payload:{
+        type: `${NAMESPACE}/postUser`,
+        payload: {
           ...payload,
         }
       })
     },
-    deleteUser:payload=>dispatch({
-      type:`${NAMESPACE}/deleteUser`,
-      payload:{
+    deleteUser: payload => dispatch({
+      type: `${NAMESPACE}/deleteUser`,
+      payload: {
         ...payload,
       }
     }),
-    patchUser:payload=>dispatch({
-      type:`${NAMESPACE}/patchUser`,
-      payload:{
+    patchUser: payload => dispatch({
+      type: `${NAMESPACE}/patchUser`,
+      payload: {
         ...payload,
       }
     })
@@ -76,122 +76,122 @@ function mapDispatchToProps(dispatch) {
 
 @WithBreadcrumb
 @queryContainerGenerator({
-  namespace:NAMESPACE,
+  namespace: NAMESPACE,
   mapStateToProps,
-  mapDispatchToProps:createMapDispatchWithPromise(mapDispatchToProps)
+  mapDispatchToProps: createMapDispatchWithPromise(mapDispatchToProps)
 })
-class Page extends React.Component{
+class Page extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      activeUser:null,
-      visible:false,
-      createUserVisible:false,
+    this.state = {
+      activeUser: null,
+      visible: false,
+      createUserVisible: false,
     }
   }
-  componentDidMount=()=>{
+  componentDidMount = () => {
     this.props.queryInit();
     this.props.getUserConfig();
   }
-  switchModal=()=>{
+  switchModal = () => {
     this.setState({
-      visible:!this.state.visible
+      visible: !this.state.visible
     })
   }
-  switchCreateUsreModal=()=>{
+  switchCreateUsreModal = () => {
     this.setState({
-      createUserVisible:!this.state.createUserVisible
+      createUserVisible: !this.state.createUserVisible
     })
   }
-  getButtonLimitHandle=(activeUser)=>{
-    return ()=>{
+  getButtonLimitHandle = (activeUser) => {
+    return () => {
       this.setState({
         activeUser,
       })
       this.switchModal();
     }
   }
-  onQuery=(payload)=>{
+  onQuery = (payload) => {
     this.props.query({
-      ...this.props[NAMESPACE].queryFilters||[],
-      ...payload||{},
+      ...this.props[NAMESPACE].queryFilters || [],
+      ...payload || {},
     });
   };
-  pageOnChange=(current)=>{
-    this.onQuery({page:current})
+  pageOnChange = (current) => {
+    this.onQuery({ page: current })
   };
-  putUserConfig=(value)=>{
+  putUserConfig = (value) => {
     this.props.putUserConfig({
-      maxAuthTimes:value
+      maxAuthTimes: value
     }).then(this.putUserConfigSuccessCallback)
 
   }
-  putUserConfigSuccessCallback=()=>{
+  putUserConfigSuccessCallback = () => {
     Message.success(configPanelTextConfig.notification)
     this.props.getUserConfig();
   }
-  getPutUserHandle=(payload)=>{
-    return ()=>{
+  getPutUserHandle = (payload) => {
+    return () => {
       this.props.putUser({
         ...payload,
       }).then(this.putUserSuccessCallback)
 
     }
   }
-  putUserHandle=(payload)=>{
+  putUserHandle = (payload) => {
     return this.props.putUser({
-        ...payload,
-      })
+      ...payload,
+    })
       .then(this.switchModal)
       .then(this.putUserSuccessCallback)
   }
-  putUserSuccessCallback=()=>{
+  putUserSuccessCallback = () => {
     Message.success(configPanelTextConfig.notification)
     this.initQuery()
   }
-  postUserHandle=(payload)=>{
+  postUserHandle = (payload) => {
     return this.props.postUser({
       ...payload,
     })
       .then(this.switchCreateUsreModal)
       .then(this.postUserSuccessCallback)
   }
-  postUserSuccessCallback=()=>{
+  postUserSuccessCallback = () => {
     Message.success(createUserPanelTextConfig.notification)
     this.initQuery()
   }
 
-  getPatchUserHandle=userAccount=>()=>this.props.patchUser({
-    userAccountList:[userAccount]
+  getPatchUserHandle = userAccount => () => this.props.patchUser({
+    userAccountList: [userAccount]
   })
-    .then(tools.curry(Message.success,"重置成功"))
+    .then(tools.curry(Message.success, "重置成功"))
     .then(this.initQuery)
 
 
-  getDelUserHandle=userAccount=>()=>this.props.deleteUser({
+  getDelUserHandle = userAccount => () => this.props.deleteUser({
     userAccount
   })
-    .then(tools.curry(Message.success,"删除成功"))
+    .then(tools.curry(Message.success, "删除成功"))
     .then(this.initQuery)
 
-  initQuery=()=>{
-    this.onQuery({page:1})
+  initQuery = () => {
+    this.onQuery({ page: 1 })
   }
 
-  getResultsPanel=()=>{
-    const {commonLayout}=this.props;
+  getResultsPanel = () => {
+    const { commonLayout } = this.props;
 
-    const classes=classnames({
-      ["expanded-row-dark"]:commonLayout.darkTheme
+    const classes = classnames({
+      ["expanded-row-dark"]: commonLayout.darkTheme
     });
 
-    const titleContent=(
-      <div style={{width:"100%",position:"relative"}}>
+    const titleContent = (
+      <div style={{ width: "100%", position: "relative" }}>
         {tableTextConfig.title}
         <Button icon="plus"
-                type="primary"
-                onClick={this.switchCreateUsreModal}
-                className={styles["btn-create"]}>
+          type="primary"
+          onClick={this.switchCreateUsreModal}
+          className={styles["btn-create"]}>
           添加新用户
         </Button>
       </div>
@@ -200,18 +200,18 @@ class Page extends React.Component{
     return (
       <div key="results-panel">
         <Card className={classes}
-              title={titleContent}>
+          title={titleContent}>
           {this.getDataResultPanel()}
         </Card>
       </div>
     )
   };
-  getConfigPanel=()=>{
-    const {commonLayout}=this.props;
-    const {queryResults,lastReqTime}=this.props[NAMESPACE];
+  getConfigPanel = () => {
+    const { commonLayout } = this.props;
+    const { queryResults, lastReqTime } = this.props[NAMESPACE];
 
-    const classes=classnames({
-      ["expanded-row-dark"]:commonLayout.darkTheme
+    const classes = classnames({
+      ["expanded-row-dark"]: commonLayout.darkTheme
     });
 
     return (
@@ -219,89 +219,89 @@ class Page extends React.Component{
         <Card
           title={configPanelTextConfig.title}
           className={classes}
-          style={{marginBottom:"15px"}}>
-          <MaxAuthTimesInput textConfig={{label:configPanelTextConfig.description}}
-                             loading={this.props.putUserConfigLoading}
-                             onSubmit={this.putUserConfig}
-                             deafultValue={queryResults.maxAuthTimes}
-                             isDark={commonLayout.darkTheme}/>
+          style={{ marginBottom: "15px" }}>
+          <MaxAuthTimesInput textConfig={{ label: configPanelTextConfig.description }}
+            loading={this.props.putUserConfigLoading}
+            onSubmit={this.putUserConfig}
+            defaultValue={queryResults.maxAuthTimes}
+            isDark={commonLayout.darkTheme} />
         </Card>
       </div>
     )
   }
-  getDataResultPanel=()=>{
+  getDataResultPanel = () => {
 
-    const {commonLayout}=this.props;
-    const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
-    const {data}=queryResults;
-    const {getPatchUserHandle,getDelUserHandle}=this;
-    const handle={
-      freeze:this.getPutUserHandle,
-      limit:this.getButtonLimitHandle,
+    const { commonLayout } = this.props;
+    const { queryResults, queryFilters, lastReqTime } = this.props[NAMESPACE];
+    const { data } = queryResults;
+    const { getPatchUserHandle, getDelUserHandle } = this;
+    const handle = {
+      freeze: this.getPutUserHandle,
+      limit: this.getButtonLimitHandle,
       getPatchUserHandle,
       getDelUserHandle
     }
 
-    const tableProps={
-      onChange:this.tableOnChange,
-      columns:tableConfig.getColumns({handle}),
-      dataSource:data.map((i,index)=>{
+    const tableProps = {
+      onChange: this.tableOnChange,
+      columns: tableConfig.getColumns({ handle }),
+      dataSource: data.map((i, index) => {
         return {
           ...i,
-          key:`item-${index}-${lastReqTime}`
+          key: `item-${index}-${lastReqTime}`
         }
       })
     };
 
-    const paginationProps={
-      total:queryResults.total,
-      current:queryFilters.page,
-      onChange:this.pageOnChange,
-      pageSize:queryFilters.limit,
+    const paginationProps = {
+      total: queryResults.total,
+      current: queryFilters.page,
+      onChange: this.pageOnChange,
+      pageSize: queryFilters.limit,
     };
 
     return (
       <div key={"results-panel"}>
         <EnhanciveTable tableProps={tableProps}
-                        inverse={true}
-                        isDark={commonLayout.darkTheme}
-                        paginationProps={paginationProps}/>
+          inverse={true}
+          isDark={commonLayout.darkTheme}
+          paginationProps={paginationProps} />
       </div>
     )
   };
-  getBreadcrumb=()=>{
+  getBreadcrumb = () => {
     return (
-      <div key="bread-crumb" style={{margin:"15px 0"}}>
+      <div key="bread-crumb" style={{ margin: "15px 0" }}>
         {this.props.getBreadcrumb(this.props.routes)}
       </div>
     )
   }
-  getLimitPanel=()=>{
+  getLimitPanel = () => {
     return (
-      <div key="ip-limit" style={{marginBottom:"15px"}}>
-        <IpLimit/>
+      <div key="ip-limit" style={{ marginBottom: "15px" }}>
+        <IpLimit />
       </div>
     )
   }
-  render=()=> {
+  render = () => {
 
-    const pageClasses=classnames({
+    const pageClasses = classnames({
       // [styles["page"]]:true,
       // [styles["page-dark"]]:this.props.commonLayout.darkTheme
     });
 
-    const {queryLoading,putUserLoading,putUserConfigLoading,commonLayout,postUserLoading}=this.props;
+    const { queryLoading, putUserLoading, putUserConfigLoading, commonLayout, postUserLoading } = this.props;
 
-    const isDark=commonLayout.darkTheme;
+    const isDark = commonLayout.darkTheme;
 
-    const modalClasses=classnames({
-      ["modal"]:true,
-      ["modal-dark"]:isDark
+    const modalClasses = classnames({
+      ["modal"]: true,
+      ["modal-dark"]: isDark
     });
 
     return (
       <div className={pageClasses}>
-        <JoSpin spinning={queryLoading||putUserLoading||putUserConfigLoading}>
+        <JoSpin spinning={queryLoading || putUserLoading || putUserConfigLoading}>
           {this.props.animateRender([
             this.getBreadcrumb(),
             this.getConfigPanel(),
@@ -311,28 +311,28 @@ class Page extends React.Component{
         </JoSpin>
 
         <Modal title={limitPanelTextConfig.title}
-               visible={this.state.visible}
-               key={`user-limit-${this.state.visible}`}
-               className={modalClasses}
-               footer={null}
-               onCancel={this.switchModal}>
+          visible={this.state.visible}
+          key={`user-limit-${this.state.visible}`}
+          className={modalClasses}
+          footer={null}
+          onCancel={this.switchModal}>
           <UserForm isDark={isDark}
-                    defaultValue={this.state.activeUser}
-                    isCreate={false}
-                    loading={putUserLoading}
-                    onSubmit={this.putUserHandle}/>
+            defaultValue={this.state.activeUser}
+            isCreate={false}
+            loading={putUserLoading}
+            onSubmit={this.putUserHandle} />
         </Modal>
 
 
         <Modal title={createUserPanelTextConfig.title}
-               visible={this.state.createUserVisible}
-               key={`create-user-${this.state.createUserVisible}`}
-               className={modalClasses}
-               footer={null}
-               onCancel={this.switchCreateUsreModal}>
+          visible={this.state.createUserVisible}
+          key={`create-user-${this.state.createUserVisible}`}
+          className={modalClasses}
+          footer={null}
+          onCancel={this.switchCreateUsreModal}>
           <UserForm isDark={isDark}
-                    loading={postUserLoading}
-                    onSubmit={this.postUserHandle}/>
+            loading={postUserLoading}
+            onSubmit={this.postUserHandle} />
         </Modal>
 
       </div>
