@@ -4,8 +4,8 @@
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import * as service from './Service';
-import {queryModelGenerator} from '../../utils/dvaModelGenerator';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
+import { queryModelGenerator } from '../../utils/dvaModelGenerator';
+import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import {
   NAMESPACE,
   IPLIMIT_DATAINDEX,
@@ -19,90 +19,105 @@ moment.locale('zh-cn');
 
 
 
-export const callConfig={
-  withArgsCombiner:true,
-  withStatusHandle:true,
-  withLoading:true,
+export const callConfig = {
+  withArgsCombiner: true,
+  withStatusHandle: true,
+  withLoading: true,
 }
 
 
-const baseModel={
+const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters:{
+    queryFilters: {
     },
-    queryResults:{
-      [OPEN_DATAINDEX]:0,
-      data:[]
+    queryResults: {
+      [OPEN_DATAINDEX]: 0,
+      data: []
     }
   },
-  effects:{
-    *put({resolve,payload},{callWithExtra,put}) {
-      const res=yield callWithExtra(
+  reducers: {
+    modifyOpen: (preState, { payload }) => {
+      return {
+        ...preState,
+        queryResults: {
+          ...preState.queryResults,
+          [OPEN_DATAINDEX]: payload[OPEN_DATAINDEX]
+        }
+      }
+    }
+  },
+  effects: {
+    *put({ resolve, payload }, { callWithExtra, put }) {
+      const res = yield callWithExtra(
         service.put,
-        {...payload||{}},
+        { ...payload || {} },
         callConfig
       )
 
-      if(res.status===1){
-        resolve&&resolve(res.payload);
+      if (res.status === 1) {
+        yield put({
+          type: "modifyOpen",
+          payload,
+        })
+        resolve && resolve(res.payload);
       }
     },
-    *delete({resolve,payload},{callWithExtra,put}) {
-      const res=yield callWithExtra(
+    *delete({ resolve, payload }, { callWithExtra, put }) {
+      const res = yield callWithExtra(
         service._delete,
-        {...payload||{}},
+        { ...payload || {} },
         callConfig
       )
 
-      if(res.status===1){
-        resolve&&resolve(res.payload);
+      if (res.status === 1) {
+        resolve && resolve(res.payload);
       }
     },
-    *post({resolve,payload},{callWithExtra,put}) {
-      const res=yield callWithExtra(
+    *post({ resolve, payload }, { callWithExtra, put }) {
+      const res = yield callWithExtra(
         service.post,
-        {...payload||{}},
+        { ...payload || {} },
         callConfig
       )
 
-      if(res.status===1){
-        resolve&&resolve(res.payload);
+      if (res.status === 1) {
+        resolve && resolve(res.payload);
       }
     },
   }
 };
 
-const payloadFilter=(payload={})=>{
-  try{
+const payloadFilter = (payload = {}) => {
+  try {
     return {
-      [OPEN_DATAINDEX]:payload[OPEN_DATAINDEX],
-      data:[
+      [OPEN_DATAINDEX]: payload[OPEN_DATAINDEX],
+      data: [
         {
-          [ROLE_DATAINDEX]:ADMIN_LIMIT_DATAINDEX,
-          [IP_RANGE_DATAINDEX]:payload[IPLIMIT_DATAINDEX][ADMIN_LIMIT_DATAINDEX]
+          [ROLE_DATAINDEX]: ADMIN_LIMIT_DATAINDEX,
+          [IP_RANGE_DATAINDEX]: payload[IPLIMIT_DATAINDEX][ADMIN_LIMIT_DATAINDEX]
         },
         {
-          [ROLE_DATAINDEX]:COMMON_LIMIT_DATAINDEX,
-          [IP_RANGE_DATAINDEX]:payload[IPLIMIT_DATAINDEX][COMMON_LIMIT_DATAINDEX]
+          [ROLE_DATAINDEX]: COMMON_LIMIT_DATAINDEX,
+          [IP_RANGE_DATAINDEX]: payload[IPLIMIT_DATAINDEX][COMMON_LIMIT_DATAINDEX]
         }
       ]
     }
-  }catch(e){
+  } catch (e) {
     console.warn(e);
     return {
-      [OPEN_DATAINDEX]:0,
-      data:[]
+      [OPEN_DATAINDEX]: 0,
+      data: []
     }
   }
 };
 
-const queryService=service.query;
+const queryService = service.query;
 
 export default queryModelGenerator({
-  model:baseModel,
+  model: baseModel,
   payloadFilter,
-  callConfig:commonCallConfig,
+  callConfig: commonCallConfig,
   queryService,
 });
 
