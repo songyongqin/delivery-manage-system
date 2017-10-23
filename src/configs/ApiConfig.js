@@ -2,53 +2,56 @@
  * Created by 13944 on 2017/8/1.
  */
 export default {
-  http:{
-    FRONT_END_CONFIG:"/front-end-config",
-    PRODUCT_TYPE:"/product-type",
-    USER_SIGN:"/user/sign",
-    USER_PASSWORD:"/user/password",
-    USER:"/user",
-    USER_CONFIG:"/user/config",
+  http: {
+    FRONT_END_CONFIG: "/front-end-config",
+    PRODUCT_TYPE: "/product-type",
 
-    USER_IP_LIMIT:"/user/ip-limit",
+    ENUM_CONFIG: "/enum-config",
 
-    TEST_EMAIL:"/warning/email/test",
+    USER_SIGN: "/user/sign",
+    USER_PASSWORD: "/user/password",
+    USER: "/user",
+    USER_CONFIG: "/user/config",
 
-    WARNING_EMAIL:"/warning/email",
-    WARNING_EMAIL_CONFIG:"/warning/email/config",
+    USER_IP_LIMIT: "/user/ip-limit",
 
-    DEVICE_CONTROL:"/device/control",
-    DEVICE_NODE:"/device/node",
+    TEST_EMAIL: "/warning/email/test",
 
-    DEVICE_CONTROL_DISK:"/device/control/disk",
-    DEVICE_NODE_DISK:"/device/node/disk",
+    WARNING_EMAIL: "/warning/email",
+    WARNING_EMAIL_CONFIG: "/warning/email/config",
 
-    VIRTUAL_MACHINE:"/virtual-machine",
+    DEVICE_CONTROL: "/device/control",
+    DEVICE_NODE: "/device/node",
 
-    OCCUPYING_NODE_IP:"/occupying/node/ip",
-    OCCUPYING_VM_IP:"/occupying/virtual-machine/ip",
-    OCCUPYING_VM_NAME:"/occupying/virtual-machine/name",
+    DEVICE_CONTROL_DISK: "/device/control/disk",
+    DEVICE_NODE_DISK: "/device/node/disk",
 
+    VIRTUAL_MACHINE: "/virtual-machine",
 
-    REPORT:"/report",
-
-    ANALYSE_EVENT:"/analyse/event",
-
-    ANALYSE_EVENT_EXPLOIT:"/analyse/event/exploit",
-    ANALYSE_EVENT_TOOL:"/analyse/event/tool",
-    ANALYSE_EVENT_THREAINFO:"/analyse/event/threat-info",
-
-    ANALYSE_ATTACK_CHAIN:"/analyse/attack-chain",
-    ANALYSE_FALL_HOST:"/analyse/fall-host",
-    ANALYSE_RANKING:"/analyse/ranking",
+    OCCUPYING_NODE_IP: "/occupying/node/ip",
+    OCCUPYING_VM_IP: "/occupying/virtual-machine/ip",
+    OCCUPYING_VM_NAME: "/occupying/virtual-machine/name",
 
 
-    SYS_CONFIG_NETWORK:"/sys-config/network",
-    SYS_CONFIG_STRATEGY:"/sys-config/strategy",
-    SYS_CONFIG_STRATEGY_APPLY:"/sys-config/strategy/apply",
-    SYS_CONFIG_STRATEGY_THREATNAME:"/sys-config/strategy/threatname",
-    SYS_CONFIG_STRATEGY_RULE:"/sys-config/strategy/rule",
-    SYS_CONFIG_STRATEGY_WHITELIST:"/sys-config/strategy/white-list",
-    SYS_CONFIG_WHITELIST_APPLY:"/sys-config/white-list/apply"
+    REPORT: "/report",
+
+    ANALYSE_EVENT: "/analyse/event",
+
+    ANALYSE_EVENT_EXPLOIT: "/analyse/event/exploit",
+    ANALYSE_EVENT_TOOL: "/analyse/event/tool",
+    ANALYSE_EVENT_THREAINFO: "/analyse/event/threat-info",
+
+    ANALYSE_ATTACK_CHAIN: "/analyse/attack-chain",
+    ANALYSE_FALL_HOST: "/analyse/fall-host",
+    ANALYSE_RANKING: "/analyse/ranking",
+
+
+    SYS_CONFIG_NETWORK: "/sys-config/network",
+    SYS_CONFIG_STRATEGY: "/sys-config/strategy",
+    SYS_CONFIG_STRATEGY_APPLY: "/sys-config/strategy/apply",
+    SYS_CONFIG_STRATEGY_THREATNAME: "/sys-config/strategy/threatname",
+    SYS_CONFIG_STRATEGY_RULE: "/sys-config/strategy/rule",
+    SYS_CONFIG_STRATEGY_WHITELIST: "/sys-config/strategy/white-list",
+    SYS_CONFIG_WHITELIST_APPLY: "/sys-config/white-list/apply"
   }
 }

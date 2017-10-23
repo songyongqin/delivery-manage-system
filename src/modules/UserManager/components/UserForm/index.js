@@ -22,7 +22,7 @@ import {
 import * as tools from '../../../../utils/tools';
 
 
-const textConfig=tableTextConfig.rowTitles
+const textConfig = tableTextConfig.rowTitles
 
 const FormItem = Form.Item;
 
@@ -50,17 +50,17 @@ const tailFormItemLayout = {
   },
 };
 
-const commonItemCreater=({commonProps,lblClasses,dataIndex,loading})=>(
+const commonItemCreater = ({ commonProps, lblClasses, dataIndex, loading }) => (
   {
-    props:{
+    props: {
       ...commonProps,
-      requried:false,
-      label:<span className={lblClasses}>{tools.getKeyText(dataIndex,textConfig)}</span>
+      requried: false,
+      label: <span className={lblClasses}>{tools.getKeyText(dataIndex, textConfig)}</span>
     },
-    filed:{
-      name:dataIndex,
+    filed: {
+      name: dataIndex,
     },
-    component:<Input disabled={loading}/>
+    component: <Input disabled={loading} />
   }
 )
 
@@ -72,7 +72,7 @@ class WrappedForm extends React.Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    const {onSubmit,form}=this.props;
+    const { onSubmit, form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
 
       if (err) {
@@ -81,7 +81,7 @@ class WrappedForm extends React.Component {
 
       delete values.confirm;
 
-      onSubmit&&onSubmit(values);
+      onSubmit && onSubmit(values);
 
     });
   }
@@ -106,55 +106,55 @@ class WrappedForm extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {isDark,loading,isCreate=true,defaultValue={}}=this.props;
-    const lblClasses=classnames({
-      [styles["lbl-dark"]]:isDark
+    const { isDark, loading, isCreate = true, defaultValue = {} } = this.props;
+    const lblClasses = classnames({
+      [styles["lbl-dark"]]: isDark
     })
-    const commonProps={...formItemLayout,colon:false,hasFeedback:true}
+    const commonProps = { ...formItemLayout, colon: false, hasFeedback: true }
 
-    let items=[
+    let items = [
       {
-        props:{
+        props: {
           ...commonProps,
-          hasFeedback:isCreate,
-          label:<span className={lblClasses}>{tools.getKeyText(USERACCOUNT_DATAINDEX,textConfig)}</span>
+          hasFeedback: isCreate,
+          label: <span className={lblClasses}>{tools.getKeyText(USERACCOUNT_DATAINDEX, textConfig)}</span>
         },
-        filed:{
-          name:USERACCOUNT_DATAINDEX,
-          initialValue:defaultValue[USERACCOUNT_DATAINDEX],
-          rules:isCreate
+        filed: {
+          name: USERACCOUNT_DATAINDEX,
+          initialValue: defaultValue[USERACCOUNT_DATAINDEX],
+          rules: isCreate
             ?
             [
               {
                 required: true, message: '用户账号不能为空',
               },
               {
-                pattern:/^[a-zA-Z0-9]{6,12}$/,message:"长度必须在6-12之间 只能由大小写字母和数字组成"
+                pattern: /^[a-zA-Z0-9]{6,12}$/, message: "长度必须在6-12之间 只能由大小写字母和数字组成"
               }
             ]
             :
             []
         },
-        component:<Input disabled={loading||!isCreate}/>
+        component: <Input disabled={loading || !isCreate} />
       },
 
       commonItemCreater({
-        commonProps:{...commonProps,hasFeedback:false},
+        commonProps: { ...commonProps, hasFeedback: false },
         lblClasses,
         loading,
-        defaultValue:defaultValue[USER_NAME_DATAINDEX],
-        dataIndex:USER_NAME_DATAINDEX
+        defaultValue: defaultValue[USER_NAME_DATAINDEX],
+        dataIndex: USER_NAME_DATAINDEX
       }),
 
       {
         props: {
           ...commonProps,
-          hasFeedback:false,
+          hasFeedback: false,
           label: <span className={lblClasses}>{tools.getKeyText(ROLE_DATAINDEX, textConfig)}</span>
         },
         filed: {
           name: ROLE_DATAINDEX,
-          initialValue:`${COMMON_USER_ROLE}`
+          initialValue: `${COMMON_USER_ROLE}`
         },
         component: <Select>
           <Select.Option value={`${COMMON_USER_ROLE}`}>
@@ -163,47 +163,47 @@ class WrappedForm extends React.Component {
         </Select>
       },
 
-      ...[DEPARTMENT_DATAINDEX,EMAIL_DATAINDEX,PHONE_NUMBER_DATAINDEX,REMARK_DATAINDEX].map(i=>(
+      ...[DEPARTMENT_DATAINDEX, EMAIL_DATAINDEX, PHONE_NUMBER_DATAINDEX, REMARK_DATAINDEX].map(i => (
         commonItemCreater({
-          commonProps:{...commonProps,hasFeedback:false},
+          commonProps: { ...commonProps, hasFeedback: false },
           lblClasses,
           loading,
-          dataIndex:i,
-          defaultValue:defaultValue[i],
+          dataIndex: i,
+          defaultValue: defaultValue[i],
         })
       )),
     ]
 
-    items=isCreate
+    items = isCreate
       ?
       [
         ...items,
         {
-          props:{
+          props: {
             ...commonProps,
-            label:<span className={lblClasses}>{tools.getKeyText(USER_PASSWORD_DATAINDEX,textConfig)}</span>
+            label: <span className={lblClasses}>{tools.getKeyText(USER_PASSWORD_DATAINDEX, textConfig)}</span>
           },
-          filed:{
-            name:USER_PASSWORD_DATAINDEX,
-            rules:[
+          filed: {
+            name: USER_PASSWORD_DATAINDEX,
+            rules: [
               {
                 required: true, message: '密码不能为空',
               },
               {
-                pattern:/^[a-zA-Z0-9]{6,12}$/,message:"长度必须在6-12之间 只能由大小写字母和数字组成"
+                pattern: /^[a-zA-Z0-9]{6,12}$/, message: "长度必须在6-12之间 只能由大小写字母和数字组成"
               }
             ]
           },
-          component:<Input disabled={loading}
-                           type="password" />
+          component: <Input disabled={loading}
+            type="password" />
         },
         {
-          props:{
+          props: {
             ...commonProps,
-            label:<span className={lblClasses}>确认密码</span>
+            label: <span className={lblClasses}>确认密码</span>
           },
-          filed:{
-            name:"confirm",
+          filed: {
+            name: "confirm",
             rules: [
               {
                 required: true, message: '请再次确密码',
@@ -213,10 +213,10 @@ class WrappedForm extends React.Component {
               }
             ],
           },
-          component:<Input type="password"
-                           disabled={loading}
-                           onBlur={this.handleConfirmBlur}
-                           onPressEnter={this.handleSubmit} />
+          component: <Input type="password"
+            disabled={loading}
+            onBlur={this.handleConfirmBlur}
+            onPressEnter={this.handleSubmit} />
         }
       ]
       :
@@ -225,18 +225,18 @@ class WrappedForm extends React.Component {
     return (
       <Form >
         {
-          items.map(i=><FormItem key={i.filed.name} {...i.props}>
+          items.map(i => <FormItem key={i.filed.name} {...i.props}>
             {
-              getFieldDecorator(i.filed.name,{...i.filed})(i.component)
+              getFieldDecorator(i.filed.name, { ...i.filed })(i.component)
             }
           </FormItem>)
         }
         <FormItem {...tailFormItemLayout}>
           <Button type="primary"
-                  loading={loading}
-                  icon="plus"
-                  onClick={this.handleSubmit}>
-            {isCreate?"添加":"确定"}
+            loading={loading}
+            icon="plus"
+            onClick={this.handleSubmit}>
+            {isCreate ? "添加" : "确定"}
           </Button>
         </FormItem>
       </Form>

@@ -4,43 +4,38 @@
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import * as service from './Service';
-import {queryModelGenerator} from '../../utils/dvaModelGenerator';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
-
+import { queryModelGenerator } from '../../utils/dvaModelGenerator';
+import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
+import {
+  EVENT_ACTION_DATA_INDEX,
+  EVENT_TYPE_DATA_INDEX,
+  NAMESPACE
+} from './ConstConfig.js'
 moment.locale('zh-cn');
 
-const NAMESPACE="main";
 
-const baseModel={
+const baseModel = {
   namespace: NAMESPACE,
   state: {
-    isInit:false
+    queryResults: {
+
+    }
   },
-  effects:{
-    // *get({resolve,payload},{callWithExtra}) {
-    //   const res=yield callWithExtra(
-    //     service.get,
-    //     {...payload||{}},
-    //     commonCallConfig
-    //   )
-    //   console.info(res);
-    //   if(res.status===1){
-    //     resolve&&resolve(res.payload);
-    //   }
-    // }
+  effects: {
   }
 };
 
-const payloadFilter=(payload)=>{
+const payloadFilter = (payload) => {
   return {
+    ...payload
   }
 };
 
 
 
 export default queryModelGenerator({
-  model:baseModel,
-  queryService:service.get,
+  model: baseModel,
+  queryService: service.get,
   payloadFilter,
-  callConfig:commonCallConfig,
+  callConfig: commonCallConfig,
 });
