@@ -138,7 +138,7 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
 
     }finally {
 
-      // yield  delay(500);
+      yield  delay(500);
 
       // if(withLoading){
       //   yield put({
