@@ -1,7 +1,10 @@
 {
-"version": 3,
-"mappings": "AAGA,SAAS;EACP,KAAK,ECaS,OAAgB",
-"sources": ["Form.scss","../../styles/_var.scss"],
-"names": [],
-"file": "Form.css"
+    "version": 3,
+    "mappings": "AAGA,AAAA,SAAS,CAAA;EACP,KAAK,ECaS,OAAgB;CDZ/B",
+    "sources": [
+        "styles.scss",
+        "../../styles/_var.scss"
+    ],
+    "names": [],
+    "file": "styles.css"
 }

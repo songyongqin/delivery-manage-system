@@ -4,45 +4,45 @@
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import * as service from './Service';
-import {queryModelGenerator} from '../../utils/dvaModelGenerator';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
-import {NAMESPACE} from './ConstConfig';
+import { queryModelGenerator } from '../../utils/dvaModelGenerator';
+import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
+import { NAMESPACE } from './ConstConfig';
 moment.locale('zh-cn');
 
 
-const baseModel={
+const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters:{
-      timestampRange:[],
-      attackCounts:1,
-      attackEventType:[],
-      ip:null,
-      limit:20,
-      page:1,
+    queryFilters: {
+      timestampRange: [],
+      attackCounts: 1,
+      attackEventType: [],
+      ip: null,
+      limit: 20,
+      page: 1,
     },
-    queryResults:{
-      total:0,
-      data:[]
+    queryResults: {
+      total: 0,
+      data: []
     }
   },
 };
 
-const payloadFilter=(payload)=>{
+const payloadFilter = (payload) => {
   return {
-    total:payload.total,
-    data:payload.data,
+    total: payload.total,
+    data: payload.data,
   }
 };
 
-const queryService=service.query;
+const queryService = service.query;
 
 export default queryModelGenerator({
-  model:baseModel,
+  model: baseModel,
   payloadFilter,
-  callConfig:commonCallConfig,
+  callConfig: commonCallConfig,
   queryService,
-  initPath:"/analyse/fall-host"
+  initPath: "/analyse/fall-host"
 });
 
 

@@ -1,7 +1,9 @@
 {
-"version": 3,
-"mappings": "AAEI,kDAA8B;EAC5B,KAAK,EAAE,IAAI",
-"sources": ["QueryForm.scss"],
-"names": [],
-"file": "QueryForm.css"
+    "version": 3,
+    "mappings": "AAAA,AAEI,WAFO,CACT,OAAO,CACL,8BAA8B,CAAA;EAC5B,KAAK,EAAE,IAAI;CACZ",
+    "sources": [
+        "styles.scss"
+    ],
+    "names": [],
+    "file": "styles.css"
 }

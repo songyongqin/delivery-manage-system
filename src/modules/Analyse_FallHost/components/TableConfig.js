@@ -45,12 +45,17 @@ const rowsRenderer = {
 };
 
 
-export const getColumns = ({ queryFilters, onSubmit }) => {
+export const getColumns = ({
+  queryFilters,
+  onSubmit,
+  filters,
+  filterTextConfig
+}) => {
   const renderer = {
     ...rowsRenderer
   },
     filterOptions = {
-
+      ...filters
     };
 
 
@@ -58,7 +63,10 @@ export const getColumns = ({ queryFilters, onSubmit }) => {
   return tableColumnsGenerator({
     keys: rowDataIndexes,
     titleTextConfig: tableTextConfig.rowTitles,
-    filterTextConfig: commonConstConfig.textConfig,
+    filterTextConfig: {
+      ...commonConstConfig.textConfig,
+      ...filterTextConfig
+    },
     filterOptions: filterOptions,
     filteredValue: queryFilters,
     renderer,

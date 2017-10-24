@@ -1,7 +1,9 @@
 {
-"version": 3,
-"mappings": "AAEI,gCAAa;EACX,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAC,IAAI",
-"sources": ["ReceiveEmailConfigForm.scss"],
-"names": [],
-"file": "ReceiveEmailConfigForm.css"
+    "version": 3,
+    "mappings": "AAAA,AAEI,UAFM,CACR,OAAO,CACL,aAAa,CAAA;EACX,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAC,IAAI;CACT",
+    "sources": [
+        "ReceiveEmailConfigForm.scss"
+    ],
+    "names": [],
+    "file": "ReceiveEmailConfigForm.css"
 }

@@ -1,7 +1,10 @@
 {
-"version": 3,
-"mappings": "AAIA,SAAS;EACP,KAAK,ECYS,OAAgB;;ADP5B,gDAAiC;EAC/B,UAAU,ECXD,OAAO;EDYhB,KAAK,EAAC,KAAK;EACX,WAAW,EAAE,IAAI;;AAOnB,6CAAqB;EACnB,KAAK,ECJK,OAAgB;;ADW5B,0CAAqB;EACnB,KAAK,ECZK,OAAgB;EDa1B,WAAW,EAAE,IAAI",
-"sources": ["styles.scss","../../../../styles/_var.scss"],
-"names": [],
-"file": "styles.css"
+    "version": 3,
+    "mappings": "AAIA,AAAA,SAAS,CAAA;EACP,KAAK,ECYS,OAAgB;CDX/B;;AAED,AAEI,MAFE,CACJ,OAAO,CACL,iCAAiC,CAAA;EAC/B,UAAU,ECXD,OAAO;EDYhB,KAAK,EAAC,KAAK;EACX,WAAW,EAAE,IAAI;CAClB;;AAIL,AAEI,eAFW,CACb,OAAO,CACL,qBAAqB,CAAA;EACnB,KAAK,ECJK,OAAgB;CDK3B;;AAIL,AAEI,YAFQ,CACV,OAAO,CACL,qBAAqB,CAAA;EACnB,KAAK,ECZK,OAAgB;EDa1B,WAAW,EAAE,IAAI;CAClB",
+    "sources": [
+        "styles.scss",
+        "../../../../styles/_var.scss"
+    ],
+    "names": [],
+    "file": "styles.css"
 }

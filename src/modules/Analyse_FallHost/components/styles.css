@@ -1,12 +1,20 @@
 .expanded-table {
   border-bottom: 1px solid #cccccc;
-  margin-bottom: 15px; }
-  .expanded-table td {
-    padding: 10px; }
-  .expanded-table td:nth-child(1) {
-    text-align: right;
-    width: 140px; }
-  .expanded-table td {
-    vertical-align: top; }
+  margin-bottom: 15px;
+}
 
-/*# sourceMappingURL=styles.css.map */
+.expanded-table td {
+  padding: 10px;
+}
+
+.expanded-table td:nth-child(1) {
+  text-align: right;
+  width: 140px;
+}
+
+.expanded-table td {
+  vertical-align: top;
+}
+ 
+
+ /*# sourceMappingURL= styles.css.map */

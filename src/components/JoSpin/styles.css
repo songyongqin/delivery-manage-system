@@ -1,31 +1,40 @@
 .spin-wrapper {
   width: 100%;
   position: relative;
-  background: transparent; }
-  .spin-wrapper.spinning {
-    user-select: none; }
-  .spin-wrapper .spin-dot {
-    user-select: none;
-    position: absolute;
-    z-index: 111;
-    border-radius: 3px;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%); }
-  .spin-wrapper .spin-cover {
-    z-index: 11;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0; }
+  background: transparent;
+}
+
+.spin-wrapper.spinning {
+  user-select: none;
+}
+
+.spin-wrapper .spin-dot {
+  user-select: none;
+  position: absolute;
+  z-index: 111;
+  border-radius: 3px;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.spin-wrapper .spin-cover {
+  z-index: 11;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
 
 .blur {
   filter: blur(3px);
   -webkit-filter: blur(3px);
   -moz-filter: blur(3px);
   -ms-filter: blur(3px);
-  -o-filter: blur(3px); }
+  -o-filter: blur(3px);
+}
+ 
 
-/*# sourceMappingURL=styles.css.map */
+ /*# sourceMappingURL= styles.css.map */

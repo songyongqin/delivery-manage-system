@@ -118,7 +118,6 @@ class Page extends React.Component {
     } = this;
 
     const isOpen = queryResults[OPEN_DATAINDEX] === IS_OPEN
-
     const tableProps = {
       onChange: this.tableOnChange,
       columns: tableConfig.getColumns({ getDelHandle, getOnAddClickHandle, isOpen }),
@@ -147,7 +146,7 @@ class Page extends React.Component {
     return (
       <div className={pageClasses}>
         <JoSpin spinning={this.props.loading}>
-          <Card title={title}>
+          <Card title={title} key={`${lastReqTime}-card`}>
             <EnhanciveTable tableProps={tableProps}
               inverse={true}
               pagination={false} />

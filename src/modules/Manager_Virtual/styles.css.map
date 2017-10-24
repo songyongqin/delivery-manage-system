@@ -1,7 +1,10 @@
 {
-"version": 3,
-"mappings": "AAII,yCAA0B;EACxB,UAAU,EAAE,MAAM",
-"sources": ["styles.scss"],
-"names": [],
-"file": "styles.css"
+    "version": 3,
+    "mappings": "AAEA,AAE4B,MAFtB,CACJ,OAAO,CACL,gBAAgB,GAAG,EAAE,GAAG,EAAE,CAAA;EACxB,UAAU,EAAE,MAAM;CACnB",
+    "sources": [
+        "styles.scss",
+        "../../styles/_var.scss"
+    ],
+    "names": [],
+    "file": "styles.css"
 }

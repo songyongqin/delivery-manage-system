@@ -10,20 +10,32 @@
   padding: 5px 10px;
   margin: 0 10px;
   border-radius: 0;
-  transition: box-shado 0.3s; }
-  .base-btn:not([disabled]):hover {
-    background-color: #239af0; }
-  .base-btn:disabled {
-    cursor: not-allowed;
-    background: #f7f7f7;
-    border: 1px solid #d9d9d9;
-    color: rgba(0, 0, 0, 0.25);
-    box-shadow: 0 0 0 transparent; }
-  .base-btn:focus {
-    outline: none; }
-  .base-btn.danger-btn {
-    background: #f46e65; }
-    .base-btn.danger-btn:not([disabled]):hover {
-      background-color: #f6847d; }
+  transition: box-shadow 0.3s;
+}
 
-/*# sourceMappingURL=BaseButton.css.map */
+.base-btn:not([disabled]):hover {
+  background-color: #239af0;
+}
+
+.base-btn:disabled {
+  cursor: not-allowed;
+  background: #f7f7f7;
+  border: 1px solid #d9d9d9;
+  color: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 0 transparent;
+}
+
+.base-btn:focus {
+  outline: none;
+}
+
+.base-btn.danger-btn {
+  background: #f46e65;
+}
+
+.base-btn.danger-btn:not([disabled]):hover {
+  background-color: #f6847d;
+}
+ 
+
+ /*# sourceMappingURL= BaseButton.css.map */

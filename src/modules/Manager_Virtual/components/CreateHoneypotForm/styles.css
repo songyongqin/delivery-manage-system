@@ -1,16 +1,21 @@
 .lbl-dark {
-  color: #b7c1cc; }
+  color: #b7c1cc;
+}
 
 .radio :global .ant-radio-button-wrapper-checked {
   background: #108ee9;
   color: white;
-  user-select: none; }
+  user-select: none;
+}
 
 .check-box-dark :global .ant-checkbox-wrapper {
-  color: #b7c1cc; }
+  color: #b7c1cc;
+}
 
 .slider-dark :global .ant-slider-mark-text {
   color: #b7c1cc;
-  user-select: none; }
+  user-select: none;
+}
+ 
 
-/*# sourceMappingURL=styles.css.map */
+ /*# sourceMappingURL= styles.css.map */

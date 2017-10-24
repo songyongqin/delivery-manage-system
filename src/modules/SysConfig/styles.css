@@ -1,13 +1,22 @@
 .page {
-  background: #F1F1F1; }
-  .page :global .ant-tabs-tab-active {
-    color: #108ee9; }
+  background: #F1F1F1;
+}
+
+.page :global .ant-tabs-tab-active {
+  color: #108ee9;
+}
 
 .page-dark {
-  background: #1c233b; }
-  .page-dark :global .ant-tabs-tab {
-    color: #b7c1cc; }
-  .page-dark :global .ant-tabs-tab-active {
-    color: #108ee9; }
+  background: #1c233b;
+}
 
-/*# sourceMappingURL=styles.css.map */
+.page-dark :global .ant-tabs-tab {
+  color: #b7c1cc;
+}
+
+.page-dark :global .ant-tabs-tab-active {
+  color: #108ee9;
+}
+ 
+
+ /*# sourceMappingURL= styles.css.map */

@@ -74,3 +74,8 @@ export const IDS_SOURCE_DES_SOURCE_IP_DATAINDEX = "sourceIp",
   IDS_SOURCE_DES_DOMAIN_DATAINDEX = "domain",
   IDS_SOURCE_DES_PROTOCOL_DATAINDEX = "protocol",
   IDS_SOURCE_DES_OTHER_DATAINDEX = "other"
+
+
+export { EVENT_TYPE_DATA_INDEX } from '../../configs/ConstConfig'
+
+export {NAMESPACE as MAIN_NAMESPACE} from '../Main/ConstConfig'

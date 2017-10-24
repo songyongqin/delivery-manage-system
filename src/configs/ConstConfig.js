@@ -200,4 +200,4 @@ export const STAND_ALONE = "standalone",
 
 
 export const EVENT_ACTION_DATA_INDEX = "eventAction",
-  EVENT_TYPE_DATA_INDEX = "eventType"
+  EVENT_TYPE_DATA_INDEX = "eventType";

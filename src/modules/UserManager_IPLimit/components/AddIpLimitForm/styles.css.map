@@ -1,7 +1,10 @@
 {
-"version": 3,
-"mappings": "AACA,MAAM;EACJ,KAAK,EAAE,IAAI;EACX,OAAO,EAAC,IAAI;;AAGd,SAAS;EACP,KAAK,ECUS,OAAgB",
-"sources": ["MaxAuthTimesInput.scss","../../../../styles/_var.scss"],
-"names": [],
-"file": "MaxAuthTimesInput.css"
+    "version": 3,
+    "mappings": "AACA,AAAA,MAAM,CAAA;EACJ,KAAK,EAAE,IAAI;EACX,OAAO,EAAC,IAAI;CACb;;AAED,AAAA,SAAS,CAAA;EACP,KAAK,ECUS,OAAgB;CDT/B",
+    "sources": [
+        "styles.scss",
+        "../../../../styles/_var.scss"
+    ],
+    "names": [],
+    "file": "styles.css"
 }

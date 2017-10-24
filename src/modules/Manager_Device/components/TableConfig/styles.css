@@ -1,18 +1,24 @@
 .operation-list .operation-item {
   margin-bottom: 10px;
-  display: inline-block; }
+  display: inline-block;
+}
 
 .btn-danger {
   border-color: #d73435;
   background: #d73435;
-  color: white; }
-  .btn-danger:disabled {
-    color: rgba(0, 0, 0, 0.25);
-    background-color: #f7f7f7;
-    border-color: #d9d9d9; }
+  color: white;
+}
+
+.btn-danger:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background-color: #f7f7f7;
+  border-color: #d9d9d9;
+}
 
 .version-table td {
   text-align: center;
-  padding: 3px; }
+  padding: 3px;
+}
+ 
 
-/*# sourceMappingURL=styles.css.map */
+ /*# sourceMappingURL= styles.css.map */
