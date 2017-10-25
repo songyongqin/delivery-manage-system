@@ -1,6 +1,6 @@
 import React from 'react';
 // import styles from './styles.css'
-import { Menu, Button, Breadcrumb } from 'antd';
+import { Menu, Button, Breadcrumb, Icon } from 'antd';
 import MonitorSettingForm from '../../modules//SysConfig_Monitor/components/MonitorSettingForm'
 import { connect } from 'dva';
 import {
@@ -21,10 +21,9 @@ import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageO
 import JoSpin from '../../components/JoSpin';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable'
 import Card from '../../domainComponents/Card'
-
+import styles from './style.css';
 
 export default ({ namespace, title, getColumns }) => {
-    console.info(MAIN_NAMESPACE);
     function mapStateToProps(state) {
         const { commonLayout } = state.layout;
         const effectLoading = state.loading.effects;
@@ -82,9 +81,8 @@ export default ({ namespace, title, getColumns }) => {
             }
             const isDark = commonLayout.darkTheme;
 
-
             const tableProps = {
-                columns: getColumns(),
+                columns: getColumns({ moduleMonitorTextConfig }),
                 dataSource: data.map((i, index) => ({
                     ...i,
                     key: `${lastReqTime}-${index}-item`
@@ -98,25 +96,25 @@ export default ({ namespace, title, getColumns }) => {
             }
 
             return (
-                <Card title={title}>
-                    <JoSpin spinning={loading}>
-                        <div style={{ overflow: "hidden" }}>
-                            <div style={{ float: "left", width: "160px" }}>
-                                <MonitorSettingForm isDark={isDark}
-                                    key={`${lastReqTime}-form`}
-                                    items={modules}
-                                    defaultValue={defaultValue}
-                                    onSubmit={this.onSubmit}
-                                    itemTextConfig={moduleMonitorTextConfig} />
-                            </div>
-                            <div style={{ float: "left", paddingLeft: "15px", width: "calc(100% - 175px)" }}>
-                                <EnhanciveTable tableProps={tableProps}
-                                    inverse
-                                    paginationProps={paginationProps} />
-                            </div>
-                        </div>
-                    </JoSpin>
-                </Card>
+                <JoSpin spinning={loading}>
+                    <div className={styles["flex-wrap"]}>
+                        <Card style={{ width: "300px" }}
+                            title={<p> <Icon type="setting"></Icon> 自检周期与模块检测设置</p>}>
+                            <MonitorSettingForm isDark={isDark}
+                                key={`${lastReqTime}-form`}
+                                items={modules}
+                                defaultValue={defaultValue}
+                                onSubmit={this.onSubmit}
+                                itemTextConfig={moduleMonitorTextConfig} />
+                        </Card>
+                        <Card title={<p> <Icon type="file-text"></Icon> 监控记录</p>}
+                            style={{ marginLeft: "15px", width: "calc(100% - 315px)" }}>
+                            <EnhanciveTable tableProps={tableProps}
+                                inverse
+                                paginationProps={paginationProps} />
+                        </Card>
+                    </div>
+                </JoSpin>
             )
         }
     }

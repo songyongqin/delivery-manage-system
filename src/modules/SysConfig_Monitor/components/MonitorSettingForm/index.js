@@ -150,11 +150,11 @@ class WrappedForm extends React.Component {
                     style={{
                         width: "60px",
                         display: "inline-block",
-                        marginLeft: "40px",
                     }}>
                     <Button type="primary"
                         loading={loading}
-                        onClick={this.handleSubmit}>保存</Button>
+                        icon="save"
+                        onClick={this.handleSubmit}>保存设置</Button>
                 </FormItem>
             </Form>
         );

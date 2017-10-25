@@ -1,54 +1,54 @@
 import React from 'react';
-import { Menu, Button,Card,Dropdown,Select } from 'antd';
-import {WithBreadcrumb,WithAnimateRender} from '../../components/HOSComponents/index'
+import { Menu, Button, Card, Dropdown, Select } from 'antd';
+import { WithBreadcrumb, WithAnimateRender } from '../../components/HOSComponents/index'
 import ControlDisk from '../Manager_Device_Control_Disk/Page';
 import DeviceControl from '../Manager_Device_Control/Page';
 import NodeDisk from '../Manager_Device_Node_Disk/Page';
 import DeviceNode from '../Manager_Device_Node/Page';
-import {CONTROL_PANEL_TITLE,NODE_PANEL_TITLE} from './ConstConfig'
+import { CONTROL_PANEL_TITLE, NODE_PANEL_TITLE } from './ConstConfig'
 import classnames from 'classnames';
-import {connect} from 'dva';
+import { connect } from 'dva';
 import JoSpin from '../../components/JoSpin/index';
-import {NAMESPACE as MANAGER_DEVICE_NAMESPACE} from '../Manager_Device_Control/ConstConfig'
-import {NAMESPACE as MANAGER_DEVICE_DISK_NAMESPACE} from '../Manager_Device_Control_Disk/ConstConfig';
-import {NAMESPACE as MANAGER_DEVICE_NODE_DISK_NAMESPACE} from '../Manager_Device_Node_Disk/ConstConfig'
-import {NAMESPACE as MANAGER_DEVICE_NODE_NAMESPACE} from '../Manager_Device_Node/ConstConfig';
+import { NAMESPACE as MANAGER_DEVICE_NAMESPACE } from '../Manager_Device_Control/ConstConfig'
+import { NAMESPACE as MANAGER_DEVICE_DISK_NAMESPACE } from '../Manager_Device_Control_Disk/ConstConfig';
+import { NAMESPACE as MANAGER_DEVICE_NODE_DISK_NAMESPACE } from '../Manager_Device_Node_Disk/ConstConfig'
+import { NAMESPACE as MANAGER_DEVICE_NODE_NAMESPACE } from '../Manager_Device_Node/ConstConfig';
 
-function  mapStateToProps(state) {
-  const {commonLayout}=state.layout;
-  const {effects:effectsLoading}=state.loading;
+function mapStateToProps(state) {
+  const { commonLayout } = state.layout;
+  const { effects: effectsLoading } = state.loading;
 
   return {
     commonLayout,
-    userData:state.user.userData,
-    productType:state.user.productType,
-    controlLoading:effectsLoading[`${MANAGER_DEVICE_DISK_NAMESPACE}/query`]
-    ||effectsLoading[`${MANAGER_DEVICE_DISK_NAMESPACE}/put`]
-    ||effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/query`],
-    nodeLoading:effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/query`]
-    ||effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/put`]
-    ||effectsLoading[`${MANAGER_DEVICE_NODE_NAMESPACE}/query`]
+    userData: state.user.userData,
+    productType: state.user.productType,
+    controlLoading: effectsLoading[`${MANAGER_DEVICE_DISK_NAMESPACE}/query`]
+    || effectsLoading[`${MANAGER_DEVICE_DISK_NAMESPACE}/put`]
+    || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/query`],
+    nodeLoading: effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/query`]
+    || effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/put`]
+    || effectsLoading[`${MANAGER_DEVICE_NODE_NAMESPACE}/query`]
   }
 }
 
 @connect(mapStateToProps)
 @WithAnimateRender
 @WithBreadcrumb
-class Page extends React.Component{
+class Page extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      selectedRows:[],
+    this.state = {
+      selectedRows: [],
     }
   }
-  getBreadcrumb=()=>{
+  getBreadcrumb = () => {
     return (
-      <div key="bread-crumb" style={{marginTop:"15px"}}>
+      <div key="bread-crumb" style={{ marginTop: "15px" }}>
         {this.props.getBreadcrumb(this.props.routes)}
       </div>
     )
   }
-  getContent=()=>{
+  getContent = () => {
     return (
       <div key="content">
         {
@@ -60,56 +60,56 @@ class Page extends React.Component{
       </div>
     )
   }
-  getControlPanel=()=>{
+  getControlPanel = () => {
 
-    const {commonLayout,controlLoading,userData}=this.props;
-    const {isAdmin}=userData;
-    const classes=classnames({
-      ["card-dark"]:commonLayout.darkTheme
+    const { commonLayout, controlLoading, userData } = this.props;
+    const { isAdmin } = userData;
+    const classes = classnames({
+      ["card-dark"]: commonLayout.darkTheme
     });
 
 
     return (
       <div key="control-panel">
         <Card className={classes}
-              title={CONTROL_PANEL_TITLE}
-              style={{marginTop:"15px"}}>
+          title={CONTROL_PANEL_TITLE}
+          style={{ marginTop: "15px" }}>
           <JoSpin spinning={controlLoading}>
             {
               isAdmin
                 ?
                 <div>
-                  <ControlDisk/>
+                  <ControlDisk />
                 </div>
                 :
                 null
             }
-            <div style={{marginTop:"15px"}}>
-              <DeviceControl/>
+            <div style={{ marginTop: "15px" }}>
+              <DeviceControl />
             </div>
           </JoSpin>
         </Card>
       </div>
     )
   }
-  setSelectedRows=(selectedRows)=>{
+  setSelectedRows = (selectedRows) => {
     this.setState({
       selectedRows
     })
   }
-  getNodePanel=()=>{
+  getNodePanel = () => {
 
-    const {commonLayout,nodeLoading,productType,userData}=this.props;
+    const { commonLayout, nodeLoading, productType, userData } = this.props;
 
     /*是否为单机版本*/
-    if(productType.standalone===1){
+    if (productType.standalone === 1) {
       return;
     }
 
-    const {isAdmin}=userData;
-    const isDark=commonLayout.darkTheme;
-    const classes=classnames({
-      ["expanded-row-dark"]:commonLayout.darkTheme
+    const { isAdmin } = userData;
+    const isDark = commonLayout.darkTheme;
+    const classes = classnames({
+      ["expanded-row-dark"]: commonLayout.darkTheme
     });
 
     const menu = (
@@ -122,15 +122,15 @@ class Page extends React.Component{
     return (
       <div key="node-panel">
         <Card className={classes}
-              title={NODE_PANEL_TITLE}
-              style={{marginTop:"15px"}}>
+          title={NODE_PANEL_TITLE}
+          style={{ marginTop: "15px" }}>
           <JoSpin spinning={nodeLoading}>
-            <div style={{overflow:"hidden"}}>
+            <div style={{ overflow: "hidden" }}>
               {
                 isAdmin
                   ?
-                  <div style={{display:"inline-block"}}>
-                    <NodeDisk/>
+                  <div style={{ display: "inline-block" }}>
+                    <NodeDisk />
                   </div>
                   :
                   null
@@ -138,10 +138,10 @@ class Page extends React.Component{
               {
                 isAdmin
                   ?
-                  <div style={{display:"inline-block",marginLeft:"15px"}}>
+                  <div style={{ display: "inline-block", marginLeft: "15px" }}>
                     <Dropdown.Button overlay={menu}
-                                     disabled={this.state.selectedRows.length===0}
-                                     type="primary">
+                      disabled={this.state.selectedRows.length === 0}
+                      type="primary">
                       批量授权
                     </Dropdown.Button>
                   </div>
@@ -150,15 +150,15 @@ class Page extends React.Component{
                   null
               }
             </div>
-            <div style={{marginTop:"15px"}}>
-              <DeviceNode setSelectedRows={this.setSelectedRows}/>
+            <div style={{ marginTop: "15px" }}>
+              <DeviceNode setSelectedRows={this.setSelectedRows} />
             </div>
           </JoSpin>
         </Card>
       </div>
     )
   }
-  render=()=>{
+  render = () => {
 
     return (
       <div>

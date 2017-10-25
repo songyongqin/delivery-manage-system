@@ -13,10 +13,12 @@ import { WithAnimateRender, WithBreadcrumb } from '../../components/HOSComponent
 import MonitorControl from '../SysConfig_Monitor_Control/Page'
 import MonitorIDS from '../SysConfig_Monitor_IDS/Page';
 import MonitorNode from '../SysConfig_Monitor_Node/Page';
+import classnames from 'classnames';
 
 function mapStateToProps(state) {
+  const { commonLayout } = state.layout;
   return {
-
+    isDark: commonLayout.darkTheme
   }
 }
 
@@ -35,20 +37,33 @@ class Page extends React.Component {
       </div>
     )
   }
+  getTabsContent = () => {
+
+    const tabClasses = classnames({
+      [styles["page-dark"]]: this.props.isDark
+    })
+
+    return (
+      <Tabs key="content-tabs"
+        className={tabClasses}
+        style={{ marginTop: "15px" }}>
+        <Tabs.TabPane key="control" tab="控制中心">
+          <MonitorControl />
+        </Tabs.TabPane>
+        <Tabs.TabPane key="node" tab="蜜罐节点">
+          <MonitorNode />
+        </Tabs.TabPane>
+        <Tabs.TabPane key="ids" tab="流量监测系统">
+          <MonitorIDS />
+        </Tabs.TabPane>
+      </Tabs>
+    )
+  }
   render = () => {
     return (
       this.props.animateRender([
         this.getBreadcrumb(),
-        <div key="control" style={{ marginTop: "15px" }}>
-          <MonitorControl />
-        </div>,
-        <div key="node" style={{ marginTop: "15px" }}>
-          <MonitorNode />
-        </div>,
-        <div key="ids" style={{ marginTop: "15px" }}>
-          <MonitorIDS />
-        </div>,
-
+        this.getTabsContent()
       ])
     )
   }

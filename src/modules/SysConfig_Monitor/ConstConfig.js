@@ -22,7 +22,7 @@ export const MONITOR_LOG_TIME_DATA_INDEX = "time",
 
 export const commonDataIndexes = [
     MONITOR_LOG_TIME_DATA_INDEX,
-    MONITOR_LOG_RESULT_DATA_INDEX,
+    // MONITOR_LOG_RESULT_DATA_INDEX,
     REGULAR_MODULE_ROW_KEY,
     ERROR_MODULE_ROW_KEY
 ]
@@ -30,13 +30,14 @@ export const commonDataIndexes = [
 export const nodeDataIndexes = [
     MONITOR_LOG_TIME_DATA_INDEX,
     MONITOR_LOG_IP_DATA_INDEX,
-    MONITOR_LOG_RESULT_DATA_INDEX,
+    // MONITOR_LOG_RESULT_DATA_INDEX,
     REGULAR_MODULE_ROW_KEY,
     ERROR_MODULE_ROW_KEY
 ]
 
 export const monitorLogTextConfig = {
     [MONITOR_LOG_TIME_DATA_INDEX]: "检测时间",
+    [MONITOR_LOG_IP_DATA_INDEX]: "节点IP",
     [MONITOR_LOG_RESULT_DATA_INDEX]: "检测模块",
     [REGULAR_MODULE_ROW_KEY]: "检测正常的模块",
     [ERROR_MODULE_ROW_KEY]: "检测到异常的模块"

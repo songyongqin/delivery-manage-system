@@ -16,7 +16,6 @@ const callConfig = {
 }
 
 export default ({ type, namespace }) => {
-    console.info("....")
     const baseModel = {
         namespace,
         state: {
