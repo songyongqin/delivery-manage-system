@@ -45,7 +45,7 @@ export const getColumns = ({ getDelHandle, getOnAddClickHandle, isOpen }) => {
     titleTextConfig: titleConfig,
     renderer: {
       [ROLE_DATAINDEX]: value => <p style={{ textAlign: "center" }}>{tools.getKeyText(value, roleTextConfig)}</p>,
-      [IP_RANGE_DATAINDEX]: value => (
+      [IP_RANGE_DATAINDEX]: (value, records) => (
         <div style={{ textAlign: "center", overflow: "hidden" }}>
           {/*<div style={{textAlign:"left",display:"inline-block",margin:"0 auto"}}>*/}
           {value.map((i, index) => (
@@ -56,7 +56,7 @@ export const getColumns = ({ getDelHandle, getOnAddClickHandle, isOpen }) => {
                 isOpen
                   ?
                   <Popconfirm title={`是否删除${value[index]}?`}
-                    onConfirm={getDelHandle(value[index])}>
+                    onConfirm={getDelHandle(value[index], records[ROLE_DATAINDEX])}>
                     {/* style={{color:"#d73435"}} */}
                     <a >
                       &nbsp;

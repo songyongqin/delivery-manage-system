@@ -78,7 +78,7 @@ class Page extends React.Component {
     });
   }
 
-  getDelHandle = ip => () => this.props.delete({ ip })
+  getDelHandle = (ip, type) => () => this.props.delete({ ip, type })
     .then(tools.curry(Message.success, "删除成功"))
     .then(this.onQuery)
 
