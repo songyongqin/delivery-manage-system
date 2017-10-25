@@ -52,6 +52,10 @@ export default {
     SYS_CONFIG_STRATEGY_THREATNAME: "/sys-config/strategy/threatname",
     SYS_CONFIG_STRATEGY_RULE: "/sys-config/strategy/rule",
     SYS_CONFIG_STRATEGY_WHITELIST: "/sys-config/strategy/white-list",
-    SYS_CONFIG_WHITELIST_APPLY: "/sys-config/white-list/apply"
+    SYS_CONFIG_WHITELIST_APPLY: "/sys-config/white-list/apply",
+
+
+    MODULE_MONITOR: "/sys-config/module-monitor",
+    MODULE_MONITOR_LOG: "/sys-config/module-monitor/log"
   }
 }

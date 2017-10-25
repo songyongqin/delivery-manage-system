@@ -6,8 +6,8 @@ import router from './router';
 import { useRouterHistory } from 'dva/router';
 import { createHashHistory } from 'history';
 
-import {combineExtraEffectsWithApp} from './utils/dvaExtraEffects';
-import {combineExtraReducersWithApp} from './utils/dvaExtraReducers';
+import { combineExtraEffectsWithApp } from './utils/dvaExtraEffects';
+import { combineExtraReducersWithApp } from './utils/dvaExtraReducers';
 import extraEffectsOptions from './configs/ExtraEffectsOptions';
 
 import MainModel from './modules/Main/Model';
@@ -23,7 +23,7 @@ import UserModel from './modules/User/Model';
 import EarlyWarningEmailReceiveModel from './modules/EarlyWarning_EmailReceive/Model';
 import EarlyWarningEmailSendModel from './modules/EarlyWarning_EmailSend/Model';
 import ManagerDeviceControlDiskModel from './modules/Manager_Device_Control_Disk/Model';
-import ManagerDeviceControlModel from  './modules/Manager_Device_Control/Model';
+import ManagerDeviceControlModel from './modules/Manager_Device_Control/Model';
 import ManagerDeviceNodeDiskModel from './modules/Manager_Device_Node_Disk/Model';
 import ManagerDeviceNodeModel from './modules/Manager_Device_Node/Model';
 import ManagerDeviceVMModel from './modules/Manager_Virtual/Model'
@@ -33,12 +33,15 @@ import StrategyThreatnameModel from './modules/SysConfig_Strategy_Threatname/Mod
 import StrategyRuleModel from './modules/SysConfig_Strategy_Rule/Model';
 import WhiteListModel from './modules/SysConfig_Strategy_WhiteList/Model';
 import IPLimitModel from './modules/UserManager_IPLimit/Model';
+import MonitorControlModel from './modules/SysConfig_Monitor_Control/Model';
+import MonitorIDSModel from './modules/SysConfig_Monitor_IDS/Model';
+
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
 });
 
-app.use(createLoading({effects:true}));
+app.use(createLoading({ effects: true }));
 
 // 3. Model
 app.model(MainModel);
@@ -65,7 +68,10 @@ app.model(StrategyThreatnameModel);
 app.model(StrategyRuleModel);
 app.model(WhiteListModel);
 app.model(IPLimitModel);
-combineExtraEffectsWithApp(app,extraEffectsOptions);
+app.model(MonitorControlModel);
+app.model(MonitorIDSModel);
+
+combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);
 
 // 4. Router

@@ -1,6 +1,6 @@
 export const NAMESPACE = "monitor"
 export const MODULE_MONITOR_DATA_INDEX = "moduleMonitor"
-export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig'
+export { NAMESPACE as MAIN_NAMESPACE } from '../../modules/Main/ConstConfig'
 
 
 export const MONITOR_PERIOD_DATA_INDEX = "period",

@@ -2,8 +2,8 @@
  * Created by 13944 on 2017/8/13.
  */
 import React from 'react';
-import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
-import {WithAnimateRender,WithContainerHeader} from '../../components/HOSComponents/index';
+import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
+import { WithAnimateRender, WithContainerHeader } from '../../components/HOSComponents/index';
 import { connect } from 'dva';
 
 function defaultMapStateToProps(state) {
@@ -23,27 +23,26 @@ function defaultMapDispatchToProps(dispatch) {
 * queryContainerGenerator(options)(wrappedComponent)
 * 传入options后返回一个高阶函数组件 再传入需要增强的组件后返回组合后的高阶组件
 * */
-export const queryContainerGenerator=({
+export const queryContainerGenerator = ({
                                  namespace,
-                                 mapStateToProps=defaultMapStateToProps,
-                                 mapDispatchToProps=defaultMapDispatchToProps})=>{
+  mapStateToProps = defaultMapStateToProps,
+  mapDispatchToProps = defaultMapDispatchToProps }) => {
 
   /*
   *
   *
   * */
-  if(!namespace){
+  if (!namespace) {
     throw new Error("function queryContainerGenerator should offer model namespace");
   }
   /*
   * */
   function wrappedMapStateProps(state) {
-    // console.info(state.loading.effects);
     return {
       ...mapStateToProps(state),
-      [namespace]:state[namespace],
-      queryLoading:state.loading.effects[`${namespace}/query`],
-      lastReqTime:state[namespace].lastReqTime
+      [namespace]: state[namespace],
+      queryLoading: state.loading.effects[`${namespace}/query`],
+      lastReqTime: state[namespace].lastReqTime
     }
   }
 
@@ -51,20 +50,20 @@ export const queryContainerGenerator=({
   * 拓展的dispatch query方法
   * */
 
-  function extraMapDispatchToProps(dispatch,ownProps) {
+  function extraMapDispatchToProps(dispatch, ownProps) {
     return {
       dispatch,
-      query:(payload)=>{
+      query: (payload) => {
         return dispatch({
-          type:`${namespace}/query`,
-          payload:{
+          type: `${namespace}/query`,
+          payload: {
             ...payload,
           }
         })
       },
-      queryInit:()=>{
+      queryInit: () => {
         return dispatch({
-          type:`${namespace}/queryInit`,
+          type: `${namespace}/queryInit`,
         })
       }
     }
@@ -73,28 +72,28 @@ export const queryContainerGenerator=({
   * extra 拓展的dispatchMapToProps 添加附带promise
   * 将配置的mapDispatchToProps 与extraDispatchMapToProps结合 作为最终的mapDispatchToProps
   * */
-  function wrappedMapDispatchToProps(dispatch,ownProps) {
+  function wrappedMapDispatchToProps(dispatch, ownProps) {
     return {
-      ...mapDispatchToProps(dispatch,ownProps),
-      ...createMapDispatchWithPromise(extraMapDispatchToProps)(dispatch,ownProps),
+      ...mapDispatchToProps(dispatch, ownProps),
+      ...createMapDispatchWithPromise(extraMapDispatchToProps)(dispatch, ownProps),
     }
   }
 
   /*
   * 返回一个高阶组件函数
   * */
-  return (WrappedComponent)=>{
+  return (WrappedComponent) => {
 
-    @connect(wrappedMapStateProps,wrappedMapDispatchToProps)
+    @connect(wrappedMapStateProps, wrappedMapDispatchToProps)
     @WithAnimateRender
     @WithContainerHeader
-    class QueryContainer extends React.Component{
-      displayName=`QueryContainer_${namespace}`;
-      constructor(props){
+    class QueryContainer extends React.Component {
+      displayName = `QueryContainer_${namespace}`;
+      constructor(props) {
         super(props);
       }
-      render=()=>{
-        return <WrappedComponent {...this.props}/>
+      render = () => {
+        return <WrappedComponent {...this.props} />
       }
     }
 

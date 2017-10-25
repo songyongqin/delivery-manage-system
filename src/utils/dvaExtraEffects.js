@@ -4,62 +4,62 @@
 /*
 *
 * */
-const WITH_TIME_TYPE="withTime"
+const WITH_TIME_TYPE = "withTime"
 
 
-function *extraEffectCreator(effectCreator,{put}) {
-  if(effectCreator.some(i=>i.type===WITH_TIME_TYPE)){
+function* extraEffectCreator(effectCreator, { put }) {
+  if (effectCreator.some(i => i.type === WITH_TIME_TYPE)) {
     yield put({
-      type:"setTime"
+      type: "setTime"
     })
   }
 }
 
 
-const combineExtraEffects=(model,options={},extraSagaEffects={})=>{
+const combineExtraEffects = (model, options = {}, extraSagaEffects = {}) => {
 
-  Object.keys(options).forEach(select=>{
-    isFunction(options[select],select);
+  Object.keys(options).forEach(select => {
+    isFunction(options[select], select);
   });
 
-  const {effects={}}=model;
+  const { effects = {} } = model;
 
-  const wrappedEffects={};
+  const wrappedEffects = {};
 
-  Object.keys(effects).forEach(key=>{
+  Object.keys(effects).forEach(key => {
 
-    const hasEffectCreator=effects[key] instanceof  Array;
-    const effectCreatorList=hasEffectCreator?effects[key].slice(1):[];
+    const hasEffectCreator = effects[key] instanceof Array;
+    const effectCreatorList = hasEffectCreator ? effects[key].slice(1) : [];
 
-    wrappedEffects[key]=function *(action,sagaEffects) {
-      const extraSagaEffects={
+    wrappedEffects[key] = function* (action, sagaEffects) {
+      const extraSagaEffects = {
         ...sagaEffects,
-        callWithStatusHandle:createExtraCall(action,sagaEffects,{withStatusHandle:true},options),
-        callWithArgsCombiner:createExtraCall(action,sagaEffects,{withArgsCombiner:true},options),
-        callWithLoading:createExtraCall(action,sagaEffects,{withLoading:true},options),
-        callWithSetFilters:createExtraCall(action,sagaEffects,{withSetFilters:true},options),
-        callWithTime:createExtraCall(action,sagaEffects,{callWithTime:true},options),
-        callWithExtra:(serviceFn,args,config)=>{
-          return createExtraCall(action,sagaEffects,config,options)(serviceFn,args);
+        callWithStatusHandle: createExtraCall(action, sagaEffects, { withStatusHandle: true }, options),
+        callWithArgsCombiner: createExtraCall(action, sagaEffects, { withArgsCombiner: true }, options),
+        callWithLoading: createExtraCall(action, sagaEffects, { withLoading: true }, options),
+        callWithSetFilters: createExtraCall(action, sagaEffects, { withSetFilters: true }, options),
+        callWithTime: createExtraCall(action, sagaEffects, { callWithTime: true }, options),
+        callWithExtra: (serviceFn, args, config) => {
+          return createExtraCall(action, sagaEffects, config, options)(serviceFn, args);
         },
         ...extraSagaEffects
       };
-      if(hasEffectCreator){
+      if (hasEffectCreator) {
         yield effects[key][0](action, extraSagaEffects);
-        yield extraEffectCreator(effectCreatorList,sagaEffects);
-      }else{
+        yield extraEffectCreator(effectCreatorList, sagaEffects);
+      } else {
         yield effects[key](action, extraSagaEffects);
       }
     }
 
-    if(hasEffectCreator){
-      wrappedEffects[key]=[wrappedEffects[key],...effectCreatorList]
+    if (hasEffectCreator) {
+      wrappedEffects[key] = [wrappedEffects[key], ...effectCreatorList]
     }
   });
 
   return {
     ...model,
-    effects:wrappedEffects
+    effects: wrappedEffects
   };
 }
 /*
@@ -83,25 +83,25 @@ const combineExtraEffects=(model,options={},extraSagaEffects={})=>{
 * 请求结束后 ，将当前时间戳记录下进 lastReqTime 需要结合dvaExtraReducers
 * */
 
-function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
+function createExtraCall(action, sagaEffects, config = {}, stateSelects = {}) {
 
-  const {put,call,select}=sagaEffects,
-        {resolve,reject,type=""}=action;
+  const { put, call, select } = sagaEffects,
+    { resolve, reject, type = "" } = action;
 
-  return function *(serviceFn,args={}) {
+  return function* (serviceFn, args = {}) {
 
-    let result=null;
+    let result = null;
 
-    const {withArgsCombiner,withStatusHandle,withLoading,withSetFilters,withTime}=config;
+    const { withArgsCombiner, withStatusHandle, withLoading, withSetFilters, withTime } = config;
 
-    const {argsCombiner,statusHandle}=stateSelects;
+    const { argsCombiner, statusHandle } = stateSelects;
 
-    try{
-      if(withSetFilters){
+    try {
+      if (withSetFilters) {
 
         yield put({
-          type:'setQueryFilters',
-          payload:action.payload,
+          type: 'setQueryFilters',
+          payload: action.payload,
         })
 
       }
@@ -115,30 +115,30 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
       //   })
       // }
 
-      if(withArgsCombiner){
-        isFunction(argsCombiner,"argsCombiner");
-        const extraArgs = yield argsCombiner(action,sagaEffects,args);
-        args=Object.assign({},args,{...extraArgs||{}});
+      if (withArgsCombiner) {
+        isFunction(argsCombiner, "argsCombiner");
+        const extraArgs = yield argsCombiner(action, sagaEffects, args);
+        args = Object.assign({}, args, { ...extraArgs || {} });
       }
 
 
-      result=yield call(serviceFn,args);
+      result = yield call(serviceFn, args);
 
 
-      if(withStatusHandle){
-        isFunction(statusHandle,"statusHandle");
-        yield statusHandle(action,sagaEffects,result);
+      if (withStatusHandle) {
+        isFunction(statusHandle, "statusHandle");
+        yield statusHandle(action, sagaEffects, result);
       }
 
 
-    }catch(e){
+    } catch (e) {
 
       console.error(e.message);
       throw e;
 
-    }finally {
+    } finally {
 
-      yield  delay(500);
+      // yield  delay(500);
 
       // if(withLoading){
       //   yield put({
@@ -162,16 +162,16 @@ function createExtraCall(action,sagaEffects,config={},stateSelects={}) {
   }
 }
 function delay(times) {
-  return new Promise((resolve)=>{
+  return new Promise((resolve) => {
     setTimeout(function () {
       resolve();
-    },times)
+    }, times)
   })
 }
 
 
-function isFunction(fn,name) {
-  if(typeof fn!=="function"){
+function isFunction(fn, name) {
+  if (typeof fn !== "function") {
     throw new Error(`${name} should type of function`)
   }
 }
@@ -180,11 +180,11 @@ function isFunction(fn,name) {
 * 给所有model添加extraEffects方法
 * */
 
-export const combineExtraEffectsWithApp=(app,options)=>{
-  if(!app){
+export const combineExtraEffectsWithApp = (app, options) => {
+  if (!app) {
     return;
   }
-  app._models=app._models.map(m=>combineExtraEffects(m,options))
+  app._models = app._models.map(m => combineExtraEffects(m, options))
 }
 
 export default combineExtraEffects;
