@@ -16,9 +16,6 @@ const baseModel = {
   state: {
     timestampRange: []
   },
-  reducers: () => {
-
-  },
   effects: {
 
   }

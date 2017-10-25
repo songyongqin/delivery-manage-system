@@ -1,12 +1,12 @@
 import request from '../../utils/request';
 import ApiConfig from '../../configs/ApiConfig';
 import * as tools from '../../utils/tools';
-const httpApi=ApiConfig.http;
+const httpApi = ApiConfig.http;
 
 export async function query() {
 
 
-  const options= {
+  const options = {
     method: 'GET',
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -19,12 +19,12 @@ export async function query() {
 export async function put(payload) {
 
 
-  const options= {
+  const options = {
     method: 'PUT',
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },
-    body:JSON.stringify(payload)
+    body: JSON.stringify(payload)
   };
   return request(httpApi.WARNING_EMAIL, options);
 }
