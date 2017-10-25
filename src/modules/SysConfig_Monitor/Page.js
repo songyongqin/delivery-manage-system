@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.css'
-import { Menu, Button, Breadcrumb } from 'antd';
+import { Menu, Button, Breadcrumb, Tabs } from 'antd';
 import MonitorSettingForm from './components/MonitorSettingForm'
 import Card from '../../domainComponents/Card'
 import { connect } from 'dva';
@@ -9,39 +9,46 @@ import {
   MAIN_NAMESPACE,
   MODULE_MONITOR_DATA_INDEX
 } from './ConstConfig.js'
-import { WithAnimateRender, WithContainerHeader } from '../../components/HOSComponents';
+import { WithAnimateRender, WithBreadcrumb } from '../../components/HOSComponents';
 import MonitorControl from '../SysConfig_Monitor_Control/Page'
 import MonitorIDS from '../SysConfig_Monitor_IDS/Page';
+import MonitorNode from '../SysConfig_Monitor_Node/Page';
 
 function mapStateToProps(state) {
-  const { commonLayout } = state.layout;
-  const effectLoading = state.loading.effects;
   return {
-    commonLayout,
-    moduleMonitorTextConfig: state[MAIN_NAMESPACE].queryResults[MODULE_MONITOR_DATA_INDEX]
+
   }
 }
 
 @connect(mapStateToProps)
-@WithContainerHeader
+@WithBreadcrumb
 @WithAnimateRender
 class Page extends React.Component {
   constructor(props) {
     super(props);
 
   }
-
+  getBreadcrumb = () => {
+    return (
+      <div key="bread-crumb" style={{ marginTop: "15px" }}>
+        {this.props.getBreadcrumb(this.props.routes)}
+      </div>
+    )
+  }
   render = () => {
-    const { commonLayout, moduleMonitorTextConfig } = this.props;
-    const isDark = commonLayout.darkTheme;
     return (
       this.props.animateRender([
-        <div key="control">
+        this.getBreadcrumb(),
+        <div key="control" style={{ marginTop: "15px" }}>
           <MonitorControl />
         </div>,
-        <div key="ids">
+        <div key="node" style={{ marginTop: "15px" }}>
+          <MonitorNode />
+        </div>,
+        <div key="ids" style={{ marginTop: "15px" }}>
           <MonitorIDS />
-        </div>
+        </div>,
+
       ])
     )
   }

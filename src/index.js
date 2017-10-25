@@ -35,6 +35,7 @@ import WhiteListModel from './modules/SysConfig_Strategy_WhiteList/Model';
 import IPLimitModel from './modules/UserManager_IPLimit/Model';
 import MonitorControlModel from './modules/SysConfig_Monitor_Control/Model';
 import MonitorIDSModel from './modules/SysConfig_Monitor_IDS/Model';
+import MonitorNodeModel from './modules/SysConfig_Monitor_Node/Model';
 
 // 1. Initialize
 const app = dva({
@@ -70,6 +71,7 @@ app.model(WhiteListModel);
 app.model(IPLimitModel);
 app.model(MonitorControlModel);
 app.model(MonitorIDSModel);
+app.model(MonitorNodeModel);
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

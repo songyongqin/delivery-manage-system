@@ -98,7 +98,7 @@ export default ({ namespace, title, getColumns }) => {
             }
 
             return (
-                <Card title="控制中心">
+                <Card title={title}>
                     <JoSpin spinning={loading}>
                         <div style={{ overflow: "hidden" }}>
                             <div style={{ float: "left", width: "160px" }}>
