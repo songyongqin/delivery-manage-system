@@ -4,22 +4,20 @@
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import * as service from './Service';
-import {queryModelGenerator} from '../../utils/dvaModelGenerator';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
-
+import { queryModelGenerator } from '../../utils/dvaModelGenerator';
+import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
+import {
+  NAMESPACE
+} from './ConstConfig'
 moment.locale('zh-cn');
 
-const NAMESPACE="main";
-
-const baseModel={
+const baseModel = {
   namespace: NAMESPACE,
   state: {
-
+    timestampRange: []
   },
-  effects:{
-    * test({payload,resolve},{callWithExtra}) {
-      console.info("test")
-    }
+  effects: {
+
   }
 };
 

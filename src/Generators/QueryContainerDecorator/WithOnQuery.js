@@ -3,21 +3,23 @@
  */
 import React from 'react';
 
+const INIT_PAGE = 1;
 
-export default namespace=>{
+export default namespace => {
 
-  return WrappedComponent=>{
-    return (props)=>{
-      if(!props[namespace]){
+  return WrappedComponent => {
+    return (props) => {
+      if (!props[namespace]) {
         console.error("namespace is not define : WithOnQuery");
       }
       function onQuery(payload) {
         props.query({
-          ...props[namespace].queryFilters||[],
-          ...payload||{},
+          ...props[namespace].queryFilters || [],
+          page: INIT_PAGE,
+          ...payload || {},
         });
       }
-      return <WrappedComponent {...props} onQuery={onQuery}/>
+      return <WrappedComponent {...props} onQuery={onQuery} />
     }
   }
 }

@@ -63,10 +63,11 @@ class Page extends React.Component {
     })
   }
   tableOnChange = (pagination, filters, sorter) => {
-    this.props.onQuery({ ...filters })
+    this.props.onQuery({ ...filters, page: 1 })
   };
+  timestampRangeOnChange = payload => this.props.onQuery({ ...payload, page: 1 })
   getQueryPanel = () => {
-    const { routes, onQuery } = this.props;
+    const { routes } = this.props;
     const { queryFilters } = this.props[NAMESPACE];
 
     return (
@@ -74,7 +75,7 @@ class Page extends React.Component {
         {this.props.getContainerHeader({
           routes,
           queryFilters,
-          onQuery
+          onQuery: this.timestampRangeOnChange
         })}
       </div>
     )
@@ -189,7 +190,7 @@ class Page extends React.Component {
     )
   };
   onFilter = (value) => {
-    this.props.onQuery({ mergeCounts: value })
+    this.props.onQuery({ mergeCounts: value, page: 1 })
   };
   getDataResultPanel = () => {
     const { pageOnChange, action } = this.props;
