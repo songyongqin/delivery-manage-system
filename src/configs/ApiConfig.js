@@ -23,8 +23,8 @@ export default {
     DEVICE_CONTROL: "/device/control",
     DEVICE_NODE: "/device/node",
 
-    DEVICE_CONTROL_DISK: "/device/control/disk",
-    DEVICE_NODE_DISK: "/device/node/disk",
+    DEVICE_CONTROL_DISK: "/device/disk",
+    DEVICE_NODE_DISK: "/device/disk",
 
     VIRTUAL_MACHINE: "/virtual-machine",
 
