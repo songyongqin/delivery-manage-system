@@ -7,21 +7,41 @@ import * as service from './Service';
 import { queryModelGenerator } from '../../utils/dvaModelGenerator';
 import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import {
-  NAMESPACE
+  NAMESPACE,
+  PROTOCOL_TYPE_DATA_INDEX,
+  protocolTypeList
 } from './ConstConfig'
 moment.locale('zh-cn');
 
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    timestampRange: []
+    queryFilters: {
+      timestampRange: [],
+      [PROTOCOL_TYPE_DATA_INDEX]: protocolTypeList[0],
+      value: "",
+      limit: 10,
+      page: 1
+    },
+    queryResults: {
+      total: 0,
+      data: []
+    }
   },
   effects: {
 
   }
 };
 
+const payloadFilter = payload => {
+  return {
+    data: payload.data,
+    total: payload.total,
+  }
+}
 
-
-
-export default baseModel;
+export default queryModelGenerator({
+  model: baseModel,
+  queryService: service.get,
+  payloadFilter
+});

@@ -44,7 +44,7 @@ export default {
     ANALYSE_ATTACK_CHAIN: "/analyse/attack-chain",
     ANALYSE_FALL_HOST: "/analyse/fall-host",
     ANALYSE_RANKING: "/analyse/ranking",
-
+    ANALYSE_OVERALL_NET_BASIC: "/analyse/overall/net-basic",
 
     SYS_CONFIG_NETWORK: "/sys-config/network",
     SYS_CONFIG_STRATEGY: "/sys-config/strategy",

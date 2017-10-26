@@ -1,19 +1,19 @@
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, DatePicker } from 'antd';
 import React from 'react';
 import * as tools from '../../../utils/tools';
-const {ipReg}=tools
+const { ipReg } = tools
 
 const FormItem = Form.Item;
 
 class QueryForm extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      if(!err){
-        this.props.onSubmit&&this.props.onSubmit(values);
+      if (!err) {
+        this.props.onSubmit && this.props.onSubmit(values);
       }
     });
   };
@@ -21,28 +21,29 @@ class QueryForm extends React.Component {
   render() {
 
     const { getFieldDecorator } = this.props.form;
-    const {defaultValue={}, loading=false}=this.props;
-    const {ip=""}=defaultValue;
+    const { defaultValue = {}, loading = false } = this.props;
+    const { ip = "" } = defaultValue;
 
     return (
-      <Form style={{width:"300px"}} layout="inline">
-        <FormItem  required={false}
-                   style={{
-                     margin:"0",
-                   }}>
+      <Form style={{ width: "300px" }} layout="inline">
+        <FormItem required={false}
+          style={{
+            margin: "0",
+          }}>
           {getFieldDecorator('ip', {
-            initialValue:ip,
-            rules:[
-              {pattern:ipReg,message:"请输入有效的ip"}
+            initialValue: ip,
+            rules: [
+              { pattern: ipReg, message: "请输入有效的ip" }
             ]
           })(
             <Input placeholder="失陷主机搜索"
-                   onPressEnter={this.handleSubmit}/>
-          )}
+              onPressEnter={this.handleSubmit} />
+            )}
         </FormItem>
         <Button type="primary"
-                size="large"
-                onClick={this.handleSubmit}>确定</Button>
+          size="large"
+          icon="search"
+          onClick={this.handleSubmit}>搜索</Button>
       </Form>
     );
   }

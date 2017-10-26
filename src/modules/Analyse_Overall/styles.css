@@ -1,3 +1,15 @@
-/* No CSS */ 
+.page-dark {
+  background: #1c233b;
+  color: #b7c1cc;
+}
+
+.page-dark :global .ant-tabs-tab {
+  color: #b7c1cc;
+}
+
+.page-dark :global .ant-tabs-tab-active {
+  color: #108ee9;
+}
+ 
 
  /*# sourceMappingURL= styles.css.map */

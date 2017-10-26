@@ -1,4 +1,4 @@
-export default NAMESPACE = "analyseOverallNetBasic"
+export const NAMESPACE = "analyseOverallNetBasic"
 
 
 export const TIME_DATA_INDEX = "time",
@@ -25,8 +25,9 @@ export const HTTP = 'http',
     DNS = "dns",
     FTP = "ftp",
     SMTP = "smtp",
-    SSH = "ssh"
+    SSH = "ssh";
 
+export const protocolTypeList = [HTTP, TCP, DNS, FTP, SMTP, SSH];
 
 export const dataIndexesConfig = {
     [HTTP]: [
@@ -87,20 +88,20 @@ export const dataIndexesConfig = {
 
 
 export const textConfig = {
-    [TIME_DATA_INDEX]: "time",
-    [SOURCE_IP_DATA_INDEX]: "sourceIP",
-    [SOURCE_PORT_DATA_INDEX]: "sourcePort",
-    [TARGET_IP_DATA_INDEX]: "targetIP",
-    [TARGET_PORT_DATA_INDEX]: "targetPort",
-    [URL_DATA_INDEX]: "url",
-    [HOST_DATA_INDEX]: "host",
-    [METHOD_DATA_INDEX]: "method",
-    [CONTENT_TYPE_DATA_INDEX]: "contentType",
-    [PROTOCOL_TYPE_DATA_INDEX]: "protocolType",
-    [REQUEST_DOMAIN_DATA_INDEX]: "requestDomain",
-    [REQUEST_IP_DATA_INDEX]: "requestIP",
-    [PACKAGE_TYPE_DATA_INDEX]: "packageType",
-    [SENDER_DATA_INDEX]: "sender",
-    [RECEIVE_DATA_INDEX]: "receiver",
-    [PROTOCOL_VERSION_DATA_INDEX]: "protocolVersion"
+    [TIME_DATA_INDEX]: "时间",
+    [SOURCE_IP_DATA_INDEX]: "源IP",
+    [SOURCE_PORT_DATA_INDEX]: "源Port",
+    [TARGET_IP_DATA_INDEX]: "目的IP",
+    [TARGET_PORT_DATA_INDEX]: "目的Port",
+    [URL_DATA_INDEX]: "URL",
+    [HOST_DATA_INDEX]: "主机名",
+    [METHOD_DATA_INDEX]: "方法名",
+    [CONTENT_TYPE_DATA_INDEX]: "内容类型",
+    [PROTOCOL_TYPE_DATA_INDEX]: "协议类型",
+    [REQUEST_DOMAIN_DATA_INDEX]: "请求域名",
+    [REQUEST_IP_DATA_INDEX]: "请求IP",
+    [PACKAGE_TYPE_DATA_INDEX]: "包类型",
+    [SENDER_DATA_INDEX]: "发件人邮箱",
+    [RECEIVE_DATA_INDEX]: "收件人邮箱",
+    [PROTOCOL_VERSION_DATA_INDEX]: "协议版本"
 }

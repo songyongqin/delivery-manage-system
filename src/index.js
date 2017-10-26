@@ -36,6 +36,7 @@ import IPLimitModel from './modules/UserManager_IPLimit/Model';
 import MonitorControlModel from './modules/SysConfig_Monitor_Control/Model';
 import MonitorIDSModel from './modules/SysConfig_Monitor_IDS/Model';
 import MonitorNodeModel from './modules/SysConfig_Monitor_Node/Model';
+import OverallNetBasicModel from './modules/Analyse_Overall_NetBasic/Model';
 
 // 1. Initialize
 const app = dva({
@@ -72,6 +73,7 @@ app.model(IPLimitModel);
 app.model(MonitorControlModel);
 app.model(MonitorIDSModel);
 app.model(MonitorNodeModel);
+app.model(OverallNetBasicModel);
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

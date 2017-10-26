@@ -205,7 +205,6 @@ class Page extends React.Component {
     const filterTextConfig = {
       [ACTION_DATAINDEX]: action
     }
-    console.info(filters, filterTextConfig)
     const tableProps = {
       onChange: this.tableOnChange,
       columns: tableConfig.getColumns({
