@@ -91,7 +91,8 @@ class WrappedForm extends React.Component {
   }
   checkPassword = (rule, value, callback) => {
     const form = this.props.form;
-    if (value && value !== form.getFieldValue('userPassword')) {
+    console.info((form.getFieldValue('confirm') !== form.getFieldValue('userPassword')));
+    if (value && (form.getFieldValue('confirm') !== form.getFieldValue('userPassword'))) {
       callback('两次输入的密码不一致');
     } else {
       callback();
@@ -191,6 +192,9 @@ class WrappedForm extends React.Component {
               },
               {
                 pattern: /^[a-zA-Z0-9]{6,12}$/, message: "长度必须在6-12之间 只能由大小写字母和数字组成"
+              },
+              {
+                validator: this.checkConfirm,
               }
             ]
           },
