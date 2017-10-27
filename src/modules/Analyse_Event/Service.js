@@ -13,9 +13,9 @@ export async function query(payload) {
     ...payload,
   };
 
-  if (timestampRange.length !== 0) {
-    payload.timestampRange = tools.momentToTimestamp(timestampRange)
-  }
+  // if (timestampRange.length !== 0) {
+  //   payload.timestampRange = tools.momentToTimestamp(timestampRange)
+  // }
 
   const options = {
     method: 'GET',

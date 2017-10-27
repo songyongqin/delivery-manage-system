@@ -2,18 +2,18 @@
  * Created by jojo on 2017/8/8.
  */
 
-import {createSetResultsReducer,createSetQueryFilters} from './tools';
-import {isFunction} from './tools';
+import { createSetResultsReducer, createSetQueryFilters } from './tools';
+import { isFunction } from './tools';
 
-const defaultPayloadFilter=(payload)=>{
+const defaultPayloadFilter = (payload) => {
   return payload;
 }
-const defaultCallConfig={
-  withSetFilters:true,
+const defaultCallConfig = {
+  withSetFilters: true,
 }
-const defaultKeyConfig={
-  queryFilters:'queryFilters',
-  queryResults:'queryResults',
+const defaultKeyConfig = {
+  queryFilters: 'queryFilters',
+  queryResults: 'queryResults',
 }
 /*
 * 为一个model添加跟query相关的state reducer effect
@@ -24,93 +24,92 @@ const defaultKeyConfig={
 * callConfig call的拓展参数 需要结合dvaExtraEffects
 * initPath 第一次进入该路径时 根据默认参数进行一次查询
 * */
-export const queryModelGenerator=({
-                                    model={},
-                                    queryService,
-                                    payloadFilter=defaultPayloadFilter,
-                                    callConfig=defaultCallConfig,
-                                    successSign={status:1},
-                                    keyConfig={},
-                                    initPath=null,
-                                  })=>{
+export const queryModelGenerator = ({
+                                    model = {},
+  queryService,
+  payloadFilter = defaultPayloadFilter,
+  callConfig = defaultCallConfig,
+  successSign = { status: 1 },
+  keyConfig = {},
+  initPath = null,
+                                  }) => {
 
 
-  isFunction(queryService,"queryService");
+  isFunction(queryService, "queryService");
 
-  isFunction(payloadFilter,"payloadFilter");
+  isFunction(payloadFilter, "payloadFilter");
 
-  const {state={},reducers={},effects={},subscriptions={},namespace}=model;
+  const { state = {}, reducers = {}, effects = {}, subscriptions = {}, namespace } = model;
 
-  keyConfig={...defaultKeyConfig,...keyConfig}
+  keyConfig = { ...defaultKeyConfig, ...keyConfig }
 
-  const wrappedState={
-    [keyConfig.queryFilters]:{},
-    [keyConfig.queryResults]:{},
+  const wrappedState = {
+    [keyConfig.queryFilters]: {},
+    [keyConfig.queryResults]: {},
     ...state
   }
 
-  const wrappedReducers={
+  const wrappedReducers = {
     ...reducers,
-    setQueryFilters:createSetQueryFilters(),
-    setQueryResults:createSetResultsReducer(keyConfig.queryResults)
+    setQueryFilters: createSetQueryFilters(),
+    setQueryResults: createSetResultsReducer(keyConfig.queryResults)
   }
 
-  const wrappedEffects={
+  const wrappedEffects = {
     ...effects,
-    query:[function*({resolve,payload},{put,callWithExtra,select}) {
-
-      const res=yield callWithExtra(
+    query: [function* ({ resolve, payload }, { put, callWithExtra, select }) {
+      const res = yield callWithExtra(
         queryService,
-        {...payload||{}},
+        { ...payload || {} },
         callConfig
       )
 
-      if(res.status===1){
-        const store=yield select(state=>state);
-        const filteredPayload=payloadFilter(res.payload,store);
+      if (res.status === 1) {
+        const store = yield select(state => state);
+        const filteredPayload = payloadFilter(res.payload, store);
 
         yield put({
-          type:"setQueryResults",
-          payload:filteredPayload,
+          type: "setQueryResults",
+          payload: filteredPayload,
         })
         // yield put({
         //   type:"setTime"
         // })
-        resolve&&resolve(filteredPayload);
+        resolve && resolve(filteredPayload);
       }
 
-    },{ type: 'throttle', ms: 1000 },{ type: 'takeLatest' },{type:"withTime"}],
-    *queryInit({resolve,payload},{put,select}) {
-      const state=yield select(state=>state[namespace]);
-      const queryFilters=state[keyConfig.queryFilters];
-      const isInit=state.isInit;
-      if(isInit){
+    }, { type: 'throttle', ms: 1000 }, { type: 'takeLatest' }, { type: "withTime" }],
+    *queryInit({ resolve, payload }, { put, select }) {
+      const state = yield select(state => state[namespace]);
+      const queryFilters = state[keyConfig.queryFilters];
+      const isInit = state.isInit;
+      if (isInit) {
         return;
       }
       yield put({
-        type:"query",
-        payload:{
+        type: "query",
+        payload: {
           ...queryFilters
         }
       })
       yield put({
-        type:"setInit",
+        type: "setInit",
       })
     }
   }
 
-  const wrappedSubscriptions={
+  const wrappedSubscriptions = {
     ...subscriptions,
     init({ history, dispatch }) {
 
-      if(!initPath){
+      if (!initPath) {
         return
       }
 
       return history.listen(({ pathname }) => {
-        if(pathname===initPath){
+        if (pathname === initPath) {
           dispatch({
-            type:`queryInit`,
+            type: `queryInit`,
           })
         }
       });
@@ -120,10 +119,10 @@ export const queryModelGenerator=({
 
   return {
     ...model,
-    state:wrappedState,
-    reducers:wrappedReducers,
-    effects:wrappedEffects,
-    subscriptions:wrappedSubscriptions,
+    state: wrappedState,
+    reducers: wrappedReducers,
+    effects: wrappedEffects,
+    subscriptions: wrappedSubscriptions,
   }
 }
 

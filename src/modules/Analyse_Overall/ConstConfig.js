@@ -1,1 +1,1 @@
-export default NAMESPACE = "analyseOverall"
+export const NAMESPACE = "analyseOverall"

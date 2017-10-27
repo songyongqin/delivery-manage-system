@@ -1,32 +1,69 @@
 import React from 'react';
 import styles from './styles.css'
 import { Menu, Button, Breadcrumb, Tabs } from 'antd';
-import { WithAnimateRender, WithBreadcrumb } from '../../components/HOSComponents';
+import { WithAnimateRender, WithBreadcrumb, WithContainerHeader } from '../../components/HOSComponents';
 import { connect } from 'dva';
 import OverallNetBasic from '../Analyse_Overall_NetBasic/Page';
 import classnames from 'classnames';
-
+import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
+import {
+  NAMESPACE
+} from './ConstConfig'
+import {
+  NAMESPACE as OVERALL_NET_BASIC_NAMESPACE
+} from '../Analyse_Overall_NetBasic/ConstConfig'
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
   return {
-    isDark: commonLayout.darkTheme
+    isDark: commonLayout.darkTheme,
+    [NAMESPACE]: state[NAMESPACE],
+    [OVERALL_NET_BASIC_NAMESPACE]: state[OVERALL_NET_BASIC_NAMESPACE]
   }
 }
 
-@connect(mapStateToProps)
-@WithBreadcrumb
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setTimestampRange: payload => dispatch({
+      type: `${NAMESPACE}/setTimestampRange`,
+      payload,
+    }),
+
+  }
+}
+
+
+@connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
 @WithAnimateRender
+@WithContainerHeader
 class Page extends React.Component {
   constructor(props) {
     super(props);
-
+  }
+  query = {
+    [OVERALL_NET_BASIC_NAMESPACE]: (payload = {}) => this.props.dispatch({
+      type: `${OVERALL_NET_BASIC_NAMESPACE}/query`,
+      payload: {
+        ...this.props[OVERALL_NET_BASIC_NAMESPACE].queryFilters,
+        ...payload,
+      }
+    })
   }
   getBreadcrumb = () => {
+    const { routes } = this.props;
+    const { queryFilters } = this.props[NAMESPACE];
     return (
       <div key="bread-crumb" style={{ marginTop: "15px" }}>
-        {this.props.getBreadcrumb(this.props.routes)}
+        {this.props.getContainerHeader({
+          routes,
+          queryFilters,
+          onQuery: this.onQuery,
+        })}
       </div>
     )
+  }
+  onQuery = payload => {
+    this.props.setTimestampRange(...payload)
+    this.query[OVERALL_NET_BASIC_NAMESPACE]({ ...payload, page: 1 });
   }
   getTabsContent = () => {
 
@@ -35,7 +72,7 @@ class Page extends React.Component {
     })
 
     return (
-      <Tabs key="tabs-content" className={tabClasses} style={{ marginTop: "15px" }}>
+      <Tabs key="tabs-content" className={tabClasses}>
         <Tabs.TabPane key="net-basic" tab="网络基础数据">
           <OverallNetBasic></OverallNetBasic>
         </Tabs.TabPane>

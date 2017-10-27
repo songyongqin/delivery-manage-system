@@ -14,10 +14,17 @@ moment.locale('zh-cn');
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    timestampRange: []
+    timestampRange: [],
+    lastTime: 0,
   },
-  reducers: () => {
-
+  reducers: {
+    setTimestampRange: (preState, { payload }) => {
+      return {
+        ...preState,
+        timestampRange: payload,
+        lastTime: new Date().getTime()
+      }
+    }
   },
   effects: {
 

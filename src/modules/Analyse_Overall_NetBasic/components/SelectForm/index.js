@@ -91,7 +91,7 @@ class QueryForm extends React.Component {
                                 protocolTypeList.map((i, index) => (
                                     <Select.Option key={`${index}-option`}
                                         value={i}>
-                                        {i}
+                                        {i.toUpperCase()}
                                     </Select.Option>
                                 ))
                             }

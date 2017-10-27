@@ -7,7 +7,10 @@ import { connect } from 'dva';
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import {
   NAMESPACE
-} from './ConstConfig'
+} from './ConstConfig';
+import {
+  NAMESPACE as ANALYSE_NAMESPACE
+} from '../Analyse_Overall/ConstConfig'
 import { getColumns } from './components/TableConfig'
 import EnhanciveTable from '../../domainComponents/EnhanciveTable'
 import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
@@ -19,6 +22,7 @@ const mapStateToProps = state => {
   const { commonLayout } = state.layout;
   return {
     isDark: commonLayout.darkTheme,
+    timestampRange: state[ANALYSE_NAMESPACE].timestampRange
   }
 }
 
@@ -40,9 +44,13 @@ class Page extends React.Component {
   }
   componentDidMount = () => {
     if (!this.props[NAMESPACE].isInit) {
-      this.props.onQuery();
+      this.onQuery();
     }
   }
+  onQuery = payload => this.props.onQuery({
+    timestampRange: this.props.timestampRange,
+    ...payload,
+  })
   render = () => {
 
     const { isDark, queryLoading } = this.props;
