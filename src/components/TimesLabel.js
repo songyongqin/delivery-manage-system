@@ -9,7 +9,7 @@ export default ({ times = [] }) => {
   }
   if (times.length === 2) {
     return (
-      <div>
+      <div style={{ display: "inline-block" }}>
         <JoTag color="#108ee9">{getTimeFormat(times[0])}</JoTag>
         &nbsp;至&nbsp;&nbsp;
         <JoTag color="#108ee9">{getTimeFormat(times[1])} </JoTag>
