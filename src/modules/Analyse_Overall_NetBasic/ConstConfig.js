@@ -20,12 +20,12 @@ export const TIME_DATA_INDEX = "time",
 
 
 
-export const HTTP = 'http',
-    TCP = "tcp",
-    DNS = "dns",
-    FTP = "ftp",
-    SMTP = "smtp",
-    SSH = "ssh";
+export const HTTP = 'HTTP',
+    TCP = "TCP",
+    DNS = "DNS",
+    FTP = "FTP",
+    SMTP = "SMTP",
+    SSH = "SSH";
 
 export const protocolTypeList = [HTTP, TCP, DNS, FTP, SMTP, SSH];
 
