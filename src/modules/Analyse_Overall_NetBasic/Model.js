@@ -43,5 +43,6 @@ const payloadFilter = payload => {
 export default queryModelGenerator({
   model: baseModel,
   queryService: service.get,
-  payloadFilter
+  payloadFilter,
+  callConfig: commonCallConfig
 });
