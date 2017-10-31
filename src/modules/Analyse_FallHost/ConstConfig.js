@@ -28,7 +28,8 @@ export const IP_DATAINDEX = "ip",
 export const rowDataIndexes = [
   IP_DATAINDEX,
   // ATTACK_COUNTS_DATAINDEX,
-  ATTACK_EVENT_TYPE_DATAINDEX,
+  // ATTACK_EVENT_TYPE_DATAINDEX,
+  ATTACK_EVENT_TYPE_LIST_DATAINDEX,
   MAC_DATAINDEX,
   // ATTACKTIMES_DATAINDEX,
 ];
@@ -78,4 +79,4 @@ export const IDS_SOURCE_DES_SOURCE_IP_DATAINDEX = "sourceIp",
 
 export { EVENT_TYPE_DATA_INDEX } from '../../configs/ConstConfig'
 
-export {NAMESPACE as MAIN_NAMESPACE} from '../Main/ConstConfig'
+export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig'
