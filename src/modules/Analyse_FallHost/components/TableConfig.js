@@ -189,7 +189,14 @@ export const getExpandedRowRender = ({ isDark }) => {
                         </td>
                         <td>
                           <div>
-                            <JoTag color="#108ee9">
+                            {
+                              description.map((i, index) => (
+                                <JoTag color="#108ee9" key={`${index}-key`}>
+                                  {i}
+                                </JoTag>
+                              ))
+                            }
+                            {/* <JoTag color="#108ee9">
                               {description[IDS_SOURCE_DES_SOURCE_IP_DATAINDEX]}
                             </JoTag>
                             端口
@@ -219,7 +226,7 @@ export const getExpandedRowRender = ({ isDark }) => {
                             &nbsp;
                             <JoTag color="#108ee9">
                               {description[IDS_SOURCE_DES_OTHER_DATAINDEX]}
-                            </JoTag>
+                            </JoTag> */}
                           </div>
                         </td>
                       </tr>
