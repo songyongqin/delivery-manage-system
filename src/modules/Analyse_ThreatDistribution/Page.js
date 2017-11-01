@@ -96,7 +96,9 @@ const getOption = ({ data, isDark, mapType = "world" }) => {
       textStyle: textStyle,
       inRange: {
         color: ["#add8f7", '#49a9ee', '#108ee9', "#09488a", "#073069"]
-      }
+      },
+      // left: "0",
+      // top: "10px"
     }
   }
 
@@ -123,6 +125,9 @@ const mapDispatchToProps = dispatch => ({
 })
 @WithOnQuery(NAMESPACE)
 class Page extends React.Component {
+  state = {
+    height: 500
+  }
   getQueryPanel = () => {
     const { routes, commonLayout } = this.props;
     const { queryFilters } = this.props[NAMESPACE];
@@ -136,6 +141,16 @@ class Page extends React.Component {
       </div>
     )
   };
+  componentDidMount = () => {
+    this.setHeight();
+    window.addEventListener("resize", this.setHeight)
+  }
+  componentWillUnmount = () => {
+    window.removeEventListener("resize", this.setHeight)
+  }
+  setHeight = () => this.setState({
+    height: document.body.offsetHeight - 200
+  })
   getContentPanel = () => {
     const { queryResults } = this.props[NAMESPACE];
     const { data } = queryResults;
@@ -153,7 +168,7 @@ class Page extends React.Component {
         </Radio.Group>
         <ReactEcharts
           option={getOption({ isDark, data: data[mapType], mapType })}
-          style={{ width: "100%", height: "600px" }}></ReactEcharts>
+          style={{ width: "100%", height: this.state.height + "px" }}></ReactEcharts>
       </div>
     )
 
