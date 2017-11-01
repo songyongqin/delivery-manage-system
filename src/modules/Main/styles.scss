@@ -90,5 +90,21 @@ $nav-width-mini:80px;
 }
 
 .main-children-wrapper{
-  padding:15px 0;
+  padding:15px 0 50px 0;
+}
+
+.footer{
+  background:  $bg-color-level-2;
+  // textAlign: "center", position: "fixed", bottom: "15px", left: "45%"
+  text-align: center;
+  position: fixed;
+  left:0;
+  bottom:0;
+  right:0;
+  height: 40px;
+  line-height: 40px;
+}
+
+.footer-dark{
+  background:  $bg-color-level-2-dark;
 }

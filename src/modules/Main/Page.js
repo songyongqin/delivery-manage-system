@@ -125,12 +125,23 @@ class Page extends React.Component {
       // ["fadeIn"]:true,
     });
 
+    let footerClasses = classnames({
+      [styles["footer"]]: true,
+      [styles["footer-dark"]]: commonLayout.darkTheme,
+      ["lbl-dark"]: commonLayout.darkTheme
+    })
+
     return (
       <div className={classes}>
         <div className={styles["main-children-wrapper"]} id="main-children-wrapper">
           {this.props.children}
         </div>
         <BackTop style={{ right: "30px" }} />
+        <footer>
+          <p className={footerClasses}>
+            © 2017 Antiy Labs
+          </p>
+        </footer>
       </div>
     )
   };
