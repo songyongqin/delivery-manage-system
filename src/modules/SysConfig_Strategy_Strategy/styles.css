@@ -91,9 +91,8 @@
 
 .expand-page {
   position: fixed;
-  top: 60px;
-  right: 0;
-  bottom: 0;
+  top: -80px;
+  right: -30px;
   z-index: 11;
   width: 400px;
   background: white;

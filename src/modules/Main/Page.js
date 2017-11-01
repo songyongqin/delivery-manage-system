@@ -127,7 +127,7 @@ class Page extends React.Component {
 
     return (
       <div className={classes}>
-        <div className={styles["main-children-wrapper"]}>
+        <div className={styles["main-children-wrapper"]} id="main-children-wrapper">
           {this.props.children}
         </div>
         <BackTop style={{ right: "30px" }} />

@@ -129,6 +129,8 @@ class Page extends React.Component {
       threatnames: [],
       createVisible: false,
       isFormDependInit: false,
+      offsetBottom: 0,
+      height: 500,
     }
   }
   /***************************************/
@@ -155,6 +157,7 @@ class Page extends React.Component {
     this.setState({
       expanded: !this.state.expanded
     })
+    this.setOffsetBottom();
   }
   getBreadcrumb = () => {
     return (
@@ -175,8 +178,20 @@ class Page extends React.Component {
         isFormDependInit: true,
       })
     });
+    // this.setOffsetBottom();
+    window.addEventListener("resize", this.setOffsetBottom);
   }
-
+  componentWillUnmount = () => {
+    window.removeEventListener("resize", this.setOffsetBottom);
+  }
+  setOffsetBottom = () => {
+    let dom = document.querySelector("#strategy-expand-page")
+    let wrapper = document.querySelector("#main-children-wrapper")
+    let offsetBottom = wrapper.scrollHeight - dom.offsetHeight;
+    this.setState({
+      height: wrapper.scrollHeight
+    })
+  }
   setSelectedRows = (selectedRows) => this.setState({
     selectedRows
   })
@@ -277,10 +292,12 @@ class Page extends React.Component {
     const { commonLayout, postRuleLoading } = this.props,
       isDark = commonLayout.darkTheme,
       {
-            expanded,
+        expanded,
         threatnames,
         createVisible,
-          } = this.state
+        offsetBottom,
+        height,
+      } = this.state
 
     const { queryResults } = this.props[NAMESPACE];
     const { data } = queryResults;
@@ -300,6 +317,9 @@ class Page extends React.Component {
     return (
       <div>
         <div className={expandPageClasses}
+          style={{
+            height,
+          }}
           id="strategy-expand-page">
           <StrategyThreatnameModule />
         </div>
@@ -307,7 +327,6 @@ class Page extends React.Component {
           <JoSpin spinning={this.props.loading}>
             {
               this.props.animateRender([
-                this.getBreadcrumb(),
                 this.getContentPanel()
               ])
             }

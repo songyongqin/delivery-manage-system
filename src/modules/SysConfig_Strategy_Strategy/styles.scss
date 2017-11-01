@@ -91,9 +91,8 @@ $expand-width:400;
 
 .expand-page{
   position: fixed;
-  top:60px;
-  right:0;
-  bottom:0;
+  top:-80px;
+  right:-30px;
   z-index: 11;
   width:$expand-width+px;
   background: $bg-color-level-1;

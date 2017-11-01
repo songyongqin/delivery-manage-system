@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, IndexRedirect ,Redirect} from 'dva/router';
+import { Router, Route, IndexRedirect, Redirect } from 'dva/router';
 // import getRegisterModel from './utils/dvaRegisterModel';
 
 
@@ -27,7 +27,7 @@ import Report from './modules/Report/Page';
 import SysConfig from './modules/SysConfig/Page';
 import SysConfigNetwork from './modules/SysConfig_Network/Page';
 import SysConfigMonitor from './modules/SysConfig_Monitor/Page';
-import SysConfigStrategy from './modules/SysConfig_Strategy_Strategy/Page';
+import SysConfigStrategy from './modules/SysConfig_Strategy/Page';
 
 
 import Manager from './modules/Manager/Page';
@@ -42,7 +42,7 @@ import UserManager from './modules/UserManager/Page';
 import WhiteList from './modules/SysConfig_Strategy_WhiteList/Page';
 
 
-function RouterConfig({ history ,app }) {
+function RouterConfig({ history, app }) {
 
   // const registerModel=getRegisterModel(app);
 
@@ -51,40 +51,40 @@ function RouterConfig({ history ,app }) {
 
 
       <Route path="/"
-             components={Main}>
-        <Route path="/login" component={Login}/>
+        components={Main}>
+        <Route path="/login" component={Login} />
 
-        <IndexRedirect to="overview"/>
-        <Route path="overview" components={Overview}/>
+        <IndexRedirect to="overview" />
+        <Route path="overview" components={Overview} />
         <Route path="analyse" components={Analyse}>
-          <IndexRedirect to="event"/>
-          <Route path="event" components={AnalyseEvent}/>
-          <Route path="attack-chain" components={AnalyseAttackChain}/>
-          <Route path="fall-host" components={AnalyseFallHost}/>
-          <Route path="ranking" components={AnalyseRanking}/>
-          <Route path="threat-distribution" components={AnalyseThreatDistribution}/>
-          <Route path="overall" components={AnalyseOverall}/>
+          <IndexRedirect to="event" />
+          <Route path="event" components={AnalyseEvent} />
+          <Route path="attack-chain" components={AnalyseAttackChain} />
+          <Route path="fall-host" components={AnalyseFallHost} />
+          <Route path="ranking" components={AnalyseRanking} />
+          <Route path="threat-distribution" components={AnalyseThreatDistribution} />
+          <Route path="overall" components={AnalyseOverall} />
         </Route>
         <Route path="early-warning" components={EarlyWarning}>
-          <IndexRedirect to="email"/>
-          <Route path="email" components={EarlyWarningEmail}/>
+          <IndexRedirect to="email" />
+          <Route path="email" components={EarlyWarningEmail} />
         </Route>
-        <Route path="report" components={Report}/>
+        <Route path="report" components={Report} />
         <Route path="sys-config" components={SysConfig}>
-          <IndexRedirect to="network"/>
-          <Route path="network" components={SysConfigNetwork}/>
-          <Route path="monitor" components={SysConfigMonitor}/>
-          <Route path="strategy" components={SysConfigStrategy}/>
-          <Route path="white-list" components={WhiteList}/>
+          <IndexRedirect to="network" />
+          <Route path="network" components={SysConfigNetwork} />
+          <Route path="monitor" components={SysConfigMonitor} />
+          <Route path="strategy" components={SysConfigStrategy} />
+          {/* <Route path="white-list" components={WhiteList}/> */}
         </Route>
         <Route path="manager" components={Manager}>
-          <IndexRedirect to="device"/>
-          <Route path="device" components={ManagerDevice}/>
-          <Route path="virtual-machine" components={ManagerVirtual}/>
-          <Route path="mirror" components={ManagerMirror}/>
+          <IndexRedirect to="device" />
+          <Route path="device" components={ManagerDevice} />
+          <Route path="virtual-machine" components={ManagerVirtual} />
+          <Route path="mirror" components={ManagerMirror} />
         </Route>
 
-        <Route path="user-manager" components={UserManager}/>
+        <Route path="user-manager" components={UserManager} />
 
 
         <Route path="threat-event" components={ThreatEvent}>

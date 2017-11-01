@@ -291,7 +291,6 @@ class Page extends React.Component {
           <JoSpin spinning={this.props.loading}>
             {
               this.props.animateRender([
-                this.getBreadcrumb(),
                 this.getContentPanel()
               ])
             }
