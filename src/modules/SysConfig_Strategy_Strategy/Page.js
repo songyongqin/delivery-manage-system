@@ -25,6 +25,7 @@ import {
 import {
   THREAT_NAME_NAME_DATAINDEX,
   THREAT_NAME_KEY_DATAINDEX,
+  NAMESPACE as THREAT_NAME_NAMESPACE,
 } from '../SysConfig_Strategy_Threatname/ConstConfig'
 import {
   RULE_THREAT_TYPE_DATAINDEX,
@@ -87,7 +88,8 @@ const mapStateToProps = state => {
     loading: effectLoading[`${NAMESPACE}/query`] ||
     effectLoading[`${NAMESPACE}/put`] ||
     effectLoading[`${NAMESPACE}/apply`],
-    postRuleLoaidng: effectLoading[`${RULE_NAMESPACE}/post`]
+    postRuleLoaidng: effectLoading[`${RULE_NAMESPACE}/post`],
+    threatnames: state[THREAT_NAME_NAMESPACE].queryResults.data,
   }
 
 }
@@ -289,16 +291,14 @@ class Page extends React.Component {
   render = () => {
 
 
-    const { commonLayout, postRuleLoading } = this.props,
+    const { commonLayout, postRuleLoading, threatnames } = this.props,
       isDark = commonLayout.darkTheme,
       {
         expanded,
-        threatnames,
         createVisible,
         offsetBottom,
         height,
       } = this.state
-
     const { queryResults } = this.props[NAMESPACE];
     const { data } = queryResults;
 
@@ -342,7 +342,10 @@ class Page extends React.Component {
             <RuleForm onSubmit={this.onSubmit}
               isDark={isDark}
               protocolTypes={data.map(i => i[PROTOCOLTYPE_DATAINDEX])}
-              threatTypes={threatnames} />
+              threatTypes={threatnames.map(i => ({
+                text: i.name,
+                value: i.key,
+              }))} />
 
 
           </JoSpin>

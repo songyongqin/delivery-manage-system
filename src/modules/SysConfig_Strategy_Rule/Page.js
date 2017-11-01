@@ -18,6 +18,7 @@ import {
 import {
   THREAT_NAME_NAME_DATAINDEX,
   THREAT_NAME_KEY_DATAINDEX,
+  NAMESPACE as THREAT_NAME_NAMESPACE
 } from '../SysConfig_Strategy_Threatname/ConstConfig'
 import QueryForm from '../../components/QueryForm';
 import Modal from '../../domainComponents/Modal';
@@ -27,7 +28,8 @@ import RuleBasicForm from './components/RuleForm';
 const mapStateToProps = state => ({
   [NAMESPACE]: state[NAMESPACE],
   isDark: state.layout.commonLayout.darkTheme,
-  putLoading: state.loading.effects[`${NAMESPACE}/put`]
+  putLoading: state.loading.effects[`${NAMESPACE}/put`],
+  threatnames: state[THREAT_NAME_NAMESPACE].queryResults.data,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -135,8 +137,8 @@ class Page extends React.Component {
     .then(tools.curry(Message.success, "删除成功"))
 
   render = () => {
-    const { loading, queryResults, queryFilters, createVisible, threatnames, activeRule } = this.state;
-    const { isDark } = this.props;
+    const { loading, queryResults, queryFilters, createVisible, activeRule } = this.state;
+    const { isDark, threatnames } = this.props;
     const { data } = queryResults;
     const { getModifyOpenHandle, getDelHandle } = this;
     const tableProps = {
@@ -144,7 +146,7 @@ class Page extends React.Component {
       size: "small",
       expandIconColumnIndex: -1,
       columns: tableConfig.getColumns({
-        getModifyOpenHandle, getDelHandle
+        getModifyOpenHandle, getDelHandle, threatnames
       }),
       dataSource: data.map((i, index) => ({
         ...i,

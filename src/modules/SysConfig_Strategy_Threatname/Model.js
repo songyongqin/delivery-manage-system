@@ -3,82 +3,81 @@
  */
 import { routerRedux } from 'dva/router';
 import * as service from './Service';
-import {queryModelGenerator} from '../../utils/dvaModelGenerator';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
-import {NAMESPACE,THREAT_NAME_NAME_DATAINDEX,THREAT_NAME_LEVEL_DATAINDEX} from './ConstConfig';
+import { queryModelGenerator } from '../../utils/dvaModelGenerator';
+import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
+import { NAMESPACE, THREAT_NAME_NAME_DATAINDEX, THREAT_NAME_LEVEL_DATAINDEX } from './ConstConfig';
 
 
-
-export const callConfig={
-  withStatusHandle:true,
-  withLoading:true,
+export const callConfig = {
+  withStatusHandle: true,
+  withLoading: true,
 }
 
 
-const baseModel={
+const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters:{
+    queryFilters: {
     },
-    queryResults:{
-      data:[]
+    queryResults: {
+      data: []
     }
   },
-  reducers:{
-    add:(preState,{payload})=>{
-      let _queryResults=preState.queryResults;
+  reducers: {
+    add: (preState, { payload }) => {
+      let _queryResults = preState.queryResults;
       return {
         ...preState,
-        queryResults:{
+        queryResults: {
           ..._queryResults,
-          data:[payload,..._queryResults.data]
+          data: [payload, ..._queryResults.data]
         }
       }
     },
 
-    del:(preState,{payload})=>{
-      let _queryResults=preState.queryResults,
-        {index}=payload,
-        {data}=_queryResults;
+    del: (preState, { payload }) => {
+      let _queryResults = preState.queryResults,
+        { index } = payload,
+        { data } = _queryResults;
       return {
         ...preState,
-        queryResults:{
+        queryResults: {
           ..._queryResults,
-          data:[
-            ...data.slice(0,index),
-            ...data.slice(index+1)
+          data: [
+            ...data.slice(0, index),
+            ...data.slice(index + 1)
           ]
         }
       }
     },
 
-    modify:(preState,{payload})=>{
-      let _queryResults=preState.queryResults,
-        {index}=payload,
-        level=payload[THREAT_NAME_LEVEL_DATAINDEX],
-        {data}=_queryResults;
+    modify: (preState, { payload }) => {
+      let _queryResults = preState.queryResults,
+        { index } = payload,
+        level = payload[THREAT_NAME_LEVEL_DATAINDEX],
+        { data } = _queryResults;
       return {
         ...preState,
-        queryResults:{
+        queryResults: {
           ..._queryResults,
-          data:[
-            ...data.slice(0,index),
+          data: [
+            ...data.slice(0, index),
             {
               ...data[index],
-              [THREAT_NAME_LEVEL_DATAINDEX]:level,
+              [THREAT_NAME_LEVEL_DATAINDEX]: level,
             },
-            ...data.slice(index+1)]
+            ...data.slice(index + 1)]
         }
       }
 
     }
   },
-  effects:{
-    *delete({resolve,payload},{callWithExtra,select,put}) {
-      const data=yield select(state=>state[NAMESPACE].queryResults.data)
-      let {index}=payload,
-          {key}=data[index];
-      const res=yield callWithExtra(
+  effects: {
+    *delete({ resolve, payload }, { callWithExtra, select, put }) {
+      const data = yield select(state => state[NAMESPACE].queryResults.data)
+      let { index } = payload,
+        { key } = data[index];
+      const res = yield callWithExtra(
         service._delete,
         {
           key
@@ -86,58 +85,60 @@ const baseModel={
         callConfig
       )
 
-      if(res.status===1){
+      if (res.status === 1) {
         yield put({
-          type:`del`,
-          payload:{
+          type: `del`,
+          payload: {
             index,
           }
         })
-        resolve&&resolve(res.payload);
+        resolve && resolve(res.payload);
       }
     },
-    *put({resolve,payload},{callWithExtra,select}) {
-      const data=yield select(state=>state[NAMESPACE].queryResults.data)
-      const res=yield callWithExtra(
+    *put({ resolve, payload }, { callWithExtra, select }) {
+      const data = yield select(state => state[NAMESPACE].queryResults.data)
+      const res = yield callWithExtra(
         service.put,
         data,
         callConfig
       )
 
-      if(res.status===1){
-        resolve&&resolve(res.payload);
+      if (res.status === 1) {
+        resolve && resolve(res.payload);
       }
     },
-    *post({resolve,payload={}},{callWithExtra,select,put}) {
-      const res=yield callWithExtra(
+    *post({ resolve, payload = {} }, { callWithExtra, select, put }) {
+      const res = yield callWithExtra(
         service.post,
         payload,
         callConfig
       )
 
-      if(res.status===1){
-        resolve&&resolve(res.payload);
+      if (res.status === 1) {
+        resolve && resolve(res.payload);
         yield put({
-          type:"add",
+          type: "add",
           payload,
         })
+
+
       }
     },
   }
 };
 
-const payloadFilter=(payload)=>{
+const payloadFilter = (payload) => {
   return {
-    data:payload
+    data: payload
   }
 };
 
-const queryService=service.get;
+const queryService = service.get;
 
 export default queryModelGenerator({
-  model:baseModel,
+  model: baseModel,
   payloadFilter,
-  callConfig:commonCallConfig,
+  callConfig: commonCallConfig,
   queryService,
 });
 
