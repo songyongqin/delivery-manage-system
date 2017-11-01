@@ -41,6 +41,8 @@ export default {
     ANALYSE_EVENT_TOOL: "/analyse/event/tool",
     ANALYSE_EVENT_THREAINFO: "/analyse/event/threat-info",
 
+    ANALYSE_DISTRIBUTION: "/analyse/distribution",
+
     ANALYSE_ATTACK_CHAIN: "/analyse/attack-chain",
     ANALYSE_FALL_HOST: "/analyse/fall-host",
     ANALYSE_RANKING: "/analyse/ranking",

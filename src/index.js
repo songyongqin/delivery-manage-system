@@ -39,6 +39,7 @@ import MonitorNodeModel from './modules/SysConfig_Monitor_Node/Model';
 import OverallNetBasicModel from './modules/Analyse_Overall_NetBasic/Model';
 import OverallModel from './modules/Analyse_Overall/Model';
 import AnalyseRankingModel from './modules/Analyse_Ranking/Model';
+import AnalyseDistributionModel from './modules/Analyse_ThreatDistribution/Model'
 
 // 1. Initialize
 const app = dva({
@@ -78,6 +79,7 @@ app.model(MonitorNodeModel);
 app.model(OverallNetBasicModel);
 app.model(OverallModel);
 app.model(AnalyseRankingModel);
+app.model(AnalyseDistributionModel);
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

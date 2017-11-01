@@ -103,7 +103,7 @@ class Page extends React.Component {
               <Col key={`${index}-bar-chart`}
                 style={{ marginBottom: "50px", height: "400px" }}
                 xs={24}
-                sm={12}
+                sm={24}
                 lg={12}
                 md={12}>
                 <ReactEcharts
