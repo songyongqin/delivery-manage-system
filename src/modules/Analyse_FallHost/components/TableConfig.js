@@ -30,7 +30,8 @@ import {
   IDS_SOURCE_DES_SOURCE_IP_DATAINDEX,
   IDS_SOURCE_DES_SOURCE_PORT_DATAINDEX,
   IDS_SOURCE_DES_OTHER_DATAINDEX,
-  IDS_SOURCE_DES_PROTOCOL_DATAINDEX
+  IDS_SOURCE_DES_PROTOCOL_DATAINDEX,
+  DETAILS_DATAINDEX,
 } from '../ConstConfig'
 
 const rowsRenderer = {
@@ -167,7 +168,7 @@ export const getExpandedRowRender = ({ isDark }) => {
                                   <div>
                                     <JoTag color="#108ee9">{i.title}</JoTag>
                                     <br /><br />
-                                    {expandedRow.description + ":"}{i.detials}
+                                    {expandedRow.description + ":"}{i[DETAILS_DATAINDEX]}
                                   </div>
                                 </Timeline.Item>
                               )

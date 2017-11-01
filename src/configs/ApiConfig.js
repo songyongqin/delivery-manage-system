@@ -45,7 +45,10 @@ export default {
     ANALYSE_FALL_HOST: "/analyse/fall-host",
     ANALYSE_RANKING: "/analyse/ranking",
     ANALYSE_OVERALL_NET_BASIC: "/analyse/overall/net-basic",
-
+    ANALYSE_OVERALL_PCAP: "/analyse/overall/pcap",
+    ANALYSE_OVERALL_SAMPLE: "/analyse/overall/sample",
+    ANALYSE_OVERALL_SYSTEM: "/analyse/overall/system",
+    ANALYSE_OVERALL_NET: "/analyse/overall/net",
     SYS_CONFIG_NETWORK: "/sys-config/network",
     SYS_CONFIG_STRATEGY: "/sys-config/strategy",
     SYS_CONFIG_STRATEGY_APPLY: "/sys-config/strategy/apply",

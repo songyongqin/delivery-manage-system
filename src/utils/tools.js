@@ -24,7 +24,7 @@ export const judgeURL = (str_url = "") => {
 
 
 export const jsonToQueryString = (jsonObject) => {
-  if ((jsonObject["timestampRange"]) && (jsonObject["timestampRange"].length !== 0)) {
+  if ((jsonObject["timestampRange"])) {
     jsonObject["timestampRange"] = momentToTimestamp(jsonObject["timestampRange"])
   }
 
@@ -142,7 +142,8 @@ export const getCache = (key) => {
 
 export const momentToTimestamp = (timestampRange = []) => {
   if (timestampRange.length === 0) {
-    return [0, new moment().hour(23), minute(59).second(59).unix()]
+    console.info([0, new moment().hour(23).minute(59).second(59).unix()])
+    return [0, new moment().hour(23).minute(59).second(59).unix()]
   }
   return [timestampRange[0].unix(), timestampRange[1].hour(23).minute(59).second(59).unix()];
 }
