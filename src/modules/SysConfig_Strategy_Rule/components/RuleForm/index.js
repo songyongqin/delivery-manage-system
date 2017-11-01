@@ -46,9 +46,9 @@ const tailFormItemLayout = {
 class WrappedForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state={
-      ruleItems:[],
-      checkerStatus:{
+    this.state = {
+      ruleItems: [],
+      checkerStatus: {
         // sourceIpPort:{
         //   status:"error"
         // }
@@ -59,34 +59,34 @@ class WrappedForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const {onSubmit,form}=this.props;
-    const {ruleItems}=this.state;
+    const { onSubmit, form } = this.props;
+    const { ruleItems } = this.state;
 
-    const ERROR="error";
+    const ERROR = "error";
 
 
-    Promise.all(ruleItems.map(i=>this.getRuleCheckConfirm(i)())).then(result=>{
-      setTimeout(()=>{
+    Promise.all(ruleItems.map(i => this.getRuleCheckConfirm(i)())).then(result => {
+      setTimeout(() => {
         form.validateFieldsAndScroll((err, values) => {
           if (err) {
             return
           }
 
-          if(Object.values(this.state.checkerStatus).some(i=>i.status===ERROR)){
+          if (Object.values(this.state.checkerStatus).some(i => i.status === ERROR)) {
             return;
           }
 
-          let _values={...values},
-            rule={};
+          let _values = { ...values },
+            rule = {};
 
-          ruleItems.forEach(i=>{
-            rule[i]=(values[i]||"")
+          ruleItems.forEach(i => {
+            rule[i] = (values[i] || "")
             delete _values[i];
           })
 
-          _values[RULE_DATAINDEX]=rule;
-          _values[RULE_DESCRIPTION]=_values[RULE_DESCRIPTION]||""
-          onSubmit&&onSubmit(_values);
+          _values[RULE_DATAINDEX] = rule;
+          _values[RULE_DESCRIPTION] = _values[RULE_DESCRIPTION] || ""
+          onSubmit && onSubmit(_values);
         });
       })
     })
@@ -94,171 +94,170 @@ class WrappedForm extends React.Component {
 
   }
 
-  componentDidMount=()=>{
-    this.setRuleItems(this.props[RULE_PROTOCOLTYPE_DATAINDEX]||this.props.protocolTypes[0])
+  componentDidMount = () => {
+    this.setRuleItems(this.props[RULE_PROTOCOLTYPE_DATAINDEX] || this.props.protocolTypes[0])
   }
 
-  componentWillReceiveProps=newProps=>{
-    const {isCreate=true,form}=this.props;
-    const isChangeProtocol=newProps.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)!==form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)
-    if(isCreate&&isChangeProtocol){
+  componentWillReceiveProps = newProps => {
+    const { isCreate = true, form } = this.props;
+    const isChangeProtocol = newProps.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX) !== form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)
+    if (isCreate && isChangeProtocol) {
       this.setRuleItems(newProps.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX))
     }
   }
 
-  setRuleItems=(protocolType)=>{
+  setRuleItems = (protocolType) => {
 
 
     this.setState({
-      ruleItems:ruleItemsConfig[protocolType]||[],
-      checkerStatus:{}
+      ruleItems: ruleItemsConfig[protocolType] || [],
+      checkerStatus: {}
     })
   }
 
-  onChange=value=>this.setRuleItems(value);
+  onChange = value => this.setRuleItems(value);
 
-  getRuleCheckConfirm=dataIndex=>()=>{
-    return new Promise((resolve,reject)=>{
-      setTimeout(()=>{
-        try{
-          const activeProtocolType=this.props.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)||
+  getRuleCheckConfirm = dataIndex => () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          const activeProtocolType = this.props.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX) ||
             this.props[RULE_PROTOCOLTYPE_DATAINDEX];
-          ruleItemCheckConfig&&ruleItemCheckConfig[activeProtocolType]({
+          ruleItemCheckConfig && ruleItemCheckConfig[activeProtocolType]({
             dataIndex,
-            setCheckStatus:this.setCheckerStatus,
-            props:this.props,
-            checkerStatus:this.state.checkerStatus
+            setCheckStatus: this.setCheckerStatus,
+            props: this.props,
+            checkerStatus: this.state.checkerStatus
           })
 
           resolve();
 
-        }catch(e){
+        } catch (e) {
 
         }
       })
     })
 
   }
-  setCheckerStatus=(dataIndex,status,help)=>{
+  setCheckerStatus = (dataIndex, status, help) => {
 
-    const {checkerStatus}=this.state;
-    const _checkerStatus={
+    const { checkerStatus } = this.state;
+    const _checkerStatus = {
       ...checkerStatus,
-      [dataIndex]:{
+      [dataIndex]: {
         status,
         help
       }
     }
 
     this.setState({
-      checkerStatus:_checkerStatus
+      checkerStatus: _checkerStatus
     })
   }
   render() {
-    const { getFieldDecorator} = this.props.form;
-    const {isDark,loading,defaultValue={},isCreate=true}=this.props;
-    const protocolTypes=this.props.protocolTypes||[];
-    const threatTypes=this.props.threatTypes||[];
-    const {ruleItems,checkerStatus}=this.state;
+    const { getFieldDecorator } = this.props.form;
+    const { isDark, loading, defaultValue = {}, isCreate = true } = this.props;
+    const protocolTypes = this.props.protocolTypes || [];
+    const threatTypes = this.props.threatTypes || [];
+    const { ruleItems, checkerStatus } = this.state;
 
-    const lblClasses=classnames({
-      [styles["lbl-dark"]]:isDark
+    const lblClasses = classnames({
+      [styles["lbl-dark"]]: isDark
     });
 
-    const commonProps={...formItemLayout,colon:false,hasFeedback:true,required:true}
-    let items=[];
+    const commonProps = { ...formItemLayout, colon: false, hasFeedback: true, required: true }
+    let items = [];
 
 
-    items=isCreate?[
+    items = isCreate ? [
       {
-        props:{
+        props: {
           ...commonProps,
-          hasFeedback:false,
-          label:<span className={lblClasses}>
-            {tools.getKeyText(RULE_PROTOCOLTYPE_DATAINDEX,textConfig)}
-            </span>
+          hasFeedback: false,
+          label: <span className={lblClasses}>
+            {tools.getKeyText(RULE_PROTOCOLTYPE_DATAINDEX, textConfig)}
+          </span>
         },
-        filed:{
-          name:RULE_PROTOCOLTYPE_DATAINDEX,
-          initialValue:protocolTypes[0]||""
+        filed: {
+          name: RULE_PROTOCOLTYPE_DATAINDEX,
+          initialValue: protocolTypes[0] || ""
         },
-        component:(
+        component: (
           <Select size="large"
-                  onChange={this.onChange}
-                  style={{width:"140px"}}>
-            {protocolTypes.map((i,index)=>(
+            onChange={this.onChange}
+            style={{ width: "140px" }}>
+            {protocolTypes.map((i, index) => (
               <Select.Option value={i}
-                             key={`${index}-item`}>
+                key={`${index}-item`}>
                 {i}
               </Select.Option>
             ))}
           </Select>
         )
       },
-    ]:items;
+    ] : items;
 
-
-    items=[
+    items = [
       ...items,
       {
-        props:{
+        props: {
           ...commonProps,
-          hasFeedback:false,
-          label:<span className={lblClasses}>{tools.getKeyText(RULE_THREAT_TYPE_DATAINDEX,textConfig)}</span>
+          hasFeedback: false,
+          label: <span className={lblClasses}>{tools.getKeyText(RULE_THREAT_TYPE_DATAINDEX, textConfig)}</span>
         },
-        filed:{
-          name:RULE_THREAT_TYPE_DATAINDEX,
-          initialValue:defaultValue[RULE_THREAT_TYPE_DATAINDEX]||((threatTypes[0]||{}).value)
+        filed: {
+          name: RULE_THREAT_TYPE_DATAINDEX,
+          initialValue: defaultValue[RULE_THREAT_TYPE_DATAINDEX] || ((threatTypes[0] || {}).value)
         },
-        component:(
+        component: (
           <Select size="large"
-                  style={{width:"140px"}}>
-            {threatTypes.map((i,index)=>(
-              <Select.Option value={i.value}
-                             key={`${index}-item`}>
-                {i.text}
+            style={{ width: "140px" }}>
+            {threatTypes.map((i, index) => (
+              <Select.Option value={i.key}
+                key={`${index}-item`}>
+                {i.name}
               </Select.Option>
             ))}
           </Select>
         )
       },
-      ...ruleItems.map((r,index)=>({
-        props:{
+      ...ruleItems.map((r, index) => ({
+        props: {
           ...commonProps,
-          required:index===0,
-          validateStatus:(checkerStatus[r]||{}).status,
-          help:(checkerStatus[r]||{}).help,
-          label:index===0?<span className={lblClasses}>{tools.getKeyText(RULE_DATAINDEX,textConfig)}</span>:" "
+          required: index === 0,
+          validateStatus: (checkerStatus[r] || {}).status,
+          help: (checkerStatus[r] || {}).help,
+          label: index === 0 ? <span className={lblClasses}>{tools.getKeyText(RULE_DATAINDEX, textConfig)}</span> : " "
         },
-        filed:{
-          name:r,
-          initialValue:(defaultValue[RULE_DATAINDEX]||{})[r],
+        filed: {
+          name: r,
+          initialValue: (defaultValue[RULE_DATAINDEX] || {})[r],
           // rules:[
           //   {
           //     validator: this.getRuleCheckConfirm(r),
           //   },
           // ]
         },
-        component:(
+        component: (
           <Input disabled={loading}
-                 key={`${r}-${index}`}
-                 onChange={this.getRuleCheckConfirm(r)}
-                 placeholder={tools.getKeyText(r,ruleItemPlaceholder)}/>
+            key={`${r}-${index}`}
+            onChange={this.getRuleCheckConfirm(r)}
+            placeholder={tools.getKeyText(r, ruleItemPlaceholder)} />
         )
       })),
       {
-        props:{
+        props: {
           ...commonProps,
-          required:false,
-          hasFeedBack:false,
-          label:<span className={lblClasses}>{tools.getKeyText(RULE_DESCRIPTION,textConfig)}</span>
+          required: false,
+          hasFeedBack: false,
+          label: <span className={lblClasses}>{tools.getKeyText(RULE_DESCRIPTION, textConfig)}</span>
         },
-        filed:{
-          name:RULE_DESCRIPTION,
-          initialValue:defaultValue[RULE_DESCRIPTION]
+        filed: {
+          name: RULE_DESCRIPTION,
+          initialValue: defaultValue[RULE_DESCRIPTION]
         },
-        component:(
-          <Input disabled={loading}/>
+        component: (
+          <Input disabled={loading} />
         )
       }
     ]
@@ -267,9 +266,9 @@ class WrappedForm extends React.Component {
     return (
       <Form >
         {
-          items.map(i=><FormItem key={i.filed.name} {...i.props}>
+          items.map(i => <FormItem key={i.filed.name} {...i.props}>
             {
-              getFieldDecorator(i.filed.name,{...i.filed})(i.component)
+              getFieldDecorator(i.filed.name, { ...i.filed })(i.component)
             }
           </FormItem>)
         }
@@ -278,20 +277,20 @@ class WrappedForm extends React.Component {
             isCreate
               ?
               <Button type="primary"
-                      loading={loading}
-                      icon="plus"
-                      onClick={this.handleSubmit}>添加</Button>
+                loading={loading}
+                icon="plus"
+                onClick={this.handleSubmit}>添加</Button>
               :
               <Button type="primary"
-                      loading={loading}
-                      icon="save"
-                      onClick={this.handleSubmit}>保存</Button>
+                loading={loading}
+                icon="save"
+                onClick={this.handleSubmit}>保存</Button>
           }
           {/*<Button type="danger"*/}
-                  {/*loading={loading}*/}
-                  {/*style={{marginLeft:"15px"}}*/}
-                  {/*icon="close"*/}
-                  {/*onClick={this.props.onCancel}>取消</Button>*/}
+          {/*loading={loading}*/}
+          {/*style={{marginLeft:"15px"}}*/}
+          {/*icon="close"*/}
+          {/*onClick={this.props.onCancel}>取消</Button>*/}
         </FormItem>
       </Form>
     );

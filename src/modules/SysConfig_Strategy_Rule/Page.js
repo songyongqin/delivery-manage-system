@@ -141,6 +141,9 @@ class Page extends React.Component {
     const { isDark, threatnames } = this.props;
     const { data } = queryResults;
     const { getModifyOpenHandle, getDelHandle } = this;
+
+
+
     const tableProps = {
       expandIconAsCell: false,
       size: "small",
