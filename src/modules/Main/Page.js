@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.css'
-import { Menu, Button, Breadcrumb, Spin, Modal, Table, BackTop, Dropdown, Icon, message as Message } from 'antd';
+import { Menu, Button, Breadcrumb, Spin, Modal, Table, BackTop, Dropdown, Icon, message as Message, Badge, Popover, Row, Col } from 'antd';
 import classnames from 'classnames';
 import Nav from './components/Nav';
 import LayoutOperateList from './components/LayoutIOperateList'
@@ -9,7 +9,9 @@ import { createMapDispatchWithPromise } from "../../utils/dvaExtraDispatch";
 import { tableTextConfig } from '../UserManager/ConstConfig';
 import { modifyPasswordTextConfig } from './ConstConfig';
 import ModifyPasswordForm from './components/ModifyPasswordForm';
-
+import {
+  NAMESPACE as VM_NAMESPACE
+} from '../../modules/Manager_Virtual/ConstConfig'
 
 const NAMESPACE = "main";
 
@@ -25,6 +27,8 @@ function mapStateToProps(state) {
     userData: state.user.userData,
     putPasswordLoading: state.loading["user/putPassword"],
     productType: state.user.productType.type,
+    honeypotCreateList: state[VM_NAMESPACE].createList
+
   }
 }
 
@@ -197,6 +201,7 @@ class Page extends React.Component {
   getHeaderRight = () => {
 
     const { userAccount, role, isAdmin } = this.props.userData;
+    const { honeypotCreateList } = this.props;
 
     const tipTextConfig = {
       admin: "说明：管理员属于授权用户,可对系统所有界面进行查看和操作",
@@ -237,6 +242,28 @@ class Page extends React.Component {
       </Menu>
     );
 
+    const createStatus = (
+      <div style={{ width: "600px" }}>
+        {
+          Object.entries(honeypotCreateList).map(([honeypotId, data], index) => {
+
+            return (
+              <Row key={`${index}-row`}>
+                <Col>
+                  <pre>
+                    {
+                      JSON.stringify(data, null, 2)
+                    }
+                  </pre>
+                </Col>
+              </Row>
+            )
+
+          })
+        }
+      </div>
+    )
+
     return (
       <div className={styles["header-right"]}>
 
@@ -247,6 +274,17 @@ class Page extends React.Component {
             <Icon type="down" />
           </a>
         </Dropdown>
+        &nbsp;&nbsp;&nbsp;
+        <Popover
+          title={<p><Icon type="desktop" />&nbsp;&nbsp;蜜罐虚拟机创建状态</p>}
+          placement="bottomLeft"
+          content={createStatus}>
+          <Badge count={Object.keys(honeypotCreateList).length}>
+            <a>
+              <Icon type="notification"></Icon>
+            </a>
+          </Badge>
+        </Popover>
       </div>
     )
   }

@@ -70,7 +70,7 @@ const getOption = ({ data, isDark, mapType = "world" }) => {
         roam: true,
         itemStyle: {
           emphasis: {
-            areaColor: "black",
+            areaColor: "white",
             label: { show: false }
           }
         },
@@ -95,7 +95,7 @@ const getOption = ({ data, isDark, mapType = "world" }) => {
       calculable: true,
       textStyle: textStyle,
       inRange: {
-        color: ["#add8f7", '#49a9ee', '#108ee9', "#09488a", "#073069"]
+        color: ["#f79992", "#d73435"]
       },
       // left: "0",
       // top: "10px"
@@ -149,7 +149,7 @@ class Page extends React.Component {
     window.removeEventListener("resize", this.setHeight)
   }
   setHeight = () => this.setState({
-    height: document.body.offsetHeight - 200
+    height: document.body.offsetHeight - 250
   })
   getContentPanel = () => {
     const { queryResults } = this.props[NAMESPACE];
