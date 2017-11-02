@@ -286,7 +286,7 @@ class Page extends React.Component {
       </Menu>
     );
 
-    const honeypotCreateListData = Object.entries(honeypotCreateList);
+    const honeypotCreateListData = [...Object.entries(honeypotCreateList)].reverse();
     const createStatus = (
       <div style={{ width: "400px", maxHeight: "700px", overflowY: "scroll", overflowX: "hidden" }}>
         {

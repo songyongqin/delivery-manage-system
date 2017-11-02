@@ -22,7 +22,7 @@ moment.locale('zh-cn');
 notification.config({
   placement: 'bottomRight',
   bottom: 50,
-  duration: null,
+  duration: 3,
 });
 
 export const HONEYPOT_CREATE_LIST_CACHE_NAMESPACE = "honeypotCreateList";
@@ -113,7 +113,13 @@ const baseModel = {
         })
       }
 
-      if (res.status === 1 && res.payload === 3) {
+      yield put({
+        type: "setCreateListTemp"
+      })
+
+      const visible = yield select(state => state[NAMESPACE].createStatusPanelVisible);
+
+      if (res.status === 1 && res.payload === 3 && !visible) {
         const item = yield select(state => state[NAMESPACE].createList[payload.honeypotId])
         const queryFilters = yield select(state => state[NAMESPACE].queryFilters);
 
@@ -132,9 +138,6 @@ const baseModel = {
 
       }
 
-      yield put({
-        type: "setCreateListTemp"
-      })
 
 
     },
