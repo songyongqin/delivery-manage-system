@@ -55,7 +55,8 @@ function mapStateToProps(state) {
     userData: state.user.userData,
     putPasswordLoading: state.loading["user/putPassword"],
     productType: state.user.productType.type,
-    honeypotCreateList: state[VM_NAMESPACE].createList
+    honeypotCreateList: state[VM_NAMESPACE].createList,
+    createStatusPanelVisible: state[VM_NAMESPACE].createStatusPanelVisible
 
   }
 }
@@ -92,6 +93,10 @@ function mapDispatchToProps(dispatch, ownProps) {
     }),
     getStatus: payload => dispatch({
       type: `${VM_NAMESPACE}/getStatus`,
+      payload,
+    }),
+    switchStatusPanel: payload => dispatch({
+      type: `${VM_NAMESPACE}/switchStatusPanel`,
       payload,
     })
   }
@@ -238,7 +243,7 @@ class Page extends React.Component {
   getHeaderRight = () => {
 
     const { userAccount, role, isAdmin } = this.props.userData;
-    const { honeypotCreateList } = this.props;
+    const { honeypotCreateList, createStatusPanelVisible } = this.props;
 
     const tipTextConfig = {
       admin: "说明：管理员属于授权用户,可对系统所有界面进行查看和操作",
@@ -282,9 +287,8 @@ class Page extends React.Component {
     );
 
     const honeypotCreateListData = Object.entries(honeypotCreateList);
-
     const createStatus = (
-      <div style={{ width: "400px" }}>
+      <div style={{ width: "400px", maxHeight: "700px", overflowY: "scroll" }}>
         {
           honeypotCreateListData.length === 0
             ?
@@ -327,7 +331,6 @@ class Page extends React.Component {
 
     const creatingCount = honeypotCreateListData.filter(([honeypotId, item]) => item.status !== 3).length;
 
-    console.info(creatingCount);
 
     return (
       <div className={styles["header-right"]}>
@@ -341,6 +344,9 @@ class Page extends React.Component {
         </Dropdown>
         &nbsp;&nbsp;&nbsp;
         <Popover
+          trigger="click"
+          onVisibleChange={value => this.props.switchStatusPanel(value)}
+          visible={createStatusPanelVisible}
           title={<p><Icon type="desktop" />&nbsp;&nbsp;蜜罐虚拟机创建状态</p>}
           placement="bottomLeft"
           content={createStatus}>

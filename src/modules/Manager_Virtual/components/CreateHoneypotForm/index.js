@@ -100,7 +100,6 @@ class WrappedForm extends React.Component {
       }
       shouldTrimDataIndexes.forEach(i => values[i] = values[i].trim())
 
-      console.info(values);
 
       onSubmit && onSubmit(values);
 

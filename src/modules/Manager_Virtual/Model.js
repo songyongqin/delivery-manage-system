@@ -45,9 +45,16 @@ const baseModel = {
       total: 0,
       data: []
     },
-    createList: getTemp(HONEYPOT_CREATE_LIST_CACHE_NAMESPACE) || {}
+    createList: getTemp(HONEYPOT_CREATE_LIST_CACHE_NAMESPACE) || {},
+    createStatusPanelVisible: false
   },
   reducers: {
+    switchStatusPanel: (preState, { payload }) => {
+      return {
+        ...preState,
+        createStatusPanelVisible: payload
+      }
+    },
     initCreateStatus: (preState, { payload }) => {
       const { honeypotId, data } = payload;
       return {
@@ -56,7 +63,8 @@ const baseModel = {
           ...preState.createList,
           [honeypotId]: {
             data,
-            status: 0
+            status: 0,
+            order: new Date().getTime()
           }
         }
       }
@@ -132,6 +140,9 @@ const baseModel = {
     },
     *setCreateListTemp(action, { put, select }) {
       let createList = yield select(state => state[NAMESPACE].createList);
+
+      createList = [...createList];
+
       let ignoreList = [];
 
       Object.entries(createList).map(([honeypotId, { data, status }]) => {
@@ -159,6 +170,11 @@ const baseModel = {
             honeypotId: res.payload,
             data: payload,
           }
+        })
+
+        yield put({
+          type: "switchStatusPanel",
+          payload: true
         })
 
         yield delay(1000);
