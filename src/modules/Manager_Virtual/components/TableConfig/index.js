@@ -177,63 +177,60 @@ const honeypotStatusRenderer = value => {
 
 }
 
-
-
 const getOperationRenderer = (handle = {}) => (value, records) => {
   let status = records[HONEYPOT_STATUS_DATAINDEX]
   const isLicenceOverdue = status.includes(STATUS_LICENCE_OVERDUE),
     isRunning = (status.includes(STATUS_RUNNING_VALUE)),
     isStop = (status.includes(STATUS_STOP_VALUE)),
     menu = (
-      <Menu>
-        <Menu.Item disabled={isRunning || isLicenceOverdue}>
-          <div onClick={handle.getPutHandle({
+      <Menu onClick={({ key }) => {
+        if (key === "start") {
+          handle.getPutHandle({
             value: OPERATION_START_VALUE,
             honeypotList: [records[ID_DATAINDEX]]
-          })}>
-            <Icon type="login" />&nbsp;开机
-              </div>
-        </Menu.Item>
-        <Menu.Item disabled={isStop || isLicenceOverdue}>
-          <div onClick={() => {
-            Modal.confirm({
-              onOk: handle.getPutHandle({
-                value: OPERATION_SHUTDOWN_VALUE,
-                honeypotList: [records[ID_DATAINDEX]]
-              }),
-              title: `关闭蜜罐 ${records[HONEYPOT_NAME_DATAINDEX]}  后，将无法再感知威胁信息`
-            })
+          })()
+        }
 
-          }}>
-            <Icon type="poweroff" />&nbsp;关机
-              </div>
-        </Menu.Item>
-        <Menu.Item>
-          <div onClick={() => {
-            Modal.confirm({
-              onOk: handle.getDelHandle({
-                [ID_DATAINDEX]: records[ID_DATAINDEX]
-              }),
-              title: `删除蜜罐 ${records[HONEYPOT_NAME_DATAINDEX]}  后，将无法再恢复`
-            })
+        if (key === "poweroff") {
+          Modal.confirm({
+            onOk: handle.getPutHandle({
+              value: OPERATION_SHUTDOWN_VALUE,
+              honeypotList: [records[ID_DATAINDEX]]
+            }),
+            title: `关闭蜜罐 ${records[HONEYPOT_NAME_DATAINDEX]}  后，将无法再感知威胁信息`
+          })
+        }
 
-          }}>
-            <Icon type="delete" />&nbsp; 删除蜜罐
-              </div>
-        </Menu.Item>
-        <Menu.Item disabled={isLicenceOverdue}>
-          <div onClick={() => {
-            Modal.confirm({
-              onOk: handle.getPutHandle({
-                value: OPERATION_INIT_VALUE,
-                honeypotList: [records[ID_DATAINDEX]]
-              }),
-              title: `还原蜜罐 ${records[HONEYPOT_NAME_DATAINDEX]}  初始镜像后，将无法返回蜜罐当前状态`
-            })
+        if (key === "delete") {
+          Modal.confirm({
+            onOk: handle.getDelHandle({
+              [ID_DATAINDEX]: records[ID_DATAINDEX]
+            }),
+            title: `删除蜜罐 ${records[HONEYPOT_NAME_DATAINDEX]}  后，将无法再恢复`
+          })
+        }
 
-          }}>
-            <Icon type="reload" />&nbsp; 还原初始蜜罐
-              </div>
+        if (key === "reload") {
+          Modal.confirm({
+            onOk: handle.getPutHandle({
+              value: OPERATION_INIT_VALUE,
+              honeypotList: [records[ID_DATAINDEX]]
+            }),
+            title: `还原蜜罐 ${records[HONEYPOT_NAME_DATAINDEX]}  初始镜像后，将无法返回蜜罐当前状态`
+          })
+        }
+      }}>
+        <Menu.Item key="start" disabled={isRunning || isLicenceOverdue}>
+          <Icon type="login" />&nbsp;开机
+        </Menu.Item>
+        <Menu.Item key="poweroff" disabled={isStop || isLicenceOverdue}>
+          <Icon type="poweroff" />&nbsp;关机
+        </Menu.Item>
+        <Menu.Item key="delete">
+          <Icon type="delete" />&nbsp; 删除蜜罐
+        </Menu.Item>
+        <Menu.Item key="reload" disabled={isLicenceOverdue}>
+          <Icon type="reload" />&nbsp; 还原初始蜜罐
         </Menu.Item>
       </Menu>
     )

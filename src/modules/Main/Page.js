@@ -348,7 +348,7 @@ class Page extends React.Component {
           onVisibleChange={value => this.props.switchStatusPanel(value)}
           visible={createStatusPanelVisible}
           title={<p><Icon type="desktop" />&nbsp;&nbsp;蜜罐虚拟机创建状态</p>}
-          placement="bottomLeft"
+          placement="bottomRight"
           content={createStatus}>
           <Badge count={creatingCount}>
             <a>
