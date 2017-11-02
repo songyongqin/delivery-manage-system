@@ -6,6 +6,7 @@ import moment from 'moment';
 import * as service from './Service';
 import { queryModelGenerator } from '../../utils/dvaModelGenerator';
 import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
+import { notification } from 'antd';
 import {
   HOST_IP_DATAINDEX,
   HONEYPOT_IP_DATAINDEX,
@@ -14,9 +15,18 @@ import {
   NAMESPACE
 } from './ConstConfig';
 
-import { delay } from '../../utils/tools';
+import { delay, setTemp, getTemp } from '../../utils/tools';
 
 moment.locale('zh-cn');
+
+notification.config({
+  placement: 'bottomRight',
+  bottom: 50,
+  duration: null,
+});
+
+export const HONEYPOT_CREATE_LIST_CACHE_NAMESPACE = "honeypotCreateList";
+
 
 
 
@@ -35,9 +45,7 @@ const baseModel = {
       total: 0,
       data: []
     },
-    createList: {
-
-    }
+    createList: getTemp(HONEYPOT_CREATE_LIST_CACHE_NAMESPACE) || {}
   },
   reducers: {
     initCreateStatus: (preState, { payload }) => {
@@ -68,12 +76,14 @@ const baseModel = {
     }
   },
   effects: {
-    *getStatus({ resolve, payload = {} }, { callWithExtra, put }) {
+    *getStatus({ resolve, payload = {} }, { callWithExtra, put, select }) {
+
       const res = yield callWithExtra(
         service.getStatus,
         payload,
         commonCallConfig
       )
+
       if (res.status === 1) {
         resolve && resolve(res.payload);
         yield put({
@@ -84,6 +94,54 @@ const baseModel = {
           }
         })
       }
+
+      if (res.status === 1 && res.payload !== 3) {
+        yield delay(2000);
+        yield put({
+          type: "getStatus",
+          payload: {
+            honeypotId: payload.honeypotId
+          }
+        })
+      }
+
+      if (res.status === 1 && res.payload === 3) {
+        const item = yield select(state => state[NAMESPACE].createList[payload.honeypotId])
+        const queryFilters = yield select(state => state[NAMESPACE].queryFilters);
+
+        notification.success({
+          message: '蜜罐虚拟机创建成功',
+          description: `蜜罐${item.data.honeypotName}创建成功`,
+        });
+
+        yield put({
+          type: "query",
+          payload: {
+            ...queryFilters,
+            page: 1
+          }
+        })
+
+      }
+
+      yield put({
+        type: "setCreateListTemp"
+      })
+
+
+    },
+    *setCreateListTemp(action, { put, select }) {
+      let createList = yield select(state => state[NAMESPACE].createList);
+      let ignoreList = [];
+
+      Object.entries(createList).map(([honeypotId, { data, status }]) => {
+        if (status === 3) {
+          ignoreList.push(honeypotId);
+        }
+      })
+
+      ignoreList.forEach(id => delete createList[id]);
+      setTemp(HONEYPOT_CREATE_LIST_CACHE_NAMESPACE, createList);
     },
     *postVM({ resolve, payload = {} }, { callWithExtra, put }) {
       const res = yield callWithExtra(
@@ -92,7 +150,9 @@ const baseModel = {
         commonCallConfig
       )
       if (res.status === 1) {
+
         resolve && resolve(res.payload)
+
         yield put({
           type: "initCreateStatus",
           payload: {
@@ -102,6 +162,7 @@ const baseModel = {
         })
 
         yield delay(1000);
+
         yield put({
           type: "getStatus",
           payload: {
@@ -109,8 +170,12 @@ const baseModel = {
           }
         })
 
-
       }
+
+      yield put({
+        type: "setCreateListTemp"
+      })
+
     },
     *getVMIpList({ resolve, payload }, { callWithExtra }) {
       const res = yield callWithExtra(

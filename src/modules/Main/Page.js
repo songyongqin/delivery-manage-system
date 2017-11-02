@@ -1,6 +1,23 @@
 import React from 'react';
 import styles from './styles.css'
-import { Menu, Button, Breadcrumb, Spin, Modal, Table, BackTop, Dropdown, Icon, message as Message, Badge, Popover, Row, Col } from 'antd';
+import {
+  Menu,
+  Button,
+  Breadcrumb,
+  Spin,
+  Modal,
+  Table,
+  BackTop,
+  Card,
+  Dropdown,
+  Icon,
+  message as Message,
+  Badge,
+  Popover,
+  Row,
+  Col,
+  Steps
+} from 'antd';
 import classnames from 'classnames';
 import Nav from './components/Nav';
 import LayoutOperateList from './components/LayoutIOperateList'
@@ -12,8 +29,19 @@ import ModifyPasswordForm from './components/ModifyPasswordForm';
 import {
   NAMESPACE as VM_NAMESPACE
 } from '../../modules/Manager_Virtual/ConstConfig'
+import { getTemp } from '../../utils/tools'
+import { HONEYPOT_CREATE_LIST_CACHE_NAMESPACE } from '../../modules/Manager_Virtual/Model'
+
 
 const NAMESPACE = "main";
+
+const honeypotCreateStatusTip = {
+  0: "正在获取蜜罐创建状态",
+  1: "等待蜜罐获取配置",
+  2: "蜜罐成功获取配置信息,等待蜜罐配置完成",
+  3: "蜜罐创建成功"
+}
+
 
 function mapStateToProps(state) {
 
@@ -61,6 +89,10 @@ function mapDispatchToProps(dispatch, ownProps) {
     },
     initConfig: () => dispatch({
       type: "main/query"
+    }),
+    getStatus: payload => dispatch({
+      type: `${VM_NAMESPACE}/getStatus`,
+      payload,
     })
   }
 }
@@ -79,6 +111,11 @@ class Page extends React.Component {
   }
   componentDidMount = () => {
     this.props.initConfig();
+    this.getTempCreateListStatus();
+  }
+  getTempCreateListStatus = () => {
+    let createList = getTemp(HONEYPOT_CREATE_LIST_CACHE_NAMESPACE) || {};
+    Object.keys(createList).forEach(honeypotId => this.props.getStatus({ honeypotId }))
   }
   switchModal = () => {
     this.setState({
@@ -208,6 +245,14 @@ class Page extends React.Component {
       common: "说明：普通用户属于非授权用户，可对系统部分界面进行查看和操作"
     }
 
+    const tipStyle = {
+      maxWidth: "240px",
+      overflow: "hidden",
+      wordBreak: "break-all",
+      padding: "5px",
+      color: "#cccccc"
+    }
+
     const menu = (
       <Menu>
         <Menu.ItemGroup key="message" title={
@@ -219,15 +264,9 @@ class Page extends React.Component {
         }>
         </Menu.ItemGroup>
         <Menu.ItemGroup key="tip">
-          <p style={{
-            maxWidth: "240px",
-            overflow: "hidden",
-            wordBreak: "break-all",
-            padding: "5px",
-            color: "#cccccc"
-          }}>
+          <div style={tipStyle}>
             {isAdmin ? tipTextConfig.admin : tipTextConfig.common}
-          </p>
+          </div>
         </Menu.ItemGroup>
         <Menu.Item key="modify-password">
           <a onClick={this.switchModal}>
@@ -242,27 +281,53 @@ class Page extends React.Component {
       </Menu>
     );
 
+    const honeypotCreateListData = Object.entries(honeypotCreateList);
+
     const createStatus = (
-      <div style={{ width: "600px" }}>
+      <div style={{ width: "400px" }}>
         {
-          Object.entries(honeypotCreateList).map(([honeypotId, data], index) => {
+          honeypotCreateListData.length === 0
+            ?
+            <p style={{ textAlign: "center", height: "50px", lineHeight: "50px" }}>
+              <Icon type="frown"></Icon>&nbsp;没有正在创建的蜜罐
+            </p>
+            :
+            honeypotCreateListData.map(([honeypotId, { data, status }], index) => {
+              const iconStyle = { color: "#108ee9", fontSize: "40px" };
+              return (
+                <Card key={`${index}-row`} title={`蜜罐名称:${data.honeypotName}`} style={{ marginBottom: "10px" }}>
+                  <Row gutter={20}>
+                    <Col span={4} style={{ height: "40px", lineHeight: "40px", textAlign: "center" }}>
+                      {
+                        status === 3
+                          ?
+                          <Icon type="check-circle-o" style={iconStyle} />
+                          :
+                          <Icon type="loading" style={iconStyle}></Icon>
+                      }
+                    </Col>
+                    <Col span={20} style={{ paddingLeft: "20px" }}>
+                      {/* <p style={{ marginBottom: "15px" }}>创建状态</p> */}
+                      <Steps direction="vertical" size="small" current={status}>
+                        {
+                          [0, 1, 2, 3].map((i, index) => <Steps.Step
+                            key={`${i}-step`}
+                            description={honeypotCreateStatusTip[i]} />)
+                        }
+                      </Steps>
+                    </Col>
+                  </Row>
+                </Card>
+              )
 
-            return (
-              <Row key={`${index}-row`}>
-                <Col>
-                  <pre>
-                    {
-                      JSON.stringify(data, null, 2)
-                    }
-                  </pre>
-                </Col>
-              </Row>
-            )
-
-          })
+            })
         }
       </div>
     )
+
+    const creatingCount = honeypotCreateListData.filter(([honeypotId, item]) => item.status !== 3).length;
+
+    console.info(creatingCount);
 
     return (
       <div className={styles["header-right"]}>
@@ -279,7 +344,7 @@ class Page extends React.Component {
           title={<p><Icon type="desktop" />&nbsp;&nbsp;蜜罐虚拟机创建状态</p>}
           placement="bottomLeft"
           content={createStatus}>
-          <Badge count={Object.keys(honeypotCreateList).length}>
+          <Badge count={creatingCount}>
             <a>
               <Icon type="notification"></Icon>
             </a>
