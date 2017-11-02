@@ -196,6 +196,26 @@ const baseModel = {
       })
 
     },
+    *deleteVM({ resolve, payload }, { callWithExtra }) {
+      const res = yield callWithExtra(
+        service.deleteVM,
+        { ...payload || {} },
+        commonCallConfig
+      )
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
+      }
+    },
+    *putVM({ resolve, payload }, { callWithExtra }) {
+      const res = yield callWithExtra(
+        service.putVM,
+        { ...payload || {} },
+        commonCallConfig
+      )
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
+      }
+    },
     *getVMIpList({ resolve, payload }, { callWithExtra }) {
       const res = yield callWithExtra(
         service.getVMIpList,

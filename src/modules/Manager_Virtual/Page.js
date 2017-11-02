@@ -18,6 +18,10 @@ import {
   HOST_IP_DATAINDEX,
   HONEYPOT_IP_DATAINDEX,
   HONEYPOT_NAME_DATAINDEX,
+  OPERATION_INIT_VALUE,
+  OPERATION_SHUTDOWN_VALUE,
+  OPERATION_START_VALUE,
+  ID_DATAINDEX
 } from './ConstConfig';
 
 
@@ -56,7 +60,15 @@ function mapDispatchToProps(dispatch) {
     postVM: payload => dispatch({
       type: `${NAMESPACE}/postVM`,
       payload,
-    })
+    }),
+    deleteVM: payload => dispatch({
+      type: `${NAMESPACE}/deleteVM`,
+      payload,
+    }),
+    putVM: payload => dispatch({
+      type: `${NAMESPACE}/putVM`,
+      payload,
+    }),
   }
 }
 
@@ -158,6 +170,37 @@ class Page extends React.Component {
     .then(this.switchModal)
     .then(curry(Message.success, "创建蜜罐操作成功，请耐心等待蜜罐创建成功"))
 
+  getDelHandle = payload => () => this.props.deleteVM(payload)
+    .then(curry(Message.success, "删除蜜罐虚拟机成功"))
+    .then(curry(this.props.onQuery))
+    .then(result => this.setSelectedRows([]))
+
+  getPutHandle = payload => () => this.props.putVM(payload)
+    .then(curry(Message.success, "操作蜜罐虚拟机成功"))
+    .then(curry(this.props.onQuery))
+    .then(result => this.setSelectedRows([]))
+
+  getOperationSelectedHandle = (operation, message) => Modal.confirm({
+    title: message,
+    onOk: this.getPutHandle({
+      value: operation,
+      honeypotList: this.state.selectedRows.map(i => i[ID_DATAINDEX])
+    })
+  })
+
+  getDelSelectedHandle = message => Modal.confirm({
+    title: message,
+    onOk: this.getDelHandle({
+      [ID_DATAINDEX]: this.state.selectedRows.map(i => i[ID_DATAINDEX])
+    })
+  })
+
+  startSelectedHandle = () => this.getPutHandle({
+    value: OPERATION_START_VALUE,
+    honeypotList: this.state.selectedRows.map(i => i[ID_DATAINDEX])
+  })()
+
+
   getDataResultPanel = () => {
 
     const { commonLayout, pageOnChange, userData } = this.props;
@@ -182,7 +225,11 @@ class Page extends React.Component {
         filterOptions,
         queryFilters,
         isAdmin,
-        onSubmit: this.onFilter
+        onSubmit: this.onFilter,
+        handle: {
+          getDelHandle: this.getDelHandle,
+          getPutHandle: this.getPutHandle
+        }
       }),
       dataSource: data.map((i, index) => {
         return {
@@ -207,12 +254,28 @@ class Page extends React.Component {
       pageSize: queryFilters.limit,
     };
 
-
     const menu = (
-      <Menu >
-        <Menu.Item key="poweroff">批量关机</Menu.Item>
-        <Menu.Item key="delete">批量删除蜜罐</Menu.Item>
-        <Menu.Item key="reload">批量还原蜜罐镜像</Menu.Item>
+      <Menu onClick={({ key }) => {
+        if (key === "poweroff") {
+          return this.getOperationSelectedHandle(OPERATION_SHUTDOWN_VALUE, "批量关机后，选中的蜜罐将无法再感知威胁信息")
+        }
+        if (key === "reload") {
+          return this.getOperationSelectedHandle(OPERATION_INIT_VALUE, "批量还原蜜罐初始镜像后，将无法返回蜜罐当前状态")
+        }
+        if (key === "delete") {
+          return this.getDelSelectedHandle("批量删除蜜罐后，将无法再恢复")
+        }
+
+      }}>
+        <Menu.Item key="poweroff" >
+          批量关机
+        </Menu.Item>
+        <Menu.Item key="delete">
+          批量删除蜜罐
+        </Menu.Item>
+        <Menu.Item key="reload">
+          批量还原蜜罐镜像
+        </Menu.Item>
       </Menu>
     );
 
@@ -237,9 +300,11 @@ class Page extends React.Component {
           {
             isAdmin
               ?
-              <Dropdown.Button style={{ marginLeft: "20px" }}
+              <Dropdown.Button
+                style={{ marginLeft: "20px" }}
                 disabled={this.state.selectedRows.length === 0}
                 overlay={menu}
+                onClick={this.startSelectedHandle}
                 type="primary">
                 批量开机
               </Dropdown.Button>

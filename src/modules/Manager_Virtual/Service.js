@@ -8,7 +8,14 @@ import commonRequestCreator from '../../utils/commonRequestCreator';
 
 export const postVM = commonRequestCreator.post(httpApi.VIRTUAL_MACHINE);
 
+export const deleteVM = commonRequestCreator.delete(httpApi.VIRTUAL_MACHINE, true);
+
+export const putVM = commonRequestCreator.put(httpApi.VIRTUAL_MACHINE);
+
+
+
 export const getStatus = commonRequestCreator.get(httpApi.CREATE_STATUS);
+
 
 export async function query(payload) {
 
