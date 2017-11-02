@@ -288,7 +288,7 @@ class Page extends React.Component {
 
     const honeypotCreateListData = Object.entries(honeypotCreateList);
     const createStatus = (
-      <div style={{ width: "400px", maxHeight: "700px", overflowY: "scroll" }}>
+      <div style={{ width: "400px", maxHeight: "700px", overflowY: "scroll", overflowX: "hidden" }}>
         {
           honeypotCreateListData.length === 0
             ?
