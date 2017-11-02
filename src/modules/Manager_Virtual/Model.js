@@ -253,7 +253,7 @@ const baseModel = {
         commonCallConfig
       )
       if (res.status === 1) {
-        resolve && resolve(res.payload)
+        resolve && resolve({ payload: res.payload, message: res.message })
       }
     }
   }

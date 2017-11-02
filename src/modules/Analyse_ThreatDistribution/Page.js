@@ -70,7 +70,7 @@ const getOption = ({ data, isDark, mapType = "world" }) => {
         roam: true,
         itemStyle: {
           emphasis: {
-            areaColor: "white",
+            areaColor: false,
             label: { show: false }
           }
         },

@@ -113,8 +113,10 @@ class WrappedForm extends React.Component {
     clearTimeout(this.timer.honeypotName);
     value.trim().length === 0 && callback();
     this.timer.honeypotName = setTimeout(() => {
-      this.props.validatorHandle({ type: "honeypotName", value: value.trim() }).then(result => {
-        result !== 1 ? callback("该蜜罐名称已被占用") : callback()
+      this.props.validatorHandle({ type: "honeypotName", value: value.trim() }).then(({ payload, message }) => {
+        console.info(payload, message);
+
+        payload !== 1 ? callback(message) : callback()
       })
     }, 500)
   }
@@ -125,8 +127,8 @@ class WrappedForm extends React.Component {
       callback("请输入正确的IP")
     }
     this.timer.honeypotIp = setTimeout(() => {
-      this.props.validatorHandle({ type: "honeypotIp", value: value.trim() }).then(result => {
-        result !== 1 ? callback("该蜜罐IP已被占用") : callback()
+      this.props.validatorHandle({ type: "honeypotIp", value: value.trim() }).then(({ payload, message }) => {
+        payload !== 1 ? callback(message) : callback()
       })
     }, 500)
 
@@ -135,8 +137,8 @@ class WrappedForm extends React.Component {
     clearTimeout(this.timer.gateway);
     value.trim().length === 0 && callback();
     this.timer.gateway = setTimeout(() => {
-      this.props.validatorHandle({ type: "gateway", value: value.trim() }).then(result => {
-        result !== 1 ? callback("请填写正确的网关") : callback()
+      this.props.validatorHandle({ type: "gateway", value: value.trim() }).then(({ payload, message }) => {
+        payload !== 1 ? callback(message) : callback()
       })
     }, 500)
 
