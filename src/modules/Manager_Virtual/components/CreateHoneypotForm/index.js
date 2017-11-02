@@ -100,6 +100,9 @@ class WrappedForm extends React.Component {
       }
       shouldTrimDataIndexes.forEach(i => values[i] = values[i].trim())
 
+      if (values[INTERCATION_DATAINDEX] === LOW_INTERACTION) {
+        values[SYSTEM_DATAINDEX] = LOW_INTERACTION;
+      }
 
       onSubmit && onSubmit(values);
 

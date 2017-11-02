@@ -282,6 +282,7 @@ class Page extends React.Component {
           ])}
         </JoSpin>
         <Modal title={<p><Icon type="plus" />&nbsp;创建新的蜜罐</p>}
+          key={`${this.state.visible}-modal-create`}
           visible={this.state.visible}
           className={modalClasses}
           onCancel={this.switchModal}
