@@ -101,11 +101,11 @@ class Page extends React.Component {
 
             return (
               <Col key={`${index}-bar-chart`}
-                style={{ marginBottom: "50px", height: "400px" }}
+                style={{ marginBottom: "50px", height: "480px" }}
                 xs={24}
                 sm={24}
-                lg={12}
-                md={12}>
+                lg={24}
+                md={24}>
                 <ReactEcharts
                   style={{ height: "100%" }}
                   option={{
@@ -124,7 +124,7 @@ class Page extends React.Component {
                     grid: {
                       left: '3%',
                       right: '15%',
-                      bottom: '20px',
+                      bottom: '50px',
                       containLabel: true
                     },
                     xAxis: [
