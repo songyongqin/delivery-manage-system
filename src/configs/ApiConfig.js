@@ -64,6 +64,9 @@ export default {
     MODULE_MONITOR_LOG: "/sys-config/module-monitor/log",
 
     CREATE_STATUS: "/virtual-machine/create-status",
-    VALIDATE: "/occupying/virtual-machine/validate"
+    VALIDATE: "/occupying/virtual-machine/validate",
+
+
+    DEVICE_LICENCE: "/device/licence"
   }
 }

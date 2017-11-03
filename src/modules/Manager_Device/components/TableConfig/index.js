@@ -23,6 +23,8 @@ import {
   VERSION_DATAINDEX,
   NAME_DATAINDEX,
   DISK_PER_DATAINDEX,
+  ID_DATAINDEX,
+  CODE_DATAINDEX,
 } from '../../ConstConfig';
 import { Progress, Row, Col, Badge, Button, Dropdown, Icon, Menu } from 'antd'
 import JoTag from '../../../../components/JoTag';
@@ -90,16 +92,19 @@ const getLiencenRenderer = isDark => value => (
   </div>
 )
 
-const getOperationRenderer = ({ isAdmin, isNode }) => {
+const getOperationRenderer = ({ isAdmin, isNode, handle }) => {
   return records => {
     const isLicence = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX] === LICENCE_VALID_VALUE,
-      isConnect = records[CONNECT_STATUS_DATAINDEX] === CONNECT,
+      isConnect = isNode ? records[CONNECT_STATUS_DATAINDEX] === CONNECT : true,
       menu = (
-        <Menu>
-          <Menu.Item disabled={isLicence || !isAdmin || !isConnect}>
-            <span>
-              <Icon type="unlock" />&nbsp;授权
-                </span>
+        <Menu onClick={({ key }) => {
+          if (key === "licence") {
+            handle.licenceHandle();
+          }
+
+        }}>
+          <Menu.Item key="licence" disabled={isLicence || !isAdmin || !isConnect}>
+            <Icon type="unlock" />&nbsp;授权
           </Menu.Item>
           <Menu.Item disabled={(!isAdmin || !isConnect) && isNode}>
             <span>

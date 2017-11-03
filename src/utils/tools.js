@@ -144,7 +144,10 @@ export const momentToTimestamp = (timestampRange = []) => {
   if (timestampRange.length === 0) {
     return [0, new moment().hour(23).minute(59).second(59).unix()]
   }
-  return [timestampRange[0].unix(), timestampRange[1].hour(23).minute(59).second(59).unix()];
+  return [
+    timestampRange[0].hour(0).minute(0).second(0).unix(),
+    timestampRange[1].hour(23).minute(59).second(59).unix()
+  ];
 }
 
 export const jsonToQueryStringImprove = (jsonObject) => {

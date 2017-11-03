@@ -74,6 +74,9 @@ const getOption = ({ data, isDark, mapType = "world" }) => {
             label: { show: false }
           }
         },
+        scaleLimit: {
+          min: 1
+        },
         zoom: 1.2,
         data
       }
@@ -167,6 +170,14 @@ class Page extends React.Component {
           </Radio.Button>
         </Radio.Group>
         <ReactEcharts
+          onEvents={{
+            georoam: (...rest) => {
+              console.info(rest)
+            }
+          }}
+          onChartReady={() => {
+            console.info("xxxxx");
+          }}
           option={getOption({ isDark, data: data[mapType], mapType })}
           style={{ width: "100%", height: this.state.height + "px" }}></ReactEcharts>
       </div>

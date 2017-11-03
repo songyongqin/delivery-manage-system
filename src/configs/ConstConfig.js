@@ -156,7 +156,7 @@ export const servicesTextConfig = {
 export const services = Object.keys(servicesTextConfig);
 
 export const HIGH_INTERATION = "HighInteraction",
-  LOW_INTERACTION = "LowInteration";
+  LOW_INTERACTION = "LowInteraction";
 
 
 export const interactionsTextConfig = {
