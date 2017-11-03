@@ -5,7 +5,12 @@ import ControlDisk from '../Manager_Device_Control_Disk/Page';
 import DeviceControl from '../Manager_Device_Control/Page';
 import NodeDisk from '../Manager_Device_Node_Disk/Page';
 import DeviceNode from '../Manager_Device_Node/Page';
-import { CONTROL_PANEL_TITLE, NODE_PANEL_TITLE } from './ConstConfig'
+import {
+  ID_DATAINDEX,
+  CONTROL_PANEL_TITLE,
+  NODE_PANEL_TITLE,
+  LICENCE_STATUS_DATAINDEX
+} from './ConstConfig'
 import classnames from 'classnames';
 import { connect } from 'dva';
 import JoSpin from '../../components/JoSpin/index';
@@ -13,6 +18,10 @@ import { NAMESPACE as MANAGER_DEVICE_NAMESPACE } from '../Manager_Device_Control
 import { NAMESPACE as MANAGER_DEVICE_DISK_NAMESPACE } from '../Manager_Device_Control_Disk/ConstConfig';
 import { NAMESPACE as MANAGER_DEVICE_NODE_DISK_NAMESPACE } from '../Manager_Device_Node_Disk/ConstConfig'
 import { NAMESPACE as MANAGER_DEVICE_NODE_NAMESPACE } from '../Manager_Device_Node/ConstConfig';
+import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
+
+import LicenceForm from './components/LicenceForm';
+import Modal from '../../domainComponents/Modal';
 
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
@@ -27,11 +36,22 @@ function mapStateToProps(state) {
     || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/query`],
     nodeLoading: effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/query`]
     || effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/put`]
-    || effectsLoading[`${MANAGER_DEVICE_NODE_NAMESPACE}/query`]
+    || effectsLoading[`${MANAGER_DEVICE_NODE_NAMESPACE}/query`],
+    postLicenceLoading: state.loading.effects[`${MANAGER_DEVICE_NODE_NAMESPACE}/postLicence`]
   }
 }
 
-@connect(mapStateToProps)
+function mapDispatchToProps(dispatch) {
+  return {
+    postLicence: payload => dispatch({
+      type: `${MANAGER_DEVICE_NODE_NAMESPACE}/postLicence`,
+      payload
+    })
+  }
+}
+
+
+@connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
 @WithAnimateRender
 @WithBreadcrumb
 class Page extends React.Component {
@@ -39,8 +59,27 @@ class Page extends React.Component {
     super(props);
     this.state = {
       selectedRows: [],
+      visible: false,
+      shouldReload: false,
     }
   }
+
+  switchModal = () => {
+    if (this.state.shouldReload) {
+      window.location.reload();
+    }
+    this.setState({
+      visible: !this.state.visible,
+    })
+  }
+
+  postLicenceHandle = payload => this.props.postLicence(payload).then(result => {
+    this.setState({
+      shouldReload: true
+    })
+    return result;
+  })
+
   getBreadcrumb = () => {
     return (
       <div key="bread-crumb" style={{ marginTop: "15px" }}>
@@ -99,7 +138,7 @@ class Page extends React.Component {
   }
   getNodePanel = () => {
 
-    const { commonLayout, nodeLoading, productType, userData } = this.props;
+    const { commonLayout, nodeLoading, productType, userData, postLicenceLoading } = this.props;
 
     /*是否为单机版本*/
     if (productType.standalone === 1) {
@@ -140,6 +179,7 @@ class Page extends React.Component {
                   ?
                   <div style={{ display: "inline-block", marginLeft: "15px" }}>
                     <Dropdown.Button overlay={menu}
+                      onClick={this.switchModal}
                       disabled={this.state.selectedRows.length === 0}
                       type="primary">
                       批量授权
@@ -153,6 +193,28 @@ class Page extends React.Component {
             <div style={{ marginTop: "15px" }}>
               <DeviceNode setSelectedRows={this.setSelectedRows} />
             </div>
+            <Modal
+              width="800px"
+              key={`${this.state.visible}-licence-modal`}
+              onCancel={this.switchModal}
+              title="设备授权"
+              maskClosable={false}
+              visible={this.state.visible}
+              footer={null}>
+              <JoSpin spinning={postLicenceLoading}>
+                <LicenceForm
+                  loading={postLicenceLoading}
+                  isDark={isDark}
+                  onSubmit={this.postLicenceHandle}
+                  defaultValue={{
+                    data: this.state.selectedRows.map(i => ({
+                      [ID_DATAINDEX]: i[ID_DATAINDEX],
+                      [LICENCE_STATUS_DATAINDEX]: i[LICENCE_STATUS_DATAINDEX].value
+                    }))
+                  }}>
+                </LicenceForm>
+              </JoSpin>
+            </Modal>
           </JoSpin>
         </Card>
       </div>

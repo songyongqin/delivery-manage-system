@@ -99,8 +99,12 @@ const getOperationRenderer = ({ isAdmin, isNode, handle }) => {
       menu = (
         <Menu onClick={({ key }) => {
           if (key === "licence") {
-            handle.licenceHandle();
+            handle.licenceHandle([{
+              [ID_DATAINDEX]: records[ID_DATAINDEX],
+              [LICENCE_STATUS_DATAINDEX]: records[LICENCE_STATUS_DATAINDEX]
+            }]);
           }
+
 
         }}>
           <Menu.Item key="licence" disabled={isLicence || !isAdmin || !isConnect}>

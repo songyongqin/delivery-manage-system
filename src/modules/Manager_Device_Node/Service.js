@@ -16,4 +16,14 @@ export async function query(payload) {
   return request(httpApi.DEVICE_NODE + tools.jsonToQueryString(payload), options);
 }
 
-export const postLicence = commonRequestCreator.post(httpApi.DEVICE_LICENCE);
+
+export const postLicence = ({ data }) => {
+  const options = {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(data || [])
+  };
+  return request(httpApi.DEVICE_LICENCE, options);
+}

@@ -9,19 +9,18 @@ import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import { curry } from '../../utils/tools'
 import LicenceForm from '../Manager_Device/components/LicenceForm';
 import Modal from '../../domainComponents/Modal';
-import LicenceSuccessModal from '../Manager_Device/components/LicenceSuccessModal'
 import JoSpin from '../../components/JoSpin';
 
 
 const data = [
-  {
-    id: "to1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3o",
-    licenceStatus: 0,
-  },
-  {
-    id: "k401h44vf3",
-    licenceStatus: 0,
-  },
+  // {
+  //   id: "to1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3o",
+  //   licenceStatus: 0,
+  // },
+  // {
+  //   id: "k401h44vf3",
+  //   licenceStatus: 0,
+  // },
   {
     id: Math.random().toString(36).slice(2, 100),
     licenceStatus: 1,
@@ -60,15 +59,24 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: true,
-      successModal: false,
-      errorModal: false,
+      visible: false,
+      shouldReload: false,
     }
   }
-  switchModal = () => this.setState({
-    visible: !this.state.visible,
+  switchModal = () => {
+    if (this.state.shouldReload) {
+      window.location.reload();
+    }
+    this.setState({
+      visible: !this.state.visible,
+    })
+  }
+  postLicenceHandle = payload => this.props.postLicence(payload).then(result => {
+    this.setState({
+      shouldReload: true
+    })
+    return result;
   })
-  postLicenceHandle = payload => this.props.postLicence(payload)
 
 
   getResultsPanel = () => {
@@ -81,7 +89,7 @@ class Page extends React.Component {
     const tableProps = {
       onChange: this.tableOnChange,
       columns: tableConfig.getColumns({
-        isDark: isDark,
+        isDark,
         isAdmin: userData.isAdmin,
         isNode: false,
         handle: {
@@ -97,7 +105,6 @@ class Page extends React.Component {
     };
 
 
-
     return (
       <div>
         <EnhanciveTable key={`${lastReqTime}-device-table`}
@@ -110,6 +117,7 @@ class Page extends React.Component {
           key={`${this.state.visible}-licence-modal`}
           onCancel={this.switchModal}
           title="设备授权"
+          maskClosable={false}
           visible={this.state.visible}
           footer={null}>
           <JoSpin spinning={postLicenceLoading}>
@@ -117,7 +125,7 @@ class Page extends React.Component {
               loading={postLicenceLoading}
               isDark={isDark}
               onSubmit={this.postLicenceHandle}
-              defaultValue={{ data }}>
+              defaultValue={{ data: [queryResults] }}>
             </LicenceForm>
           </JoSpin>
         </Modal>

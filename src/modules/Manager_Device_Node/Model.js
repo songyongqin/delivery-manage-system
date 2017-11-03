@@ -25,14 +25,12 @@ const baseModel = {
     }
   },
   effects: {
-    postLicence: function* ({ payload }, { callWithExtra }) {
-
+    postLicence: function* ({ payload, resolve }, { callWithExtra }) {
       const res = yield callWithExtra(
         service.postLicence,
-        {},
+        { data: payload },
         commonCallConfig
       )
-
       if (res.status === 1) {
         resolve && resolve(res.payload)
       }

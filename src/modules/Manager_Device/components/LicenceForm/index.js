@@ -38,7 +38,7 @@ const LicenceBackPlaceholder = ({ isDark = false }) => (
       textAlign: "center",
       fontWeight: "500"
     }}>
-      感谢您使用本产品，本次批量授权操作已完成，若存在授权失败的设备请尝试重新授权
+      感谢您使用本产品，本次授权操作已完成，若存在授权失败的设备请尝试重新授权
     </h4>
     <table className={styles["placeholder-table"]}>
       <tbody>
@@ -52,7 +52,15 @@ const LicenceBackPlaceholder = ({ isDark = false }) => (
         </tr>
       </tbody>
     </table>
-  </div>
+    <div style={{ textAlign: "center" }}>
+      <Button
+        onClick={() => window.location.reload()}
+        size="large"
+        type="primary">
+        确定(重新载入应用)
+      </Button>
+    </div>
+  </div >
 )
 
 
@@ -61,7 +69,7 @@ const LicenceBackPlaceholder = ({ isDark = false }) => (
 class WrappedForm extends React.Component {
   state = {
     result: [],
-    fileVisible: true,
+    fileVisible: false,
   }
   static defaultProps = {
     defaultValue: { data: [] }
@@ -88,9 +96,10 @@ class WrappedForm extends React.Component {
     let codeList = {};
     payload.forEach(({ id, code }) => codeList[id] = code);
     data.forEach(({ id }) => {
-      if (id in codeList) {
+      id in codeList
+        ?
         form.setFieldsValue({ [id]: codeList[id] })
-      } else {
+        :
         form.setFields({
           [id]: {
             value: "",
@@ -99,7 +108,6 @@ class WrappedForm extends React.Component {
             ]
           }
         })
-      }
     })
   }
   handleSubmit = (e) => {
@@ -135,7 +143,6 @@ class WrappedForm extends React.Component {
       "lbl-dark": isDark
     })
     const { data = [] } = defaultValue;
-
     const tableProps = {
       dataSource: data.map((i, index) => ({
         ...i,
@@ -208,8 +215,9 @@ class WrappedForm extends React.Component {
       ]
     }
 
+    const validateData = data.filter(i => i[LICENCE_STATUS_DATAINDEX] !== LICENCE_VALID_VALUE);
 
-    const isMulti = data.length !== 1 && data.length !== 0
+    const isMulti = validateData.length > 1;
 
     const haveResult = result.length !== 0;
 
@@ -297,7 +305,7 @@ class WrappedForm extends React.Component {
                   <FormItem style={{ textAlign: "center" }}>
                     <Button type="primary"
                       loading={loading}
-                      disabled={loading || result.length !== 0}
+                      disabled={loading || result.length !== 0 || validateData.length === 0}
                       onClick={this.handleSubmit}>授权</Button>
                   </FormItem>
                 </Col>
