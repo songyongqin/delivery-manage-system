@@ -8,7 +8,9 @@ import {
   NAMESPACE,
   MAIN_NAMESPACE,
   ACTION_DATA_INDEX,
-  EVENT_ACTION_DATA_INDEX
+  EVENT_ACTION_DATA_INDEX,
+  NET_TOOL_DATA_INDEX,
+  TOOL_DATA_INDEX
 } from './ConstConfig';
 import {
   NAMESPACE as ANALYSE_NAMESPACE
@@ -26,7 +28,8 @@ const mapStateToProps = state => {
   return {
     isDark: commonLayout.darkTheme,
     timestampRange: state[ANALYSE_NAMESPACE].timestampRange,
-    action: state[MAIN_NAMESPACE].queryResults[EVENT_ACTION_DATA_INDEX] || {}
+    action: state[MAIN_NAMESPACE].queryResults[EVENT_ACTION_DATA_INDEX] || {},
+    netTool: state[MAIN_NAMESPACE].queryResults[NET_TOOL_DATA_INDEX] || {}
   }
 }
 
@@ -60,16 +63,18 @@ class Page extends React.Component {
   };
   render = () => {
 
-    const { isDark, queryLoading, action } = this.props;
+    const { isDark, queryLoading, action, netTool } = this.props;
     const { queryResults, queryFilters, lastReqTime } = this.props[NAMESPACE]
     const { data, total } = queryResults;
 
     const filters = {
-      [ACTION_DATA_INDEX]: Object.keys(action)
+      [ACTION_DATA_INDEX]: Object.keys(action),
+      [TOOL_DATA_INDEX]: Object.keys(netTool)
     }
 
     const filterTextConfig = {
       [ACTION_DATA_INDEX]: action,
+      [TOOL_DATA_INDEX]: netTool,
     }
 
     const tableProps = {

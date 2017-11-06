@@ -23,6 +23,7 @@ import {
   ACTION_STATUS_DATA_INDEX,
   LEVEL_DATA_INDEX,
   PCAP_DATA_INDEX,
+  TOOL_DATA_INDEX,
 } from '../../ConstConfig'
 import TimesLabel from '../../../../components/TimesLabel';
 import JoTag from '../../../../components/JoTag';
@@ -56,6 +57,7 @@ export const getColumns = ({ queryFilters, filters = {}, filterTextConfig = {} }
       [ATTACK_TIME_DATA_INDEX]: value => <TimesLabel times={value}></TimesLabel>,
       [LEVEL_DATA_INDEX]: value => tools.getKeyText(value, levelTextConfig),
       [ATTACK_STAGE_DATA_INDEX]: value => tools.getKeyText(value, attackStageTextConfig),
+      [TOOL_DATA_INDEX]: value => tools.getKeyText(value, filterTextConfig[TOOL_DATA_INDEX]),
       [ACTION_STATUS_DATA_INDEX]: value => {
         if (value === ACTIONSTATUS_SUCCESS) {
           return <span><Badge status="success" />{tools.getKeyText(value, actionStatusTextConfig)}</span>

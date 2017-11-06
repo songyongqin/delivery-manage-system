@@ -72,3 +72,6 @@ export const textConfig = {
 export { EVENT_ACTION_DATA_INDEX, EVENT_TYPE_DATA_INDEX } from '../../configs/ConstConfig';
 
 export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig';
+
+
+export const NET_TOOL_DATA_INDEX = "netTool"

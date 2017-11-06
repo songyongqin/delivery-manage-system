@@ -9,7 +9,7 @@ import {
 import classnames from 'classnames';
 
 const labelTextConfig = {
-  [FILE_NAME_DATA_INDEX]: "文件名搜素",
+  [FILE_NAME_DATA_INDEX]: "文件名搜索",
   [MD5_DATA_INDEX]: "MD5搜索",
   [FAMILY_DATA_INDEX]: "家族搜索"
 }
