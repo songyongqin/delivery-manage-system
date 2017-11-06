@@ -83,7 +83,7 @@ class WrappedForm extends React.Component {
     const eleLink = document.createElement('a');
     eleLink.download = "deviceCodeList.json";
     eleLink.style.display = 'none';
-    const blob = new Blob([JSON.stringify({ id: content }, null, 2)]);
+    const blob = new Blob([JSON.stringify({ [ID_DATAINDEX]: content }, null, 2)]);
     eleLink.href = URL.createObjectURL(blob);
     document.body.appendChild(eleLink);
     eleLink.click();
@@ -94,14 +94,22 @@ class WrappedForm extends React.Component {
     const { form, defaultValue } = this.props;
     const { data = [] } = defaultValue;
     let codeList = {};
-    payload.forEach(({ id, code }) => codeList[id] = code);
-    data.forEach(({ id }) => {
-      id in codeList
+    payload.forEach(item => {
+      const code = item.code,
+        deviceId = item[ID_DATAINDEX];
+
+      codeList[deviceId] = code
+    });
+
+    data.forEach(item => {
+      const deviceId = item[ID_DATAINDEX];
+
+      deviceId in codeList
         ?
-        form.setFieldsValue({ [id]: codeList[id] })
+        form.setFieldsValue({ [deviceId]: codeList[deviceId] })
         :
         form.setFields({
-          [id]: {
+          [deviceId]: {
             value: "",
             errors: [
               new Error("授权码未提供，请确认授权码文件中包含该设备的授权，重新导入授权文件")
@@ -123,7 +131,7 @@ class WrappedForm extends React.Component {
       Object.entries(values)
         .filter(([key, value]) => value[LICENCE_STATUS_DATAINDEX] !== LICENCE_VALID_VALUE)
         .map(([key, value]) => payload.push({
-          id: key,
+          [ID_DATAINDEX]: key,
           code: value
         }))
 
@@ -150,7 +158,7 @@ class WrappedForm extends React.Component {
       })),
       columns: [
         {
-          dataIndex: "id",
+          dataIndex: ID_DATAINDEX,
           title: <p style={{ textAlign: "center" }}>设备唯一标识</p>,
           width: "50%",
         },

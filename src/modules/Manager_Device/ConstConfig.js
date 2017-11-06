@@ -16,9 +16,9 @@ export const HOST_IP_DATAINDEX = "hostIp",
   LIBRARY_VERSION_DATAINDEX = "libraryVersion",
   APPLIACTION_VERSION_DATAINDEX = "applicationVersion",
 
-  ID_DATAINDEX = "id",
+  ID_DATAINDEX = "deviceId",
 
-  DEVICE_ID_DATAINDEX = "deviceId",
+  // DEVICE_ID_DATAINDEX = "deviceId",
 
   DEVICE_PROPS_DATAINDEX = "deviceProps",
 

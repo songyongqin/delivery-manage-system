@@ -1,19 +1,19 @@
 {
   "licence": [
     {
-      "id": "to1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3o",
+      "deviceId": "to1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3o",
       "code": "xxx123123123xxx"
     },
     {
-      "id": "k401h44vf3",
+      "deviceId": "k401h44vf3",
       "code": "xxxx123123xx"
     },
     {
-      "id": "2qynia56guj1qynia56guj1qynia56guj1qynia56guj1qynia56guj",
+      "deviceId": "2qynia56guj1qynia56guj1qynia56guj1qynia56guj1qynia56guj",
       "code": "xxxxxxc123123"
     },
     {
-      "id": "cccccccccccc",
+      "deviceId": "cccccccccccc",
       "code": "123123123123123"
     }
   ]

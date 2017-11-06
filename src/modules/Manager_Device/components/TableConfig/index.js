@@ -69,7 +69,7 @@ const licenceValueRenderer = (value, isDark) => {
 
 const getTimeFormat = time => moment(time * 1000).format("YYYY-MM-DD");
 
-const getLiencenRenderer = isDark => value => (
+const getLicenceRenderer = isDark => value => (
   <div style={{ textAlign: "center" }} >
     {licenceValueRenderer(value[LICENCE_STATUS_VALUE_DATAINDEX], isDark)}
     <br /><br />
@@ -169,7 +169,7 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
     deviceProps: devicePropsRender,
     applicationVersion: tagRenderer,
     libraryVersion: tagRenderer,
-    licenceStatus: getLiencenRenderer(isDark),
+    licenceStatus: getLicenceRenderer(isDark),
     [CONNECT_STATUS_DATAINDEX]: value => (
       <div style={{ textAlign: "center" }}>
         {
