@@ -48,6 +48,7 @@ export default {
     ANALYSE_RANKING: "/analyse/ranking",
     ANALYSE_OVERALL_NET_BASIC: "/analyse/overall/net-basic",
     ANALYSE_OVERALL_PCAP: "/analyse/overall/pcap",
+    ANALYSE_OVERALL_CAPTURE: "/analyse/overall/capture",
     ANALYSE_OVERALL_SAMPLE: "/analyse/overall/sample",
     ANALYSE_OVERALL_SYSTEM: "/analyse/overall/system",
     ANALYSE_OVERALL_NET: "/analyse/overall/net",
@@ -67,6 +68,12 @@ export default {
     VALIDATE: "/occupying/virtual-machine/validate",
 
 
-    DEVICE_LICENCE: "/device/licence"
+    DEVICE_LICENCE: "/device/licence",
+
+
+    DEVICE_UPDATE_ONLINE: "/device/update/online",
+    DEVICE_UPDATE_LOCAL: "/device/update/local",
+    DEVICE_UPDATE_INFO_ONLINE: "/device/update-info/online",
+    DEVICE_UPDATE_INFO_LOCAL: "/device/update-info/local"
   }
 }

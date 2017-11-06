@@ -219,7 +219,7 @@ class Page extends React.Component {
     const { languageConfig, commonLayout } = this.props;
     const { language, darkTheme } = commonLayout;
 
-    document.title = languageConfig[language].title;
+    document.title = (languageConfig[language] || {}).title;
     document.body.style.background = darkTheme ? "rgb(28,35,59)" : "#F1F1F1";
     const headerClasses = classnames({
       [styles["header"]]: true,

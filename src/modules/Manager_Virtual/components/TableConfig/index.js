@@ -52,7 +52,7 @@ const TagList = ({
   className = "",
   layout = Y_LAYOUT,
   color = [],
-  data,
+  data = [],
   max = 3,
 }) => {
 

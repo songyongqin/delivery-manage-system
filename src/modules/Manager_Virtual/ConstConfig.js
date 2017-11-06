@@ -9,7 +9,7 @@ import JoIcon from '../../components/JoIcon';
 export const NAMESPACE = "managerVirtual";
 
 
-export const ID_DATAINDEX = "id",
+export const ID_DATAINDEX = "honeypotId",
   HOST_IP_DATAINDEX = "hostIp",
   HONEYPOT_IP_DATAINDEX = "honeypotIp",
   HONEYPOT_NAME_DATAINDEX = "honeypotName",

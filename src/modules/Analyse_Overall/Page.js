@@ -4,13 +4,18 @@ import { Menu, Button, Breadcrumb, Tabs } from 'antd';
 import { WithAnimateRender, WithBreadcrumb, WithContainerHeader } from '../../components/HOSComponents';
 import { connect } from 'dva';
 import OverallNetBasic from '../Analyse_Overall_NetBasic/Page';
+import OverallPcap from '../Analyse_Overall_PCAP/Page'
+import OverallCapture from '../Analyse_Overall_Capture/Page'
+import OverallSystem from '../Analyse_Overall_System/Page';
+import OverallNet from '../Analyse_Overall_Net/Page';
 import classnames from 'classnames';
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import {
   NAMESPACE
 } from './ConstConfig'
 import {
-  NAMESPACE as OVERALL_NET_BASIC_NAMESPACE
+  NAMESPACE as OVERALL_NET_BASIC_NAMESPACE,
+
 } from '../Analyse_Overall_NetBasic/ConstConfig'
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
@@ -72,20 +77,24 @@ class Page extends React.Component {
     })
 
     return (
-      <Tabs key="tabs-content" className={tabClasses}>
+      <Tabs
+        key="tabs-content"
+        className={tabClasses}
+        defaultActiveKey={"net"}>
         <Tabs.TabPane key="net-basic" tab="网络基础数据">
           <OverallNetBasic></OverallNetBasic>
         </Tabs.TabPane>
         <Tabs.TabPane key="net" tab="网络行为">
+          <OverallNet></OverallNet>
         </Tabs.TabPane>
         <Tabs.TabPane key="system" tab="系统行为">
-
+          <OverallSystem></OverallSystem>
         </Tabs.TabPane>
         <Tabs.TabPane key="capture" tab="捕获文件">
-
+          <OverallCapture></OverallCapture>
         </Tabs.TabPane>
         <Tabs.TabPane key="pcap" tab="Pcap下载">
-
+          <OverallPcap></OverallPcap>
         </Tabs.TabPane>
       </Tabs>
     )

@@ -57,10 +57,10 @@ export const queryModelGenerator = ({
 
   const wrappedEffects = {
     ...effects,
-    query: [function* ({ resolve, payload }, { put, callWithExtra, select }) {
+    query: [function* ({ resolve, payload = {} }, { put, callWithExtra, select }) {
       const res = yield callWithExtra(
         queryService,
-        { ...payload || {} },
+        payload,
         callConfig
       )
 

@@ -82,7 +82,6 @@ class Page extends React.Component {
       [ATTACK_EVENT_TYPE_DATAINDEX]: eventTypeList
     }
 
-    console.info(filters)
     const tableProps = {
       onChange: this.tableOnChange,
       columns: tableConfig.getColumns({

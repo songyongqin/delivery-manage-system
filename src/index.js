@@ -35,12 +35,15 @@ import WhiteListModel from './modules/SysConfig_Strategy_WhiteList/Model';
 import IPLimitModel from './modules/UserManager_IPLimit/Model';
 import MonitorControlModel from './modules/SysConfig_Monitor_Control/Model';
 import MonitorIDSModel from './modules/SysConfig_Monitor_IDS/Model';
-import MonitorNodeModel from './modules/SysConfig_Monitor_Node/Model';
+import MonitorNodeModel from './modules/SysConfig_Monitor_Node/Model'; 
 import OverallNetBasicModel from './modules/Analyse_Overall_NetBasic/Model';
 import OverallModel from './modules/Analyse_Overall/Model';
 import AnalyseRankingModel from './modules/Analyse_Ranking/Model';
 import AnalyseDistributionModel from './modules/Analyse_ThreatDistribution/Model'
-
+import AnalyseOverallPcapModel from './modules/Analyse_Overall_PCAP/Model';
+import AnalyseOverallCaptureModel from './modules/Analyse_Overall_Capture/Model';
+import AnalyseOverallSystemModel from './modules/Analyse_Overall_System/Model';
+import AnalyseOverallNetModel from './modules/Analyse_Overall_Net/Model';
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -80,6 +83,10 @@ app.model(OverallNetBasicModel);
 app.model(OverallModel);
 app.model(AnalyseRankingModel);
 app.model(AnalyseDistributionModel);
+app.model(AnalyseOverallPcapModel);
+app.model(AnalyseOverallCaptureModel);
+app.model(AnalyseOverallSystemModel);
+app.model(AnalyseOverallNetModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

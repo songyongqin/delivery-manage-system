@@ -4,7 +4,7 @@
 /*
 *  攻击阶段枚举值
 * */
-const SCAN = "scan",
+export const SCAN = "scan",
   INVADE = "invade",
   INSTALL = "install",
   CONTROL = "control";
@@ -26,7 +26,7 @@ export const attackStageTextConfig = {
 /*
 *  威胁等级枚举值
 * */
-const HIGH = "high",
+export const HIGH = "high",
   MIDDLE = "middle",
   LOW = "low";
 

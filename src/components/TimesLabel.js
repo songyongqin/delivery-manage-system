@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import JoTag from './JoTag';
-const getTimeFormat = time => moment(time * 1000).format("YYYY-MM-DD hh:mm");
+const getTimeFormat = time => moment(time * 1000).format("YYYY-MM-DD HH:mm");
 
 export default ({ times = [] }) => {
   if (times.length === 1) {

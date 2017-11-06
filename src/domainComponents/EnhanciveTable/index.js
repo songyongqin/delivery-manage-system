@@ -1,63 +1,63 @@
 /**
  * Created by 13944 on 2017/8/6.
  */
-import {Table,Pagination,Spin} from 'antd'
+import { Table, Pagination, Spin } from 'antd'
 import styles from './styles.css';
 import React from 'react';
 import classnames from 'classnames';
 import JoTag from '../../components/JoTag';
-import {connect} from 'dva';
+import { connect } from 'dva';
 /*
 * 控制列展开属性，点击列时可展开
 * */
 
-class ExpandControlTable extends React.Component{
+class ExpandControlTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      expandedRowKeys:[]
+    this.state = {
+      expandedRowKeys: []
     }
   }
-  onRowClick=(record)=>{
+  onRowClick = (record) => {
     this.handleExpanededRowKeys(record.key);
   }
-  onExpand=(expanded,record)=>{
+  onExpand = (expanded, record) => {
     this.handleExpanededRowKeys(record.key);
   }
-  handleExpanededRowKeys=(key)=>{
-    const {expandedRowKeys}=this.state;
+  handleExpanededRowKeys = (key) => {
+    const { expandedRowKeys } = this.state;
 
-    let keyIndex=expandedRowKeys.indexOf(key);
+    let keyIndex = expandedRowKeys.indexOf(key);
 
-    if(keyIndex===-1){
+    if (keyIndex === -1) {
       return this.setState({
-        expandedRowKeys:[...expandedRowKeys,key]
+        expandedRowKeys: [...expandedRowKeys, key]
       })
     }
 
     this.setState({
-      expandedRowKeys:[
-        ...expandedRowKeys.slice(0,keyIndex),
-        ...expandedRowKeys.slice(keyIndex+1)]
+      expandedRowKeys: [
+        ...expandedRowKeys.slice(0, keyIndex),
+        ...expandedRowKeys.slice(keyIndex + 1)]
     })
 
   }
-  render=()=>{
+  render = () => {
 
 
 
     return (
       <Table pagination={false}
-             rowClassName={()=>{
-               if(this.props.expandedRowRender){
-                 return styles["expanded"];
-               }
-             }}
-             bordered={false}
-             onRowClick={this.onRowClick}
-             onExpand={this.onExpand}
-             {...this.props}
-             expandedRowKeys={this.state.expandedRowKeys}/>
+        rowClassName={() => {
+          if (this.props.expandedRowRender) {
+            return styles["expanded"];
+          }
+        }}
+        bordered={false}
+        onRowClick={this.onRowClick}
+        onExpand={this.onExpand}
+        {...this.props}
+        expandedRowKeys={this.state.expandedRowKeys} />
     )
   }
 }
@@ -66,29 +66,29 @@ class ExpandControlTable extends React.Component{
 
 
 
-const EnhanciveTable=({expanded=true,inverse=false,title=null,tableProps={},paginationProps={},loading=false,pagination=true,isDark=true})=>{
+const EnhanciveTable = ({ expanded = true, inverse = false, title = null, tableProps = {}, paginationProps = {}, loading = false, pagination = true, isDark = true }) => {
 
-  const classes=classnames({
-    [styles["dark"]]:isDark,
-    [styles["light"]]:!isDark,
-    [styles["table"]]:true,
-    [styles["inverse-color"]]:inverse,
-    [tableProps.className]:!!tableProps.className
+  const classes = classnames({
+    [styles["dark"]]: isDark,
+    [styles["light"]]: !isDark,
+    [styles["table"]]: true,
+    [styles["inverse-color"]]: inverse,
+    [tableProps.className]: !!tableProps.className
   });
 
 
-  const titleClasses=classnames({
-    ["secondary-title"]:true,
-    ["secondary-title-dark"]:isDark,
+  const titleClasses = classnames({
+    ["secondary-title"]: true,
+    ["secondary-title-dark"]: isDark,
   });
 
-  const paginationClasses=classnames({
-    [styles["pagination-dark"]]:isDark
+  const paginationClasses = classnames({
+    [styles["pagination-dark"]]: isDark
   })
 
 
   return (
-    <div style={{height:"100%",width:"100%"}}>
+    <div style={{ height: "100%", width: "100%" }}>
       <Spin spinning={loading}>
         {
           title
@@ -101,36 +101,36 @@ const EnhanciveTable=({expanded=true,inverse=false,title=null,tableProps={},pagi
           expanded
             ?
             <ExpandControlTable {...tableProps}
-                                className={classes}
-                                bordered={false}/>
+              className={classes}
+              bordered={false} />
             :
             <Table pagination={false}
-                   {...tableProps}
-                   className={classes} />
+              {...tableProps}
+              className={classes} />
         }
 
 
         {
           pagination
             ?
-            <Pagination style={{marginTop:"15px"}}
-                        showTotal={(total, range)=>
-                          <div className={paginationClasses}>共找到&nbsp;
+            <Pagination style={{ marginTop: "15px" }}
+              showTotal={(total, range) =>
+                <div className={paginationClasses}>共找到&nbsp;
                             <JoTag color={"#108ee9"} >
-                              {paginationProps.total}
-                            </JoTag>
-                            个结果
+                    {paginationProps.total}
+                  </JoTag>
+                  个结果
                           </div>}
-                        {...paginationProps}/>
-            :null
+              {...paginationProps} />
+            : null
         }
       </Spin>
     </div>
   )
 }
 
-const mapStateToProps=state=>({
-  isDark:state.layout.commonLayout.darkTheme
+const mapStateToProps = state => ({
+  isDark: state.layout.commonLayout.darkTheme
 })
 
 
