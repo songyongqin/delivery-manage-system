@@ -4,23 +4,23 @@
 /*
 *  攻击阶段枚举值
 * */
-export const SCAN = "scan",
-  INVADE = "invade",
-  INSTALL = "install",
-  CONTROL = "control";
+export const INVADE_DATAINDEX = "invade",
+  INSTALL_DATAINDEX = "install",
+  CONTROL_DATAINDEX = "control",
+  INTENTION_DATAINDEX = "intention"
 
 export const attackStage = [
-  SCAN,
-  INVADE,
-  INSTALL,
-  CONTROL
+  INVADE_DATAINDEX,
+  INSTALL_DATAINDEX,
+  CONTROL_DATAINDEX,
+  INTENTION_DATAINDEX
 ];
 
 export const attackStageTextConfig = {
-  [SCAN]: "扫描",
-  [INVADE]: "入侵",
-  [INSTALL]: "安装",
-  [CONTROL]: "控制"
+  [INVADE_DATAINDEX]: "入侵",
+  [INSTALL_DATAINDEX]: "安装",
+  [CONTROL_DATAINDEX]: "控制",
+  [INTENTION_DATAINDEX]: "意图",
 };
 /***********************************************************************************************************/
 /*

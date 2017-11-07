@@ -261,11 +261,8 @@ class Page extends React.Component {
             this.getQueryPanel(),
             this.getStatisticResultPanel(),
             this.getDataResultPanel(),
-            <div key="ranking">
+            <div key="ranking-flow">
               <OverviewRanking></OverviewRanking>
-            </div>,
-            <div key="flow">
-              <OverviewFlow></OverviewFlow>
             </div>
           ])}
         </JoSpin>

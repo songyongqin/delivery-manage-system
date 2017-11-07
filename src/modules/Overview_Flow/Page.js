@@ -188,19 +188,14 @@ class Page extends React.Component {
     )
   }
   render = () => {
-
-
-
     return (
-      <Card
-        title={this.getQueryPanel()}
+      <div
         style={{ marginTop: "15px" }}>
         <JoSpin spinning={this.props.queryLoading}>
-          {
-            this.getContentPanel()
-          }
+          {this.getQueryPanel()}
+          {this.getContentPanel()}
         </JoSpin>
-      </Card>
+      </div>
 
     )
   }

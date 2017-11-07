@@ -21,6 +21,20 @@ import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageO
 import ReactEcharts from 'echarts-for-react';
 import TimestampForm from '../../components/TimestampForm';
 import Card from '../../domainComponents/Card';
+import OverviewFlow from '../Overview_Flow/Page';
+import {
+  NAMESPACE as FLOW_NAMESPACE
+} from '../Overview_Flow/ConstConfig'
+
+import {
+  createMapDispatchWithPromise
+} from '../../utils/dvaExtraDispatch'
+
+const mapStateToProps = state => ({
+  [FLOW_NAMESPACE]: state[FLOW_NAMESPACE].queryFilters
+})
+
+
 
 @queryContainerGenerator({
   namespace: NAMESPACE,
@@ -42,7 +56,7 @@ class Page extends React.Component {
     return (
       <div key="query-panel" style={{ overflow: "hidden" }}>
         <span>
-          威胁事件
+          统计数据
         </span>
         <div style={{ float: "right", marginTop: "8px" }}>
           <TimestampForm
@@ -64,9 +78,20 @@ class Page extends React.Component {
     })
   }
   tableOnChange = (pagination, filters, sorter) => {
-    this.props.onQuery({ ...filters, page: 1 })
+    this.props.onQuery({ ...filters })
   };
-  timestampRangeOnChange = payload => this.props.onQuery({ ...payload })
+  timestampRangeOnChange = payload => {
+
+    this.props.onQuery({ ...payload })
+    this.props.dispatch({
+      type: `${FLOW_NAMESPACE}/query`,
+      payload: {
+        ...this.props[FLOW_NAMESPACE],
+        ...payload
+      }
+    })
+
+  }
   getContentPanel = () => {
     const { routes, commonLayout } = this.props;
 
@@ -186,10 +211,14 @@ class Page extends React.Component {
         title={this.getQueryPanel()}
         style={{ marginTop: "15px" }}>
         <JoSpin spinning={this.props.queryLoading}>
+          <span>
+            威胁事件
+          </span>
           {
             this.getContentPanel()
           }
         </JoSpin>
+        <OverviewFlow></OverviewFlow>
       </Card>
 
     )
