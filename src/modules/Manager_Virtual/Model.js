@@ -121,13 +121,14 @@ const baseModel = {
 
       if (res.status === 1 && res.payload === 3 && !visible) {
         const item = yield select(state => state[NAMESPACE].createList[payload.honeypotId])
-        const queryFilters = yield select(state => state[NAMESPACE].queryFilters);
-
         notification.success({
           message: '蜜罐虚拟机创建成功',
           description: `蜜罐${item.data.honeypotName}创建成功`,
         });
+      }
 
+      if (res.status === 1 && res.payload === 3) {
+        const queryFilters = yield select(state => state[NAMESPACE].queryFilters);
         yield put({
           type: "query",
           payload: {
@@ -135,7 +136,6 @@ const baseModel = {
             page: 1
           }
         })
-
       }
 
 
