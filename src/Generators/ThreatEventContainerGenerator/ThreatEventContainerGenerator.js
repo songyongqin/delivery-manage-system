@@ -2,34 +2,34 @@
  * Created by jojo on 2017/9/6.
  */
 import React from 'react';
-import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge } from 'antd';
-import {queryContainerGenerator} from '../QueryContainerrGenerator/QueryContainerGenerator';
+import { Menu, Button, Breadcrumb, Table, Icon, Row, Col, Card, Badge } from 'antd';
+import { queryContainerGenerator } from '../QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
 import ThreatEventOperationPanel from '../../components/ThreatEventOperationPanel';
-import {createMapDispatchWithPromise} from '../../utils/dvaExtraDispatch'
+import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import * as tools from '../../utils/tools';
 import WithOnQuery from '../QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../QueryContainerDecorator/WithPageOnChangeQuery';
 
-export default ({tableConfig,formTextConfig,namespace})=>{
-  const NAMESPACE=namespace;
+export default ({ tableConfig, formTextConfig, namespace }) => {
+  const NAMESPACE = namespace;
 
   function mapStateToProps(state) {
-    const {commonLayout}=state.layout;
+    const { commonLayout } = state.layout;
     return {
       commonLayout,
-      exportLoading:state.loading.effects[`${NAMESPACE}/post`]
+      exportLoading: state.loading.effects[`${NAMESPACE}/post`]
     }
   }
 
   function mapDispatchToProps(dispacth) {
     return {
       dispacth,
-      post:(payload)=>{
+      post: (payload) => {
         return dispacth({
-          type:`${NAMESPACE}/post`,
-          payload:{
+          type: `${NAMESPACE}/post`,
+          payload: {
             ...payload
           }
         })
@@ -38,92 +38,93 @@ export default ({tableConfig,formTextConfig,namespace})=>{
   }
 
   @queryContainerGenerator({
-    namespace:NAMESPACE,
+    namespace: NAMESPACE,
     mapStateToProps,
-    mapDispatchToProps:createMapDispatchWithPromise(mapDispatchToProps)
+    mapDispatchToProps: createMapDispatchWithPromise(mapDispatchToProps)
   })
   @WithOnQuery(NAMESPACE)
   @WithPageOnChange(NAMESPACE)
-  class Page extends React.Component{
+  class Page extends React.Component {
     constructor(props) {
       super(props);
     }
-    componentDidMount=()=>{
+    componentDidMount = () => {
       this.props.query({
-        timestampRange:this.props.timestampRange,
-        value:null
+        ...this.props[NAMESPACE].queryFilters,
+        timestampRange: this.props.timestampRange,
+        value: null
       })
     }
-    onSelectChange=(payload)=>{
-      this.props.onQuery({...payload,page:1})
+    onSelectChange = (payload) => {
+      this.props.onQuery({ ...payload, page: 1 })
     }
-    onExport=()=>{
-      this.props.post({timestampRange:this.props.timestampRange}).then(result=>{
+    onExport = () => {
+      this.props.post({ timestampRange: this.props.timestampRange }).then(result => {
 
         tools.download(result);
       })
     }
-    getQueryPanel=()=>{
-      const {onQuery}=this.props;
-      const {queryFilters}=this.props[NAMESPACE];
-      const {commonLayout}=this.props;
+    getQueryPanel = () => {
+      const { onQuery } = this.props;
+      const { queryFilters } = this.props[NAMESPACE];
+      const { commonLayout } = this.props;
 
       return <ThreatEventOperationPanel key="query-panel"
-                                        handle={{
-                                          onQuery,
-                                          onSelectChange:this.onSelectChange,
-                                          onExport:this.onExport
-                                        }}
-                                        loading={this.props.queryLoading}
-                                        isDark={commonLayout.darkTheme}
-                                        queryFilters={queryFilters}
-                                        formTextConfig={formTextConfig}/>
+        handle={{
+          onQuery,
+          onSelectChange: this.onSelectChange,
+          onExport: this.onExport
+        }}
+        loading={this.props.queryLoading}
+        isDark={commonLayout.darkTheme}
+        queryFilters={queryFilters}
+        formTextConfig={formTextConfig} />
     };
-    getResultsPanel=()=>{
+    getResultsPanel = () => {
       return (
         <div key="results-panel">
           {this.getDataResultPanel()}
         </div>
       )
     };
-    getDataResultPanel=()=>{
+    getDataResultPanel = () => {
 
-      const {commonLayout,pageOnChange}=this.props;
-      const {queryResults,queryFilters,lastReqTime}=this.props[NAMESPACE];
-      const {data}=queryResults;
+      const { commonLayout, pageOnChange } = this.props;
+      const { queryResults, queryFilters, lastReqTime } = this.props[NAMESPACE];
+      const { data } = queryResults;
 
-      const tableProps={
-        columns:tableConfig.getColumns({queryFilters}),
-        dataSource:data.map((i,index)=>{
+      const tableProps = {
+        columns: tableConfig.getColumns({ queryFilters }),
+        dataSource: data.map((i, index) => {
           return {
             ...i,
-            key:`item-${index}-${lastReqTime}`
+            key: `item-${index}-${lastReqTime}`
           }
         })
       };
 
-      const paginationProps={
-        total:queryResults.total,
-        current:queryFilters.page,
-        onChange:pageOnChange,
-        pageSize:queryFilters.limit,
+      const paginationProps = {
+        total: queryResults.total,
+        current: queryFilters.page,
+        onChange: pageOnChange,
+        pageSize: queryFilters.limit,
       };
 
       return (
-        <div key={"results-panel"+lastReqTime}>
+        <div key={"results-panel" + lastReqTime}>
           <EnhanciveTable tableProps={tableProps}
-                          isDark={commonLayout.darkTheme}
-                          paginationProps={paginationProps}/>
+            isDark={commonLayout.darkTheme}
+            paginationProps={paginationProps} />
         </div>
       )
     };
-    render=()=> {
+    render = () => {
 
-      const {queryLoading,exportLoading}=this.props;
+      const { queryLoading, exportLoading } = this.props;
 
       return (
         <div>
-          <JoSpin spinning={queryLoading||exportLoading}>
+          <JoSpin spinning={queryLoading || exportLoading}>
             {this.getQueryPanel()}
             {this.getResultsPanel()}
           </JoSpin>

@@ -23,6 +23,16 @@ const baseModel = {
       data: []
     }
   },
+  subscriptions: {
+    setup({ history, dispatch }) {
+      console.info("xxxxx");
+      const ws = new WebSocket("ws://172.31.50.78:6001");
+
+      ws.onmessage = ({ data }) => {
+        console.info(data);
+      }
+    },
+  }
 };
 
 const payloadFilter = (payload) => {
