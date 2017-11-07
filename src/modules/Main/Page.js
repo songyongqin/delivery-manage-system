@@ -259,24 +259,21 @@ class Page extends React.Component {
       maxWidth: "240px",
       overflow: "hidden",
       wordBreak: "break-all",
-      padding: "5px",
       color: "#cccccc"
     }
 
     const menu = (
       <Menu>
         <Menu.ItemGroup key="message" title={
-          <div style={{ padding: "5px 10px" }}>
+          <div style={{ padding: "5px" }}>
             <span style={{ color: "#108ee9", fontWeight: "900" }}>{userAccount}</span>
             &nbsp;&nbsp;
             <span>{tableTextConfig.enums.role[role]}</span>
+            <div style={tipStyle}>
+              {isAdmin ? tipTextConfig.admin : tipTextConfig.common}
+            </div>
           </div>
         }>
-        </Menu.ItemGroup>
-        <Menu.ItemGroup key="tip">
-          <div style={tipStyle}>
-            {isAdmin ? tipTextConfig.admin : tipTextConfig.common}
-          </div>
         </Menu.ItemGroup>
         <Menu.Item key="modify-password">
           <a onClick={this.switchModal}>
