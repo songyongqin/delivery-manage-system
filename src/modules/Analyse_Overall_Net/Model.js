@@ -18,7 +18,6 @@ const baseModel = {
   state: {
     queryFilters: {
       timestampRange: [],
-      value: "",
       limit: 10,
       page: 1
     },

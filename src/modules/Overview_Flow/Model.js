@@ -21,16 +21,31 @@ const baseModel = {
     },
     queryResults: {
       data: []
+    },
+    data: [],
+  },
+  reducers: {
+    saveFlowData: (preState, { payload }) => {
+      return {
+        ...preState,
+        data: payload,
+      }
     }
   },
   subscriptions: {
     setup({ history, dispatch }) {
-      console.info("xxxxx");
-      const ws = new WebSocket("ws://172.31.50.78:6001");
+      // const ws = new WebSocket("ws://172.31.50.78:6001");
+      // ws.onmessage = ({ data }) => {
+      //   try {
+      //     const parseData = JSON.parse(data)
+      //     dispatch({
+      //       type: "saveFlowData",
+      //       payload: parseData
+      //     })
+      //   } catch (e) {
 
-      ws.onmessage = ({ data }) => {
-        console.info(data);
-      }
+      //   }
+      // }
     },
   }
 };

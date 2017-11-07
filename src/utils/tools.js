@@ -150,42 +150,7 @@ export const momentToTimestamp = (timestampRange = []) => {
   ];
 }
 
-export const jsonToQueryStringImprove = (jsonObject) => {
-
-
-  let keys = Object.keys(jsonObject),
-    queryString = "?";
-
-  keys.forEach(k => {
-
-    let content = jsonObject[k]
-
-    try {
-      if (content.constructor === [].constructor) {
-
-        content.forEach(c => {
-          queryString += `${k}=${c}&`;
-        })
-
-        return;
-      }
-      if (content === null) {
-
-        return;
-
-      }
-    } catch (e) {
-
-      console.warn(`jsonToQueryString:${e.message}`);
-
-    }
-    queryString += `${k}=${content}&`
-  });
-
-
-  return queryString.substring(0, queryString.length - 1);
-
-};
+export const jsonToQueryStringImprove = jsonToQueryString
 
 
 export const getKeyText = (key, textConfig = {}) => {

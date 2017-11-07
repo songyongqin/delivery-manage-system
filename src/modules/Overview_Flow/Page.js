@@ -22,8 +22,14 @@ import ReactEcharts from 'echarts-for-react';
 import TimestampForm from '../../components/TimestampForm';
 import Card from '../../domainComponents/Card';
 
+
+const mapStateToProps = state => ({
+  data: state[NAMESPACE].data,
+})
+
 @queryContainerGenerator({
   namespace: NAMESPACE,
+  mapStateToProps
 })
 @WithOnQuery(NAMESPACE)
 @WithPageOnChange(NAMESPACE)
@@ -66,78 +72,6 @@ class Page extends React.Component {
   tableOnChange = (pagination, filters, sorter) => {
     this.props.onQuery({ ...filters, page: 1 })
   };
-  getData = () => {
-    function randomData() {
-      now = new Date(+now + oneDay);
-      value = value + Math.random() * 21 - 10;
-      return {
-        name: now.toString(),
-        value: [
-          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-          Math.round(value)
-        ]
-      }
-    }
-
-    var data = [];
-    var now = +new Date(1997, 9, 3);
-    var oneDay = 24 * 3600 * 1000;
-    var value = Math.random() * 1000;
-    for (var i = 0; i < 1000; i++) {
-      data.push(randomData());
-    }
-    return data;
-  }
-  monitor = () => {
-
-
-    return <Col span={24}>
-      <ReactEcharts option={{
-        title: {
-          text: '动态数据 + 时间坐标轴'
-        },
-        tooltip: {
-          trigger: 'axis',
-          formatter: function (params) {
-            params = params[0];
-            var date = new Date(params.name);
-            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-          },
-          axisPointer: {
-            animation: false
-          }
-        },
-        xAxis: {
-          type: 'time',
-          splitLine: {
-            show: false
-          }
-        },
-        yAxis: {
-          type: 'value',
-          boundaryGap: [0, '100%'],
-          splitLine: {
-            show: false
-          }
-        },
-        series: [{
-          name: '模拟数据',
-          type: 'line',
-          showSymbol: false,
-          hoverAnimation: false,
-          data: this.getData()
-        },
-        {
-          name: '模拟数据2',
-          type: 'line',
-          showSymbol: false,
-          hoverAnimation: false,
-          data: this.getData()
-        }]
-      }}>
-
-      </ReactEcharts></Col>
-  }
   timestampRangeOnChange = payload => this.props.onQuery({ ...payload })
   getContentPanel = () => {
     const { routes, commonLayout } = this.props;
@@ -249,7 +183,6 @@ class Page extends React.Component {
             )
           })
         }
-        {this.monitor()}
 
       </Row>
     )
