@@ -51,9 +51,9 @@ class Page extends React.Component {
 
   }
   componentDidMount = () => {
-    if (!this.props[NAMESPACE].isInit) {
-      this.onQuery();
-    }
+    // if (!this.props[NAMESPACE].isInit) {
+    //   this.onQuery();
+    // }
   }
   tableOnChange = (pagination, filters, sorter) => {
     this.props.onQuery({ ...filters, page: 1 })

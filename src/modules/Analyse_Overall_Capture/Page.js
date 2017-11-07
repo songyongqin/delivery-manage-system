@@ -26,7 +26,7 @@ const mapStateToProps = state => {
   const { commonLayout } = state.layout;
   return {
     isDark: commonLayout.darkTheme,
-    timestampRange: state[ANALYSE_NAMESPACE].timestampRange
+    timestampRange: state[ANALYSE_NAMESPACE].timestampRange,
   }
 }
 
@@ -47,9 +47,9 @@ class Page extends React.Component {
 
   }
   componentDidMount = () => {
-    if (!this.props[NAMESPACE].isInit) {
-      this.onQuery();
-    }
+    // if (!this.props[NAMESPACE].isInit) {
+    //   this.onQuery();
+    // }
   }
   onQuery = payload => this.props.onQuery({
     timestampRange: this.props.timestampRange,

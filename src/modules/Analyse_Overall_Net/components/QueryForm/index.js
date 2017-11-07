@@ -17,7 +17,7 @@ class QueryForm extends React.Component {
       if (this.props.loading) {
         return;
       }
-
+      values.limit = parseInt(values.limit)
       if (!err) {
         this.props.onSubmit && this.props.onSubmit(values);
       }
@@ -51,7 +51,9 @@ class QueryForm extends React.Component {
             initialValue: value,
 
           })(
-            <Input placeholder={textConfig["placeholder"]}
+            <Input
+              disabled={loading}
+              placeholder={textConfig["placeholder"]}
               style={{ width: "100%" }}
               onPressEnter={this.handleSubmit} />
             )}

@@ -50,9 +50,9 @@ class Page extends React.Component {
 
   }
   componentDidMount = () => {
-    if (!this.props[NAMESPACE].isInit) {
-      this.onQuery();
-    }
+    // if (!this.props[NAMESPACE].isInit) {
+    //   this.onQuery();
+    // }
   }
   onQuery = payload => this.props.onQuery({
     timestampRange: this.props.timestampRange,
@@ -100,6 +100,7 @@ class Page extends React.Component {
           <div style={{ marginBottom: "15px" }}>
             <QueryForm
               isDark={isDark}
+              defaultValue={queryFilters}
               loading={queryLoading}
               textConfig={{ placeholder: "端口搜索 如：8080" }}
               onSubmit={this.props.onQuery}>

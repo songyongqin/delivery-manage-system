@@ -28,10 +28,19 @@ const baseModel = {
     queryResults: {
       total: 0,
       data: []
-    }
+    },
+    lastTime: 0
   },
   effects: {
 
+  },
+  reducers: {
+    setLastTime: (preState, { payload }) => {
+      return {
+        ...preState,
+        lastTime: payload,
+      }
+    }
   }
 };
 

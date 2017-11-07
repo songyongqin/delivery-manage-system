@@ -44,9 +44,9 @@ class Page extends React.Component {
 
   }
   componentDidMount = () => {
-    if (!this.props[NAMESPACE].isInit) {
-      this.onQuery();
-    }
+    // if (!this.props[NAMESPACE].isInit) {
+    //   this.onQuery();
+    // }
   }
   onQuery = payload => this.props.onQuery({
     timestampRange: this.props.timestampRange,
