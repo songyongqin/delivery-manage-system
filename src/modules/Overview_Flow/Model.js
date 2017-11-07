@@ -1,6 +1,3 @@
-/**
- * Created by jojo on 2017/8/21.
- */
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import * as service from './Service';
@@ -9,12 +6,8 @@ import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import { statisticDataIndexes } from './ConstConfig';
 import {
   NAMESPACE
-} from './ConstConfig';
-const initStatistic = {};
+} from './ConstConfig'
 
-statisticDataIndexes.forEach(i => {
-  initStatistic[i] = 0;
-});
 
 moment.locale('zh-cn');
 
@@ -24,18 +17,9 @@ const baseModel = {
   namespace: NAMESPACE,
   state: {
     queryFilters: {
-      timestampRange: [],
-      mergeCounts: 10,
-      attackStage: [],
-      action: [],
-      level: [],
-      actionStatus: [],
-      limit: 5,
-      page: 1,
+      // timestampRange: [],
     },
     queryResults: {
-      total: 0,
-      statistics: initStatistic,
       data: []
     }
   },
@@ -43,13 +27,11 @@ const baseModel = {
 
 const payloadFilter = (payload) => {
   return {
-    total: payload.total,
-    data: payload.data,
-    statistics: payload.statistics,
+    data: payload
   }
 };
 
-const queryService = service.query;
+const queryService = service.get;
 
 export default queryModelGenerator({
   model: baseModel,
