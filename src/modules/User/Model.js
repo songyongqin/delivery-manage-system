@@ -4,7 +4,7 @@
 import moment from 'moment';
 import * as service from './Service';
 import { routerRedux } from 'dva/router';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
+import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import * as tools from '../../utils/tools';
 import {
   ADMIN_ROLE,
@@ -15,117 +15,117 @@ import {
 } from '../../configs/ConstConfig';
 moment.locale('zh-cn');
 
-const NAMESPACE="user";
+const NAMESPACE = "user";
 
-const callConfig={
-  withArgsCombiner:true,
-  withStatusHandle:true,
-  withLoading:true,
+const callConfig = {
+  withArgsCombiner: true,
+  withStatusHandle: true,
+  withLoading: true,
 }
 
-const baseModel={
+const baseModel = {
   namespace: NAMESPACE,
   state: {
-    signin:!!tools.getTemp("userData"),
-    userData:tools.getTemp("userData")||{},
-    productType:tools.getTemp("productType")||{standalone:0,type:"distribution"}
+    signin: !!tools.getTemp("userData"),
+    userData: tools.getTemp("userData") || {},
+    productType: tools.getTemp("productType") || { standalone: 0, type: "distribution" }
   },
-  reducers:{
-    setUserData(preState,{payload}) {
+  reducers: {
+    setUserData(preState, { payload }) {
       return {
         ...preState,
-        signin:true,
-        userData:{
+        signin: true,
+        userData: {
           ...preState.userData,
-          ...payload||{}
+          ...payload || {}
         }
       }
     }
   },
-  effects:{
+  effects: {
 
-    *putPassword({payload,resolve},{callWithExtra}) {
+    *putPassword({ payload, resolve }, { callWithExtra }) {
 
-        const res=yield callWithExtra(
-          service.putPassowrd,
-          {...payload||{}},
-          callConfig
-        );
+      const res = yield callWithExtra(
+        service.putPassowrd,
+        { ...payload || {} },
+        callConfig
+      );
 
-        if(res.status===1){
-          resolve&&resolve();
+      if (res.status === 1) {
+        resolve && resolve();
+      }
+
+    },
+    *postSign({ payload, resolve }, { callWithExtra, put, take }) {
+      const res = yield callWithExtra(
+        service.postSign,
+        { ...payload || {} },
+        commonCallConfig
+      );
+
+      if (res.status === 1) {
+
+        const userData = {
+          ...res.payload,
+          userAccount: payload[USERACCOUNT_DATAINDEX],
+          isAdmin: res.payload[ROLE_DATAINDEX] === ADMIN_ROLE
         }
 
-    },
-    *postSign({payload,resolve},{callWithExtra,put,take}) {
-        const res=yield callWithExtra(
-          service.postSign,
-          {...payload||{}},
-          commonCallConfig
-        );
+        tools.setTemp("userData", userData);
 
-        if(res.status===1){
-
-          const userData={
-            ...res.payload,
-            userAccount:payload[USERACCOUNT_DATAINDEX],
-            isAdmin:res.payload[ROLE_DATAINDEX]===ADMIN_ROLE
+        yield put({
+          type: "setUserData",
+          payload: {
+            ...userData
           }
+        })
 
-          tools.setTemp("userData",userData);
-
-          yield put({
-            type:"setUserData",
-            payload:{
-              ...userData
-            }
-          })
-
-          const productTypeRes=yield callWithExtra(
-            service.getProductType,
-            {},
-            {
-              withStatusHandle:true,
-            }
-          )
-
-          if(productTypeRes.status===1){
-            tools.setTemp("productType",productTypeRes.payload);
+        const productTypeRes = yield callWithExtra(
+          service.getProductType,
+          {},
+          {
+            withStatusHandle: true,
           }
+        )
 
-          resolve&&resolve();
+        if (productTypeRes.status === 1) {
+          tools.setTemp("productType", productTypeRes.payload);
         }
 
+        resolve && resolve();
+      }
+
     },
-    *deleteSign({payload,resolve},{callWithExtra,put}) {
-        window.sessionStorage.clear();
-        window.location.reload();
+    *deleteSign({ payload, resolve }, { callWithExtra, put }) {
+      window.sessionStorage.clear();
+      window.location.reload();
     },
-    *redirect({payload},{call,put,select}){
-      const user=yield select(state=>state.user);
-      if(user.signin){
+    *redirect({ payload }, { call, put, select }) {
+      const user = yield select(state => state.user);
+      if (user.signin) {
         yield put(routerRedux.push('/'));
       }
 
     },
-    *redirectMain({payload},{call,put,select}){
-        yield put(routerRedux.push('/'));
+    *redirectMain({ payload }, { call, put, select }) {
+      yield put(routerRedux.push('/'));
     },
     /*
      *
      * */
-    *checkLogin({payload},{call,put,select}){
-      const user=yield select(state=>state.user);
+    *checkLogin({ payload }, { call, put, select }) {
+      const user = yield select(state => state.user);
 
-      if(!user.signin){
+      if (!user.signin) {
         yield put(routerRedux.push('/login'));
       }
 
     },
-    *checkAdmin({payload},{call,put,select}){
-      const user=yield select(state=>state.user);
+    *checkAdmin({ payload }, { call, put, select }) {
+      const user = yield select(state => state.user);
 
-      if(!user.userData.isAdmin){
+      if (!user.userData.isAdmin) {
         yield put(routerRedux.push('/'));
       }
 
@@ -135,9 +135,9 @@ const baseModel={
     setup({ history, dispatch }) {
       // 监听 history 变化，当进入 `/` 时触发 `load` action
 
-      const adminOnlyRoutes=["/sys-config","/user-manager"];
+      const adminOnlyRoutes = ["/sys-config", "/user-manager", "/sys-log/login"];
 
-      const idsRouteBlackList=[
+      const idsRouteBlackList = [
         "/honeypot-manager/mirror",
         "/honeypot-manager/virtual-machine",
         "/sys-config/strategy",
@@ -148,7 +148,7 @@ const baseModel={
         "/early-warning",
       ];
 
-      const nodeRouteBlackList=[
+      const nodeRouteBlackList = [
         "/analyse/ranking",
         "/analyse/threat-distribution",
         "/early-warning",
@@ -158,37 +158,37 @@ const baseModel={
         "/user-manager",
       ];
 
-      const producType=(tools.getTemp("productType")||{}).type
-
+      const productType = (tools.getTemp("productType") || {}).type
+      console.info(productType);
       return history.listen(({ pathname }) => {
 
-        if(pathname==="/login"){
+        if (pathname === "/login") {
           return dispatch({
-            type:"redirect"
+            type: "redirect"
           });
         }
 
-        if(nodeRouteBlackList.includes(pathname)&&producType===NODE){
+        if (nodeRouteBlackList.includes(pathname) && productType === NODE) {
           return dispatch({
-            type:"redirectMain"
+            type: "redirectMain"
           });
         }
 
-        if(idsRouteBlackList.includes(pathname)&&producType===IDS){
+        if (idsRouteBlackList.includes(pathname) && productType === IDS) {
           return dispatch({
-            type:"redirectMain"
+            type: "redirectMain"
           });
         }
 
-        if(adminOnlyRoutes.includes(pathname)){
+        if (adminOnlyRoutes.includes(pathname)) {
           return dispatch({
-            type:"checkAdmin"
+            type: "checkAdmin"
           })
         }
 
 
         dispatch({
-          type:"checkLogin"
+          type: "checkLogin"
         });
 
       });

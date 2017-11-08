@@ -116,7 +116,7 @@ class Page extends React.Component {
     const { languageConfig, commonLayout } = props;
     const { language, darkTheme } = commonLayout;
 
-    document.title = (props.languageConfig[language] || {}).title;
+    // document.title = (props.languageConfig[language] || {}).title;
 
   }
   componentDidMount = () => {

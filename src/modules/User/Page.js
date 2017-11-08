@@ -100,7 +100,7 @@ class Page extends React.Component {
       [styles["title"]]: true,
       [styles["title-dark"]]: isDark
     })
-
+    console.info(document.title);
     return (
       <div className={pageClasses}>
         <div className={modalClasses}>
@@ -119,7 +119,7 @@ class Page extends React.Component {
           }
           <div className={formWrapperClasses}>
             <h1 className={titleClasses}>
-              {languageConfig["zh-cn"].title}
+              {document.title || languageConfig["zh-cn"].title}
             </h1>
             <LoginForm onSubmit={this.postSignHandle}
               isDark={isDark}
