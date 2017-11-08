@@ -47,7 +47,7 @@ import AnalyseOverallNetModel from './modules/Analyse_Overall_Net/Model';
 import OverviewModel from './modules/Overview/Model';
 import OverviewRankingModel from './modules/Overview_Ranking/Model';
 import OverviewFlowModel from './modules/Overview_Flow/Model';
-
+import SysLogLoginModel from './modules/SystemLog_Login/Model'
 
 // 1. Initialize
 const app = dva({
@@ -95,6 +95,7 @@ app.model(AnalyseOverallNetModel)
 app.model(OverviewModel);
 app.model(OverviewRankingModel)
 app.model(OverviewFlowModel)
+app.model(SysLogLoginModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);
