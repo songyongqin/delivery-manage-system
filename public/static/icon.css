@@ -9,6 +9,14 @@
   font-style: normal;
 }
 
+@font-face{
+  font-family:anticon;src:url("fonts/font-antd.eot");
+  src:url("fonts/font-antd.eot?#iefix") format("embedded-opentype"),
+    url("fonts/font-antd.woff") format("woff"),
+    url("fonts/font-antd.ttf") format("truetype"),
+    url("fonts/font-antd.svg#iconfont") format("svg")
+}
+
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
