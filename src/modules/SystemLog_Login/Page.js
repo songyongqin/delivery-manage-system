@@ -13,7 +13,7 @@ class Page extends React.Component {
 
     return (
       <div>
-        System log Login
+        System log Login test
       </div>
     )
   }
