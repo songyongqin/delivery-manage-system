@@ -68,6 +68,14 @@ const routesZHCN = {
   "user-manager": {
     title: "用户管理"
   },
+  "sys-log": {
+    title: "系统日志",
+    items: {
+      "login": {
+        title: "登录日志"
+      }
+    }
+  },
   "manager": {
     title: producType === IDS ? "流量监测管理" : "蜜罐管理",
     items: {

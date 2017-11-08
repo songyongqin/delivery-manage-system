@@ -154,5 +154,16 @@ export default {
         idsHide: true,
       }
     }
-  }
+  },
+  "sys-log": {
+    link: "/sys-log",
+    adminOnly: true,
+    icon: <Icon type="filetext1"></Icon>,
+    items: {
+      "login": {
+        link: "/sys-log/login",
+        title: "登录日志"
+      }
+    }
+  },
 }

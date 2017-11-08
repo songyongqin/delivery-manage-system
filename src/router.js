@@ -41,6 +41,9 @@ import UserManager from './modules/UserManager/Page';
 
 import WhiteList from './modules/SysConfig_Strategy_WhiteList/Page';
 
+import SystemLog from './modules/SystemLog/Page';
+import SystemLogLogin from './modules/SystemLog_Login/Page';
+
 
 function RouterConfig({ history, app }) {
 
@@ -83,12 +86,13 @@ function RouterConfig({ history, app }) {
           <Route path="virtual-machine" components={ManagerVirtual} />
           <Route path="mirror" components={ManagerMirror} />
         </Route>
-
         <Route path="user-manager" components={UserManager} />
-
-
         <Route path="threat-event" components={ThreatEvent}>
+        </Route>
 
+        <Route path="sys-log" components={SystemLog}>
+          <IndexRedirect to="login" />
+          <Route path="login" components={SystemLogLogin} />
         </Route>
 
         {/*<Redirect from="*" to="error"/>*/}

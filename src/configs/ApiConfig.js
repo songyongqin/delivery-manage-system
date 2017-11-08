@@ -77,6 +77,9 @@ export default {
     DEVICE_UPDATE_INFO_LOCAL: "/device/update-info/local",
 
     OVERVIEW_EVENT: "/overview/event",
-    OVERVIEW_FLOW: "/overview/flow"
+    OVERVIEW_FLOW: "/overview/flow",
+
+
+    SYS_LOG_LOGIN: "/sys-log/login"
   }
 }
