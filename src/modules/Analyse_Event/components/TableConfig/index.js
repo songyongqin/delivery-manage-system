@@ -157,14 +157,14 @@ export const getExpandedRowRender = ({ isDark }) => {
               </td>
             </tr>
 
-            <tr>
+            {/* <tr>
               <td style={nth1TdStyle}>
                 {tools.getKeyText(ADVICE_DATAINDEX, expandedRow.rows)}
               </td>
               <td style={nth2TdStyle}>
                 <JoTag color="#108ee9">{advice}</JoTag>
               </td>
-            </tr>
+            </tr> */}
 
             <tr>
               <td style={nth1TdStyle}>
