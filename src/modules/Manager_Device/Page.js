@@ -75,7 +75,7 @@ class Page extends React.Component {
 
   postLicenceHandle = payload => this.props.postLicence(payload).then(result => {
     this.setState({
-      shouldReload: true
+      shouldReload: result.some(i => i.status === 1)
     })
     return result;
   })
@@ -203,6 +203,7 @@ class Page extends React.Component {
               footer={null}>
               <JoSpin spinning={postLicenceLoading}>
                 <LicenceForm
+                  onCancel={this.switchModal}
                   loading={postLicenceLoading}
                   isDark={isDark}
                   onSubmit={this.postLicenceHandle}

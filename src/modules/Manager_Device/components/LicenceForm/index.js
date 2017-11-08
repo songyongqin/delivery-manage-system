@@ -31,7 +31,7 @@ const FormItem = Form.Item;
 const Dragger = Upload.Dragger;
 const LICENCE_SUCCESS = 1;
 
-const LicenceBackPlaceholder = ({ isDark = false }) => (
+const LicenceBackPlaceholder = ({ isDark = false, shouldReload = false, onCancel }) => (
   <div >
     <h4 style={{
       color: "#108ee9",
@@ -54,10 +54,16 @@ const LicenceBackPlaceholder = ({ isDark = false }) => (
     </table>
     <div style={{ textAlign: "center" }}>
       <Button
-        onClick={() => window.location.reload()}
+        onClick={() => shouldReload ? window.location.reload() : onCancel()}
         size="large"
         type="primary">
-        确定(重新载入应用)
+        {
+          shouldReload
+            ?
+            "确定(重新载入应用)"
+            :
+            "确定"
+        }
       </Button>
     </div>
   </div >
@@ -70,6 +76,8 @@ class WrappedForm extends React.Component {
   state = {
     result: [],
     fileVisible: false,
+    disabledList: [],
+    hasFail: false,
   }
   static defaultProps = {
     defaultValue: { data: [] }
@@ -104,6 +112,7 @@ class WrappedForm extends React.Component {
     data.forEach(item => {
       const deviceId = item[ID_DATAINDEX];
 
+
       deviceId in codeList
         ?
         form.setFieldsValue({ [deviceId]: codeList[deviceId] })
@@ -116,6 +125,10 @@ class WrappedForm extends React.Component {
             ]
           }
         })
+    })
+
+    this.setState({
+      disabledList: Object.keys(codeList),
     })
   }
   handleSubmit = (e) => {
@@ -137,7 +150,8 @@ class WrappedForm extends React.Component {
 
       onSubmit && onSubmit(payload).then(result => {
         this.setState({
-          result
+          result,
+          shouldReload: result.some(i => i.status === 1)
         })
       });
 
@@ -146,7 +160,7 @@ class WrappedForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = { data: [] }, style } = this.props;
-    const { result, fileVisible } = this.state;
+    const { result, fileVisible, disabledList, shouldReload } = this.state;
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -198,7 +212,8 @@ class WrappedForm extends React.Component {
                       }
                     ]
                   })(
-                    <Input placeholder="填写授权码"></Input>
+                    <Input placeholder="填写授权码" disabled={loading || disabledList.includes(records[ID_DATAINDEX])}>
+                    </Input>
                     )}
                 </FormItem>
               )
@@ -271,7 +286,11 @@ class WrappedForm extends React.Component {
         {
           haveResult
             ?
-            <LicenceBackPlaceholder isDark={isDark}></LicenceBackPlaceholder>
+            <LicenceBackPlaceholder
+              isDark={isDark}
+              shouldReload={shouldReload}
+              onCancel={this.props.onCancel}>
+            </LicenceBackPlaceholder>
             :
             <div>
               <p
