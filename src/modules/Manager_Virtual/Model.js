@@ -27,6 +27,11 @@ notification.config({
 
 export const HONEYPOT_CREATE_LIST_CACHE_NAMESPACE = "honeypotCreateList";
 
+const callConfig = {
+  withArgsCombiner: true,
+  withStatusHandle: true,
+  withTime: true,
+}
 
 
 
@@ -89,7 +94,7 @@ const baseModel = {
       const res = yield callWithExtra(
         service.getStatus,
         payload,
-        commonCallConfig
+        callConfig
       )
 
       if (res.status === 1) {
@@ -161,7 +166,7 @@ const baseModel = {
       const res = yield callWithExtra(
         service.postVM,
         payload,
-        commonCallConfig
+        callConfig
       )
       if (res.status === 1) {
 
@@ -200,7 +205,7 @@ const baseModel = {
       const res = yield callWithExtra(
         service.deleteVM,
         { ...payload || {} },
-        commonCallConfig
+        callConfig
       )
       if (res.status === 1) {
         resolve && resolve(res.payload)
@@ -210,7 +215,7 @@ const baseModel = {
       const res = yield callWithExtra(
         service.putVM,
         { ...payload || {} },
-        commonCallConfig
+        callConfig
       )
       if (res.status === 1) {
         resolve && resolve(res.payload)
@@ -220,7 +225,7 @@ const baseModel = {
       const res = yield callWithExtra(
         service.getVMIpList,
         { ...payload || {} },
-        commonCallConfig
+        callConfig
       )
       if (res.status === 1) {
         resolve && resolve(res.payload)
@@ -230,7 +235,7 @@ const baseModel = {
       const res = yield callWithExtra(
         service.getNodeIpList,
         {},
-        commonCallConfig
+        callConfig
       )
       if (res.status === 1) {
         resolve && resolve(res.payload)
@@ -240,7 +245,7 @@ const baseModel = {
       const res = yield callWithExtra(
         service.getVMNameList,
         {},
-        commonCallConfig
+        callConfig
       )
       if (res.status === 1) {
         resolve && resolve(res.payload)
@@ -250,7 +255,7 @@ const baseModel = {
       const res = yield callWithExtra(
         service.validate,
         payload,
-        commonCallConfig
+        callConfig
       )
       if (res.status === 1) {
         resolve && resolve({ payload: res.payload, message: res.message })
