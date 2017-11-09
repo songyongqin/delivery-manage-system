@@ -76,12 +76,14 @@ export const connectTextConfig = {
 
 const PROP_NODE = "node",
   PROP_CONTROL = "control",
-  PROP_STANDALONE = "standalone";
+  PROP_STANDALONE = "standalone",
+  PROP_IDS = "ids";
 
 export const devicePropsTextConfig = {
   [PROP_CONTROL]: "控制中心",
   [PROP_STANDALONE]: "单机版蜜罐",
-  [PROP_NODE]: "蜜罐节点"
+  [PROP_NODE]: "蜜罐节点",
+  [PROP_IDS]: "流量监测节点"
 }
 
 export const CONTROL_PANEL_TITLE = "控制中心设备";
