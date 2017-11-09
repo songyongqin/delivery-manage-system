@@ -80,6 +80,17 @@ export default {
     OVERVIEW_FLOW: "/overview/flow",
 
 
-    SYS_LOG_LOGIN: "/sys-log/login"
+    SYS_LOG_LOGIN: "/sys-log/login",
+
+
+    REPORT_STATISTICS: "/report/statistics",
+    REPORT_FALL_HOST: "/report/fall-host",
+    REPORT_THREAT_INFO: "/report/threat-info",
+    REPORT_MAL_IP: "/report/mal-ip",
+    REPORT_MAL_DOMAIN: "/report/mal-domain",
+    REPORT_SUFFER_HOST_CALL_ON_RECORD: "/report/suffer-host-call-on-record",
+    REPORT_HAVE_COMMUNICATE_INSIDE_IP: "/report/have-communicate-inside-ip",
+    REPORT_CALL_ON_IP: "/report/call-on-ip",
+    REPORT_CALL_ON_DOMAIN: "/report/call-on-domain"
   }
 }
