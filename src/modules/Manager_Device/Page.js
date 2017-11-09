@@ -5,6 +5,7 @@ import ControlDisk from '../Manager_Device_Control_Disk/Page';
 import DeviceControl from '../Manager_Device_Control/Page';
 import NodeDisk from '../Manager_Device_Node_Disk/Page';
 import DeviceNode from '../Manager_Device_Node/Page';
+import DeviceNodeIDS from '../Manager_Device_Node_IDS/Page';
 import {
   ID_DATAINDEX,
   CONTROL_PANEL_TITLE,
@@ -18,6 +19,7 @@ import { NAMESPACE as MANAGER_DEVICE_NAMESPACE } from '../Manager_Device_Control
 import { NAMESPACE as MANAGER_DEVICE_DISK_NAMESPACE } from '../Manager_Device_Control_Disk/ConstConfig';
 import { NAMESPACE as MANAGER_DEVICE_NODE_DISK_NAMESPACE } from '../Manager_Device_Node_Disk/ConstConfig'
 import { NAMESPACE as MANAGER_DEVICE_NODE_NAMESPACE } from '../Manager_Device_Node/ConstConfig';
+import { NAMESPACE as MANAGER_DEVICE_NODE_IDS_NAMESPACE } from '../Manager_Device_Node_IDS/ConstConfig'
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 
 import LicenceForm from './components/LicenceForm';
@@ -37,7 +39,11 @@ function mapStateToProps(state) {
     nodeLoading: effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/query`]
     || effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/put`]
     || effectsLoading[`${MANAGER_DEVICE_NODE_NAMESPACE}/query`],
-    postLicenceLoading: state.loading.effects[`${MANAGER_DEVICE_NODE_NAMESPACE}/postLicence`]
+    postLicenceLoading: state.loading.effects[`${MANAGER_DEVICE_NODE_NAMESPACE}/postLicence`],
+    nodeIdsLoading: effectsLoading[`${MANAGER_DEVICE_NODE_IDS_NAMESPACE}/query`]
+    || effectsLoading[`${MANAGER_DEVICE_NODE_IDS_NAMESPACE}/put`]
+    || effectsLoading[`${MANAGER_DEVICE_NODE_IDS_NAMESPACE}/query`],
+    postLicenceLoading: state.loading.effects[`${MANAGER_DEVICE_NODE_IDS_NAMESPACE}/postLicence`],
   }
 }
 
@@ -94,6 +100,7 @@ class Page extends React.Component {
           this.props.animateRender([
             this.getControlPanel(),
             this.getNodePanel(),
+            this.getNodeIDSPanel()
           ])
         }
       </div>
@@ -192,6 +199,66 @@ class Page extends React.Component {
             </div>
             <div style={{ marginTop: "15px" }}>
               <DeviceNode setSelectedRows={this.setSelectedRows} />
+            </div>
+            <Modal
+              width="800px"
+              key={`${this.state.visible}-licence-modal`}
+              onCancel={this.switchModal}
+              title="设备授权"
+              maskClosable={false}
+              visible={this.state.visible}
+              footer={null}>
+              <JoSpin spinning={postLicenceLoading}>
+                <LicenceForm
+                  onCancel={this.switchModal}
+                  loading={postLicenceLoading}
+                  isDark={isDark}
+                  onSubmit={this.postLicenceHandle}
+                  defaultValue={{
+                    data: this.state.selectedRows.map(i => ({
+                      [ID_DATAINDEX]: i[ID_DATAINDEX],
+                      [LICENCE_STATUS_DATAINDEX]: i[LICENCE_STATUS_DATAINDEX].value
+                    }))
+                  }}>
+                </LicenceForm>
+              </JoSpin>
+            </Modal>
+          </JoSpin>
+        </Card>
+      </div>
+    )
+  }
+  getNodeIDSPanel = () => {
+
+    const { commonLayout, nodeIdsLoading, productType, userData, postLicenceLoading } = this.props;
+
+    /*是否为单机版本*/
+    if (productType.standalone === 1) {
+      return;
+    }
+
+    const { isAdmin } = userData;
+    const isDark = commonLayout.darkTheme;
+    const classes = classnames({
+      ["expanded-row-dark"]: commonLayout.darkTheme
+    });
+
+    const menu = (
+      <Menu >
+        <Menu.Item key="clear">批量磁盘清理</Menu.Item>
+        <Menu.Item key="update">批量检查更新</Menu.Item>
+      </Menu>
+    );
+
+    return (
+      <div key="node-panel-ids">
+        <Card className={classes}
+          title={"流量监测设备"}
+          style={{ marginTop: "15px" }}>
+          <JoSpin spinning={nodeIdsLoading}>
+
+            <div style={{ marginTop: "15px" }}>
+              <DeviceNodeIDS />
             </div>
             <Modal
               width="800px"
