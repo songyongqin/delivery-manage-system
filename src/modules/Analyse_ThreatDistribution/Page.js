@@ -88,10 +88,9 @@ const getOption = ({ data, isDark, mapType = "world" }) => {
   } else {
     option.series[0].center = [10, 15]
   }
-
   if (data.length !== 0) {
     option.visualMap = {
-      min: Math.min(...values),
+      min: 0,
       max: Math.max(...values),
       text: ['最大值', '最小值'],
       realtime: false,

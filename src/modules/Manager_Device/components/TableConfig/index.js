@@ -236,15 +236,15 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
     extraProps
   });
 
-  const CONNCET_ROW_INDEX = 4
+  const CONNECT_ROW_INDEX = 4
 
   columns = isNode
     ?
     columns
     :
     [
-      ...columns.slice(0, CONNCET_ROW_INDEX),
-      ...columns.slice(CONNCET_ROW_INDEX + 1)
+      ...columns.slice(0, CONNECT_ROW_INDEX),
+      ...columns.slice(CONNECT_ROW_INDEX + 1)
     ]
 
 

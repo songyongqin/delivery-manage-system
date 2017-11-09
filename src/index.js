@@ -49,6 +49,7 @@ import OverviewRankingModel from './modules/Overview_Ranking/Model';
 import OverviewFlowModel from './modules/Overview_Flow/Model';
 import SysLogLoginModel from './modules/SystemLog_Login/Model'
 import ReportModel from './modules/Report/Model';
+import DeviceNodeIdsModel from './modules/Manager_Device_Node_IDS/Model'
 
 // 1. Initialize
 const app = dva({
@@ -98,6 +99,7 @@ app.model(OverviewRankingModel)
 app.model(OverviewFlowModel)
 app.model(SysLogLoginModel)
 app.model(ReportModel)
+app.model(DeviceNodeIdsModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);
