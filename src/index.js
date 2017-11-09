@@ -48,6 +48,7 @@ import OverviewModel from './modules/Overview/Model';
 import OverviewRankingModel from './modules/Overview_Ranking/Model';
 import OverviewFlowModel from './modules/Overview_Flow/Model';
 import SysLogLoginModel from './modules/SystemLog_Login/Model'
+import ReportModel from './modules/Report/Model';
 
 // 1. Initialize
 const app = dva({
@@ -96,6 +97,7 @@ app.model(OverviewModel);
 app.model(OverviewRankingModel)
 app.model(OverviewFlowModel)
 app.model(SysLogLoginModel)
+app.model(ReportModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);
