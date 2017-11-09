@@ -160,11 +160,10 @@ class WrappedForm extends React.Component {
     const protocolTypes = this.props.protocolTypes || [];
     const threatTypes = this.props.threatTypes || [];
     const { ruleItems, checkerStatus } = this.state;
-
     const lblClasses = classnames({
       [styles["lbl-dark"]]: isDark
     });
-
+    console.info(threatTypes)
     const commonProps = { ...formItemLayout, colon: false, hasFeedback: true, required: true }
     let items = [];
 
@@ -213,9 +212,9 @@ class WrappedForm extends React.Component {
           <Select size="large"
             style={{ width: "140px" }}>
             {threatTypes.map((i, index) => (
-              <Select.Option value={i.key}
+              <Select.Option value={i.key || i.value}
                 key={`${index}-item`}>
-                {i.name}
+                {i.name || i.text}
               </Select.Option>
             ))}
           </Select>
