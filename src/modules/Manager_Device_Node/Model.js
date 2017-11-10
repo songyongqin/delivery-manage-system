@@ -11,6 +11,11 @@ import { DISK_PER_DATAINDEX } from '../Manager_Device/ConstConfig'
 
 moment.locale('zh-cn');
 
+const callConfig = {
+  withStatusHandle: true,
+  withTime: true,
+}
+
 const baseModel = {
   namespace: NAMESPACE,
   state: {
@@ -29,7 +34,47 @@ const baseModel = {
       const res = yield callWithExtra(
         service.postLicence,
         { data: payload },
-        commonCallConfig
+        callConfig
+      )
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
+      }
+    },
+    getUpdateInfoLocal: function* ({ payload, resolve }, { callWithExtra }) {
+      const res = yield callWithExtra(
+        service.getVersionInfoLocal,
+        payload,
+        callConfig
+      )
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
+      }
+    },
+    getUpdateInfoRemote: function* ({ payload, resolve }, { callWithExtra }) {
+      const res = yield callWithExtra(
+        service.getVersionInfoRemote,
+        payload,
+        callConfig
+      )
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
+      }
+    },
+    updateRemote: function* ({ payload, resolve }, { callWithExtra }) {
+      const res = yield callWithExtra(
+        service.updateRemote,
+        payload,
+        callConfig
+      )
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
+      }
+    },
+    updateLocal: function* ({ payload, resolve }, { callWithExtra }) {
+      const res = yield callWithExtra(
+        service.updateLocal,
+        payload,
+        callConfig
       )
       if (res.status === 1) {
         resolve && resolve(res.payload)

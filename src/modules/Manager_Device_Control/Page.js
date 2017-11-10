@@ -12,27 +12,6 @@ import Modal from '../../domainComponents/Modal';
 import JoSpin from '../../components/JoSpin';
 
 
-const data = [
-  // {
-  //   id: "to1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3oto1z4gkh3o",
-  //   licenceStatus: 0,
-  // },
-  // {
-  //   id: "k401h44vf3",
-  //   licenceStatus: 0,
-  // },
-  {
-    id: Math.random().toString(36).slice(2, 100),
-    licenceStatus: 1,
-  }, {
-    id: Math.random().toString(36).slice(2, 100),
-    licenceStatus: 1,
-  },
-  {
-    id: "1qynia56guj1qynia56guj1qynia56guj1qynia56guj1qynia56guj",
-    licenceStatus: 0,
-  },
-]
 
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;

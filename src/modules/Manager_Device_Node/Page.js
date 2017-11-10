@@ -12,13 +12,19 @@ import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import LicenceForm from '../Manager_Device/components/LicenceForm';
 import Modal from '../../domainComponents/Modal';
 import JoSpin from '../../components/JoSpin';
+import UpdateForm from '../Manager_Device/components/UpdateForm'
 
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
+  const effectLoading = state.loading.effects;
   return {
     commonLayout,
     userData: state.user.userData,
-    postLicenceLoading: state.loading.effects[`${NAMESPACE}/postLicence`]
+    postLicenceLoading: state.loading.effects[`${NAMESPACE}/postLicence`],
+    updateLoading: effectLoading[`${NAMESPACE}/getUpdateInfoLocal`]
+    || effectLoading[`${NAMESPACE}/getUpdateInfoRemote`]
+    || effectLoading[`${NAMESPACE}/updateRemote`]
+    || effectLoading[`${NAMESPACE}/updateLocal`]
   }
 }
 
@@ -31,6 +37,22 @@ function mapDispatchToProps(dispatch) {
     postLicence: payload => dispatch({
       type: `${NAMESPACE}/postLicence`,
       payload
+    }),
+    getUpdateInfoLocal: payload => dispatch({
+      type: `${NAMESPACE}/getUpdateInfoLocal`,
+      payload
+    }),
+    getUpdateInfoRemote: payload => dispatch({
+      type: `${NAMESPACE}/getUpdateInfoRemote`,
+      payload
+    }),
+    updateRemote: payload => dispatch({
+      type: `${NAMESPACE}/updateRemote`,
+      payload
+    }),
+    updateLocal: payload => dispatch({
+      type: `${NAMESPACE}/updateLocal`,
+      payload,
     })
   }
 }
@@ -48,10 +70,23 @@ class Page extends React.Component {
     this.state = {
       visible: false,
       shouldReload: false,
-      activeItems: []
+      activeItems: [],
+      updateVisible: false,
+      hasGetVersion: false,
+
     }
   }
-
+  initGetVersion = () => {
+    this.setState({
+      hasGetVersion: false,
+    })
+  }
+  switchUpdateModal = () => {
+    this.setState({
+      updateVisible: !this.state.updateVisible,
+    })
+    this.initGetVersion()
+  }
   switchModal = () => {
     if (this.state.shouldReload) {
       window.location.reload();
@@ -78,12 +113,28 @@ class Page extends React.Component {
   setActiveItems = activeItems => this.setState({
     activeItems
   })
+  getUpdateInfoRemote = payload => this.props.getUpdateInfoRemote(payload)
+    .then(result => {
+      this.setState({ hasGetVersion: true })
+      return result;
+    })
+
+  getUpdateInfoLocal = payload => this.props.getUpdateInfoLocal(payload)
+    .then(result => {
+      this.setState({ hasGetVersion: true })
+      return result;
+    })
+
+  updateRemote = payload => this.props.updateRemote(payload)
+
+  updateLocal = payload => this.props.updateLocal(payload)
 
   getResultsPanel = () => {
 
-    const { commonLayout, userData, postLicenceLoading } = this.props;
+    const { commonLayout, userData, postLicenceLoading, updateLoading } = this.props;
     const { queryResults, lastReqTime, queryFilters } = this.props[NAMESPACE];
     const { isAdmin } = userData;
+    const { hasGetVersion } = this.state;
     const isDark = commonLayout.darkTheme;
 
     const tableProps = {
@@ -123,6 +174,13 @@ class Page extends React.Component {
       pageSize: queryFilters.limit,
     };
 
+    const {
+      getUpdateInfoLocal,
+      getUpdateInfoRemote,
+      updateLocal,
+      updateRemote
+    } = this;
+
     return (
       <div>
         <EnhanciveTable
@@ -146,6 +204,24 @@ class Page extends React.Component {
               onSubmit={this.postLicenceHandle}
               defaultValue={{ data: this.state.activeItems }}>
             </LicenceForm>
+          </JoSpin>
+        </Modal>
+        <Modal
+          width={hasGetVersion ? "1200px" : "900px"}
+          key={`${this.state.updateVisible}-update-modal`}
+          onCancel={this.switchUpdateModal}
+          title="设备更新"
+          maskClosable={false}
+          visible={this.state.updateVisible}
+          footer={null}>
+          <JoSpin spinning={updateLoading}>
+            <UpdateForm
+              handle={{ getUpdateInfoLocal, getUpdateInfoRemote, updateLocal, updateRemote }}
+              loading={updateLoading}
+              isDark={isDark}
+              onSubmit={this.postLicenceHandle}
+              defaultValue={{ data: queryResults.data }}>
+            </UpdateForm>
           </JoSpin>
         </Modal>
       </div>
