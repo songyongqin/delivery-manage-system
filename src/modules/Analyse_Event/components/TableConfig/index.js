@@ -148,7 +148,7 @@ export const getExpandedRowRender = ({ isDark }) => {
                 <div>
                   {details.map((d, index) => {
                     return <JoTag key={'item-' + index}
-                      style={{ marginBottom: "0" }}
+
                       color="#108ee9">
                       {d}
                     </JoTag>
