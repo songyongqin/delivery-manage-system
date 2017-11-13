@@ -52,7 +52,7 @@ import OverviewFlowModel from './modules/Overview_Flow/Model';
 import SysLogLoginModel from './modules/SystemLog_Login/Model'
 import ReportModel from './modules/Report/Model';
 import DeviceNodeIdsModel from './modules/Manager_Device_Node_IDS/Model'
-import AnalyseEventStatisticsModel from './modules/Analyse_Event/models/statistics'
+import AnalyseEventStatisticsModel from './modules/Analyse_Event/models/Statistics'
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
