@@ -46,6 +46,7 @@ import AnalyseOverallCaptureModel from './modules/Analyse_Overall_Capture/Model'
 import AnalyseOverallSystemModel from './modules/Analyse_Overall_System/Model';
 import AnalyseOverallNetModel from './modules/Analyse_Overall_Net/Model';
 import OverviewModel from './modules/Overview/Model';
+import OverviewStatisticsModel from './modules/Overview/models/Statistics'
 import OverviewRankingModel from './modules/Overview_Ranking/Model';
 import OverviewFlowModel from './modules/Overview_Flow/Model';
 import SysLogLoginModel from './modules/SystemLog_Login/Model'
@@ -103,6 +104,7 @@ app.model(SysLogLoginModel)
 app.model(ReportModel)
 app.model(DeviceNodeIdsModel)
 app.model(AnalyseEventStatisticsModel)
+app.model(OverviewStatisticsModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

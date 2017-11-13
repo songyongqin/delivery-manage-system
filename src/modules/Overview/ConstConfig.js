@@ -7,6 +7,8 @@ import JoIcon from '../../components/JoIcon';
 
 
 export const NAMESPACE = "overview";
+export const STATISTICS_NAMESPACE = "overviewStatistics"
+export const EVENT_NAMESPACE = "overviewEvent"
 /**************************************************
  * table
  **************************************************/
