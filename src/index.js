@@ -2,6 +2,7 @@ import dva from 'dva';
 import './index.css';
 import './styles/commonHack.css';
 import createLoading from 'dva-loading'
+import createLastEffectTime from 'utils/dvaLastEffectTime'
 import router from './router';
 import { useRouterHistory } from 'dva/router';
 import { createHashHistory } from 'history';
@@ -57,6 +58,7 @@ const app = dva({
 });
 
 app.use(createLoading({ effects: true }));
+app.use(createLastEffectTime())
 
 // 3. Model
 app.model(MainModel);

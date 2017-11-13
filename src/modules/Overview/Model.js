@@ -1,62 +1,40 @@
-/**
- * Created by jojo on 2017/8/21.
- */
-import { routerRedux } from 'dva/router';
-import moment from 'moment';
+import createQueryModel from 'utils/models/query'
 import * as service from './Service';
-import { queryModelGenerator } from '../../utils/dvaModelGenerator';
-import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
-import { statisticDataIndexes } from './ConstConfig';
-import {
-  NAMESPACE
-} from './ConstConfig';
-const initStatistic = {};
-
-statisticDataIndexes.forEach(i => {
-  initStatistic[i] = 0;
-});
-
-moment.locale('zh-cn');
-
-
-
-const baseModel = {
+import { NAMESPACE } from './ConstConfig'
+const model = {
   namespace: NAMESPACE,
   state: {
-    queryFilters: {
+    filters: {
       timestampRange: [],
       mergeCounts: 10,
       attackStage: [],
       action: [],
       level: [],
       actionStatus: [],
-      limit: 5,
+      limit: 20,
       page: 1,
     },
-    queryResults: {
+    results: {
       total: 0,
-      statistics: initStatistic,
+      statistics: {},
       data: []
     }
-  },
-};
-
-const payloadFilter = (payload) => {
-  return {
-    total: payload.total,
-    data: payload.data,
-    statistics: payload.statistics,
   }
-};
+}
 
-const queryService = service.query;
 
-export default queryModelGenerator({
-  model: baseModel,
-  payloadFilter,
-  callConfig: commonCallConfig,
-  queryService,
-  initPath: "/overview"
-});
-
+export default createQueryModel({
+  model,
+  service: service.query,
+  isSuccess: res => res.status === 1,
+  resultFilter: ({ payload }) => {
+    const { total, data, statistics } = payload;
+    return {
+      total,
+      data,
+      statistics,
+    }
+  },
+  initPath: "/overview",
+})
 
