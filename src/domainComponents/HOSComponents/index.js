@@ -15,7 +15,7 @@ export const WithCommonConnect = namespace => {
     lastQueryTime: state.lastEffectTime.effects[`${namespace}/query`],
     queryLoading: state.loading.effects[`${namespace}/query`],
     commonLayout: state.layout,
-    isDark: state.layout.darkTheme,
+    isDark: state.layout.commonLayout.darkTheme,
   })
 
   const mapDispatchToProps = dispatch => ({

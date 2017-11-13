@@ -38,7 +38,7 @@ export default {
     REPORT: "/report",
 
     ANALYSE_EVENT: "/analyse/event",
-
+    ANALYSE_EVENT_STATISTICS: "/analyse/event/statistics",
     ANALYSE_EVENT_EXPLOIT: "/analyse/event/exploit",
     ANALYSE_EVENT_TOOL: "/analyse/event/tool",
     ANALYSE_EVENT_THREAINFO: "/analyse/event/threat-info",

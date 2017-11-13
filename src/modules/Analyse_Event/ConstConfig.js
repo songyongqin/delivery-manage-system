@@ -7,6 +7,7 @@ import JoIcon from '../../components/JoIcon';
 
 
 export const NAMESPACE = "analyseEvent";
+export const STATISTICS_NAMESPACE = "analyseEventStatistics"
 /**************************************************
  * table
  **************************************************/

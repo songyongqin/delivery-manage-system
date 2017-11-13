@@ -51,7 +51,7 @@ import OverviewFlowModel from './modules/Overview_Flow/Model';
 import SysLogLoginModel from './modules/SystemLog_Login/Model'
 import ReportModel from './modules/Report/Model';
 import DeviceNodeIdsModel from './modules/Manager_Device_Node_IDS/Model'
-
+import AnalyseEventStatisticsModel from './modules/Analyse_Event/models/statistics'
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -102,6 +102,7 @@ app.model(OverviewFlowModel)
 app.model(SysLogLoginModel)
 app.model(ReportModel)
 app.model(DeviceNodeIdsModel)
+app.model(AnalyseEventStatisticsModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

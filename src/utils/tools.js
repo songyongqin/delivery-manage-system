@@ -26,7 +26,7 @@ export const judgeURL = (str_url = "") => {
 export const jsonToQueryString = (jsonObject) => {
 
   jsonObject = { ...jsonObject }
-  
+
   if ((jsonObject["timestampRange"])) {
     jsonObject["timestampRange"] = momentToTimestamp(jsonObject["timestampRange"])
   }
@@ -181,3 +181,7 @@ export function curry(...args) {
 
 
 export const getTableRowKey = (index, lastReqTime) => `item-${index}-${lastReqTime}`
+
+import Ramda from 'ramda';
+
+export const compose = Ramda.compose;

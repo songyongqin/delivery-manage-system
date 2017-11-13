@@ -16,9 +16,10 @@ import {
   NAMESPACE,
   EVENT_ACTION_DATA_INDEX,
   MAIN_NAMESPACE,
-  ACTION_DATAINDEX
+  ACTION_DATAINDEX,
+  STATISTICS_NAMESPACE
 } from './ConstConfig';
-import EventStatisticsPanel from "domainComponents/EventStatisticsPanel"
+import EventStatisticsPanel from "./components/EventStatisticsPanel"
 import JoIcon from '../../components/JoIcon';
 import { Link } from 'dva/router';
 import ThreatEvent from '../ThreatEvent/Page';
@@ -29,25 +30,39 @@ import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageO
 import Modal from 'domainComponents/Modal'
 import { connect } from 'dva'
 import { WithAnimateRender } from 'components/HOSComponents'
-import { WithCommonConnect, WithCommonTableHandle, WithModal,WithContainerHeader } from 'domainComponents/HOSComponents'
+import { WithCommonConnect, WithCommonTableHandle, WithModal, WithContainerHeader } from 'domainComponents/HOSComponents'
+const { compose } = tools;
+import EventPanel from './components/EventPanel'
 
-const mapStateToProps = state => {
-  const { commonLayout } = state.layout;
+const mapStateToProps=state=>{
+
   return {
-    commonLayout,
-    action: state[MAIN_NAMESPACE].queryResults[EVENT_ACTION_DATA_INDEX] || {},
+    eventFilters:state[NAMESPACE].filters,
+    statisticsFilters:state[STATISTICS_NAMESPACE].filters,
   }
 }
+
+const mapDispatchToProps=dispatch=>(
+  {
+    queryStatistics:payload=>dispatch({
+      type:`${NAMESPACE}/query`,
+      payload,
+    }),
+    queryEvent:payload=>dispatch({
+      type:`${STATISTICS_NAMESPACE}/query`,
+      payload
+    })
+  }
+)
 
 const THREAT_EVENT_MODAL = "threatEvent";
 
 
 @WithContainerHeader
 @WithCommonConnect(NAMESPACE)
-@WithCommonTableHandle
 @WithModal()
 @WithAnimateRender
-@connect(mapStateToProps)
+@connect(mapStateToProps,mapDispatchToProps)
 class Page extends React.Component {
   constructor(props) {
     super(props);
@@ -69,93 +84,38 @@ class Page extends React.Component {
     })
   }
 
-  timestampRangeOnChange = payload => this.props.onSearch(payload)
+  timestampRangeOnChange = payload => {
+    this.props.queryEvent({...this.props.eventFilters,...payload,page:1})
+    this.props.queryStatistics({...payload})
+  }
 
   getQueryPanel = () => {
     const { routes, filters } = this.props;
     return (
       <div key="query-panel" style={{ marginTop: "15px" }}>
         {this.props.getContainerHeader({
-            routes,
-            queryFilters:filters,
-            onQuery: this.timestampRangeOnChange
-          })}
+          routes,
+          queryFilters: filters,
+          onQuery: this.timestampRangeOnChange
+        })}
       </div>
     )
   };
   getStatisticResultPanel = () => {
 
-    const { commonLayout, results } = this.props
-
+    const { isDark, results } = this.props
     return <EventStatisticsPanel
-      isDark={commonLayout.darkTheme}
-      data={results.statistics}
       getDetailsItemOnClickHandle={this.getDetailsItemOnClickHandle}
       key="statistics-panel">
     </EventStatisticsPanel>
 
 
   };
-  onFilter = (value) => {
-    this.props.query({
-      ...this.props.filters,
-      mergeCounts: value,
-      page: 1
-    })
-  };
   getDataResultPanel = () => {
-    const {
-      pageOnChange,
-      tableOnChange,
-      action,
-      lastQueryTime,
-      commonLayout,
-      results,
-      filters
-    } = this.props
-    const { data, total } = results
-    const { page, limit } = filters
-    const isDark = commonLayout.darkTheme
-
-    const filtersOption = {
-      [ACTION_DATAINDEX]: Object.keys(action),
-    }
-
-    const filterTextConfig = {
-      [ACTION_DATAINDEX]: action
-    }
-
-
-    const tableProps = {
-      onChange: tableOnChange,
-      columns: tableConfig.getColumns({
-        queryFilters: filters,
-        onSubmit: this.onFilter,
-        filters: filtersOption,
-        filterTextConfig
-      }),
-      expandedRowRender: tableConfig.getExpandedRowRender({ isDark }),
-      dataSource: data.map((i, index) => {
-        return {
-          ...i,
-          key: `item-${index}-${lastQueryTime}`
-        }
-      })
-    };
-
-    const paginationProps = {
-      total: total,
-      current: page,
-      onChange: pageOnChange,
-      pageSize: limit,
-    };
 
     return (
       <div key={"results-panel"}>
-        <EnhanciveTable title={tableTextConfig.title}
-          key={"table" + lastQueryTime}
-          tableProps={tableProps}
-          paginationProps={paginationProps} />
+        <EventPanel></EventPanel>
       </div>
     )
   };
@@ -166,13 +126,11 @@ class Page extends React.Component {
 
     return (
       <div>
-        <JoSpin spinning={this.props.queryLoading}>
-          {this.props.animateRender([
-            this.getQueryPanel(),
-            this.getStatisticResultPanel(),
-            this.getDataResultPanel(),
-          ])}
-        </JoSpin>
+        {this.props.animateRender([
+          this.getQueryPanel(),
+          this.getStatisticResultPanel(),
+          this.getDataResultPanel(),
+        ])}
         <Modal width={"90%"}
           style={{ top: "80px" }}
           key={`${modalVisible[THREAT_EVENT_MODAL]}-modal-threat-event`}
@@ -187,5 +145,10 @@ class Page extends React.Component {
     )
   }
 }
+
+
+
+
+
 
 export default Page;
