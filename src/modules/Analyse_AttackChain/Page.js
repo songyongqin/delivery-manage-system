@@ -5,10 +5,10 @@ import { Menu, Button,Breadcrumb,Table,Icon,Row,Col,Card,Badge,Timeline,Checkbox
 import {queryContainerGenerator} from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
-import * as tableConfig from  './components/index';
+import * as tableConfig from  './components/TableConfig';
 import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
-
+import QueryForm from './components/StageCheckForm'
 import {NAMESPACE} from './ConstConfig';
 
 
@@ -32,23 +32,7 @@ class Page extends React.Component{
     super(props);
   }
 
-  getCheckboxOnChange=(value)=>{
-    return (checked)=>{
-      const {attackStage}=this.props[NAMESPACE].queryFilters;
-
-      let attackStageMap={};
-
-      attackStage.forEach(i=>{
-        attackStageMap[i]=true;
-      })
-
-      attackStageMap[value]=checked;
-
-      let newAttackStage=Object.keys(attackStageMap).filter(k=>attackStageMap[k]);
-
-      this.props.onQuery({attackStage:newAttackStage})
-    }
-  };
+  onFilter=payload=>this.props.query({...this.props[NAMESPACE].queryFilters,...payload})
   getQueryPanel=()=>{
     const {onQuery,routes}=this.props;
     const {queryFilters}=this.props[NAMESPACE];
@@ -62,6 +46,20 @@ class Page extends React.Component{
       </div>
     )
   };
+
+  
+
+  getStageCheckPanel=()=>{
+    return (
+      <div key="stage-check" style={{marginBottom:"15px"}}>
+        <QueryForm 
+        defaultValue={this.props[NAMESPACE].queryFilters}
+        onSubmit={this.onFilter}
+        isDark={this.props.commonLayout.darkTheme}>
+        </QueryForm>
+      </div>
+    )
+  }
   getResultsPanel=()=>{
 
     return (
@@ -80,7 +78,6 @@ class Page extends React.Component{
     const tableProps={
       columns:tableConfig.getColumns({
         queryFilters,
-        getCheckboxOnChange:this.getCheckboxOnChange
       }),
       expandedRowRender:tableConfig.getExpandedRowRender({
         isDark:commonLayout.darkTheme,
@@ -121,6 +118,7 @@ class Page extends React.Component{
         <JoSpin spinning={this.props.queryLoading}>
           {this.props.animateRender([
             this.getQueryPanel(),
+            this.getStageCheckPanel(),
             this.getResultsPanel(),
           ])}
         </JoSpin>
