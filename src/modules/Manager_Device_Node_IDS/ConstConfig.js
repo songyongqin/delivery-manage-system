@@ -13,4 +13,9 @@ export { NAMESPACE as MANAGER_DEVICE_NODE_DISK_NAMESPACE } from '../Manager_Devi
 
 
 
-
+export {
+  STAND_ALONE,
+  DISTRIBUTION,
+  IDS,
+  NODE
+} from 'configs/ConstConfig'

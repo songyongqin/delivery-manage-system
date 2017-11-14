@@ -16,9 +16,9 @@ export const HOST_IP_DATAINDEX = "hostIp",
   LIBRARY_VERSION_DATAINDEX = "libraryVersion",
   APPLIACTION_VERSION_DATAINDEX = "applicationVersion",
 
-  ID_DATAINDEX = "deviceId",
+  ID_DATAINDEX = "id",
 
-  // DEVICE_ID_DATAINDEX = "deviceId",
+  DEVICE_ID_DATAINDEX = "deviceId",
 
   DEVICE_PROPS_DATAINDEX = "deviceProps",
 
@@ -108,3 +108,11 @@ export const VERSION_DATAINDEX = "version",
 
 
 export const CODE_DATAINDEX = "code"
+
+
+export {
+  STAND_ALONE,
+  DISTRIBUTION,
+  IDS,
+  NODE
+} from 'configs/ConstConfig'

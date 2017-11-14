@@ -82,7 +82,17 @@ export default {
       if (res.status === 1) {
         resolve && resolve(res.payload)
       }
-    }
+    },
+    clean: function* ({ payload, resolve }, { callWithExtra }) {
+      const res = yield callWithExtra(
+        service.clean,
+        payload,
+        callConfig
+      )
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
+      }
+    },
   },
   subscriptions: {
     setup: ({ history, dispatch }) => {

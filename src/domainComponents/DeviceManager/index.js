@@ -7,10 +7,11 @@ import WithOnQuery from 'Generators/QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from 'Generators/QueryContainerDecorator/WithPageOnChangeQuery';
 import classnames from 'classnames';
 import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
-import LicenceForm from './components/LicenceForm';
 import Modal from 'domainComponents/Modal';
 import JoSpin from 'components/JoSpin';
 import UpdateForm from './components/UpdateForm'
+import LicenceForm from './components/LicenceForm';
+import CleanForm from './components/CleanForm';
 import Card from 'domainComponents/Card'
 
 
@@ -20,7 +21,8 @@ export default ({
   mapDispatchToProps,
   title,
   getNodeDiskComponent,
-  isNode = true
+  isNode = true,
+  productType = "distribution"
 }) => {
 
   const NAMESPACE = namespace;
@@ -42,7 +44,7 @@ export default ({
         selectedRows: [],
         updateVisible: false,
         hasGetVersion: false,
-
+        cleanVisible: false
       }
     }
 
@@ -55,6 +57,19 @@ export default ({
     initGetVersion = () => {
       this.setState({
         hasGetVersion: false,
+      })
+    }
+    switchCleanModal = () => {
+      if (this.state.shouldReload) {
+        window.location.reload();
+      }
+      if (this.state.cleanVisible) {
+        this.setState({
+          activeItems: []
+        })
+      }
+      this.setState({
+        cleanVisible: !this.state.cleanVisible,
       })
     }
     switchUpdateModal = () => {
@@ -104,6 +119,11 @@ export default ({
       this.setActiveItems(payload);
     }
 
+    cleanModalOpenHandle = payload => {
+      this.switchCleanModal();
+      this.setActiveItems(payload);
+    }
+
     setActiveItems = activeItems => this.setState({
       activeItems
     })
@@ -126,6 +146,15 @@ export default ({
         return result;
       })
 
+    clean = payload => this.props.clean(payload)
+      .then(result => {
+        this.setState({
+          shouldReload: result.some(i => i.status === 1)
+        })
+        this.props.onQuery()
+        return result;
+      })
+
     updateRemote = payload => this.props.updateRemote(payload)
 
     updateLocal = payload => this.props.updateLocal(payload)
@@ -136,8 +165,13 @@ export default ({
           if (key === "update") {
             this.switchUpdateModal();
           }
+
+          if (key === "clean") {
+            this.switchCleanModal()
+          }
+
         }}>
-          <Menu.Item key="clear">批量磁盘清理</Menu.Item>
+          <Menu.Item key="clean">批量磁盘清理</Menu.Item>
           <Menu.Item key="update">批量检查更新</Menu.Item>
         </Menu>
       );
@@ -174,7 +208,7 @@ export default ({
 
     getResultsPanel = () => {
 
-      const { commonLayout, userData, postLicenceLoading, updateLoading, versionColExpanded, loading } = this.props;
+      const { commonLayout, userData, postLicenceLoading, updateLoading, cleanLoading, versionColExpanded, loading } = this.props;
       const { queryResults, lastReqTime, queryFilters } = this.props[NAMESPACE];
       const { isAdmin } = userData;
       const { hasGetVersion } = this.state;
@@ -190,7 +224,8 @@ export default ({
           versionColExpanded,
           handle: {
             licenceHandle: this.licenceModalOpenHandle,
-            updateHandle: this.updateModalOpenHandle
+            updateHandle: this.updateModalOpenHandle,
+            cleanHandle: this.cleanModalOpenHandle
           }
         }),
         dataSource: queryResults.data.map((i, index) => {
@@ -281,6 +316,24 @@ export default ({
                 onSubmit={this.postLicenceHandle}
                 defaultValue={operationList}>
               </UpdateForm>
+            </JoSpin>
+          </Modal>
+          <Modal
+            width={"800px"}
+            title="清理磁盘"
+            onCancel={this.switchCleanModal}
+            maskClosable={false}
+            visible={this.state.cleanVisible}
+            footer={null}>
+            <JoSpin spinning={cleanLoading}>
+              <CleanForm
+                productType={productType}
+                onSubmit={this.clean}
+                onCancel={this.switchCleanModal}
+                defaultValue={operationList}
+                isDark={isDark}>
+
+              </CleanForm>
             </JoSpin>
           </Modal>
         </Card>

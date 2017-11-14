@@ -1,8 +1,9 @@
 import React from 'react';
-import { 
+import {
   NAMESPACE,
   MANAGER_DEVICE_NAMESPACE,
-  MANAGER_DEVICE_NODE_DISK_NAMESPACE
+  MANAGER_DEVICE_NODE_DISK_NAMESPACE,
+  NODE
 } from './ConstConfig'
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import NodeDisk from '../Manager_Device_Node_Disk/Page'
@@ -26,7 +27,10 @@ function mapStateToProps(state) {
     updateLoading: effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoLocal`]
       || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoRemote`]
       || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateRemote`]
-      || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateLocal`]
+      || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateLocal`],
+
+
+    cleanLoading: effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/clean`]
   }
 }
 
@@ -55,16 +59,21 @@ function mapDispatchToProps(dispatch) {
     updateLocal: payload => dispatch({
       type: `${MANAGER_DEVICE_NAMESPACE}/updateLocal`,
       payload,
+    }),
+    clean: payload => dispatch({
+      type: `${MANAGER_DEVICE_NAMESPACE}/clean`,
+      payload,
     })
   }
 }
 
 export default DeviceManagerGenerator({
-  namespace:NAMESPACE,
+  namespace: NAMESPACE,
   mapStateToProps,
   mapDispatchToProps,
-  title:"蜜罐节点设备",
-  getNodeDiskComponent:()=>{
+  title: "蜜罐节点设备",
+  productType: NODE,
+  getNodeDiskComponent: () => {
     return <NodeDisk></NodeDisk>
   }
 })

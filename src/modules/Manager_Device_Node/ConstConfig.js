@@ -12,4 +12,9 @@ export { NAMESPACE as MANAGER_DEVICE_NAMESPACE } from '../Manager_Device/ConstCo
 export { NAMESPACE as MANAGER_DEVICE_NODE_DISK_NAMESPACE } from '../Manager_Device_Node_Disk/ConstConfig'
 
 
-
+export {
+  STAND_ALONE,
+  DISTRIBUTION,
+  IDS,
+  NODE
+} from 'configs/ConstConfig'

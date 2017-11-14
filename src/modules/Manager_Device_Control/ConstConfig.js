@@ -13,3 +13,11 @@ export const NAMESPACE = "deviceControl";
 export { NAMESPACE as MANAGER_DEVICE_NAMESPACE } from '../Manager_Device/ConstConfig'
 
 export { NAMESPACE as MANAGER_DEVICE_NODE_CONTROL_NAMESPACE } from '../Manager_Device_Control_Disk/ConstConfig'
+
+
+export {
+  STAND_ALONE,
+  DISTRIBUTION,
+  IDS,
+  NODE
+} from 'configs/ConstConfig'

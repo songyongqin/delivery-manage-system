@@ -31,6 +31,7 @@ import {
   APPLIACTION_VERSION_DATAINDEX,
   ENGINE_VERSION_LIST_DATAINDEX,
   tableTextConfig,
+  DEVICE_ID_DATAINDEX,
 } from '../../ConstConfig'
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 const FormItem = Form.Item;
@@ -103,7 +104,7 @@ const FILE_DATA_INDEX = "file",
   SERVER_URL_DATA_INDEX = "serverUrl",
   REMOTE_METHOD = "remote",
   LOCAL_METHOD = "local",
-  DEVICE_LIST_DATA_INDEX = "deviceList"
+  DEVICE_LIST_DATA_INDEX = "idList"
 
 @Form.create()
 class WrappedForm extends React.Component {
@@ -140,13 +141,15 @@ class WrappedForm extends React.Component {
     let serverUrl = form.getFieldValue(SERVER_URL_DATA_INDEX);
 
 
-    const deviceList = defaultValue.data.map(i => i[ID_DATAINDEX]);
+    const idList = defaultValue.data
+      .filter(i => i[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE)
+      .map(i => i[ID_DATAINDEX])
 
     const res = method === REMOTE_METHOD
       ?
-      updateRemote({ deviceList, serverUrl })
+      updateRemote({ idList, serverUrl })
       :
-      updateLocal({ deviceList, file })
+      updateLocal({ idList, file })
 
     res.then(result => this.setState({
       updateResult: result,
@@ -169,13 +172,16 @@ class WrappedForm extends React.Component {
       return form.setFields({ [FILE_DATA_INDEX]: { value: "", errors: [new Error("本地升级文件不能为空")] } })
     }
 
-    const deviceList = defaultValue.data.map(i => i[ID_DATAINDEX]);
+    const idList = defaultValue.data
+      .filter(i => i[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE)
+      .map(i => i[ID_DATAINDEX])
+
 
     const res = method === REMOTE_METHOD
       ?
-      getUpdateInfoRemote({ deviceList, serverUrl })
+      getUpdateInfoRemote({ idList, serverUrl })
       :
-      getUpdateInfoLocal({ deviceList, file })
+      getUpdateInfoLocal({ idList, file })
 
     res.then(result => this.setState({
       result
@@ -207,6 +213,11 @@ class WrappedForm extends React.Component {
         dataIndex: APPLIACTION_VERSION_DATAINDEX,
         title: <p style={{ textAlign: "center" }}>{tableTextConfig.colTitles[APPLIACTION_VERSION_DATAINDEX]}</p>,
         render: (value, records) => {
+
+          if (records[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE) {
+            return null
+          }
+
           const deviceId = records[ID_DATAINDEX];
           const valueTag = <JoTag
             color="#108ee9"
@@ -242,6 +253,12 @@ class WrappedForm extends React.Component {
         dataIndex: LIBRARY_VERSION_LIST_DATAINDEX,
         title: <p style={{ textAlign: "center" }}>{tableTextConfig.colTitles[LIBRARY_VERSION_LIST_DATAINDEX]}</p>,
         render: (value, records) => {
+          if (records[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE) {
+            return <p>
+              该设备未授权或授权已过期
+            </p>
+          }
+
           const deviceId = records[ID_DATAINDEX];
 
 
@@ -286,6 +303,11 @@ class WrappedForm extends React.Component {
         dataIndex: ENGINE_VERSION_LIST_DATAINDEX,
         title: <p style={{ textAlign: "center" }}>{tableTextConfig.colTitles[ENGINE_VERSION_LIST_DATAINDEX]}</p>,
         render: (value, records) => {
+
+          if (records[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE) {
+            return null
+          }
+
           const deviceId = records[ID_DATAINDEX];
 
           if (haveResult) {
@@ -332,8 +354,17 @@ class WrappedForm extends React.Component {
         key: "result",
         title: <p style={{ textAlign: "center" }}>更新结果</p>,
         render: records => {
+
           const deviceId = records[ID_DATAINDEX];
+
+          if (records[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE) {
+            return <p>
+              该设备未授权或授权已过期
+            </p>
+          }
+
           const { status, message } = updateResult.find(i => i[ID_DATAINDEX] === deviceId);
+
           if (status === 1) {
             return <p style={{ color: "#108ee9", textAlign: "center" }}>
               <Icon type="check"></Icon> &nbsp;更新成功<br />
@@ -355,7 +386,7 @@ class WrappedForm extends React.Component {
       })),
       columns: [
         {
-          dataIndex: ID_DATAINDEX,
+          dataIndex: DEVICE_ID_DATAINDEX,
           title: <p style={{ textAlign: "center" }}>设备唯一标识</p>,
           width: haveUpdateResult ? null : "140px"
         },

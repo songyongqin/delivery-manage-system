@@ -24,9 +24,11 @@ import {
   CODE_DATAINDEX,
   ID_DATAINDEX,
   LICENCE_STATUS_DATAINDEX,
-  LICENCE_VALID_VALUE
+  LICENCE_VALID_VALUE,
+  DEVICE_ID_DATAINDEX,
 } from '../../ConstConfig'
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
+
 const FormItem = Form.Item;
 const Dragger = Upload.Dragger;
 const LICENCE_SUCCESS = 1;
@@ -87,11 +89,11 @@ class WrappedForm extends React.Component {
   })
   exportDeviceId = () => {
     const { data } = this.props.defaultValue;
-    const content = data.filter(i => i[LICENCE_STATUS_DATAINDEX] !== LICENCE_VALID_VALUE).map(i => i[ID_DATAINDEX])
+    const content = data.filter(i => i[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE).map(i => i[DEVICE_ID_DATAINDEX])
     const eleLink = document.createElement('a');
     eleLink.download = "deviceCodeList.json";
     eleLink.style.display = 'none';
-    const blob = new Blob([JSON.stringify({ [ID_DATAINDEX]: content }, null, 2)]);
+    const blob = new Blob([JSON.stringify({ [DEVICE_ID_DATAINDEX]: content }, null, 2)]);
     eleLink.href = URL.createObjectURL(blob);
     document.body.appendChild(eleLink);
     eleLink.click();
@@ -101,10 +103,17 @@ class WrappedForm extends React.Component {
 
     const { form, defaultValue } = this.props;
     const { data = [] } = defaultValue;
+
+    const idMap = {}
+
+    data.forEach(i => {
+      idMap[i[DEVICE_ID_DATAINDEX]] = i[ID_DATAINDEX]
+    })
+
     let codeList = {};
     payload.forEach(item => {
       const code = item.code,
-        deviceId = item[ID_DATAINDEX];
+        deviceId = idMap[item[DEVICE_ID_DATAINDEX]];
 
       codeList[deviceId] = code
     });
@@ -133,7 +142,11 @@ class WrappedForm extends React.Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    const { onSubmit, form } = this.props;
+    const { onSubmit, form, defaultValue } = this.props;
+    const { data } = defaultValue;
+
+
+
     form.validateFieldsAndScroll((err, values) => {
       if (err) {
         return
@@ -142,9 +155,9 @@ class WrappedForm extends React.Component {
       let payload = [];
 
       Object.entries(values)
-        .filter(([key, value]) => value[LICENCE_STATUS_DATAINDEX] !== LICENCE_VALID_VALUE)
+        .filter(([key, value]) => data.find(i => i[ID_DATAINDEX] === parseInt(key))[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE)
         .map(([key, value]) => payload.push({
-          [ID_DATAINDEX]: key,
+          [ID_DATAINDEX]: parseInt(key),
           code: value
         }))
 
@@ -172,7 +185,7 @@ class WrappedForm extends React.Component {
       })),
       columns: [
         {
-          dataIndex: ID_DATAINDEX,
+          dataIndex: DEVICE_ID_DATAINDEX,
           title: <p style={{ textAlign: "center" }}>设备唯一标识</p>,
           width: "50%",
         },
@@ -182,7 +195,7 @@ class WrappedForm extends React.Component {
           width: "50%",
           render: records => {
             //已授权的显示内容
-            if (records[LICENCE_STATUS_DATAINDEX] === LICENCE_VALID_VALUE) {
+            if (records[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE) {
               return <p className={lblClasses}>
                 该设备已授权且授权未即将过期，无需重新授权
               </p>
@@ -204,7 +217,7 @@ class WrappedForm extends React.Component {
                   required={true}
                   hasFeedback={true}
                 >
-                  {getFieldDecorator(records[ID_DATAINDEX], {
+                  {getFieldDecorator(`${records[ID_DATAINDEX]}`, {
                     initialValue: "",
                     rules: [
                       {

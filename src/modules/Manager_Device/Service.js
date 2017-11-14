@@ -40,7 +40,7 @@ export const getVersionInfoLocal = payload => {
   if (process.env.NODE_ENV !== "development") {
     const fd = new FormData();
     fd.append("file", payload.file)
-    fd.append("deviceList", payload.deviceList.join(","))
+    fd.append("idList", payload.deviceList.join(","))
     options.body = fd;
   } else {
     options.headers.deviceList = payload.deviceList.join(",")
@@ -74,7 +74,7 @@ export const updateLocal = payload => {
   if (process.env.NODE_ENV !== "development") {
     const fd = new FormData();
     fd.append("file", payload.file)
-    fd.append("deviceList", payload.deviceList.join(","))
+    fd.append("idList", payload.deviceList.join(","))
     options.body = fd;
   } else {
     options.headers.deviceList = payload.deviceList.join(",")
@@ -92,3 +92,5 @@ export const updateRemote = payload => {
   }
   return request(httpApi.DEVICE_UPDATE_ONLINE, options)
 }
+
+export const clean = commonRequestCreator.post(httpApi.DEVICE_DISK)

@@ -27,7 +27,7 @@ export default {
 
     DEVICE_CONTROL_DISK: "/device/disk",
     DEVICE_NODE_DISK: "/device/disk",
-
+    DEVICE_DISK: "/device/disk",
     VIRTUAL_MACHINE: "/virtual-machine",
 
     OCCUPYING_NODE_IP: "/occupying/node/ip",

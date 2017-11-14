@@ -94,6 +94,7 @@ const getOperationRenderer = ({ isAdmin, isNode, handle }) => {
   return records => {
     const isLicence = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX] === LICENCE_VALID_VALUE,
       isConnect = isNode ? records[CONNECT_STATUS_DATAINDEX] === CONNECT : true,
+
       menu = (
         <Menu onClick={({ key }) => {
 
@@ -108,14 +109,14 @@ const getOperationRenderer = ({ isAdmin, isNode, handle }) => {
           }
 
           if (key === "clean") {
-
+            return handle.cleanHandle(payload)
           }
 
         }}>
           <Menu.Item key="licence" disabled={isLicence || !isAdmin || !isConnect}>
             <Icon type="unlock" />&nbsp;授权
           </Menu.Item>
-          <Menu.Item key="update" disabled={(!isAdmin || !isConnect) && isNode}>
+          <Menu.Item key="update" disabled={((!isAdmin || !isConnect) && isNode) || !isLicence}>
             <span>
               <Icon type="reload" />&nbsp;检查升级
                 </span>

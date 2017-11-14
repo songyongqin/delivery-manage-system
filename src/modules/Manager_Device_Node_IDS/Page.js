@@ -1,8 +1,9 @@
 import React from 'react';
-import { 
+import {
   NAMESPACE,
   MANAGER_DEVICE_NAMESPACE,
-  MANAGER_DEVICE_NODE_DISK_NAMESPACE
+  MANAGER_DEVICE_NODE_DISK_NAMESPACE,
+  IDS
 } from './ConstConfig'
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import NodeDisk from '../Manager_Device_Node_Disk/Page'
@@ -60,11 +61,12 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default DeviceManagerGenerator({
-  namespace:NAMESPACE,
+  namespace: NAMESPACE,
   mapStateToProps,
   mapDispatchToProps,
-  title:"流量监测设备",
-  getNodeDiskComponent:()=>{
+  title: IDS,
+  productType: "ids",
+  getNodeDiskComponent: () => {
     return null
   }
 })
