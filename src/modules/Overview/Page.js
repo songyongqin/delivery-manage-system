@@ -45,6 +45,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
   {
+    dispatch,
     queryStatistics: payload => dispatch({
       type: `${EVENT_NAMESPACE}/query`,
       payload,
@@ -103,9 +104,10 @@ class Page extends React.Component {
   };
   getStatisticResultPanel = () => {
 
-    const { isDark, results } = this.props
-
+    const { isDark, results, dispatch } = this.props
+    console.info(dispatch)
     return <EventStatisticsPanel
+      dispatch={dispatch}
       getDetailsItemOnClickHandle={this.getDetailsItemOnClickHandle}
       key="statistics-panel">
     </EventStatisticsPanel>

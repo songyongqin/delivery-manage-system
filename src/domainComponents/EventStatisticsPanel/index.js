@@ -18,7 +18,7 @@ const { title, units, items, icons } = textConfig
 
 const spanConfig = { lg: { span: 4 }, md: { span: 8 }, sm: { span: 12 }, xs: { span: 24 } };
 
-export default ({ isDark, data ,getDetailsItemOnClickHandle}) => {
+export default ({ isDark, data, getDetailsItemOnClickHandle, dispatch }) => {
 
   const listClasses = classnames({
     [styles["statistic-list"]]: true,
@@ -59,6 +59,14 @@ export default ({ isDark, data ,getDetailsItemOnClickHandle}) => {
         getDetailsItemOnClickHandle(k)
         :
         null
+
+    clickHandle = isFallHosts
+      ?
+      () => {
+        dispatch(routerRedux.push("/analyse/fall-host"))
+      }
+      :
+      clickHandle
 
     return (
       <Col

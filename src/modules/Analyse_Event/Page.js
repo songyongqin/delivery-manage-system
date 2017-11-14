@@ -34,22 +34,23 @@ import { WithCommonConnect, WithCommonTableHandle, WithModal, WithContainerHeade
 const { compose } = tools;
 import EventPanel from './components/EventPanel'
 
-const mapStateToProps=state=>{
+const mapStateToProps = state => {
 
   return {
-    eventFilters:state[NAMESPACE].filters,
-    statisticsFilters:state[STATISTICS_NAMESPACE].filters,
+    eventFilters: state[NAMESPACE].filters,
+    statisticsFilters: state[STATISTICS_NAMESPACE].filters,
   }
 }
 
-const mapDispatchToProps=dispatch=>(
+const mapDispatchToProps = dispatch => (
   {
-    queryStatistics:payload=>dispatch({
-      type:`${NAMESPACE}/query`,
+    dispatch,
+    queryStatistics: payload => dispatch({
+      type: `${NAMESPACE}/query`,
       payload,
     }),
-    queryEvent:payload=>dispatch({
-      type:`${STATISTICS_NAMESPACE}/query`,
+    queryEvent: payload => dispatch({
+      type: `${STATISTICS_NAMESPACE}/query`,
       payload
     })
   }
@@ -62,7 +63,7 @@ const THREAT_EVENT_MODAL = "threatEvent";
 @WithCommonConnect(NAMESPACE)
 @WithModal()
 @WithAnimateRender
-@connect(mapStateToProps,mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 class Page extends React.Component {
   constructor(props) {
     super(props);
@@ -85,8 +86,8 @@ class Page extends React.Component {
   }
 
   timestampRangeOnChange = payload => {
-    this.props.queryEvent({...this.props.eventFilters,...payload,page:1})
-    this.props.queryStatistics({...payload})
+    this.props.queryEvent({ ...this.props.eventFilters, ...payload, page: 1 })
+    this.props.queryStatistics({ ...payload })
   }
 
   getQueryPanel = () => {
@@ -103,8 +104,9 @@ class Page extends React.Component {
   };
   getStatisticResultPanel = () => {
 
-    const { isDark, results } = this.props
+    const { isDark, results, dispatch } = this.props
     return <EventStatisticsPanel
+      dispatch={dispatch}
       getDetailsItemOnClickHandle={this.getDetailsItemOnClickHandle}
       key="statistics-panel">
     </EventStatisticsPanel>

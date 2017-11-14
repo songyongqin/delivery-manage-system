@@ -7,21 +7,23 @@ import * as tools from 'utils/tools.js';
 import JoSpin from 'components/JoSpin'
 const { compose } = tools;
 
-const StatisticsPanel = ({ 
+const StatisticsPanel = ({
   queryLoading,
-  isDark, 
+  isDark,
   results,
-  getDetailsItemOnClickHandle
+  getDetailsItemOnClickHandle,
+  dispatch,
 }) => {
 
   return (
     <JoSpin spinning={queryLoading}>
       <EventStatisticsPanel
-      isDark={isDark}
-      data={results.statistics}
-      getDetailsItemOnClickHandle={getDetailsItemOnClickHandle}
-    >
-    </EventStatisticsPanel>
+        dispatch={dispatch}
+        isDark={isDark}
+        data={results.statistics}
+        getDetailsItemOnClickHandle={getDetailsItemOnClickHandle}
+      >
+      </EventStatisticsPanel>
     </JoSpin>
   )
 
