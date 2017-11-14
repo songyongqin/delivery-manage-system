@@ -1,6 +1,3 @@
-/**
- * Created by jojo on 2017/8/21.
- */
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import * as service from './Service';
@@ -29,58 +26,6 @@ const baseModel = {
       data: []
     }
   },
-  effects: {
-    postLicence: function* ({ payload, resolve }, { callWithExtra }) {
-      const res = yield callWithExtra(
-        service.postLicence,
-        { data: payload },
-        callConfig
-      )
-      if (res.status === 1) {
-        resolve && resolve(res.payload)
-      }
-    },
-    getUpdateInfoLocal: function* ({ payload, resolve }, { callWithExtra }) {
-      const res = yield callWithExtra(
-        service.getVersionInfoLocal,
-        payload,
-        callConfig
-      )
-      if (res.status === 1) {
-        resolve && resolve(res.payload)
-      }
-    },
-    getUpdateInfoRemote: function* ({ payload, resolve }, { callWithExtra }) {
-      const res = yield callWithExtra(
-        service.getVersionInfoRemote,
-        payload,
-        callConfig
-      )
-      if (res.status === 1) {
-        resolve && resolve(res.payload)
-      }
-    },
-    updateRemote: function* ({ payload, resolve }, { callWithExtra }) {
-      const res = yield callWithExtra(
-        service.updateRemote,
-        payload,
-        callConfig
-      )
-      if (res.status === 1) {
-        resolve && resolve(res.payload)
-      }
-    },
-    updateLocal: function* ({ payload, resolve }, { callWithExtra }) {
-      const res = yield callWithExtra(
-        service.updateLocal,
-        payload,
-        callConfig
-      )
-      if (res.status === 1) {
-        resolve && resolve(res.payload)
-      }
-    }
-  }
 };
 
 const payloadFilter = (payload) => {

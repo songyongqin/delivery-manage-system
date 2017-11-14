@@ -17,17 +17,7 @@ const baseModel = {
 
     },
     queryResults: {
-      "hostIp": "",
-      "diskPer": 0,
-      "licenceStatus": {
-        "value": 0,
-        "expiration": 0
-      },
-      "librayVersion": "",
-      "appliactionVersion": "",
-      "id": "",
-      "deviceProps": [],
-      "deviceId": ""
+      data:[]
     }
   },
   effects: {
@@ -46,7 +36,9 @@ const baseModel = {
 
 const payloadFilter = (payload) => {
   return {
-    ...payload
+    data:[
+      payload
+    ]
   }
 };
 

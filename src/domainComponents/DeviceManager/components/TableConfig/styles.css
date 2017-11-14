@@ -15,9 +15,21 @@
   border-color: #d9d9d9;
 }
 
+.version-table {
+  width: 100%;
+}
+
 .version-table td {
   text-align: center;
   padding: 3px;
+}
+
+.version-list {
+  width: 100%;
+}
+
+.version-list td, .version-list th {
+  text-align: center;
 }
  
 

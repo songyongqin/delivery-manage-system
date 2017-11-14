@@ -53,6 +53,8 @@ import SysLogLoginModel from './modules/SystemLog_Login/Model'
 import ReportModel from './modules/Report/Model';
 import DeviceNodeIdsModel from './modules/Manager_Device_Node_IDS/Model'
 import AnalyseEventStatisticsModel from './modules/Analyse_Event/models/Statistics'
+import ManagerDeviceModel from './modules/Manager_Device/Model';
+
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -105,6 +107,7 @@ app.model(ReportModel)
 app.model(DeviceNodeIdsModel)
 app.model(AnalyseEventStatisticsModel)
 app.model(OverviewStatisticsModel)
+app.model(ManagerDeviceModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

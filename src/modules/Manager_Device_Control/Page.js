@@ -1,121 +1,67 @@
 import React from 'react';
-import { Menu, Button, Breadcrumb, Table, Icon, Row, Col, Card, Badge, message as Message } from 'antd';
-import { queryContainerGenerator } from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
-import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
-import * as tableConfig from '../Manager_Device/components/TableConfig/index';
-import { NAMESPACE, ID_DATAINDEX } from './ConstConfig'
-import styles from './styles.css';
+import { 
+  NAMESPACE, 
+  MANAGER_DEVICE_NAMESPACE,
+  MANAGER_DEVICE_NODE_CONTROL_NAMESPACE
+} from './ConstConfig'
+import ControlDisk from '../Manager_Device_Control_Disk/Page'
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
-import { curry } from '../../utils/tools'
-import LicenceForm from '../Manager_Device/components/LicenceForm';
-import Modal from '../../domainComponents/Modal';
-import JoSpin from '../../components/JoSpin';
-
+import DeviceManagerGenerator from 'domainComponents/DeviceManager'
 
 
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
+  const effectsLoading=state.loading.effects;
   return {
     commonLayout,
+    versionColExpanded: state[MANAGER_DEVICE_NAMESPACE].versionColExpanded,
     userData: state.user.userData,
-    postLicenceLoading: state.loading.effects[`${NAMESPACE}/postLicence`]
+    productType: state.user.productType,
+
+    loading: effectsLoading[`${NAMESPACE}/query`]
+    || effectsLoading[`${MANAGER_DEVICE_NODE_CONTROL_NAMESPACE}/put`]
+    || effectsLoading[`${MANAGER_DEVICE_NODE_CONTROL_NAMESPACE}/query`],
+  
+    postLicenceLoading: state.loading.effects[`${NAMESPACE}/postLicence`], 
+
+    updateLoading: effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoLocal`]
+    || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoRemote`]
+    || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateRemote`]
+    || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateLocal`]
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  postLicence: payload => dispatch({
-    type: `${NAMESPACE}/postLicence`,
-    payload
-  })
+    postLicence: payload => dispatch({
+      type: `${MANAGER_DEVICE_NAMESPACE}/postLicence`,
+      payload
+    }),
+    getUpdateInfoLocal: payload => dispatch({
+      type: `${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoLocal`,
+      payload
+    }),
+    getUpdateInfoRemote: payload => dispatch({
+      type: `${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoRemote`,
+      payload
+    }),
+    updateRemote: payload => dispatch({
+      type: `${MANAGER_DEVICE_NAMESPACE}/updateRemote`,
+      payload
+    }),
+    updateLocal: payload => dispatch({
+      type: `${MANAGER_DEVICE_NAMESPACE}/updateLocal`,
+      payload,
+    })
 })
 
-@queryContainerGenerator({
-  namespace: NAMESPACE,
+export default DeviceManagerGenerator({
+  namespace:NAMESPACE,
   mapStateToProps,
-  mapDispatchToProps: createMapDispatchWithPromise(mapDispatchToProps)
+  mapDispatchToProps,
+  isNode:false,
+  title:"控制中心",
+  getNodeDiskComponent:()=>{
+    return <ControlDisk></ControlDisk>
+  }
 })
-class Page extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: false,
-      shouldReload: false,
-    }
-  }
-  switchModal = () => {
-    if (this.state.shouldReload) {
-      window.location.reload();
-    }
-    this.setState({
-      visible: !this.state.visible,
-    })
-  }
-  postLicenceHandle = payload => this.props.postLicence(payload).then(result => {
-    this.setState({
-      shouldReload: true
-    })
-    return result;
-  })
 
-
-  getResultsPanel = () => {
-
-    const { commonLayout, userData, postLicenceLoading } = this.props;
-    const { queryResults, lastReqTime } = this.props[NAMESPACE];
-
-    const isDark = commonLayout.darkTheme;
-
-    const tableProps = {
-      onChange: this.tableOnChange,
-      columns: tableConfig.getColumns({
-        isDark,
-        isAdmin: userData.isAdmin,
-        isNode: false,
-        handle: {
-          licenceHandle: this.switchModal
-        }
-      }),
-      dataSource: [
-        {
-          ...queryResults,
-          key: "device-control"
-        }
-      ]
-    };
-
-
-    return (
-      <div>
-        <EnhanciveTable key={`${lastReqTime}-device-table`}
-          inverse={true}
-          tableProps={tableProps}
-          isDark={commonLayout.darkTheme}
-          pagination={false} />
-        <Modal
-          width="800px"
-          key={`${this.state.visible}-licence-modal`}
-          onCancel={this.switchModal}
-          title="设备授权"
-          maskClosable={false}
-          visible={this.state.visible}
-          footer={null}>
-          <JoSpin spinning={postLicenceLoading}>
-            <LicenceForm
-              loading={postLicenceLoading}
-              isDark={isDark}
-              onSubmit={this.postLicenceHandle}
-              defaultValue={{ data: [queryResults] }}>
-            </LicenceForm>
-          </JoSpin>
-        </Modal>
-      </div>
-
-    )
-  };
-  render = () => {
-
-    return this.getResultsPanel()
-  }
-}
-
-export default Page;

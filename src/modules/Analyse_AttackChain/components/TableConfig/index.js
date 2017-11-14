@@ -41,7 +41,7 @@ export const getColumns = ({ queryFilters, getCheckboxOnChange }) => {
     renderer[i] = stageRowRenderer;
 
     titleRenderer[i] = (
-      <div style={{ textAlign: "center", height: "30px", lineHeight: "30px" }}>
+      <div style={{ height: "30px", lineHeight: "30px" }}>
         {tableTextConfig.rowTitles[i]}
         {/* <Switch style={{ marginLeft: "10px", position: "relative", top: "-2px" }}
           checked={queryFilters.attackStage.indexOf(i) !== -1}
