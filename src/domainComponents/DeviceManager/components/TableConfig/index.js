@@ -54,7 +54,7 @@ const devicePropsRender = value => {
 
 const tagRenderer = value => {
   return <div style={{ textAlign: "center" }}>
-    <JoTag color="#108ee9" style={{marginBottom:"0"}}>{value}</JoTag>
+    <JoTag color="#108ee9" style={{ marginBottom: "0" }}>{value}</JoTag>
   </div>
 }
 
@@ -76,16 +76,16 @@ const getLicenceRenderer = isDark => value => (
     {licenceValueRenderer(value[LICENCE_STATUS_VALUE_DATAINDEX], isDark)}
     {
       value[LICENCE_STATUS_VALUE_DATAINDEX] !== LICENCE_NULL_VALUE
-      ?
-      <div style={{marginTop:"5px"}}>
-        <span>授权到期时间:&nbsp;</span>
-        <JoTag color="#108ee9">
-          {getTimeFormat(value[LICENCE_STATUS_EXPIRATION_DATAINDEX])}
-        </JoTag>
-      </div>
-      :
-      null
-      
+        ?
+        <div style={{ marginTop: "5px" }}>
+          <span>授权到期时间:&nbsp;</span>
+          <JoTag color="#108ee9">
+            {getTimeFormat(value[LICENCE_STATUS_EXPIRATION_DATAINDEX])}
+          </JoTag>
+        </div>
+        :
+        null
+
     }
   </div>
 )
@@ -96,24 +96,31 @@ const getOperationRenderer = ({ isAdmin, isNode, handle }) => {
       isConnect = isNode ? records[CONNECT_STATUS_DATAINDEX] === CONNECT : true,
       menu = (
         <Menu onClick={({ key }) => {
+
+          const payload = [records]
+
           if (key === "licence") {
-            handle.licenceHandle([{
-              [ID_DATAINDEX]: records[ID_DATAINDEX],
-              [LICENCE_STATUS_DATAINDEX]: records[LICENCE_STATUS_DATAINDEX]
-            }]);
+            return handle.licenceHandle(payload);
           }
 
+          if (key === "update") {
+            return handle.updateHandle(payload)
+          }
+
+          if (key === "clean") {
+
+          }
 
         }}>
           <Menu.Item key="licence" disabled={isLicence || !isAdmin || !isConnect}>
             <Icon type="unlock" />&nbsp;授权
           </Menu.Item>
-          <Menu.Item disabled={(!isAdmin || !isConnect) && isNode}>
+          <Menu.Item key="update" disabled={(!isAdmin || !isConnect) && isNode}>
             <span>
               <Icon type="reload" />&nbsp;检查升级
                 </span>
           </Menu.Item>
-          <Menu.Item disabled={!isAdmin || !isConnect}>
+          <Menu.Item key="clean" disabled={!isAdmin || !isConnect}>
             <span>
               <Icon type="delete" />&nbsp;磁盘清理
                 </span>

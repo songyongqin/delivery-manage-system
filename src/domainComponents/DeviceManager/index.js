@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Button, Breadcrumb, Table, Icon, Row, Col,  Badge, Dropdown } from 'antd';
+import { Menu, Button, Breadcrumb, Table, Icon, Row, Col, Badge, Dropdown } from 'antd';
 import { queryContainerGenerator } from 'Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import EnhanciveTable from 'domainComponents/EnhanciveTable/index';
 import * as tableConfig from './components/TableConfig/index';
@@ -20,10 +20,10 @@ export default ({
   mapDispatchToProps,
   title,
   getNodeDiskComponent,
-  isNode=true
-})=>{
+  isNode = true
+}) => {
 
-  const NAMESPACE=namespace;
+  const NAMESPACE = namespace;
 
   @queryContainerGenerator({
     namespace: NAMESPACE,
@@ -42,22 +42,30 @@ export default ({
         selectedRows: [],
         updateVisible: false,
         hasGetVersion: false,
-  
+
       }
     }
-  
+
     setSelectedRows = (selectedRows) => {
       this.setState({
         selectedRows
       })
     }
-  
+
     initGetVersion = () => {
       this.setState({
         hasGetVersion: false,
       })
     }
     switchUpdateModal = () => {
+      if (this.state.shouldReload) {
+        window.location.reload();
+      }
+      if (this.state.updateVisible) {
+        this.setState({
+          activeItems: [],
+        })
+      }
       this.setState({
         updateVisible: !this.state.updateVisible,
       })
@@ -67,7 +75,7 @@ export default ({
       if (this.state.shouldReload) {
         window.location.reload();
       }
-      if(this.state.visible){
+      if (this.state.visible) {
         this.setState({
           activeItems: [],
         })
@@ -76,82 +84,97 @@ export default ({
         visible: !this.state.visible,
       })
     }
-  
+
     postLicenceHandle = payload => this.props.postLicence(payload).then(result => {
       this.setState({
         shouldReload: result.some(i => i.status === 1)
       })
       return result;
     })
-  
+
     onSubmit = payload => this.props.get(payload)
-  
+
     licenceModalOpenHandle = payload => {
       this.switchModal();
       this.setActiveItems(payload);
     }
-  
+
+    updateModalOpenHandle = payload => {
+      this.switchUpdateModal();
+      this.setActiveItems(payload);
+    }
+
     setActiveItems = activeItems => this.setState({
       activeItems
     })
-    
+
     getUpdateInfoRemote = payload => this.props.getUpdateInfoRemote(payload)
       .then(result => {
-        this.setState({ hasGetVersion: true })
+        this.setState({
+          hasGetVersion: true,
+          shouldReload: result.some(i => i.status === 1)
+        })
         return result;
       })
-  
+
     getUpdateInfoLocal = payload => this.props.getUpdateInfoLocal(payload)
       .then(result => {
-        this.setState({ hasGetVersion: true })
+        this.setState({
+          hasGetVersion: true,
+          shouldReload: result.some(i => i.status === 1)
+        })
         return result;
       })
-  
+
     updateRemote = payload => this.props.updateRemote(payload)
-  
+
     updateLocal = payload => this.props.updateLocal(payload)
-  
+
     getOperationPanel = () => {
       const menu = (
-        <Menu >
+        <Menu onClick={({ key }) => {
+          if (key === "update") {
+            this.switchUpdateModal();
+          }
+        }}>
           <Menu.Item key="clear">批量磁盘清理</Menu.Item>
           <Menu.Item key="update">批量检查更新</Menu.Item>
         </Menu>
       );
-  
+
       const dropDownDisabled = this.state.selectedRows.length === 0;
-      
+
       return (
-        <div style={{marginBottom:"15px"}}>
+        <div style={{ marginBottom: "15px" }}>
           <div style={{ display: "inline-block" }}>
             {getNodeDiskComponent()}
           </div>
-          <div style={{ display: "inline-block", marginLeft: "15px" }}>       
+          <div style={{ display: "inline-block", marginLeft: "15px" }}>
             {
               isNode
-              ?
-              <Dropdown.Button 
-                overlay={menu}
-                className={classnames({
-                  ["dropdown-disabled"]: dropDownDisabled
-                })}
-                onClick={this.switchModal}
-                disabled={dropDownDisabled}
-                type="primary">
-              批量授权
+                ?
+                <Dropdown.Button
+                  overlay={menu}
+                  className={classnames({
+                    ["dropdown-disabled"]: dropDownDisabled
+                  })}
+                  onClick={this.switchModal}
+                  disabled={dropDownDisabled}
+                  type="primary">
+                  批量授权
             </Dropdown.Button>
-            :
-            null
+                :
+                null
             }
           </div>
         </div>
       )
-  
+
     }
-  
+
     getResultsPanel = () => {
-  
-      const { commonLayout, userData, postLicenceLoading, updateLoading, versionColExpanded,loading } = this.props;
+
+      const { commonLayout, userData, postLicenceLoading, updateLoading, versionColExpanded, loading } = this.props;
       const { queryResults, lastReqTime, queryFilters } = this.props[NAMESPACE];
       const { isAdmin } = userData;
       const { hasGetVersion } = this.state;
@@ -166,7 +189,8 @@ export default ({
           onSubmit: this.onSubmit,
           versionColExpanded,
           handle: {
-            licenceHandle: this.licenceModalOpenHandle
+            licenceHandle: this.licenceModalOpenHandle,
+            updateHandle: this.updateModalOpenHandle
           }
         }),
         dataSource: queryResults.data.map((i, index) => {
@@ -176,41 +200,51 @@ export default ({
           }
         }),
       };
-  
-  
-      if (isAdmin&&isNode) {
+
+
+      if (isAdmin && isNode) {
         tableProps.rowSelection = {
           onChange: (selectedRowKeys, selectedRows) => {
             this.setSelectedRows(selectedRows)
           },
         };
       }
-  
+
       const paginationProps = {
         total: queryResults.total,
         current: queryFilters.page,
         onChange: this.props.pageOnChange,
         pageSize: queryFilters.limit,
       };
-  
+
       const {
         getUpdateInfoLocal,
         getUpdateInfoRemote,
         updateLocal,
         updateRemote
       } = this;
-  
+
+      const operationList = this.state.activeItems.length !== 0
+        ?
+        {
+          data: this.state.activeItems
+        }
+        :
+        {
+          data: this.state.selectedRows
+        }
+
       return (
         <Card title={title}>
           <JoSpin spinning={loading}>
-          {this.getOperationPanel()}
-          <EnhanciveTable
-            key={`${lastReqTime}-device-table`}
-            inverse={true}
-            pagination={isNode}
-            tableProps={tableProps}
-            paginationProps={paginationProps}
-            isDark={commonLayout.darkTheme} />
+            {this.getOperationPanel()}
+            <EnhanciveTable
+              key={`${lastReqTime}-device-table`}
+              inverse={true}
+              pagination={isNode}
+              tableProps={tableProps}
+              paginationProps={paginationProps}
+              isDark={commonLayout.darkTheme} />
           </JoSpin>
           <Modal
             width="800px"
@@ -222,16 +256,11 @@ export default ({
             footer={null}>
             <JoSpin spinning={postLicenceLoading}>
               <LicenceForm
+                onCancel={this.switchModal}
                 loading={postLicenceLoading}
                 isDark={isDark}
                 onSubmit={this.postLicenceHandle}
-                defaultValue={{ 
-                  data: this.state.activeItems.length!==0
-                  ?
-                  this.state.activeItems
-                  :
-                  this.state.selectedRows
-              }}>
+                defaultValue={operationList}>
               </LicenceForm>
             </JoSpin>
           </Modal>
@@ -245,11 +274,12 @@ export default ({
             footer={null}>
             <JoSpin spinning={updateLoading}>
               <UpdateForm
+                onCancel={this.switchUpdateModal}
                 handle={{ getUpdateInfoLocal, getUpdateInfoRemote, updateLocal, updateRemote }}
                 loading={updateLoading}
                 isDark={isDark}
                 onSubmit={this.postLicenceHandle}
-                defaultValue={{ data: queryResults.data }}>
+                defaultValue={operationList}>
               </UpdateForm>
             </JoSpin>
           </Modal>
@@ -257,7 +287,7 @@ export default ({
       )
     };
     render = () => {
-  
+
       return this.getResultsPanel()
     }
   }

@@ -150,6 +150,7 @@ class WrappedForm extends React.Component {
 
     res.then(result => this.setState({
       updateResult: result,
+      shouldReload: result.some(i => i.status === 1)
     }))
   }
   handleGetVersion = (e) => {
@@ -196,7 +197,6 @@ class WrappedForm extends React.Component {
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
-    console.info(result)
 
     const { data = [] } = defaultValue;
     const haveResult = result.length !== 0,
