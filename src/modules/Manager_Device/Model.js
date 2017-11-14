@@ -2,7 +2,7 @@ import {
   NAMESPACE
 } from './ConstConfig';
 import * as service from './Service';
-const SHOULD_EXPANDED_WIDTH_DIVIDE = 1400;
+const SHOULD_EXPANDED_WIDTH_DIVIDE = 1600;
 
 const callConfig = {
   withStatusHandle: true,
