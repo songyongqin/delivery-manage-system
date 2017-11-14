@@ -17,7 +17,7 @@ const baseModel = {
   namespace: NAMESPACE,
   state: {
     queryFilters: {
-      // timestampRange: [],
+      timestampRange: [],
     },
     queryResults: {
       data: []
