@@ -84,16 +84,16 @@ const LicenceBackPlaceholder = ({ isDark = false, shouldReload = false, onCancel
 
 const CommonListRenderer = ({ data }) => (
   <Card>
-  <table>
+    <table>
       <tbody>
         {
           data.map((i, index) => (
             <tr key={`${index}-row`}>
-              <td style={{ padding: "2px" ,textAlign:"center"}}>{i.name}</td>
-              <td style={{ padding: "2px" ,textAlign:"center"}}>
+              <td style={{ padding: "2px", textAlign: "center" }}>{i.name}</td>
+              <td style={{ padding: "2px", textAlign: "center" }}>
                 <JoTag color="#108ee9" style={{ marginBottom: "0" }}>{i.value}</JoTag>
               </td>
-              <td style={{ padding: "2px",textAlign:"center" }}>
+              <td style={{ padding: "2px", textAlign: "center" }}>
                 {i.result}
               </td>
             </tr>
@@ -102,7 +102,7 @@ const CommonListRenderer = ({ data }) => (
       </tbody>
     </table>
   </Card>
- 
+
 )
 
 
@@ -220,6 +220,10 @@ class WrappedForm extends React.Component {
         title: <p style={{ textAlign: "center" }}>{tableTextConfig.colTitles[APPLIACTION_VERSION_DATAINDEX]}</p>,
         render: (value, records) => {
 
+          if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
+            return null
+          }
+
           if (records[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE) {
             return null
           }
@@ -260,14 +264,14 @@ class WrappedForm extends React.Component {
         title: <p style={{ textAlign: "center" }}>{tableTextConfig.colTitles[LIBRARY_VERSION_LIST_DATAINDEX]}</p>,
         render: (value, records) => {
 
-          if(records[CONNECT_STATUS_DATAINDEX]===CONNECT){
-            return <p style={{textAlign:"center"}}>
+          if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
+            return <p style={{ textAlign: "center" }}>
               设备连接异常 无法进行更新操作
             </p>
           }
 
           if (records[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE) {
-            return <p style={{textAlign:"center"}}>
+            return <p style={{ textAlign: "center" }}>
               该设备未授权或授权已过期 无法进行更新操作
             </p>
           }
@@ -317,6 +321,9 @@ class WrappedForm extends React.Component {
         title: <p style={{ textAlign: "center" }}>{tableTextConfig.colTitles[ENGINE_VERSION_LIST_DATAINDEX]}</p>,
         render: (value, records) => {
 
+          if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
+            return null
+          }
           if (records[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE) {
             return null
           }

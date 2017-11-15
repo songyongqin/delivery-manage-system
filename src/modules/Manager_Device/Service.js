@@ -40,10 +40,10 @@ export const getVersionInfoLocal = payload => {
   if (process.env.NODE_ENV !== "development") {
     const fd = new FormData();
     fd.append("file", payload.file)
-    fd.append("idList", payload.deviceList.join(","))
+    fd.append("idList", payload.idList.join(","))
     options.body = fd;
   } else {
-    options.headers.deviceList = payload.deviceList.join(",")
+    options.headers.idList = payload.idList.join(",")
   }
 
   return request(httpApi.DEVICE_UPDATE_INFO_LOCAL, options)
@@ -74,10 +74,10 @@ export const updateLocal = payload => {
   if (process.env.NODE_ENV !== "development") {
     const fd = new FormData();
     fd.append("file", payload.file)
-    fd.append("idList", payload.deviceList.join(","))
+    fd.append("idList", payload.idList.join(","))
     options.body = fd;
   } else {
-    options.headers.deviceList = payload.deviceList.join(",")
+    options.headers.idList = payload.idList.join(",")
   }
   return request(httpApi.DEVICE_UPDATE_LOCAL, options)
 }
