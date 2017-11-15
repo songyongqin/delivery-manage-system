@@ -93,6 +93,11 @@ export default {
     REPORT_SUFFER_HOST_CALL_ON_RECORD: "/report/suffer-host-call-on-record",
     REPORT_HAVE_COMMUNICATE_INSIDE_IP: "/report/have-communicate-inside-ip",
     REPORT_CALL_ON_IP: "/report/call-on-ip",
-    REPORT_CALL_ON_DOMAIN: "/report/call-on-domain"
+    REPORT_CALL_ON_DOMAIN: "/report/call-on-domain",
+
+
+    USER_ACTIVE: "/user/active",
+
+    USER_HEART_BEAT: "/user/heart-beat"
   }
 }

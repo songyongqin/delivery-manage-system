@@ -63,7 +63,7 @@ export default DeviceManagerGenerator({
   mapDispatchToProps,
   isNode: false,
   title: "控制中心",
-  productType: tools.getTemp("productType").type,
+  productType: (tools.getTemp("productType") || {}).type,
   getNodeDiskComponent: () => {
     return <ControlDisk></ControlDisk>
   }

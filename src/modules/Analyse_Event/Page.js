@@ -46,11 +46,11 @@ const mapDispatchToProps = dispatch => (
   {
     dispatch,
     queryStatistics: payload => dispatch({
-      type: `${NAMESPACE}/query`,
+      type: `${STATISTICS_NAMESPACE}/query`,
       payload,
     }),
     queryEvent: payload => dispatch({
-      type: `${STATISTICS_NAMESPACE}/query`,
+      type: `${NAMESPACE}/query`,
       payload
     })
   }
