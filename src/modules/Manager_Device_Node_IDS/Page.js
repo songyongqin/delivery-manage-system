@@ -64,8 +64,8 @@ export default DeviceManagerGenerator({
   namespace: NAMESPACE,
   mapStateToProps,
   mapDispatchToProps,
-  title: IDS,
-  productType: "ids",
+  title: "流量监测设备",
+  productType: IDS,
   getNodeDiskComponent: () => {
     return null
   }

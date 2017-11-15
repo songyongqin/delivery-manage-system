@@ -1,6 +1,6 @@
 import createQueryModel from 'utils/models/query'
 import * as service from './Service';
-import { EVENT_NAMESPACE } from './ConstConfig'
+import { EVENT_NAMESPACE, STATISTICS_NAMESPACE, FLOW_NAMESPACE, RANKING_NAMESPACE } from './ConstConfig'
 const model = {
   namespace: EVENT_NAMESPACE,
   state: {
@@ -19,7 +19,34 @@ const model = {
       statistics: {},
       data: []
     }
+  },
+  subscriptions: {
+    initData({ history, dispatch }) {
+
+
+      return history.listen(({ pathname }) => {
+        if (pathname === "/overview") {
+
+          dispatch({
+            type: `${STATISTICS_NAMESPACE}/queryInit`
+          })
+
+          dispatch({
+            type: `queryInit`,
+          })
+
+          dispatch({
+            type: `${RANKING_NAMESPACE}/queryInit`
+          })
+
+          dispatch({
+            type: `${FLOW_NAMESPACE}/queryInit`
+          })
+        }
+      });
+    },
   }
+
 }
 
 
@@ -35,6 +62,5 @@ export default createQueryModel({
       statistics,
     }
   },
-  initPath: "/overview",
 })
 

@@ -55,15 +55,15 @@ export default ({
   }
 
   if (SAVE_FILTERS_REDUCER_KEY in reducers) {
-    throwError(`query model:${SAVE_FILTERS_REDUCER_KEY} is already in model:${NAMESPACE} reducers`)
+    throwError(`query model:${SAVE_FILTERS_REDUCER_KEY} is already in model:${namespace} reducers`)
   }
 
   if (SAVE_RESULTS_REDUCER_KEY in reducers) {
-    throwError(`query model:${SAVE_RESULTS_REDUCER_KEY} is already in model:${NAMESPACE} reducers`)
+    throwError(`query model:${SAVE_RESULTS_REDUCER_KEY} is already in model:${namespace} reducers`)
   }
 
   if (QUERY_INIT_REDUCER_KEY in reducers) {
-    throwError(`query model:${QUERY_INIT_REDUCER_KEY} is already in model:${NAMESPACE} reducers`)
+    throwError(`query model:${QUERY_INIT_REDUCER_KEY} is already in model:${namespace} reducers`)
   }
 
   const wrappedReducers = {
@@ -79,7 +79,7 @@ export default ({
   }
 
   if (QUERY_EFFECT_KEY in effects) {
-    throwError(`query model:${QUERY_EFFECT_KEY} is already in model:${NAMESPACE} effects`)
+    throwError(`query model:${QUERY_EFFECT_KEY} is already in model:${namespace} effects`)
   }
 
   const initFilters = wrappedState[FILTERS_STATE_KEY];
@@ -138,7 +138,7 @@ export default ({
   }
 
   if (INIT_SUBSCRIPTION_KEY in subscriptions) {
-    throwError(`query model:${INIT_SUBSCRIPTION_KEY} is already in model:${NAMESPACE} subscriptions`)
+    throwError(`query model:${INIT_SUBSCRIPTION_KEY} is already in model:${namespace} subscriptions`)
   }
 
   const wrappedSubscriptions = {
