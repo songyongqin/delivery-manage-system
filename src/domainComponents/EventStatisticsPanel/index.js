@@ -81,7 +81,7 @@ export default ({ isDark, data, getDetailsItemOnClickHandle, dispatch }) => {
           </span>
           <p className={styles["counts"]}>
             <CountUp start={0}
-              end={data[k]}
+              end={data[k] || 0}
               separator={","}
               useGrouping={true}
               duration={1}
