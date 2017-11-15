@@ -11,7 +11,7 @@ const model = {
       action: [],
       level: [],
       actionStatus: [],
-      limit: 20,
+      limit: 5,
       page: 1,
     },
     results: {

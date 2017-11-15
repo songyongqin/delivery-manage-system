@@ -67,6 +67,7 @@ app.use(createLastEffectTime())
 app.model(MainModel);
 // app.model(HomeModel);
 app.model(LayoutModel);
+app.model(AnalyseEventStatisticsModel)
 app.model(AnalyseEventModel);
 app.model(AnalyseAttackChainModel);
 app.model(AnalyseFallHostModel);
@@ -99,14 +100,13 @@ app.model(AnalyseOverallPcapModel);
 app.model(AnalyseOverallCaptureModel);
 app.model(AnalyseOverallSystemModel);
 app.model(AnalyseOverallNetModel)
+app.model(OverviewStatisticsModel)
 app.model(OverviewModel);
 app.model(OverviewRankingModel)
 app.model(OverviewFlowModel)
 app.model(SysLogLoginModel)
 app.model(ReportModel)
 app.model(DeviceNodeIdsModel)
-app.model(AnalyseEventStatisticsModel)
-app.model(OverviewStatisticsModel)
 app.model(ManagerDeviceModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
