@@ -36,6 +36,8 @@ import {
   tableTextConfig,
   STAND_ALONE,
   DISTRIBUTION,
+  CONNECT_STATUS_DATAINDEX,
+  CONNECT,
   IDS,
   NODE,
 } from '../../ConstConfig'
@@ -216,6 +218,7 @@ class WrappedForm extends React.Component {
     const { optionCheckedList } = this.state;
     const { defaultValue, onSubmit } = this.props;
     const payload = defaultValue.data
+      .filter(i => i[CONNECT_STATUS_DATAINDEX] === CONNECT)
       .map(i => {
         return {
           [ID_DATAINDEX]: i[ID_DATAINDEX],
@@ -248,8 +251,11 @@ class WrappedForm extends React.Component {
       [
         {
           key: "result",
-          title: "清理结果",
+          title: <p style={{ textAlign: "center" }}>清理结果</p>,
           render: records => {
+            if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
+              return "设备连接异常 无法进行清理磁盘操作"
+            }
             const target = result.find(i => i[ID_DATAINDEX] === records[ID_DATAINDEX])
             if (target.status === 1) {
               return <p style={{ color: "#108ee9", textAlign: "center" }}>
@@ -281,7 +287,9 @@ class WrappedForm extends React.Component {
           width: "200px",
           title: <p style={{ textAlign: "center" }}>清理选项</p>,
           render: records => {
-
+            if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
+              return "设备连接异常 无法进行清理磁盘操作"
+            }
             return <Collapse bordered={false}>
               <Collapse.Panel header="清理配置" style={{ background: "transparent" }}>
                 <Checkbox.Group
@@ -328,6 +336,7 @@ class WrappedForm extends React.Component {
       ]
     }
 
+    const validItems = data.filter(i => i[CONNECT_STATUS_DATAINDEX] === CONNECT);
 
     return (
       <Form>
@@ -348,14 +357,19 @@ class WrappedForm extends React.Component {
               </LicenceBackPlaceholder>
             </div>
             :
-            <Row>
-
-              <Col>
-                <div style={{ textAlign: "center", marginTop: "20px" }}>
-                  <Button type="primary" size="large" onClick={this.onSubmit}>确认清理</Button>
-                </div>
-              </Col>
-            </Row>
+            (
+              validItems.length !== 0
+                ?
+                <Row>
+                  <Col>
+                    <div style={{ textAlign: "center", marginTop: "20px" }}>
+                      <Button type="primary" size="large" onClick={this.onSubmit}>确认清理</Button>
+                    </div>
+                  </Col>
+                </Row>
+                :
+                null
+            )
         }
 
       </Form>

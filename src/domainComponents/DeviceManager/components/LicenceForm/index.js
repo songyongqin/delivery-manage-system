@@ -16,7 +16,8 @@ import {
   Button,
   AutoComplete,
   Slider,
-  message as Message
+  message as Message,
+  Switch,
 } from 'antd';
 import styles from './styles.css';
 import classnames from 'classnames';
@@ -26,6 +27,8 @@ import {
   LICENCE_STATUS_DATAINDEX,
   LICENCE_VALID_VALUE,
   DEVICE_ID_DATAINDEX,
+  CONNECT_STATUS_DATAINDEX,
+  CONNECT,
 } from '../../ConstConfig'
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 
@@ -80,10 +83,16 @@ class WrappedForm extends React.Component {
     fileVisible: false,
     disabledList: [],
     hasFail: false,
+    hideNotValidItem: false,
   }
   static defaultProps = {
     defaultValue: { data: [] }
   }
+
+  hideNotValidItemOnChange = () => this.setState({
+    hideNotValidItem: !this.state.hideNotValidItem,
+  })
+
   switchFilePanel = value => this.setState({
     fileVisible: value
   })
@@ -156,6 +165,7 @@ class WrappedForm extends React.Component {
 
       Object.entries(values)
         .filter(([key, value]) => data.find(i => i[ID_DATAINDEX] === parseInt(key))[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE)
+        .filter(([key, value]) => data.find(i => i[ID_DATAINDEX] === parseInt(key))[CONNECT_STATUS_DATAINDEX] === CONNECT)
         .map(([key, value]) => payload.push({
           [ID_DATAINDEX]: parseInt(key),
           code: value
@@ -194,12 +204,21 @@ class WrappedForm extends React.Component {
           title: <p style={{ textAlign: "center" }}>授权信息</p>,
           width: "50%",
           render: records => {
+            if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
+              return <p className={lblClasses}>
+                该设备连接异常，无法进行授权
+            </p>
+            }
+
             //已授权的显示内容
             if (records[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE) {
               return <p className={lblClasses}>
                 该设备已授权且授权未即将过期，无需重新授权
               </p>
             }
+
+
+
             let target = {}, hasBack = false;
             result.some(i => {
               if (i[ID_DATAINDEX] === records[ID_DATAINDEX]) {
@@ -251,9 +270,11 @@ class WrappedForm extends React.Component {
       ]
     }
 
-    const validateData = data.filter(i => i[LICENCE_STATUS_DATAINDEX] !== LICENCE_VALID_VALUE);
+    const validItems = data
+      .filter(i => i[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE)
+      .filter(i => i[CONNECT_STATUS_DATAINDEX] === CONNECT);
 
-    const isMulti = validateData.length > 1;
+    const isMulti = validItems.length > 1;
 
     const haveResult = result.length !== 0;
 
@@ -288,8 +309,19 @@ class WrappedForm extends React.Component {
       }
     }
 
+
     return (
       <Form >
+        <div style={{marginBottom:"15px"}}>
+        <span className={lblClasses}>
+        隐藏无法操作的设备 &nbsp;
+        <Switch 
+        checked={this.state.hideNotValidItem} 
+        checkedChildren={<Icon type="check" />} 
+        unCheckedChildren={<Icon type="cross" />}>
+        </Switch>
+        </span>
+        </div>
         <div style={{ marginBottom: "15px" }}>
           <EnhanciveTable
             tableProps={tableProps}
@@ -305,66 +337,73 @@ class WrappedForm extends React.Component {
               onCancel={this.props.onCancel}>
             </LicenceBackPlaceholder>
             :
-            <div>
-              <p
-                className={lblClasses}
-                style={{ textAlign: "center", margin: "15px 0" }}>
-                <span style={{ color: "red" }}>*</span>
-                授权码请联系售后获取，需提供设备唯一标识码
-              </p>
-              <Row>
-                {
-                  isMulti
-                  &&
-                  <Col span={8}>
-                    <FormItem style={{ textAlign: "center" }}>
-                      <Button
-                        onClick={this.exportDeviceId}
-                        type="primary"
-                        loading={loading}
-                      >批量导出设备码</Button>
-                    </FormItem>
-                  </Col>
-                }
+            (
+              validItems.length !== 0
+                ?
+                <div>
+                  <p
+                    className={lblClasses}
+                    style={{ textAlign: "center", margin: "15px 0" }}>
+                    <span style={{ color: "red" }}>*</span>
+                    授权码请联系售后获取，需提供设备唯一标识码
+                  </p>
+                  <Row>
+                    {
+                      isMulti
+                      &&
+                      <Col span={8}>
+                        <FormItem style={{ textAlign: "center" }}>
+                          <Button
+                            onClick={this.exportDeviceId}
+                            type="primary"
+                            loading={loading}
+                          >批量导出设备码</Button>
+                        </FormItem>
+                      </Col>
+                    }
 
-                {
-                  isMulti
-                  &&
-                  <Col span={8}>
-                    <FormItem style={{ textAlign: "center" }}>
-                      <Button
-                        onClick={() => { this.switchFilePanel(!fileVisible) }}
-                        type="primary"
-                        loading={loading}
-                      >批量导入授权码文件</Button>
-                    </FormItem>
-                  </Col>
-                }
+                    {
+                      isMulti
+                      &&
+                      <Col span={8}>
+                        <FormItem style={{ textAlign: "center" }}>
+                          <Button
+                            onClick={() => { this.switchFilePanel(!fileVisible) }}
+                            type="primary"
+                            loading={loading}
+                          >批量导入授权码文件</Button>
+                        </FormItem>
+                      </Col>
+                    }
 
-                <Col span={isMulti ? 8 : 24}>
-                  <FormItem style={{ textAlign: "center" }}>
-                    <Button type="primary"
-                      loading={loading}
-                      disabled={loading || result.length !== 0 || validateData.length === 0}
-                      onClick={this.handleSubmit}>授权</Button>
-                  </FormItem>
-                </Col>
-              </Row>
-              {
-                fileVisible
-                &&
-                <Row>
-                  <Col>
-                    <Dragger {...fileProps}>
-                      <p className="ant-upload-drag-icon" style={{ marginTop: "15px" }}>
-                        <Icon type="file-text" />
-                      </p>
-                      <p className={lblClasses}>点击或拖拽文件到此处 仅支持JSON格式文件</p>
-                    </Dragger>
-                  </Col>
-                </Row>
-              }
-            </div>
+                    <Col span={isMulti ? 8 : 24}>
+                      <FormItem style={{ textAlign: "center" }}>
+                        <Button type="primary"
+                          loading={loading}
+                          disabled={loading || result.length !== 0 || validItems.length === 0}
+                          onClick={this.handleSubmit}>授权</Button>
+                      </FormItem>
+                    </Col>
+                  </Row>
+                  {
+                    fileVisible
+                    &&
+                    <Row>
+                      <Col>
+                        <Dragger {...fileProps}>
+                          <p className="ant-upload-drag-icon" style={{ marginTop: "15px" }}>
+                            <Icon type="file-text" />
+                          </p>
+                          <p className={lblClasses}>点击或拖拽文件到此处 仅支持JSON格式文件</p>
+                        </Dragger>
+                      </Col>
+                    </Row>
+                  }
+                </div>
+                :
+                null
+            )
+
         }
       </Form>
     );

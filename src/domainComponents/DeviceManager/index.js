@@ -300,7 +300,7 @@ export default ({
             </JoSpin>
           </Modal>
           <Modal
-            width={hasGetVersion ? "1200px" : "900px"}
+            width={"1200px"}
             key={`${this.state.updateVisible}-update-modal`}
             onCancel={this.switchUpdateModal}
             title="设备更新"

@@ -190,7 +190,7 @@ const versionListTableRenderer = records => {
             {getVersionListRenderer()(records[LIBRARY_VERSION_LIST_DATAINDEX])}
           </td>
           <td>
-            {getVersionListRenderer()(records[LIBRARY_VERSION_LIST_DATAINDEX])}
+            {getVersionListRenderer()(records[ENGINE_VERSION_LIST_DATAINDEX])}
           </td>
         </tr>
       </tbody>

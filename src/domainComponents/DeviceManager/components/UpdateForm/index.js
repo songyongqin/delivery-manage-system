@@ -32,11 +32,14 @@ import {
   ENGINE_VERSION_LIST_DATAINDEX,
   tableTextConfig,
   DEVICE_ID_DATAINDEX,
+  CONNECT_STATUS_DATAINDEX,
+  CONNECT,
 } from '../../ConstConfig'
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 const FormItem = Form.Item;
 const Dragger = Upload.Dragger;
 import JoTag from '../../../../components/JoTag';
+import Card from 'domainComponents/Card'
 const LICENCE_SUCCESS = 1;
 const CommonCell = ({ value }) => (
   <div style={{ textAlign: "center" }}>{value}</div>
@@ -80,23 +83,26 @@ const LicenceBackPlaceholder = ({ isDark = false, shouldReload = false, onCancel
 )
 
 const CommonListRenderer = ({ data }) => (
+  <Card>
   <table>
-    <tbody>
-      {
-        data.map((i, index) => (
-          <tr key={`${index}-row`}>
-            <td style={{ padding: "2px" }}>{i.name}</td>
-            <td style={{ padding: "2px" }}>
-              <JoTag color="#108ee9" style={{ marginBottom: "0" }}>{i.value}</JoTag>
-            </td>
-            <td style={{ padding: "2px" }}>
-              {i.result}
-            </td>
-          </tr>
-        ))
-      }
-    </tbody>
-  </table>
+      <tbody>
+        {
+          data.map((i, index) => (
+            <tr key={`${index}-row`}>
+              <td style={{ padding: "2px" ,textAlign:"center"}}>{i.name}</td>
+              <td style={{ padding: "2px" ,textAlign:"center"}}>
+                <JoTag color="#108ee9" style={{ marginBottom: "0" }}>{i.value}</JoTag>
+              </td>
+              <td style={{ padding: "2px",textAlign:"center" }}>
+                {i.result}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </Card>
+ 
 )
 
 
@@ -253,9 +259,16 @@ class WrappedForm extends React.Component {
         dataIndex: LIBRARY_VERSION_LIST_DATAINDEX,
         title: <p style={{ textAlign: "center" }}>{tableTextConfig.colTitles[LIBRARY_VERSION_LIST_DATAINDEX]}</p>,
         render: (value, records) => {
+
+          if(records[CONNECT_STATUS_DATAINDEX]===CONNECT){
+            return <p style={{textAlign:"center"}}>
+              设备连接异常 无法进行更新操作
+            </p>
+          }
+
           if (records[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE) {
-            return <p>
-              该设备未授权或授权已过期
+            return <p style={{textAlign:"center"}}>
+              该设备未授权或授权已过期 无法进行更新操作
             </p>
           }
 
