@@ -148,8 +148,8 @@ export const momentToTimestamp = (timestampRange = []) => {
     return [0, new moment().hour(23).minute(59).second(59).unix()]
   }
   return [
-    new moment(timestampRange[0].unix()).hour(0).minute(0).second(0).unix(),
-    new moment(timestampRange[1].unix()).hour(23).minute(59).second(59).unix()
+    new moment(timestampRange[0].unix() * 1000).hour(0).minute(0).second(0).unix(),
+    new moment(timestampRange[1].unix() * 1000).hour(23).minute(59).second(59).unix()
   ];
 }
 
