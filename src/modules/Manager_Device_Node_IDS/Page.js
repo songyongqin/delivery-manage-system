@@ -6,7 +6,7 @@ import {
   IDS
 } from './ConstConfig'
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
-import NodeDisk from '../Manager_Device_Node_Disk/Page'
+import NodeDisk from '../Manager_Device_Node_IDS_Disk/Page'
 import DeviceManagerGenerator from 'domainComponents/DeviceManager'
 
 function mapStateToProps(state) {
@@ -67,7 +67,7 @@ export default DeviceManagerGenerator({
   title: "流量监测设备",
   productType: IDS,
   getNodeDiskComponent: () => {
-    return null
+    return <NodeDisk></NodeDisk>
   }
 })
 

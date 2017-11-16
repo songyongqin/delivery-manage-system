@@ -25,6 +25,8 @@ export default {
 
     DEVICE_NODE_IDS: "/device/node-ids",
 
+    DEVICE_NODE_IDS_DISK: "/device/disk/ids",
+
     DEVICE_CONTROL_DISK: "/device/disk",
     DEVICE_NODE_DISK: "/device/disk",
     DEVICE_DISK: "/device/disk",

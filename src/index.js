@@ -54,6 +54,7 @@ import ReportModel from './modules/Report/Model';
 import DeviceNodeIdsModel from './modules/Manager_Device_Node_IDS/Model'
 import AnalyseEventStatisticsModel from './modules/Analyse_Event/models/Statistics'
 import ManagerDeviceModel from './modules/Manager_Device/Model';
+import DeviceNodeIDSDiskModel from './modules/Manager_Device_Node_IDS_Disk/Model';
 
 // 1. Initialize
 const app = dva({
@@ -108,6 +109,7 @@ app.model(SysLogLoginModel)
 app.model(ReportModel)
 app.model(DeviceNodeIdsModel)
 app.model(ManagerDeviceModel)
+app.model(DeviceNodeIDSDiskModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);
