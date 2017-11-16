@@ -30,6 +30,11 @@ export const postLicence = ({ data }) => {
 
 
 export const getVersionInfoLocal = payload => {
+
+  const fd = new FormData();
+  fd.append("file", payload.file)
+  fd.append("idList", payload.idList.join(","))
+
   const options = {
     method: "POST",
     headers: {
@@ -37,21 +42,18 @@ export const getVersionInfoLocal = payload => {
     }
   }
 
-  if (process.env.NODE_ENV !== "development") {
-    const fd = new FormData();
-    fd.append("file", payload.file)
-    fd.append("idList", payload.idList.join(","))
-    options.body = fd;
-  } else {
-    options.headers.idList = payload.idList.join(",")
+  try {
+    if (process.env.NODE_ENV === "development") {
+      options.headers.idList = payload.idList.join(",")
+    }
+  } catch (e) {
+    console.info(e)
   }
 
   return request(httpApi.DEVICE_UPDATE_INFO_LOCAL, options)
 }
 
 export const getVersionInfoRemote = payload => {
-
-
 
   const options = {
     method: "POST",
@@ -65,19 +67,24 @@ export const getVersionInfoRemote = payload => {
 }
 
 export const updateLocal = payload => {
+
+  const fd = new FormData();
+  fd.append("file", payload.file)
+  fd.append("idList", payload.idList.join(","))
+
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     }
   }
-  if (process.env.NODE_ENV !== "development") {
-    const fd = new FormData();
-    fd.append("file", payload.file)
-    fd.append("idList", payload.idList.join(","))
-    options.body = fd;
-  } else {
-    options.headers.idList = payload.idList.join(",")
+
+  try {
+    if (process.env.NODE_ENV === "development") {
+      options.headers.idList = payload.idList.join(",")
+    }
+  } catch (e) {
+    console.info(e)
   }
   return request(httpApi.DEVICE_UPDATE_LOCAL, options)
 }
