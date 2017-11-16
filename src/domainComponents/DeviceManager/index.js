@@ -61,11 +61,15 @@ export default ({
     }
     switchCleanModal = () => {
       if (this.state.shouldReload) {
-        window.location.reload();
+        this.props.onQuery()
+        this.setSelectedRows([])
+        this.setState({
+          shouldReload: false,
+        })
       }
       if (this.state.cleanVisible) {
         this.setState({
-          activeItems: []
+          activeItems: [],
         })
       }
       this.setState({
@@ -151,8 +155,6 @@ export default ({
         this.setState({
           shouldReload: result.some(i => i.status === 1)
         })
-        this.props.onQuery()
-        this.setSelectedRows([])
         return result;
       })
 

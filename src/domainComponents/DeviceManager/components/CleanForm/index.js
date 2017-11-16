@@ -8,7 +8,6 @@ import {
   Input,
   Tooltip,
   Icon,
-  Cascader,
   Select,
   Row,
   Col,
@@ -47,6 +46,22 @@ const FormItem = Form.Item;
 const Dragger = Upload.Dragger;
 import JoTag from '../../../../components/JoTag';
 import { SYSTEM_DATAINDEX } from '../../../../modules/Manager_Virtual/ConstConfig';
+import moment from 'moment';
+
+const timeRange = [7, 14, 30, 90]
+
+const timeRangeTextConfig = {
+  [7]: "一星期前",
+  [14]: "两星期前",
+  [30]: "一个月前",
+  [90]: "三个月前"
+}
+
+const timeToUnix = (count) => {
+  return moment().subtract(count, "day").unix()
+}
+
+
 const LICENCE_SUCCESS = 1;
 const CommonCell = ({ value }) => (
   <div style={{ textAlign: "center" }}>{value}</div>
@@ -77,13 +92,7 @@ const LicenceBackPlaceholder = ({ isDark = false, shouldReload = false, onCancel
         onClick={() => shouldReload ? window.location.reload() : onCancel()}
         size="large"
         type="primary">
-        {
-          shouldReload
-            ?
-            "确定(重新载入应用)"
-            :
-            "确定"
-        }
+        确定
       </Button>
     </div>
   </div >
@@ -180,10 +189,11 @@ class WrappedForm extends React.Component {
   }
   constructor(props) {
     super(props);
-    const optionCheckedList = {};
+    const optionCheckedList = {}, timeList = {};
 
     props.defaultValue.data.forEach(i => {
       optionCheckedList[i[ID_DATAINDEX]] = [...getOptions(props.productType)]
+      timeList[i[ID_DATAINDEX]] = timeRange[0]
     });
 
 
@@ -192,6 +202,7 @@ class WrappedForm extends React.Component {
       disabledList: [],
       optionCheckedList,
       hideNotValidItem: false,
+      timeList,
     }
   }
 
@@ -204,6 +215,15 @@ class WrappedForm extends React.Component {
       optionCheckedList: {
         ...this.state.optionCheckedList,
         [id]: payload
+      }
+    })
+  }
+
+  getTimeSelectOnChange = id => payload => {
+    this.setState({
+      timeList: {
+        ...this.state.timeList,
+        [id]: payload,
       }
     })
   }
@@ -221,13 +241,16 @@ class WrappedForm extends React.Component {
   })
 
   onSubmit = () => {
-    const { optionCheckedList } = this.state;
+    const { optionCheckedList, timeList } = this.state;
     const { defaultValue, onSubmit } = this.props;
     const payload = this.getValidItems()
       .map(i => {
+        const id = i[ID_DATAINDEX]
+
         return {
-          [ID_DATAINDEX]: i[ID_DATAINDEX],
-          options: optionCheckedList[i[ID_DATAINDEX]]
+          [ID_DATAINDEX]: id,
+          options: optionCheckedList[id],
+          time: timeToUnix(timeList[id])
         }
       });
 
@@ -253,7 +276,7 @@ class WrappedForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = { data: [] }, style, productType } = this.props;
-    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem } = this.state;
+    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, timeList } = this.state;
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -306,11 +329,26 @@ class WrappedForm extends React.Component {
             if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
               return "设备连接异常 无法进行清理磁盘操作"
             }
+            const id = records[ID_DATAINDEX]
             return <Collapse bordered={false}>
               <Collapse.Panel header="清理配置" style={{ background: "transparent" }}>
+                <Select
+                  onChange={this.getTimeSelectOnChange(id)}
+                  value={`${timeList[id]}`}
+                  style={{ marginBottom: "10px" }}>
+                  {
+                    timeRange.map((i, index) => (
+                      <Select.Option
+                        key={`${index}-option`}
+                        value={`${i}`}>
+                        {timeRangeTextConfig[i]}
+                      </Select.Option>
+                    ))
+                  }
+                </Select>
                 <Checkbox.Group
-                  onChange={this.getCheckedOnChange(records[ID_DATAINDEX])}
-                  value={this.state.optionCheckedList[records[ID_DATAINDEX]]}>
+                  onChange={this.getCheckedOnChange(id)}
+                  value={this.state.optionCheckedList[id]}>
                   {
                     getOptions(productType).map((i, index) => {
                       return <Col key={`${index}-radio-item`}>
