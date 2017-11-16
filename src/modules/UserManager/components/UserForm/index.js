@@ -59,6 +59,13 @@ const commonItemCreater = ({ commonProps, lblClasses, dataIndex, loading }) => (
     },
     filed: {
       name: dataIndex,
+      rules: dataIndex === EMAIL_DATAINDEX
+        ?
+        [{
+          type: 'email', message: '请输入正确的邮箱格式',
+        }]
+        :
+        []
     },
     component: <Input disabled={loading} />
   }
