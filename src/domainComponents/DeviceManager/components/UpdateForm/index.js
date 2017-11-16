@@ -420,6 +420,7 @@ class WrappedForm extends React.Component {
     ]
 
     const tableProps = {
+      scroll: { y: 400 },
       dataSource: hideNotValidItem
         ?
         this.getValidItems()

@@ -309,7 +309,7 @@ export default ({
             width={"1200px"}
             key={`${this.state.updateVisible}-update-modal`}
             onCancel={this.switchUpdateModal}
-            title="设备更新"
+            title="检测更新"
             maskClosable={false}
             visible={this.state.updateVisible}
             footer={null}>

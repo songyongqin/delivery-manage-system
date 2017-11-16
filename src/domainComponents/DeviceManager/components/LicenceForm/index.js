@@ -87,14 +87,14 @@ const getColumns = ({ result, getFieldDecorator, lblClasses, loading, disabledLi
       width: "50%",
       render: records => {
         if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
-          return <p className={lblClasses}>
+          return <p className={lblClasses} style={{ textAlign: "center" }}>
             该设备连接异常，无法进行授权
         </p>
         }
 
         //已授权的显示内容
         if (records[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE) {
-          return <p className={lblClasses}>
+          return <p className={lblClasses} style={{ textAlign: "center" }}>
             该设备已授权且授权未即将过期，无需重新授权
           </p>
         }
@@ -380,6 +380,7 @@ class WrappedForm extends React.Component {
     })
     const { data = [] } = defaultValue;
     const tableProps = {
+      scroll: { y: 400 },
       dataSource: hideNotValidItem
         ?
         this.getValidItems()

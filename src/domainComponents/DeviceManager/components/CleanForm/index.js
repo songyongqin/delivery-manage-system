@@ -73,7 +73,7 @@ const LicenceBackPlaceholder = ({ isDark = false, shouldReload = false, onCancel
       textAlign: "center",
       fontWeight: "500"
     }}>
-      感谢您使用本产品，本次批量升级操作已完成，若存在升级失败的设备请尝试重新升级
+      本次批量清理磁盘操作已完成
     </h4>
     <table className={styles["placeholder-table"]}>
       <tbody>
@@ -293,7 +293,9 @@ class WrappedForm extends React.Component {
           title: <p style={{ textAlign: "center" }}>清理结果</p>,
           render: records => {
             if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
-              return "设备连接异常 无法进行清理磁盘操作"
+              return <p style={{ textAlign: "center" }}>
+                设备连接异常 无法进行清理磁盘操作
+              </p>
             }
             const target = result.find(i => i[ID_DATAINDEX] === records[ID_DATAINDEX])
             if (target.status === 1) {
@@ -327,9 +329,11 @@ class WrappedForm extends React.Component {
           title: <p style={{ textAlign: "center" }}>清理选项</p>,
           render: records => {
             if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
-              return "设备连接异常 无法进行清理磁盘操作"
+              return <p style={{ textAlign: "center" }}>
+                设备连接异常 无法进行清理磁盘操作
+              </p>
             }
-            const id = records[ID_DATAINDEX],value=timeList[id]+"";
+            const id = records[ID_DATAINDEX], value = timeList[id] + "";
             return <Collapse bordered={false}>
               <Collapse.Panel header="清理配置" style={{ background: "transparent" }}>
                 <Select
@@ -378,6 +382,7 @@ class WrappedForm extends React.Component {
           ...i,
           key: `${i[ID_DATAINDEX]}-item`,
         })),
+      scroll: { y: 400 },
       columns: [
         {
           dataIndex: DEVICE_ID_DATAINDEX,
@@ -431,6 +436,10 @@ class WrappedForm extends React.Component {
                 ?
                 <Row>
                   <Col>
+                    <p style={{ textAlign: "center" }} className={lblClasses}>
+                      <span style={{ color: "red" }}>*</span>
+                      清理磁盘后，web页面中的所有威胁信息将会清除，请谨慎删除
+                    </p>
                     <div style={{ textAlign: "center", marginTop: "20px" }}>
                       <Button type="primary" size="large" onClick={this.onSubmit}>确认清理</Button>
                     </div>
