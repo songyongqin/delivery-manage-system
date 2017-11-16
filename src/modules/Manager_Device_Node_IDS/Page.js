@@ -2,7 +2,7 @@ import React from 'react';
 import {
   NAMESPACE,
   MANAGER_DEVICE_NAMESPACE,
-  MANAGER_DEVICE_NODE_DISK_NAMESPACE,
+  MANAGER_DEVICE_NODE_IDS_DISK_NAMESPACE,
   IDS
 } from './ConstConfig'
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
@@ -19,15 +19,17 @@ function mapStateToProps(state) {
     productType: state.user.productType,
 
     loading: effectsLoading[`${NAMESPACE}/query`]
-      || effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/put`]
-      || effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/query`],
+      || effectsLoading[`${MANAGER_DEVICE_NODE_IDS_DISK_NAMESPACE}/put`]
+      || effectsLoading[`${MANAGER_DEVICE_NODE_IDS_DISK_NAMESPACE}/query`],
 
     postLicenceLoading: effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/postLicence`],
 
     updateLoading: effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoLocal`]
       || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoRemote`]
       || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateRemote`]
-      || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateLocal`]
+      || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateLocal`],
+
+    cleanLoading: effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/clean`]
   }
 }
 
