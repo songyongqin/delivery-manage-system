@@ -302,6 +302,9 @@ class Page extends React.Component {
               ?
               <Dropdown.Button
                 style={{ marginLeft: "20px" }}
+                className={classnames({
+                  ["dropdown-disabled"]: this.state.selectedRows.length === 0
+                })}
                 disabled={this.state.selectedRows.length === 0}
                 overlay={menu}
                 onClick={this.startSelectedHandle}

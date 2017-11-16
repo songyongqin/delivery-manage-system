@@ -100,9 +100,11 @@ const EnhanciveTable = ({ expanded = true, inverse = false, title = null, tableP
         {
           expanded
             ?
-            <ExpandControlTable {...tableProps}
+            <ExpandControlTable
+              bordered={false}
+              {...tableProps}
               className={classes}
-              bordered={false} />
+            />
             :
             <Table pagination={false}
               {...tableProps}

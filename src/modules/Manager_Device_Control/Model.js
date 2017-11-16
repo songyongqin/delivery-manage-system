@@ -6,7 +6,7 @@ import moment from 'moment';
 import * as service from './Service';
 import { queryModelGenerator } from '../../utils/dvaModelGenerator';
 import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
-import { NAMESPACE } from './ConstConfig';
+import { NAMESPACE, CONNECT, CONNECT_STATUS_DATAINDEX } from './ConstConfig';
 
 moment.locale('zh-cn');
 
@@ -17,17 +17,7 @@ const baseModel = {
 
     },
     queryResults: {
-      "hostIp": "",
-      "diskPer": 0,
-      "licenceStatus": {
-        "value": 0,
-        "expiration": 0
-      },
-      "librayVersion": "",
-      "appliactionVersion": "",
-      "id": "",
-      "deviceProps": [],
-      "deviceId": ""
+      data: []
     }
   },
   effects: {
@@ -46,7 +36,12 @@ const baseModel = {
 
 const payloadFilter = (payload) => {
   return {
-    ...payload
+    data: [
+      {
+        ...payload,
+        [CONNECT_STATUS_DATAINDEX]: CONNECT
+      }
+    ]
   }
 };
 

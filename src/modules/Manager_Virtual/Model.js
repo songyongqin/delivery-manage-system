@@ -149,7 +149,7 @@ const baseModel = {
     *setCreateListTemp(action, { put, select }) {
       let createList = yield select(state => state[NAMESPACE].createList);
 
-      createList = [...createList];
+      createList = { ...createList };
 
       let ignoreList = [];
 
@@ -160,6 +160,7 @@ const baseModel = {
       })
 
       ignoreList.forEach(id => delete createList[id]);
+
       setTemp(HONEYPOT_CREATE_LIST_CACHE_NAMESPACE, createList);
     },
     *postVM({ resolve, payload = {} }, { callWithExtra, put }) {

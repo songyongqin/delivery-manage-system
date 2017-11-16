@@ -32,12 +32,12 @@ export const HOST_IP_DATAINDEX = "hostIp",
 
   ENGINE_VERSION_LIST_DATAINDEX = "engineVersionList",
 
-  CONNECT_STATUS_DATAINDEX = "connectStatus"
+  CONNECT_STATUS_DATAINDEX = "connectStatus",
+
+  VERSION_COMBINE_KEY = "versionCombine"
 
 
-
-
-export const OPERATION_ROW_KEY = "operaion";
+export const OPERATION_ROW_KEY = "operation";
 
 export const deviceRowDataIndexes = [
   HOST_IP_DATAINDEX,
@@ -62,7 +62,8 @@ export const tableTextConfig = {
     [OPERATION_ROW_KEY]: "操作",
     [LIBRARY_VERSION_LIST_DATAINDEX]: "库版本",
     [ENGINE_VERSION_LIST_DATAINDEX]: "引擎版本",
-    [CONNECT_STATUS_DATAINDEX]: "连接状态"
+    [CONNECT_STATUS_DATAINDEX]: "连接状态",
+    [VERSION_COMBINE_KEY]: "版本信息"
   }
 }
 

@@ -1,52 +1,9 @@
 import request from '../../utils/request';
 import ApiConfig from '../../configs/ApiConfig';
 import * as tools from '../../utils/tools';
+import commonRequestCreator from 'utils/commonRequestCreator';
 const httpApi=ApiConfig.http;
 
-export async function query(payload) {
-  /*
-   * 转换参数格式
-   * */
-  let {timestampRange,value}=payload;
+export const query = commonRequestCreator.get(httpApi.ANALYSE_EVENT_THREAINFO,true)
 
-  payload={
-    ...payload,
-  };
-
-  if(timestampRange.length!==0){
-    payload.timestampRange=tools.momentToTimestamp(timestampRange)
-  }
-
-  if(value===null||value.trim().length===0){
-    delete payload.value;
-  }
-
-  const options= {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-  return request(httpApi.ANALYSE_EVENT_THREAINFO+tools.jsonToQueryStringImprove(payload), options);
-}
-
-
-export async function post(payload) {
-
-  let {timestampRange}=payload;
-
-  payload={};
-
-  if(timestampRange.length!==0){
-    payload.timestampRange=tools.momentToTimestamp(timestampRange)
-  }
-
-  const options= {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-    body:JSON.stringify(payload,null,4)
-  };
-  return request(httpApi.ANALYSE_EVENT_THREAINFO, options);
-}
+export const post=commonRequestCreator.post(httpApi.ANALYSE_EVENT_THREAINFO);

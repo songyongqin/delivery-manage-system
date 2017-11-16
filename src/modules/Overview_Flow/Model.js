@@ -17,7 +17,7 @@ const baseModel = {
   namespace: NAMESPACE,
   state: {
     queryFilters: {
-      // timestampRange: [],
+      timestampRange: [],
     },
     queryResults: {
       data: []
@@ -63,7 +63,6 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig: commonCallConfig,
   queryService,
-  initPath: "/overview"
 });
 
 

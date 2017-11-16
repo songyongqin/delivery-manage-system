@@ -2,6 +2,7 @@ import dva from 'dva';
 import './index.css';
 import './styles/commonHack.css';
 import createLoading from 'dva-loading'
+import createLastEffectTime from 'utils/dvaLastEffectTime'
 import router from './router';
 import { useRouterHistory } from 'dva/router';
 import { createHashHistory } from 'history';
@@ -45,11 +46,15 @@ import AnalyseOverallCaptureModel from './modules/Analyse_Overall_Capture/Model'
 import AnalyseOverallSystemModel from './modules/Analyse_Overall_System/Model';
 import AnalyseOverallNetModel from './modules/Analyse_Overall_Net/Model';
 import OverviewModel from './modules/Overview/Model';
+import OverviewStatisticsModel from './modules/Overview/models/Statistics'
 import OverviewRankingModel from './modules/Overview_Ranking/Model';
 import OverviewFlowModel from './modules/Overview_Flow/Model';
 import SysLogLoginModel from './modules/SystemLog_Login/Model'
 import ReportModel from './modules/Report/Model';
 import DeviceNodeIdsModel from './modules/Manager_Device_Node_IDS/Model'
+import AnalyseEventStatisticsModel from './modules/Analyse_Event/models/statistics'
+import ManagerDeviceModel from './modules/Manager_Device/Model';
+import DeviceNodeIDSDiskModel from './modules/Manager_Device_Node_IDS_Disk/Model';
 
 // 1. Initialize
 const app = dva({
@@ -57,11 +62,13 @@ const app = dva({
 });
 
 app.use(createLoading({ effects: true }));
+app.use(createLastEffectTime())
 
 // 3. Model
 app.model(MainModel);
 // app.model(HomeModel);
 app.model(LayoutModel);
+app.model(AnalyseEventStatisticsModel)
 app.model(AnalyseEventModel);
 app.model(AnalyseAttackChainModel);
 app.model(AnalyseFallHostModel);
@@ -94,12 +101,15 @@ app.model(AnalyseOverallPcapModel);
 app.model(AnalyseOverallCaptureModel);
 app.model(AnalyseOverallSystemModel);
 app.model(AnalyseOverallNetModel)
+app.model(OverviewStatisticsModel)
 app.model(OverviewModel);
 app.model(OverviewRankingModel)
 app.model(OverviewFlowModel)
 app.model(SysLogLoginModel)
 app.model(ReportModel)
 app.model(DeviceNodeIdsModel)
+app.model(ManagerDeviceModel)
+app.model(DeviceNodeIDSDiskModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

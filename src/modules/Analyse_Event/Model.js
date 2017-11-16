@@ -1,60 +1,58 @@
-/**
- * Created by jojo on 2017/8/21.
- */
-import { routerRedux } from 'dva/router';
-import moment from 'moment';
+import createQueryModel from 'utils/models/query'
 import * as service from './Service';
-import {queryModelGenerator} from '../../utils/dvaModelGenerator';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
-import {statisticDataIndexes} from './ConstConfig';
-
-const initStatistic={};
-
-statisticDataIndexes.forEach(i=>{
-  initStatistic[i]=0;
-});
-
-moment.locale('zh-cn');
-
-const NAMESPACE="analyseEvent";
-
-const baseModel={
+import { NAMESPACE, STATISTICS_NAMESPACE } from './ConstConfig'
+const model = {
   namespace: NAMESPACE,
   state: {
-    queryFilters:{
-      timestampRange:[],
-      mergeCounts:10,
-      attackStage:[],
-      action:[],
-      level:[],
-      actionStatus:[],
-      limit:20,
-      page:1,
+    filters: {
+      timestampRange: [],
+      mergeCounts: 10,
+      attackStage: [],
+      action: [],
+      level: [],
+      actionStatus: [],
+      limit: 20,
+      page: 1,
     },
-    queryResults:{
-      total:0,
-      statistics:initStatistic,
-      data:[]
+    results: {
+      total: 0,
+      statistics: {},
+      data: []
     }
   },
-};
+  subscriptions: {
+    initData({ history, dispatch }) {
 
-const payloadFilter=(payload)=>{
-  return {
-    total:payload.total,
-    data:payload.data,
-    statistics:payload.statistics,
+
+      return history.listen(({ pathname }) => {
+        if (pathname === "/analyse/event") {
+
+          dispatch({
+            type: `${STATISTICS_NAMESPACE}/queryInit`
+          })
+
+          dispatch({
+            type: `queryInit`,
+          })
+
+
+        }
+      });
+    },
   }
-};
-
-const queryService=service.query;
-
-export default queryModelGenerator({
-  model:baseModel,
-  payloadFilter,
-  callConfig:commonCallConfig,
-  queryService,
-  initPath:"/analyse/event"
-});
+}
 
 
+export default createQueryModel({
+  model,
+  service: service.query,
+  isSuccess: res => res.status === 1,
+  resultFilter: ({ payload }) => {
+    const { total, data, statistics } = payload;
+    return {
+      total,
+      data,
+      statistics,
+    }
+  },
+})

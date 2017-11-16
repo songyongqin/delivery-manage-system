@@ -7,6 +7,8 @@ import JoIcon from '../../components/JoIcon';
 
 
 export const NAMESPACE = "overview";
+export const STATISTICS_NAMESPACE = "overviewStatistics"
+export const EVENT_NAMESPACE = "overviewEvent"
 /**************************************************
  * table
  **************************************************/
@@ -138,3 +140,6 @@ export const statisticsTextConfig = {
 
 export { EVENT_ACTION_DATA_INDEX, EVENT_TYPE_DATA_INDEX } from '../../configs/ConstConfig';
 export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig';
+
+export { NAMESPACE as RANKING_NAMESPACE } from '../Overview_Ranking/ConstConfig'
+export { NAMESPACE as FLOW_NAMESPACE } from '../Overview_Flow/ConstConfig'

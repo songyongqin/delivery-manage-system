@@ -49,10 +49,12 @@ export default ({ tableConfig, formTextConfig, namespace }) => {
       super(props);
     }
     componentDidMount = () => {
+      
       this.props.query({
         ...this.props[NAMESPACE].queryFilters,
         timestampRange: this.props.timestampRange,
-        value: null
+        value: null,
+        page:1,
       })
     }
     onSelectChange = (payload) => {

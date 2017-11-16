@@ -119,12 +119,16 @@ class Page extends React.Component {
       {
         color: "black"
       };
+
     return (
       <Row key="content-panel">
         {
           rankingListData.map((i, index) => {
-            const xData = i.data.map(i => i.name);
-            const yData = i.data.map(i => i.value);
+
+            const data = i.data || []
+
+            const xData = data.map(item => item.name);
+            const yData = data.map(item => item.value);
 
             return (
               <Col key={`${index}-bar-chart`}

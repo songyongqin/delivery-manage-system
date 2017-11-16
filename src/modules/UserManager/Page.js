@@ -16,6 +16,8 @@ import { WithBreadcrumb } from '../../components/HOSComponents/index'
 import IpLimit from '../UserManager_IPLimit/Page';
 import * as tools from '../../utils/tools';
 import Card from '../../domainComponents/Card';
+import QueryFrom from './components/QueryForm'
+
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
   return {

@@ -196,7 +196,40 @@ const baseModel = {
   },
 };
 
-
-
-
 export default baseModel;
+
+
+// user active listener , send a request to server for keep active status
+// debounceTime:number   judge active 
+const initActiveListener = (debounceTime = 10) => {
+
+  let lastActiveTime = new Date().getTime()
+
+  window.addEventListener("click", () => {
+    console.info("click")
+    lastActiveTime = new Date().getTime()
+  })
+
+  window.addEventListener("keydown", () => {
+    console.info("keydown")
+    lastActiveTime = new Date().getTime()
+  })
+
+  setInterval(() => {
+
+    const timeDiff = Math.floor((new Date().getTime() - lastActiveTime) / 1000)
+
+    timeDiff < debounceTime
+      ?
+      console.info("is active")
+      :
+      console.info("is not active")
+
+  }, 1000 * debounceTime);
+
+}
+
+
+const DE_BOUNCE_TIME_SECOND = 10
+
+initActiveListener(DE_BOUNCE_TIME_SECOND);

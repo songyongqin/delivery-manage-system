@@ -23,7 +23,7 @@ import {
   ADVICE_DATAINDEX,
   HONEYPOT_SOURCE,
   IDS_SOURCE,
-  sourceTextConfig
+  sourceTextConfig,
 } from '../../ConstConfig';
 import FilterInputNumber from '../../../../components/FilterInputNumber/index';
 import TimeLabel from '../../../../components/TimesLabel';
@@ -106,7 +106,10 @@ export const getColumns = ({ queryFilters, onSubmit, filters, filterTextConfig =
   filterTextConfig: { ...commonConstConfig.textConfig, ...filterTextConfig },
   filterOptions: { ...filterOptions, ...filters },
   filteredValue: queryFilters,
-  renderer,
+  renderer: {
+    ...renderer,
+    [ACTION_DATAINDEX]: value => tools.getKeyText(value, filterTextConfig[ACTION_DATAINDEX])
+  },
   extraProps: {
     [COUNTS_DATAINDEX]: {
       filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
@@ -148,7 +151,7 @@ export const getExpandedRowRender = ({ isDark }) => {
                 <div>
                   {details.map((d, index) => {
                     return <JoTag key={'item-' + index}
-                      style={{ marginBottom: "0" }}
+
                       color="#108ee9">
                       {d}
                     </JoTag>

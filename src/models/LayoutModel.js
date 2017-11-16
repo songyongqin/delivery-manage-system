@@ -6,6 +6,8 @@ import languageConfig from '../configs/LanguageConfig';
 import RouteConfig from '../configs/RouteConfig';
 import LayoutConfig from '../configs/LayoutConfig';
 
+const SHOULD_EXPANDED_WIDTH_DIVIDE = 1400;
+
 let commonLayout = tools.getCache("commonLayout");
 
 commonLayout = commonLayout
@@ -39,7 +41,6 @@ export default {
       };
 
       tools.setCache("commonLayout", newCommonLayout);
-
       return {
         ...preState,
         commonLayout: newCommonLayout
@@ -47,6 +48,33 @@ export default {
     }
   },
   effects: {
+    throttleChangeNavExpanded: function* ({ payload }, { select, put }) {
+      const navExpanded = yield select(state => !state.layout.commonLayout.navMini);
+      if (navExpanded === payload) {
+        return;
+      }
+      yield put({
+        type: "setCommonLayout",
+        payload: {
+          navMini: !payload
+        }
+      })
+    },
+  },
+  subscriptions: {
+    setup: ({ history, dispatch }) => {
 
+      dispatch({
+        type: "throttleChangeNavExpanded",
+        payload: window.innerWidth > SHOULD_EXPANDED_WIDTH_DIVIDE
+      })
+
+      window.addEventListener("resize", () => {
+        dispatch({
+          type: "throttleChangeNavExpanded",
+          payload: window.innerWidth > SHOULD_EXPANDED_WIDTH_DIVIDE
+        })
+      })
+    }
   }
 }

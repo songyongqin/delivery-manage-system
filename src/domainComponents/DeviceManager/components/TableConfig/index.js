@@ -25,8 +25,10 @@ import {
   DISK_PER_DATAINDEX,
   ID_DATAINDEX,
   CODE_DATAINDEX,
+  APPLIACTION_VERSION_DATAINDEX,
+  VERSION_COMBINE_KEY
 } from '../../ConstConfig';
-import { Progress, Row, Col, Badge, Button, Dropdown, Icon, Menu } from 'antd'
+import { Progress, Row, Col, Badge, Button, Dropdown, Icon, Menu, Popover } from 'antd'
 import JoTag from '../../../../components/JoTag';
 import TimesLabel from '../../../../components/TimesLabel';
 import styles from './styles.css';
@@ -52,7 +54,7 @@ const devicePropsRender = value => {
 
 const tagRenderer = value => {
   return <div style={{ textAlign: "center" }}>
-    <JoTag color="#108ee9">{value}</JoTag>
+    <JoTag color="#108ee9" style={{ marginBottom: "0" }}>{value}</JoTag>
   </div>
 }
 
@@ -72,22 +74,18 @@ const getTimeFormat = time => moment(time * 1000).format("YYYY-MM-DD");
 const getLicenceRenderer = isDark => value => (
   <div style={{ textAlign: "center" }} >
     {licenceValueRenderer(value[LICENCE_STATUS_VALUE_DATAINDEX], isDark)}
-    <br /><br />
     {
       value[LICENCE_STATUS_VALUE_DATAINDEX] !== LICENCE_NULL_VALUE
         ?
-        <span>授权到期时间:&nbsp;</span>
+        <div style={{ marginTop: "5px" }}>
+          <span>授权到期时间:&nbsp;</span>
+          <JoTag color="#108ee9">
+            {getTimeFormat(value[LICENCE_STATUS_EXPIRATION_DATAINDEX])}
+          </JoTag>
+        </div>
         :
         null
-    }
-    {
-      value[LICENCE_STATUS_VALUE_DATAINDEX] !== LICENCE_NULL_VALUE
-        ?
-        <JoTag color="#108ee9">
-          {getTimeFormat(value[LICENCE_STATUS_EXPIRATION_DATAINDEX])}
-        </JoTag>
-        :
-        null
+
     }
   </div>
 )
@@ -96,26 +94,34 @@ const getOperationRenderer = ({ isAdmin, isNode, handle }) => {
   return records => {
     const isLicence = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX] === LICENCE_VALID_VALUE,
       isConnect = isNode ? records[CONNECT_STATUS_DATAINDEX] === CONNECT : true,
+
       menu = (
         <Menu onClick={({ key }) => {
+
+          const payload = [records]
+
           if (key === "licence") {
-            handle.licenceHandle([{
-              [ID_DATAINDEX]: records[ID_DATAINDEX],
-              [LICENCE_STATUS_DATAINDEX]: records[LICENCE_STATUS_DATAINDEX]
-            }]);
+            return handle.licenceHandle(payload);
           }
 
+          if (key === "update") {
+            return handle.updateHandle(payload)
+          }
+
+          if (key === "clean") {
+            return handle.cleanHandle(payload)
+          }
 
         }}>
           <Menu.Item key="licence" disabled={isLicence || !isAdmin || !isConnect}>
             <Icon type="unlock" />&nbsp;授权
           </Menu.Item>
-          <Menu.Item disabled={(!isAdmin || !isConnect) && isNode}>
+          <Menu.Item key="update" disabled={((!isAdmin || !isConnect) && isNode) || !isLicence}>
             <span>
               <Icon type="reload" />&nbsp;检查升级
                 </span>
           </Menu.Item>
-          <Menu.Item disabled={!isAdmin || !isConnect}>
+          <Menu.Item key="clean" disabled={!isAdmin || !isConnect}>
             <span>
               <Icon type="delete" />&nbsp;磁盘清理
                 </span>
@@ -136,7 +142,7 @@ const getOperationRenderer = ({ isAdmin, isNode, handle }) => {
   }
 }
 
-const getVersionListRenderer = dataIndex => value => {
+const getVersionListRenderer = () => value => {
   value = value || [];
   return (
     <table className={styles["version-table"]}>
@@ -161,7 +167,61 @@ const getVersionListRenderer = dataIndex => value => {
   );
 }
 
-export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilters = {}, onSubmit }) => {
+const versionListTableRenderer = records => {
+  return (
+    <table className={styles["version-list"]} style={{ width: "100%" }}>
+      <tbody>
+        <tr>
+          <th>
+            {tableTextConfig.colTitles[APPLIACTION_VERSION_DATAINDEX]}
+          </th>
+          <th>
+            {tableTextConfig.colTitles[LIBRARY_VERSION_LIST_DATAINDEX]}
+          </th>
+          <th>
+            {tableTextConfig.colTitles[ENGINE_VERSION_LIST_DATAINDEX]}
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <JoTag color="#108ee9">{records[APPLIACTION_VERSION_DATAINDEX]}</JoTag>
+          </td>
+          <td>
+            {getVersionListRenderer()(records[LIBRARY_VERSION_LIST_DATAINDEX])}
+          </td>
+          <td>
+            {getVersionListRenderer()(records[ENGINE_VERSION_LIST_DATAINDEX])}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  )
+}
+
+
+
+const versionListRenderer = records => {
+
+  return (
+    <p style={{ textAlign: "center" }}>
+      <Popover
+        title="版本信息"
+        placement="left"
+        content={<div style={{ width: "700px" }}>
+          {versionListTableRenderer(records)}
+        </div>}>
+        <a style={{ padding: "5px" }}>
+          <Icon type="eye-o"></Icon>
+        </a>
+      </Popover>
+    </p>
+  )
+}
+
+
+const versionDataIndexes = [APPLIACTION_VERSION_DATAINDEX, LIBRARY_VERSION_LIST_DATAINDEX, ENGINE_VERSION_LIST_DATAINDEX]
+
+export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilters = {}, onSubmit, versionColExpanded = true }) => {
 
   const renderer = {
     diskPer: diskPerRenderer,
@@ -185,8 +245,11 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
         }
       </div>
     ),
-    [LIBRARY_VERSION_LIST_DATAINDEX]: getVersionListRenderer(LIBRARY_VERSION_LIST_DATAINDEX),
-    [ENGINE_VERSION_LIST_DATAINDEX]: getVersionListRenderer(ENGINE_VERSION_LIST_DATAINDEX)
+    [LIBRARY_VERSION_LIST_DATAINDEX]: getVersionListRenderer(),
+    [ENGINE_VERSION_LIST_DATAINDEX]: getVersionListRenderer(),
+    [VERSION_COMBINE_KEY]: (value, records) => {
+      return versionListRenderer(records)
+    }
   }
 
 
@@ -229,23 +292,26 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
       {}
 
 
+  const tableDataIndexes = versionColExpanded
+    ?
+    deviceRowDataIndexes
+    :
+    [...deviceRowDataIndexes.filter(i => !versionDataIndexes.includes(i)), VERSION_COMBINE_KEY]
+
+
   let columns = tableColumnsGenerator({
-    keys: deviceRowDataIndexes,
+    keys: tableDataIndexes,
     titleTextConfig: finalTitleTextConfig,
     renderer,
     extraProps
   });
 
-  const CONNECT_ROW_INDEX = 4
 
   columns = isNode
     ?
     columns
     :
-    [
-      ...columns.slice(0, CONNECT_ROW_INDEX),
-      ...columns.slice(CONNECT_ROW_INDEX + 1)
-    ]
+    columns.filter(i => i.dataIndex !== CONNECT_STATUS_DATAINDEX)
 
 
   return isAdmin

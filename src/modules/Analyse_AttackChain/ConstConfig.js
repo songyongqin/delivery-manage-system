@@ -19,10 +19,11 @@ export const stageRowDataIndexes=[
 
 export const rowDataIndexes=[ATTACKTIMES_DATAINDEX,...stageRowDataIndexes];
 
+export const ATTACK_STAGE_DATA_INDEX="attackStage"
 
 const EXPANDED_ROW_DESCRIPTION="事件详情"
 
-const tableTextConfig={
+export const tableTextConfig={
   rowTitles:{
     [ATTACKTIMES_DATAINDEX]:"攻击链时间范围",
     [INVADE_DATAINDEX]:"入侵",

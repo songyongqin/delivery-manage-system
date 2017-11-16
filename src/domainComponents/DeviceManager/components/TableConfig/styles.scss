@@ -16,8 +16,17 @@
 }
 
 .version-table{
+  width: 100%;
   td{
     text-align: center;
     padding:3px;
+  }
+}
+
+
+.version-list{
+  width:100%;
+  td,th{
+    text-align: center;
   }
 }

@@ -11,7 +11,8 @@ import {
   NAMESPACE,
   MAIN_NAMESPACE,
   EVENT_TYPE_DATA_INDEX,
-  ATTACK_EVENT_TYPE_DATAINDEX
+  ATTACK_EVENT_TYPE_DATAINDEX,
+  ATTACK_EVENT_TYPE_LIST_DATAINDEX
 } from './ConstConfig'
 import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
@@ -75,13 +76,12 @@ class Page extends React.Component {
     const isDark = commonLayout.darkTheme;
 
     const filters = {
-      [ATTACK_EVENT_TYPE_DATAINDEX]: Object.keys(eventTypeList)
+      [ATTACK_EVENT_TYPE_LIST_DATAINDEX]: Object.keys(eventTypeList)
     }
 
     const filterTextConfig = {
-      [ATTACK_EVENT_TYPE_DATAINDEX]: eventTypeList
+      [ATTACK_EVENT_TYPE_LIST_DATAINDEX]: eventTypeList
     }
-
     const tableProps = {
       onChange: this.tableOnChange,
       columns: tableConfig.getColumns({

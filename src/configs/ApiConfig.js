@@ -25,9 +25,11 @@ export default {
 
     DEVICE_NODE_IDS: "/device/node-ids",
 
+    DEVICE_NODE_IDS_DISK: "/device/disk/ids",
+
     DEVICE_CONTROL_DISK: "/device/disk",
     DEVICE_NODE_DISK: "/device/disk",
-
+    DEVICE_DISK: "/device/disk",
     VIRTUAL_MACHINE: "/virtual-machine",
 
     OCCUPYING_NODE_IP: "/occupying/node/ip",
@@ -38,7 +40,7 @@ export default {
     REPORT: "/report",
 
     ANALYSE_EVENT: "/analyse/event",
-
+    ANALYSE_EVENT_STATISTICS: "/analyse/event/statistics",
     ANALYSE_EVENT_EXPLOIT: "/analyse/event/exploit",
     ANALYSE_EVENT_TOOL: "/analyse/event/tool",
     ANALYSE_EVENT_THREAINFO: "/analyse/event/threat-info",
@@ -93,6 +95,14 @@ export default {
     REPORT_SUFFER_HOST_CALL_ON_RECORD: "/report/suffer-host-call-on-record",
     REPORT_HAVE_COMMUNICATE_INSIDE_IP: "/report/have-communicate-inside-ip",
     REPORT_CALL_ON_IP: "/report/call-on-ip",
-    REPORT_CALL_ON_DOMAIN: "/report/call-on-domain"
+    REPORT_CALL_ON_DOMAIN: "/report/call-on-domain",
+
+
+    USER_ACTIVE: "/user/active",
+
+    USER_HEART_BEAT: "/user/heart-beat",
+
+
+    REPORT_EXPORT: "/report/export"
   }
 }

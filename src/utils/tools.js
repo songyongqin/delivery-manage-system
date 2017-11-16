@@ -24,6 +24,9 @@ export const judgeURL = (str_url = "") => {
 
 
 export const jsonToQueryString = (jsonObject) => {
+
+  jsonObject = { ...jsonObject }
+
   if ((jsonObject["timestampRange"])) {
     jsonObject["timestampRange"] = momentToTimestamp(jsonObject["timestampRange"])
   }
@@ -145,8 +148,8 @@ export const momentToTimestamp = (timestampRange = []) => {
     return [0, new moment().hour(23).minute(59).second(59).unix()]
   }
   return [
-    timestampRange[0].hour(0).minute(0).second(0).unix(),
-    timestampRange[1].hour(23).minute(59).second(59).unix()
+    new moment(timestampRange[0].unix() * 1000).hour(0).minute(0).second(0).unix(),
+    new moment(timestampRange[1].unix() * 1000).hour(23).minute(59).second(59).unix()
   ];
 }
 
@@ -178,3 +181,7 @@ export function curry(...args) {
 
 
 export const getTableRowKey = (index, lastReqTime) => `item-${index}-${lastReqTime}`
+
+import Ramda from 'ramda';
+
+export const compose = Ramda.compose;
