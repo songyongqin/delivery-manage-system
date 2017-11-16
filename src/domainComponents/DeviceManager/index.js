@@ -107,7 +107,7 @@ export default ({
       return result;
     })
 
-    onSubmit = payload => this.props.get(payload)
+    onSubmit = payload => this.props.get(payload).then(() => this.setSelectedRows([]))
 
     licenceModalOpenHandle = payload => {
       this.switchModal();
@@ -152,6 +152,7 @@ export default ({
           shouldReload: result.some(i => i.status === 1)
         })
         this.props.onQuery()
+        this.setSelectedRows([])
         return result;
       })
 
@@ -248,7 +249,10 @@ export default ({
       const paginationProps = {
         total: queryResults.total,
         current: queryFilters.page,
-        onChange: this.props.pageOnChange,
+        onChange: current => {
+          this.setSelectedRows([]);
+          this.props.pageOnChange(current)
+        },
         pageSize: queryFilters.limit,
       };
 
