@@ -38,8 +38,8 @@ export const getVersionInfoLocal = payload => {
   const options = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
+    },
+    body: fd
   }
 
   try {
@@ -75,8 +75,8 @@ export const updateLocal = payload => {
   const options = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
+    },
+    body: fd,
   }
 
   try {
