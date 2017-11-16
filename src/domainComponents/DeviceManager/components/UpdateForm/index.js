@@ -510,7 +510,7 @@ class WrappedForm extends React.Component {
             <Button
               type="primary"
               onClick={this.handleUpdate}>
-              更新
+              确定
             </Button>
           </div>
         }

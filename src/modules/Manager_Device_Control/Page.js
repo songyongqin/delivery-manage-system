@@ -53,6 +53,10 @@ const mapDispatchToProps = dispatch => ({
   updateLocal: payload => dispatch({
     type: `${MANAGER_DEVICE_NAMESPACE}/updateLocal`,
     payload,
+  }),
+  clean: payload => dispatch({
+    type: `${MANAGER_DEVICE_NAMESPACE}/clean`,
+    payload,
   })
 })
 
