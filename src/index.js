@@ -122,4 +122,4 @@ app.router(router);
 // 5. Start
 app.start('#root');
 
-
+export default app;
