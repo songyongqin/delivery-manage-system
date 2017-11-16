@@ -193,7 +193,7 @@ class WrappedForm extends React.Component {
 
     props.defaultValue.data.forEach(i => {
       optionCheckedList[i[ID_DATAINDEX]] = [...getOptions(props.productType)]
-      timeList[i[ID_DATAINDEX]] = timeRange[0]
+      timeList[i[ID_DATAINDEX]] = 7
     });
 
 
@@ -329,12 +329,12 @@ class WrappedForm extends React.Component {
             if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
               return "设备连接异常 无法进行清理磁盘操作"
             }
-            const id = records[ID_DATAINDEX]
+            const id = records[ID_DATAINDEX],value=timeList[id]+"";
             return <Collapse bordered={false}>
               <Collapse.Panel header="清理配置" style={{ background: "transparent" }}>
                 <Select
                   onChange={this.getTimeSelectOnChange(id)}
-                  value={`${timeList[id]}`}
+                  value={value}
                   style={{ marginBottom: "10px" }}>
                   {
                     timeRange.map((i, index) => (

@@ -327,6 +327,7 @@ export default ({
           <Modal
             width={"800px"}
             title="清理磁盘"
+            key={`${this.state.cleanVisible}-clean-modal`}
             onCancel={this.switchCleanModal}
             maskClosable={false}
             visible={this.state.cleanVisible}
