@@ -100,6 +100,9 @@ export default {
 
     USER_ACTIVE: "/user/active",
 
-    USER_HEART_BEAT: "/user/heart-beat"
+    USER_HEART_BEAT: "/user/heart-beat",
+
+
+    REPORT_EXPORT: "/report/export"
   }
 }
