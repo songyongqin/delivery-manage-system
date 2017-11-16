@@ -391,9 +391,7 @@ class WrappedForm extends React.Component {
       columns: getColumns({ result, disabledList, loading, getFieldDecorator })
     }
 
-    const validItems = data
-      .filter(i => i[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE)
-      .filter(i => i[CONNECT_STATUS_DATAINDEX] === CONNECT);
+    const validItems = this.getValidItems()
 
     const isMulti = validItems.length > 1;
 

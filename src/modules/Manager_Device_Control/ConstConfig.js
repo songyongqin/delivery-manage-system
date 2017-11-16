@@ -1,7 +1,7 @@
 /**
  * Created by jojo on 2017/9/5.
  */
-export { ID_DATAINDEX, CODE_DATAINDEX } from '../Manager_Device/ConstConfig'
+export { ID_DATAINDEX, CODE_DATAINDEX, CONNECT_STATUS_DATAINDEX, CONNECT } from '../Manager_Device/ConstConfig'
 
 
 export const NAMESPACE = "deviceControl";

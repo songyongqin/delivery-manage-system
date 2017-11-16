@@ -18,7 +18,8 @@ import {
   Slider,
   Radio,
   Collapse,
-  message as Message
+  message as Message,
+  Switch,
 } from 'antd';
 import styles from './styles.css';
 import classnames from 'classnames';
@@ -189,9 +190,14 @@ class WrappedForm extends React.Component {
     this.state = {
       result: [],
       disabledList: [],
-      optionCheckedList
+      optionCheckedList,
+      hideNotValidItem: false,
     }
   }
+
+  hideNotValidItemOnChange = () => this.setState({
+    hideNotValidItem: !this.state.hideNotValidItem,
+  })
 
   getCheckedOnChange = id => payload => {
     this.setState({
@@ -217,8 +223,7 @@ class WrappedForm extends React.Component {
   onSubmit = () => {
     const { optionCheckedList } = this.state;
     const { defaultValue, onSubmit } = this.props;
-    const payload = defaultValue.data
-      .filter(i => i[CONNECT_STATUS_DATAINDEX] === CONNECT)
+    const payload = this.getValidItems()
       .map(i => {
         return {
           [ID_DATAINDEX]: i[ID_DATAINDEX],
@@ -234,10 +239,21 @@ class WrappedForm extends React.Component {
         })
       });
   }
+
+  getValidItems = () => {
+    const { defaultValue } = this.props,
+      { data } = defaultValue;
+
+    return data.filter(i => i[CONNECT_STATUS_DATAINDEX] === CONNECT)
+      .map((i, index) => ({
+        ...i,
+        key: `${i[ID_DATAINDEX]}-item`
+      }));
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = { data: [] }, style, productType } = this.props;
-    const { result, fileVisible, disabledList, shouldReload, updateResult, } = this.state;
+    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem } = this.state;
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -316,10 +332,14 @@ class WrappedForm extends React.Component {
 
 
     const tableProps = {
-      dataSource: data.map((i, index) => ({
-        ...i,
-        key: `${index}-item`,
-      })),
+      dataSource: hideNotValidItem
+        ?
+        this.getValidItems()
+        :
+        data.map((i, index) => ({
+          ...i,
+          key: `${i[ID_DATAINDEX]}-item`,
+        })),
       columns: [
         {
           dataIndex: DEVICE_ID_DATAINDEX,
@@ -340,6 +360,17 @@ class WrappedForm extends React.Component {
 
     return (
       <Form>
+        <div style={{ marginBottom: "15px" }}>
+          <span className={lblClasses}>
+            隐藏无法操作的设备 &nbsp;
+          </span>
+          <Switch
+            onChange={this.hideNotValidItemOnChange}
+            checked={this.state.hideNotValidItem}
+            checkedChildren={<Icon type="check" />}
+            unCheckedChildren={<Icon type="cross" />}>
+          </Switch>
+        </div>
         <div style={{ marginBottom: "15px" }}>
           <EnhanciveTable
             tableProps={tableProps}
