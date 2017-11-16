@@ -17,6 +17,7 @@ import {
   AutoComplete,
   Slider,
   Radio,
+  Switch,
   message as Message
 } from 'antd';
 import styles from './styles.css';
@@ -121,11 +122,17 @@ class WrappedForm extends React.Component {
     hasFail: false,
     method: REMOTE_METHOD,
     file: null,
-    updateResult: []
+    updateResult: [],
+    hideNotValidItem: false,
   }
   static defaultProps = {
     defaultValue: { data: [] }
   }
+
+  hideNotValidItemOnChange = () => this.setState({
+    hideNotValidItem: !this.state.hideNotValidItem,
+  })
+
   radioOnChange = e => {
     let { value } = e.target
     this.setState({
@@ -146,10 +153,7 @@ class WrappedForm extends React.Component {
 
     let serverUrl = form.getFieldValue(SERVER_URL_DATA_INDEX);
 
-
-    const idList = defaultValue.data
-      .filter(i => i[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE)
-      .map(i => i[ID_DATAINDEX])
+    const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
 
     const res = method === REMOTE_METHOD
       ?
@@ -161,6 +165,7 @@ class WrappedForm extends React.Component {
       updateResult: result,
       shouldReload: result.some(i => i.status === 1)
     }))
+
   }
   handleGetVersion = (e) => {
     e.preventDefault();
@@ -178,9 +183,7 @@ class WrappedForm extends React.Component {
       return form.setFields({ [FILE_DATA_INDEX]: { value: "", errors: [new Error("本地升级文件不能为空")] } })
     }
 
-    const idList = defaultValue.data
-      .filter(i => i[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE)
-      .map(i => i[ID_DATAINDEX])
+    const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
 
 
     const res = method === REMOTE_METHOD
@@ -202,10 +205,21 @@ class WrappedForm extends React.Component {
     }
 
   }
+  getValidItems = () => {
+    const { defaultValue } = this.props,
+      { data } = defaultValue;
+
+    return data.filter(i => i[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE)
+      .filter(i => i[CONNECT_STATUS_DATAINDEX] === CONNECT)
+      .map((i, index) => ({
+        ...i,
+        key: `${i[ID_DATAINDEX]}-item`
+      }));
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = { data: [] }, style } = this.props;
-    const { result, fileVisible, disabledList, shouldReload, updateResult } = this.state;
+    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem } = this.state;
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -377,9 +391,15 @@ class WrappedForm extends React.Component {
 
           const deviceId = records[ID_DATAINDEX];
 
+          if (records[CONNECT_STATUS_DATAINDEX] !== CONNECT) {
+            return <p style={{ textAlign: "center" }}>
+              设备连接异常 无法进行更新操作
+            </p>
+          }
+
           if (records[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE) {
-            return <p>
-              该设备未授权或授权已过期
+            return <p style={{ textAlign: "center" }}>
+              该设备未授权或授权已过期 无法进行更新操作
             </p>
           }
 
@@ -400,10 +420,14 @@ class WrappedForm extends React.Component {
     ]
 
     const tableProps = {
-      dataSource: data.map((i, index) => ({
-        ...i,
-        key: `${index}-item`,
-      })),
+      dataSource: hideNotValidItem
+        ?
+        this.getValidItems()
+        :
+        data.map((i, index) => ({
+          ...i,
+          key: `${i[ID_DATAINDEX]}-item`,
+        })),
       columns: [
         {
           dataIndex: DEVICE_ID_DATAINDEX,
@@ -424,9 +448,9 @@ class WrappedForm extends React.Component {
 
 
 
-    const validateData = data.filter(i => i[LICENCE_STATUS_DATAINDEX] !== LICENCE_VALID_VALUE);
+    const validItems = this.getValidItems()
 
-    const isMulti = validateData.length > 1;
+    const isMulti = validItems.length > 1;
 
 
     const { clearError } = this;
@@ -450,6 +474,17 @@ class WrappedForm extends React.Component {
     return (
       <Form>
         <div style={{ marginBottom: "15px" }}>
+          <span className={lblClasses}>
+            隐藏无法操作的设备 &nbsp;
+          </span>
+          <Switch
+            onChange={this.hideNotValidItemOnChange}
+            checked={this.state.hideNotValidItem}
+            checkedChildren={<Icon type="check" />}
+            unCheckedChildren={<Icon type="cross" />}>
+          </Switch>
+        </div>
+        <div style={{ marginBottom: "15px" }}>
           <EnhanciveTable
             tableProps={tableProps}
             pagination={false}>
@@ -457,102 +492,110 @@ class WrappedForm extends React.Component {
         </div>
         {
           haveResult
-            ?
-            <div>
-              {
-                haveUpdateResult
-                  ?
-                  <LicenceBackPlaceholder
-                    isDark={isDark}
-                    shouldReload={shouldReload}
-                    onCancel={this.props.onCancel}>
-                  </LicenceBackPlaceholder>
-                  :
-                  <div style={{ textAlign: "center" }}>
-                    <Button
-                      type="primary"
-                      onClick={this.handleUpdate}>
-                      更新
-                    </Button>
-                  </div>
-              }
-
-
-            </div>
-            :
-            <Row>
-              <Col >
-                <Radio.Group
-                  style={{ width: "100%" }}
-                  value={this.state.method}
-                  onChange={this.radioOnChange}>
-                  <Row>
-                    <Col span={12} style={{ textAlign: "center" }}>
-                      <Radio value="remote"><span className={lblClasses}>远程升级</span></Radio>
-                    </Col>
-                    <Col span={12} style={{ textAlign: "center" }}>
-                      <Radio value="local"><span className={lblClasses}>本地升级</span></Radio>
-                    </Col>
-                  </Row>
-
-                </Radio.Group>
-              </Col>
-              <Col >
-                <div style={{ width: "650px", margin: "10px auto 0" }}>
-                  {
-                    this.state.method === "local"
-                      ?
-                      <div>
-                        <FormItem
-                          style={{ margin: "10px 0" }}
-                          required={false}
-                          hasFeedback={true}
-                        >
-                          {getFieldDecorator("file", {
-                          })(
-                            <Dragger {...fileProps} style={{ margin: "10px 0" }} disabled={loading}>
-                              <p className="ant-upload-drag-icon" style={{ marginTop: "15px" }}>
-                                <Icon type="file-text" />
-                              </p>
-                              <p className={lblClasses}>点击或拖拽文件到此处</p>
-                            </Dragger>
-                            )}
-                        </FormItem>
-
-                      </div>
-                      :
-                      <div style={{ margin: "10px 0" }}>
-                        <FormItem
-                          style={{ margin: "0" }}
-                          wrapperCol={{ span: 19 }}
-                          labelCol={{ span: 5 }}
-                          label={<span className={lblClasses}>升级服务器地址</span>}
-                          required={false}
-                          hasFeedback={true}
-                        >
-                          {getFieldDecorator("serverUrl", {
-                            initialValue: "",
-                            rules: [
-                              {
-                                required: true, message: "服务器地址不能为空"
-                              }
-                            ]
-                          })(
-                            <Input placeholder="请填写升级服务器地址" disabled={loading}>
-                            </Input>
-                            )}
-                        </FormItem>
-                      </div>
-                  }
-                </div>
-              </Col>
-              <Col>
-                <div style={{ textAlign: "center", marginTop: "20px" }}>
-                  <Button type="primary" size="large" onClick={this.handleGetVersion}>获取升级版本信息</Button>
-                </div>
-              </Col>
-            </Row>
+          &&
+          haveUpdateResult
+          &&
+          <LicenceBackPlaceholder
+            isDark={isDark}
+            shouldReload={shouldReload}
+            onCancel={this.props.onCancel}>
+          </LicenceBackPlaceholder>
         }
+        {
+          haveResult
+          &&
+          !haveUpdateResult
+          &&
+          <div style={{ textAlign: "center" }}>
+            <Button
+              type="primary"
+              onClick={this.handleUpdate}>
+              更新
+            </Button>
+          </div>
+        }
+        {
+          validItems.length !== 0
+          &&
+          !haveResult
+          &&
+          !haveUpdateResult
+          &&
+          <Row>
+            <Col >
+              <Radio.Group
+                style={{ width: "100%" }}
+                value={this.state.method}
+                onChange={this.radioOnChange}>
+                <Row>
+                  <Col span={12} style={{ textAlign: "center" }}>
+                    <Radio value="remote"><span className={lblClasses}>远程升级</span></Radio>
+                  </Col>
+                  <Col span={12} style={{ textAlign: "center" }}>
+                    <Radio value="local"><span className={lblClasses}>本地升级</span></Radio>
+                  </Col>
+                </Row>
+
+              </Radio.Group>
+            </Col>
+            <Col >
+              <div style={{ width: "650px", margin: "10px auto 0" }}>
+                {
+                  this.state.method === "local"
+                    ?
+                    <div>
+                      <FormItem
+                        style={{ margin: "10px 0" }}
+                        required={false}
+                        hasFeedback={true}
+                      >
+                        {getFieldDecorator("file", {
+                        })(
+                          <Dragger {...fileProps} style={{ margin: "10px 0" }} disabled={loading}>
+                            <p className="ant-upload-drag-icon" style={{ marginTop: "15px" }}>
+                              <Icon type="file-text" />
+                            </p>
+                            <p className={lblClasses}>点击或拖拽文件到此处</p>
+                          </Dragger>
+                          )}
+                      </FormItem>
+
+                    </div>
+                    :
+                    <div style={{ margin: "10px 0" }}>
+                      <FormItem
+                        style={{ margin: "0" }}
+                        wrapperCol={{ span: 19 }}
+                        labelCol={{ span: 5 }}
+                        label={<span className={lblClasses}>升级服务器地址</span>}
+                        required={false}
+                        hasFeedback={true}
+                      >
+                        {getFieldDecorator("serverUrl", {
+                          initialValue: "",
+                          rules: [
+                            {
+                              required: true, message: "服务器地址不能为空"
+                            }
+                          ]
+                        })(
+                          <Input placeholder="请填写升级服务器地址" disabled={loading}>
+                          </Input>
+                          )}
+                      </FormItem>
+                    </div>
+                }
+              </div>
+            </Col>
+            <Col>
+              <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <Button type="primary" size="large" onClick={this.handleGetVersion}>获取升级版本信息</Button>
+              </div>
+            </Col>
+          </Row>
+        }
+
+
 
       </Form>
     );
