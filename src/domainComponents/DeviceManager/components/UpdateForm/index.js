@@ -83,26 +83,30 @@ const LicenceBackPlaceholder = ({ isDark = false, shouldReload = false, onCancel
   </div >
 )
 
-const CommonListRenderer = ({ data }) => (
-  <Card>
-    <table>
-      <tbody>
-        {
-          data.map((i, index) => (
-            <tr key={`${index}-row`}>
-              <td style={{ padding: "2px", textAlign: "center" }}>{i.name}</td>
-              <td style={{ padding: "2px", textAlign: "center" }}>
-                <JoTag color="#108ee9" style={{ marginBottom: "0" }}>{i.value}</JoTag>
-              </td>
-              <td style={{ padding: "2px", textAlign: "center" }}>
-                {i.result}
-              </td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </Card>
+const CommonListRenderer = ({ data = [] }) => (
+  data.length !== 0
+    ?
+    <Card>
+      <table>
+        <tbody>
+          {
+            data.map((i, index) => (
+              <tr key={`${index}-row`}>
+                <td style={{ padding: "2px", textAlign: "center" }}>{i.name}</td>
+                <td style={{ padding: "2px", textAlign: "center" }}>
+                  <JoTag color="#108ee9" style={{ marginBottom: "0" }}>{i.value}</JoTag>
+                </td>
+                <td style={{ padding: "2px", textAlign: "center" }}>
+                  {i.result}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </Card>
+    :
+    null
 
 )
 
@@ -124,11 +128,16 @@ class WrappedForm extends React.Component {
     file: null,
     updateResult: [],
     hideNotValidItem: false,
+    serverUrl: ""
   }
   static defaultProps = {
     defaultValue: { data: [] }
   }
-
+  setServerUrl = e => {
+    this.setState({
+      serverUrl: e.target.value,
+    })
+  }
   hideNotValidItemOnChange = () => this.setState({
     hideNotValidItem: !this.state.hideNotValidItem,
   })
@@ -151,7 +160,7 @@ class WrappedForm extends React.Component {
     const { method, file } = this.state;
     const { updateLocal, updateRemote } = handle;
 
-    let serverUrl = form.getFieldValue(SERVER_URL_DATA_INDEX);
+    let { serverUrl } = this.state;
 
     const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
 
@@ -216,6 +225,15 @@ class WrappedForm extends React.Component {
         key: `${i[ID_DATAINDEX]}-item`
       }));
   }
+
+  haveValidResult = () => this.state.result.some(i =>
+    i[APPLIACTION_VERSION_DATAINDEX] !== null
+    ||
+    i[ENGINE_VERSION_LIST_DATAINDEX].some(e => e["version"] !== null)
+    ||
+    i[LIBRARY_VERSION_DATAINDEX].some(l => l["version"] !== null)
+  )
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = { data: [] }, style } = this.props;
@@ -231,6 +249,7 @@ class WrappedForm extends React.Component {
     const versionColumns = [
       {
         dataIndex: APPLIACTION_VERSION_DATAINDEX,
+        width: "100px",
         title: <p style={{ textAlign: "center" }}>{tableTextConfig.colTitles[APPLIACTION_VERSION_DATAINDEX]}</p>,
         render: (value, records) => {
 
@@ -275,6 +294,7 @@ class WrappedForm extends React.Component {
       },
       {
         dataIndex: LIBRARY_VERSION_LIST_DATAINDEX,
+        width: "400px",
         title: <p style={{ textAlign: "center" }}>{tableTextConfig.colTitles[LIBRARY_VERSION_LIST_DATAINDEX]}</p>,
         render: (value, records) => {
 
@@ -456,6 +476,8 @@ class WrappedForm extends React.Component {
 
     const { clearError } = this;
 
+    const haveValidResult = this.haveValidResult()
+
     const fileProps = {
       name: "file",
       multiple: false,
@@ -508,7 +530,17 @@ class WrappedForm extends React.Component {
           !haveUpdateResult
           &&
           <div style={{ textAlign: "center" }}>
+            {
+              haveValidResult
+                ?
+                null
+                :
+                <p className={lblClasses}>
+                  已是最新版本 无需更新
+                </p>
+            }
             <Button
+              disabled={!haveValidResult}
               type="primary"
               onClick={this.handleUpdate}>
               确定
@@ -580,7 +612,7 @@ class WrappedForm extends React.Component {
                             }
                           ]
                         })(
-                          <Input placeholder="请填写升级服务器地址" disabled={loading}>
+                          <Input onChange={this.setServerUrl} placeholder="请填写升级服务器地址" disabled={loading}>
                           </Input>
                           )}
                       </FormItem>
