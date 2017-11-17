@@ -50,7 +50,7 @@ class QueryForm extends React.Component {
       <Form>
         <Row gutter={10}>
           {
-            [USERACCOUNT_DATAINDEX, USER_NAME_DATAINDEX].map((i, index) => <Col span={7} key={`${index}-item`}>
+            [USERACCOUNT_DATAINDEX, USER_NAME_DATAINDEX].map((i, index) => <Col span={10} key={`${index}-item`}>
               <FormItem
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 18 }}

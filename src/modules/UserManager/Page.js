@@ -16,7 +16,7 @@ import { WithBreadcrumb } from '../../components/HOSComponents/index'
 import IpLimit from '../UserManager_IPLimit/Page';
 import * as tools from '../../utils/tools';
 import Card from '../../domainComponents/Card';
-import QueryFrom from './components/QueryForm'
+import QueryForm from './components/QueryForm'
 
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
@@ -179,14 +179,16 @@ class Page extends React.Component {
   initQuery = () => {
     this.onQuery({ page: 1 })
   }
-
+  queryOnSubmit = payload => {
+    this.onQuery({ ...payload, page: 1 })
+  }
   getResultsPanel = () => {
     const { commonLayout } = this.props;
-
+    const isDark = commonLayout.darkTheme
     const classes = classnames({
-      ["expanded-row-dark"]: commonLayout.darkTheme
+      ["expanded-row-dark"]: isDark
     });
-
+    const { queryResults, queryFilters, lastReqTime } = this.props[NAMESPACE];
     const titleContent = (
       <div style={{ width: "100%", position: "relative" }}>
         {tableTextConfig.title}
@@ -203,6 +205,11 @@ class Page extends React.Component {
       <div key="results-panel">
         <Card className={classes}
           title={titleContent}>
+          <QueryForm
+            onSubmit={this.queryOnSubmit}
+            defaultValue={queryFilters}
+            isDark={isDark}>
+          </QueryForm>
           {this.getDataResultPanel()}
         </Card>
       </div>
