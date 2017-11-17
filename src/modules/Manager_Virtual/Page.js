@@ -32,7 +32,8 @@ function mapStateToProps(state) {
     commonLayout,
     userData: state.user.userData,
     productType: state.user.productType.type,
-    postLoading: state.loading.effects[`${NAMESPACE}/postVM`]
+    postLoading: state.loading.effects[`${NAMESPACE}/postVM`],
+    options: state[NAMESPACE].options,
   }
 }
 
@@ -102,10 +103,10 @@ class Page extends React.Component {
 
     const { queryFilters } = this.props[NAMESPACE];
     if (queryFilters[HOST_IP_DATAINDEX].length !== 0) {
-      this.getVMIpList();
+      // this.getVMIpList();
     }
-    this.getNodeIpList();
-    this.getVMNameList();
+    // this.getNodeIpList();
+    // this.getVMNameList();
   }
   getNodeIpList = () => {
     this.props.getNodeIpList().then(result => {
@@ -203,15 +204,14 @@ class Page extends React.Component {
 
   getDataResultPanel = () => {
 
-    const { commonLayout, pageOnChange, userData } = this.props;
+    const { commonLayout, pageOnChange, userData, options } = this.props;
     const { queryResults, queryFilters, lastReqTime } = this.props[NAMESPACE];
     const { data } = queryResults;
     const isDark = commonLayout.darkTheme,
       { isAdmin } = userData;
 
     const filterOptions = {
-      [HOST_IP_DATAINDEX]: this.state[HOST_IP_DATAINDEX],
-      [HONEYPOT_IP_DATAINDEX]: this.state[HONEYPOT_IP_DATAINDEX]
+      ...options,
     };
 
 

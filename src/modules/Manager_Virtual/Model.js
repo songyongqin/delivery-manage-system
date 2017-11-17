@@ -33,18 +33,25 @@ const callConfig = {
   withTime: true,
 }
 
+const initFilters = {
+  [HOST_IP_DATAINDEX]: [],
+  [HONEYPOT_IP_DATAINDEX]: [],
+  [HONEYPOT_TYPE_ROW_KEY]: [],
+  [HONEYPOT_STATUS_DATAINDEX]: [],
+  limit: 20,
+  page: 1,
+}
 
 
 const baseModel = {
   namespace: NAMESPACE,
   state: {
     queryFilters: {
+      ...initFilters
+    },
+    options: {
       [HOST_IP_DATAINDEX]: [],
-      [HONEYPOT_IP_DATAINDEX]: [],
-      [HONEYPOT_TYPE_ROW_KEY]: [],
-      [HONEYPOT_STATUS_DATAINDEX]: [],
-      limit: 20,
-      page: 1,
+      [HONEYPOT_IP_DATAINDEX]: []
     },
     queryResults: {
       total: 0,
@@ -54,6 +61,15 @@ const baseModel = {
     createStatusPanelVisible: false
   },
   reducers: {
+    saveOptions: (preState, { payload }) => {
+      return {
+        ...preState,
+        options: {
+          ...preState.options,
+          ...payload
+        }
+      }
+    },
     switchStatusPanel: (preState, { payload }) => {
       return {
         ...preState,
@@ -222,27 +238,40 @@ const baseModel = {
         resolve && resolve(res.payload)
       }
     },
-    *getVMIpList({ resolve, payload }, { callWithExtra }) {
+    *getVMIpList({ resolve, payload }, { put, callWithExtra }) {
       const res = yield callWithExtra(
         service.getVMIpList,
         { ...payload || {} },
         callConfig
       )
       if (res.status === 1) {
+        yield put({
+          type: "saveOptions",
+          payload: {
+            [HONEYPOT_IP_DATAINDEX]: res.payload
+          }
+        })
         resolve && resolve(res.payload)
       }
     },
-    *getNodeIpList({ resolve }, { callWithExtra }) {
+    *getNodeIpList({ resolve }, { put, callWithExtra }) {
       const res = yield callWithExtra(
         service.getNodeIpList,
         {},
         callConfig
       )
       if (res.status === 1) {
+        yield put({
+          type: "saveOptions",
+          payload: {
+            [HOST_IP_DATAINDEX]: res.payload,
+            [HONEYPOT_IP_DATAINDEX]: []
+          }
+        })
         resolve && resolve(res.payload)
       }
     },
-    *getVMNameList({ resolve }, { callWithExtra }) {
+    *getVMNameList({ resolve }, { put, callWithExtra }) {
       const res = yield callWithExtra(
         service.getVMNameList,
         {},
@@ -262,6 +291,21 @@ const baseModel = {
         resolve && resolve({ payload: res.payload, message: res.message })
       }
     }
+  },
+  subscriptions: {
+    initOptions: ({ history, dispatch }) => {
+      return history.listen(({ pathname }) => {
+        if (pathname === "/manager/virtual-machine") {
+          dispatch({
+            type: "getNodeIpList"
+          })
+          dispatch({
+            type: "query",
+            payload: initFilters
+          })
+        }
+      })
+    }
   }
 };
 
@@ -280,6 +324,5 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig: commonCallConfig,
   queryService,
-  initPath: "/manager/virtual-machine"
 });
 
