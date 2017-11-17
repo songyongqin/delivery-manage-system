@@ -25,8 +25,8 @@ function mapStateToProps(state) {
   return {
     commonLayout,
     loading: effectLoading[`${NAMESPACE}/delete`] ||
-    effectLoading[`${NAMESPACE}/put`] ||
-    effectLoading[`${NAMESPACE}/post`]
+      effectLoading[`${NAMESPACE}/put`] ||
+      effectLoading[`${NAMESPACE}/post`]
   }
 }
 
@@ -160,7 +160,7 @@ class Page extends React.Component {
           <AddIpLimitForm isDark={isDark}
             onSubmit={this.onPostHandle}
             loading={loading}
-            ipList={data[this.state.activeType] || []} />
+            ipList={(data.find(i => i.role === this.state.activeType) || {}).ipRange} />
         </Modal>
       </div>
     )
