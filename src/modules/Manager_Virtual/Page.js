@@ -326,7 +326,7 @@ class Page extends React.Component {
   };
   render = () => {
 
-    const { commonLayout } = this.props;
+    const { commonLayout, options } = this.props;
 
     const isDark = commonLayout.darkTheme;
 
@@ -360,10 +360,7 @@ class Page extends React.Component {
             validatorHandle={this.props.validate}
             onSubmit={this.onSubmit}
             loading={this.props.postLoading}
-            options={{
-              [HONEYPOT_NAME_DATAINDEX]: this.state[HONEYPOT_NAME_DATAINDEX],
-              [HOST_IP_DATAINDEX]: this.state[HOST_IP_DATAINDEX]
-            }} />
+            options={options} />
         </Modal>
       </div>
     )
