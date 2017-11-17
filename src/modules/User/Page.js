@@ -9,7 +9,6 @@ import LoginForm from './components/LoginForm/index';
 import { Alert } from 'antd';
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 
-
 function mapStateToProps(state) {
 
   const { commonLayout, languageConfig } = state.layout;
@@ -32,6 +31,11 @@ function mapDispacthToProps(dispatch) {
           ...payload,
         }
       })
+    },
+    getVerificationCode: () => {
+      return dispatch({
+        type: 'user/getVerificationCode'
+      })
     }
   }
 }
@@ -43,8 +47,18 @@ class Page extends React.Component {
     this.state = {
       err: null,
       shouldShakeModal: false,
-
+      verificationCode: ""
     }
+  }
+  requestCode = () => {
+    this.props.getVerificationCode().then(result => {
+      this.setState({
+        verificationCode: result,
+      })
+    })
+  }
+  componentDidMount = () => {
+    this.requestCode()
   }
   postSignHandle = (payload) => {
     return this.props.postSign(payload)
@@ -100,7 +114,6 @@ class Page extends React.Component {
       [styles["title"]]: true,
       [styles["title-dark"]]: isDark
     })
-    console.info(document.title);
     return (
       <div className={pageClasses}>
         <div className={modalClasses}>
@@ -122,6 +135,8 @@ class Page extends React.Component {
               {document.title || languageConfig["zh-cn"].title}
             </h1>
             <LoginForm onSubmit={this.postSignHandle}
+              verificationCode={this.state.verificationCode}
+              requestCode={this.requestCode}
               isDark={isDark}
               loading={this.props.loading} />
           </div>

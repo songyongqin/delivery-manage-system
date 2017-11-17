@@ -103,6 +103,8 @@ export default {
     USER_HEART_BEAT: "/user/heart-beat",
 
 
-    REPORT_EXPORT: "/report/export"
+    REPORT_EXPORT: "/report/export",
+
+    VERIFICATION_CODE: "/verification-code"
   }
 }

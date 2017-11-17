@@ -13,6 +13,7 @@ import {
   IDS,
   NODE,
 } from '../../configs/ConstConfig';
+import { getVerificationCode } from './Service';
 moment.locale('zh-cn');
 
 const NAMESPACE = "user";
@@ -130,6 +131,13 @@ const baseModel = {
       }
 
     },
+    *getVerificationCode({ payload, resolve }, { callWithExtra }) {
+      const res = yield callWithExtra(service.getVerificationCode, {}, callConfig)
+
+      if (res.status === 1) {
+        resolve(res.payload)
+      }
+    }
   },
   subscriptions: {
     setup({ history, dispatch }) {
