@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2017",
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "allowJs": true,
+    "baseUrl": "./src",
+    "paths": {
+      "components": [
+        "components"
+      ],
+      "domainComponents": [
+        "domainComponents"
+      ],
+      "utils": [
+        "utils"
+      ],
+      "modules": [
+        "modules"
+      ],
+      "routes": [
+        "routes"
+      ],
+      "interfaces": [
+        "interfaces"
+      ],
+      "configs": [
+        "configs"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

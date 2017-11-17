@@ -65,13 +65,18 @@ import ReportModel_mal_ip from './modules/Report/models/Model_mal_ip';
 import ReportModel_suffer_host_call_on_record from './modules/Report/models/Model_suffer_host_call_on_record';
 import ReportModel_threat_info from './modules/Report/models/Model_threat_info';
 
+import ManagerMirrorModelList from './modules/Manager_Mirror/Model'
+
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
 });
 
+const importModelList = (modelList = []) => modelList.forEach(m => app.model(m))
+
 app.use(createLoading({ effects: true }));
 app.use(createLastEffectTime())
+
 
 // 3. Model
 app.model(MainModel);
@@ -128,6 +133,7 @@ app.model(ReportModel_mal_domain)
 app.model(ReportModel_mal_ip)
 app.model(ReportModel_suffer_host_call_on_record)
 app.model(ReportModel_threat_info)
+importModelList(ManagerMirrorModelList)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

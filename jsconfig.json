@@ -1,5 +1,29 @@
 {
-    "compilerOptions": {
-        "experimentalDecorators": true
-    }
+  "compilerOptions": {
+    "experimentalDecorators": true
+  },
+  "baseUrl": "./src",
+  "paths": {
+    "components": [
+      "components"
+    ],
+    "domainComponents": [
+      "domainComponents"
+    ],
+    "utils": [
+      "utils"
+    ],
+    "modules": [
+      "modules"
+    ],
+    "routes": [
+      "routes"
+    ],
+    "configs": [
+      "configs"
+    ],
+    "Generators": [
+      "Generators"
+    ]
+  }
 }
