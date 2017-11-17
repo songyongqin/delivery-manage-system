@@ -265,7 +265,7 @@ export default class extends React.Component {
                       </FormItem>
                     </Col>
                     <Col span={2}>
-                      <p style={{ textAlign: "center" }}>~</p>
+                      <p className={lblClasses} style={{ textAlign: "center" }}>~</p>
                     </Col>
                     <Col span={11}>
                       <FormItem
