@@ -129,7 +129,7 @@ class WrappedForm extends React.Component {
             )}
         </FormItem>
 
-        <FormItem wrapperCol={{ span: 4, push: 5 }}
+        <FormItem wrapperCol={{ span: 4, push: 6 }}
           colon={false}>
           <Button type="primary"
             disabled={loading}
