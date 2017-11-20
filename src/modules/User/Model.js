@@ -99,6 +99,9 @@ const baseModel = {
 
     },
     *deleteSign({ payload, resolve }, { callWithExtra, put }) {
+
+      const result = yield callWithExtra(service.deleteSign, {}, callConfig)
+
       window.sessionStorage.clear();
       window.location.reload();
     },
