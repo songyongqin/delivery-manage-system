@@ -105,6 +105,8 @@ export default {
 
     REPORT_EXPORT: "/report/export",
 
-    VERIFICATION_CODE: "/verification-code"
+    VERIFICATION_CODE: "/user/verification-code",
+
+    SYS_LOG_CONFIG: "/sys-config/sys-log"
   }
 }

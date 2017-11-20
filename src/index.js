@@ -66,7 +66,7 @@ import ReportModel_suffer_host_call_on_record from './modules/Report/models/Mode
 import ReportModel_threat_info from './modules/Report/models/Model_threat_info';
 
 import ManagerMirrorModelList from './modules/Manager_Mirror/Model'
-
+import SysLogConfigModel from './modules/SysConfig_Network/models/sysLog.js'
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -134,6 +134,7 @@ app.model(ReportModel_mal_ip)
 app.model(ReportModel_suffer_host_call_on_record)
 app.model(ReportModel_threat_info)
 importModelList(ManagerMirrorModelList)
+app.model(SysLogConfigModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);
