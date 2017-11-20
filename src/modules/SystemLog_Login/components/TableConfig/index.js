@@ -38,13 +38,17 @@ class App extends React.Component {
             </div>
         )
     };
-    timestampRangeOnChange = (payload) => {
+    timestampRangeOnChange = ({timestampRange}) => {
+      const { limit } = this.props;
         this.props.dispatch({
             type: `${NAMESPACE}/fetch`,
-            payload: {
-                payload
+            payload:{
+              page:1,
+              limit,
+              timestampRange
             }
-        })
+          
+        });
     }
     onInputChangeip = (e) => {
         this.setState({ searchTextip: e.target.value });
@@ -53,41 +57,53 @@ class App extends React.Component {
         this.setState({ searchTextname: e.target.value });
     }
     pageChangeHandler = (page) => {
+      const { timestampRange, limit } = this.props;
         this.props.dispatch({
             type: `${NAMESPACE}/fetch`,
-            payload: {
-                page,
+            payload:{
+              page,
+              limit,
+              timestampRange
             }
+          
         })
     }
     onSearchname = () => {
         const { searchTextname } = this.state;
+        const { timestampRange, limit } = this.props;
         this.setState({ filterDropdownVisiblename: false });
         this.props.dispatch({
             type: `${NAMESPACE}/fetch`,
             payload: {
                 searchTextname,
-                page: 1
+                page: 1,
+                limit,
+                timestampRange
             }
         })
     }
     onSearchip = () => {
         const { searchTextip } = this.state;
+        const { timestampRange, limit } = this.props;
         this.setState({ filterDropdownVisibleip: false });
         this.props.dispatch({
             type: `${NAMESPACE}/fetch`,
             payload: {
                 searchTextip,
-                page: 1
+                page: 1,
+                limit,
+                timestampRange
             }
         })
     }
     onExport = () => {
-        const page = this.props.page;
+        const { timestampRange, limit} = this.props;
         this.props.dispatch({
             type: `${NAMESPACE}/onExport`,
             payload: {
-                page
+                page:1,
+                limit,
+                timestampRange
             }
         })
     }
@@ -178,11 +194,14 @@ class App extends React.Component {
         const tableProps = {
             onChange: (pagination, filters) => {
                 const value = filters.loginStatus[0];
+                const { timestampRange, limit} = this.props;
                 this.props.dispatch({
                     type: `${NAMESPACE}/fetch`,
                     payload: {
                         value,
-                        page: 1
+                        page: 1,
+                        limit,
+                        timestampRange
                     }
                 })
             },
