@@ -217,12 +217,12 @@ const initActiveListener = (debounceTime = 10) => {
   let lastActiveTime = new Date().getTime()
 
   window.addEventListener("click", () => {
-    console.info("click")
+    // console.info("click")
     lastActiveTime = new Date().getTime()
   })
 
   window.addEventListener("keydown", () => {
-    console.info("keydown")
+    // console.info("keydown")
     lastActiveTime = new Date().getTime()
   })
 
@@ -230,11 +230,14 @@ const initActiveListener = (debounceTime = 10) => {
 
     const timeDiff = Math.floor((new Date().getTime() - lastActiveTime) / 1000)
 
-    timeDiff < debounceTime
-      ?
-      console.info("is active")
-      :
-      console.info("is not active")
+    if (timeDiff < debounceTime) {
+      service.postUserActive({}).catch(e => console.error(e))
+    }
+    // timeDiff < debounceTime
+    //   ?
+    //   console.info("is active")
+    //   :
+    //   console.info("is not active")
 
   }, 1000 * debounceTime);
 
@@ -243,4 +246,39 @@ const initActiveListener = (debounceTime = 10) => {
 
 const DE_BOUNCE_TIME_SECOND = 10
 
-initActiveListener(DE_BOUNCE_TIME_SECOND);
+try {
+  const userData = tools.getTemp("userData")
+  if (userData) {
+    initActiveListener(DE_BOUNCE_TIME_SECOND);
+  }
+
+
+} catch (e) {
+  console.info('active', e)
+}
+
+
+/******************Heart beat / Admin **************/
+
+
+const heartBeatListener = (time) => {
+
+  setInterval(() => {
+
+    service.postAdminHeartBeat({}).catch(e => console.info(e))
+
+  }, time * 1000)
+
+}
+
+const HEART_BEAT_TIMING = 30;
+
+
+try {
+  const { isAdmin } = tools.getTemp("userData")
+  if (isAdmin) {
+    heartBeatListener(HEART_BEAT_TIMING)
+  }
+} catch (e) {
+  console.info(`heart beat:`, e)
+}
