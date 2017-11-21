@@ -18,8 +18,9 @@ class App extends React.Component {
     this.state = {
       filterDropdownVisiblename: false,
       filterDropdownVisibleip: false,
-      ip: '',
-      userAccount: '',
+      ip: "",
+      userAccount: "",
+      loginStatus: "",
 
     };
   }
@@ -69,13 +70,15 @@ class App extends React.Component {
     })
   }
   onSearchname = () => {
-    const { userAccount } = this.state;
+    const { userAccount, loginStatus, ip } = this.state;
     const { timestampRange, limit } = this.props;
     this.setState({ filterDropdownVisiblename: false });
     this.props.dispatch({
       type: `${NAMESPACE}/fetch`,
       payload: {
         userAccount,
+        ip,
+        loginStatus,
         page: 1,
         limit,
         timestampRange
@@ -83,13 +86,15 @@ class App extends React.Component {
     })
   }
   onSearchip = () => {
-    const { ip } = this.state;
+    const { userAccount, loginStatus, ip } = this.state;
     const { timestampRange, limit } = this.props;
     this.setState({ filterDropdownVisibleip: false });
     this.props.dispatch({
       type: `${NAMESPACE}/fetch`,
       payload: {
         ip,
+        userAccount,
+        loginStatus,
         page: 1,
         limit,
         timestampRange
@@ -193,17 +198,22 @@ class App extends React.Component {
     },];
     const tableProps = {
       onChange: (pagination, filters) => {
-        const loginStatus = filters.loginStatus[0];
-        const { timestampRange, limit } = this.props;
-        this.props.dispatch({
-          type: `${NAMESPACE}/fetch`,
-          payload: {
-            loginStatus,
-            page: 1,
-            limit,
-            timestampRange
-          }
-        })
+
+        this.setState({ loginStatus: filters.loginStatus[0] }, () => {
+          const { userAccount, loginStatus, ip } = this.state;
+          const { timestampRange, limit } = this.props;
+          this.props.dispatch({
+            type: `${NAMESPACE}/fetch`,
+            payload: {
+              loginStatus,
+              userAccount,
+              ip,
+              page: 1,
+              limit,
+              timestampRange
+            }
+          })
+        });
       },
       columns: columns,
       dataSource: data.map((i, index) => {
