@@ -21,6 +21,7 @@ export default {
   },
   effects: {
     *fetch({ payload }, { call, put }) {
+      console.info(payload);
       const result = yield call(Service.getthreatevent, payload);
       const data = result.payload.data;
       const timestampRange = payload.timestampRange ? payload.timestampRange : [];
@@ -46,18 +47,18 @@ export default {
     }
   },
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname }) => {
-        if (pathname === '/report') {
-          dispatch({
-            type: 'fetch',
-            payload: {
-              limit: 10,
-              timestampRange: []
-            }
-          });
-        }
-      });
-    },
+    // setup({ dispatch, history }) {
+    //   return history.listen(({ pathname }) => {
+    //     if (pathname === '/report') {
+    //       dispatch({
+    //         type: 'fetch',
+    //         payload: {
+    //           limit: 10,
+    //           timestampRange: []
+    //         }
+    //       });
+    //     }
+    //   });
+    // },
   }
 }

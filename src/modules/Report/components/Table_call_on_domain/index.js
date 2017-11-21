@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import styles from './index.css';
 import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
 import { routerRedux } from 'dva/router';
-import EnhanciveTable from '../../components/EnhanciveTable'
+import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE_CALL_ON_DOMAIN } from '../../ConstConfig'
@@ -18,11 +18,24 @@ class Tableevent extends React.Component {
   }
 
   pageChangeHandler = (page) => {
-    this.props.fetch({ page })
+    const { timestampRange, limit } = this.props;
+    this.props.fetch({
+      page,
+      limit,
+      timestampRange
+
+    })
   }
   onExport = () => {
-    const { exportdata, timestampRange } = this.props;
-    this.props.onExport({ exportdata, timestampRange })
+    const { timestampRange } = this.props;
+    const option = {
+      callondomain:
+      {
+        limit: 10,
+        page: 1
+      }
+    }
+    this.props.onExport({ option, timestampRange })
   }
   render() {
     const data = this.props.data;
@@ -57,19 +70,14 @@ class Tableevent extends React.Component {
       onChange: this.pageChangeHandler,
       pageSize: this.props.limit,
     };
-    const title = "访问的域名"
-
     return (
       <div>
         <JoSpin spinning={this.props.loading}>
-          {
-            this.props.animateRender([
-              <EnhanciveTable key="table" tableProps={tableProps} paginationProps={paginationProps} title={title}> </EnhanciveTable>,
-              <div key="operation-panel" style={{ position: "absolute", top: "0px", right: "0px" }} >
-                <Button type="primary" onClick={this.onExport}>导出</Button>
-              </div>
-            ])
-          }
+          <h4 style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>访问的域名</h4>
+          <div style={{ position: "absolute", top: "0px", right: "0px" }} >
+            <Button type="primary" onClick={this.onExport}>导出</Button>
+          </div>
+          <EnhanciveTable key="table" tableProps={tableProps} paginationProps={paginationProps}> </EnhanciveTable>
         </JoSpin>
 
       </div>
@@ -79,14 +87,13 @@ class Tableevent extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { data, loading, timestampRange, page, limit, exportdata } = state[NAMESPACE_CALL_ON_DOMAIN];
+  const { data, loading, timestampRange, page, limit } = state[NAMESPACE_CALL_ON_DOMAIN];
   return {
     data,
     loading: state.loading.effects[`${NAMESPACE_CALL_ON_DOMAIN}/fetch`],
     timestampRange,
     page,
     limit,
-    exportdata
   };
 }
 
@@ -104,4 +111,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Tableevent);
-// export default connect(mapStateToProps)(Tableevent);
+

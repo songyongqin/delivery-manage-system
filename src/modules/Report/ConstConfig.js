@@ -1,9 +1,10 @@
 export const
+  NAMESPACE_BASE = "basemodels",
   NAMESPACE = "analyseRanking",
   NAMESPACE_ATTACK = "attack",
   NAMESPACE_THREATEVENT = "threatEvent",
   NAMESPACE_CALL_ON_DOMAIN = "callondomain",
-  MAMESPACE_CALL_ON_IP = "callonip",
+  NAMESPACE_CALL_ON_IP = "callonip",
   NAMESPACE_FALL_HOST = "fallhost",
   NAMESPACE_HAVECOMMUNICATEINSIDEIP = "havecommunicateinsideip",
   NAMESPACE_MALDOMAIN = "maldomain",

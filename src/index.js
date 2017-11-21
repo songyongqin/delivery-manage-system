@@ -54,6 +54,7 @@ import DeviceNodeIdsModel from './modules/Manager_Device_Node_IDS/Model'
 import AnalyseEventStatisticsModel from './modules/Analyse_Event/models/statistics'
 import ManagerDeviceModel from './modules/Manager_Device/Model';
 import DeviceNodeIDSDiskModel from './modules/Manager_Device_Node_IDS_Disk/Model';
+import ReportbaseModel from './modules/Report/models';
 import ReportModelattack from './modules/Report/models/Model_attack';
 import ReportModelthreatEvent from './modules/Report/models/Model_threat_event';
 import ReportModel_call_on_domain from './modules/Report/models/Model_call_on_domain';
@@ -123,6 +124,7 @@ app.model(SysLogLoginModel)
 app.model(DeviceNodeIdsModel)
 app.model(ManagerDeviceModel)
 app.model(DeviceNodeIDSDiskModel)
+app.model(ReportbaseModel)
 app.model(ReportModelattack)
 app.model(ReportModelthreatEvent)
 app.model(ReportModel_call_on_domain)

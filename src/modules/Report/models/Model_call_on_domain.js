@@ -46,18 +46,18 @@ export default {
     }
   },
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname }) => {
-        if (pathname === '/report') {
-          dispatch({
-            type: 'fetch',
-            payload: {
-              limit: 10,
-              timestampRange: []
-            }
-          });
-        }
-      });
-    },
+    // setup({ dispatch, history }) {
+    //   return history.listen(({ pathname }) => {
+    //     if (pathname === '/report') {
+    //       dispatch({
+    //         type: 'fetch',
+    //         payload: {
+    //           limit: 10,
+    //           timestampRange: []
+    //         }
+    //       });
+    //     }
+    //   });
+    // },
   }
 }
