@@ -18,10 +18,6 @@ class App extends React.Component {
     this.state = {
       filterDropdownVisiblename: false,
       filterDropdownVisibleip: false,
-      ip: "",
-      userAccount: "",
-      loginStatus: "",
-
     };
   }
   getQueryPanel = () => {
@@ -40,10 +36,13 @@ class App extends React.Component {
     )
   };
   timestampRangeOnChange = ({ timestampRange }) => {
-    const { limit } = this.props;
+    const { limit, userAccount, ip, loginStatus, } = this.props;
     this.props.dispatch({
       type: `${NAMESPACE}/fetch`,
       payload: {
+        userAccount,
+        ip,
+        loginStatus,
         page: 1,
         limit,
         timestampRange
@@ -52,16 +51,29 @@ class App extends React.Component {
     });
   }
   onInputChangeip = (e) => {
-    this.setState({ ip: e.target.value });
+    this.props.dispatch({
+      type: `${NAMESPACE}/save`,
+      payload: {
+        ip: e.target.value
+      }
+    });
   }
   onInputChangename = (e) => {
-    this.setState({ userAccount: e.target.value });
+    this.props.dispatch({
+      type: `${NAMESPACE}/save`,
+      payload: {
+        userAccount: e.target.value
+      }
+    });
   }
   pageChangeHandler = (page) => {
-    const { timestampRange, limit } = this.props;
+    const { limit, userAccount, ip, loginStatus, timestampRange } = this.props;
     this.props.dispatch({
       type: `${NAMESPACE}/fetch`,
       payload: {
+        userAccount,
+        ip,
+        loginStatus,
         page,
         limit,
         timestampRange
@@ -70,8 +82,7 @@ class App extends React.Component {
     })
   }
   onSearchname = () => {
-    const { userAccount, loginStatus, ip } = this.state;
-    const { timestampRange, limit } = this.props;
+    const { userAccount, loginStatus, ip, timestampRange, limit } = this.props;
     this.setState({ filterDropdownVisiblename: false });
     this.props.dispatch({
       type: `${NAMESPACE}/fetch`,
@@ -86,14 +97,13 @@ class App extends React.Component {
     })
   }
   onSearchip = () => {
-    const { userAccount, loginStatus, ip } = this.state;
-    const { timestampRange, limit } = this.props;
+    const { userAccount, loginStatus, ip, timestampRange, limit } = this.props;
     this.setState({ filterDropdownVisibleip: false });
     this.props.dispatch({
       type: `${NAMESPACE}/fetch`,
       payload: {
-        ip,
         userAccount,
+        ip,
         loginStatus,
         page: 1,
         limit,
@@ -102,10 +112,13 @@ class App extends React.Component {
     })
   }
   onExport = () => {
-    const { timestampRange, limit } = this.props;
+    const { userAccount, loginStatus, ip, timestampRange, limit } = this.props;
     this.props.dispatch({
       type: `${NAMESPACE}/onExport`,
       payload: {
+        userAccount,
+        loginStatus,
+        ip,
         page: 1,
         limit,
         timestampRange
@@ -114,7 +127,7 @@ class App extends React.Component {
   }
 
   render() {
-    const data = this.props.list.data;
+    const data = this.props.list;
     const columns = [{
       title: '登录时间',
       dataIndex: 'time',
@@ -136,8 +149,8 @@ class App extends React.Component {
           <Input
             ref={ele => this.searchInputname = ele}
             placeholder="Search userAccount"
-            value={this.state.userAccount}
             onChange={this.onInputChangename}
+            value={this.props.userAccount}
             onPressEnter={this.onSearchname}
           />
           <Button icon="search" type="primary" onClick={this.onSearchname} style={{ marginTop: "10px" }}>搜索</Button>
@@ -167,7 +180,7 @@ class App extends React.Component {
           <Input
             ref={ele => this.searchInputip = ele}
             placeholder="Search IP"
-            value={this.state.ip}
+            value={this.props.ip}
             onChange={this.onInputChangeip}
             onPressEnter={this.onSearchip}
           />
@@ -198,21 +211,18 @@ class App extends React.Component {
     },];
     const tableProps = {
       onChange: (pagination, filters) => {
-
-        this.setState({ loginStatus: filters.loginStatus[0] }, () => {
-          const { userAccount, loginStatus, ip } = this.state;
-          const { timestampRange, limit } = this.props;
-          this.props.dispatch({
-            type: `${NAMESPACE}/fetch`,
-            payload: {
-              loginStatus,
-              userAccount,
-              ip,
-              page: 1,
-              limit,
-              timestampRange
-            }
-          })
+        this.props.changeloginStatus({ loginStatus: filters.loginStatus[0] });
+        const { userAccount, loginStatus, ip, timestampRange, limit } = this.props;
+        this.props.dispatch({
+          type: `${NAMESPACE}/fetch`,
+          payload: {
+            userAccount,
+            ip,
+            loginStatus: filters.loginStatus[0],
+            page: 1,
+            limit,
+            timestampRange
+          }
         });
       },
       columns: columns,
@@ -256,15 +266,27 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { list, page, loading, limit, timestampRange } = state[NAMESPACE];
+  const { list, page, loading, limit, timestampRange, ip, userAccount, loginStatus, } = state[NAMESPACE];
   return {
     list,
     page,
     loading: state.loading.effects[`${NAMESPACE}/fetch`],
     limit,
-    timestampRange
+    timestampRange,
+    ip,
+    userAccount,
+    loginStatus,
 
   };
 }
-
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeloginStatus: (payload) => {
+      dispatch({
+        type: `${NAMESPACE}/save`,
+        payload,
+      });
+    },
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -9,39 +9,46 @@ import * as tools from '../../utils/tools.js';
 export default {
   namespace: NAMESPACE,
   state: {
-    list: {
-      data: []
-    },
+    list: [],
     page: 1,
     loading: false,
     limit: 50,
-    timestampRange: []
+    timestampRange: [],
+    ip: "",
+    userAccount: "",
+    loginStatus: "",
   },
   reducers: {
-    save(state, { payload: { data: list, page,timestampRange } }) {
-      return { ...state, list, page,timestampRange };
+    save(state, { payload }) {
+      console.info(payload)
+      return { ...state, ...payload };
     },
   },
   effects: {
     *fetch({ payload }, { call, put }) {
       const result = yield call(Service.search, payload);
-      const data = result.payload;
+      const list = result.payload.data;
       const page = payload.page ? payload.page : 1;
       const timestampRange = payload.timestampRange ? payload.timestampRange : 1;
-      
+      const ip = payload.ip ? payload.ip : "";
+      const userAccount = payload.userAccount ? payload.userAccount : "";
+      const loginStatus = payload.loginStatus ? payload.loginStatus : "";
       if (result.status === 1) {
         yield put({
           type: 'save',
           payload: {
-            data,
+            list,
             page,
-            timestampRange
+            timestampRange,
+            userAccount,
+            ip,
+            loginStatus,
           }
         });
       }
     },
     *onExport({ payload }, { callWithExtra, put }) {
-      const result = yield callWithExtra(Service.onExport, payload,{withStatusHandle:true});
+      const result = yield callWithExtra(Service.onExport, payload, { withStatusHandle: true });
       const data = result.payload;
       if (result.status === 1) {
         tools.download(data);
@@ -53,11 +60,14 @@ export default {
       return history.listen(({ pathname }) => {
         if (pathname === '/sys-log/login') {
           dispatch({
-            type: 'fetch', payload: {
+            type: 'fetch',
+            payload: {
               page: 1,
               limit: 50,
-              timestampRange: []
-
+              timestampRange: [],
+              userAccount: "",
+              ip: "",
+              loginStatus: "",
             }
           });
         }
