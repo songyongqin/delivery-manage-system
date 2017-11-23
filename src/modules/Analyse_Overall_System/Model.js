@@ -8,7 +8,7 @@ import { queryModelGenerator } from '../../utils/dvaModelGenerator';
 import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import {
   NAMESPACE,
-
+  PATH_DATA_INDEX,
 } from './ConstConfig'
 moment.locale('zh-cn');
 
@@ -17,7 +17,7 @@ const baseModel = {
   state: {
     queryFilters: {
       timestampRange: [],
-   
+      [PATH_DATA_INDEX]: "",
       limit: 10,
       page: 1
     },

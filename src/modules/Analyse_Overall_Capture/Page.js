@@ -19,7 +19,7 @@ import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
 import { queryContainerGenerator } from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin'
-import QueryForm from './components/QueryForm'
+import LimitForm from 'domainComponents/LimitForm'
 
 
 const mapStateToProps = state => {
@@ -62,7 +62,7 @@ class Page extends React.Component {
     const { data, total } = queryResults;
 
     const tableProps = {
-      columns: getColumns({ queryFilters }),
+      columns: getColumns({ queryFilters, onQuery: this.props.onQuery }),
       dataSource: data.map((i, index) => ({
         ...i,
         key: `${lastReqTime}-${index}-item`
@@ -79,17 +79,16 @@ class Page extends React.Component {
     return (
       <div >
         <JoSpin spinning={queryLoading}>
-          <div >
-            <QueryForm
+          <div style={{ marginBottom: "15px" }}>
+            <LimitForm
               isDark={isDark}
               onSubmit={this.props.onQuery}
               defaultValue={queryFilters}
-              keyConfig={FILE_NAME_DATA_INDEX}
-              textConfig={{ placeholder: "文件名 如：DownloadDll.dll" }}
               loading={queryLoading}>
-            </QueryForm>
+            </LimitForm >
           </div>
           <EnhanciveTable
+            key={`${this.props.queryLoading}-table`}
             tableProps={tableProps}
             paginationProps={paginationProps}>
           </EnhanciveTable>

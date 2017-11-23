@@ -79,7 +79,7 @@ class Page extends React.Component {
 
     const tableProps = {
       onChange: this.tableOnChange,
-      columns: getColumns({ queryFilters, filters, filterTextConfig }),
+      columns: getColumns({ queryFilters, filters, filterTextConfig, onQuery: this.props.onQuery }),
       expandedRowRender,
       dataSource: data.map((i, index) => ({
         ...i,
@@ -106,8 +106,11 @@ class Page extends React.Component {
               onSubmit={this.props.onQuery}>
             </QueryForm>
           </div>
-          <EnhanciveTable tableProps={tableProps}
-            paginationProps={paginationProps}></EnhanciveTable>
+          <EnhanciveTable
+            key={`${queryLoading}-table`}
+            tableProps={tableProps}
+            paginationProps={paginationProps}>
+          </EnhanciveTable>
         </JoSpin>
       </div>
     )

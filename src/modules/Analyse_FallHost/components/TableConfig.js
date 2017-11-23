@@ -12,6 +12,8 @@ import commonConstConfig from '../../../configs/ConstConfig';
 import { filterRowDataIndexes, rowDataIndexes, tableTextConfig } from '../ConstConfig';
 import FilterInputNumber from '../../../components/FilterInputNumber/index';
 import TimeLabel from '../../../components/TimesLabel';
+import QueryIPForm from './QueryIPForm'
+import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
 import {
   ATTACK_COUNTS_DATAINDEX,
   ITEMS_DATAINDEX,
@@ -32,6 +34,7 @@ import {
   IDS_SOURCE_DES_OTHER_DATAINDEX,
   IDS_SOURCE_DES_PROTOCOL_DATAINDEX,
   DETAILS_DATAINDEX,
+  IP_DATAINDEX
 } from '../ConstConfig'
 
 const rowsRenderer = {
@@ -50,7 +53,8 @@ export const getColumns = ({
   queryFilters,
   onSubmit,
   filters,
-  filterTextConfig
+  filterTextConfig,
+  onQuery
 }) => {
   const renderer = {
     ...rowsRenderer
@@ -72,11 +76,11 @@ export const getColumns = ({
     filteredValue: queryFilters,
     renderer,
     extraProps: {
-      attackCounts: {
+      [IP_DATAINDEX]: {
         filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
-        filterDropdown: <FilterInputNumber textConfig={{ label: "攻击次数筛选", placeholder: "输入整数n，表示不少于n次" }}
-          defaultValue={queryFilters.attackCounts}
-          onSubmit={onSubmit} />
+        filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
+          <QueryIPForm defaultValue={queryFilters} onSubmit={onQuery}></QueryIPForm>
+        </FilterDropdownWrapper>
 
       }
     }

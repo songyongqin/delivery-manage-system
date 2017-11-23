@@ -1,6 +1,6 @@
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, DatePicker } from 'antd';
 import React from 'react';
-import * as tools from '../../../utils/tools';
+import * as tools from 'utils/tools';
 const { ipReg } = tools
 
 const FormItem = Form.Item;
@@ -21,21 +21,19 @@ class QueryForm extends React.Component {
   render() {
 
     const { getFieldDecorator } = this.props.form;
-    const { defaultValue = {}, loading = false } = this.props;
-    const { ip = "" } = defaultValue;
+    const { defaultValue = {}, loading = false, config = {} } = this.props;
+    const { placeholder, label, dataIndex, rules = [] } = config;
 
     return (
       <Form style={{ width: "300px" }}>
         <FormItem required={false}
           style={{ marginBottom: "10px" }}
-          label={<span>请输入要搜索的失陷主机IP</span>}>
-          {getFieldDecorator('ip', {
-            initialValue: ip,
-            rules: [
-              { pattern: ipReg, message: "请输入有效的ip" }
-            ]
+          label={<span>{label}</span>}>
+          {getFieldDecorator(dataIndex, {
+            initialValue: defaultValue[dataIndex],
+            rules
           })(
-            <Input placeholder="失陷主机搜索"
+            <Input placeholder={placeholder}
               onPressEnter={this.handleSubmit} />
             )}
         </FormItem>

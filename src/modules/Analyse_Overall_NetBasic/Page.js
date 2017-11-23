@@ -58,7 +58,7 @@ class Page extends React.Component {
     const { data, total } = queryResults;
 
     const tableProps = {
-      columns: getColumns({ queryFilters }),
+      columns: getColumns({ queryFilters, onQuery: this.props.onQuery }),
       dataSource: data.map((i, index) => ({
         ...i,
         key: `${lastReqTime}-${index}-item`
@@ -81,7 +81,9 @@ class Page extends React.Component {
               defaultValue={queryFilters}
               onSubmit={this.props.onQuery}></SelectForm>
           </div>
-          <EnhanciveTable tableProps={tableProps}
+          <EnhanciveTable
+            key={`${this.props.queryLoading}-table`}
+            tableProps={tableProps}
             paginationProps={paginationProps}></EnhanciveTable>
         </JoSpin>
       </div>

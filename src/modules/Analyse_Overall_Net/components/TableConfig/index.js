@@ -24,12 +24,18 @@ import {
   LEVEL_DATA_INDEX,
   PCAP_DATA_INDEX,
   TOOL_DATA_INDEX,
+  SOURCE_IP_DATA_INDEX,
+  TARGET_IP_DATA_INDEX,
+  SOURCE_PORT_DATA_INDEX,
+  TARGET_PORT_DATA_INDEX
 } from '../../ConstConfig'
 import TimesLabel from '../../../../components/TimesLabel';
 import JoTag from '../../../../components/JoTag';
-import { Popover, Badge, Timeline } from 'antd';
+import { Popover, Badge, Timeline, Icon } from 'antd';
 import Card from '../../../../domainComponents/Card';
-
+import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
+import SearchFilterForm from 'domainComponents/SearchFilterForm'
+import getFilterForm from 'utils/getFilterForm'
 
 export const commonFilters = {
   [ATTACK_STAGE_DATA_INDEX]: attackStage,
@@ -43,10 +49,37 @@ export const commonFilterTextConfig = {
   [LEVEL_DATA_INDEX]: levelTextConfig,
 }
 
+const filterDataIndexes = [
+  SOURCE_IP_DATA_INDEX,
+  TARGET_IP_DATA_INDEX,
+  SOURCE_PORT_DATA_INDEX,
+  TARGET_PORT_DATA_INDEX,
+]
+
+const filterFormTextConfig = {
+  [SOURCE_IP_DATA_INDEX]: {
+    label: "攻击源IP",
+    placeholder: "请输入IP"
+  },
+  [TARGET_IP_DATA_INDEX]: {
+    label: "目的IP",
+    placeholder: "请输入IP"
+  },
+  [TARGET_PORT_DATA_INDEX]: {
+    label: "目的端口",
+    placeholder: "如:8080"
+  },
+  [SOURCE_PORT_DATA_INDEX]: {
+    label: "源端口",
+    placeholder: "如:8080"
+  }
+}
+
+
 
 const OVER_FLOW_LENGTH = 40;
 
-export const getColumns = ({ queryFilters, filters = {}, filterTextConfig = {} } = {}) =>
+export const getColumns = ({ queryFilters, filters = {}, filterTextConfig = {}, onQuery } = {}) =>
   tableColumnsGenerator({
     keys: dataIndexes,
     filterOptions: { ...commonFilters, ...filters, },
@@ -68,6 +101,9 @@ export const getColumns = ({ queryFilters, filters = {}, filterTextConfig = {} }
         return <span><Badge status="warning" />{tools.getKeyText(value, actionStatusTextConfig)}</span>
 
       },
+    },
+    extraProps: {
+      ...getFilterForm({ queryFilters, onQuery, dataIndexes: filterDataIndexes, textConfig: filterFormTextConfig })
     }
   })
 

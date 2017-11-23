@@ -49,11 +49,7 @@ class Page extends React.Component {
           queryFilters,
           onQuery,
         })}
-        <div style={{ display: "inline-block", marginBottom: "10px" }}>
-          <QueryIPForm key={"query-ip" + lastReqTime}
-            onSubmit={onQuery}
-            defaultValue={queryFilters} />
-        </div>
+
       </div>
     )
   };
@@ -88,7 +84,8 @@ class Page extends React.Component {
         queryFilters,
         onSubmit: this.onFilter,
         filters,
-        filterTextConfig
+        filterTextConfig,
+        onQuery: this.props.onQuery
       }),
       expandedRowRender: tableConfig.getExpandedRowRender({ isDark }),
       dataSource: data.map((i, index) => {

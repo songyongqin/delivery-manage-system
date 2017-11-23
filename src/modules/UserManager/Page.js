@@ -24,7 +24,8 @@ function mapStateToProps(state) {
     commonLayout,
     putUserConfigLoading: state.loading.effects["userManager/putUserConfig"],
     putUserLoading: state.loading.effects["userManager/putUser"],
-    postUserLoading: state.loading.effects["userManager/postUser"]
+    postUserLoading: state.loading.effects["userManager/postUser"],
+    lastReqTime: state[`userManager`].lastReqTime
   }
 }
 
@@ -205,11 +206,6 @@ class Page extends React.Component {
       <div key="results-panel">
         <Card className={classes}
           title={titleContent}>
-          <QueryForm
-            onSubmit={this.queryOnSubmit}
-            defaultValue={queryFilters}
-            isDark={isDark}>
-          </QueryForm>
           {this.getDataResultPanel()}
         </Card>
       </div>
@@ -253,7 +249,7 @@ class Page extends React.Component {
 
     const tableProps = {
       onChange: this.tableOnChange,
-      columns: tableConfig.getColumns({ handle }),
+      columns: tableConfig.getColumns({ handle, queryFilters, onQuery: this.queryOnSubmit }),
       dataSource: data.map((i, index) => {
         return {
           ...i,
@@ -270,7 +266,7 @@ class Page extends React.Component {
     };
 
     return (
-      <div key={"results-panel"}>
+      <div key={`results-panel-${this.props.queryLoading}`}>
         <EnhanciveTable tableProps={tableProps}
           inverse={true}
           isDark={commonLayout.darkTheme}

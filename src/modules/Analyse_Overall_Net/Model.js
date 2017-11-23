@@ -9,7 +9,11 @@ import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import {
   NAMESPACE,
   PROTOCOL_TYPE_DATA_INDEX,
-  protocolTypeList
+  protocolTypeList,
+  SOURCE_IP_DATA_INDEX,
+  SOURCE_PORT_DATA_INDEX,
+  TARGET_IP_DATA_INDEX,
+  TARGET_PORT_DATA_INDEX,
 } from './ConstConfig'
 moment.locale('zh-cn');
 
@@ -19,7 +23,11 @@ const baseModel = {
     queryFilters: {
       timestampRange: [],
       limit: 10,
-      page: 1
+      page: 1,
+      [SOURCE_IP_DATA_INDEX]: "",
+      [SOURCE_PORT_DATA_INDEX]: "",
+      [TARGET_IP_DATA_INDEX]: "",
+      [TARGET_PORT_DATA_INDEX]: ""
     },
     queryResults: {
       total: 0,

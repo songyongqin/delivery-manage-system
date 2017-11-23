@@ -13,6 +13,7 @@ import {
   OPERATION_ROW_KEY,
   ROLE_DATAINDEX,
   USERACCOUNT_DATAINDEX,
+  USER_NAME_DATAINDEX,
   FREEZE_DATAINDEX,
   ADMIN_ROLE,
   COMMON_USER_ROLE,
@@ -20,6 +21,8 @@ import {
   IS_FREEZE,
 } from '../../ConstConfig';
 
+import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
+import SearchFilterForm from 'domainComponents/SearchFilterForm'
 
 const tipTextConfig = {
   [ADMIN_ROLE]: "管理员唯一且拥有最高权限",
@@ -116,7 +119,7 @@ const getOperationColumn = ({ handle = {} } = {}) => {
 }
 
 
-export const getColumns = ({ handle = {} } = {}) => {
+export const getColumns = ({ handle = {}, queryFilters, onQuery } = {}) => {
 
   const columns = tableColumnsGenerator({
     keys: rowDataIndexes,
@@ -124,6 +127,36 @@ export const getColumns = ({ handle = {} } = {}) => {
     renderer: {
       [ROLE_DATAINDEX]: roleRenderer,
       [FREEZE_DATAINDEX]: freezeRenderer,
+    },
+    extraProps: {
+      [USERACCOUNT_DATAINDEX]: {
+        filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
+        filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
+          <SearchFilterForm
+            config={{
+              dataIndex: USERACCOUNT_DATAINDEX,
+              placeholder: "请输入用户账号",
+              label: "用户账号搜索"
+            }}
+            defaultValue={queryFilters}
+            onSubmit={onQuery}>
+          </SearchFilterForm>
+        </FilterDropdownWrapper>
+      },
+      [USER_NAME_DATAINDEX]: {
+        filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
+        filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
+          <SearchFilterForm
+            config={{
+              dataIndex: USER_NAME_DATAINDEX,
+              placeholder: "请输入用名",
+              label: "用户名搜索"
+            }}
+            defaultValue={queryFilters}
+            onSubmit={onQuery}>
+          </SearchFilterForm>
+        </FilterDropdownWrapper>
+      }
     }
   });
 

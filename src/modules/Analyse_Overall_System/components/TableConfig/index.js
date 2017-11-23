@@ -24,11 +24,26 @@ import {
   ACTIONSTATUS_SUCCESS,
   ACTIONSTATUS_FAIL,
   DETAILS_DATA_INDEX,
+
 } from '../../ConstConfig'
 import TimesLabel from '../../../../components/TimesLabel';
 import JoTag from '../../../../components/JoTag';
 import { Popover, Badge, Timeline } from 'antd';
 import Card from '../../../../domainComponents/Card';
+import getFilterForm from 'utils/getFilterForm'
+
+const filterDataIndexes = [
+  PATH_DATA_INDEX
+]
+
+const filterFormTextConfig = {
+  [PATH_DATA_INDEX]: {
+    label: "操作路径",
+    placeholder: "如：windows"
+  },
+
+}
+
 
 export const commonFilters = {
   [ATTACKSTAGE_DATAINDEX]: attackStage,
@@ -41,6 +56,8 @@ export const commonFilterTextConfig = {
   [ACTIONSTATUS_DATAINDEX]: actionStatusTextConfig,
   [LEVEL_DATAINDEX]: levelTextConfig,
 }
+
+
 
 const renderer = {
   [TIME_DATA_INDEX]: value => <TimesLabel times={[value]}></TimesLabel>,
@@ -67,7 +84,7 @@ const renderer = {
   }
 }
 
-export const getColumns = ({ queryFilters, filterTextConfig = {}, filters = {} } = {}) =>
+export const getColumns = ({ onQuery, queryFilters, filterTextConfig = {}, filters = {} } = {}) =>
   tableColumnsGenerator({
     keys: dataIndexes,
     titleTextConfig: textConfig,
@@ -75,6 +92,9 @@ export const getColumns = ({ queryFilters, filterTextConfig = {}, filters = {} }
     filterOptions: { ...commonFilters, ...filters },
     filterTextConfig: { ...commonFilterTextConfig, ...filterTextConfig },
     renderer,
+    extraProps: {
+      ...getFilterForm({ dataIndexes: filterDataIndexes, textConfig: filterFormTextConfig, onQuery, queryFilters })
+    }
   })
 
 

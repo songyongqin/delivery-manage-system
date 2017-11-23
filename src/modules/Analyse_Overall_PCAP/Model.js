@@ -9,7 +9,8 @@ import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import {
   NAMESPACE,
   PROTOCOL_TYPE_DATA_INDEX,
-  protocolTypeList
+  protocolTypeList,
+  PACKAGE_NAME_DATA_INDEX
 } from './ConstConfig'
 moment.locale('zh-cn');
 
@@ -18,7 +19,7 @@ const baseModel = {
   state: {
     queryFilters: {
       timestampRange: [],
-      value: "",
+      [PACKAGE_NAME_DATA_INDEX]: "",
       limit: 10,
       page: 1
     },

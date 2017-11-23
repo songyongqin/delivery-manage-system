@@ -9,7 +9,16 @@ import {
   SMTP,
   DNS,
   FTP,
-  SSH
+  SSH,
+  URL_DATA_INDEX,
+  TIME_DATA_INDEX,
+  TARGET_IP_DATA_INDEX,
+  TARGET_PORT_DATA_INDEX,
+  SOURCE_IP_DATA_INDEX,
+  SOURCE_PORT_DATA_INDEX,
+  REQUEST_DOMAIN_DATA_INDEX,
+  SENDER_DATA_INDEX,
+  RECEIVE_DATA_INDEX,
 } from '../../ConstConfig'
 import classnames from 'classnames';
 const FormItem = Form.Item;
@@ -27,6 +36,16 @@ const placeholderConfig = {
   [SSH]: "请输入源ip:port或目的ip:port"
 }
 
+const filterDataIndexes = [
+  URL_DATA_INDEX,
+  SOURCE_IP_DATA_INDEX,
+  SOURCE_PORT_DATA_INDEX,
+  TARGET_IP_DATA_INDEX,
+  TARGET_PORT_DATA_INDEX,
+  REQUEST_DOMAIN_DATA_INDEX,
+  SENDER_DATA_INDEX,
+  RECEIVE_DATA_INDEX
+]
 
 class QueryForm extends React.Component {
   constructor(props) {
@@ -51,7 +70,15 @@ class QueryForm extends React.Component {
   }
   onProtocolChange = value => {
     const { onSubmit } = this.props;
+
+    const initFilter = {};
+
+    filterDataIndexes.forEach(key => {
+      initFilter[key] = ""
+    })
+
     onSubmit && onSubmit({
+      ...initFilter,
       [PROTOCOL_TYPE_DATA_INDEX]: value
     })
   }
@@ -64,7 +91,7 @@ class QueryForm extends React.Component {
     })
     return (
       <Form layout="inline">
-        <FormItem required={false}>
+        {/* <FormItem required={false}>
           {getFieldDecorator(INPUT_DATA_INDEX, {
             initialValue: defaultValue[INPUT_DATA_INDEX] || "",
           })(
@@ -78,7 +105,7 @@ class QueryForm extends React.Component {
             onClick={this.handleSubmit}>
             搜索
                     </Button>
-        </FormItem>
+        </FormItem> */}
         <FormItem required={false}
           label={<span className={lblClasses}>协议类型</span>}>
           {getFieldDecorator(PROTOCOL_TYPE_DATA_INDEX, {
