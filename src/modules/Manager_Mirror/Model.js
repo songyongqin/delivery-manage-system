@@ -1,6 +1,6 @@
 
+import MirrorOperationModel from './models/operation'
 
 
 
-
-export default []
+export default [MirrorOperationModel]

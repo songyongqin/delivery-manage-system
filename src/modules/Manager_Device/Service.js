@@ -30,8 +30,8 @@ export const postLicence = ({ data }) => {
 
 
 export const getVersionInfoLocal = payload => {
-
   const fd = new FormData();
+
   fd.append("file", payload.file)
   fd.append("idList", payload.idList.join(","))
 
@@ -49,6 +49,7 @@ export const getVersionInfoLocal = payload => {
   } catch (e) {
     console.info(e)
   }
+  console.info("xxxxxxx")
 
   return request(httpApi.DEVICE_UPDATE_INFO_LOCAL, options)
 }

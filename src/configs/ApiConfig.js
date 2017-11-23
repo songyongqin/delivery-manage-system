@@ -107,6 +107,14 @@ export default {
 
     VERIFICATION_CODE: "/user/verification-code",
 
-    SYS_LOG_CONFIG: "/sys-config/sys-log"
+    SYS_LOG_CONFIG: "/sys-config/sys-log",
+
+
+    MIRROR_UPDATE_LOCAL: "/mirror/update/local",
+
+    MIRROR_UPDATE_LOCAL_MERGE: "/mirror/update/local/merge",
+
+    MIRROR_UPDATE_REMOTE: "/mirror/upload/remote",
+
   }
 }

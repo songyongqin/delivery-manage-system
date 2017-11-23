@@ -188,3 +188,11 @@ export const getTableRowKey = (index, lastReqTime) => `item-${index}-${lastReqTi
 import Ramda from 'ramda';
 
 export const compose = Ramda.compose;
+
+
+
+
+export { default as getFileMd5 } from './hashCalc'
+
+
+export { splitFileToChunk, uploadFile } from './fileSplitUpload.js'

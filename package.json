@@ -4,7 +4,8 @@
     "start": "roadhog server",
     "dev": "set PORT=8001&&roadhog server",
     "build": "roadhog build",
-    "lint": "eslint --ext .js src test"
+    "lint": "eslint --ext .js src test",
+    "mockServer": "babel-node ./mock/httpMockServer.js"
   },
   "engines": {
     "install-node": "6.9.2"
