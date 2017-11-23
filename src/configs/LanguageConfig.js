@@ -6,7 +6,6 @@ import {
   IDS
 } from '../configs/ConstConfig'
 const producType = (tools.getTemp("productType") || {}).type
-console.info(producType);
 const routesZHCN = {
   "overview": {
     title: "威胁概览"

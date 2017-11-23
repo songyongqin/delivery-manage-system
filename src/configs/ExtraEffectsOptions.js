@@ -21,6 +21,7 @@ function messageHandle(res, type) {
     Modal.error({
       title: "登录超时",
       content: "登录超时，请重新登录",
+      okText: "确定",
       onOk: () => {
         window.sessionStorage.clear()
         window.location.reload()
