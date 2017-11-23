@@ -61,7 +61,7 @@ class WrappedForm extends React.Component {
       onSubmit && onSubmit({
         ..._values,
         [THREAT_NAME_USER_DEFINED_DATAINDEX]: USER_DEFINED_VALUE,
-        [THREAT_NAME_KEY_DATAINDEX]: getMD5(values[THREAT_NAME_NAME_DATAINDEX])
+        [THREAT_NAME_KEY_DATAINDEX]: "KEY" + getMD5(values[THREAT_NAME_NAME_DATAINDEX])
       });
 
     });
