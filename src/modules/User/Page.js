@@ -72,7 +72,8 @@ class Page extends React.Component {
         this.setState({
           err: msg,
         })
-        this.shakeModal();
+        this.shakeModal()
+        this.requestCode()
       })
   }
   shakeModal = () => {
