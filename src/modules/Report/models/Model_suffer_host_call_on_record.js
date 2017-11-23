@@ -2,7 +2,7 @@
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
 import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
-import { NAMESPACE_SUFFERHOSTCALLONRECORD, VALUE_SUFFERHOSTCALLONRECORD } from '../ConstConfig';
+import { NAMESPACE_SUFFERHOSTCALLONRECORD } from '../ConstConfig';
 import * as tools from '../../../utils/tools.js';
 export default {
   namespace: NAMESPACE_SUFFERHOSTCALLONRECORD,
@@ -12,7 +12,7 @@ export default {
     timestampRange: [],
     page: 1,
     limit: 10,
-    exportdata: VALUE_SUFFERHOSTCALLONRECORD
+    lastChangeTime: -1,
   },
   reducers: {
     save(state, { payload }) {
@@ -46,18 +46,6 @@ export default {
     }
   },
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname }) => {
-        if (pathname === '/report') {
-          dispatch({
-            type: 'fetch',
-            payload: {
-              limit: 10,
-              timestampRange: []
-            }
-          });
-        }
-      });
-    },
+
   }
 }

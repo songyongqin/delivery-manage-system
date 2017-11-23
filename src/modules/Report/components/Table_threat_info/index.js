@@ -3,11 +3,11 @@ import { connect } from 'dva';
 import styles from './index.css';
 import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
 import { routerRedux } from 'dva/router';
-import EnhanciveTable from '../../components/EnhanciveTable'
+import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE_THREATINFO } from '../../ConstConfig'
-
+import classnames from 'classnames';
 @WithAnimateRender
 class Tableevent extends React.Component {
   constructor(props) {
@@ -17,27 +17,40 @@ class Tableevent extends React.Component {
   }
 
   pageChangeHandler = (page) => {
+    const { timestampRange, limit } = this.props;
     this.props.dispatch({
       type: `${NAMESPACE_THREATINFO}/fetch`,
       payload:
-      { page }
-    })
+      {
+        page,
+        limit,
+        timestampRange
 
+      }
+    })
   }
   onExport = () => {
 
-    const { timestampRange, exportdata } = this.props;
+    const { timestampRange } = this.props;
+    const option = {
+      threatinfo:
+      {
+        limit: 10,
+        page: 1
+      }
+    };
     this.props.dispatch({
       type: `${NAMESPACE_THREATINFO}/onExport`,
       payload:
       {
-        exportdata,
+        option,
         timestampRange
       }
     });
   }
   render() {
     const data = this.props.data;
+    const { isDark } = this.props;
     const columns = [{
       title: '威胁类型',
       dataIndex: 'threatType',
@@ -74,19 +87,15 @@ class Tableevent extends React.Component {
       onChange: this.pageChangeHandler,
       pageSize: this.props.limit,
     };
-    const title = "威胁情报"
 
     return (
       <div>
         <JoSpin spinning={this.props.loading}>
-          {
-            this.props.animateRender([
-              <EnhanciveTable key="table" tableProps={tableProps} paginationProps={paginationProps} title={title}> </EnhanciveTable>,
-              <div key="operation-panel" style={{ position: "absolute", top: "0px", right: "0px" }} >
-                <Button type="primary" onClick={this.onExport}>导出</Button>
-              </div>
-            ])
-          }
+          <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>威胁情报</h4>
+          <div style={{ position: "absolute", top: "0px", right: "0px" }} >
+            <Button type="primary" onClick={this.onExport}>导出</Button>
+          </div>
+          <EnhanciveTable key="table" tableProps={tableProps} paginationProps={paginationProps}> </EnhanciveTable>
         </JoSpin>
 
       </div>
@@ -96,14 +105,14 @@ class Tableevent extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { data, loading, timestampRange, page, limit, exportdata } = state[NAMESPACE_THREATINFO];
+  const { data, loading, timestampRange, page, limit } = state[NAMESPACE_THREATINFO];
   return {
     data,
     loading: state.loading.effects[`${NAMESPACE_THREATINFO}/fetch`],
     timestampRange,
     page,
     limit,
-    exportdata
+    isDark: state.layout.commonLayout.darkTheme,
   };
 }
 export default connect(mapStateToProps)(Tableevent);

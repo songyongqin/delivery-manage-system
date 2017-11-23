@@ -12,7 +12,8 @@ export default {
     timestampRange: [],
     page: 1,
     limit: 10,
-    exportdata: VALUE_THREATEVENT
+    exportdata: VALUE_THREATEVENT,
+    lastChangeTime: -1,
   },
   reducers: {
     save(state, { payload }) {
@@ -46,18 +47,18 @@ export default {
     }
   },
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname }) => {
-        if (pathname === '/report') {
-          dispatch({
-            type: 'fetch',
-            payload: {
-              limit: 10,
-              timestampRange: []
-            }
-          });
-        }
-      });
-    },
+    // setup({ dispatch, history }) {
+    //   return history.listen(({ pathname }) => {
+    //     if (pathname === '/report') {
+    //       dispatch({
+    //         type: 'fetch',
+    //         payload: {
+    //           limit: 10,
+    //           timestampRange: []
+    //         }
+    //       });
+    //     }
+    //   });
+    // },
   }
 }
