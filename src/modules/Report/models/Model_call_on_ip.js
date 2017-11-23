@@ -2,17 +2,17 @@
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
 import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
-import { MAMESPACE_CALL_ON_IP, VALUE_CALL_ON_IP } from '../ConstConfig';
+import { NAMESPACE_CALL_ON_IP, VALUE_CALL_ON_IP } from '../ConstConfig';
 import * as tools from '../../../utils/tools.js';
 export default {
-  namespace: MAMESPACE_CALL_ON_IP,
+  namespace: NAMESPACE_CALL_ON_IP,
   state: {
     data: [],
     loading: false,
     timestampRange: [],
     page: 1,
     limit: 10,
-    exportdata: VALUE_CALL_ON_IP
+    lastChangeTime: -1,
   },
   reducers: {
     save(state, { payload }) {
@@ -46,18 +46,6 @@ export default {
     }
   },
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname }) => {
-        if (pathname === '/report') {
-          dispatch({
-            type: 'fetch',
-            payload: {
-              limit: 10,
-              timestampRange: []
-            }
-          });
-        }
-      });
-    },
+
   }
 }

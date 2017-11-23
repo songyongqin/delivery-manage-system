@@ -2,16 +2,18 @@
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
 import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
-import { NAMESPACE_ATTACK } from '../ConstConfig';
+import { NAMESPACE_ATTACK, NAMESPACE_BASE } from '../ConstConfig';
 import * as tools from '../../../utils/tools.js';
+import moment from 'moment';
 export default {
   namespace: NAMESPACE_ATTACK,
   state: {
     data: [],
     loading: false,
-    timestampRange: [],
+    timestampRange: [moment(), moment()],
     page: 1,
     limit: 10,
+    lastChangeTime: -1,
   },
   reducers: {
     save(state, { payload }) {
@@ -19,16 +21,18 @@ export default {
     }
   },
   effects: {
-    *fetch({ payload }, { call, put }) {
-
+    *fetch({ payload }, { call, put, select }) {
+      const lastChangeTime = yield select(state => state[NAMESPACE_BASE].lastChangeTime)
       const result = yield call(Service.getAttack, payload);
-      const timestampRange = payload.timestampRange ? payload.timestampRange : [];
+      const timestampRange = payload.timestampRange ? payload.timestampRange : [moment(), moment()];
+      const limit = payload.limit ? payload.limit : 10;
       const data = result.payload;
       if (result.status === 1) {
         yield put({
           type: 'save',
           payload: {
             data,
+            limit,
             timestampRange
           }
         });
@@ -44,17 +48,17 @@ export default {
     }
   },
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname }) => {
-        if (pathname === '/report') {
-          dispatch({
-            type: 'fetch',
-            payload: {
-              timestampRange: []
-            }
-          });
-        }
-      });
-    },
+    // setup({ dispatch, history }) {
+    //   return history.listen(({ pathname }) => {
+    //     if (pathname === '/report') {
+    //       dispatch({
+    //         type: 'fetch',
+    //         payload: {
+    //           timestampRange: [moment(), moment()]
+    //         }
+    //       });
+    //     }
+    //   });
+    // },
   }
 }
