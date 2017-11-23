@@ -370,135 +370,135 @@ class Page extends React.Component {
     const option = {
       eventStatistic: checkedListNew.includes("VALUE_ATTACK") ? 1 : 0,
       threatEvent:
-      threateventItemList.every(i => this.haveChecked(i))
-        ?
-        {
-          limit: 10,
-          page: 1,
-          level: ["high", "middle", "low"]
-        }
-        : this.selectLevel(checkedListNew),
+        threateventItemList.every(i => this.haveChecked(i))
+          ?
+          {
+            limit: 10,
+            page: 1,
+            level: ["high", "middle", "low"]
+          }
+          : this.selectLevel(checkedListNew),
       fallhost:
-      checkedListNew.includes("VALUE_FALL_HOST")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_FALL_HOST")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       threatinfo:
-      checkedListNew.includes("VALUE_THREATINFO")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_THREATINFO")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       malip:
-      checkedListNew.includes("VALUE_MALIP")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_MALIP")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       maldomain:
-      checkedListNew.includes("VALUE_MALDOMAIN")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_MALDOMAIN")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       sufferhostcallonrecord:
-      checkedListNew.includes("VALUE_SUFFERHOSTCALLONRECORD")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_SUFFERHOSTCALLONRECORD")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       havecommunicateinsideip:
-      checkedListNew.includes("VALUE_HAVECOMMUNICATEINSIDEIP")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_HAVECOMMUNICATEINSIDEIP")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       callonip:
-      checkedListNew.includes("VALUE_CALL_ON_IP")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_CALL_ON_IP")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       callondomain:
-      checkedListNew.includes("VALUE_CALL_ON_DOMAIN")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_CALL_ON_DOMAIN")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       chartattackip:
-      checkedListNew.includes("VALUE_CHART_ATTACK")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_CHART_ATTACK")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       eventtype:
-      checkedListNew.includes("VALUE_EVENT_TYPE")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_EVENT_TYPE")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       exploitvulnerability:
-      checkedListNew.includes("VALUE_EXLOITVULNERABILITY")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_EXLOITVULNERABILITY")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       sourcecountry:
-      checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       sourceprovince:
-      checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       recordstatistical:
-      checkedListNew.includes("VALUE_RECORDSTATISTICAL")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_RECORDSTATISTICAL")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       watermark:
-      checkedListNew.includes("VALUE_WATERMARK") ? 1 : 0,
+        checkedListNew.includes("VALUE_WATERMARK") ? 1 : 0,
 
     };
     const timestampRange = this.props.base.timestampRange;
     this.props.dispatch({
       type: `${NAMESPACE_ATTACK}/onExport`,
       payload:
-      { option, timestampRange }
+        { option, timestampRange }
 
     });
   }
@@ -727,7 +727,6 @@ class Page extends React.Component {
     const { visible, loading } = this.state;
     const { isDark } = this.props;
     const { timestampRange } = this.props.base;
-
     let showdatastart = "", showdataend = ""
     try {
       showdatastart = timestampRange[0].format("YYYY-MM-DD");
@@ -739,245 +738,252 @@ class Page extends React.Component {
 
     return (
       <div>
-        {this.getQueryPanel()}
-        <div key="operation-panel" style={{ overflow: "hidden" }}>
-          <h2 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "10px" }}>威胁报告</h2>
-          <h5 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center" }} >
-            {
 
-              timestampRange.length === 0
-                ?
-                "统计日期：全部时间"
-                :
-                ("统计日期：" + showdatastart + "到" + showdataend)
-            }
-          </h5>
+        {
+          this.props.animateRender([
+            this.getQueryPanel(),
+            <div key="operation-panel" style={{ overflow: "hidden" }}>
+              <h2 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "10px" }}>威胁报告</h2>
+              <h5 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center" }} >
+                {
 
-          <Button type="primary" style={{ float: "right", marginBottom: "15px" }} onClick={this.showModal}>导出报告</Button>
-          <Modal
-            visible={this.state.visible}
-            title="报告配置"
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-            footer={[
-              <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
-                导出报告
+                  timestampRange.length === 0
+                    ?
+                    "统计日期：全部时间"
+                    :
+                    ("统计日期：" + showdatastart + "到" + showdataend)
+                }
+              </h5>
+
+              <Button type="primary" style={{ float: "right", marginBottom: "15px" }} onClick={this.showModal}>导出报告</Button>
+
+            </div>,
+            <Tabs onChange={this.callback} className={classnames({ "lbl-dark": isDark })} key="tab-list">
+              <TabPane tab="攻击统计" key="attack_components">  <Table_attack_components {...this.props} /></TabPane>
+              <TabPane tab="事件报告" key="event_components">
+                <Table_threat_event_components {...this.props} />
+                <Table_fall_host_components {...this.props} />
+                <Table_threat_info_components {...this.props} />
+                <Table_mal_ip_components {...this.props} />
+                <Table_mal_domain_components {...this.props} />
+                <Table_suffer_host_call_on_record_components {...this.props} />
+                <Table_have_communicate_inside_ip_components {...this.props} />
+                <Table_call_on_ip_components {...this.props} />
+                <Table_call_on_domain_components {...this.props} />
+              </TabPane>
+              <TabPane tab="图表统计" key="chart_statistical"><Chart_statistical_components {...this.props} /></TabPane>
+
+
+            </Tabs>
+          ])
+        }
+
+        <Modal
+          visible={this.state.visible}
+          title="报告配置"
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          footer={[
+            <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
+              导出报告
                     </Button>
-            ]}
-          >
-            <Row className={classnames({ "lbl-dark": isDark })}>
-              <Col span={24} style={{ marginBottom: "10px", fontWeight: "bold" }}> 选择界面及导出报告中显示的模块</Col>
-              <Col span={24}>
-                <Checkbox
-                  style={{ fontWeight: "bold" }}
-                  value="VALUE_ATTACK"
-                  checked={this.state.checkedListNew.includes("VALUE_ATTACK")}
-                  onChange={this.getOnChangeHandle(["VALUE_ATTACK"])}>
-                  攻击统计
+          ]}
+        >
+          <Row className={classnames({ "lbl-dark": isDark })}>
+            <Col span={24} style={{ marginBottom: "10px", fontWeight: "bold" }}> 选择界面及导出报告中显示的模块</Col>
+            <Col span={24}>
+              <Checkbox
+                style={{ fontWeight: "bold" }}
+                value="VALUE_ATTACK"
+                checked={this.state.checkedListNew.includes("VALUE_ATTACK")}
+                onChange={this.getOnChangeHandle(["VALUE_ATTACK"])}>
+                攻击统计
                         </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox
-                  style={{ fontWeight: "bold" }}
-                  value="VALUE_EVENTREPORT"
-                  checked={eventexportItemList.every(i => this.haveChecked(i))}
-                  onChange={this.getOnChangeHandle(eventreportdata)}
-                >
-                  事件报告
+            </Col>
+            <Col span={24}>
+              <Checkbox
+                style={{ fontWeight: "bold" }}
+                value="VALUE_EVENTREPORT"
+                checked={eventexportItemList.every(i => this.haveChecked(i))}
+                onChange={this.getOnChangeHandle(eventreportdata)}
+              >
+                事件报告
                       </Checkbox>
-              </Col>
-              <Row>
-                <Col span={5} offset={1}>
-                  <Checkbox
-                    value="VALUE_THREATEVENT"
-                    checked={threateventItemList.every(i => this.haveChecked(i))}
-                    onChange={this.getOnChangeHandle(["VALUE_HIGH", "VALUE_MIDDLE", "VALUE_LOW"])}>
-                    威胁事件:
+            </Col>
+            <Row>
+              <Col span={5} offset={1}>
+                <Checkbox
+                  value="VALUE_THREATEVENT"
+                  checked={threateventItemList.every(i => this.haveChecked(i))}
+                  onChange={this.getOnChangeHandle(["VALUE_HIGH", "VALUE_MIDDLE", "VALUE_LOW"])}>
+                  威胁事件:
                           </Checkbox>
-                </Col>
+              </Col>
 
 
-                <Col span={5} offset={1}>
-                  <Checkbox
-                    value="VALUE_HIGH"
-                    checked={this.state.checkedListNew.includes("VALUE_HIGH")}
-                    onChange={this.getOnChangeHandle(["VALUE_HIGH"])}>
-                    高危
+              <Col span={5} offset={1}>
+                <Checkbox
+                  value="VALUE_HIGH"
+                  checked={this.state.checkedListNew.includes("VALUE_HIGH")}
+                  onChange={this.getOnChangeHandle(["VALUE_HIGH"])}>
+                  高危
                           </Checkbox>
-                </Col>
-                <Col span={5} offset={1}>
-                  <Checkbox
-                    value="VALUE_MIDDLE"
-                    checked={this.state.checkedListNew.includes("VALUE_MIDDLE")}
-                    onChange={this.getOnChangeHandle(["VALUE_MIDDLE"])}>
-                    中危
+              </Col>
+              <Col span={5} offset={1}>
+                <Checkbox
+                  value="VALUE_MIDDLE"
+                  checked={this.state.checkedListNew.includes("VALUE_MIDDLE")}
+                  onChange={this.getOnChangeHandle(["VALUE_MIDDLE"])}>
+                  中危
                           </Checkbox>
-                </Col>
-                <Col span={5} offset={1}>
-                  <Checkbox
-                    value="VALUE_LOW"
-                    checked={this.state.checkedListNew.includes("VALUE_LOW")}
-                    onChange={this.getOnChangeHandle(["VALUE_LOW"])}>
-                    低危
+              </Col>
+              <Col span={5} offset={1}>
+                <Checkbox
+                  value="VALUE_LOW"
+                  checked={this.state.checkedListNew.includes("VALUE_LOW")}
+                  onChange={this.getOnChangeHandle(["VALUE_LOW"])}>
+                  低危
                           </Checkbox>
-                </Col>
+              </Col>
 
 
 
-              </Row>
-
-
-              <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_FALL_HOST"
-                  onChange={this.getOnChangeHandle(["VALUE_FALL_HOST"])}
-                  checked={this.state.checkedListNew.includes("VALUE_FALL_HOST")}>
-                  失陷主机
-                      </Checkbox>
-              </Col>
-              <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_THREATINFO"
-                  onChange={this.getOnChangeHandle(["VALUE_THREATINFO"])}
-                  checked={this.state.checkedListNew.includes("VALUE_THREATINFO")}>
-                  威胁情报
-                      </Checkbox>
-              </Col>
-              <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_MALIP"
-                  onChange={this.getOnChangeHandle(["VALUE_MALIP"])}
-                  checked={this.state.checkedListNew.includes("VALUE_MALIP")}>
-                  恶意IP
-                      </Checkbox>
-              </Col>
-              <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_MALDOMAIN"
-                  onChange={this.getOnChangeHandle(["VALUE_MALDOMAIN"])}
-                  checked={this.state.checkedListNew.includes("VALUE_MALDOMAIN")}>
-                  恶意域名
-                      </Checkbox>
-              </Col>
-              <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_SUFFERHOSTCALLONRECORD"
-                  onChange={this.getOnChangeHandle(["VALUE_SUFFERHOSTCALLONRECORD"])}
-                  checked={this.state.checkedListNew.includes("VALUE_SUFFERHOSTCALLONRECORD")}>
-                  内网受害主机访问外网恶意域名/IP
-                      </Checkbox>
-              </Col>
-              <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_HAVECOMMUNICATEINSIDEIP"
-                  onChange={this.getOnChangeHandle(["VALUE_HAVECOMMUNICATEINSIDEIP"])}
-                  checked={this.state.checkedListNew.includes("VALUE_HAVECOMMUNICATEINSIDEIP")}>
-                  有通讯记录的内网IP
-                      </Checkbox>
-              </Col>
-              <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_CALL_ON_IP"
-                  onChange={this.getOnChangeHandle(["VALUE_CALL_ON_IP"])}
-                  checked={this.state.checkedListNew.includes("VALUE_CALL_ON_IP")}>
-                  访问的外网IP
-                      </Checkbox>
-              </Col>
-              <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_CALL_ON_DOMAIN"
-                  onChange={this.getOnChangeHandle(["VALUE_CALL_ON_DOMAIN"])}
-                  checked={this.state.checkedListNew.includes("VALUE_CALL_ON_DOMAIN")}>
-                  访问的域名
-                      </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox
-                  style={{ fontWeight: "bold" }}
-                  value="VALUE_CHART"
-                  checked={chartItemList.every(i => this.haveChecked(i))}
-                  onChange={this.getOnChangeHandle(chartdata)}
-                >
-                  图表统计
-                      </Checkbox>
-              </Col>
-              <Col span={7} offset={1}>
-                <Checkbox
-                  value="VALUE_CHART_ATTACK"
-                  onChange={this.getOnChangeHandle(["VALUE_CHART_ATTACK"])}
-                  checked={this.state.checkedListNew.includes("VALUE_CHART_ATTACK")}>
-                  攻击IP
-                      </Checkbox>
-              </Col>
-              <Col span={7} offset={1}>
-                <Checkbox
-                  value="VALUE_EVENT_TYPE"
-                  onChange={this.getOnChangeHandle(["VALUE_EVENT_TYPE"])}
-                  checked={this.state.checkedListNew.includes("VALUE_EVENT_TYPE")}>
-                  攻击事件类型
-                      </Checkbox>
-              </Col>
-              <Col span={7} offset={1}>
-                <Checkbox
-                  value="VALUE_EXLOITVULNERABILITY"
-                  onChange={this.getOnChangeHandle(["VALUE_EXLOITVULNERABILITY"])}
-                  checked={this.state.checkedListNew.includes("VALUE_EXLOITVULNERABILITY")}>
-                  攻击利用漏洞
-                      </Checkbox>
-              </Col>
-              <Col span={7} offset={1}>
-                <Checkbox
-                  value="VALUE_CHART_SOURCECOUNTRY"
-                  onChange={this.getOnChangeHandle(["VALUE_CHART_SOURCECOUNTRY"])}
-                  checked={this.state.checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")}>
-                  攻击来源国家
-                      </Checkbox>
-              </Col>
-              <Col span={7} offset={1}>
-                <Checkbox
-                  value="VALUE_CHART_SOURCEPROVINCE"
-                  onChange={this.getOnChangeHandle(["VALUE_CHART_SOURCEPROVINCE"])}
-                  checked={this.state.checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")}>
-                  攻击来源省份
-                      </Checkbox>
-              </Col>
-              <Col span={7} offset={1}>
-                <Checkbox
-                  value="VALUE_RECORDSTATISTICAL"
-                  onChange={this.getOnChangeHandle(["VALUE_RECORDSTATISTICAL"])}
-                  checked={this.state.checkedListNew.includes("VALUE_RECORDSTATISTICAL")}>
-                  威胁记录统计
-                      </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox
-                  value="VALUE_WATERMARK"
-                  onChange={this.getOnChangeHandle(["VALUE_WATERMARK"])}
-                  checked={this.state.checkedListNew.includes("VALUE_WATERMARK")}>
-                  水印功能
-              </Checkbox>
-              </Col>
             </Row>
 
-          </Modal>
-        </div>
-        <Tabs onChange={this.callback} className={classnames({ "lbl-dark": isDark })}>
-          <TabPane tab="攻击统计" key="attack_components">  <Table_attack_components {...this.props} /></TabPane>
-          <TabPane tab="事件报告" key="event_components">
-            <Table_threat_event_components {...this.props} />
-            <Table_fall_host_components {...this.props} />
-            <Table_threat_info_components {...this.props} />
-            <Table_mal_ip_components {...this.props} />
-            <Table_mal_domain_components {...this.props} />
-            <Table_suffer_host_call_on_record_components {...this.props} />
-            <Table_have_communicate_inside_ip_components {...this.props} />
-            <Table_call_on_ip_components {...this.props} />
-            <Table_call_on_domain_components {...this.props} />
-          </TabPane>
-          <TabPane tab="图表统计" key="chart_statistical"><Chart_statistical_components {...this.props} /></TabPane>
 
+            <Col span={23} offset={1}>
+              <Checkbox
+                value="VALUE_FALL_HOST"
+                onChange={this.getOnChangeHandle(["VALUE_FALL_HOST"])}
+                checked={this.state.checkedListNew.includes("VALUE_FALL_HOST")}>
+                失陷主机
+                      </Checkbox>
+            </Col>
+            <Col span={23} offset={1}>
+              <Checkbox
+                value="VALUE_THREATINFO"
+                onChange={this.getOnChangeHandle(["VALUE_THREATINFO"])}
+                checked={this.state.checkedListNew.includes("VALUE_THREATINFO")}>
+                威胁情报
+                      </Checkbox>
+            </Col>
+            <Col span={23} offset={1}>
+              <Checkbox
+                value="VALUE_MALIP"
+                onChange={this.getOnChangeHandle(["VALUE_MALIP"])}
+                checked={this.state.checkedListNew.includes("VALUE_MALIP")}>
+                恶意IP
+                      </Checkbox>
+            </Col>
+            <Col span={23} offset={1}>
+              <Checkbox
+                value="VALUE_MALDOMAIN"
+                onChange={this.getOnChangeHandle(["VALUE_MALDOMAIN"])}
+                checked={this.state.checkedListNew.includes("VALUE_MALDOMAIN")}>
+                恶意域名
+                      </Checkbox>
+            </Col>
+            <Col span={23} offset={1}>
+              <Checkbox
+                value="VALUE_SUFFERHOSTCALLONRECORD"
+                onChange={this.getOnChangeHandle(["VALUE_SUFFERHOSTCALLONRECORD"])}
+                checked={this.state.checkedListNew.includes("VALUE_SUFFERHOSTCALLONRECORD")}>
+                内网受害主机访问外网恶意域名/IP
+                      </Checkbox>
+            </Col>
+            <Col span={23} offset={1}>
+              <Checkbox
+                value="VALUE_HAVECOMMUNICATEINSIDEIP"
+                onChange={this.getOnChangeHandle(["VALUE_HAVECOMMUNICATEINSIDEIP"])}
+                checked={this.state.checkedListNew.includes("VALUE_HAVECOMMUNICATEINSIDEIP")}>
+                有通讯记录的内网IP
+                      </Checkbox>
+            </Col>
+            <Col span={23} offset={1}>
+              <Checkbox
+                value="VALUE_CALL_ON_IP"
+                onChange={this.getOnChangeHandle(["VALUE_CALL_ON_IP"])}
+                checked={this.state.checkedListNew.includes("VALUE_CALL_ON_IP")}>
+                访问的外网IP
+                      </Checkbox>
+            </Col>
+            <Col span={23} offset={1}>
+              <Checkbox
+                value="VALUE_CALL_ON_DOMAIN"
+                onChange={this.getOnChangeHandle(["VALUE_CALL_ON_DOMAIN"])}
+                checked={this.state.checkedListNew.includes("VALUE_CALL_ON_DOMAIN")}>
+                访问的域名
+                      </Checkbox>
+            </Col>
+            <Col span={24}>
+              <Checkbox
+                style={{ fontWeight: "bold" }}
+                value="VALUE_CHART"
+                checked={chartItemList.every(i => this.haveChecked(i))}
+                onChange={this.getOnChangeHandle(chartdata)}
+              >
+                图表统计
+                      </Checkbox>
+            </Col>
+            <Col span={7} offset={1}>
+              <Checkbox
+                value="VALUE_CHART_ATTACK"
+                onChange={this.getOnChangeHandle(["VALUE_CHART_ATTACK"])}
+                checked={this.state.checkedListNew.includes("VALUE_CHART_ATTACK")}>
+                攻击IP
+                      </Checkbox>
+            </Col>
+            <Col span={7} offset={1}>
+              <Checkbox
+                value="VALUE_EVENT_TYPE"
+                onChange={this.getOnChangeHandle(["VALUE_EVENT_TYPE"])}
+                checked={this.state.checkedListNew.includes("VALUE_EVENT_TYPE")}>
+                攻击事件类型
+                      </Checkbox>
+            </Col>
+            <Col span={7} offset={1}>
+              <Checkbox
+                value="VALUE_EXLOITVULNERABILITY"
+                onChange={this.getOnChangeHandle(["VALUE_EXLOITVULNERABILITY"])}
+                checked={this.state.checkedListNew.includes("VALUE_EXLOITVULNERABILITY")}>
+                攻击利用漏洞
+                      </Checkbox>
+            </Col>
+            <Col span={7} offset={1}>
+              <Checkbox
+                value="VALUE_CHART_SOURCECOUNTRY"
+                onChange={this.getOnChangeHandle(["VALUE_CHART_SOURCECOUNTRY"])}
+                checked={this.state.checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")}>
+                攻击来源国家
+                      </Checkbox>
+            </Col>
+            <Col span={7} offset={1}>
+              <Checkbox
+                value="VALUE_CHART_SOURCEPROVINCE"
+                onChange={this.getOnChangeHandle(["VALUE_CHART_SOURCEPROVINCE"])}
+                checked={this.state.checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")}>
+                攻击来源省份
+                      </Checkbox>
+            </Col>
+            <Col span={7} offset={1}>
+              <Checkbox
+                value="VALUE_RECORDSTATISTICAL"
+                onChange={this.getOnChangeHandle(["VALUE_RECORDSTATISTICAL"])}
+                checked={this.state.checkedListNew.includes("VALUE_RECORDSTATISTICAL")}>
+                威胁记录统计
+                      </Checkbox>
+            </Col>
+            <Col span={24}>
+              <Checkbox
+                value="VALUE_WATERMARK"
+                onChange={this.getOnChangeHandle(["VALUE_WATERMARK"])}
+                checked={this.state.checkedListNew.includes("VALUE_WATERMARK")}>
+                水印功能
+              </Checkbox>
+            </Col>
+          </Row>
 
-        </Tabs>
+        </Modal>
       </div>
     )
   }
