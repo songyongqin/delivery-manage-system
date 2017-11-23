@@ -8,6 +8,7 @@ import EnhanciveTable from '../../../../domainComponents/EnhanciveTable'
 import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE } from '../../ConstConfig'
+import TimesLabel from 'components/TimesLabel'
 
 @WithAnimateRender
 @WithContainerHeader
@@ -132,6 +133,9 @@ class App extends React.Component {
       title: '登录时间',
       dataIndex: 'time',
       key: 'time',
+      render: value => {
+        return <TimesLabel times={[value]}></TimesLabel>
+      }
     },
     {
       title: '登录账号',
