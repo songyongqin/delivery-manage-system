@@ -15,7 +15,8 @@ import {
   USER_DEFINED_VALUE,
   THREAT_NAME_USER_DEFINED_DATAINDEX
 } from '../../ConstConfig'
-import * as tools from '../../../../utils/tools';
+import * as tools from 'utils/tools';
+const { getMD5 } = tools;
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -46,27 +47,29 @@ const tailFormItemLayout = {
 class WrappedForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    const {onSubmit,form}=this.props;
+    const { onSubmit, form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (err) {
         return
       }
 
-      let _values={};
+      let _values = {};
 
-      Object.keys(values).forEach(i=>_values[i]=values[i].trim())
-      onSubmit&&onSubmit({
+      Object.keys(values).forEach(i => _values[i] = values[i].trim())
+
+
+      onSubmit && onSubmit({
         ..._values,
-        [THREAT_NAME_USER_DEFINED_DATAINDEX]:USER_DEFINED_VALUE,
-        [THREAT_NAME_KEY_DATAINDEX]:window.btoa(values[THREAT_NAME_NAME_DATAINDEX])
+        [THREAT_NAME_USER_DEFINED_DATAINDEX]: USER_DEFINED_VALUE,
+        [THREAT_NAME_KEY_DATAINDEX]: getMD5(values[THREAT_NAME_NAME_DATAINDEX])
       });
 
     });
   }
 
   checkInput = (rule, value, callback) => {
-    const {threatnameList=[]}=this.props;
-    let _value=value.trim();
+    const { threatnameList = [] } = this.props;
+    let _value = value.trim();
 
     if (threatnameList.includes(_value)) {
       callback("该行为已经存在");
@@ -77,55 +80,55 @@ class WrappedForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {isDark,loading}=this.props;
+    const { isDark, loading } = this.props;
 
 
-    const lblClasses=classnames({
-      [styles["lbl-dark"]]:isDark
+    const lblClasses = classnames({
+      [styles["lbl-dark"]]: isDark
     })
 
-    const commonProps={...formItemLayout,colon:false,hasFeedback:true}
+    const commonProps = { ...formItemLayout, colon: false, hasFeedback: true }
 
-    const items=[
+    const items = [
       {
-        props:{
+        props: {
           ...commonProps,
-          label:<span className={lblClasses}>{tools.getKeyText(THREAT_NAME_NAME_DATAINDEX,textConfig)}</span>
+          label: <span className={lblClasses}>{tools.getKeyText(THREAT_NAME_NAME_DATAINDEX, textConfig)}</span>
         },
-        filed:{
-          name:THREAT_NAME_NAME_DATAINDEX,
-          rules:[
+        filed: {
+          name: THREAT_NAME_NAME_DATAINDEX,
+          rules: [
             {
               required: true, message: '攻击行为不能为空',
             },
             {
-              validator:this.checkInput,
+              validator: this.checkInput,
             },
             {
-              whitespace:true,message:"攻击行为不能为空"
+              whitespace: true, message: "攻击行为不能为空"
             }
           ]
         },
-        component:<Input disabled={loading}/>
+        component: <Input disabled={loading} />
       },
       {
-        props:{
+        props: {
           ...commonProps,
-          hasFeedback:false,
-          required:true,
-          label:<span className={lblClasses}>{tools.getKeyText(THREAT_NAME_LEVEL_DATAINDEX,textConfig)}</span>
+          hasFeedback: false,
+          required: true,
+          label: <span className={lblClasses}>{tools.getKeyText(THREAT_NAME_LEVEL_DATAINDEX, textConfig)}</span>
         },
-        filed:{
-          name:THREAT_NAME_LEVEL_DATAINDEX,
-          initialValue:levels[0]
+        filed: {
+          name: THREAT_NAME_LEVEL_DATAINDEX,
+          initialValue: levels[0]
         },
-        component:(
+        component: (
           <Select size="large"
-                  style={{width:"100px"}}>
-            {levels.map((i,index)=>(
+            style={{ width: "100px" }}>
+            {levels.map((i, index) => (
               <Select.Option value={i}
-                             key={`${index}-item`}>
-                {tools.getKeyText(i,levelTextConfig)}
+                key={`${index}-item`}>
+                {tools.getKeyText(i, levelTextConfig)}
               </Select.Option>
             ))}
           </Select>
@@ -138,23 +141,23 @@ class WrappedForm extends React.Component {
     return (
       <Form >
         {
-          items.map(i=><FormItem key={i.filed.name} {...i.props}>
+          items.map(i => <FormItem key={i.filed.name} {...i.props}>
             {
-              getFieldDecorator(i.filed.name,{...i.filed})(i.component)
+              getFieldDecorator(i.filed.name, { ...i.filed })(i.component)
             }
           </FormItem>)
         }
         <FormItem {...tailFormItemLayout}>
           <Button type="primary"
-                  loading={loading}
-                  icon="plus"
-                  onClick={this.handleSubmit}>添加</Button>
+            loading={loading}
+            icon="plus"
+            onClick={this.handleSubmit}>添加</Button>
 
           {/*<Button type="danger"*/}
-                  {/*loading={loading}*/}
-                  {/*style={{marginLeft:"15px"}}*/}
-                  {/*icon="close"*/}
-                  {/*onClick={this.props.onCancel}>取消</Button>*/}
+          {/*loading={loading}*/}
+          {/*style={{marginLeft:"15px"}}*/}
+          {/*icon="close"*/}
+          {/*onClick={this.props.onCancel}>取消</Button>*/}
         </FormItem>
       </Form>
     );

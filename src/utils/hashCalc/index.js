@@ -1,5 +1,10 @@
 import SparkMD5 from './spark-md5.min.js';
 
+export const getMD5 = (str = "") => {
+  let spark = new SparkMD5();
+  spark.append(str);
+  return spark.end();
+}
 
 export default file => {
   return new Promise((resolve, reject) => {

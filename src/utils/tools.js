@@ -192,7 +192,7 @@ export const compose = Ramda.compose;
 
 
 
-export { default as getFileMd5 } from './hashCalc'
+export { default as getFileMd5, getMD5 } from './hashCalc'
 
 
 export { splitFileToChunk, uploadFile } from './fileSplitUpload.js'

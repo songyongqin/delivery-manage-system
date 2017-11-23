@@ -163,7 +163,6 @@ class WrappedForm extends React.Component {
     const lblClasses = classnames({
       [styles["lbl-dark"]]: isDark
     });
-    console.info(threatTypes)
     const commonProps = { ...formItemLayout, colon: false, hasFeedback: true, required: true }
     let items = [];
 
@@ -247,13 +246,18 @@ class WrappedForm extends React.Component {
       {
         props: {
           ...commonProps,
-          required: false,
+          required: true,
           hasFeedBack: false,
           label: <span className={lblClasses}>{tools.getKeyText(RULE_DESCRIPTION, textConfig)}</span>
         },
         filed: {
           name: RULE_DESCRIPTION,
-          initialValue: defaultValue[RULE_DESCRIPTION]
+          initialValue: defaultValue[RULE_DESCRIPTION],
+          rules: [
+            {
+              required: true, message: "不能为空"
+            }
+          ]
         },
         component: (
           <Input disabled={loading} />
