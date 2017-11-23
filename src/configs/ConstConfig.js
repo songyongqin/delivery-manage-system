@@ -28,13 +28,15 @@ export const attackStageTextConfig = {
 * */
 export const HIGH = "high",
   MIDDLE = "middle",
-  LOW = "low";
+  LOW = "low",
+  UN_KNOW = "unknow";
 
 
 export const levelTextConfig = {
   [HIGH]: "高危",
   [MIDDLE]: "中危",
-  [LOW]: "低危"
+  [LOW]: "低危",
+  [UN_KNOW]: "未知"
 };
 
 export const level = Object.keys(levelTextConfig)
