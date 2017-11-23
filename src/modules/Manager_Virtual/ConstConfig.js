@@ -68,7 +68,9 @@ export const honeypotStatusValues = Object.keys(honeypotStatusTextConfig);
 export const VCPUS_DATAINDEX = "vcpus",
   RAM_DATAINDEX = "ram",
   GATEWAY_DATAINDEX = "gateway",
-  AUTH_DATAINDEX = "auth";
+  AUTH_DATAINDEX = "auth",
+  AUTH_USER_DATA_INDEX = "authUserName",
+  AUTH_PASSWORD_DATA_INDEX = "authPassword"
 
 
 export const honeypotTextConfig = {
@@ -79,5 +81,18 @@ export const honeypotTextConfig = {
   [INTERCATION_DATAINDEX]: "蜜罐类型",
   [SYSTEM_DATAINDEX]: "操作系统",
   [SERVICES_DATAINDEX]: "服务支持",
-  [AUTH_DATAINDEX]: "802.1x认证"
+  [AUTH_DATAINDEX]: "802.1x认证",
+  [AUTH_USER_DATA_INDEX]: "用户名",
+  [AUTH_PASSWORD_DATA_INDEX]: "密码"
 }
+
+export const VM_ENUM_CONFIG_DATA_INDEX = "vm",
+  HIGH_DATA_INDEX = "high",
+  LOW_DATA_INDEX = "low",
+  SYSTEM_LIST_DATA_INDEX = "systemList",
+  WINDOW_SERVER_TYPE = "windows",
+  LINUX_SERVER_TYPE = "linux",
+  SERVICE_LIST_DATA_INDEX = "serviceList"
+
+
+export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig.js'
