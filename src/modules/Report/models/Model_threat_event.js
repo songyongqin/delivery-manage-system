@@ -12,7 +12,8 @@ export default {
     timestampRange: [],
     page: 1,
     limit: 10,
-    exportdata: VALUE_THREATEVENT
+    exportdata: VALUE_THREATEVENT,
+    lastChangeTime: -1,
   },
   reducers: {
     save(state, { payload }) {
@@ -21,7 +22,6 @@ export default {
   },
   effects: {
     *fetch({ payload }, { call, put }) {
-      console.info(payload);
       const result = yield call(Service.getthreatevent, payload);
       const data = result.payload.data;
       const timestampRange = payload.timestampRange ? payload.timestampRange : [];

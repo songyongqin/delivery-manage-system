@@ -2,7 +2,7 @@
 import { connect } from 'dva';
 import * as moment from 'moment';
 import styles from './index.css';
-import { Table, Input, Button, Icon, Pagination, Spin, Checkbox, Row, Col } from 'antd';
+import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
 import { routerRedux } from 'dva/router';
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import Modal from '../../../../domainComponents/Modal';

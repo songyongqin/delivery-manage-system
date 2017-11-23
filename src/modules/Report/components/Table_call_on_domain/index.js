@@ -7,7 +7,7 @@ import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE_CALL_ON_DOMAIN } from '../../ConstConfig'
-
+import classnames from 'classnames';
 @WithAnimateRender
 class Tableevent extends React.Component {
   constructor(props) {
@@ -39,6 +39,7 @@ class Tableevent extends React.Component {
   }
   render() {
     const data = this.props.data;
+    const { isDark } = this.props;
     const columns = [
       {
         title: '序号',
@@ -73,7 +74,7 @@ class Tableevent extends React.Component {
     return (
       <div>
         <JoSpin spinning={this.props.loading}>
-          <h4 style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>访问的域名</h4>
+          <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>访问的域名</h4>
           <div style={{ position: "absolute", top: "0px", right: "0px" }} >
             <Button type="primary" onClick={this.onExport}>导出</Button>
           </div>
@@ -94,6 +95,7 @@ function mapStateToProps(state) {
     timestampRange,
     page,
     limit,
+    isDark: state.layout.commonLayout.darkTheme,
   };
 }
 

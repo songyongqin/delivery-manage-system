@@ -31,7 +31,12 @@ const getChecker = ipList => (ip) => {
   };
 }
 
+const FILL_STR = "0"
 
+const fillStrStart = str => {
+  let value = str = FILL_STR.repeat(3) + str;
+  return value.slice(value.length - 3)
+}
 
 
 const getIpRangeChecker = (ipList) => (ipStart = "", ipEnd = "") => {
@@ -85,8 +90,7 @@ const getIpRangeChecker = (ipList) => (ipStart = "", ipEnd = "") => {
   if (startNth1 !== endNth1) {
     return errorResult
   }
-
-  if (parseInt(ipStart.split(".").join("")) >= parseInt(ipEnd.split(".").join(""))) {
+  if (parseInt(ipStart.split(".").map(fillStrStart).join("")) >= parseInt(ipEnd.split(".").map(fillStrStart).join(""))) {
     return errorResult
   }
 

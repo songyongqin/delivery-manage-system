@@ -1,6 +1,6 @@
 export const
   NAMESPACE_BASE = "basemodels",
-  NAMESPACE = "analyseRanking",
+  NAMESPACE_CHART = "chartstatistical",
   NAMESPACE_ATTACK = "attack",
   NAMESPACE_THREATEVENT = "threatEvent",
   NAMESPACE_CALL_ON_DOMAIN = "callondomain",
@@ -11,6 +11,7 @@ export const
   NAMESPACE_MALIP = "malip",
   NAMESPACE_SUFFERHOSTCALLONRECORD = "sufferhostcallonrecord",
   NAMESPACE_THREATINFO = "threatinfo",
+
 
   VALUE_ATTACK = "statistics",
   VALUE_EVENTREPORT = "eventreport",
@@ -25,5 +26,15 @@ export const
   VALUE_THREATINFO = "threatinfo",
   VALUE_HIGH = "high",
   VALUE_MIDDLE = "middle",
-  VALUE_LOW = "low";
+  VALUE_LOW = "low",
+  VALUE_CHART = "chartstatistical",
+  VALUE_CHART_ATTACK = "chartattackip",
+  VALUE_EVENT_TYPE = "eventtype",
+  VALUE_EXLOITVULNERABILITY = "exploitvulnerability",
+  VALUE_CHART_SOURCECOUNTRY = "sourcecountry",
+  VALUE_CHART_SOURCEPROVINCE = "sourceprovince",
+  VALUE_RECORDSTATISTICAL = "recordstatistical",
+  VALUE_WATERMARK = "watermark";
+
+
 

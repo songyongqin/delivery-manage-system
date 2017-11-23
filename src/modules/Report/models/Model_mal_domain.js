@@ -12,7 +12,7 @@ export default {
     timestampRange: [],
     page: 1,
     limit: 10,
-    exportdata: VALUE_MALDOMAIN
+    lastChangeTime: -1,
   },
   reducers: {
     save(state, { payload }) {

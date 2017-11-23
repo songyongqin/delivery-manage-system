@@ -12,7 +12,7 @@ export default {
     timestampRange: [],
     page: 1,
     limit: 10,
-    exportdata: VALUE_FALL_HOST
+    lastChangeTime: -1,
   },
   reducers: {
     save(state, { payload }) {

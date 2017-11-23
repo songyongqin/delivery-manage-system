@@ -12,6 +12,7 @@ export default {
     timestampRange: [],
     page: 1,
     limit: 10,
+    lastChangeTime: -1,
   },
   reducers: {
     save(state, { payload }) {

@@ -4,7 +4,6 @@ import commonRequestCreator from '../../utils/commonRequestCreator';
 import request from '../../utils/request';
 const httpApi = ApiConfig.http;
 
-export const get = commonRequestCreator.get(httpApi.ANALYSE_RANKING);
 //攻击统计接口
 export function getAttack(payload) {
   return request(httpApi.REPORT_STATISTICS + tools.jsonToQueryString(payload), {
@@ -95,7 +94,16 @@ export function getEPORT_CALL_ON_DOMAIN(payload) {
     },
   });
 }
-//测试阶段——>导出文件全部调用一个接口
+//图表统计
+export function getCHART_STATISTICAL(payload) {
+  return request(httpApi.ANALYSE_RANKING + tools.jsonToQueryString(payload), {
+    method: 'GET',
+    header: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+  });
+}
+//导出文件全部调用一个接口
 export function onExport(payload) {
   return request(httpApi.REPORT_EXPORT, {
     method: 'POST',

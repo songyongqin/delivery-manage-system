@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import * as moment from 'moment';
-import { Menu, Button, Breadcrumb, Tabs, Checkbox, Row, Col } from 'antd';
+import { Menu, Button, Breadcrumb, Tabs, Checkbox, Row, Col, Switch, Icon } from 'antd';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable';
 import Modal from '../../domainComponents/Modal';
 import JoSpin from '../../components/JoSpin';
@@ -30,6 +30,7 @@ import {
   NAMESPACE_MALIP,
   NAMESPACE_SUFFERHOSTCALLONRECORD,
   NAMESPACE_THREATINFO,
+  NAMESPACE_CHART,
   VALUE_ATTACK,
   VALUE_THREATEVENT,
   VALUE_CALL_ON_DOMAIN,
@@ -42,7 +43,16 @@ import {
   VALUE_THREATINFO,
   VALUE_HIGH,
   VALUE_MIDDLE,
-  VALUE_LOW
+  VALUE_LOW,
+  VALUE_CHART,
+  VALUE_CHART_ATTACK,
+  VALUE_EVENT_TYPE,
+  VALUE_EXLOITVULNERABILITY,
+  VALUE_CHART_SOURCECOUNTRY,
+  VALUE_CHART_SOURCEPROVINCE,
+  VALUE_RECORDSTATISTICAL,
+  VALUE_WATERMARK
+
 } from './ConstConfig'
 const CheckboxGroup = Checkbox.Group;
 
@@ -64,6 +74,14 @@ const threateventItemList = [
   "VALUE_HIGH",
   "VALUE_MIDDLE",
   "VALUE_LOW"
+]
+const chartItemList = [
+  "VALUE_CHART_ATTACK",
+  "VALUE_EVENT_TYPE",
+  "VALUE_EXLOITVULNERABILITY",
+  "VALUE_CHART_SOURCECOUNTRY",
+  "VALUE_CHART_SOURCEPROVINCE",
+  "VALUE_RECORDSTATISTICAL",
 ]
 const TabPane = Tabs.TabPane;
 @WithAnimateRender
@@ -101,7 +119,6 @@ class Page extends React.Component {
         checkedListNew.filter(n => n !== i)
 
     })
-    console.info(checkedListNew)
     this.setState({
       checkedListNew
     })
@@ -118,7 +135,8 @@ class Page extends React.Component {
   }
 
   getQueryPanel = () => {
-    const { routes, timestampRange } = this.props;
+    const { routes } = this.props;
+    const { timestampRange } = this.props.base;
     const queryFilters = {
       timestampRange
     }
@@ -133,16 +151,82 @@ class Page extends React.Component {
     )
   };
   timestampRangeOnChange = ({ timestampRange }) => {
-
-    if (this.props.keyvalue == 'attack_components') {
-
+    const lastChangeTime = new Date().getTime();
+    this.props.dispatch({
+      type: `${NAMESPACE_BASE}/save`,
+      payload: {
+        timestampRange,
+        lastChangeTime
+      }
+    });
+    if (this.props.base.keyvalue == 'attack_components') {
+      this.props.dispatch({
+        type: `${NAMESPACE_ATTACK}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
       this.props.dispatch({
         type: `${NAMESPACE_ATTACK}/fetch`,
         payload: {
-          timestampRange
+          timestampRange,
         }
       });
-    } else if (this.props.keyvalue == 'event_components') {
+    } else if (this.props.base.keyvalue == 'event_components') {
+      this.props.dispatch({
+        type: `${NAMESPACE_THREATEVENT}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
+      this.props.dispatch({
+        type: `${NAMESPACE_FALL_HOST}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
+      this.props.dispatch({
+        type: `${NAMESPACE_THREATINFO}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
+      this.props.dispatch({
+        type: `${NAMESPACE_MALIP}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
+      this.props.dispatch({
+        type: `${NAMESPACE_MALDOMAIN}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
+      this.props.dispatch({
+        type: `${NAMESPACE_SUFFERHOSTCALLONRECORD}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
+      this.props.dispatch({
+        type: `${NAMESPACE_HAVECOMMUNICATEINSIDEIP}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
+      this.props.dispatch({
+        type: `${NAMESPACE_CALL_ON_IP}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
+      this.props.dispatch({
+        type: `${NAMESPACE_CALL_ON_DOMAIN}/save`,
+        payload: {
+          lastChangeTime
+        }
+      });
       this.props.dispatch({
         type: `${NAMESPACE_THREATEVENT}/fetch`,
         payload: {
@@ -223,7 +307,16 @@ class Page extends React.Component {
         }
 
       });
-    } else { }
+    } else if (this.props.base.keyvalue == 'chart_statistical') {
+      this.props.dispatch({
+        type: `${NAMESPACE_CHART}/fetch`,
+        payload: {
+          timestampRange
+        }
+
+      });
+
+    }
   }
   selectLevel = (checkedListNew) => {
     if (checkedListNew.includes("VALUE_HIGH") && !checkedListNew.includes("VALUE_MIDDLE") && !checkedListNew.includes("VALUE_LOW")) {
@@ -274,7 +367,6 @@ class Page extends React.Component {
 
   onExport = () => {
     const checkedListNew = this.state.checkedListNew;
-    console.info(threateventItemList.every(i => this.haveChecked(i)))
     const option = {
       eventStatistic: checkedListNew.includes("VALUE_ATTACK") ? 1 : 0,
       threatEvent:
@@ -350,13 +442,59 @@ class Page extends React.Component {
           page: 1
         }
         : null,
-
-
-
-
+      chartattackip:
+      checkedListNew.includes("VALUE_CHART_ATTACK")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
+      eventtype:
+      checkedListNew.includes("VALUE_EVENT_TYPE")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
+      exploitvulnerability:
+      checkedListNew.includes("VALUE_EXLOITVULNERABILITY")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
+      sourcecountry:
+      checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
+      sourceprovince:
+      checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
+      recordstatistical:
+      checkedListNew.includes("VALUE_RECORDSTATISTICAL")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
+      watermark:
+      checkedListNew.includes("VALUE_WATERMARK") ? 1 : 0,
 
     };
-    const timestampRange = this.props.timestampRange;
+    const timestampRange = this.props.base.timestampRange;
     this.props.dispatch({
       type: `${NAMESPACE_ATTACK}/onExport`,
       payload:
@@ -368,100 +506,228 @@ class Page extends React.Component {
     return this.state.checkedListNew.includes(key)
   }
   callback = (key) => {
+
+    const attacklastChangeTime = this.props.attack.lastChangeTime;
+    const threateventlastChangeTime = this.props.threatevent.lastChangeTime;
+    const fallhostlastChangeTime = this.props.fallhost.lastChangeTime;
+    const threatinfolastChangeTime = this.props.threatinfo.lastChangeTime;
+    const maliplastChangeTime = this.props.malip.lastChangeTime;
+    const maldomainlastChangeTime = this.props.maldomain.lastChangeTime;
+    const sufferhostcalllastChangeTime = this.props.sufferhostcall.lastChangeTime;
+    const havecommunicatelastChangeTime = this.props.havecommunicate.lastChangeTime;
+    const calloniplastChangeTime = this.props.callonip.lastChangeTime;
+    const callondomainlastChangeTime = this.props.callondomain.lastChangeTime;
+    const chartstatisticallastChangeTime = this.props.chartstatistical.lastChangeTime;
+    const { lastChangeTime, timestampRange, limit, page } = this.props.base;
     switch (key) {
       case 'attack_components':
         this.props.dispatch({
-          type: `${NAMESPACE_ATTACK}/fetch`
-        }); break;
+          type: `${NAMESPACE_BASE}/save`,
+          payload: {
+            keyvalue: 'attack_components'
+          }
+        });
+        if (lastChangeTime !== attacklastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_ATTACK}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_ATTACK}/fetch`,
+            payload: {
+              timestampRange
+            }
+          });
+        }
+        break;
       case 'event_components':
-        const { timestampRange } = this.props;
-        const { page, limit } = this.props.threatevent;
         this.props.dispatch({
           type: `${NAMESPACE_BASE}/save`,
           payload: {
             keyvalue: 'event_components'
           }
         });
-        this.props.dispatch({
-          type: `${NAMESPACE_THREATEVENT}/fetch`,
-          payload: {
-            page,
-            limit,
-            timestampRange
-          }
-        });
-        this.props.dispatch({
-          type: `${NAMESPACE_FALL_HOST}/fetch`,
-          payload: {
-            page,
-            limit,
-            timestampRange
-          }
-        });
-        this.props.dispatch({
-          type: `${NAMESPACE_THREATINFO}/fetch`,
-          payload: {
-            page,
-            limit,
-            timestampRange
-          }
+        if (lastChangeTime !== threateventlastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_THREATEVENT}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_THREATEVENT}/fetch`,
+            payload: {
+              page,
+              limit,
+              timestampRange
+            }
+          });
+        }
+        if (lastChangeTime !== fallhostlastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_FALL_HOST}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_FALL_HOST}/fetch`,
+            payload: {
+              page,
+              limit,
+              timestampRange
+            }
+          });
+        }
+        if (lastChangeTime !== threatinfolastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_THREATINFO}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_THREATINFO}/fetch`,
+            payload: {
+              page,
+              limit,
+              timestampRange
+            }
 
-        });
+          });
+        }
+        if (lastChangeTime !== maliplastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_MALIP}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_MALIP}/fetch`,
+            payload: {
+              page,
+              limit,
+              timestampRange
+            }
+          });
+        }
+        if (lastChangeTime !== maldomainlastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_MALDOMAIN}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_MALDOMAIN}/fetch`,
+            payload: {
+              page,
+              limit,
+              timestampRange
+            }
+          });
+        }
+        if (lastChangeTime !== sufferhostcalllastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_SUFFERHOSTCALLONRECORD}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_SUFFERHOSTCALLONRECORD}/fetch`,
+            payload: {
+              page,
+              limit,
+              timestampRange
+            }
+          });
+        }
+        if (lastChangeTime !== havecommunicatelastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_HAVECOMMUNICATEINSIDEIP}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_HAVECOMMUNICATEINSIDEIP}/fetch`,
+            payload: {
+              page,
+              limit,
+              timestampRange
+            }
+          });
+        }
+        if (lastChangeTime !== calloniplastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_CALL_ON_IP}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_CALL_ON_IP}/fetch`,
+            payload: {
+              page,
+              limit,
+              timestampRange
+            }
+          });
+        }
+        if (lastChangeTime !== callondomainlastChangeTime) {
+          this.props.dispatch({
+            type: `${NAMESPACE_CALL_ON_DOMAIN}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_CALL_ON_DOMAIN}/fetch`,
+            payload: {
+              page,
+              limit,
+              timestampRange
+            }
+          });
+        }
+        break;
+      case 'chart_statistical':
         this.props.dispatch({
-          type: `${NAMESPACE_MALIP}/fetch`,
+          type: `${NAMESPACE_BASE}/save`,
           payload: {
-            page,
-            limit,
-            timestampRange
+            keyvalue: 'chart_statistical'
           }
         });
-        this.props.dispatch({
-          type: `${NAMESPACE_MALDOMAIN}/fetch`,
-          payload: {
-            page,
-            limit,
-            timestampRange
-          }
-        });
-        this.props.dispatch({
-          type: `${NAMESPACE_SUFFERHOSTCALLONRECORD}/fetch`,
-          payload: {
-            page,
-            limit,
-            timestampRange
-          }
-        });
-        this.props.dispatch({
-          type: `${NAMESPACE_HAVECOMMUNICATEINSIDEIP}/fetch`,
-          payload: {
-            page,
-            limit,
-            timestampRange
-          }
-        });
-        this.props.dispatch({
-          type: `${NAMESPACE_CALL_ON_IP}/fetch`,
-          payload: {
-            page,
-            limit,
-            timestampRange
-          }
-        });
-        this.props.dispatch({
-          type: `${NAMESPACE_CALL_ON_DOMAIN}/fetch`,
-          payload: {
-            page,
-            limit,
-            timestampRange
-          }
-        });
+        if (lastChangeTime !== chartstatisticallastChangeTime) {
+          console.info("11")
+          this.props.dispatch({
+            type: `${NAMESPACE_CHART}/save`,
+            payload: {
+              lastChangeTime: lastChangeTime
+            }
+          });
+          this.props.dispatch({
+            type: `${NAMESPACE_CHART}/fetch`,
+            payload: {
+              timestampRange
+            }
+          });
+
+        }
         break;
     };
   }
   render() {
     const eventreportdata = ["VALUE_FALL_HOST", "VALUE_THREATEVENT", "VALUE_THREATINFO", "VALUE_MALIP", "VALUE_MALDOMAIN", "VALUE_SUFFERHOSTCALLONRECORD", "VALUE_HAVECOMMUNICATEINSIDEIP", "VALUE_CALL_ON_IP", "VALUE_CALL_ON_DOMAIN", "VALUE_HIGH", "VALUE_MIDDLE", "VALUE_LOW"];
+    const chartdata = ["VALUE_CHART_ATTACK", "VALUE_EVENT_TYPE", "VALUE_EXLOITVULNERABILITY", "VALUE_CHART_SOURCECOUNTRY", "VALUE_CHART_SOURCEPROVINCE", "VALUE_RECORDSTATISTICAL"];
     const { visible, loading } = this.state;
-    const { data, timestampRange, isDark } = this.props;
+    const { isDark } = this.props;
+    const { timestampRange } = this.props.base;
+
     let showdatastart = "", showdataend = ""
     try {
       showdatastart = timestampRange[0].format("YYYY-MM-DD");
@@ -625,11 +891,77 @@ class Page extends React.Component {
                   访问的域名
                       </Checkbox>
               </Col>
+              <Col span={24}>
+                <Checkbox
+                  style={{ fontWeight: "bold" }}
+                  value="VALUE_CHART"
+                  checked={chartItemList.every(i => this.haveChecked(i))}
+                  onChange={this.getOnChangeHandle(chartdata)}
+                >
+                  图表统计
+                      </Checkbox>
+              </Col>
+              <Col span={7} offset={1}>
+                <Checkbox
+                  value="VALUE_CHART_ATTACK"
+                  onChange={this.getOnChangeHandle(["VALUE_CHART_ATTACK"])}
+                  checked={this.state.checkedListNew.includes("VALUE_CHART_ATTACK")}>
+                  攻击IP
+                      </Checkbox>
+              </Col>
+              <Col span={7} offset={1}>
+                <Checkbox
+                  value="VALUE_EVENT_TYPE"
+                  onChange={this.getOnChangeHandle(["VALUE_EVENT_TYPE"])}
+                  checked={this.state.checkedListNew.includes("VALUE_EVENT_TYPE")}>
+                  攻击事件类型
+                      </Checkbox>
+              </Col>
+              <Col span={7} offset={1}>
+                <Checkbox
+                  value="VALUE_EXLOITVULNERABILITY"
+                  onChange={this.getOnChangeHandle(["VALUE_EXLOITVULNERABILITY"])}
+                  checked={this.state.checkedListNew.includes("VALUE_EXLOITVULNERABILITY")}>
+                  攻击利用漏洞
+                      </Checkbox>
+              </Col>
+              <Col span={7} offset={1}>
+                <Checkbox
+                  value="VALUE_CHART_SOURCECOUNTRY"
+                  onChange={this.getOnChangeHandle(["VALUE_CHART_SOURCECOUNTRY"])}
+                  checked={this.state.checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")}>
+                  攻击来源国家
+                      </Checkbox>
+              </Col>
+              <Col span={7} offset={1}>
+                <Checkbox
+                  value="VALUE_CHART_SOURCEPROVINCE"
+                  onChange={this.getOnChangeHandle(["VALUE_CHART_SOURCEPROVINCE"])}
+                  checked={this.state.checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")}>
+                  攻击来源省份
+                      </Checkbox>
+              </Col>
+              <Col span={7} offset={1}>
+                <Checkbox
+                  value="VALUE_RECORDSTATISTICAL"
+                  onChange={this.getOnChangeHandle(["VALUE_RECORDSTATISTICAL"])}
+                  checked={this.state.checkedListNew.includes("VALUE_RECORDSTATISTICAL")}>
+                  威胁记录统计
+                      </Checkbox>
+              </Col>
+              <Col span={24}>
+                <Checkbox
+                  value="VALUE_WATERMARK"
+                  onChange={this.getOnChangeHandle(["VALUE_WATERMARK"])}
+                  checked={this.state.checkedListNew.includes("VALUE_WATERMARK")}>
+                  水印功能
+              </Checkbox>
+              </Col>
             </Row>
 
           </Modal>
         </div>
-        <Tabs defaultActiveKey="1" onChange={this.callback} className={classnames({ "lbl-dark": isDark })}>
+        <Tabs onChange={this.callback} className={classnames({ "lbl-dark": isDark })}>
           <TabPane tab="攻击统计" key="attack_components">  <Table_attack_components {...this.props} /></TabPane>
           <TabPane tab="事件报告" key="event_components">
             <Table_threat_event_components {...this.props} />
@@ -651,9 +983,9 @@ class Page extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  const { data, loading, timestampRange } = state[NAMESPACE_ATTACK];
-  const { page, limit } = state[NAMESPACE_THREATEVENT];
-  const { keyvalue } = state[NAMESPACE_BASE];
+
+  const base = state[NAMESPACE_BASE];
+  const attack = state[NAMESPACE_ATTACK];
   const threatevent = state[NAMESPACE_THREATEVENT];
   const fallhost = state[NAMESPACE_FALL_HOST];
   const threatinfo = state[NAMESPACE_THREATINFO];
@@ -663,14 +995,12 @@ function mapStateToProps(state) {
   const havecommunicate = state[NAMESPACE_HAVECOMMUNICATEINSIDEIP];
   const callonip = state[NAMESPACE_CALL_ON_IP];
   const callondomain = state[NAMESPACE_CALL_ON_DOMAIN];
-
+  const chartstatistical = state[NAMESPACE_CHART];
   return {
-    page,
-    limit,
-    keyvalue,
-    data,
+
     loading: state.loading.effects[`${NAMESPACE_ATTACK}/fetch`],
-    timestampRange,
+    base,
+    attack,
     threatevent,
     fallhost,
     threatinfo,
@@ -680,6 +1010,7 @@ function mapStateToProps(state) {
     havecommunicate,
     callonip,
     callondomain,
+    chartstatistical,
     isDark: state.layout.commonLayout.darkTheme,
   };
 }

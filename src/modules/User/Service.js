@@ -22,3 +22,8 @@ export async function putPassowrd(payload) {
 
 export const getProductType = commonRequestCreator.get(httpApi.PRODUCT_TYPE)
 
+export const deleteSign = commonRequestCreator.delete(httpApi.USER_SIGN)
+
+export const postUserActive = commonRequestCreator.post(httpApi.USER_ACTIVE)
+
+export const postAdminHeartBeat = commonRequestCreator.post(httpApi.USER_HEART_BEAT)

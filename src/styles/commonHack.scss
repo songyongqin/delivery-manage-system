@@ -14,7 +14,7 @@ body{
 
     .lbl-dark{
       color:$txt-color-dark;
-      *{
+      &>span{
         color:$txt-color-dark;
       }
     }

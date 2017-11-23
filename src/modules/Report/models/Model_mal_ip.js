@@ -12,7 +12,7 @@ export default {
     timestampRange: [],
     page: 1,
     limit: 10,
-    exportdata: VALUE_MALIP
+    lastChangeTime: -1,
   },
   reducers: {
     save(state, { payload }) {
@@ -46,6 +46,6 @@ export default {
     }
   },
   subscriptions: {
-   
+
   }
 }

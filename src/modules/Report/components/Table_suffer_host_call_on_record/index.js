@@ -7,7 +7,7 @@ import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE_SUFFERHOSTCALLONRECORD } from '../../ConstConfig'
-
+import classnames from 'classnames';
 @WithAnimateRender
 class Tableevent extends React.Component {
   constructor(props) {
@@ -50,6 +50,7 @@ class Tableevent extends React.Component {
   }
   render() {
     const data = this.props.data;
+    const { isDark } = this.props;
     const columns = [{
       title: '序号',
       dataIndex: 'key',
@@ -86,7 +87,7 @@ class Tableevent extends React.Component {
     return (
       <div>
         <JoSpin spinning={this.props.loading}>
-          <h4 style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>内网受害主机访问外网恶意域名/IP</h4>
+          <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>内网受害主机访问外网恶意域名/IP</h4>
           <div style={{ position: "absolute", top: "0px", right: "0px" }} >
             <Button type="primary" onClick={this.onExport}>导出</Button>
           </div>
@@ -106,7 +107,8 @@ function mapStateToProps(state) {
     loading: state.loading.effects[`${NAMESPACE_SUFFERHOSTCALLONRECORD}/fetch`],
     timestampRange,
     page,
-    limit
+    limit,
+    isDark: state.layout.commonLayout.darkTheme,
   };
 }
 export default connect(mapStateToProps)(Tableevent);
