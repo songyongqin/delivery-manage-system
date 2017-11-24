@@ -15,10 +15,10 @@ export default {
     ip: "",
     userAccount: "",
     loginStatus: "",
+    total:500
   },
   reducers: {
     save(state, { payload }) {
-      console.info(payload)
       return { ...state, ...payload };
     },
   },
@@ -26,6 +26,7 @@ export default {
     *fetch({ payload }, { call, put }) {
       const result = yield call(Service.search, payload);
       const list = result.payload.data;
+      const total = result.payload.total?result.payload.total:500;
       const page = payload.page ? payload.page : 1;
       const timestampRange = payload.timestampRange ? payload.timestampRange : 1;
       const ip = payload.ip ? payload.ip : "";
@@ -41,6 +42,7 @@ export default {
             userAccount,
             ip,
             loginStatus,
+            total
           }
         });
       }
