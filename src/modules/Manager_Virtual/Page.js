@@ -95,7 +95,7 @@ class Page extends React.Component {
       [HOST_IP_DATAINDEX]: [],
       [HONEYPOT_IP_DATAINDEX]: [],
       [HONEYPOT_NAME_DATAINDEX]: [],
-      visible: true,
+      visible: false,
       selectedRows: [],
     }
   }
