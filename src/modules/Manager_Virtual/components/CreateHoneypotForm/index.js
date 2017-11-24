@@ -380,7 +380,7 @@ class WrappedForm extends React.Component {
             getFieldDecorator(
               SERVICES_DATAINDEX,
               {
-                initialValue: (activeServiceOptions[0] || {}).key,
+                initialValue: [],
                 rules: [
                   {
                     required: true, message: '服务支持不能为空',
@@ -396,15 +396,17 @@ class WrappedForm extends React.Component {
               //     </Checkbox>)
               //   }
               // </Checkbox.Group>
-              <Select>
+              <Checkbox.Group className={checkboxClasses}>
                 {
                   activeServiceOptions.map((i, index) => {
-                    return <Select.Option value={i.key} key={`${index}-option`}>
-                      {i.title}
-                    </Select.Option>
+                    return <Col key={`${index}-option`}>
+                      <Checkbox value={i.key} >
+                        {i.title}
+                      </Checkbox>
+                    </Col>
                   })
                 }
-              </Select>
+              </Checkbox.Group>
               )
           }
         </FormItem>
@@ -494,7 +496,7 @@ class WrappedForm extends React.Component {
           <Button type="primary"
             loading={loading}
             icon="plus"
-            onClick={this.handleSubmit}>添加</Button>
+            onClick={this.handleSubmit}>创建</Button>
         </FormItem>
       </Form>
     );
