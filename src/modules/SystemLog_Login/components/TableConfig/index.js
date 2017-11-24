@@ -240,7 +240,7 @@ class App extends React.Component {
       })
     }
     const paginationProps = {
-      total: 500,
+      total: this.props.total,
       current: this.props.page,
       onChange: this.pageChangeHandler,
       pageSize: this.props.limit
@@ -270,7 +270,7 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { list, page, loading, limit, timestampRange, ip, userAccount, loginStatus, } = state[NAMESPACE];
+  const { list, page, loading, limit, timestampRange, ip, userAccount, loginStatus,total } = state[NAMESPACE];
   return {
     list,
     page,
@@ -280,6 +280,7 @@ function mapStateToProps(state) {
     ip,
     userAccount,
     loginStatus,
+    total
 
   };
 }
