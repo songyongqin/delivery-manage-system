@@ -3,7 +3,6 @@ import ApiConfig from '../../configs/ApiConfig';
 import { uploadFile, getTemp } from 'utils/tools';
 import commonRequestCreator from 'utils/commonRequestCreator'
 const httpApi = ApiConfig.http;
-import app from '../../index.js'
 import {
   OPERATION_NAMESPACE,
   MD5_DATA_INDEX,
@@ -11,6 +10,7 @@ import {
   CURRENT_CHUNK_DATA_INDEX
 } from './ConstConfig'
 
+export const updateRemote = commonRequestCreator.post(httpApi.MIRROR_UPDATE_REMOTE)
 
 export const createUploadTask = commonRequestCreator.post(httpApi.MIRROR_UPDATE_LOCAL)
 
@@ -35,18 +35,6 @@ export const putFileChunk = payload => {
       "access-token": (getTemp("userData") || {}).token
     },
     body: fd,
-    onProgress: e => {
-      const { loaded, total } = e;
-      console.info(currentChunk, loaded, total)
-      app._store.dispatch({
-        type: `${OPERATION_NAMESPACE}/updatePutProgress`,
-        payload: {
-          [MD5_DATA_INDEX]: md5,
-          percent: loaded / total,
-          currentChunk
-        }
-      })
-    }
   })
 
 }

@@ -114,7 +114,7 @@ export default {
 
     MIRROR_UPDATE_LOCAL_MERGE: "/mirror/update/local/merge",
 
-    MIRROR_UPDATE_REMOTE: "/mirror/upload/remote",
+    MIRROR_UPDATE_REMOTE: "/mirror/update/online",
 
   }
 }

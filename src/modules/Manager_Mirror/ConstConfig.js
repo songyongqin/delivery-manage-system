@@ -31,4 +31,5 @@ export const CHUNK_DATA_INDEX = "chunk",
 
 export const UPLOAD_STATUS = "upload",
   MERGE_STATUS = "merge",
-  COMMON_STATUS = "common"
+  COMMON_STATUS = "common",
+  INIT_STATUS = "INIT"

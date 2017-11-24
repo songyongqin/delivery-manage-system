@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.css'
-import { Menu, Button, Breadcrumb, Upload, Icon, Progress } from 'antd';
+import { Menu, Badge, Button, Breadcrumb, Upload, Icon, Progress, Row, Col, Radio } from 'antd';
 import {
   WithAnimateRender,
   WithBreadcrumb
@@ -10,257 +10,136 @@ import {
   OPERATION_NAMESPACE,
   UPLOAD_STATUS,
   MERGE_STATUS,
-  COMMON_STATUS
+  COMMON_STATUS,
+  INIT_STATUS,
 } from './ConstConfig'
 import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
 import classnames from 'classnames';
 import EnhanciveTable from 'domainComponents/EnhanciveTable';
 import { getFileMd5 } from 'utils/tools'
 import JoSpin from 'components/JoSpin'
+import JoTag from 'components/JoTag'
 const { Dragger } = Upload;
+import LocalUpdatePanel from './components/LocalUpdatePanel'
+import RemoteUpdatePanel from './components/RemoteUpdatePanel'
+import Modal from 'domainComponents/Modal'
+import { WithModal } from 'domainComponents/HOSComponents'
 
-const mapStateToProps = state => (
-  {
-    uploadInfo: state[OPERATION_NAMESPACE].uploadInfo,
-    mergeInfo: state[OPERATION_NAMESPACE].mergeInfo,
-    isDark: state.layout.commonLayout.darkTheme,
-    creating: state.loading.effects[`${OPERATION_NAMESPACE}/createUploadTask`],
-    uploading: state.loading.effects[`${OPERATION_NAMESPACE}/putFileChunk`],
-    merging: state.loading.effects[`${OPERATION_NAMESPACE}/mergeUploadTask`],
-    localUpdateStatus: state[OPERATION_NAMESPACE].localUpdateStatus
-  }
-)
+const mapStateToProps = state => ({
+  isDark: state.layout.commonLayout.darkTheme,
+})
 
-const mapDispatchToProps = dispatch => (
-  {
-    createUploadTask: payload => dispatch({
-      type: `${OPERATION_NAMESPACE}/createUploadTask`,
+const mapDispatchToProps = dispatch => {
+  return {
+    initLocalUploadInfo: payload => dispatch({
+      type: `${OPERATION_NAMESPACE}/initLocalUploadInfo`,
       payload
     }),
-    saveUploadProgress: payload => dispatch({
-      type: `${OPERATION_NAMESPACE}/saveUploadProgress`,
-      payload,
-    }),
-    getUploadTask: payload => dispatch({
-      type: `${OPERATION_NAMESPACE}/getUploadTask`
-    })
   }
-)
-
-const DraggerPanel = ({ onChange, isDark }) => {
-
-  const lblClasses = classnames({
-    ["lbl-dark"]: isDark
-  })
-
-  const fileProps = {
-    multiple: false,
-    showUploadList: false,
-    beforeUpload: (file) => {
-      onChange && onChange(file)
-      return false;
-    },
-  };
-
-  return (
-    <div style={{ marginTop: 16, height: 180 }}>
-      <Dragger {...fileProps}>
-        <p className="ant-upload-drag-icon" style={{ marginTop: "15px" }}>
-          <Icon type="file-text" />
-        </p>
-        <p className={lblClasses}>点击或拖拽文件到此处</p>
-      </Dragger>
-    </div>
-  )
 }
 
-const UploadPanel = ({
-  file,
-  uploadInfo = {},
-  isDark,
-  creating,
-  uploadHandle,
-  uploading,
-  onRemove,
-  merging
- }) => {
-
-  const disabled = creating || uploading || uploadInfo.loading || merging
-
-  const tableProps = {
-    dataSource: [
-      {
-        ...uploadInfo,
-        key: "uploadInfo"
-      }
-    ],
-    columns: [
-      {
-        dataIndex: "fileName",
-        title: "文件名",
-      },
-      {
-        dataIndex: "fileSize",
-        title: "文件大小",
-        render: value => {
-          const fileSizeMB = Math.ceil(value / 1024 / 1024)
-          return fileSizeMB < 1024 ? `${fileSizeMB}MB` : `${(fileSizeMB / 1024).toFixed(2)}GB`
-        }
-      },
-      {
-        dataIndex: "progress",
-        title: "文件上传状态",
-        render: value => {
-          if (creating) {
-            return <p>
-              <Icon type="loading"></Icon>
-              &nbsp;
-              正在检测文件...
-            </p>
-          }
-          const percent = Math.ceil(value * 100)
-          return (
-            <div style={{ padding: "5px" }}>
-              <Progress
-                status={percent === 100 ? "success" : "active"}
-                percent={percent} >
-              </Progress>
-            </div>
-          )
-        }
-      },
-      {
-        key: "operation",
-        title: "操作",
-        render: records => {
-          return (
-            <div>
-              <Button
-                disabled={disabled}
-                style={{ marginRight: "15px" }}
-                onClick={uploadHandle}
-                type="primary"
-                icon="upload">
-                上传
-              </Button>
-              <Button
-                disabled={disabled}
-                icon="delete"
-                onClick={onRemove}>
-                删除
-              </Button>
-            </div>
-          )
-        }
-      }
-    ]
-  }
-
-  return (
-    <div>
-      <EnhanciveTable
-        tableProps={tableProps}
-        pagination={false}>
-
-      </EnhanciveTable>
-    </div>
-  )
-
-}
+const REMOTE_METHOD = "remote",
+  LOCAL_METHOD = "local"
 
 
+@WithModal()
 @connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
-class Demo extends React.Component {
-  state = {
-    file: null,
-    md5: null,
-  }
-  fileOnChange = file => {
-    this.setState({ file })
-    this.props.saveUploadProgress({
-      fileName: file.name,
-      fileSize: file.size,
-      progress: 0,
-    })
-
-  }
-  fileOnRemove = () => this.setState({ file: null })
-  onUpload = () => {
-    this.props.createUploadTask({
-      file: this.state.file,
-    })
-  }
-
-  render() {
-    const { file, calculating } = this.state;
-    const { uploadInfo, isDark, uploading, creating, merging, mergeInfo, localUpdateStatus } = this.props;
-
-    const uploadResult =
-      file
-        ?
-        <UploadPanel
-          file={file}
-          merging={merging}
-          isDark={isDark}
-          uploading={uploading}
-          creating={creating}
-          uploadHandle={this.onUpload}
-          onRemove={this.fileOnRemove}
-          uploadInfo={uploadInfo}>
-        </UploadPanel>
-        :
-        <DraggerPanel
-          onChange={this.fileOnChange}
-          isDark={isDark}>
-        </DraggerPanel>
-
-    console.info(mergeInfo.result)
-
-    return (
-      <div>
-        <JoSpin spinning={merging}>
-          {
-            mergeInfo.result
-              ?
-              <pre>
-                {
-                  JSON.stringify(mergeInfo.result, null, 2)
-                }
-              </pre>
-              :
-              uploadResult
-          }
-        </JoSpin>
-      </div>
-    );
-  }
-}
-
-
-
 @WithAnimateRender
 @WithBreadcrumb
 class Page extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      method: REMOTE_METHOD,
+      visible: true,
+    }
 
+  }
+  hideOptionPanel = () => this.setState({
+    visible: false
+  })
+  methodOnChange = e => {
+    let method = e.target.value;
+    this.props.initLocalUploadInfo()
+    this.setState({
+      method
+    })
   }
   getHeader = () => {
     return <div key="header">
       {this.props.getBreadcrumb(this.props.routes)}
     </div>
   }
+  getOperationPanel = () => {
+    return <div key="operation" style={{ marginBottom: "15px", overflow: "hidden" }}>
+      <Button type="primary" style={{ float: "right" }} onClick={() => this.props.switchModal("update")}>
+        升级控制中心镜像
+      </Button>
+    </div>
+  }
   render = () => {
 
+    // const activeStyle = {
+    //   background: "#108ee9",
+    //   color: "white"
+    // }
+    const { visible } = this.state;
 
+    const lblClasses = classnames({
+      ["lbl-dark"]: this.props.isDark
+    })
 
+    const activeMethod = this.state.method;
+
+    const { modalVisible } = this.props;
 
     return (
       <div>
         {this.props.animateRender([
-          this.getHeader()
+          this.getHeader(),
+          this.getOperationPanel()
         ])}
-        <Demo></Demo>
+        <Modal
+          title="升级控制中心镜像"
+          footer={null}
+          onCancel={() => this.props.switchModal("update")}
+          visible={modalVisible["update"]}
+          width={"800px"}>
+          <div key="local" >
+            <div style={{ textAlgin: "center", marginBottom: "30px" }}>
+              {
+                visible
+                  ?
+                  <Radio.Group
+                    style={{ margin: "0 auto" }}
+                    value={activeMethod}
+                    onChange={this.methodOnChange}>
+                    <Radio
+                      value={REMOTE_METHOD}>
+                      <span className={lblClasses}>在线升级</span>
+                    </Radio>
+                    <Radio
+                      value={LOCAL_METHOD}>
+                      <span className={lblClasses}>本地升级</span>
+                    </Radio>
+                  </Radio.Group>
+                  :
+                  null
+              }
+            </div>
+            {
+              activeMethod === REMOTE_METHOD
+              &&
+              <RemoteUpdatePanel hideOptionPanel={this.hideOptionPanel}></RemoteUpdatePanel>
+            }
+            {
+              activeMethod === LOCAL_METHOD
+              &&
+              <LocalUpdatePanel hideOptionPanel={this.hideOptionPanel}></LocalUpdatePanel>
+            }
+
+          </div>
+        </Modal>
       </div>
     )
   }

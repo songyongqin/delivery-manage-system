@@ -13,7 +13,8 @@ import {
   CHUNK_DATA_INDEX,
   UPLOAD_STATUS,
   MERGE_STATUS,
-  COMMON_STATUS
+  COMMON_STATUS,
+  INIT_STATUS,
 } from '../ConstConfig';
 
 import { delay, setTemp, getTemp, getFileMd5, splitFileToChunk } from 'utils/tools';
@@ -29,6 +30,20 @@ const callConfig = {
   withTime: true,
 }
 
+const initLocalUploadInfo = {
+  status: COMMON_STATUS,
+  md5: null,
+  file: null,
+  fileSize: 0,
+  fileName: null,
+  progress: 0,
+  chunkCount: 0,
+  currentChunk: -1,
+  remoteTask: {},
+  chunkList: [],
+  mergeResult: {}
+}
+
 const baseModel = {
   namespace: OPERATION_NAMESPACE,
   state: {
@@ -39,135 +54,81 @@ const baseModel = {
     queryResults: {
 
     },
-    localUpdateStatus: COMMON_STATUS,
-    uploadInfo: {
-      md5: null,
-      chunkCount: 0,
-      chunkProgress: [],
-      fileSize: 0,
-      fileName: null,
-      progress: 0,
-      loading: false,
-    },
-    mergeInfo: {
-      loading: false,
-      isSuccess: false,
-      isError: false,
-      result: null
-    }
+    localUploadInfo: initLocalUploadInfo
   },
   reducers: {
-    setLocalUpdateStatus: (preState, { payload }) => {
+    saveLocalUploadInfo: (preState, { payload }) => {
       return {
         ...preState,
-        localUpdateStatus: payload,
-      }
-    },
-    saveUploadProgress: (preState, { payload }) => {
-      return {
-        ...preState,
-        uploadInfo: {
-          ...preState.uploadInfo,
+        localUploadInfo: {
+          ...preState.localUploadInfo,
           ...payload
         }
       }
     },
-    saveMergeInfo: (preState, { payload }) => {
+    initLocalUploadInfo: (preState, { payload }) => {
       return {
         ...preState,
-        mergeInfo: {
-          ...preState.mergeInfo,
-          ...payload,
-        }
+        localUploadInfo: initLocalUploadInfo
       }
     }
   },
   effects: {
-
-    *createUploadTask({ resolve, payload }, { call, put, select, callWithExtra }) {
+    *initUploadTask({ resolve, payload }, { call, put, select, callWithExtra }) {
 
       const { file } = payload;
 
       yield put({
-        type: "saveUploadProgress",
+        type: "saveLocalUploadInfo",
         payload: {
-          loading: true,
+          status: INIT_STATUS,
+          fileName: file.name,
+          fileSize: file.size,
         }
       })
 
-      const md5 = yield call(getFileMd5, file)
+      const [md5, res] = yield [
+        call(getFileMd5, file),
+        call(service.getUploadTask, {})
+      ]
 
-      const uploadHistoryRes = yield callWithExtra(service.getUploadTask, {})
-
-      let hasHistory = false;
-      let target = null;
-
-      if (uploadHistoryRes.status === 1) {
-        target = uploadHistoryRes.payload[0]
-        const currentMd5 = target.md5
-        hasHistory = currentMd5 === md5
+      if (res.status !== 1) {
+        return
       }
+
+      const target = res.payload.find(i => i.md5 === md5)
 
       const chunkList = splitFileToChunk(file, CHUNK_SIZE)
 
       const chunkCount = chunkList.length;
 
-
-      if (hasHistory) {
-
-        const { uploadInfo } = yield select(state => state[OPERATION_NAMESPACE])
-
-        const currentChunk = target.currentChunk + 1
-
-        const newUploadInfo = {
-          ...uploadInfo,
-          md5,
-          chunkCount,
-          chunkProgress: new Array(currentChunk + 1).fill(1),
-          fileSize: file.size,
-          fileName: file.name,
-          loading: true,
-        }
+      const newUploadInfo = {
+        md5,
+        file,
+        chunkList,
+        fileName: file.name,
+        fileSize: file.size,
+        chunkCount,
+        progress: 0,
+        currentChunk: 0,
+        status: INIT_STATUS
+      }
+      //服务器上存在任务，获取任务进度
+      if (target) {
+        const { currentChunk } = target
+        newUploadInfo["currentChunk"] = currentChunk + 1;
+        newUploadInfo["progress"] = currentChunk / chunkList.length
 
         yield put({
-          type: "saveUploadProgress",
+          type: "saveLocalUploadInfo",
           payload: newUploadInfo
         })
+        resolve && resolve()
 
-        yield delay(500)
-
-        yield put({
-          type: "putFileChunk",
-          payload: {
-            chunkList,
-            currentChunk,
-            file,
-            md5,
-          }
-        })
-
-      } else {
-
-
-        yield put({
-          type: `createNewTask`,
-          payload: {
-            md5,
-            file,
-            chunkSize: CHUNK_SIZE,
-            chunkCount,
-            chunkList,
-          }
-        })
+        return
       }
-
-
-
-    },
-    *createNewTask({ resolve, payload }, { call, put, callWithExtra, select }) {
-      const { md5, file, chunkSize, chunkCount, chunkList } = payload;
-
-      const res = yield callWithExtra(service.createUploadTask, {
+      //服务器上不存在任务，初始化任务
+      const newTaskRes = yield callWithExtra(service.createUploadTask, {
         md5,
         fileName: file.name,
         fileSize: file.size,
@@ -175,45 +136,29 @@ const baseModel = {
         chunkCount
       }, commonCallConfig)
 
-      if (res.status === 1) {
-        yield delay(500)
 
-        const { uploadInfo } = yield select(state => state[OPERATION_NAMESPACE])
-
-        const newUploadInfo = {
-          ...uploadInfo,
-          md5,
-          chunkCount: chunkList.length,
-          chunkProgress: [],
-          fileSize: file.size,
-          fileName: file.name,
-          loading: true,
-        }
+      if (newTaskRes.status === 1) {
 
         yield put({
-          type: "saveUploadProgress",
+          type: "saveLocalUploadInfo",
           payload: newUploadInfo
         })
 
-        yield put({
-          type: "putFileChunk",
-          payload: {
-            chunkList,
-            currentChunk: 0,
-            file,
-            md5,
-          }
-        })
+        resolve && resolve()
       }
 
-    },
-    *putFileChunk({ resolve, payload }, { call, put, callWithExtra }) {
 
-      const { chunkList, currentChunk, file, md5 } = payload;
+    },
+
+    *putFileChunk({ resolve, payload }, { call, put, callWithExtra, select }) {
+
+      const { chunkList, currentChunk, file, md5, chunkCount } = yield select(state => state[OPERATION_NAMESPACE].localUploadInfo)
 
       yield put({
-        type: "setLocalUpdateStatus",
-        payload: UPLOAD_STATUS
+        type: "saveLocalUploadInfo",
+        payload: {
+          status: UPLOAD_STATUS
+        }
       })
 
       const res = yield callWithExtra(service.putFileChunk, {
@@ -222,20 +167,25 @@ const baseModel = {
         md5,
       })
 
+
+
       const lastCurrent = currentChunk + 1
       //上传成功，进行下一个chunk的上传
       if (res.status === 1 && lastCurrent < chunkList.length) {
-
         yield put({
-          type: "putFileChunk",
+          type: "saveLocalUploadInfo",
           payload: {
-            chunkList,
-            currentChunk: lastCurrent,
-            file,
-            md5,
+            currentChunk: currentChunk + 1,
+            progress: currentChunk / chunkCount,
+            status: UPLOAD_STATUS
           }
         })
+
+        yield put({
+          type: "putFileChunk"
+        })
       }
+
       //上传失败，重新上传
       if (res.status !== 1 && currentChunk < chunkList.length) {
 
@@ -243,21 +193,18 @@ const baseModel = {
 
         yield put({
           type: "putFileChunk",
-          payload: {
-            chunkList,
-            currentChunk,
-            file,
-            md5,
-          }
         })
+
       }
+
       //全部上传结束 ，发起合并请求
       if (res.status === 1 && lastCurrent >= chunkList.length) {
 
         yield put({
-          type: "saveUploadProgress",
+          type: "saveLocalUploadInfo",
           payload: {
-            loading: false,
+            progress: 1,
+            status: UPLOAD_STATUS
           }
         })
 
@@ -273,92 +220,39 @@ const baseModel = {
 
 
     },
-    *updatePutProgress({ resolve, payload }, { call, put, callWithExtra, select }) {
-
-      const md5 = payload[MD5_DATA_INDEX],
-        currentChunk = payload[CURRENT_CHUNK_DATA_INDEX],
-        { percent } = payload
-
-      const { uploadInfo } = yield select(state => state[OPERATION_NAMESPACE])
-
-      let { chunkProgress, chunkCount } = uploadInfo
-
-      let newChunkProgress = [...chunkProgress]
-
-      newChunkProgress[currentChunk] = newChunkProgress[currentChunk] > percent
-        ?
-        newChunkProgress[currentChunk]
-        :
-        percent
-
-
-      yield put({
-        type: "saveUploadProgress",
-        payload: {
-          ...uploadInfo,
-          chunkProgress: newChunkProgress,
-          progress: newChunkProgress.reduce((sum, item) => sum + item, 0) / chunkCount
-        }
-      })
-      // console.info(currentChunk, percent)
-      // console.info(newChunkProgress)
-      // console.info(newChunkProgress.reduce((sum, item) => sum + item, 0) / chunkCount)
-      // console.info("-------------------------")
-
-    },
+    //合并上传的任务
     *mergeUploadTask({ resolve, payload }, { callWithExtra, put }) {
 
       yield put({
-        type: "setLocalUpdateStatus",
-        payload: MERGE_STATUS
-      })
-
-      yield put({
-        type: "saveMergeInfo",
+        type: "saveLocalUploadInfo",
         payload: {
-          result: [],
-          loading: true,
-          isSuccess: false,
-          isError: false,
+          status: MERGE_STATUS
         }
       })
 
       const res = yield callWithExtra(service.mergeUploadTask, payload, commonCallConfig)
+
       if (res.status === 1) {
+
         yield put({
-          type: "saveMergeInfo",
+          type: "saveLocalUploadInfo",
           payload: {
-            result: res.payload,
-            loading: false,
-            isSuccess: true,
+            mergeResult: res.payload
           }
         })
-
         resolve && resolve()
-
-      } else {
-
-        yield put({
-          type: "saveMergeInfo",
-          payload: {
-            loading: false,
-            isSuccess: false,
-          }
-        })
       }
+    },
+    *updateRemote({ resolve, payload }, { callWithExtra }) {
+      const res = yield callWithExtra(service.updateRemote, payload, commonCallConfig)
+
+      if (res.status === 1) {
+
+        resolve && resolve(res.payload)
+      }
+
     }
   },
-  subscriptions: {
-
-  }
-};
-
-const payloadFilter = (payload) => {
-  return {
-    total: payload.total,
-    data: payload.data,
-    statistics: payload.statistics,
-  }
 };
 
 // const queryService = service.query;

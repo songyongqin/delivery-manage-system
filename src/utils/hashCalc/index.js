@@ -17,12 +17,17 @@ export default file => {
 
     fileReader.onload = function (e) {
       spark.append(e.target.result);
-      currentChunk++;
-
+      // currentChunk++;
+      currentChunk = chunks.length - 1
       if (currentChunk < chunks) {
         loadNext();
       } else {
-        resolve(spark.end())
+        let messageSpark = new SparkMD5();
+        messageSpark.append(file.lastModified)
+        messageSpark.append(file.name)
+        messageSpark.append(file.size)
+        messageSpark.append(spark.end())
+        resolve(messageSpark.end())
       }
     };
 

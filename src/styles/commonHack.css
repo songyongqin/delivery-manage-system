@@ -96,6 +96,15 @@ body :global .ant-card-head-title {
   width: 100%;
 }
 
+body :global .common-table {
+  width: 100%;
+}
+
+body :global .common-table td {
+  padding: 5px;
+  text-align: center;
+}
+
 body .btn-danger {
   border-color: #d73435;
   background: #d73435;
