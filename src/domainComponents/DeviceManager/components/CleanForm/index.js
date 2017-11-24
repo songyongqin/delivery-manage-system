@@ -300,8 +300,9 @@ class WrappedForm extends React.Component {
             const target = result.find(i => i[ID_DATAINDEX] === records[ID_DATAINDEX])
             if (target.status === 1) {
               return <p style={{ color: "#108ee9", textAlign: "center" }}>
-                <Icon type="check"></Icon> &nbsp;清理成功，<br />
-                共清理：{parseFloat(target["payload"] / 1024).toFixed(2)}GB数据
+                <Icon type="check"></Icon> &nbsp;清理成功
+                {/* <Icon type="check"></Icon> &nbsp;清理成功，<br />
+                共清理：{parseFloat(target["payload"] / 1024).toFixed(2)}GB数据 */}
               </p>
             }
 

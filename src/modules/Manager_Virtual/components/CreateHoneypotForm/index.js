@@ -34,6 +34,15 @@ import {
   GATEWAY_DATAINDEX,
   honeypotTextConfig,
   AUTH_DATAINDEX,
+  AUTH_USER_DATA_INDEX,
+  AUTH_PASSWORD_DATA_INDEX,
+
+  LOW_DATA_INDEX,
+  HIGH_DATA_INDEX,
+  SYSTEM_LIST_DATA_INDEX,
+  WINDOW_SERVER_TYPE,
+  LINUX_SERVER_TYPE,
+  SERVICE_LIST_DATA_INDEX,
 } from '../../ConstConfig'
 
 import {
@@ -81,8 +90,20 @@ const tailFormItemLayout = {
 
 const Label = ({ keyName, className }) => <span className={className}>{honeypotTextConfig[keyName]}</span>
 
-const shouldTrimDataIndexes = [HONEYPOT_NAME_DATAINDEX, HONEYPOT_IP_DATAINDEX, GATEWAY_DATAINDEX, AUTH_DATAINDEX];
+const shouldTrimDataIndexes = [HONEYPOT_NAME_DATAINDEX, HONEYPOT_IP_DATAINDEX, GATEWAY_DATAINDEX];
 
+const defaultVmOptions = {
+  [HIGH_DATA_INDEX]: {
+    [SYSTEM_LIST_DATA_INDEX]: [],
+    [SERVICE_LIST_DATA_INDEX]: {
+      [WINDOW_SERVER_TYPE]: [],
+      [LINUX_SERVER_TYPE]: []
+    }
+  },
+  [LOW_DATA_INDEX]: {
+    [SERVICE_LIST_DATA_INDEX]: []
+  }
+}
 
 @Form.create()
 class WrappedForm extends React.Component {
@@ -114,7 +135,6 @@ class WrappedForm extends React.Component {
     value.trim().length === 0 && callback();
     this.timer.honeypotName = setTimeout(() => {
       this.props.validatorHandle({ type: "honeypotName", value: value.trim() }).then(({ payload, message }) => {
-        console.info(payload, message);
 
         payload !== 1 ? callback(message) : callback()
       })
@@ -155,17 +175,25 @@ class WrappedForm extends React.Component {
       [INTERCATION_DATAINDEX]: intercation
     })
   }
+  interactionOnChange = e => {
+    this.props.form.resetFields([SERVICES_DATAINDEX])
+  }
+  systemOnChange = () => {
+    this.props.form.resetFields([SERVICES_DATAINDEX])
+  }
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator, getFieldValue } = this.props.form;
     const { isDark, loading, defaultValue = {} } = this.props;
     const activeInteraction = this.state[INTERCATION_DATAINDEX];
+    let { vmOptions } = this.props;
+
+    vmOptions = Object.keys(vmOptions).length === 0 ? defaultVmOptions : vmOptions
 
     const lblClasses = classnames({
       [styles["lbl-dark"]]: isDark
     })
 
     const commonProps = { ...formItemLayout, colon: false, hasFeedback: true, required: true }
-
 
     const radioClasses = classnames({
       [styles["radio"]]: true,
@@ -179,8 +207,19 @@ class WrappedForm extends React.Component {
       [styles["slider-dark"]]: isDark
     })
 
+    const activeSystem = getFieldValue(SYSTEM_DATAINDEX) || (vmOptions[HIGH_DATA_INDEX][SYSTEM_LIST_DATA_INDEX][0] || {}).key
+
+    const activeSystemServiceType = (vmOptions[HIGH_DATA_INDEX][SYSTEM_LIST_DATA_INDEX].find(i => i.key === activeSystem) || {}).service
+
+    const activeServiceOptions = activeInteraction === LOW_INTERACTION
+      ?
+      vmOptions[LOW_DATA_INDEX][SERVICE_LIST_DATA_INDEX]
+      :
+      (vmOptions[HIGH_DATA_INDEX][SERVICE_LIST_DATA_INDEX][activeSystemServiceType] || [])
+
+
     return (
-      <Form >
+      <Form style={{ height: "100%", overflowY: "scroll" }}>
         <FormItem  {...commonProps}
           label={<Label className={lblClasses}
             keyName={HONEYPOT_NAME_DATAINDEX} />}>
@@ -283,7 +322,7 @@ class WrappedForm extends React.Component {
               }
             )
               (
-              <Radio.Group className={radioClasses}>
+              <Radio.Group className={radioClasses} onChange={this.interactionOnChange}>
                 {
                   interactions.map(i => <Radio.Button value={i} key={i}>
                     {interactionsTextConfig[i]}
@@ -304,56 +343,76 @@ class WrappedForm extends React.Component {
                 getFieldDecorator(
                   SYSTEM_DATAINDEX,
                   {
-                    initialValue: defaultValue[SYSTEM_DATAINDEX] || systems[0]
+                    initialValue: (vmOptions[HIGH_DATA_INDEX][SYSTEM_LIST_DATA_INDEX][0] || {}).key
                   }
                 )
                   (
-                  <Radio.Group className={radioClasses}>
+                  // <Radio.Group className={radioClasses}>
+                  //   {
+                  //     systems.map(i => <Radio.Button value={i} key={i}>
+                  //       {systemsTextConfig[i]}
+                  //     </Radio.Button>)
+                  //   }
+                  // </Radio.Group>
+                  <Select onChange={this.systemOnChange}>
                     {
-                      systems.map(i => <Radio.Button value={i} key={i}>
-                        {systemsTextConfig[i]}
-                      </Radio.Button>)
+                      vmOptions[HIGH_DATA_INDEX][SYSTEM_LIST_DATA_INDEX].map((i, index) => {
+                        return <Select.Option value={i.key} key={`${index}-option`}>
+                          {i.title}
+                        </Select.Option>
+                      })
                     }
-                  </Radio.Group>
+                  </Select>
                   )
               }
             </FormItem>
             :
             null
         }
-        {
+        {/* {
           activeInteraction === LOW_INTERACTION
-            ?
-            <FormItem  {...commonProps}
-              hasFeedback={false}
-              label={<Label className={lblClasses}
-                keyName={SERVICES_DATAINDEX} />}>
+            ? */}
+        <FormItem  {...commonProps}
+          hasFeedback={false}
+          label={<Label className={lblClasses}
+            keyName={SERVICES_DATAINDEX} />}>
+          {
+            getFieldDecorator(
+              SERVICES_DATAINDEX,
               {
-                getFieldDecorator(
-                  SERVICES_DATAINDEX,
+                initialValue: [],
+                rules: [
                   {
-                    initialValue: defaultValue[SERVICES_DATAINDEX] || [],
-                    rules: [
-                      {
-                        required: true, message: '服务支持不能为空',
-                      }
-                    ]
+                    required: true, message: '服务支持不能为空',
                   }
-                )
-                  (
-                  <Checkbox.Group className={checkboxClasses}>
-                    {
-                      services.map(i => <Checkbox value={i} key={i}>
-                        {servicesTextConfig[i]}
-                      </Checkbox>)
-                    }
-                  </Checkbox.Group>
-                  )
+                ]
               }
-            </FormItem>
-            :
+            )
+              (
+              // <Checkbox.Group className={checkboxClasses}>
+              //   {
+              //     services.map(i => <Checkbox value={i} key={i}>
+              //       {servicesTextConfig[i]}
+              //     </Checkbox>)
+              //   }
+              // </Checkbox.Group>
+              <Checkbox.Group className={checkboxClasses}>
+                {
+                  activeServiceOptions.map((i, index) => {
+                    return <Col key={`${index}-option`}>
+                      <Checkbox value={i.key} >
+                        {i.title}
+                      </Checkbox>
+                    </Col>
+                  })
+                }
+              </Checkbox.Group>
+              )
+          }
+        </FormItem>
+        {/* :
             null
-        }
+        } */}
         <FormItem {...formItemLayout}
           colon={false}
           hasFeedback={false}
@@ -393,16 +452,39 @@ class WrappedForm extends React.Component {
               marks={{ 1: '1', 2: '2', 3: '3', 4: '4' }} />
             )}
         </FormItem>
+        <Row style={{ marginBottom: "15px" }}>
+          <Col span={10} push={6}>
+            <Label className={lblClasses}
+              keyName={AUTH_DATAINDEX} />
+          </Col>
+        </Row>
         <FormItem  {...commonProps}
           required={false}
           hasFeedback={false}
           label={<Label className={lblClasses}
-            keyName={AUTH_DATAINDEX} />}>
+            keyName={AUTH_USER_DATA_INDEX} />}>
           {
             getFieldDecorator(
-              AUTH_DATAINDEX,
+              AUTH_USER_DATA_INDEX,
               {
-                initialValue: defaultValue[AUTH_DATAINDEX] || ""
+                initialValue: ""
+              }
+            )
+              (
+              <Input disabled={loading} />
+              )
+          }
+        </FormItem>
+        <FormItem  {...commonProps}
+          required={false}
+          hasFeedback={false}
+          label={<Label className={lblClasses}
+            keyName={AUTH_PASSWORD_DATA_INDEX} />}>
+          {
+            getFieldDecorator(
+              AUTH_PASSWORD_DATA_INDEX,
+              {
+                initialValue: ""
               }
             )
               (
@@ -414,7 +496,7 @@ class WrappedForm extends React.Component {
           <Button type="primary"
             loading={loading}
             icon="plus"
-            onClick={this.handleSubmit}>添加</Button>
+            onClick={this.handleSubmit}>创建</Button>
         </FormItem>
       </Form>
     );

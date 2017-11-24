@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Menu, Button, Table, Icon, Row, Col, Card, Modal, Dropdown, message as Message } from 'antd';
+import { Menu, Button, Table, Icon, Row, Col, Card, Dropdown, message as Message } from 'antd';
 import { queryContainerGenerator } from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
@@ -12,6 +12,8 @@ import styles from './styles.css'
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import CreateHoneypotForm from './components/CreateHoneypotForm';
 import { curry } from '../../utils/tools'
+import Modal from 'domainComponents/Modal'
+
 import {
   tableTextConfig,
   NAMESPACE,
@@ -21,7 +23,9 @@ import {
   OPERATION_INIT_VALUE,
   OPERATION_SHUTDOWN_VALUE,
   OPERATION_START_VALUE,
-  ID_DATAINDEX
+  ID_DATAINDEX,
+  MAIN_NAMESPACE,
+  VM_ENUM_CONFIG_DATA_INDEX
 } from './ConstConfig';
 
 
@@ -34,6 +38,7 @@ function mapStateToProps(state) {
     productType: state.user.productType.type,
     postLoading: state.loading.effects[`${NAMESPACE}/postVM`],
     options: state[NAMESPACE].options,
+    vmOptions: state[MAIN_NAMESPACE].queryResults[VM_ENUM_CONFIG_DATA_INDEX] || {}
   }
 }
 
@@ -326,20 +331,15 @@ class Page extends React.Component {
   };
   render = () => {
 
-    const { commonLayout, options } = this.props;
+    const { commonLayout, options, vmOptions } = this.props;
 
     const isDark = commonLayout.darkTheme;
-
 
     const pageClasses = classnames({
       // [styles["page"]]:true,
       // [styles["page-dark"]]:this.props.commonLayout.darkTheme
     });
 
-    const modalClasses = classnames({
-      ["modal"]: true,
-      ["modal-dark"]: isDark
-    });
 
     return (
       <div className={pageClasses}>
@@ -352,12 +352,15 @@ class Page extends React.Component {
         <Modal title={<p><Icon type="plus" />&nbsp;创建新的蜜罐</p>}
           key={`${this.state.visible}-modal-create`}
           visible={this.state.visible}
-          className={modalClasses}
+          className={styles["vm-modal"]}
           onCancel={this.switchModal}
+          style={{ position: "absolute", top: "30px", bottom: "30px", left: "50%", right: "50px", marginLeft: "-350px", marginRight: "0" }}
           footer={null}
           width={700}>
           <CreateHoneypotForm isDark={isDark}
+            key={`${Object.keys(vmOptions).length}-create-vm`}
             validatorHandle={this.props.validate}
+            vmOptions={vmOptions}
             onSubmit={this.onSubmit}
             loading={this.props.postLoading}
             options={options} />
