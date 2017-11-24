@@ -1,9 +1,21 @@
 import classnames from 'classnames';
 import JoTag from 'components/JoTag'
 import { Badge } from 'antd'
+import ContactTip from 'domainComponents/ContactTip'
 
-export default ({ data, isDark }) => {
-  const { add = [], remove = [] } = data || {}
+export default ({ data, isDark, onCancel, res }) => {
+  const { status, payload = {}, message } = res || {}
+  const { add = [], remove = [] } = payload;
+
+  if (status !== 1) {
+    return <div>
+      <h3 className={textClasses} style={{ margin: "5px", textAlign: "center", color: "red" }}>
+        更新失败，原因：{message}
+      </h3>
+      <ContactTip onCancel={onCancel}>
+      </ContactTip>
+    </div>
+  }
 
   const textClasses = classnames({
     ["lbl-dark"]: isDark
@@ -50,5 +62,7 @@ export default ({ data, isDark }) => {
 
       </tbody>
     </table>
+    <ContactTip onCancel={onCancel}>
+    </ContactTip>
   </div>
 }

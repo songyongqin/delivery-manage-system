@@ -24,9 +24,11 @@ import LocalUpdatePanel from './components/LocalUpdatePanel'
 import RemoteUpdatePanel from './components/RemoteUpdatePanel'
 import Modal from 'domainComponents/Modal'
 import { WithModal } from 'domainComponents/HOSComponents'
+import UpdatePanel from './components/UpdatePanel'
 
 const mapStateToProps = state => ({
   isDark: state.layout.commonLayout.darkTheme,
+  shouldReload: state[OPERATION_NAMESPACE].shouldReload
 })
 
 const mapDispatchToProps = dispatch => {
@@ -35,6 +37,10 @@ const mapDispatchToProps = dispatch => {
       type: `${OPERATION_NAMESPACE}/initLocalUploadInfo`,
       payload
     }),
+    changeReloadStatus: payload => dispatch({
+      type: `${OPERATION_NAMESPACE}/changeReloadStatus`,
+      payload
+    })
   }
 }
 
@@ -50,20 +56,21 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      method: REMOTE_METHOD,
-      visible: true,
+      lastChangeTime: 0,
     }
-
   }
-  hideOptionPanel = () => this.setState({
-    visible: false
-  })
-  methodOnChange = e => {
-    let method = e.target.value;
-    this.props.initLocalUploadInfo()
-    this.setState({
-      method
-    })
+
+  updateModalSwitchHandle = () => {
+    if (this.props.shouldReload) {
+      setTimeout(() => {
+        this.props.changeReloadStatus(false)
+        this.props.initLocalUploadInfo()
+        this.setState({
+          lastChangeTime: new Date().getTime()
+        })
+      }, 300)
+    }
+    this.props.switchModal("update")
   }
   getHeader = () => {
     return <div key="header">
@@ -72,24 +79,16 @@ class Page extends React.Component {
   }
   getOperationPanel = () => {
     return <div key="operation" style={{ marginBottom: "15px", overflow: "hidden" }}>
-      <Button type="primary" style={{ float: "right" }} onClick={() => this.props.switchModal("update")}>
+      <Button type="primary" style={{ float: "right" }} onClick={this.updateModalSwitchHandle}>
         升级控制中心镜像
       </Button>
     </div>
   }
   render = () => {
 
-    // const activeStyle = {
-    //   background: "#108ee9",
-    //   color: "white"
-    // }
-    const { visible } = this.state;
-
     const lblClasses = classnames({
       ["lbl-dark"]: this.props.isDark
     })
-
-    const activeMethod = this.state.method;
 
     const { modalVisible } = this.props;
 
@@ -100,45 +99,16 @@ class Page extends React.Component {
           this.getOperationPanel()
         ])}
         <Modal
+          key={`${this.state.lastChangeTime}-update-modal`}
           title="升级控制中心镜像"
           footer={null}
-          onCancel={() => this.props.switchModal("update")}
+          onCancel={this.updateModalSwitchHandle}
           visible={modalVisible["update"]}
           width={"800px"}>
-          <div key="local" >
-            <div style={{ textAlgin: "center", marginBottom: "30px" }}>
-              {
-                visible
-                  ?
-                  <Radio.Group
-                    style={{ margin: "0 auto" }}
-                    value={activeMethod}
-                    onChange={this.methodOnChange}>
-                    <Radio
-                      value={REMOTE_METHOD}>
-                      <span className={lblClasses}>在线升级</span>
-                    </Radio>
-                    <Radio
-                      value={LOCAL_METHOD}>
-                      <span className={lblClasses}>本地升级</span>
-                    </Radio>
-                  </Radio.Group>
-                  :
-                  null
-              }
-            </div>
-            {
-              activeMethod === REMOTE_METHOD
-              &&
-              <RemoteUpdatePanel hideOptionPanel={this.hideOptionPanel}></RemoteUpdatePanel>
-            }
-            {
-              activeMethod === LOCAL_METHOD
-              &&
-              <LocalUpdatePanel hideOptionPanel={this.hideOptionPanel}></LocalUpdatePanel>
-            }
+          <UpdatePanel
+            onCancel={this.updateModalSwitchHandle}>
 
-          </div>
+          </UpdatePanel>
         </Modal>
       </div>
     )

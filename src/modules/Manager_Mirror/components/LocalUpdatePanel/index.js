@@ -87,6 +87,7 @@ const UploadPanel = ({
   merging,
   localUploadInfo = {},
   initLoading,
+  onCancel
  }) => {
 
   const { status, mergeResult } = localUploadInfo
@@ -94,9 +95,8 @@ const UploadPanel = ({
 
 
   if (status === MERGE_STATUS && !merging) {
-    const { add = [], remove = [] } = mergeResult || {};
 
-    return <UpdateResultPanel isDark={isDark} data={mergeResult}></UpdateResultPanel>
+    return <UpdateResultPanel isDark={isDark} onCancel={onCancel} res={mergeResult}></UpdateResultPanel>
 
   }
 
@@ -212,7 +212,8 @@ const _LocalUpdatePanel = ({
   initLoading,
   initLocalUploadInfo,
   putFileChunk,
-  initUploadTask
+  initUploadTask,
+  onCancel
 }) => {
 
   const { status } = localUploadInfo
@@ -230,6 +231,7 @@ const _LocalUpdatePanel = ({
 
   return (
     <UploadPanel
+      onCancel={onCancel}
       isDark={isDark}
       merging={merging}
       uploadHandle={putFileChunk}

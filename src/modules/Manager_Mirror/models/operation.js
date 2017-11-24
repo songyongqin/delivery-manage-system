@@ -50,13 +50,19 @@ const baseModel = {
     queryFilters: {
 
     },
-
     queryResults: {
 
     },
-    localUploadInfo: initLocalUploadInfo
+    localUploadInfo: initLocalUploadInfo,
+    shouldReload: false
   },
   reducers: {
+    changeReloadStatus: (preState, { payload }) => {
+      return {
+        ...preState,
+        shouldReload: payload
+      }
+    },
     saveLocalUploadInfo: (preState, { payload }) => {
       return {
         ...preState,
@@ -230,26 +236,35 @@ const baseModel = {
         }
       })
 
-      const res = yield callWithExtra(service.mergeUploadTask, payload, commonCallConfig)
+      const res = yield callWithExtra(service.mergeUploadTask, payload)
 
-      if (res.status === 1) {
+      // if (res.status === 1) {
 
-        yield put({
-          type: "saveLocalUploadInfo",
-          payload: {
-            mergeResult: res.payload
-          }
-        })
-        resolve && resolve()
-      }
+      yield put({
+        type: "saveLocalUploadInfo",
+        payload: {
+          mergeResult: res
+        }
+      })
+
+      yield put({
+        type: "changeReloadStatus",
+        payload: true,
+      })
+
+      resolve && resolve()
+      // }
     },
-    *updateRemote({ resolve, payload }, { callWithExtra }) {
-      const res = yield callWithExtra(service.updateRemote, payload, commonCallConfig)
+    *updateRemote({ resolve, payload }, { callWithExtra, put }) {
+      const res = yield callWithExtra(service.updateRemote, payload)
 
-      if (res.status === 1) {
-
-        resolve && resolve(res.payload)
-      }
+      // if (res.status === 1) {
+      yield put({
+        type: "changeReloadStatus",
+        payload: true,
+      })
+      resolve && resolve(res)
+      // }
 
     }
   },

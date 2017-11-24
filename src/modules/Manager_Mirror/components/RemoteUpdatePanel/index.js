@@ -14,7 +14,7 @@ class RemoteUpdate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: null,
+      res: null,
     }
   }
   handleSubmit = (e) => {
@@ -29,8 +29,8 @@ class RemoteUpdate extends React.Component {
       }
 
       this.props.onSubmit && this.props.onSubmit(values)
-        .then(result => this.setState({
-          result,
+        .then(res => this.setState({
+          res,
         }));
     });
   };
@@ -40,7 +40,7 @@ class RemoteUpdate extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { defaultValue = {}, isDark, loading = false, textConfig = {}, style = {}, keyConfig = "value" } = this.props;
     const { value = "" } = defaultValue;
-    const { result } = this.state;
+    const { res } = this.state;
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -48,11 +48,12 @@ class RemoteUpdate extends React.Component {
     return (
       <Form>
         {
-          result
+          res
             ?
             <UpdateResultPanel
+              onCancel={this.props.onCancel}
               isDark={isDark}
-              data={result}>
+              res={res}>
             </UpdateResultPanel>
             :
             <JoSpin spinning={loading}>
