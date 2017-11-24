@@ -55,7 +55,28 @@ import {
 
 } from './ConstConfig'
 const CheckboxGroup = Checkbox.Group;
-
+const defaultCheckedList = [
+  "VALUE_ATTACK",
+  "VALUE_THREATEVENT",
+  "VALUE_FALL_HOST",
+  "VALUE_THREATINFO",
+  "VALUE_MALIP",
+  "VALUE_MALDOMAIN",
+  "VALUE_SUFFERHOSTCALLONRECORD",
+  "VALUE_HAVECOMMUNICATEINSIDEIP",
+  "VALUE_CALL_ON_IP",
+  "VALUE_CALL_ON_DOMAIN",
+  "VALUE_HIGH",
+  "VALUE_MIDDLE",
+  "VALUE_LOW",
+  "VALUE_CHART_ATTACK",
+  "VALUE_EVENT_TYPE",
+  "VALUE_EXLOITVULNERABILITY",
+  "VALUE_CHART_SOURCECOUNTRY",
+  "VALUE_CHART_SOURCEPROVINCE",
+  "VALUE_RECORDSTATISTICAL",
+  "VALUE_WATERMARK"
+]
 const eventexportItemList = [
   "VALUE_THREATEVENT",
   "VALUE_FALL_HOST",
@@ -94,7 +115,7 @@ class Page extends React.Component {
       loading: false,
       indeterminate: true,
       checkAll: false,
-      checkedListNew: []
+      checkedListNew: defaultCheckedList,
     };
 
   }
@@ -370,135 +391,135 @@ class Page extends React.Component {
     const option = {
       eventStatistic: checkedListNew.includes("VALUE_ATTACK") ? 1 : 0,
       threatEvent:
-        threateventItemList.every(i => this.haveChecked(i))
-          ?
-          {
-            limit: 10,
-            page: 1,
-            level: ["high", "middle", "low"]
-          }
-          : this.selectLevel(checkedListNew),
+      threateventItemList.every(i => this.haveChecked(i))
+        ?
+        {
+          limit: 10,
+          page: 1,
+          level: ["high", "middle", "low"]
+        }
+        : this.selectLevel(checkedListNew),
       fallhost:
-        checkedListNew.includes("VALUE_FALL_HOST")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_FALL_HOST")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       threatinfo:
-        checkedListNew.includes("VALUE_THREATINFO")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_THREATINFO")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       malip:
-        checkedListNew.includes("VALUE_MALIP")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_MALIP")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       maldomain:
-        checkedListNew.includes("VALUE_MALDOMAIN")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_MALDOMAIN")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       sufferhostcallonrecord:
-        checkedListNew.includes("VALUE_SUFFERHOSTCALLONRECORD")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_SUFFERHOSTCALLONRECORD")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       havecommunicateinsideip:
-        checkedListNew.includes("VALUE_HAVECOMMUNICATEINSIDEIP")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_HAVECOMMUNICATEINSIDEIP")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       callonip:
-        checkedListNew.includes("VALUE_CALL_ON_IP")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_CALL_ON_IP")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       callondomain:
-        checkedListNew.includes("VALUE_CALL_ON_DOMAIN")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_CALL_ON_DOMAIN")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       chartattackip:
-        checkedListNew.includes("VALUE_CHART_ATTACK")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_CHART_ATTACK")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       eventtype:
-        checkedListNew.includes("VALUE_EVENT_TYPE")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_EVENT_TYPE")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       exploitvulnerability:
-        checkedListNew.includes("VALUE_EXLOITVULNERABILITY")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_EXLOITVULNERABILITY")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       sourcecountry:
-        checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       sourceprovince:
-        checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       recordstatistical:
-        checkedListNew.includes("VALUE_RECORDSTATISTICAL")
-          ?
-          {
-            limit: 10,
-            page: 1
-          }
-          : null,
+      checkedListNew.includes("VALUE_RECORDSTATISTICAL")
+        ?
+        {
+          limit: 10,
+          page: 1
+        }
+        : null,
       watermark:
-        checkedListNew.includes("VALUE_WATERMARK") ? 1 : 0,
+      checkedListNew.includes("VALUE_WATERMARK") ? 1 : 0,
 
     };
     const timestampRange = this.props.base.timestampRange;
     this.props.dispatch({
       type: `${NAMESPACE_ATTACK}/onExport`,
       payload:
-        { option, timestampRange }
+      { option, timestampRange }
 
     });
   }
@@ -722,6 +743,7 @@ class Page extends React.Component {
     };
   }
   render() {
+    console.info(this.state.checkedListNew)
     const eventreportdata = ["VALUE_FALL_HOST", "VALUE_THREATEVENT", "VALUE_THREATINFO", "VALUE_MALIP", "VALUE_MALDOMAIN", "VALUE_SUFFERHOSTCALLONRECORD", "VALUE_HAVECOMMUNICATEINSIDEIP", "VALUE_CALL_ON_IP", "VALUE_CALL_ON_DOMAIN", "VALUE_HIGH", "VALUE_MIDDLE", "VALUE_LOW"];
     const chartdata = ["VALUE_CHART_ATTACK", "VALUE_EVENT_TYPE", "VALUE_EXLOITVULNERABILITY", "VALUE_CHART_SOURCECOUNTRY", "VALUE_CHART_SOURCEPROVINCE", "VALUE_RECORDSTATISTICAL"];
     const { visible, loading } = this.state;

@@ -12,6 +12,7 @@ export default {
     timestampRange: [],
     page: 1,
     limit: 10,
+    total: 0,
     lastChangeTime: -1,
   },
   reducers: {
@@ -24,6 +25,7 @@ export default {
       const result = yield call(Service.getREPORT_HAVE_COMMUNICATE_INSIDE_IP, payload);
       const data = result.payload.data;
       const page = payload.page ? payload.page : 1;
+      const total = result.payload.total ? result.payload.total : 0;
       const timestampRange = payload.timestampRange ? payload.timestampRange : [];
       if (result.status === 1) {
         yield put({
@@ -31,6 +33,7 @@ export default {
           payload: {
             page,
             data,
+            total,
             timestampRange
           }
         });
