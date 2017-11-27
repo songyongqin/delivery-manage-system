@@ -27,6 +27,7 @@ import RemoteUpdatePanel from './components/RemoteUpdatePanel'
 import Modal from 'domainComponents/Modal'
 import { WithModal } from 'domainComponents/HOSComponents'
 import UpdatePanel from './components/UpdatePanel'
+import Table_mirrorsummary from './components/Table_mirrorsummary'
 
 const mapStateToProps = state => ({
   isDark: state.layout.commonLayout.darkTheme,
@@ -49,8 +50,6 @@ const mapDispatchToProps = dispatch => {
     })
   }
 }
-
-
 
 @WithModal()
 @connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
@@ -101,7 +100,8 @@ class Page extends React.Component {
       <div>
         {this.props.animateRender([
           this.getHeader(),
-          this.getOperationPanel()
+          this.getOperationPanel(),
+          <Table_mirrorsummary key="Table_mirrorsummary" />
         ])}
         <Modal
           key={`${this.state.lastChangeTime}-update-modal`}
