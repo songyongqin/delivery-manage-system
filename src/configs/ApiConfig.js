@@ -84,7 +84,7 @@ export default {
     OVERVIEW_FLOW: "/overview/flow",
 
 
-    SYS_LOG_LOGIN: "/sys-log/login",
+    SYS_LOG_LOGIN: "/user/sys-log/login",
 
 
     REPORT_STATISTICS: "/report/statistics",
