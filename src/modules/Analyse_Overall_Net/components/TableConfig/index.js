@@ -85,6 +85,7 @@ export const getColumns = ({ queryFilters, filters = {}, filterTextConfig = {}, 
     filterOptions: { ...commonFilters, ...filters, },
     filterTextConfig: { ...commonFilterTextConfig, ...filterTextConfig },
     titleTextConfig: textConfig,
+    filteredValue: queryFilters,
     renderer: {
       [PCAP_DATA_INDEX]: (value, records) => <a href={value} download="pcap" onClick={e => e.stopPropagation()}>下载</a>,
       [ATTACK_TIME_DATA_INDEX]: value => <TimesLabel times={value}></TimesLabel>,

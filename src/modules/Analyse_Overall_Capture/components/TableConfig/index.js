@@ -46,6 +46,7 @@ export const getColumns = ({ queryFilters, onQuery } = {}) =>
   tableColumnsGenerator({
     keys: dataIndexes,
     titleTextConfig: textConfig,
+    filteredValue: queryFilters,
     renderer: {
       [TIME_DATA_INDEX]: value => <TimesLabel times={[value]}></TimesLabel>,
       [DOWNLOAD_URL_DATA_INDEX]: (value, records) => <a href={value} download={records[FILE_NAME_DATA_INDEX]}>下载</a>

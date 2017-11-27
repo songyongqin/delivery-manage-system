@@ -4,55 +4,69 @@
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import * as service from './Service';
-import {queryModelGenerator} from '../../utils/dvaModelGenerator';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
-import {NAMESPACE} from './ConstConfig';
+import { queryModelGenerator } from '../../utils/dvaModelGenerator';
+import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
+import {
+  NAMESPACE,
+  THREAT_TYPE_DATAINDEX,
+  FEATURE_DATAINDEX,
+  THTREAT_NAME_DATAINDEX,
+  ACCURACY_DATAINDEX
+} from './ConstConfig';
 moment.locale('zh-cn');
 
-const baseModel={
+const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters:{
-      timestampRange:[],
-      value:null,
-      limit:20,
-      page:1,
+    queryFilters: {
+      timestampRange: [],
+      // value: null,
+      [THREAT_TYPE_DATAINDEX]: [],
+      [ACCURACY_DATAINDEX]: [],
+      [FEATURE_DATAINDEX]: "",
+      limit: 20,
+      page: 1,
     },
-    queryResults:{
-      total:0,
-      data:[]
+    initFilters: {
+      [THREAT_TYPE_DATAINDEX]: [],
+      [ACCURACY_DATAINDEX]: [],
+      [FEATURE_DATAINDEX]: "",
+    },
+    queryResults: {
+      total: 0,
+      data: []
     }
   },
-  effects:{
-    *post({resolve,payload},{callWithExtra}) {
+  effects: {
+    *post({ resolve, payload }, { callWithExtra }) {
 
-      const res=yield callWithExtra(
+      const res = yield callWithExtra(
         service.post,
-        {...payload||{}},
+        { ...payload || {} },
         commonCallConfig
       )
 
-      if(res.status===1){
-        resolve&&resolve(res.payload);
+      if (res.status === 1) {
+        resolve && resolve(res.payload);
       }
 
     }
   }
 };
 
-const payloadFilter=(payload)=>{
+const payloadFilter = (payload) => {
   return {
-    total:payload.total,
-    data:payload.data,
+    total: payload.total,
+    data: payload.data,
   }
 };
 
-const queryService=service.query;
+const queryService = service.query;
 
 export default queryModelGenerator({
-  model:baseModel,
+  model: baseModel,
   payloadFilter,
-  callConfig:commonCallConfig,
+  callConfig: commonCallConfig,
   queryService,
 });
 

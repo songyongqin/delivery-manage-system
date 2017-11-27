@@ -75,6 +75,7 @@ export const getColumns = ({ queryFilters, onQuery } = {}) =>
   tableColumnsGenerator({
     keys: dataIndexesConfig[queryFilters[PROTOCOL_TYPE_DATA_INDEX]],
     titleTextConfig: textConfig,
+    filteredValue: queryFilters,
     renderer: {
       [TIME_DATA_INDEX]: value => <TimesLabel times={[value]}></TimesLabel>,
       [URL_DATA_INDEX]: value => value.length > OVER_FLOW_LENGTH

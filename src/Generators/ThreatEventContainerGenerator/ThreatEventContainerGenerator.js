@@ -11,6 +11,9 @@ import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import * as tools from '../../utils/tools';
 import WithOnQuery from '../QueryContainerDecorator/WithOnQuery';
 import WithPageOnChange from '../QueryContainerDecorator/WithPageOnChangeQuery';
+import { THREAT_TYPE_DATAINDEX, MAIN_NAMESPACE } from 'modules/ThreatEvent_ThreatInfo/ConstConfig'
+
+const ENUM_THREAT_TYPE_DATA_INDEX = "threatType"
 
 export default ({ tableConfig, formTextConfig, namespace }) => {
   const NAMESPACE = namespace;
@@ -19,7 +22,9 @@ export default ({ tableConfig, formTextConfig, namespace }) => {
     const { commonLayout } = state.layout;
     return {
       commonLayout,
-      exportLoading: state.loading.effects[`${NAMESPACE}/post`]
+      exportLoading: state.loading.effects[`${NAMESPACE}/post`],
+      initFilters: state[NAMESPACE].initFilters,
+      threatType: state[MAIN_NAMESPACE].queryResults[ENUM_THREAT_TYPE_DATA_INDEX] || {},
     }
   }
 
@@ -49,12 +54,13 @@ export default ({ tableConfig, formTextConfig, namespace }) => {
       super(props);
     }
     componentDidMount = () => {
-      
+
       this.props.query({
         ...this.props[NAMESPACE].queryFilters,
         timestampRange: this.props.timestampRange,
-        value: null,
-        page:1,
+        // value: null,
+        ...this.props.initFilters,
+        page: 1,
       })
     }
     onSelectChange = (payload) => {
@@ -89,14 +95,31 @@ export default ({ tableConfig, formTextConfig, namespace }) => {
         </div>
       )
     };
+    tableOnChange = (pagination, filters) => {
+      this.props.query({
+        ...this.props[NAMESPACE].queryFilters,
+        timestampRange: this.props.timestampRange,
+        ...filters,
+        page: 1,
+      })
+    }
     getDataResultPanel = () => {
 
-      const { commonLayout, pageOnChange } = this.props;
+      const { commonLayout, pageOnChange, threatType } = this.props;
       const { queryResults, queryFilters, lastReqTime } = this.props[NAMESPACE];
       const { data } = queryResults;
 
+      const filtersOption = {
+        [THREAT_TYPE_DATAINDEX]: Object.keys(threatType),
+      }
+
+      const filterTextConfig = {
+        [THREAT_TYPE_DATAINDEX]: threatType
+      }
+
       const tableProps = {
-        columns: tableConfig.getColumns({ queryFilters }),
+        onChange: this.tableOnChange,
+        columns: tableConfig.getColumns({ queryFilters, onQuery: this.props.onQuery, filtersOption, filterTextConfig }),
         dataSource: data.map((i, index) => {
           return {
             ...i,
@@ -113,7 +136,7 @@ export default ({ tableConfig, formTextConfig, namespace }) => {
       };
 
       return (
-        <div key={"results-panel" + lastReqTime}>
+        <div key={"results-panel" + `${this.props.queryLoading}`}>
           <EnhanciveTable tableProps={tableProps}
             isDark={commonLayout.darkTheme}
             paginationProps={paginationProps} />
