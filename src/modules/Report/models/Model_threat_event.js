@@ -2,7 +2,7 @@
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
 import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
-import { NAMESPACE_THREATEVENT, VALUE_THREATEVENT } from '../ConstConfig';
+import { NAMESPACE_THREATEVENT } from '../ConstConfig';
 import * as tools from '../../../utils/tools.js';
 export default {
   namespace: NAMESPACE_THREATEVENT,
@@ -12,7 +12,7 @@ export default {
     timestampRange: [],
     page: 1,
     limit: 10,
-    exportdata: VALUE_THREATEVENT,
+    total: 0,
     lastChangeTime: -1,
   },
   reducers: {
@@ -26,13 +26,15 @@ export default {
       const data = result.payload.data;
       const timestampRange = payload.timestampRange ? payload.timestampRange : [];
       const page = payload.page ? payload.page : 1;
+      const total = result.payload.total ? result.payload.total : 0;
       if (result.status === 1) {
         yield put({
           type: 'save',
           payload: {
             page,
             data,
-            timestampRange
+            timestampRange,
+            total
           }
         });
       };
@@ -47,18 +49,5 @@ export default {
     }
   },
   subscriptions: {
-    // setup({ dispatch, history }) {
-    //   return history.listen(({ pathname }) => {
-    //     if (pathname === '/report') {
-    //       dispatch({
-    //         type: 'fetch',
-    //         payload: {
-    //           limit: 10,
-    //           timestampRange: []
-    //         }
-    //       });
-    //     }
-    //   });
-    // },
   }
 }

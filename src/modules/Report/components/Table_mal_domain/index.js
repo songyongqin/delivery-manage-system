@@ -74,7 +74,7 @@ class Tableevent extends React.Component {
       }),
     }
     const paginationProps = {
-      total: 500,
+      total: this.props.total,
       current: this.props.page,
       onChange: this.pageChangeHandler,
       pageSize: this.props.limit,
@@ -97,12 +97,13 @@ class Tableevent extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { data, loading, timestampRange, page, limit } = state[NAMESPACE_MALDOMAIN];
+  const { data, loading, timestampRange, page, limit, total } = state[NAMESPACE_MALDOMAIN];
   return {
     data,
     loading: state.loading.effects[`${NAMESPACE_MALDOMAIN}/fetch`],
     timestampRange,
     page,
+    total,
     limit,
     isDark: state.layout.commonLayout.darkTheme,
   };
