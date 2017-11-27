@@ -15,6 +15,8 @@ import {
   MERGE_STATUS,
   COMMON_STATUS,
   INIT_STATUS,
+  REMOTE_METHOD,
+  LOCAL_METHOD,
 } from '../ConstConfig';
 
 import { delay, setTemp, getTemp, getFileMd5, splitFileToChunk } from 'utils/tools';
@@ -54,9 +56,23 @@ const baseModel = {
 
     },
     localUploadInfo: initLocalUploadInfo,
-    shouldReload: false
+    shouldReload: false,
+    activePanel: REMOTE_METHOD,
+    panelVisible: true,
   },
   reducers: {
+    changePanelVisible: (preState, { payload }) => {
+      return {
+        ...preState,
+        panelVisible: payload,
+      }
+    },
+    changeActivePanel: (preState, { payload }) => {
+      return {
+        ...preState,
+        activePanel: payload
+      }
+    },
     changeReloadStatus: (preState, { payload }) => {
       return {
         ...preState,

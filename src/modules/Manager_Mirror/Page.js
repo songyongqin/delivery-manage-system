@@ -12,6 +12,8 @@ import {
   MERGE_STATUS,
   COMMON_STATUS,
   INIT_STATUS,
+  REMOTE_METHOD,
+  LOCAL_METHOD
 } from './ConstConfig'
 import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
 import classnames from 'classnames';
@@ -40,12 +42,14 @@ const mapDispatchToProps = dispatch => {
     changeReloadStatus: payload => dispatch({
       type: `${OPERATION_NAMESPACE}/changeReloadStatus`,
       payload
+    }),
+    changePanelVisible: payload => dispatch({
+      type: `${OPERATION_NAMESPACE}/changePanelVisible`,
+      payload,
     })
   }
 }
 
-const REMOTE_METHOD = "remote",
-  LOCAL_METHOD = "local"
 
 
 @WithModal()
@@ -61,8 +65,9 @@ class Page extends React.Component {
   }
 
   updateModalSwitchHandle = () => {
-    if (this.props.shouldReload) {
+    if (this.props.shouldReload && this.props.modalVisible["update"]) {
       setTimeout(() => {
+        this.props.changePanelVisible(true)
         this.props.changeReloadStatus(false)
         this.props.initLocalUploadInfo()
         this.setState({
@@ -73,12 +78,12 @@ class Page extends React.Component {
     this.props.switchModal("update")
   }
   getHeader = () => {
-    return <div key="header">
+    return <div key="header" style={{ margin: "15px 0" }}>
       {this.props.getBreadcrumb(this.props.routes)}
     </div>
   }
   getOperationPanel = () => {
-    return <div key="operation" style={{ marginBottom: "15px", overflow: "hidden" }}>
+    return <div key="operation" style={{ overflow: "hidden" }}>
       <Button type="primary" style={{ float: "right" }} onClick={this.updateModalSwitchHandle}>
         升级控制中心镜像
       </Button>

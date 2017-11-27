@@ -33,3 +33,8 @@ export const UPLOAD_STATUS = "upload",
   MERGE_STATUS = "merge",
   COMMON_STATUS = "common",
   INIT_STATUS = "INIT"
+
+
+
+export const REMOTE_METHOD = "remote",
+  LOCAL_METHOD = "local"

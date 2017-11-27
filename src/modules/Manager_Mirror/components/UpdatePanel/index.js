@@ -26,6 +26,8 @@ import { WithModal } from 'domainComponents/HOSComponents'
 
 const mapStateToProps = state => ({
   isDark: state.layout.commonLayout.darkTheme,
+  activePanel: state[OPERATION_NAMESPACE].activePanel,
+  panelVisible: state[OPERATION_NAMESPACE].panelVisible
 })
 
 const mapDispatchToProps = dispatch => {
@@ -34,6 +36,14 @@ const mapDispatchToProps = dispatch => {
       type: `${OPERATION_NAMESPACE}/initLocalUploadInfo`,
       payload
     }),
+    changeActivePanel: payload => dispatch({
+      type: `${OPERATION_NAMESPACE}/changeActivePanel`,
+      payload,
+    }),
+    changePanelVisible: payload => dispatch({
+      type: `${OPERATION_NAMESPACE}/changePanelVisible`,
+      payload,
+    })
   }
 }
 
@@ -45,32 +55,32 @@ class UpdatePanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      method: REMOTE_METHOD,
-      visible: true,
+      // method: REMOTE_METHOD,
+      // visible: true,
       lastUpdateTime: 0,
       shouldReload: false,
     }
   }
-  hideOptionPanel = () => this.setState({
-    visible: false
-  })
+  hideOptionPanel = () => this.props.changePanelVisible(false)
   methodOnChange = e => {
-    let method = e.target.value;
+    this.props.changeActivePanel(e.target.value)
     this.props.initLocalUploadInfo()
-    this.setState({
-      method,
-    })
+    // this.setState({
+    //   method,
+    // })
+
   }
   render = () => {
 
 
-    const { visible } = this.state;
+    // const { visible } = this.state;
+    const visible = this.props.panelVisible
 
     const lblClasses = classnames({
       ["lbl-dark"]: this.props.isDark
     })
 
-    const activeMethod = this.state.method;
+    const activeMethod = this.props.activePanel;
 
     const { modalVisible } = this.props;
 
