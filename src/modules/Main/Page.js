@@ -16,7 +16,8 @@ import {
   Popover,
   Row,
   Col,
-  Steps
+  Steps,
+  Tooltip
 } from 'antd';
 import classnames from 'classnames';
 import Nav from './components/Nav';
@@ -31,8 +32,7 @@ import {
 } from '../../modules/Manager_Virtual/ConstConfig'
 import { getTemp } from '../../utils/tools'
 import { HONEYPOT_CREATE_LIST_CACHE_NAMESPACE } from '../../modules/Manager_Virtual/Model'
-
-
+import { NODE, IDS } from "configs/ConstConfig"
 const NAMESPACE = "main";
 
 const honeypotCreateStatusTip = {
@@ -55,6 +55,7 @@ function mapStateToProps(state) {
     userData: state.user.userData,
     putPasswordLoading: state.loading["user/putPassword"],
     productType: state.user.productType.type,
+    productInfo: state.user.productType,
     honeypotCreateList: state[VM_NAMESPACE].createList,
     createStatusPanelVisible: state[VM_NAMESPACE].createStatusPanelVisible
 
@@ -248,7 +249,7 @@ class Page extends React.Component {
   getHeaderRight = () => {
 
     const { userAccount, role, isAdmin } = this.props.userData;
-    const { honeypotCreateList, createStatusPanelVisible } = this.props;
+    const { honeypotCreateList, createStatusPanelVisible, productInfo } = this.props;
 
     const tipTextConfig = {
       admin: "说明：管理员属于授权用户,可对系统所有界面进行查看和操作",
@@ -336,7 +337,15 @@ class Page extends React.Component {
 
     return (
       <div className={styles["header-right"]}>
-
+        <p style={{ marginRight: "10px", display: "inline-block" }}>
+          {
+            productInfo.type === NODE
+            &&
+            <Tooltip title="此为该蜜罐节点主机的IP，用于区分不同的蜜罐节点">
+              蜜罐节点：<span style={{ color: "#108ee9" }}>{`${productInfo.ip}`}</span>
+            </Tooltip>
+          }
+        </p>
         <span>欢迎回来，</span>
         <Dropdown overlay={menu}>
           <a style={{ color: "#108EE9" }}>

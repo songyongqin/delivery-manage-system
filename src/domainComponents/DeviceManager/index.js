@@ -13,7 +13,7 @@ import UpdateForm from './components/UpdateForm'
 import LicenceForm from './components/LicenceForm';
 import CleanForm from './components/CleanForm';
 import Card from 'domainComponents/Card'
-
+import { NODE, IDS, DISTRIBUTION, STAND_ALONE } from 'configs/ConstConfig'
 
 export default ({
   namespace,
@@ -22,7 +22,7 @@ export default ({
   title,
   getNodeDiskComponent,
   isNode = true,
-  productType = "distribution"
+  deviceType = "distribution"
 }) => {
 
   const NAMESPACE = namespace;
@@ -47,7 +47,9 @@ export default ({
         cleanVisible: false
       }
     }
-
+    componentDidMount = () => {
+      this.props.query();
+    }
     setSelectedRows = (selectedRows) => {
       this.setState({
         selectedRows
@@ -181,10 +183,24 @@ export default ({
 
       const dropDownDisabled = this.state.selectedRows.length === 0;
 
-      return (
+      const { productType: productInfo, isDark } = this.props;
+
+      const lblClasses = classnames({
+        "lbl-dark": isDark
+      })
+
+
+      return (productInfo.type === NODE || productInfo.type === IDS)
+        ?
+        <p className={lblClasses} style={{ fontSize: "20px", marginBottom: "10px" }}>
+          控制中心IP:{productInfo.controlCenterIp}
+        </p>
+        :
         <div style={{ marginBottom: "15px" }}>
           <div style={{ display: "inline-block" }}>
-            {getNodeDiskComponent()}
+            {
+              getNodeDiskComponent()
+            }
           </div>
           <div style={{ display: "inline-block", marginLeft: "15px" }}>
             {
@@ -199,19 +215,17 @@ export default ({
                   disabled={dropDownDisabled}
                   type="primary">
                   批量授权
-            </Dropdown.Button>
+                </Dropdown.Button>
                 :
                 null
             }
           </div>
         </div>
-      )
-
     }
 
     getResultsPanel = () => {
 
-      const { commonLayout, userData, postLicenceLoading, updateLoading, cleanLoading, versionColExpanded, loading } = this.props;
+      const { commonLayout, userData, postLicenceLoading, productType, updateLoading, cleanLoading, versionColExpanded, loading } = this.props;
       const { queryResults, lastReqTime, queryFilters } = this.props[NAMESPACE];
       const { isAdmin } = userData;
       const { hasGetVersion } = this.state;
@@ -225,6 +239,7 @@ export default ({
           isNode,
           onSubmit: this.onSubmit,
           versionColExpanded,
+          productType,
           handle: {
             licenceHandle: this.licenceModalOpenHandle,
             updateHandle: this.updateModalOpenHandle,
@@ -240,7 +255,7 @@ export default ({
       };
 
 
-      if (isAdmin && isNode) {
+      if (isAdmin && isNode && productType.type !== NODE && productType.type !== STAND_ALONE && productType.type !== IDS) {
         tableProps.rowSelection = {
           onChange: (selectedRowKeys, selectedRows) => {
             this.setSelectedRows(selectedRows)
@@ -282,7 +297,7 @@ export default ({
             <EnhanciveTable
               key={`${lastReqTime}-device-table`}
               inverse={true}
-              pagination={isNode}
+              pagination={isNode && productType.type !== NODE && productType.type !== IDS}
               tableProps={tableProps}
               paginationProps={paginationProps}
               isDark={commonLayout.darkTheme} />
@@ -334,7 +349,7 @@ export default ({
             footer={null}>
             <JoSpin spinning={cleanLoading}>
               <CleanForm
-                productType={productType}
+                productType={deviceType}
                 onSubmit={this.clean}
                 onCancel={this.switchCleanModal}
                 defaultValue={operationList}

@@ -96,3 +96,5 @@ export const VM_ENUM_CONFIG_DATA_INDEX = "vm",
 
 
 export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig.js'
+
+export { NODE } from 'configs/ConstConfig'

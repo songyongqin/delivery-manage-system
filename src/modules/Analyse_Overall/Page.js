@@ -11,7 +11,8 @@ import OverallNet from '../Analyse_Overall_Net/Page';
 import classnames from 'classnames';
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import {
-  NAMESPACE
+  NAMESPACE,
+  NODE,
 } from './ConstConfig'
 import {
   NAMESPACE as OVERALL_NET_BASIC_NAMESPACE,
@@ -43,6 +44,7 @@ function mapStateToProps(state) {
     timestampRange: state[NAMESPACE].timestampRange,
     lastTime: state[NAMESPACE].lastTime,
     panelLastTime: state[NAMESPACE].panelLastTime,
+    productType: state.user.productType.type,
   }
 }
 
@@ -68,7 +70,7 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeKey: OVERALL_NET_BASIC_NAMESPACE
+      activeKey: props.productType === NODE ? OVERALL_NET_NAMESPACE : OVERALL_NET_BASIC_NAMESPACE
     }
   }
   componentDidMount = () => {
@@ -125,7 +127,7 @@ class Page extends React.Component {
     this.tabPanelFetchData(key, this.props.timestampRange, this.props.lastTime)
   }
   getTabsContent = () => {
-    const { lastTime } = this.props;
+    const { lastTime, productType } = this.props;
     const tabClasses = classnames({
       [styles["page-dark"]]: this.props.isDark
     })
@@ -136,9 +138,15 @@ class Page extends React.Component {
         key="tabs-content"
         className={tabClasses}
         activeKey={this.state.activeKey}>
-        <Tabs.TabPane key={OVERALL_NET_BASIC_NAMESPACE} tab="网络基础数据">
-          <OverallNetBasic lastTime={lastTime}></OverallNetBasic>
-        </Tabs.TabPane>
+        {
+          productType == NODE
+            ?
+            null
+            :
+            <Tabs.TabPane key={OVERALL_NET_BASIC_NAMESPACE} tab="网络基础数据">
+              <OverallNetBasic lastTime={lastTime}></OverallNetBasic>
+            </Tabs.TabPane>
+        }
         <Tabs.TabPane key={OVERALL_NET_NAMESPACE} tab="网络行为">
           <OverallNet lastTime={lastTime}></OverallNet>
         </Tabs.TabPane>

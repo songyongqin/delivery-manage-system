@@ -5,7 +5,6 @@ import commonRequestCreator from '../../utils/commonRequestCreator';
 const httpApi = ApiConfig.http;
 
 export async function query(payload) {
-
   const options = {
     method: 'GET',
     headers: {

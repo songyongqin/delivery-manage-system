@@ -45,19 +45,23 @@ function mapDispatchToProps(dispatch) {
     }),
     getUpdateInfoLocal: payload => dispatch({
       type: `${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoLocal`,
-      payload
+      payload,
+      productType: IDS
     }),
     getUpdateInfoRemote: payload => dispatch({
       type: `${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoRemote`,
-      payload
+      payload,
+      productType: IDS
     }),
     updateRemote: payload => dispatch({
       type: `${MANAGER_DEVICE_NAMESPACE}/updateRemote`,
-      payload
+      payload,
+      productType: IDS
     }),
     updateLocal: payload => dispatch({
       type: `${MANAGER_DEVICE_NAMESPACE}/updateLocal`,
       payload,
+      productType: IDS
     }),
     clean: payload => dispatch({
       type: `${MANAGER_DEVICE_NAMESPACE}/clean`,

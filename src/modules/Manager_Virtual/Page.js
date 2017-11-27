@@ -14,6 +14,7 @@ import CreateHoneypotForm from './components/CreateHoneypotForm';
 import { curry } from '../../utils/tools'
 import Modal from 'domainComponents/Modal'
 
+
 import {
   tableTextConfig,
   NAMESPACE,
@@ -25,7 +26,8 @@ import {
   OPERATION_START_VALUE,
   ID_DATAINDEX,
   MAIN_NAMESPACE,
-  VM_ENUM_CONFIG_DATA_INDEX
+  VM_ENUM_CONFIG_DATA_INDEX,
+  NODE,
 } from './ConstConfig';
 
 
@@ -209,7 +211,7 @@ class Page extends React.Component {
 
   getDataResultPanel = () => {
 
-    const { commonLayout, pageOnChange, userData, options } = this.props;
+    const { commonLayout, pageOnChange, userData, options, productType } = this.props;
     const { queryResults, queryFilters, lastReqTime } = this.props[NAMESPACE];
     const { data } = queryResults;
     const isDark = commonLayout.darkTheme,
@@ -230,6 +232,7 @@ class Page extends React.Component {
         filterOptions,
         queryFilters,
         isAdmin,
+        productType,
         onSubmit: this.onFilter,
         handle: {
           getDelHandle: this.getDelHandle,
@@ -244,7 +247,7 @@ class Page extends React.Component {
       })
     };
 
-    if (isAdmin) {
+    if (isAdmin && productType !== NODE) {
       tableProps.rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
           this.setSelectedRows(selectedRows);
@@ -293,7 +296,7 @@ class Page extends React.Component {
         <Card title={"虚拟蜜罐"}
           className={classes}>
           {
-            isAdmin
+            isAdmin && !productType === NODE
               ?
               <Button style={{ marginBottom: "15px" }}
                 onClick={this.switchModal}
@@ -303,7 +306,7 @@ class Page extends React.Component {
               null
           }
           {
-            isAdmin
+            isAdmin && !productType === NODE
               ?
               <Dropdown.Button
                 style={{ marginLeft: "20px" }}
@@ -331,7 +334,7 @@ class Page extends React.Component {
   };
   render = () => {
 
-    const { commonLayout, options, vmOptions } = this.props;
+    const { commonLayout, options, vmOptions, productType } = this.props;
 
     const isDark = commonLayout.darkTheme;
 

@@ -52,7 +52,7 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig: commonCallConfig,
   queryService,
-  initPath: "/manager/device"
+  // initPath: "/manager/device"
 });
 
 

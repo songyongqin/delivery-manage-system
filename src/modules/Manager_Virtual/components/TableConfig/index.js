@@ -26,7 +26,8 @@ import {
   ID_DATAINDEX,
   OPERATION_INIT_VALUE,
   OPERATION_SHUTDOWN_VALUE,
-  OPERATION_START_VALUE
+  OPERATION_START_VALUE,
+  NODE,
 } from '../../ConstConfig';
 
 import {
@@ -36,12 +37,12 @@ import {
   servicesTextConfig,
   systems,
   interactions,
-} from '../../../../configs/ConstConfig';
+} from 'configs/ConstConfig';
 
 import { Progress, Row, Col, Badge, Button, Popover, Tooltip, Menu, Dropdown, Icon, Popconfirm, Modal } from 'antd'
-import JoTag from '../../../../components/JoTag';
+import JoTag from 'components/JoTag';
 import classnames from 'classnames';
-import * as tools from '../../../../utils/tools';
+import * as tools from 'utils/tools';
 
 
 
@@ -177,11 +178,12 @@ const honeypotStatusRenderer = value => {
 
 }
 
-const getOperationRenderer = (handle = {}) => (value, records) => {
+const getOperationRenderer = (handle = {}, productType) => (value, records) => {
   let status = records[HONEYPOT_STATUS_DATAINDEX]
   const isLicenceOverdue = status.includes(STATUS_LICENCE_OVERDUE),
     isRunning = (status.includes(STATUS_RUNNING_VALUE)),
     isStop = (status.includes(STATUS_STOP_VALUE)),
+    isNodeProductType = productType === NODE,
     menu = (
       <Menu onClick={({ key }) => {
         if (key === "start") {
@@ -220,16 +222,16 @@ const getOperationRenderer = (handle = {}) => (value, records) => {
           })
         }
       }}>
-        <Menu.Item key="start" disabled={isRunning || isLicenceOverdue}>
+        <Menu.Item key="start" disabled={isRunning || isLicenceOverdue || isNodeProductType}>
           <Icon type="login" />&nbsp;开机
         </Menu.Item>
-        <Menu.Item key="poweroff" disabled={isStop || isLicenceOverdue}>
+        <Menu.Item key="poweroff" disabled={isStop || isLicenceOverdue || isNodeProductType}>
           <Icon type="poweroff" />&nbsp;关机
         </Menu.Item>
-        <Menu.Item key="delete">
+        <Menu.Item key="delete" disabled={isNodeProductType}>
           <Icon type="delete" />&nbsp; 删除蜜罐
         </Menu.Item>
-        <Menu.Item key="reload" disabled={isLicenceOverdue}>
+        <Menu.Item key="reload" disabled={isLicenceOverdue || isNodeProductType}>
           <Icon type="reload" />&nbsp; 还原初始蜜罐
         </Menu.Item>
       </Menu>
@@ -264,8 +266,9 @@ const filterTextConfig = {
 
 
 export const getColumns = ({
-                           isDark,
+  isDark,
   isAdmin,
+  productType,
   queryFilters,
   handle,
   filterOptions = {},
@@ -276,7 +279,7 @@ export const getColumns = ({
     [SERVICES_DATAINDEX]: servicesRenderer,
     [PORTS_DATAINDEX]: portsRenderer,
     [HONEYPOT_STATUS_DATAINDEX]: honeypotStatusRenderer,
-    [OPERATION_ROW_KEY]: getOperationRenderer(handle),
+    [OPERATION_ROW_KEY]: getOperationRenderer(handle, productType),
     [HOST_IP_DATAINDEX]: commonRenderer,
     [HONEYPOT_IP_DATAINDEX]: commonRenderer,
     [HONEYPOT_NAME_DATAINDEX]: commonRenderer,

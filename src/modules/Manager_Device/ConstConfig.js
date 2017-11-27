@@ -108,3 +108,5 @@ export const VERSION_DATAINDEX = "version",
 
 
 export const CODE_DATAINDEX = "code"
+
+export { NODE } from 'configs/ConstConfig'

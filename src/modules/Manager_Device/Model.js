@@ -43,9 +43,9 @@ export default {
         resolve && resolve(res.payload)
       }
     },
-    getUpdateInfoLocal: function* ({ payload, resolve }, { callWithExtra }) {
+    getUpdateInfoLocal: function* ({ payload, resolve, productType }, { callWithExtra }) {
       const res = yield callWithExtra(
-        service.getVersionInfoLocal,
+        service.getUpdateServiceHandle(productType).getVersionInfoLocal,
         payload,
         callConfig
       )
@@ -53,9 +53,9 @@ export default {
         resolve && resolve(res.payload)
       }
     },
-    getUpdateInfoRemote: function* ({ payload, resolve }, { callWithExtra }) {
+    getUpdateInfoRemote: function* ({ payload, resolve, productType }, { callWithExtra }) {
       const res = yield callWithExtra(
-        service.getVersionInfoRemote,
+        service.getUpdateServiceHandle(productType).getVersionInfoRemote,
         payload,
         callConfig
       )
@@ -63,9 +63,9 @@ export default {
         resolve && resolve(res.payload)
       }
     },
-    updateRemote: function* ({ payload, resolve }, { callWithExtra }) {
+    updateRemote: function* ({ payload, resolve, productType }, { callWithExtra }) {
       const res = yield callWithExtra(
-        service.updateRemote,
+        service.getUpdateServiceHandle(productType).updateRemote,
         payload,
         callConfig
       )
@@ -73,9 +73,9 @@ export default {
         resolve && resolve(res.payload)
       }
     },
-    updateLocal: function* ({ payload, resolve }, { callWithExtra }) {
+    updateLocal: function* ({ payload, resolve, productType }, { callWithExtra }) {
       const res = yield callWithExtra(
-        service.updateLocal,
+        service.getUpdateServiceHandle(productType).updateLocal,
         payload,
         callConfig
       )
@@ -83,7 +83,7 @@ export default {
         resolve && resolve(res.payload)
       }
     },
-    clean: function* ({ payload, resolve }, { callWithExtra }) {
+    clean: function* ({ payload, resolve, }, { callWithExtra }) {
       const res = yield callWithExtra(
         service.clean,
         payload,

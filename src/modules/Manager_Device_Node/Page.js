@@ -3,12 +3,27 @@ import {
   NAMESPACE,
   MANAGER_DEVICE_NAMESPACE,
   MANAGER_DEVICE_NODE_DISK_NAMESPACE,
-  NODE
+  NODE,
+  MANAGER_DEVICE_CONTROL_NAMESPACE
 } from './ConstConfig'
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import NodeDisk from '../Manager_Device_Node_Disk/Page'
 import DeviceManagerGenerator from 'domainComponents/DeviceManager'
+import { getTemp } from 'utils/tools'
 
+
+//产品形态为蜜罐节点时，需将本身作为控制中心来处理......
+let productType = ""
+
+try {
+  productType = (getTemp("productType") || {}).type
+} catch (e) {
+  console.info(e)
+}
+
+let namespace = productType === NODE ? MANAGER_DEVICE_CONTROL_NAMESPACE : NAMESPACE
+
+console.info(namespace, '....')
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
   const effectsLoading = state.loading.effects;
@@ -18,7 +33,7 @@ function mapStateToProps(state) {
     userData: state.user.userData,
     productType: state.user.productType,
 
-    loading: effectsLoading[`${NAMESPACE}/query`]
+    loading: effectsLoading[`${namespace}/query`]
       || effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/put`]
       || effectsLoading[`${MANAGER_DEVICE_NODE_DISK_NAMESPACE}/query`],
 
@@ -37,7 +52,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     get: payload => dispatch({
-      type: `${NAMESPACE}/query`,
+      type: `${namespace}/query`,
       payload,
     }),
     postLicence: payload => dispatch({
@@ -68,13 +83,15 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default DeviceManagerGenerator({
-  namespace: NAMESPACE,
+  namespace: namespace,
   mapStateToProps,
   mapDispatchToProps,
   title: "蜜罐节点设备",
-  productType: NODE,
+  deviceType: NODE,
   getNodeDiskComponent: () => {
-    return <NodeDisk></NodeDisk>
+    return <div>
+      <NodeDisk></NodeDisk>
+    </div>
   }
 })
 

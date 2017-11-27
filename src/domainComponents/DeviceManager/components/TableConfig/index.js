@@ -26,7 +26,10 @@ import {
   ID_DATAINDEX,
   CODE_DATAINDEX,
   APPLIACTION_VERSION_DATAINDEX,
-  VERSION_COMBINE_KEY
+  VERSION_COMBINE_KEY,
+  STAND_ALONE,
+  IDS,
+  NODE
 } from '../../ConstConfig';
 import { Progress, Row, Col, Badge, Button, Dropdown, Icon, Menu, Popover } from 'antd'
 import JoTag from '../../../../components/JoTag';
@@ -90,11 +93,12 @@ const getLicenceRenderer = isDark => value => (
   </div>
 )
 
-const getOperationRenderer = ({ isAdmin, isNode, handle }) => {
+const getOperationRenderer = ({ isAdmin, isNode, handle, productType }) => {
   return records => {
     const isLicence = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX] === LICENCE_VALID_VALUE,
       isConnect = isNode ? records[CONNECT_STATUS_DATAINDEX] === CONNECT : true,
-
+      isNodeProductType = productType.type === NODE,
+      isIdsProductType = productType.type === IDS,
       menu = (
         <Menu onClick={({ key }) => {
 
@@ -113,22 +117,21 @@ const getOperationRenderer = ({ isAdmin, isNode, handle }) => {
           }
 
         }}>
-          <Menu.Item key="licence" disabled={isLicence || !isAdmin || !isConnect}>
+          <Menu.Item key="licence" disabled={isLicence || !isAdmin || !isConnect || isNodeProductType || isIdsProductType}>
             <Icon type="unlock" />&nbsp;授权
           </Menu.Item>
-          <Menu.Item key="update" disabled={((!isAdmin || !isConnect) && isNode) || !isLicence}>
+          <Menu.Item key="update" disabled={((!isAdmin || !isConnect) && isNode) || !isLicence || isNodeProductType || isIdsProductType}>
             <span>
               <Icon type="reload" />&nbsp;检查升级
                 </span>
           </Menu.Item>
-          <Menu.Item key="clean" disabled={!isAdmin || !isConnect}>
+          <Menu.Item key="clean" disabled={!isAdmin || !isConnect || isNodeProductType || isIdsProductType}>
             <span>
               <Icon type="delete" />&nbsp;磁盘清理
                 </span>
           </Menu.Item>
         </Menu>
       )
-
 
 
     return (
@@ -221,7 +224,7 @@ const versionListRenderer = records => {
 
 const versionDataIndexes = [APPLIACTION_VERSION_DATAINDEX, LIBRARY_VERSION_LIST_DATAINDEX, ENGINE_VERSION_LIST_DATAINDEX]
 
-export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilters = {}, onSubmit, versionColExpanded = true }) => {
+export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilters = {}, onSubmit, versionColExpanded = true, productType }) => {
 
   const renderer = {
     diskPer: diskPerRenderer,
@@ -323,7 +326,7 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
           {tableTextConfig.colTitles[OPERATION_ROW_KEY]}
         </p>,
         key: OPERATION_ROW_KEY,
-        render: getOperationRenderer({ isAdmin, handle, isNode })
+        render: getOperationRenderer({ isAdmin, handle, isNode, productType })
       }
     ]
     :
