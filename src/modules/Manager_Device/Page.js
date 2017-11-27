@@ -12,7 +12,7 @@ import { NAMESPACE as MANAGER_DEVICE_NODE_IDS_NAMESPACE } from '../Manager_Devic
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import { NODE } from './ConstConfig'
 import { connect } from 'dva'
-import { STAND_ALONE } from 'configs/ConstConfig';
+import { STAND_ALONE, IDS } from 'configs/ConstConfig';
 
 const mapStateToProps = state => ({
   productType: state.user.productType.type,

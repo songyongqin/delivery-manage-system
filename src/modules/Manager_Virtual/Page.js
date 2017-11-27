@@ -296,7 +296,7 @@ class Page extends React.Component {
         <Card title={"虚拟蜜罐"}
           className={classes}>
           {
-            isAdmin && !productType === NODE
+            isAdmin && productType !== NODE
               ?
               <Button style={{ marginBottom: "15px" }}
                 onClick={this.switchModal}
@@ -306,7 +306,7 @@ class Page extends React.Component {
               null
           }
           {
-            isAdmin && !productType === NODE
+            isAdmin && productType !== NODE
               ?
               <Dropdown.Button
                 style={{ marginLeft: "20px" }}

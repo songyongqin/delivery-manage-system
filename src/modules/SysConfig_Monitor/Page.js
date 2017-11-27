@@ -14,11 +14,13 @@ import MonitorControl from '../SysConfig_Monitor_Control/Page'
 import MonitorIDS from '../SysConfig_Monitor_IDS/Page';
 import MonitorNode from '../SysConfig_Monitor_Node/Page';
 import classnames from 'classnames';
-
+import { IDS, NODE, STAND_ALONE, DISTRIBUTION } from 'configs/ConstConfig'
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
   return {
-    isDark: commonLayout.darkTheme
+    isDark: commonLayout.darkTheme,
+    productType: state.user.productType.type,
+    productInfo: state.user.productType,
   }
 }
 
@@ -39,6 +41,8 @@ class Page extends React.Component {
   }
   getTabsContent = () => {
 
+    const { productType } = this.props;
+
     const tabClasses = classnames({
       [styles["page-dark"]]: this.props.isDark
     })
@@ -47,15 +51,28 @@ class Page extends React.Component {
       <Tabs key="content-tabs"
         className={tabClasses}
         style={{ marginTop: "15px" }}>
-        <Tabs.TabPane key="control" tab="控制中心">
-          <MonitorControl />
-        </Tabs.TabPane>
-        <Tabs.TabPane key="node" tab="蜜罐节点">
-          <MonitorNode />
-        </Tabs.TabPane>
-        <Tabs.TabPane key="ids" tab="流量监测系统">
-          <MonitorIDS />
-        </Tabs.TabPane>
+        {
+          productType === DISTRIBUTION
+          &&
+          <Tabs.TabPane key="control" tab={productType === DISTRIBUTION ? "控制中心" : "单机版蜜罐设备"}>
+            <MonitorControl />
+          </Tabs.TabPane>
+        }
+        {
+          (productType === NODE || productType === DISTRIBUTION)
+          &&
+          <Tabs.TabPane key="node" tab="蜜罐节点">
+            <MonitorNode />
+          </Tabs.TabPane>
+        }
+        {
+          (productType === IDS || productType === DISTRIBUTION)
+          &&
+          <Tabs.TabPane key="ids" tab="流量监测系统">
+            <MonitorIDS />
+          </Tabs.TabPane>
+        }
+
       </Tabs>
     )
   }
