@@ -38,10 +38,12 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType) => {
   if (items) {
 
     const subMenuTitle = (
-      <span>
-        <span style={{ padding: "0 10px" }}>{icon}</span>
-        <span>{title}</span>
-      </span>
+      <Link to={link} className={styles["link"]}>
+        <span>
+          <span style={{ padding: "0 10px" }}>{icon}</span>
+          <span>{title}</span>
+        </span>
+      </Link>
     );
 
     return (

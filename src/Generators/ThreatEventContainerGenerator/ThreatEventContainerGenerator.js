@@ -67,7 +67,7 @@ export default ({ tableConfig, formTextConfig, namespace }) => {
       this.props.onQuery({ ...payload, page: 1 })
     }
     onExport = () => {
-      this.props.post({ timestampRange: this.props.timestampRange }).then(result => {
+      this.props.post({ ...this.props[NAMESPACE].queryFilters }).then(result => {
 
         tools.download(result);
       })

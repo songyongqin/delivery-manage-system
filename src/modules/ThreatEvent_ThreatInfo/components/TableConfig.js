@@ -27,11 +27,10 @@ const filterFormTextConfig = {
 }
 
 export const getColumns = ({ queryFilters, onQuery, filtersOption, filterTextConfig }) => {
-
   return tableColumnsGenerator({
     keys: rowDataIndexes,
     titleTextConfig: tableTextConfig.rowTitles,
-    filterTextConfig: { ...commonConstConfig.textConfig, ...statisticsTextConfig, ...filterTextConfig },
+    filterTextConfig: { ...commonConstConfig.textConfig, ...statistFilterTextConfig, ...filterTextConfig },
     filterOptions: { ...staticFilterOptions, ...filtersOption },
     filteredValue: queryFilters,
     extraProps: {
