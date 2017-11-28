@@ -40,7 +40,7 @@ function mapStateToProps(state) {
     productType: state.user.productType.type,
     postLoading: state.loading.effects[`${NAMESPACE}/postVM`],
     options: state[NAMESPACE].options,
-    vmOptions: state[MAIN_NAMESPACE].queryResults[VM_ENUM_CONFIG_DATA_INDEX] || {}
+    // vmOptions: state[MAIN_NAMESPACE].queryResults[VM_ENUM_CONFIG_DATA_INDEX] || {}
   }
 }
 
@@ -77,6 +77,10 @@ function mapDispatchToProps(dispatch) {
       type: `${NAMESPACE}/putVM`,
       payload,
     }),
+    getVMOption: payload => dispatch({
+      type: `${NAMESPACE}/getVMOption`,
+      payload,
+    })
   }
 }
 
@@ -97,8 +101,9 @@ class Page extends React.Component {
       [HOST_IP_DATAINDEX]: [],
       [HONEYPOT_IP_DATAINDEX]: [],
       [HONEYPOT_NAME_DATAINDEX]: [],
-      visible: false,
+      visible: true,
       selectedRows: [],
+      vmOptions: {}
     }
   }
   switchModal = () => {
@@ -112,6 +117,8 @@ class Page extends React.Component {
     if (queryFilters[HOST_IP_DATAINDEX].length !== 0) {
       // this.getVMIpList();
     }
+    this.props.getVMOption()
+      .then(result => this.setState({ vmOptions: result }))
     // this.getNodeIpList();
     // this.getVMNameList();
   }
@@ -334,8 +341,8 @@ class Page extends React.Component {
   };
   render = () => {
 
-    const { commonLayout, options, vmOptions, productType } = this.props;
-
+    const { commonLayout, options, productType } = this.props;
+    const { vmOptions } = this.state;
     const isDark = commonLayout.darkTheme;
 
     const pageClasses = classnames({

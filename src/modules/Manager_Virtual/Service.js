@@ -12,7 +12,7 @@ export const deleteVM = commonRequestCreator.delete(httpApi.VIRTUAL_MACHINE, tru
 
 export const putVM = commonRequestCreator.put(httpApi.VIRTUAL_MACHINE);
 
-
+export const getVMOption = commonRequestCreator.get(httpApi.VM_OPTION)
 
 export const getStatus = commonRequestCreator.get(httpApi.CREATE_STATUS);
 

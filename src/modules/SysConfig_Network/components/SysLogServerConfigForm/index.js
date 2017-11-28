@@ -75,7 +75,8 @@ class WrappedForm extends React.Component {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </span>}>
           {getFieldDecorator(ENABLED_DATA_INDEX, {
-            initialValue: defaultValue[ENABLED_DATA_INDEX] === 1
+            initialValue: defaultValue[ENABLED_DATA_INDEX] === 1,
+            valuePropName: "checked"
           })(
             <Switch checkedChildren={"开"}
               unCheckedChildren={"关"}

@@ -53,14 +53,16 @@ import {
   systems,
   systemsTextConfig,
   services,
-  servicesTextConfig
+  servicesTextConfig,
+  INTENTION_DATAINDEX
 } from '../../../../configs/ConstConfig'
 
 const gatewayReg = /^(?:(?:2[0-4][0-9]\.)|(?:25[0-5]\.)|(?:1[0-9][0-9]\.)|(?:[1-9][0-9]\.)|(?:[0-9]\.)){3}(?:(?:2[0-5][0-5])|(?:25[0-5])|(?:1[0-9][0-9])|(?:[1-9][0-9])|(?:[0-9]))$/
 
 const ipRangeReg = /^10\.|^192\.168\.|^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-1]\./
 
-import { ipReg } from '../../../../utils/tools'
+import { ipReg } from 'utils/tools'
+import { HOST_IP_DATA_INDEX } from 'modules/Manager_Mirror/ConstConfig';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -109,7 +111,8 @@ const defaultVmOptions = {
 class WrappedForm extends React.Component {
   state = {
     [INTERCATION_DATAINDEX]: null,
-
+    systemList: [],
+    serviceList: []
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -164,7 +167,7 @@ class WrappedForm extends React.Component {
 
   }
   componentDidMount = () => {
-    this.setFormType(this.props);
+    this.setFormType(this.props)
   }
   componentWillReceiveProps = (newProps) => {
     this.setFormType(newProps);
@@ -181,13 +184,41 @@ class WrappedForm extends React.Component {
   systemOnChange = () => {
     this.props.form.resetFields([SERVICES_DATAINDEX])
   }
+  hostIpOnChange = (hostIp) => {
+    let activeSystem = (Object.keys(this.props.vmOptions[hostIp]) || {}).filter(k => k !== LOW_INTERACTION)[0]
+    this.props.form.setFieldsValue({ [SYSTEM_DATAINDEX]: activeSystem })
+    this.props.form.resetFields([SERVICES_DATAINDEX])
+  }
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { isDark, loading, defaultValue = {} } = this.props;
     const activeInteraction = this.state[INTERCATION_DATAINDEX];
     let { vmOptions } = this.props;
+    const hostIpList = Object.keys(vmOptions)
 
-    vmOptions = Object.keys(vmOptions).length === 0 ? defaultVmOptions : vmOptions
+    const defaultHostIp = hostIpList[0]
+
+    const activeHostIp = getFieldValue(HOST_IP_DATAINDEX) || defaultHostIp;
+
+    const systemList = Object.entries(vmOptions[activeHostIp] || {})
+      .filter(([key, value]) => key !== LOW_INTERACTION)
+
+    const defaultSystem = (systemList[0] || [])[0]
+
+    const activeSystem = activeInteraction === LOW_INTERACTION
+      ?
+      LOW_INTERACTION
+      :
+      (getFieldValue(SYSTEM_DATAINDEX) || defaultSystem)
+
+    const serviceList = Object.entries((((((vmOptions[activeHostIp] || {})[activeSystem]) || {})).services || {}) || {})
+
+    const defaultService = []
+
+    const activeService = getFieldValue(SERVICES_DATAINDEX) || defaultService
+
+
+    // console.info(activeSystem, getFieldValue(SYSTEM_DATAINDEX), (vmOptions[activeHostIp] || {})[activeSystem])
 
     const lblClasses = classnames({
       [styles["lbl-dark"]]: isDark
@@ -206,17 +237,6 @@ class WrappedForm extends React.Component {
     const sliderClasses = classnames({
       [styles["slider-dark"]]: isDark
     })
-
-    const activeSystem = getFieldValue(SYSTEM_DATAINDEX) || (vmOptions[HIGH_DATA_INDEX][SYSTEM_LIST_DATA_INDEX][0] || {}).key
-
-    const activeSystemServiceType = (vmOptions[HIGH_DATA_INDEX][SYSTEM_LIST_DATA_INDEX].find(i => i.key === activeSystem) || {}).service
-
-    const activeServiceOptions = activeInteraction === LOW_INTERACTION
-      ?
-      vmOptions[LOW_DATA_INDEX][SERVICE_LIST_DATA_INDEX]
-      :
-      (vmOptions[HIGH_DATA_INDEX][SERVICE_LIST_DATA_INDEX][activeSystemServiceType] || [])
-
 
     return (
       <Form style={{ height: "100%", overflowY: "scroll" }}>
@@ -250,13 +270,13 @@ class WrappedForm extends React.Component {
             getFieldDecorator(
               HOST_IP_DATAINDEX,
               {
-                initialValue: defaultValue[HOST_IP_DATAINDEX] || this.props.options[HOST_IP_DATAINDEX][0]
+                initialValue: hostIpList[0]
               }
             )
               (
-              <Select>
+              <Select onChange={this.hostIpOnChange}>
                 {
-                  this.props.options[HOST_IP_DATAINDEX].map(i => <Option value={i} key={i}>
+                  hostIpList.map(i => <Option value={i} key={i}>
                     {i}
                   </Option>)
                 }
@@ -343,22 +363,15 @@ class WrappedForm extends React.Component {
                 getFieldDecorator(
                   SYSTEM_DATAINDEX,
                   {
-                    initialValue: (vmOptions[HIGH_DATA_INDEX][SYSTEM_LIST_DATA_INDEX][0] || {}).key
+                    initialValue: defaultSystem
                   }
                 )
                   (
-                  // <Radio.Group className={radioClasses}>
-                  //   {
-                  //     systems.map(i => <Radio.Button value={i} key={i}>
-                  //       {systemsTextConfig[i]}
-                  //     </Radio.Button>)
-                  //   }
-                  // </Radio.Group>
                   <Select onChange={this.systemOnChange}>
                     {
-                      vmOptions[HIGH_DATA_INDEX][SYSTEM_LIST_DATA_INDEX].map((i, index) => {
-                        return <Select.Option value={i.key} key={`${index}-option`}>
-                          {i.title}
+                      systemList.map(([key, value], index) => {
+                        return <Select.Option value={key} key={`${index}-option`}>
+                          {value.title}
                         </Select.Option>
                       })
                     }
@@ -369,9 +382,6 @@ class WrappedForm extends React.Component {
             :
             null
         }
-        {/* {
-          activeInteraction === LOW_INTERACTION
-            ? */}
         <FormItem  {...commonProps}
           hasFeedback={false}
           label={<Label className={lblClasses}
@@ -389,19 +399,12 @@ class WrappedForm extends React.Component {
               }
             )
               (
-              // <Checkbox.Group className={checkboxClasses}>
-              //   {
-              //     services.map(i => <Checkbox value={i} key={i}>
-              //       {servicesTextConfig[i]}
-              //     </Checkbox>)
-              //   }
-              // </Checkbox.Group>
               <Checkbox.Group className={checkboxClasses}>
                 {
-                  activeServiceOptions.map((i, index) => {
+                  serviceList.map(([key, value], index) => {
                     return <Col key={`${index}-option`}>
-                      <Checkbox value={i.key} >
-                        {i.title}
+                      <Checkbox value={key} >
+                        {value}
                       </Checkbox>
                     </Col>
                   })
@@ -410,9 +413,6 @@ class WrappedForm extends React.Component {
               )
           }
         </FormItem>
-        {/* :
-            null
-        } */}
         <FormItem {...formItemLayout}
           colon={false}
           hasFeedback={false}

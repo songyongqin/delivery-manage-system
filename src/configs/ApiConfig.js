@@ -122,5 +122,7 @@ export default {
 
     MIRROR_UPDATE_REMOTE: "/mirror/update/online",
 
+    VM_OPTION: "/virtual-machine/option"
+
   }
 }

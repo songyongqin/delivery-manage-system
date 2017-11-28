@@ -290,6 +290,16 @@ const baseModel = {
       if (res.status === 1) {
         resolve && resolve({ payload: res.payload, message: res.message })
       }
+    },
+    *getVMOption({ resolve, payload }, { callWithExtra }) {
+      const res = yield callWithExtra(
+        service.getVMOption,
+        payload,
+        callConfig
+      )
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
+      }
     }
   },
   subscriptions: {
