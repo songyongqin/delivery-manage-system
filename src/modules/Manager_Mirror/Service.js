@@ -1,15 +1,15 @@
 import request from '../../utils/request';
 import ApiConfig from '../../configs/ApiConfig';
-import { uploadFile, getTemp } from 'utils/tools';
+import { uploadFile, getTemp, jsonToQueryString } from 'utils/tools';
 import commonRequestCreator from 'utils/commonRequestCreator'
 const httpApi = ApiConfig.http;
 import {
+  MIRROR_SUMMARY,
   OPERATION_NAMESPACE,
   MD5_DATA_INDEX,
   CHUNK_DATA_INDEX,
   CURRENT_CHUNK_DATA_INDEX
 } from './ConstConfig'
-
 export const updateRemote = commonRequestCreator.post(httpApi.MIRROR_UPDATE_REMOTE)
 
 export const createUploadTask = commonRequestCreator.post(httpApi.MIRROR_UPDATE_LOCAL)
@@ -37,4 +37,20 @@ export const putFileChunk = payload => {
     body: fd,
   })
 
+}
+export function getMIRROR_SUMMARY(payload) {
+  return request(httpApi.MIRROR_SUMMARY + jsonToQueryString(payload), {
+    method: 'GET',
+    header: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+}
+export function getMIRROR_NODE(payload) {
+  return request(httpApi.MIRROR_NODE + jsonToQueryString(payload), {
+    method: 'GET',
+    header: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
 }

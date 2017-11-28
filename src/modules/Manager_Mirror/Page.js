@@ -27,6 +27,9 @@ import RemoteUpdatePanel from './components/RemoteUpdatePanel'
 import Modal from 'domainComponents/Modal'
 import { WithModal } from 'domainComponents/HOSComponents'
 import UpdatePanel from './components/UpdatePanel'
+import Table_mirrorsummary from './components/Table_mirrorsummary'
+import Table_mirrornode from './components/Table_mirrornode'
+
 
 const mapStateToProps = state => ({
   isDark: state.layout.commonLayout.darkTheme,
@@ -49,8 +52,6 @@ const mapDispatchToProps = dispatch => {
     })
   }
 }
-
-
 
 @WithModal()
 @connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
@@ -84,7 +85,7 @@ class Page extends React.Component {
   }
   getOperationPanel = () => {
     return <div key="operation" style={{ overflow: "hidden" }}>
-      <Button type="primary" style={{ float: "right" }} onClick={this.updateModalSwitchHandle}>
+      <Button type="primary" style={{ float: "right",marginBottom:"20px" }} onClick={this.updateModalSwitchHandle}>
         升级控制中心镜像
       </Button>
     </div>
@@ -101,7 +102,10 @@ class Page extends React.Component {
       <div>
         {this.props.animateRender([
           this.getHeader(),
-          this.getOperationPanel()
+          <h4 key="h4" className={lblClasses} style={{ marginBottom: "25px", marginTop: "30px" }}>镜像汇总</h4>,
+          this.getOperationPanel(),
+          <Table_mirrorsummary key="Table_mirrorsummary" />,
+          <Table_mirrornode key="Table_mirrornode" />
         ])}
         <Modal
           key={`${this.state.lastChangeTime}-update-modal`}
@@ -112,12 +116,10 @@ class Page extends React.Component {
           width={"800px"}>
           <UpdatePanel
             onCancel={this.updateModalSwitchHandle}>
-
           </UpdatePanel>
         </Modal>
       </div>
     )
   }
 }
-
 export default Page;

@@ -115,7 +115,8 @@ export default {
 
     SYS_LOG_CONFIG: "/sys-config/sys-log",
 
-
+    MIRROR_SUMMARY: "/mirror",
+    MIRROR_NODE: "/mirror/node",
     MIRROR_UPDATE_LOCAL: "/mirror/update/local",
 
     MIRROR_UPDATE_LOCAL_MERGE: "/mirror/update/local/merge",
