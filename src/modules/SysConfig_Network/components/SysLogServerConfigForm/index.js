@@ -31,7 +31,7 @@ class WrappedForm extends React.Component {
         return;
       }
       values = { ...values }
-      values[ENABLED_DATA_INDEX] = values[ENABLED_DATA_INDEX] === 1;
+      values[ENABLED_DATA_INDEX] = values[ENABLED_DATA_INDEX] ? 1 : 0;
       onSubmit && onSubmit(values)
     });
   };
