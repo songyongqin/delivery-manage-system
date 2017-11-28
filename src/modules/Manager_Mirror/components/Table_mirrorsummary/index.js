@@ -1,26 +1,42 @@
 
 import { connect } from 'dva';
-import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
+import { Table, Input, Button, Icon, Pagination, Spin, Modal, Collapse,Tooltip } from 'antd';
 import { routerRedux } from 'dva/router';
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
-import { NAMESPACE } from '../../ConstConfig'
+import { NAMESPACE_SUMMARY } from '../../ConstConfig'
 import classnames from 'classnames'
 import styles from './index.css'
-
+import TimesLabel from '../../../../components/TimesLabel'
+import JoTag from '../../../../components/JoTag'
+const Panel = Collapse.Panel;
 @WithAnimateRender
 class mirrorsummary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      visible: false
     };
   }
-
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  }
+  handleCancel = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  }
+  callback = (key) => {
+    console.log(key);
+  }
   pageChangeHandler = (page) => {
     const { limit } = this.props;
     this.props.dispatch({
-      type: `${NAMESPACE}/fetch`,
+      type: `${NAMESPACE_SUMMARY}/fetch`,
       payload:
       {
         page,
@@ -77,18 +93,43 @@ class mirrorsummary extends React.Component {
       key: 'size',
     }, {
       title: '创建时间',
-      dataIndex: 'creatTime',
-      key: 'creatTime',
-    }, {
-      title: '详情',
-      dataIndex: '',
-      key: 'c',
-      render: () => {
-        return "+"
+      dataIndex: 'createTime',
+      key: 'createTime',
+      render: value => {
+        return <TimesLabel times={[value]}></TimesLabel>
       }
-    }];
+    },
+    ];
+
+
+
+
     const tableProps = {
       columns: columns,
+      expandedRowRender: 
+      record => {
+        const services=record.services;
+        const port=record.port;
+        return <div>
+        <div style={{width:"100%"}}>
+         <h4 className={classnames({["lbl-dark"]: this.props.isDark})} style={{ float: "left",width:"10%",marginTop:"10px" }}>支持的服务</h4>
+               <ul style={{width:"90%",float:"left"}}>              
+                 {services.map((n,index)=>{
+                   return <li key={`${index}-item`} style={{ float: "left",marginRight:"20px",marginTop:"10px" }}><JoTag>{n}</JoTag></li>
+                 })}
+                       
+               </ul>
+        </div>
+        <div style={{width:"100%"}}>
+               <h4 className={classnames({["lbl-dark"]: this.props.isDark})} style={{ float: "left",width:"10%",marginTop:"10px" }}>支持的端口</h4>
+               <ul style={{width:"90%",float:"left",marginTop:"20px"}}>
+                 {port.map((n,index)=>{
+                   return <li key={`${index}-n`} style={{ float: "left",marginRight:"20px",marginTop:"10px" }}><JoTag>{n}</JoTag></li>
+                 })}
+               </ul>
+        </div>     
+        </div>
+      },
       dataSource: data.map((i, index) => {
         return {
           ...i,
@@ -105,9 +146,6 @@ class mirrorsummary extends React.Component {
     return (
       <div>
         <JoSpin spinning={this.props.loading}>
-
-          <h4 className="line" className={classnames({ "lbl-dark": isDark })} style={{ marginBottom: "25px", marginTop: "30px" }}>镜像汇总</h4>
-
           <EnhanciveTable key="table" tableProps={tableProps} paginationProps={paginationProps}> </EnhanciveTable>
 
         </JoSpin>
@@ -119,10 +157,10 @@ class mirrorsummary extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { data, loading, page, limit, total } = state[NAMESPACE];
+  const { data, loading, page, limit, total } = state[NAMESPACE_SUMMARY];
   return {
     data,
-    loading: state.loading.effects[`${NAMESPACE}/fetch`],
+    loading: state.loading.effects[`${NAMESPACE_SUMMARY}/fetch`],
     page,
     limit,
     total,

@@ -46,3 +46,11 @@ export function getMIRROR_SUMMARY(payload) {
     },
   });
 }
+export function getMIRROR_NODE(payload) {
+  return request(httpApi.MIRROR_NODE + jsonToQueryString(payload), {
+    method: 'GET',
+    header: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+}

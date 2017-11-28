@@ -1,4 +1,5 @@
-export const NAMESPACE = "managerMirror"
+export const NAMESPACE_SUMMARY = "managerMirrorsummary"
+export const NAMESPACE_NODE = "managerMirrornode"
 export const OPERATION_NAMESPACE = "managerMirrorOperation"
 
 export const ID_DATA_INDEX = "id",

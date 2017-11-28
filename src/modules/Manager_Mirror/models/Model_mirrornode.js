@@ -2,10 +2,10 @@
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
 import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
-import { NAMESPACE_SUMMARY } from '../ConstConfig';
+import { NAMESPACE_NODE } from '../ConstConfig';
 import * as tools from '../../../utils/tools.js';
 export default {
-  namespace: NAMESPACE_SUMMARY,
+  namespace: NAMESPACE_NODE,
   state: {
     data: [],
     loading: false,
@@ -20,7 +20,7 @@ export default {
   },
   effects: {
     *fetch({ payload }, { callWithExtra, put }) {
-      const result = yield callWithExtra(Service.getMIRROR_SUMMARY, payload, { withStatusHandle: true });
+      const result = yield callWithExtra(Service.getMIRROR_NODE, payload, { withStatusHandle: true });
       const data = result.payload.data;
       const page = payload.page ? payload.page : 1;
       const total = result.payload.total ? result.payload.total : 0;
