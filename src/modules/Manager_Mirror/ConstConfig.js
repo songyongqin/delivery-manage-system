@@ -38,3 +38,10 @@ export const UPLOAD_STATUS = "upload",
 
 export const REMOTE_METHOD = "remote",
   LOCAL_METHOD = "local"
+
+
+export const HOST_IP_DATA_INDEX = "hostIp",
+  NODE_MIRROR_COUNTS_DATA_INDEX = "nodeMirrorCounts",
+  CONTROL_MIRROR_COUNTS_DATA_INDEX = "controlMirrorCounts",
+  NOT_UPDATE_LIST_DATA_INDEX = "notUpdateList",
+  ID_DAT_INDEX = "id"
