@@ -30,14 +30,21 @@ import {
   createMapDispatchWithPromise
 } from '../../utils/dvaExtraDispatch'
 
+import {
+  IDS,
+} from 'configs/ConstConfig'
+
 const mapStateToProps = state => ({
-  [FLOW_NAMESPACE]: state[FLOW_NAMESPACE].queryFilters
+  [FLOW_NAMESPACE]: state[FLOW_NAMESPACE].queryFilters,
+  productType: state.user.productType.type,
+  productInfo: state.user.productType,
 })
 
 
 
 @queryContainerGenerator({
   namespace: NAMESPACE,
+  mapStateToProps,
 })
 @WithOnQuery(NAMESPACE)
 @WithPageOnChange(NAMESPACE)
@@ -208,17 +215,23 @@ class Page extends React.Component {
   }
   render = () => {
 
-
-
+    const { productType } = this.props;
+    console.info(productType)
     return (
       <Card
         title={this.getQueryPanel()}
         style={{ marginTop: "15px" }}>
         <JoSpin spinning={this.props.queryLoading}>
-          <span>
-            威胁事件
-          </span>
           {
+            productType !== IDS
+            &&
+            <span>
+              威胁事件
+            </span>
+          }
+          {
+            productType !== IDS
+            &&
             this.getContentPanel()
           }
         </JoSpin>

@@ -121,11 +121,7 @@ class Page extends React.Component {
   getDataResultPanel = () => {
     return (
       <div key={"results-panel"}>
-        {
-          this.props.productType !== IDS
-          &&
-          <EventPanel></EventPanel>
-        }
+        <EventPanel></EventPanel>
       </div>
     )
   };
