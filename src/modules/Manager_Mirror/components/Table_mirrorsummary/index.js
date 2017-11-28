@@ -1,6 +1,6 @@
 
 import { connect } from 'dva';
-import { Table, Input, Button, Icon, Pagination, Spin, Modal, Collapse,Tooltip } from 'antd';
+import { Table, Input, Button, Icon, Pagination, Spin, Modal, Collapse, Tooltip } from 'antd';
 import { routerRedux } from 'dva/router';
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
@@ -106,29 +106,29 @@ class mirrorsummary extends React.Component {
 
     const tableProps = {
       columns: columns,
-      expandedRowRender: 
+      expandedRowRender:
       record => {
-        const services=record.services;
-        const port=record.port;
-        return <div>
-        <div style={{width:"100%"}}>
-         <h4 className={classnames({["lbl-dark"]: this.props.isDark})} style={{ float: "left",width:"10%",marginTop:"10px" }}>支持的服务</h4>
-               <ul style={{width:"90%",float:"left"}}>              
-                 {services.map((n,index)=>{
-                   return <li key={`${index}-item`} style={{ float: "left",marginRight:"20px",marginTop:"10px" }}><JoTag>{n}</JoTag></li>
-                 })}
-                       
-               </ul>
-        </div>
-        <div style={{width:"100%"}}>
-               <h4 className={classnames({["lbl-dark"]: this.props.isDark})} style={{ float: "left",width:"10%",marginTop:"10px" }}>支持的端口</h4>
-               <ul style={{width:"90%",float:"left",marginTop:"20px"}}>
-                 {port.map((n,index)=>{
-                   return <li key={`${index}-n`} style={{ float: "left",marginRight:"20px",marginTop:"10px" }}><JoTag>{n}</JoTag></li>
-                 })}
-               </ul>
-        </div>     
-        </div>
+        const services = record.services;
+        const port = record.port;
+        return <table>
+          <tr>
+            <td style={{ width: "10%" }}>支持的服务</td>
+            <td>
+              {services.map((n, index) => {
+                return <span key={`${index}-item`} style={{ float: "left", marginRight: "20px", marginTop: "10px" }}><JoTag style={{ background: "#108ee9", color: "#fff", border: "none" }}>{n}</JoTag></span>
+              })}
+
+            </td>
+          </tr>
+          <tr>
+            <td>支持的端口</td>
+            <td>
+              {port.map((n, index) => {
+                return <span key={`${index}-n`} style={{ float: "left", marginRight: "20px", marginTop: "10px" }}><JoTag style={{ background: "#108ee9", color: "#fff", border: "none" }}>{n}</JoTag></span>
+              })}
+            </td>
+          </tr>
+        </table>
       },
       dataSource: data.map((i, index) => {
         return {
