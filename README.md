@@ -2,7 +2,8 @@
 
 ## 环境依赖:
 Node.js (NPM)  https://nodejs.org/en/
-git 
+
+Git   https://git-scm.com/
 ## 快速开始
 
 1.clone仓库到本地 
@@ -62,3 +63,18 @@ npm start
 ```
 
 
+## .roadhogrc.js配置文件使用说明
+
+开发环境下，为了避免代码入侵问题，将http接口返回数据依赖于外界，
+可改动target为目标服务器，可轻易起切换mock服务和真实的服务器
+```
+{
+  ...,
+  proxy:{
+    "/": {
+      "target": "服务器ip地址",
+      "changeOrigin": true
+    }
+  }
+}
+```
