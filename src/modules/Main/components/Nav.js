@@ -11,7 +11,8 @@ import {
   NODE,
   DISTRIBUTION,
   STAND_ALONE,
-} from '../../../configs/ConstConfig'
+} from 'configs/ConstConfig'
+import { shouldIdsHideRouteList, shouldNodeHideRouteList } from 'configs/RouteConfig'
 const SubMenu = Menu.SubMenu;
 const Item = Menu.Item;
 
@@ -21,10 +22,10 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType) => {
   if (adminOnly && !isAdmin) {
     return null;
   }
-  if (productType === IDS && idsHide) {
+  if (productType === IDS && shouldIdsHideRouteList.includes(link)) {
     return null;
   }
-  if (productType === NODE && nodeHide) {
+  if (productType === NODE && shouldNodeHideRouteList.includes(link)) {
     return null;
   }
 

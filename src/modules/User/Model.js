@@ -14,6 +14,7 @@ import {
   NODE,
 } from '../../configs/ConstConfig';
 import { getVerificationCode } from './Service';
+import { shouldIdsHideRouteList, shouldNodeHideRouteList } from 'configs/RouteConfig'
 moment.locale('zh-cn');
 
 const NAMESPACE = "user";
@@ -148,26 +149,9 @@ const baseModel = {
 
       const adminOnlyRoutes = ["/sys-config", "/user-manager", "/sys-log/login"];
 
-      const idsRouteBlackList = [
-        "/honeypot-manager/mirror",
-        "/honeypot-manager/virtual-machine",
-        "/sys-config/strategy",
-        "/sys-config/white-list",
-        "/report",
-        // "/analyse/ranking",
-        // "/analyse/threat-distribution",
-        "/early-warning",
-      ];
+      const idsRouteBlackList = shouldIdsHideRouteList
 
-      const nodeRouteBlackList = [
-        "/analyse/ranking",
-        "/analyse/threat-distribution",
-        "/early-warning",
-        "/report",
-        "/sys-config/strategy",
-        "/sys-config/white-list",
-        "/user-manager",
-      ];
+      const nodeRouteBlackList = shouldNodeHideRouteList
 
       const productType = (tools.getTemp("productType") || {}).type
       console.info(productType);

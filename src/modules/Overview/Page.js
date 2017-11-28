@@ -34,12 +34,14 @@ import { connect } from 'dva'
 import Modal from 'domainComponents/Modal'
 import EventPanel from './components/EventPanel'
 import EventStatisticsPanel from "./components/EventStatisticsPanel"
-
+import { IDS } from 'configs/ConstConfig'
 const mapStateToProps = state => {
 
   return {
     eventFilters: state[EVENT_NAMESPACE].filters,
     statisticsFilters: state[STATISTICS_NAMESPACE].filters,
+    productType: state.user.productType.type,
+    productInfo: state.user.productType,
   }
 }
 
@@ -80,7 +82,9 @@ class Page extends React.Component {
   }
 
   timestampRangeOnChange = payload => {
-    this.props.queryEvent({ ...this.props.eventFilters, ...payload, page: 1 })
+    if (this.props.productType !== IDS) {
+      this.props.queryEvent({ ...this.props.eventFilters, ...payload, page: 1 })
+    }
     this.props.queryStatistics({ ...payload })
   }
 
@@ -117,7 +121,11 @@ class Page extends React.Component {
   getDataResultPanel = () => {
     return (
       <div key={"results-panel"}>
-        <EventPanel></EventPanel>
+        {
+          this.props.productType !== IDS
+          &&
+          <EventPanel></EventPanel>
+        }
       </div>
     )
   };

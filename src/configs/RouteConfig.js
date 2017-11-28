@@ -22,6 +22,24 @@ import {
 
 const producType = (tools.getTemp("productType") || {}).type
 
+export const shouldIdsHideRouteList = [
+  "/analyse/attack-chain",
+  "/early-warning",
+  "/report",
+  "/sys-config/strategy",
+  "/user-manager",
+  "/manager/virtual-machine",
+  "/manager/mirror"
+]
+
+export const shouldNodeHideRouteList = [
+  "/analyse/ranking",
+  "/analyse/threat-distribution",
+  "/early-warning",
+  "/report",
+  "/sys-config/strategy",
+  "/user-manager"
+]
 
 export default {
   "overview": {
@@ -46,6 +64,7 @@ export default {
         order: 2,
         link: "/analyse/attack-chain",
         title: "攻击链分析",
+        idsHide: true,
       },
       "fall-host": {
         order: 3,
@@ -128,6 +147,7 @@ export default {
     link: "/user-manager",
     adminOnly: true,
     nodeHide: true,
+    idsNode: true,
     icon: <Icon type="team" />
   },
   "manager": {
@@ -167,3 +187,4 @@ export default {
     }
   },
 }
+

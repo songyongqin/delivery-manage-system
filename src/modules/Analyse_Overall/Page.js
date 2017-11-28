@@ -13,6 +13,7 @@ import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import {
   NAMESPACE,
   NODE,
+  IDS,
 } from './ConstConfig'
 import {
   NAMESPACE as OVERALL_NET_BASIC_NAMESPACE,
@@ -132,6 +133,22 @@ class Page extends React.Component {
       [styles["page-dark"]]: this.props.isDark
     })
 
+    const honeypotDataPanel = [
+      <Tabs.TabPane key={OVERALL_NET_NAMESPACE} tab="网络行为">
+        <OverallNet lastTime={lastTime}></OverallNet>
+      </Tabs.TabPane>,
+      <Tabs.TabPane key={OVERALL_SYSTEM_NAMESPACE} tab="系统行为">
+        <OverallSystem lastTime={lastTime}></OverallSystem>
+      </Tabs.TabPane>,
+      <Tabs.TabPane key={OVERALL_CAPTURE_NAMESPACE} tab="捕获文件">
+        <OverallCapture lastTime={lastTime}></OverallCapture>
+      </Tabs.TabPane>,
+      <Tabs.TabPane key={OVERALL_PCAP_NAMESPACE} tab="Pcap下载">
+        <OverallPcap lastTime={lastTime}></OverallPcap>
+      </Tabs.TabPane>
+    ]
+
+
     return (
       <Tabs
         onChange={this.tabOnChange}
@@ -147,18 +164,13 @@ class Page extends React.Component {
               <OverallNetBasic lastTime={lastTime}></OverallNetBasic>
             </Tabs.TabPane>
         }
-        <Tabs.TabPane key={OVERALL_NET_NAMESPACE} tab="网络行为">
-          <OverallNet lastTime={lastTime}></OverallNet>
-        </Tabs.TabPane>
-        <Tabs.TabPane key={OVERALL_SYSTEM_NAMESPACE} tab="系统行为">
-          <OverallSystem lastTime={lastTime}></OverallSystem>
-        </Tabs.TabPane>
-        <Tabs.TabPane key={OVERALL_CAPTURE_NAMESPACE} tab="捕获文件">
-          <OverallCapture lastTime={lastTime}></OverallCapture>
-        </Tabs.TabPane>
-        <Tabs.TabPane key={OVERALL_PCAP_NAMESPACE} tab="Pcap下载">
-          <OverallPcap lastTime={lastTime}></OverallPcap>
-        </Tabs.TabPane>
+        {
+          productType !== IDS
+            ?
+            null
+            :
+            honeypotDataPanel
+        }
       </Tabs>
     )
   }

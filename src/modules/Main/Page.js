@@ -345,6 +345,13 @@ class Page extends React.Component {
               蜜罐节点：<span style={{ color: "#108ee9" }}>{`${productInfo.ip}`}</span>
             </Tooltip>
           }
+          {
+            productInfo.type === IDS
+            &&
+            <Tooltip title="此为该流量监测设备节点主机的IP，用于区分不同的流量监测设备节点">
+              流量监测设备节点：<span style={{ color: "#108ee9" }}>{`${productInfo.ip}`}</span>
+            </Tooltip>
+          }
         </p>
         <span>欢迎回来，</span>
         <Dropdown overlay={menu}>
