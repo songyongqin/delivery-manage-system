@@ -16,7 +16,6 @@ import {
   REQUEST_DOMAIN_DATA_INDEX,
   SENDER_DATA_INDEX,
   RECEIVE_DATA_INDEX,
-
 } from '../../ConstConfig'
 import TimesLabel from '../../../../components/TimesLabel';
 import JoTag from '../../../../components/JoTag';
@@ -67,6 +66,10 @@ const filterFormTextConfig = {
   [RECEIVE_DATA_INDEX]: {
     label: "收件人邮箱",
     placeholder: "请输入收件人邮箱"
+  },
+  [REQUEST_DOMAIN_DATA_INDEX]: {
+    label: "域名搜索",
+    placeholder: "请输入域名"
   }
 }
 
