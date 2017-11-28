@@ -68,6 +68,7 @@ import ReportModel_threat_info from './modules/Report/models/Model_threat_info';
 import ReportModel_chart_statistical from './modules/Report/models/Model_chart_statistical';
 import ManagerMirrorModelList from './modules/Manager_Mirror/Model'
 import SysLogConfigModel from './modules/SysConfig_Network/models/sysLog.js'
+import ControlConfigModel from './modules/SysConfig_Network/models/controlConfig'
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -138,6 +139,7 @@ app.model(ReportModel_threat_info)
 app.model(ReportModel_chart_statistical)
 importModelList(ManagerMirrorModelList)
 app.model(SysLogConfigModel)
+app.model(ControlConfigModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

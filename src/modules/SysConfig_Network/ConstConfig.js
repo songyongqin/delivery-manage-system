@@ -4,6 +4,7 @@
 
 export const NAMESPACE = "network";
 export const SYS_LOG_CONFIG_NAMESPACE = "sysLogConfig"
+export const CONTROL_CONFIG_NAMESPACE = "controlConfig"
 
 export const DNS_DATAINDEX = "dns",
   ADAPTER_LIST_DATAINDEX = "adapterList",

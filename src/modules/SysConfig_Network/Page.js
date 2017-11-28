@@ -23,12 +23,15 @@ import {
   STATUS_UN_CONNECT,
   STATUS_CONNECT,
   DNS_DATAINDEX,
-  SYS_LOG_NETWORK_TITLE
+  SYS_LOG_NETWORK_TITLE,
+  CONTROL_CONFIG_NAMESPACE,
 } from './ConstConfig'
+import { IDS, DISTRIBUTION, NODE, STAND_ALONE } from 'configs/ConstConfig'
 import { connect } from 'dva';
 import NetworkForm from './components/NetworkForm';
 import DNSForm from './components/DNSForm';
 import SysLogServerConfigForm from './components/SysLogServerConfigForm'
+import ControlConfigForm from './components/ControlConfigForm'
 import JoSpin from '../../components/JoSpin';
 import classnames from 'classnames';
 
@@ -68,7 +71,7 @@ const AdapterContent = ({ data = [], titleStyle, isDark, loading, getAdapterPutH
 )
 /*********************************************************/
 const SysLogServerContent = ({ data = {}, isDark, loading, onSubmit }) => {
-  return <Card title={SYS_LOG_NETWORK_TITLE}>
+  return <Card title={SYS_LOG_NETWORK_TITLE} style={{ marginBottom: "15px" }}>
     <JoSpin spinning={loading}>
       <SysLogServerConfigForm
         loading={loading}
@@ -76,6 +79,20 @@ const SysLogServerContent = ({ data = {}, isDark, loading, onSubmit }) => {
         onSubmit={onSubmit}
         isDark={isDark}>
       </SysLogServerConfigForm>
+    </JoSpin>
+  </Card>
+}
+
+/*********************************************************/
+const ControlCenterConfigContent = ({ data = {}, isDark, loading, onSubmit }) => {
+  return <Card title={"控制中心IP配置"} style={{ marginBottom: "15px" }}>
+    <JoSpin spinning={loading}>
+      <ControlConfigForm
+        loading={loading}
+        defaultValue={data}
+        onSubmit={onSubmit}
+        isDark={isDark}>
+      </ControlConfigForm>
     </JoSpin>
   </Card>
 }
@@ -89,7 +106,12 @@ const mapStateToProps = state => ({
   getLoading: state.loading.effects[`${NAMESPACE}/query`],
   sysConfigLoading: state.loading.effects[`${SYS_LOG_CONFIG_NAMESPACE}/query`] ||
     state.loading.effects[`${SYS_LOG_CONFIG_NAMESPACE}/put`],
-  commonLayout: state.layout.commonLayout
+  commonLayout: state.layout.commonLayout,
+  productType: state.user.productType.type,
+  productInfo: state.user.productType,
+  controlConfig: state[CONTROL_CONFIG_NAMESPACE].queryResults,
+  controlConfigLoading: state.loading.effects[`${CONTROL_CONFIG_NAMESPACE}/query`] ||
+    state.loading.effects[`${CONTROL_CONFIG_NAMESPACE}/put`],
 })
 /*********************************************************/
 const mapDispatchToProps = dispatch => ({
@@ -106,7 +128,14 @@ const mapDispatchToProps = dispatch => ({
   putSysLogConfig: payload => dispatch({
     type: `${SYS_LOG_CONFIG_NAMESPACE}/put`,
     payload,
-  })
+  }),
+  getControlConfig: payload => dispatch({
+    type: `${CONTROL_CONFIG_NAMESPACE}/query`,
+  }),
+  putControlConfig: payload => dispatch({
+    type: `${CONTROL_CONFIG_NAMESPACE}/put`,
+    payload,
+  }),
 })
 /*********************************************************/
 const ADAPTER = "adapter";
@@ -123,6 +152,9 @@ class Page extends React.Component {
   componentDidMount = () => {
     this.props.get();
     this.props.getSysLogConfig()
+    if (this.props.productType === IDS || this.props.productType === NODE) {
+      this.props.getControlConfig()
+    }
   }
   /*********************************************************/
   getBreadcrumb = () => {
@@ -150,9 +182,12 @@ class Page extends React.Component {
   putSysLogConfig = payload => this.props.putSysLogConfig(payload)
     .then(Message.success.call(null, "保存成功"))
   /*********************************************************/
+  putControlConfig = payload => this.props.putControlConfig(payload)
+    .then(Message.success.call(null, "保存成功"))
+  /*********************************************************/
   getContentPanel = () => {
     const { queryResults } = this.props[NAMESPACE],
-      { putLoading, getLoading, commonLayout, sysConfigLoading, sysLogConfig } = this.props,
+      { putLoading, getLoading, commonLayout, sysConfigLoading, sysLogConfig, controlConfigLoading, controlConfig } = this.props,
       isDark = commonLayout.darkTheme;
 
     let titleStyle = { fontSize: "16px", marginBottom: "10px" };
@@ -175,8 +210,17 @@ class Page extends React.Component {
             loading={sysConfigLoading}
             data={sysLogConfig}
             isDark={isDark}>
-
           </SysLogServerContent>
+          {
+            (this.props.productType === IDS || this.props.productType === NODE)
+            &&
+            <ControlCenterConfigContent
+              loading={controlConfigLoading}
+              data={controlConfig}
+              onSubmit={this.putControlConfig}
+              isDark={isDark}>
+            </ControlCenterConfigContent>
+          }
         </JoSpin>
       </div>
     )

@@ -8,22 +8,21 @@ import {
   dnsTextConfig
 } from '../../ConstConfig'
 
-
-
 import { ipReg } from 'utils/tools'
 
+
 const dataIndexes = [
-  DNS_DATAINDEX
+  "ip"
 ];
 
 const rulesConfig = {
-  [DNS_DATAINDEX]: [
+  ip: [
     {
-      required: true, message: "DNS不能为空",
+      required: true, message: "不能为空",
     },
     {
       pattern: ipReg,
-      message: "请输入正确的DNS"
+      message: "请输入正确的IP"
     }
   ],
 
@@ -34,5 +33,5 @@ export default (props) => {
   return <CommonForm {...props}
     rulesConfig={rulesConfig}
     dataIndexes={dataIndexes}
-    labelTextConfig={dnsTextConfig} />
+    labelTextConfig={"IP"} />
 };
