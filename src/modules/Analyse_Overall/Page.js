@@ -148,7 +148,6 @@ class Page extends React.Component {
       </Tabs.TabPane>
     ]
 
-
     return (
       <Tabs
         onChange={this.tabOnChange}
@@ -165,7 +164,7 @@ class Page extends React.Component {
             </Tabs.TabPane>
         }
         {
-          productType !== IDS
+          productType === IDS
             ?
             null
             :
