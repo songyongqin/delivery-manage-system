@@ -97,3 +97,16 @@
     }
   }
 }
+
+.event-modal{
+  :global{
+    .ant-modal-content{
+      height:100%;
+    }
+    .ant-modal-body{
+      height:calc(100% - 48px);
+      position: relative;
+      top:30px;
+    }
+  }
+}

@@ -82,6 +82,16 @@
 .modal-dark :global .ant-modal-close-x {
   color: #b7c1cc;
 }
+
+.event-modal :global .ant-modal-content {
+  height: 100%;
+}
+
+.event-modal :global .ant-modal-body {
+  height: calc(100% - 48px);
+  position: relative;
+  top: 30px;
+}
  
 
  /*# sourceMappingURL= styles.css.map */

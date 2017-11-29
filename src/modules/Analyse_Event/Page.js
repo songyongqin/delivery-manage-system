@@ -134,7 +134,8 @@ class Page extends React.Component {
           this.getDataResultPanel(),
         ])}
         <Modal width={"90%"}
-          style={{ top: "80px" }}
+          className={styles["event-modal"]}
+          style={{ position: "absolute", top: "30px", bottom: "30px", left: "5%", right: "5%" }}
           key={`${modalVisible[THREAT_EVENT_MODAL]}-modal-threat-event`}
           footer={null}
           visible={modalVisible[THREAT_EVENT_MODAL]}

@@ -7,7 +7,9 @@
 .page{
   @include common-page();
   background: $bg-color-level-3;
-  padding:30px;
+  height:100%;
+  padding:0 30px 30px 30px;
+  // overflow-y: scroll;
   :global{
     .ant-tabs-tab-active{
       color:$primary-color;
@@ -15,8 +17,8 @@
   }
 
   .threat-event-item-wrapper{
-    max-height: 600px;
-    overflow-y: scroll;
+    // max-height: 600px;
+    // overflow-y: scroll;
     padding-right:30px;
   }
 }

@@ -3,7 +3,8 @@
   background: #F1F1F1;
   color: rgba(0, 0, 0, 0.85);
   background: #F1F1F1;
-  padding: 30px;
+  height: 100%;
+  padding: 0 30px 30px 30px;
 }
 
 .page :global .ant-tabs-tab-active {
@@ -11,8 +12,6 @@
 }
 
 .page .threat-event-item-wrapper {
-  max-height: 600px;
-  overflow-y: scroll;
   padding-right: 30px;
 }
 
