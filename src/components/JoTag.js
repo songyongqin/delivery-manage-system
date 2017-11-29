@@ -1,7 +1,7 @@
 /**
  * Created by jojo on 2017/8/28.
  */
-import { Tag as AntTag, Tooltip } from 'antd';
+import { Tag as AntTag, Popover } from 'antd';
 
 
 const Tag = props => {
@@ -10,9 +10,9 @@ const Tag = props => {
   if (typeof children === 'string') {
 
     if (children.length > overflowLength) {
-      value = <Tooltip title={<span>{children}</span>}>
+      value = <Popover content={<p>{children}</p>} >
         {children.substr(0, overflowLength) + "..."}
-      </Tooltip>;
+      </Popover>;
     } else {
       value = children;
     }
