@@ -43,7 +43,9 @@ const baseModel = {
       const res = yield callWithExtra(
         service.post,
         { ...payload || {} },
-        commonCallConfig
+        {
+          withStatusHandle: true,
+        }
       )
 
       if (res.status === 1) {

@@ -46,8 +46,8 @@ export default class TagList extends React.Component {
       data.length > maxCount && list.push(
         <Popover
           key="extra-tag-item"
-          placement={"bottomRight"}
           arrowPointAtCenter={true}
+          autoAdjustOverflow={true}
           content={
             <div style={contentStyle}>
               <TagList
