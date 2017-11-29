@@ -2,12 +2,12 @@
  * Created by jojo on 2017/9/5.
  */
 import React from 'react';
-import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
-import JoTag from '../../../../components/JoTag';
+import tableColumnsGenerator from 'utils/tableColumnsGenerator';
+import JoTag from 'components/JoTag';
 import { Icon, Switch, Card, Timeline, InputNumber, Button, Badge } from 'antd';
 import classnames from 'classnames';
-import * as tools from '../../../../utils/tools';
-import commonConstConfig from '../../../../configs/ConstConfig';
+import * as tools from 'utils/tools';
+import commonConstConfig from 'configs/ConstConfig';
 import {
   filterRowDataIndexes,
   rowDataIndexes,
@@ -25,15 +25,17 @@ import {
   IDS_SOURCE,
   sourceTextConfig,
 } from '../../ConstConfig';
-import FilterInputNumber from '../../../../components/FilterInputNumber/index';
-import TimeLabel from '../../../../components/TimesLabel';
+import FilterInputNumber from 'components/FilterInputNumber/index';
+import TimeLabel from 'components/TimesLabel';
 import CountUp from 'react-countup';
 
 import {
   ACTIONSTATUS_SUCCESS,
   ACTIONSTATUS_FAIL,
   ACTIONSTATUS_UNKNOW,
-} from '../../../../configs/ConstConfig';
+} from 'configs/ConstConfig';
+
+import TagList from 'components/TagList'
 
 const rowsRenderer = {
   description: value => {
@@ -142,32 +144,16 @@ export const getExpandedRowRender = ({ isDark }) => {
         className={classes}>
         <table>
           <tbody>
-
             <tr>
               <td style={nth1TdStyle}>
                 {tools.getKeyText(DETAILS_DATAINDEX, expandedRow.rows)}
               </td>
               <td style={nth2TdStyle}>
                 <div>
-                  {details.map((d, index) => {
-                    return <JoTag key={'item-' + index}
-
-                      color="#108ee9">
-                      {d}
-                    </JoTag>
-                  })}
+                  <TagList data={details} maxCount={8}></TagList>
                 </div>
               </td>
             </tr>
-
-            {/* <tr>
-              <td style={nth1TdStyle}>
-                {tools.getKeyText(ADVICE_DATAINDEX, expandedRow.rows)}
-              </td>
-              <td style={nth2TdStyle}>
-                <JoTag color="#108ee9">{advice}</JoTag>
-              </td>
-            </tr> */}
 
             <tr>
               <td style={nth1TdStyle}>

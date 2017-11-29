@@ -4,23 +4,23 @@
 import { Tag as AntTag, Tooltip } from 'antd';
 
 
-const Tag = (props) => {
-  let children = props.children,
-    value = "";
+const Tag = props => {
+  let { overflowLength = 30, children } = props,
+    value = children;
   if (typeof children === 'string') {
-    if (children.length > 60) {
+
+    if (children.length > overflowLength) {
       value = <Tooltip title={<span>{children}</span>}>
-        {children.substr(0, 60) + "..."}
+        {children.substr(0, overflowLength) + "..."}
       </Tooltip>;
     } else {
       value = children;
     }
-  } else {
-    value = children;
+
   }
   return <AntTag
     {...props}
-    style={{ cursor: "text", borderRadius: "4px", margin: "0 5px 5px 0", ...(props.style || {}) }}
+    style={{ textAlign: "center", cursor: "text", borderRadius: "4px", margin: "0 5px 5px 0", ...(props.style || {}) }}
     children={value} />
 };
 

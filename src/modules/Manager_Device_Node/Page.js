@@ -23,7 +23,6 @@ try {
 
 let namespace = productType === NODE ? MANAGER_DEVICE_CONTROL_NAMESPACE : NAMESPACE
 
-console.info(namespace, '....')
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
   const effectsLoading = state.loading.effects;

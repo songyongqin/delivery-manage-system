@@ -3,17 +3,18 @@
  */
 import React from 'react';
 import styles from './styles.css'
-import tableColumnsGenerator from '../../../utils/tableColumnsGenerator';
-import JoTag from '../../../components/JoTag';
+import tableColumnsGenerator from 'utils/tableColumnsGenerator';
+import JoTag from 'components/JoTag';
 import { Icon, Switch, Card, Timeline, InputNumber, Button } from 'antd';
 import classnames from 'classnames';
 import * as tools from '../../../utils/tools';
 import commonConstConfig from '../../../configs/ConstConfig';
 import { filterRowDataIndexes, rowDataIndexes, tableTextConfig } from '../ConstConfig';
-import FilterInputNumber from '../../../components/FilterInputNumber/index';
-import TimeLabel from '../../../components/TimesLabel';
+import FilterInputNumber from 'components/FilterInputNumber/index';
+import TimeLabel from 'components/TimesLabel';
 import QueryIPForm from './QueryIPForm'
 import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
+import TagList from 'components/TagList'
 import {
   ATTACK_COUNTS_DATAINDEX,
   ITEMS_DATAINDEX,
@@ -39,12 +40,7 @@ import {
 
 const rowsRenderer = {
   [ATTACK_EVENT_TYPE_LIST_DATAINDEX]: value => (
-    <div>
-      {value.map((i, index) => (
-        <JoTag color="#108ee9"
-          key={`${index}-event-item`}>{i}</JoTag>
-      ))}
-    </div>
+    <TagList data={value} maxCount={8}></TagList>
   )
 };
 
@@ -146,7 +142,6 @@ export const getExpandedRowRender = ({ isDark }) => {
                     </td>
                   </tr>
 
-
                   <tr>
                     <td>
                       {tools.getKeyText(ATTACKTIMES_DATAINDEX, expandTextConfig)}
@@ -155,8 +150,6 @@ export const getExpandedRowRender = ({ isDark }) => {
                       <TimeLabel times={attackTime} />
                     </td>
                   </tr>
-
-
                   {
                     source === HONEYPOT_SOURCE
                       ?
@@ -183,7 +176,6 @@ export const getExpandedRowRender = ({ isDark }) => {
                       :
                       null
                   }
-
                   {
                     source === IDS_SOURCE
                       ?
@@ -193,44 +185,7 @@ export const getExpandedRowRender = ({ isDark }) => {
                         </td>
                         <td>
                           <div>
-                            {
-                              description.map((i, index) => (
-                                <JoTag color="#108ee9" key={`${index}-key`}>
-                                  {i}
-                                </JoTag>
-                              ))
-                            }
-                            {/* <JoTag color="#108ee9">
-                              {description[IDS_SOURCE_DES_SOURCE_IP_DATAINDEX]}
-                            </JoTag>
-                            端口
-                            &nbsp;
-                            <JoTag color="#108ee9">
-                              {description[IDS_SOURCE_DES_SOURCE_PORT_DATAINDEX]}
-                            </JoTag>
-                            通过
-                            &nbsp;
-                            <JoTag color="#108ee9">
-                              {description[IDS_SOURCE_DES_PROTOCOL_DATAINDEX]}
-                            </JoTag>
-                            访问
-                            &nbsp;
-                            <JoTag color="#108ee9">
-                              {description[IDS_SOURCE_DES_DOMAIN_DATAINDEX]}
-                            </JoTag>
-                            <JoTag color="#108ee9">
-                              {description[IDS_SOURCE_DES_TARGET_IP_DATAINDEX]}
-                            </JoTag>
-                            端口
-                            &nbsp;
-                            <JoTag color="#108ee9">
-                              {description[IDS_SOURCE_DES_TARGET_PORT_DATAINDEX]}
-                            </JoTag>
-                            其他信息
-                            &nbsp;
-                            <JoTag color="#108ee9">
-                              {description[IDS_SOURCE_DES_OTHER_DATAINDEX]}
-                            </JoTag> */}
+                            <TagList data={description} maxCount={8}></TagList>
                           </div>
                         </td>
                       </tr>
