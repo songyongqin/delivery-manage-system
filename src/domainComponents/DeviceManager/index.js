@@ -304,6 +304,7 @@ export default ({
           </JoSpin>
           <Modal
             width="800px"
+            style={{ top: "40" }}
             key={`${this.state.visible}-licence-modal`}
             onCancel={this.switchModal}
             title="设备授权"
@@ -322,6 +323,7 @@ export default ({
           </Modal>
           <Modal
             width={"1200px"}
+            style={{ top: "40" }}
             key={`${this.state.updateVisible}-update-modal`}
             onCancel={this.switchUpdateModal}
             title="检测更新"
@@ -342,6 +344,7 @@ export default ({
           <Modal
             width={"800px"}
             title="清理磁盘"
+            style={{ top: "40" }}
             key={`${this.state.cleanVisible}-clean-modal`}
             onCancel={this.switchCleanModal}
             maskClosable={false}

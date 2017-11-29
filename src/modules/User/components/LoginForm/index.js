@@ -33,7 +33,7 @@ class WrappedForm extends React.Component {
       <Form className={formClasses}>
         <FormItem required={false}>
           {getFieldDecorator('userAccount', {
-            rules: [{ required: true, message: '不能为空' }],
+            rules: [{ required: true, message: '请输入您的账号' }],
           })(
             <Input disabled={loading}
               prefix={<Icon type="user" style={{ fontSize: 13 }} />}
@@ -66,7 +66,7 @@ class WrappedForm extends React.Component {
                   autoComplete="off"
                   disabled={loading}
                   onPressEnter={this.handleSubmit}
-                  placeholder="请输入右侧的验证码" />
+                  placeholder="验证码" />
                 )}
             </FormItem>
           </div>
