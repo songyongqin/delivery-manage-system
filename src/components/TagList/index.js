@@ -45,6 +45,7 @@ export default class TagList extends React.Component {
 
       data.length > maxCount && list.push(
         <Popover
+          key="extra-tag-item"
           placement={"bottomRight"}
           arrowPointAtCenter={true}
           content={
@@ -57,18 +58,13 @@ export default class TagList extends React.Component {
               </TagList>
             </div>
           }>
-          <JoTag
-            style={{ cursor: "pointer" }}
-            key={`extra-tag-item`}>
+          <JoTag style={{ cursor: "pointer" }}>
             {`...`}
           </JoTag>
         </Popover>
       )
-
-      return <div style={style}>{list}</div>;
-
+      return <div style={style}>{list}</div>
     }
-
     return (
       <div style={style}>
         {
