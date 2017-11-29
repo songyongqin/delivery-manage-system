@@ -8,6 +8,8 @@ import { WithContainerHeader, WithAnimateRender } from '../../../../components/H
 import { NAMESPACE_NODE } from '../../ConstConfig'
 import classnames from 'classnames'
 import styles from './index.css'
+import TagList from 'components/TagList'
+import JoTag from 'components/JoTag'
 const Panel = Collapse.Panel;
 @WithAnimateRender
 class mirrornode extends React.Component {
@@ -62,6 +64,10 @@ class mirrornode extends React.Component {
       title: '未更新镜像名称列表',
       dataIndex: 'notUpdateList',
       key: 'notUpdateList',
+      render:record=>{
+
+        return <TagList data={record} maxCount={4}></TagList>
+      }
     }, {
       title: '操作',
       dataIndex: 'interaction',

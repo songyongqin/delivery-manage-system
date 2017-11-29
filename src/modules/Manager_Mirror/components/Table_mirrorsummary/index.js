@@ -1,6 +1,6 @@
 
 import { connect } from 'dva';
-import { Table, Input, Button, Icon, Pagination, Spin, Modal, Collapse, Tooltip } from 'antd';
+import { Table, Input, Button, Icon, Pagination, Spin, Modal, Collapse, Tooltip,Popover } from 'antd';
 import { routerRedux } from 'dva/router';
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
@@ -10,6 +10,7 @@ import classnames from 'classnames'
 import styles from './index.css'
 import TimesLabel from '../../../../components/TimesLabel'
 import JoTag from '../../../../components/JoTag'
+import TagList from 'components/TagList'
 const Panel = Collapse.Panel;
 @WithAnimateRender
 class mirrorsummary extends React.Component {
@@ -91,6 +92,9 @@ class mirrorsummary extends React.Component {
       title: '镜像大小',
       dataIndex: 'size',
       key: 'size',
+      render:record=>{
+        return record>=1024?(record/1024.0).toFixed(1)+"G":record+"Mb"
+      }
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
@@ -111,23 +115,20 @@ class mirrorsummary extends React.Component {
         const services = record.services;
         const port = record.port;
         return <table>
+          <tbody>
           <tr>
             <td style={{ width: "10%" }}>支持的服务</td>
-            <td>
-              {services.map((n, index) => {
-                return <span key={`${index}-item`} style={{ float: "left", marginRight: "20px", marginTop: "10px" }}><JoTag style={{ background: "#108ee9", color: "#fff", border: "none" }}>{n}</JoTag></span>
-              })}
-
+            <td>          
+            <TagList data={services} maxCount={8}></TagList>
             </td>
           </tr>
           <tr>
             <td>支持的端口</td>
-            <td>
-              {port.map((n, index) => {
-                return <span key={`${index}-n`} style={{ float: "left", marginRight: "20px", marginTop: "10px" }}><JoTag style={{ background: "#108ee9", color: "#fff", border: "none" }}>{n}</JoTag></span>
-              })}
+            <td>          
+            <TagList data={port} maxCount={8}></TagList>
             </td>
           </tr>
+          </tbody>
         </table>
       },
       dataSource: data.map((i, index) => {
