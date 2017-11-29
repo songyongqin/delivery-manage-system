@@ -724,7 +724,6 @@ class Page extends React.Component {
           }
         });
         if (lastChangeTime !== chartstatisticallastChangeTime) {
-          console.info("11")
           this.props.dispatch({
             type: `${NAMESPACE_CHART}/save`,
             payload: {
@@ -743,7 +742,7 @@ class Page extends React.Component {
     };
   }
   render() {
-    console.info(this.state.checkedListNew)
+
     const eventreportdata = ["VALUE_FALL_HOST", "VALUE_THREATEVENT", "VALUE_THREATINFO", "VALUE_MALIP", "VALUE_MALDOMAIN", "VALUE_SUFFERHOSTCALLONRECORD", "VALUE_HAVECOMMUNICATEINSIDEIP", "VALUE_CALL_ON_IP", "VALUE_CALL_ON_DOMAIN", "VALUE_HIGH", "VALUE_MIDDLE", "VALUE_LOW"];
     const chartdata = ["VALUE_CHART_ATTACK", "VALUE_EVENT_TYPE", "VALUE_EXLOITVULNERABILITY", "VALUE_CHART_SOURCECOUNTRY", "VALUE_CHART_SOURCEPROVINCE", "VALUE_RECORDSTATISTICAL"];
     const { visible, loading } = this.state;

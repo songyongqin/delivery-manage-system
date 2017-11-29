@@ -24,7 +24,6 @@ export default {
       const timestampRange = payload.timestampRange ? payload.timestampRange : [moment(), moment()];
       const limit = payload.limit ? payload.limit : 10;
       const data = result.payload;
-      console.info(data)
       if (result.status === 1) {
         yield put({
           type: 'save',
