@@ -46,13 +46,12 @@ class Page extends React.Component {
     const tabClasses = classnames({
       [styles["page-dark"]]: this.props.isDark
     })
-
     return (
       <Tabs key="content-tabs"
         className={tabClasses}
         style={{ marginTop: "15px" }}>
         {
-          productType === DISTRIBUTION
+          (productType === DISTRIBUTION || productType === STAND_ALONE)
           &&
           <Tabs.TabPane key="control" tab={productType === DISTRIBUTION ? "控制中心" : "单机版蜜罐设备"}>
             <MonitorControl />

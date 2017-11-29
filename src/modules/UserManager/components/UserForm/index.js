@@ -19,7 +19,7 @@ import {
   COMMON_USER_ROLE
 } from '../../ConstConfig'
 
-import * as tools from '../../../../utils/tools';
+import * as tools from 'utils/tools';
 
 
 const textConfig = tableTextConfig.rowTitles
@@ -217,7 +217,7 @@ class WrappedForm extends React.Component {
             name: "confirm",
             rules: [
               {
-                required: true, message: '请再次确密码',
+                required: true, message: '确认密码不能为空',
               },
               {
                 validator: this.checkPassword,

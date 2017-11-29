@@ -67,7 +67,12 @@ export default ({ tableConfig, formTextConfig, namespace }) => {
       this.props.onQuery({ ...payload, page: 1 })
     }
     onExport = () => {
-      this.props.post({ ...this.props[NAMESPACE].queryFilters }).then(result => {
+
+      const payload = { ...this.props[NAMESPACE].queryFilters }
+      const { timestampRange } = payload
+      payload["timestampRange"] = tools.momentToTimestamp(timestampRange)
+
+      this.props.post(payload).then(result => {
 
         tools.download(result);
       })

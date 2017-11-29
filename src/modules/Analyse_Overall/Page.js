@@ -14,6 +14,7 @@ import {
   NAMESPACE,
   NODE,
   IDS,
+  STAND_ALONE
 } from './ConstConfig'
 import {
   NAMESPACE as OVERALL_NET_BASIC_NAMESPACE,
@@ -71,7 +72,9 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeKey: props.productType === NODE ? OVERALL_NET_NAMESPACE : OVERALL_NET_BASIC_NAMESPACE
+      activeKey: (props.productType === NODE || props.productType === STAND_ALONE)
+        ?
+        OVERALL_NET_NAMESPACE : OVERALL_NET_BASIC_NAMESPACE
     }
   }
   componentDidMount = () => {
@@ -147,7 +150,7 @@ class Page extends React.Component {
         <OverallPcap lastTime={lastTime}></OverallPcap>
       </Tabs.TabPane>
     ]
-
+    console.info(productType === NODE, productType === STAND_ALONE, productType, NODE, STAND_ALONE)
     return (
       <Tabs
         onChange={this.tabOnChange}
@@ -155,7 +158,7 @@ class Page extends React.Component {
         className={tabClasses}
         activeKey={this.state.activeKey}>
         {
-          productType == NODE
+          (productType === NODE || productType === STAND_ALONE)
             ?
             null
             :
