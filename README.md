@@ -1,20 +1,30 @@
 # 安天捕风蜜罐系统
 
 ## 环境依赖:
-Node.js (NPM)  https://nodejs.org/en/
+Node.js (NPM) 版本：^6.9.2  https://nodejs.org/en/ 
 
 Git   https://git-scm.com/
+
 ## 快速开始
 
 1.clone仓库到本地 
+
+主分支
 ```
-git clone [仓库地址] -b [分支]
+git clone https://git.antiy.org.cn/chenxinzhou/Attack-Capture-System.git -b master
+```
+或开发分支
+```
+git clone https://git.antiy.org.cn/chenxinzhou/Attack-Capture-System.git -b dev
 ```
 
-
-2.进入代码所在的根目录，使用npm安装依赖(国外镜像速度较慢，推荐使用cnpm http://npm.taobao.org/)
+2.进入代码所在的根目录，
 ```
-npm install
+cd Attack-Capture-System
+```
+使用npm安装依赖(国外镜像速度较慢，推荐使用cnpm http://npm.taobao.org/)
+```
+npm install 或 cnpm install
 ```
 
 
@@ -28,6 +38,52 @@ npm start
 
 执行`npm run build` 等待构建完毕后，所有静态资源均会在根目录下dist文件夹内生成，复制文件夹内容部署到服务器上即可（具体文件结构可自行调整，调整后需改动index.html的文件资源引用路径）
 
+## package.json 说明
+
+```
+{
+  ...,
+  "engines": {
+    "install-node": "6.9.2"//依赖的node版本
+  },
+  "dependencies": {
+    "antd": "^2.12.7",//antd组件组
+    "classnames": "^2.2.5",//classname处理工具
+    "dva": "^1.2.1",//dva https://github.com/dvajs/dva
+    "dva-loading": "^0.2.1",// loading插件，用于获取effect的loading状态
+    "echarts": "^3.7.2",//图表
+    "echarts-for-react": "^2.0.0",//基于react封装的echarts
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1",//moment 处理时间转换和格式等问题
+    "ramda": "^0.25.0",//工具函数库
+    "rc-queue-anim": "^1.2.2",//react队列动画库
+    "react": "^15.6.1",//react
+    "react-copy-to-clipboard": "^5.0.0",//剪切板插件
+    "react-countup": "^2.2.0",//动态计数器
+    "react-dom": "^15.4.0",
+  },
+
+  //开发环境依赖 webpack的loader等等，该部分所有的依赖均不会打包进入生产环境
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "babel-runtime": "^6.9.2",
+    "babel-plugin-dva-hmr": "^0.3.2",
+    "babel-plugin-import": "^1.3.1",
+    "babel-plugin-dynamic-import-webpack": "^1.0.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0",
+    "expect": "^1.20.2",
+    "husky": "^0.12.0",
+    "redbox-react": "^1.3.2",
+    "roadhog": "^0.5.2"
+  }
+}
+```
 
 ## git 仓库分支说明
 本仓库使用git flow 方案来管理代码
@@ -66,7 +122,7 @@ npm start
 ## .roadhogrc.js配置文件使用说明
 
 开发环境下，为了避免代码入侵问题，将http接口返回数据依赖于外界，
-可改动target为目标服务器，可轻易起切换mock服务和真实的服务器
+可改动target为目标服务器，可按照自己需求切换mock服务和真实的服务器
 ```
 {
   ...,
