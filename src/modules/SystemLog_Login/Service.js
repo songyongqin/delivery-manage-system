@@ -12,10 +12,11 @@ export function search(payload) {
   });
 }
 export function onExport(payload) {
-  return request(httpApi.SYS_LOG_LOGIN + tools.jsonToQueryString(payload), {
+  return request(httpApi.SYS_LOG_LOGIN, {
     method: 'POST',
     header: {
       "Content-Type": "application/json; charset=utf-8",
     },
+    body: JSON.stringify(payload)
   });
 }
