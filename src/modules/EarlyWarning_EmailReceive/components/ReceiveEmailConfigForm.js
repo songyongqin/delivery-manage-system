@@ -122,7 +122,8 @@ class WrappedForm extends React.Component {
           colon={false}
           label={<span className={isDark ? "lbl-dark" : null}>邮件通知</span>}>
           {getFieldDecorator('open', {
-            initialValue: defaultValue.open === 1
+            initialValue: defaultValue.open === 1,
+            valuePropName: "checked"
           })(
             <Switch checkedChildren={"开"}
               unCheckedChildren={"关"}
