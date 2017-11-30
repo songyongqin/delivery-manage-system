@@ -219,7 +219,6 @@ const _LocalUpdatePanel = ({
   const { status } = localUploadInfo
 
   const fileOnChange = file => initUploadTask({ file })
-
   if (status === COMMON_STATUS) {
     return (
       <DraggerPanel

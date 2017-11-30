@@ -197,11 +197,14 @@ class WrappedForm extends React.Component {
             initialValue: defaultValue.port,
             rules: [
               {
+                required: true, message: '端口不能为空',
+              },
+              {
                 pattern: portReg, message: "请输入正确的端口号"
               }
             ],
           })(
-            <Input disabled={loading} placeholder="自动匹配" />
+            <Input disabled={loading} />
             )}
         </FormItem>
         <FormItem {...formItemLayout}

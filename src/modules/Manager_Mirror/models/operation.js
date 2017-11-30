@@ -118,11 +118,16 @@ const baseModel = {
 
       const [md5, res] = yield [
         call(getFileMd5, file),
-        call(service.getUploadTask, {})
+        callWithExtra(service.getUploadTask, {}, { withStatusHandle: true })
       ]
 
       if (res.status !== 1) {
-        return
+        return yield put({
+          type: "saveLocalUploadInfo",
+          payload: {
+            status: COMMON_STATUS,
+          }
+        })
       }
 
       const target = res.payload.find(i => i.md5 === md5)

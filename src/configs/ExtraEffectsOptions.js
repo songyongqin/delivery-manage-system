@@ -14,7 +14,7 @@ Message.config({
 *  处理全局错误信息
 *  ignoreActionTypes中保存不处理的action Type
 * */
-const ignoreActionTypes = ["user/postSign", "earylyWarningEmailSent/test"]
+const ignoreActionTypes = ["user/postSign"]
 function messageHandle(res, type) {
 
   if (res.status === -4 && !ignoreActionTypes.includes(res)) {
