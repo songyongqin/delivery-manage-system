@@ -135,7 +135,7 @@ class WrappedForm extends React.Component {
           label={<span className={lblClasses}>密码</span>}
         >
           {getFieldDecorator('emailUserPassword', {
-            initialValue: "",
+            initialValue: defaultValue.emailUserPassword,
             rules: [
               {
                 required: true, message: '密码不能为空',
