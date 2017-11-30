@@ -304,11 +304,12 @@ export default ({
           </JoSpin>
           <Modal
             width="800px"
+            closable={postLicenceLoading}
+            maskClosable={false}
             style={{ top: "40" }}
             key={`${this.state.visible}-licence-modal`}
             onCancel={this.switchModal}
             title="设备授权"
-            maskClosable={false}
             visible={this.state.visible}
             footer={null}>
             <JoSpin spinning={postLicenceLoading}>
@@ -326,8 +327,9 @@ export default ({
             style={{ top: "40" }}
             key={`${this.state.updateVisible}-update-modal`}
             onCancel={this.switchUpdateModal}
-            title="检测更新"
+            closable={updateLoading}
             maskClosable={false}
+            title="检测更新"
             visible={this.state.updateVisible}
             footer={null}>
             <JoSpin spinning={updateLoading}>
@@ -347,6 +349,7 @@ export default ({
             style={{ top: "40" }}
             key={`${this.state.cleanVisible}-clean-modal`}
             onCancel={this.switchCleanModal}
+            closable={cleanLoading}
             maskClosable={false}
             visible={this.state.cleanVisible}
             footer={null}>
