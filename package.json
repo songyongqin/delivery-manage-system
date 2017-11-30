@@ -20,6 +20,7 @@
     "echarts-for-react": "^2.0.0",
     "jquery": "^3.2.1",
     "moment": "^2.18.1",
+    "mousetrap": "^1.6.1",
     "ramda": "^0.25.0",
     "rc-queue-anim": "^1.2.2",
     "react": "^15.6.1",
