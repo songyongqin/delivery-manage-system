@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "antd": "^2.12.7",
-    "babel-runtime": "^6.9.2",
     "classnames": "^2.2.5",
     "crypto-js": "^3.1.9-1",
     "dva": "^1.2.1",
@@ -29,6 +28,7 @@
     "react-dom": "^15.4.0"
   },
   "devDependencies": {
+    "babel-runtime": "^6.9.2",
     "babel-eslint": "^7.1.1",
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
     "babel-plugin-dva-hmr": "^0.3.2",
