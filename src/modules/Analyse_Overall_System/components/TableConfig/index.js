@@ -17,8 +17,8 @@ import {
   LEVEL_DATAINDEX,
   attackStage,
   attackStageTextConfig,
-  level,
-  levelTextConfig,
+  // level,
+  // levelTextConfig,
   actionStatus,
   actionStatusTextConfig,
   ACTIONSTATUS_SUCCESS,
@@ -31,6 +31,22 @@ import JoTag from '../../../../components/JoTag';
 import { Popover, Badge, Timeline } from 'antd';
 import Card from '../../../../domainComponents/Card';
 import getFilterForm from 'utils/getFilterForm'
+
+
+export const HIGH = "high",
+  MIDDLE = "middle",
+  LOW = "low",
+  UN_KNOW = "unknow";
+
+
+export const levelTextConfig = {
+  [HIGH]: "高危",
+  [MIDDLE]: "中危",
+  [LOW]: "低危",
+  [UN_KNOW]: "未知"
+};
+
+export const level = Object.keys(levelTextConfig)
 
 const filterDataIndexes = [
   PATH_DATA_INDEX

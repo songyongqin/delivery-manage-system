@@ -4,71 +4,67 @@
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import * as service from './Service';
-import {queryModelGenerator} from '../../utils/dvaModelGenerator';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
-import {NAMESPACE} from './ConstConfig';
+import { queryModelGenerator } from '../../utils/dvaModelGenerator';
+import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
+import { NAMESPACE } from './ConstConfig';
 import * as tools from '../../utils/tools';
 moment.locale('zh-cn');
 
-export const callConfig={
-  withStatusHandle:true,
-  withLoading:true,
+export const callConfig = {
+  withStatusHandle: true,
+  withLoading: true,
 }
 
 
 
-const baseModel={
+const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters:{
+    queryFilters: {
     },
-    queryResults:{
+    queryResults: {
 
     }
   },
-  effects:{
-    *put({resolve,payload},{callWithExtra}) {
-      const res=yield callWithExtra(
+  effects: {
+    *put({ resolve, payload }, { callWithExtra }) {
+      const res = yield callWithExtra(
         service.put,
-        {...payload||{}},
+        { ...payload || {} },
         callConfig
       )
 
-      if(res.status===1){
-        resolve&&resolve(res.payload);
+      if (res.status === 1) {
+        resolve && resolve(res.payload);
       }
     },
-    *test({resolve,payload},{callWithExtra}) {
-      const res=yield callWithExtra(
+    *test({ resolve, payload }, { callWithExtra }) {
+      const res = yield callWithExtra(
         service.testEmail,
-        {...payload||{}},
+        { ...payload || {} },
         callConfig
       )
 
-      if(res.status===1){
-        resolve&&resolve(res.payload);
+      if (res.status === 1) {
+        resolve && resolve(res.payload);
       }
     },
   }
 };
 
-const payloadFilter=(payload)=>{
+const payloadFilter = (payload) => {
   return {
-    emailUserAccount:payload.emailUserAccount,
-    port:payload.port,
-    sender:payload.sender,
-    sendServer:payload.sendServer,
-    ssl:payload.ssl,
+    ...payload,
   }
 };
 
-const queryService=service.query;
+const queryService = service.query;
 
 
 export default queryModelGenerator({
-  model:baseModel,
+  model: baseModel,
   payloadFilter,
-  callConfig:commonCallConfig,
+  callConfig: commonCallConfig,
   queryService,
   // initPath:"/early-warning/email"
 });

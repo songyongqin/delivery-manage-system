@@ -36,7 +36,7 @@ export const levelTextConfig = {
   [HIGH]: "高危",
   [MIDDLE]: "中危",
   [LOW]: "低危",
-  [UN_KNOW]: "未知"
+  // [UN_KNOW]: "未知"
 };
 
 export const level = Object.keys(levelTextConfig)

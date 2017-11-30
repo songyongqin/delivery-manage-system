@@ -108,7 +108,6 @@ class WrappedForm extends React.Component {
       ["modal"]: true,
       ["modal-dark"]: isDark,
     })
-
     return (
       <Form style={{ maxWidth: "650px", paddingTop: "15px" }}>
         <FormItem

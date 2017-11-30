@@ -150,7 +150,6 @@ class Page extends React.Component {
         <OverallPcap lastTime={lastTime}></OverallPcap>
       </Tabs.TabPane>
     ]
-    console.info(productType === NODE, productType === STAND_ALONE, productType, NODE, STAND_ALONE)
     return (
       <Tabs
         onChange={this.tabOnChange}

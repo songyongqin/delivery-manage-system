@@ -12,8 +12,8 @@ import {
   dataIndexes,
   attackStage,
   attackStageTextConfig,
-  level,
-  levelTextConfig,
+  // level,
+  // levelTextConfig,
   actionStatus,
   actionStatusTextConfig,
   ACTIONSTATUS_SUCCESS,
@@ -36,6 +36,22 @@ import Card from '../../../../domainComponents/Card';
 import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
 import SearchFilterForm from 'domainComponents/SearchFilterForm'
 import getFilterForm from 'utils/getFilterForm'
+
+
+export const HIGH = "high",
+  MIDDLE = "middle",
+  LOW = "low",
+  UN_KNOW = "unknow";
+
+
+export const levelTextConfig = {
+  [HIGH]: "高危",
+  [MIDDLE]: "中危",
+  [LOW]: "低危",
+  [UN_KNOW]: "未知"
+};
+
+export const level = Object.keys(levelTextConfig)
 
 export const commonFilters = {
   [ATTACK_STAGE_DATA_INDEX]: attackStage,
