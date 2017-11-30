@@ -38,6 +38,29 @@ npm start
 
 执行`npm run build` 等待构建完毕后，所有静态资源均会在根目录下dist文件夹内生成，复制文件夹内容部署到服务器上即可（具体文件结构可自行调整，调整后需改动index.html的文件资源引用路径）
 
+## DEBUG模式说明
+
+如需要关闭数据传输的加密和解密
+可在sessionstorage中设置`@@__DEBUG__@@"`值
+或在index.html中title后添加 
+```
+<script>
+    //open debug mode,production env please remove this code
+    sessionStorage.setItem("@@__DEBUG__@@", "@@__DEBUG__@@")
+  </script>
+```
+
+
+需要临时改变secertKey 可在sessionStorage中设置`@@__SECRET_KEY__@@`值
+
+```
+<script>
+    //open debug mode,production env please remove this code
+    sessionStorage.setItem("@@__SECRET_KEY__@@", "your secret key")
+  </script>
+```
+
+
 ## package.json 说明
 
 ```
