@@ -12,7 +12,13 @@
   <link rel="stylesheet" href="./static/icon.css">
   <link rel="stylesheet" href="./static/animate.css"> -->
 
+  <script>
+    //open debug mode,production env please remove this code
+    sessionStorage.setItem("@@__DEBUG__@@", "@@__DEBUG__@@")
+  </script>
+
   <!-- should not cache all static data -->
+
   <script>
     document.write('<script src="./polyfill.min.js?' + new Date().getTime() + '"><\/script>');
     document.write('<script src="./jquery.min.js?' + new Date().getTime() + '"><\/script>');
