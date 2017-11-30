@@ -41,13 +41,13 @@ npm start
 ## DEBUG模式说明
 
 如需要关闭数据传输的加密和解密
-可在sessionstorage中设置`@@__DEBUG__@@"`值
+可在sessionstorage中设置`@@__DEBUG__@@`值
 或在index.html中title后添加 
 ```
 <script>
     //open debug mode,production env please remove this code
     sessionStorage.setItem("@@__DEBUG__@@", "@@__DEBUG__@@")
-  </script>
+</script>
 ```
 
 
@@ -55,9 +55,8 @@ npm start
 
 ```
 <script>
-    //open debug mode,production env please remove this code
     sessionStorage.setItem("@@__SECRET_KEY__@@", "your secret key")
-  </script>
+</script>
 ```
 
 
