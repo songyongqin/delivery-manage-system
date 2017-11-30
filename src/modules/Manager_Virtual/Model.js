@@ -15,6 +15,8 @@ import {
   NAMESPACE
 } from './ConstConfig';
 
+import { HIGH_INTERATION, LOW_INTERACTION } from 'configs/ConstConfig'
+
 import { delay, setTemp, getTemp } from '../../utils/tools';
 
 moment.locale('zh-cn');
@@ -298,7 +300,21 @@ const baseModel = {
         callConfig
       )
       if (res.status === 1) {
-        resolve && resolve(res.payload)
+
+        let finalPayload = {}
+
+        Object.entries(res.payload).forEach(([hostIp, value]) => {
+
+          finalPayload[hostIp] = {
+            ...value[HIGH_INTERATION],
+            [LOW_INTERACTION]: value[LOW_INTERACTION]["low_interaction"]
+          }
+
+        })
+
+        console.info(finalPayload)
+
+        resolve && resolve(finalPayload)
       }
     }
   },
