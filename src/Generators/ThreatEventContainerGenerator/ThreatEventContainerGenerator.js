@@ -15,7 +15,7 @@ import { THREAT_TYPE_DATAINDEX, MAIN_NAMESPACE } from 'modules/ThreatEvent_Threa
 
 const ENUM_THREAT_TYPE_DATA_INDEX = "threatType"
 
-export default ({ tableConfig, formTextConfig, namespace }) => {
+export default ({ tableConfig, formTextConfig, namespace, multiple = false }) => {
   const NAMESPACE = namespace;
 
   function mapStateToProps(state) {
@@ -66,13 +66,12 @@ export default ({ tableConfig, formTextConfig, namespace }) => {
     onSelectChange = (payload) => {
       this.props.onQuery({ ...payload, page: 1 })
     }
-    onExport = () => {
+    onExport = (payload = {}) => {
 
-      const payload = { ...this.props[NAMESPACE].queryFilters }
-      const { timestampRange } = payload
-      payload["timestampRange"] = tools.momentToTimestamp(timestampRange)
-
-      this.props.post(payload).then(result => {
+      const finalPayload = { ...this.props[NAMESPACE].queryFilters, ...payload }
+      const { timestampRange } = finalPayload
+      finalPayload["timestampRange"] = tools.momentToTimestamp(timestampRange)
+      this.props.post(finalPayload).then(result => {
 
         tools.download(result);
       })
@@ -83,6 +82,7 @@ export default ({ tableConfig, formTextConfig, namespace }) => {
       const { commonLayout } = this.props;
 
       return <ThreatEventOperationPanel key="query-panel"
+        multiple={multiple}
         handle={{
           onQuery,
           onSelectChange: this.onSelectChange,
