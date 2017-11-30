@@ -31,10 +31,20 @@ import Table_mirrorsummary from './components/Table_mirrorsummary'
 import Table_mirrornode from './components/Table_mirrornode'
 
 
-const mapStateToProps = state => ({
-  isDark: state.layout.commonLayout.darkTheme,
-  shouldReload: state[OPERATION_NAMESPACE].shouldReload
-})
+const mapStateToProps = state => {
+  const effectsLoading = state.loading.effects
+
+  return {
+    isDark: state.layout.commonLayout.darkTheme,
+    shouldReload: state[OPERATION_NAMESPACE].shouldReload,
+    mirrorUpdateLoading: effectsLoading[`${OPERATION_NAMESPACE}/initUploadTask`] ||
+      effectsLoading[`${OPERATION_NAMESPACE}/putFileChunk`] ||
+      effectsLoading[`${OPERATION_NAMESPACE}/initUploadTask`] ||
+      effectsLoading[`${OPERATION_NAMESPACE}/mergeUploadTask`] ||
+      effectsLoading[`${OPERATION_NAMESPACE}/updateRemote`] ||
+      state[OPERATION_NAMESPACE].updateLoading
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -49,6 +59,10 @@ const mapDispatchToProps = dispatch => {
     changePanelVisible: payload => dispatch({
       type: `${OPERATION_NAMESPACE}/changePanelVisible`,
       payload,
+    }),
+    changeUpdateLoadingStatus: payload => dispatch({
+      type: `${OPERATION_NAMESPACE}/changeUpdateLoadingStatus`,
+      payload
     })
   }
 }
@@ -85,7 +99,7 @@ class Page extends React.Component {
   }
   getOperationPanel = () => {
     return <div key="operation" style={{ overflow: "hidden" }}>
-      <Button type="primary" style={{ float: "right",marginBottom:"20px" }} onClick={this.updateModalSwitchHandle}>
+      <Button type="primary" style={{ float: "right", marginBottom: "20px" }} onClick={this.updateModalSwitchHandle}>
         升级控制中心镜像
       </Button>
     </div>
@@ -96,7 +110,7 @@ class Page extends React.Component {
       ["lbl-dark"]: this.props.isDark
     })
 
-    const { modalVisible } = this.props;
+    const { modalVisible, mirrorUpdateLoading } = this.props;
 
     return (
       <div>
@@ -108,6 +122,8 @@ class Page extends React.Component {
           <Table_mirrornode key="Table_mirrornode" />
         ])}
         <Modal
+          maskClosable={false}
+          closable={!mirrorUpdateLoading}
           key={`${this.state.lastChangeTime}-update-modal`}
           title="升级控制中心镜像"
           footer={null}

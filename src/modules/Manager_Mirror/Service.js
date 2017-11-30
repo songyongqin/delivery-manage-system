@@ -18,6 +18,8 @@ export const getUploadTask = commonRequestCreator.get(httpApi.MIRROR_UPDATE_LOCA
 
 export const mergeUploadTask = commonRequestCreator.post(httpApi.MIRROR_UPDATE_LOCAL_MERGE)
 
+export const updateNodeMirror = commonRequestCreator.post(httpApi.MIRROR_UPDATE_NODE)
+
 export const putFileChunk = payload => {
   const fd = new FormData();
   const md5 = payload[MD5_DATA_INDEX],

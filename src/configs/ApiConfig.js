@@ -124,6 +124,8 @@ export default {
 
     MIRROR_UPDATE_REMOTE: "/mirror/update/online",
 
+    MIRROR_UPDATE_NODE: "/mirror/node/update",
+
     VM_OPTION: "/virtual-machine/option",
 
     OVERVIEW_LAST_EVENT: "/overview/last-event"

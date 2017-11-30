@@ -59,8 +59,15 @@ const baseModel = {
     shouldReload: false,
     activePanel: REMOTE_METHOD,
     panelVisible: true,
+    updateLoading: false
   },
   reducers: {
+    changeUpdateLoadingStatus: (preState, { payload }) => {
+      return {
+        ...preState,
+        updateLoading: payload,
+      }
+    },
     changePanelVisible: (preState, { payload }) => {
       return {
         ...preState,
@@ -183,6 +190,11 @@ const baseModel = {
         }
       })
 
+      yield put({
+        type: "changeUpdateLoadingStatus",
+        payload: true
+      })
+
       const res = yield callWithExtra(service.putFileChunk, {
         chunk: chunkList[currentChunk].chunk,
         currentChunk,
@@ -268,6 +280,11 @@ const baseModel = {
         payload: true,
       })
 
+      yield put({
+        type: "changeUpdateLoadingStatus",
+        payload: false
+      })
+
       resolve && resolve()
       // }
     },
@@ -282,6 +299,12 @@ const baseModel = {
       resolve && resolve(res)
       // }
 
+    },
+    *updateNodeMirror({ resolve, payload }, { callWithExtra, put }) {
+      const res = yield callWithExtra(service.updateNodeMirror, payload)
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
+      }
     }
   },
 };
