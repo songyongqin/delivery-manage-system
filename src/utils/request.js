@@ -1,5 +1,8 @@
 import fetch from 'dva/fetch';
 import requestExtraOptionsHandle from '../configs/requestExtraOptionsHandle';
+import { encrypt, decrypt, getTemp, setTemp, compose } from './tools.js'
+import secretKey from 'configs/SecretKey'
+import { DEBUG_MODE } from 'configs/ConstConfig'
 
 function parseJSON(response) {
   return response.json();
@@ -15,20 +18,52 @@ function checkStatus(response) {
   throw error;
 }
 
-/**
- * Requests a URL, returning a promise.
- *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
- * @return {object}           An object containing either "data" or "err"
- */
+//根据key加密数据
+const encryptData = (data) => {
+  try {
+    if (sessionStorage.getItem(DEBUG_MODE)) {
+      return data;
+    }
+    return encrypt(data, secretKey)
+  } catch (e) {
+    console.warn(e)
+    return data;
+  }
+}
+//加密option中body的数据
+const encryptBodyString = (options) => {
+  let finalOptions = { ...options }
+  if (typeof options.body === "string") {
+    finalOptions.body = encryptData(options.body)
+  }
+  return finalOptions
+}
+
+const decryptResponse = response => {
+  return new Promise((resolve, reject) => {
+    if (sessionStorage.getItem(DEBUG_MODE)) {
+      return resolve(response.json())
+    }
+
+    response.text()
+      .then(text => {
+        let data = JSON.parse(decrypt(text, secretKey))
+        resolve(data)
+      })
+      .catch(e => reject(e))
+  })
+
+
+}
+
 export default function request(url, options) {
 
-  const finalOptions=requestExtraOptionsHandle(url.split("?")[0],options);
+  const finalOptions = compose(encryptBodyString, requestExtraOptionsHandle)(url.split("?")[0], options)
 
   return fetch(url, finalOptions)
     .then(checkStatus)
-    .then(parseJSON)
-    .then(data => ( data ))
-    .catch(err => ({ status:-1,message:err.message }));
+    .then(decryptResponse)
+    // .then(parseJSON)
+    .then(data => (data))
+    .catch(err => ({ status: -1, message: err.message }));
 }

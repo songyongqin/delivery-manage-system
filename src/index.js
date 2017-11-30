@@ -1,3 +1,16 @@
+import { DEBUG_MODE } from 'configs/ConstConfig'
+//开发环境下默认开启debug模式
+const openDebugMode = () => {
+  try {
+    if (process.env.NODE_ENV === "development") {
+      sessionStorage.setItem(DEBUG_MODE, DEBUG_MODE)
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+openDebugMode()
+
 import dva from 'dva';
 import './index.css';
 import './styles/commonHack.css';

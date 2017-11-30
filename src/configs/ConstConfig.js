@@ -203,3 +203,6 @@ export const STAND_ALONE = "standAlone",
 
 export const EVENT_ACTION_DATA_INDEX = "eventAction",
   EVENT_TYPE_DATA_INDEX = "eventType"
+
+
+export const DEBUG_MODE = "@@__DEBUG__@@"

@@ -196,3 +196,5 @@ export { default as getFileMd5, getMD5 } from './hashCalc'
 
 
 export { splitFileToChunk, uploadFile } from './fileSplitUpload.js'
+
+export { encrypt, decrypt } from './aes.js'
