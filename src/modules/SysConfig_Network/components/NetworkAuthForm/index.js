@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Row, Col, Button, Tooltip, message as Message, Spin, Switch, Checkbox } from 'antd';
+import { Input, Row, Col, Button, Tooltip, message as Message, Spin, Switch, Checkbox, Popconfirm } from 'antd';
 import { Form, Icon } from 'antd';
 
 import classnames from 'classnames';
@@ -7,7 +7,7 @@ const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 import { ipReg, portReg } from '../../../../utils/tools.js'
 import {
-  AUTH_USER_ACCOUNT, AUTH_PASSWORD
+  AUTH_USER_ACCOUNT, AUTH_PASSWORD, IS_CONNECT
 } from '../../ConstConfig'
 
 
@@ -19,18 +19,41 @@ const labelConfig = {
 
 @Form.create()
 class WrappedForm extends React.Component {
+  constructor(props) {
+    super(props)
 
-  handleSubmit = (e) => {
+    this.state = {
+      connect: null
+    }
+  }
+  handleConnect = (e) => {
     e.preventDefault();
     const { form, onSubmit } = this.props;
     form.validateFields((err, values) => {
       if (err) {
         return;
       }
-      onSubmit && onSubmit(values)
-    });
-  };
-
+      onSubmit && onSubmit({
+        values,
+        [IS_CONNECT]: 1,
+      }).then(result => this.setState({ connect: 1 }))
+    })
+  }
+  handleDisConnect = (e) => {
+    e.preventDefault();
+    const { form, onSubmit } = this.props;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      onSubmit && onSubmit({
+        values,
+        [IS_CONNECT]: 0,
+      })
+        .then(result => this.setState({ connect: 0 }))
+        .then(result => Message.success("802.1x协议上网认证配置成功", 3))
+    })
+  }
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { defaultValue = {}, isDark, loading, isAdmin } = this.props;
@@ -46,6 +69,8 @@ class WrappedForm extends React.Component {
     const lblClasses = classnames({
       ["lbl-dark"]: isDark,
     })
+
+    const connect = this.state.connect !== null ? this.state.connect : defaultValue[IS_CONNECT];
 
 
 
@@ -89,11 +114,30 @@ class WrappedForm extends React.Component {
           label={" "}
           colon={false}>
           <Button type="primary"
-            disabled={loading}
-            icon="save"
-            onClick={this.handleSubmit}
-            size="large">保存</Button>
+            style={{ marginRight: "10px" }}
+            disabled={connect === 1}
+            icon="link"
+            onClick={this.handleConnect}
+            size="large">
+            {
+              connect === 1
+                ?
+                "连接中"
+                :
+                "连接"
+            }
+          </Button>
+          <Popconfirm onConfirm={this.handleDisConnect} title="将断开802.1x协议上网认证功能">
+            <Button type="primary"
+              disabled={connect !== 1}
+              icon="disconnect"
+
+              size="large">
+              断开
+          </Button>
+          </Popconfirm>
         </FormItem>
+
       </Form>
     )
     return formContent
