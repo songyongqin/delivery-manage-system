@@ -251,6 +251,7 @@ class Page extends React.Component {
           }
           <NetworkAuthContent
             isDark={isDark}
+            loading={this.props.authNetworkLoading}
             data={this.props.authNetworkConfig}
             onSubmit={this.putAuthNetworkConfig}>
           </NetworkAuthContent>
