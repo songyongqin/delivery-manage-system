@@ -19,9 +19,6 @@ export function onExport(payload) {
     header: {
       "Content-Type": "application/json; charset=utf-8",
     },
-    body: JSON.stringify({
-      ...payload,
-      timestampRange
-    })
+    body: JSON.stringify(payload)
   });
 }

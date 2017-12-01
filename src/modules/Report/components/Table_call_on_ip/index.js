@@ -8,6 +8,7 @@ import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE_CALL_ON_IP } from '../../ConstConfig'
 import classnames from 'classnames';
+import TimesLabel from 'components/TimesLabel'
 @WithAnimateRender
 class Tableevent extends React.Component {
   constructor(props) {
@@ -61,6 +62,9 @@ class Tableevent extends React.Component {
         title: '时间',
         dataIndex: 'time',
         key: 'time',
+        render: (time) => {
+          return <TimesLabel times={[time]}></TimesLabel>
+        }
       },
       {
         title: '访问的外网IP',
