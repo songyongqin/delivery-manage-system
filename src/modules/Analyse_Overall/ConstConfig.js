@@ -1,3 +1,3 @@
 export const NAMESPACE = "analyseOverall"
 
-export { NODE, STAND_ALONE } from 'configs/ConstConfig'
+export { NODE, STAND_ALONE, IDS } from 'configs/ConstConfig'

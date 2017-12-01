@@ -15,3 +15,7 @@ export const putSysLogConfig = commonRequestCreator.put(httpApi.SYS_LOG_CONFIG)
 export const getControlConfig = commonRequestCreator.get(httpApi.SYS_CONFIG_NETWORK_CONTROL)
 
 export const putControlConfig = commonRequestCreator.put(httpApi.SYS_CONFIG_NETWORK_CONTROL)
+
+export const getAuthNetworkConfig = commonRequestCreator.get(httpApi.AUTH_NETWORK_802)
+
+export const putAuthNetworkConfig = commonRequestCreator.put(httpApi.AUTH_NETWORK_802)

@@ -25,6 +25,7 @@ import {
   DNS_DATAINDEX,
   SYS_LOG_NETWORK_TITLE,
   CONTROL_CONFIG_NAMESPACE,
+  AUTH_NETWORK_802_NAMESPACE
 } from './ConstConfig'
 import { IDS, DISTRIBUTION, NODE, STAND_ALONE } from 'configs/ConstConfig'
 import { connect } from 'dva';
@@ -32,7 +33,8 @@ import NetworkForm from './components/NetworkForm';
 import DNSForm from './components/DNSForm';
 import SysLogServerConfigForm from './components/SysLogServerConfigForm'
 import ControlConfigForm from './components/ControlConfigForm'
-import JoSpin from '../../components/JoSpin';
+import JoSpin from '../../components/JoSpin'
+import NetworkAuthForm from './components/NetworkAuthForm/'
 import classnames from 'classnames';
 
 /*********************************************************/
@@ -96,7 +98,19 @@ const ControlCenterConfigContent = ({ data = {}, isDark, loading, onSubmit }) =>
     </JoSpin>
   </Card>
 }
-
+/*********************************************************/
+const NetworkAuthContent = ({ data = {}, isDark, loading, onSubmit }) => {
+  return <Card title={"802.1x认证配置"} style={{ marginBottom: "15px" }}>
+    <JoSpin spinning={loading}>
+      <NetworkAuthForm
+        loading={loading}
+        defaultValue={data}
+        onSubmit={onSubmit}
+        isDark={isDark}>
+      </NetworkAuthForm>
+    </JoSpin>
+  </Card>
+}
 
 /*********************************************************/
 const mapStateToProps = state => ({
@@ -109,9 +123,12 @@ const mapStateToProps = state => ({
   commonLayout: state.layout.commonLayout,
   productType: state.user.productType.type,
   productInfo: state.user.productType,
+  authNetworkConfig: state[AUTH_NETWORK_802_NAMESPACE].queryResults,
   controlConfig: state[CONTROL_CONFIG_NAMESPACE].queryResults,
   controlConfigLoading: state.loading.effects[`${CONTROL_CONFIG_NAMESPACE}/query`] ||
     state.loading.effects[`${CONTROL_CONFIG_NAMESPACE}/put`],
+  authNetworkLoading: state.loading.effects[`${AUTH_NETWORK_802_NAMESPACE}/query`] ||
+    state.loading.effects[`${AUTH_NETWORK_802_NAMESPACE}/put`]
 })
 /*********************************************************/
 const mapDispatchToProps = dispatch => ({
@@ -136,6 +153,13 @@ const mapDispatchToProps = dispatch => ({
     type: `${CONTROL_CONFIG_NAMESPACE}/put`,
     payload,
   }),
+  getAuthNetworkConfig: payload => dispatch({
+    type: `${AUTH_NETWORK_802_NAMESPACE}/query`,
+  }),
+  putAuthNetworkConfig: payload => dispatch({
+    type: `${AUTH_NETWORK_802_NAMESPACE}/put`,
+    payload,
+  }),
 })
 /*********************************************************/
 const ADAPTER = "adapter";
@@ -152,6 +176,7 @@ class Page extends React.Component {
   componentDidMount = () => {
     this.props.get();
     this.props.getSysLogConfig()
+    this.props.getAuthNetworkConfig()
     if (this.props.productType === IDS || this.props.productType === NODE) {
       this.props.getControlConfig()
     }
@@ -185,6 +210,9 @@ class Page extends React.Component {
   putControlConfig = payload => this.props.putControlConfig(payload)
     .then(Message.success.call(null, "保存成功"))
   /*********************************************************/
+  putAuthNetworkConfig = payload => this.props.putAuthNetworkConfig(payload)
+    .then(Message.success.call(null, "保存成功"))
+
   getContentPanel = () => {
     const { queryResults } = this.props[NAMESPACE],
       { putLoading, getLoading, commonLayout, sysConfigLoading, sysLogConfig, controlConfigLoading, controlConfig } = this.props,
@@ -221,6 +249,11 @@ class Page extends React.Component {
               isDark={isDark}>
             </ControlCenterConfigContent>
           }
+          <NetworkAuthContent
+            isDark={isDark}
+            data={this.props.authNetworkConfig}
+            onSubmit={this.putAuthNetworkConfig}>
+          </NetworkAuthContent>
         </JoSpin>
       </div>
     )

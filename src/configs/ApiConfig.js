@@ -128,7 +128,9 @@ export default {
 
     VM_OPTION: "/virtual-machine/option",
 
-    OVERVIEW_LAST_EVENT: "/overview/last-event"
+    OVERVIEW_LAST_EVENT: "/overview/last-event",
+
+    AUTH_NETWORK_802: "/sys-config/auth-network"
 
   }
 }

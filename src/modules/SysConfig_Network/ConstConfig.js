@@ -5,6 +5,7 @@
 export const NAMESPACE = "network";
 export const SYS_LOG_CONFIG_NAMESPACE = "sysLogConfig"
 export const CONTROL_CONFIG_NAMESPACE = "controlConfig"
+export const AUTH_NETWORK_802_NAMESPACE = "authNetwork802"
 
 export const DNS_DATAINDEX = "dns",
   ADAPTER_LIST_DATAINDEX = "adapterList",
@@ -57,3 +58,6 @@ export const sysLogServerFormTextConfig = {
   [SERVER_IP_DATA_INDEX]: "SYS-LOG 服务器IP",
   [SERVER_PORT_DATA_INDEX]: "SYS-LOG 服务器端口"
 }
+
+export const AUTH_USER_ACCOUNT = "authUserAccount",
+  AUTH_PASSWORD = "authUserPassword"
