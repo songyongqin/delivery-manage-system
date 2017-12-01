@@ -83,7 +83,6 @@ class RemoteUpdate extends React.Component {
                 <Button
                   type="primary"
                   size="large"
-                  icon="search"
                   loading={loading}
                   onClick={this.handleSubmit}>更新</Button>
               </FormItem>

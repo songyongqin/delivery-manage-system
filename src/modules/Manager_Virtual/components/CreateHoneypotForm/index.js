@@ -239,7 +239,7 @@ class WrappedForm extends React.Component {
     })
 
     return (
-      <Form style={{ height: "100%", overflowY: "scroll" }}>
+      <Form style={{ height: "100%", overflowY: "scroll", overflowX: "hidden" }}>
         <FormItem  {...commonProps}
           label={<Label className={lblClasses}
             keyName={HONEYPOT_NAME_DATAINDEX} />}>
@@ -274,7 +274,7 @@ class WrappedForm extends React.Component {
               }
             )
               (
-              <Select onChange={this.hostIpOnChange}>
+              <Select onChange={this.hostIpOnChange} disabled={loading}>
                 {
                   hostIpList.map(i => <Option value={i} key={i}>
                     {i}
@@ -342,7 +342,7 @@ class WrappedForm extends React.Component {
               }
             )
               (
-              <Radio.Group className={radioClasses} onChange={this.interactionOnChange}>
+              <Radio.Group className={radioClasses} onChange={this.interactionOnChange} disabled={loading}>
                 {
                   interactions.map(i => <Radio.Button value={i} key={i}>
                     {interactionsTextConfig[i]}
@@ -367,7 +367,7 @@ class WrappedForm extends React.Component {
                   }
                 )
                   (
-                  <Select onChange={this.systemOnChange}>
+                  <Select onChange={this.systemOnChange} disabled={loading}>
                     {
                       systemList.map(([key, value], index) => {
                         return <Select.Option value={key} key={`${index}-option`}>
@@ -399,7 +399,7 @@ class WrappedForm extends React.Component {
               }
             )
               (
-              <Checkbox.Group className={checkboxClasses}>
+              <Checkbox.Group className={checkboxClasses} disabled={loading}>
                 {
                   serviceList.map(([key, value], index) => {
                     return <Col key={`${index}-option`}>
@@ -428,6 +428,7 @@ class WrappedForm extends React.Component {
             <Slider step={1}
               min={1}
               max={4}
+              disabled={loading}
               className={sliderClasses}
               tipFormatter={value => `${value}GB`}
               marks={{ 1: '1GB', 2: '2GB', 3: '3GB', 4: '4GB' }} />
@@ -448,11 +449,12 @@ class WrappedForm extends React.Component {
             <Slider step={1}
               min={1}
               max={4}
+              disabled={loading}
               className={sliderClasses}
               marks={{ 1: '1', 2: '2', 3: '3', 4: '4' }} />
             )}
         </FormItem>
-        <Row style={{ marginBottom: "15px" }}>
+        {/* <Row style={{ marginBottom: "15px" }}>
           <Col span={10} push={6}>
             <Label className={lblClasses}
               keyName={AUTH_DATAINDEX} />
@@ -491,7 +493,7 @@ class WrappedForm extends React.Component {
               <Input disabled={loading} />
               )
           }
-        </FormItem>
+        </FormItem> */}
         <FormItem {...tailFormItemLayout}>
           <Button type="primary"
             loading={loading}

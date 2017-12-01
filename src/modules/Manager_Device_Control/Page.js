@@ -29,7 +29,9 @@ function mapStateToProps(state) {
     updateLoading: effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoLocal`]
       || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoRemote`]
       || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateRemote`]
-      || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateLocal`]
+      || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/updateLocal`],
+
+    cleanLoading: effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/clean`]
   }
 }
 

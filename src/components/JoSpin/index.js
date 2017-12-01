@@ -3,58 +3,58 @@
  */
 import React from 'react';
 import styles from './styles.css';
-import {Icon} from 'antd';
+import { Icon } from 'antd';
 import classnames from 'classnames';
 import JoLoadingEffect from '../JoLoadingEffect/index';
-export default class JoSpin extends React.Component{
+export default class JoSpin extends React.Component {
   constructor(props) {
     super(props);
-    this.shouldFadeIn=false;
-    this.state={
-      spinning:props.spinning,
-      style:{}
+    this.shouldFadeIn = false;
+    this.state = {
+      spinning: props.spinning,
+      style: {}
     }
   }
-  componentWillReceiveProps=(newProps)=>{
-    if(newProps.spinning===true){
+  componentWillReceiveProps = (newProps) => {
+    if (newProps.spinning === true) {
 
       this.setState({
-        spinning:newProps.spinning
+        spinning: newProps.spinning
       })
 
-    }else{
+    } else {
       clearTimeout(this.timer);
-      this.timer=setTimeout(()=>{
+      this.timer = setTimeout(() => {
         this.setState({
-          spinning:newProps.spinning
+          spinning: newProps.spinning
         })
-      },500)
+      }, 500)
 
     }
 
 
-    if(this.target.offsetHeight>=500){
+    if (this.target.offsetHeight >= 500) {
       this.setState({
-        style:{top:"220px"}
+        style: { top: "220px" }
       })
     }
 
 
 
   }
-  componentWillUnmount=()=>{
+  componentWillUnmount = () => {
     clearTimeout(this.timer);
   }
 
-  render=()=>{
-    const {children,className="",style={}}=this.props;
-    const {spinning}=this.state;
-    const classes=classnames({
-      [className]:true,
-      [styles["spin-wrapper"]]:true,
-      [styles["spinning"]]:spinning,
-      animated:true,
-      ["fadeIn"]:this.shouldFadeIn,
+  render = () => {
+    const { children, className = "", style = {}, contentWrapperStyle = {} } = this.props;
+    const { spinning } = this.state;
+    const classes = classnames({
+      [className]: true,
+      [styles["spin-wrapper"]]: true,
+      [styles["spinning"]]: spinning,
+      animated: true,
+      ["fadeIn"]: this.shouldFadeIn,
     })
 
     return (
@@ -62,22 +62,23 @@ export default class JoSpin extends React.Component{
         {
           spinning
             ?
-            <div  style={this.state.style}
-                  className={styles["spin-dot"]}>
-              <JoLoadingEffect/>
+            <div style={this.state.style}
+              className={styles["spin-dot"]}>
+              <JoLoadingEffect />
             </div>
             :
             null
         }
         {
           spinning
-          ?
-          <div className={styles["spin-cover"]}/>
-          :
-          null
+            ?
+            <div className={styles["spin-cover"]} />
+            :
+            null
         }
-        <div className={spinning?styles["blur"]:""}
-             ref={target=>this.target=target}>
+        <div style={contentWrapperStyle}
+          className={spinning ? styles["blur"] : ""}
+          ref={target => this.target = target}>
           {children}
         </div>
       </div>

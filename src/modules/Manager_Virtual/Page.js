@@ -13,6 +13,7 @@ import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import CreateHoneypotForm from './components/CreateHoneypotForm';
 import { curry } from '../../utils/tools'
 import Modal from 'domainComponents/Modal'
+import { modal as ModalHandle } from 'antd'
 
 
 import {
@@ -195,7 +196,7 @@ class Page extends React.Component {
     .then(curry(this.props.onQuery))
     .then(result => this.setSelectedRows([]))
 
-  getOperationSelectedHandle = (operation, message) => Modal.confirm({
+  getOperationSelectedHandle = (operation, message) => ModalHandle.confirm({
     title: message,
     onOk: this.getPutHandle({
       value: operation,
@@ -203,7 +204,7 @@ class Page extends React.Component {
     })
   })
 
-  getDelSelectedHandle = message => Modal.confirm({
+  getDelSelectedHandle = message => ModalHandle.confirm({
     title: message,
     onOk: this.getDelHandle({
       [ID_DATAINDEX]: this.state.selectedRows.map(i => i[ID_DATAINDEX])
@@ -364,16 +365,23 @@ class Page extends React.Component {
           visible={this.state.visible}
           className={styles["vm-modal"]}
           onCancel={this.switchModal}
-          style={{ position: "absolute", top: "30px", bottom: "30px", left: "50%", right: "50px", marginLeft: "-350px", marginRight: "0" }}
+          maskClosable={false}
+          closable={this.props.loading}
+          style={{ position: "absolute", top: "30px", bottom: "30px", left: "50%", right: "50px", marginLeft: "-350px", marginRight: "0", maxHeight: "750px" }}
           footer={null}
           width={700}>
-          <CreateHoneypotForm isDark={isDark}
-            key={`${Object.keys(vmOptions).length}-create-vm`}
-            validatorHandle={this.props.validate}
-            vmOptions={vmOptions}
-            onSubmit={this.onSubmit}
-            loading={this.props.postLoading}
-            options={options} />
+          <JoSpin
+            spinning={this.props.postLoading}
+            style={{ height: "100%" }}
+            contentWrapperStyle={{ height: "100%" }}>
+            <CreateHoneypotForm isDark={isDark}
+              key={`${Object.keys(vmOptions).length}-create-vm`}
+              validatorHandle={this.props.validate}
+              vmOptions={vmOptions}
+              onSubmit={this.onSubmit}
+              loading={this.props.postLoading}
+              options={options} />
+          </JoSpin>
         </Modal>
       </div>
     )

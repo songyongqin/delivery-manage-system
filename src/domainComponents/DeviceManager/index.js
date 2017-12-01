@@ -327,7 +327,7 @@ export default ({
             style={{ top: "40" }}
             key={`${this.state.updateVisible}-update-modal`}
             onCancel={this.switchUpdateModal}
-            closable={updateLoading}
+            closable={!updateLoading}
             maskClosable={false}
             title="检测更新"
             visible={this.state.updateVisible}
@@ -349,7 +349,7 @@ export default ({
             style={{ top: "40" }}
             key={`${this.state.cleanVisible}-clean-modal`}
             onCancel={this.switchCleanModal}
-            closable={cleanLoading}
+            closable={!cleanLoading}
             maskClosable={false}
             visible={this.state.cleanVisible}
             footer={null}>
