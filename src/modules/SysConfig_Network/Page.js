@@ -5,6 +5,8 @@ import {
   Row,
   Col,
   Badge,
+  Icon,
+  Tooltip,
   message as Message,
 } from 'antd';
 import { WithAnimateRender, WithBreadcrumb } from '../../components/HOSComponents/index'
@@ -100,7 +102,17 @@ const ControlCenterConfigContent = ({ data = {}, isDark, loading, onSubmit }) =>
 }
 /*********************************************************/
 const NetworkAuthContent = ({ data = {}, isDark, loading, onSubmit }) => {
-  return <Card title={"802.1x认证配置"} style={{ marginBottom: "15px" }}>
+  return <Card title={
+    <p>
+      802.1x认证配置
+      &nbsp;
+      <Tooltip title="此配置适用于需要进行802.1x协议端口上网认证的网络环境，需输入认证的账号名和密码">
+        <a style={{ color: "#108ee9" }}>
+          <Icon type="question-circle-o" />
+        </a>
+      </Tooltip>
+    </p>
+  } style={{ marginBottom: "15px" }}>
     <JoSpin spinning={loading}>
       <NetworkAuthForm
         loading={loading}
@@ -201,17 +213,16 @@ class Page extends React.Component {
       ...(payload || {})
     }
   })
-    .then(Message.success.call(null, "保存成功"))
+    .then(Message.success.call(null, "保存成功", 3))
     .then(this.props.get.call(this))
   /*********************************************************/
   putSysLogConfig = payload => this.props.putSysLogConfig(payload)
-    .then(Message.success.call(null, "保存成功"))
+    .then(result => Message.success("保存成功", 3))
   /*********************************************************/
   putControlConfig = payload => this.props.putControlConfig(payload)
-    .then(Message.success.call(null, "保存成功"))
+    .then(result => Message.success("保存成功", 3))
   /*********************************************************/
   putAuthNetworkConfig = payload => this.props.putAuthNetworkConfig(payload)
-    .then(Message.success.call(null, "保存成功"))
 
   getContentPanel = () => {
     const { queryResults } = this.props[NAMESPACE],

@@ -60,4 +60,5 @@ export const sysLogServerFormTextConfig = {
 }
 
 export const AUTH_USER_ACCOUNT = "authUserAccount",
-  AUTH_PASSWORD = "authUserPassword"
+  AUTH_PASSWORD = "authUserPassword",
+  IS_CONNECT = "isConnect"
