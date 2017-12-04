@@ -183,6 +183,7 @@ Command+Alt+K // Mac
 
 * 常量
 ```javascript
+
 //常量全部大写 单词间用 下划线 _ 连接
 const MAIN_NAMESPACE="main"
 ``` 
@@ -193,10 +194,10 @@ let firstName="antiy"
 ```
 
 * 构造函数
-```jsx
+```
 //构造函数 首字母大写 包括React的无状态组件等
 class List extends React.Component{
-  ...
+  
 }
 
 const TableCell = ({children})={
