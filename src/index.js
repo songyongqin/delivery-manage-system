@@ -9,7 +9,7 @@ const openDebugMode = () => {
     console.error(e);
   }
 }
-// openDebugMode()
+openDebugMode()
 
 import dva from 'dva';
 import './index.css';
