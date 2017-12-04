@@ -7,6 +7,7 @@ import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE_MALDOMAIN } from '../../ConstConfig'
+import TimesLabel from 'components/TimesLabel'
 import classnames from 'classnames';
 @WithAnimateRender
 class Tableevent extends React.Component {
@@ -59,6 +60,9 @@ class Tableevent extends React.Component {
       title: '时间',
       dataIndex: 'time',
       key: 'time',
+      render: (time) => {
+        return <TimesLabel times={[time]}></TimesLabel>
+      }
     }, {
       title: '恶意域名',
       dataIndex: 'domain',

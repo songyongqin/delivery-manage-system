@@ -8,6 +8,7 @@ import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE_FALL_HOST, VALUE_FALL_HOST } from '../../ConstConfig'
 import classnames from 'classnames';
+import TimesLabel from 'components/TimesLabel'
 @WithAnimateRender
 class Tableevent extends React.Component {
   constructor(props) {
@@ -67,6 +68,9 @@ class Tableevent extends React.Component {
       title: '攻击时间范围',
       dataIndex: 'attackTimes',
       key: 'attackTimes',
+      render: (time) => {
+        return <TimesLabel times={[time]}></TimesLabel>
+      }
     }];
     const tableProps = {
       columns: columns,

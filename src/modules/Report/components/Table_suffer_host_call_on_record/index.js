@@ -8,6 +8,8 @@ import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE_SUFFERHOSTCALLONRECORD } from '../../ConstConfig'
 import classnames from 'classnames';
+import TimesLabel from 'components/TimesLabel'
+
 @WithAnimateRender
 class Tableevent extends React.Component {
   constructor(props) {
@@ -59,6 +61,9 @@ class Tableevent extends React.Component {
       title: '时间',
       dataIndex: 'time',
       key: 'time',
+      render: (time) => {
+        return <TimesLabel times={[time]}></TimesLabel>
+      }
     }, {
       title: '内网受害主机',
       dataIndex: 'insideSufferHostIP',
