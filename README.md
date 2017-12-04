@@ -58,7 +58,7 @@ Command+Alt+K // Mac
 ### 手动改变值
 在index.html中`<title></title>`标签后 添加以下代码
 
-```javascript
+```html
 <script>
     //如需要关闭数据传输的加密和解密 可在sessionstorage中设置`@@__DEBUG__@@`值
     sessionStorage.setItem("@@__DEBUG__@@", "@@__DEBUG__@@")
