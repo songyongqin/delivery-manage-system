@@ -75,7 +75,7 @@ Command+Alt+K // Mac
 
 ## package.json 说明
 
-```
+```json
 {
   ...,
   "engines": {
@@ -168,4 +168,39 @@ Command+Alt+K // Mac
     }
   }
 }
+```
+
+
+## 开发者须知
+
+### 语言版本
+
+主要为ECMAScript 6，另使用了ES7和ES8部分提案
+
+参考 http://es6.ruanyifeng.com/
+
+### 编码风格建议
+
+* 常量
+```javascript
+//常量全部大写 单词间用 下划线 _ 连接
+const MAIN_NAMESPACE="main"
+``` 
+* 变量
+```javascript
+//变量命名使用小驼峰命名 （第一个单词以小写字母开始，第二个单词的首字母大写）
+let firstName="antiy"
+```
+
+* 构造函数
+```jsx
+//构造函数 首字母大写 包括React的无状态组件等
+class List extends React.Component{
+  ...
+}
+
+const TableCell = ({children})={
+  return <td>{children}</td>
+}
+
 ```
