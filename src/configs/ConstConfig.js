@@ -206,3 +206,5 @@ export const EVENT_ACTION_DATA_INDEX = "eventAction",
 
 
 export const DEBUG_MODE = "@@__DEBUG__@@"
+
+export const SECRET_KEY_NAMESPACE = "@@__SECRET_KEY__@@"

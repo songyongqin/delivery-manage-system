@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.css'
 import classnames from 'classnames';
-import { Menu, Button, Icon, Row, Col, message as Message, Switch } from 'antd';
+import { Menu, Button, Icon, Row, Col, message as Message, Switch, Tooltip, notification as Notification } from 'antd';
 import { queryContainerGenerator } from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
 import JoSpin from '../../components/JoSpin/index';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
@@ -18,6 +18,7 @@ import * as tools from '../../utils/tools';
 import Card from '../../domainComponents/Card';
 import Modal from '../../domainComponents/Modal';
 import AddIpLimitForm from './components/AddIpLimitForm';
+import { ADMIN_ROLE } from 'modules/UserManager/ConstConfig';
 
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
@@ -83,10 +84,22 @@ class Page extends React.Component {
     .then(this.onQuery)
 
 
-  onOpenChange = value => this.props.put({
-    [OPEN_DATAINDEX]: value ? IS_OPEN : IS_NOT_OPEN
-  })
-    .then(tools.curry(Message.success, "修改成功"))
+  onOpenChange = value => {
+    if (value) {
+      Notification["warning"]({
+        message: '警告',
+        description: '该系统仅可在限制的IP范围内登录',
+        duration: 5
+      })
+    }
+
+    this.props.put({
+      [OPEN_DATAINDEX]: value ? IS_OPEN : IS_NOT_OPEN
+    })
+      .then(tools.curry(Message.success, "修改成功"))
+
+  }
+
 
   onPostHandle = payload => this.props.post({ ...payload, type: this.state.activeType })
     .then(tools.curry(Message.success, "添加成功"))
@@ -120,7 +133,7 @@ class Page extends React.Component {
     const isOpen = queryResults[OPEN_DATAINDEX] === IS_OPEN
     const tableProps = {
       onChange: this.tableOnChange,
-      columns: tableConfig.getColumns({ getDelHandle, getOnAddClickHandle, isOpen }),
+      columns: tableConfig.getColumns({ getDelHandle, getOnAddClickHandle, isOpen: true }),
       dataSource: data.map((i, index) => {
         return {
           ...i,
@@ -129,15 +142,23 @@ class Page extends React.Component {
       })
     };
 
+    const adminData = data.find(i => i.role === "admin")
+
+    const adminIpRange = adminData ? adminData.ipRange : []
+
+    const disabled = adminIpRange.length === 0
 
     const title = (
       <div><Icon type="filter" />
         &nbsp;限制IP登录范围
         <span style={{ paddingLeft: "15px" }}>
-          <Switch checkedChildren={"开"}
-            unCheckedChildren={"关"}
-            onChange={this.onOpenChange}
-            defaultChecked={isOpen} />
+          <Tooltip title={disabled ? "管理员无IP范围设置，无法开启该功能" : null}>
+            <Switch checkedChildren={"开"}
+              unCheckedChildren={"关"}
+              disabled={disabled}
+              onChange={this.onOpenChange}
+              defaultChecked={isOpen} />
+          </Tooltip>
         </span>
       </div>
     )
