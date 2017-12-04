@@ -43,27 +43,53 @@ const baseModel = {
           return false
         }
 
-        debugModalRef = Modal.confirm({
-          title: "DEBUG模式",
-          content: "是否开启DEBUG模式，将关闭数据的加密和解密模块（关闭tab后重启或注销登录可取消DEBUG模式）",
-          okText: "确定",
-          onOk: () => {
-            debugModalRef = null
-            sessionStorage.setItem(DEBUG_MODE, DEBUG_MODE)
-            if (sessionStorage.getItem(DEBUG_MODE)) {
-              Message.success("DEBUG模式开始成功,等待窗口刷新..")
+        const currentMode = sessionStorage.getItem(DEBUG_MODE)
+
+
+
+        debugModalRef = currentMode
+          ?
+          Modal.confirm({
+            title: "DEBUG模式",
+            content: "关闭debug模式",
+            okText: "确定",
+            onOk: () => {
+              debugModalRef = null
+              sessionStorage.removeItem(DEBUG_MODE)
+              Message.success("DEBUG模式关闭成功,等待窗口刷新..")
               setTimeout(() => {
                 window.location.reload()
               }, 1200)
-            } else {
-              Message.error("DEBUG模式开启失败")
+            },
+            onCancel: () => {
+              debugModalRef = null
             }
+          })
+          :
+          Modal.confirm({
+            title: "DEBUG模式",
+            content: "是否开启DEBUG模式，将关闭数据的加密和解密模块（关闭tab后重启或注销登录可取消DEBUG模式）",
+            okText: "确定",
+            onOk: () => {
+              debugModalRef = null
+              sessionStorage.setItem(DEBUG_MODE, DEBUG_MODE)
+              if (sessionStorage.getItem(DEBUG_MODE)) {
+                Message.success("DEBUG模式开启成功,等待窗口刷新..")
+                setTimeout(() => {
+                  window.location.reload()
+                }, 1200)
+              } else {
+                Message.error("DEBUG模式开启失败")
+              }
 
-          },
-          onCancel: () => {
-            debugModalRef = null
-          }
-        })
+            },
+            onCancel: () => {
+              debugModalRef = null
+            }
+          })
+
+
+
 
         return false;
       });
