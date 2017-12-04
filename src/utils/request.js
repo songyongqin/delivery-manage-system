@@ -3,7 +3,9 @@ import requestExtraOptionsHandle from '../configs/requestExtraOptionsHandle';
 import { encrypt, decrypt, getTemp, setTemp, compose } from './tools.js'
 import secretKey from 'configs/SecretKey'
 import { DEBUG_MODE } from 'configs/ConstConfig'
+// console.info(encrypt("123456", "antiy test").toString())
 
+// console.info(decrypt(encrypt("123456", "antiy test").toString(), "antiy test"))
 function parseJSON(response) {
   return response.json();
 }
