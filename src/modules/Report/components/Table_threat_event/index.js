@@ -7,7 +7,10 @@ import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE_THREATEVENT } from '../../ConstConfig'
-import classnames from 'classnames';
+import classnames from 'classnames'
+import TimesLabel from 'components/TimesLabel'
+import { levelTextConfig, actionStatusTextConfig, attackStageTextConfig } from 'configs/ConstConfig'
+import { getKeyText } from 'utils/tools'
 
 @WithAnimateRender
 class Tableevent extends React.Component {
@@ -57,6 +60,9 @@ class Tableevent extends React.Component {
       title: '攻击阶段',
       dataIndex: 'attackStage',
       key: 'attackStage',
+      render: (record) => {
+        return getKeyText(record, attackStageTextConfig)
+      }
     }, {
       title: '行为',
       dataIndex: 'action',
@@ -65,10 +71,17 @@ class Tableevent extends React.Component {
       title: '威胁等级',
       dataIndex: 'level',
       key: 'level',
+      render: (record) => {
+        return getKeyText(record, levelTextConfig)
+      }
     }, {
       title: '攻击状态',
       dataIndex: 'actionStatus',
       key: 'actionStatus',
+      render: (record) => {
+        return getKeyText(record, actionStatusTextConfig)
+      }
+
     }, {
       title: '威胁描述',
       dataIndex: 'description',
@@ -81,6 +94,9 @@ class Tableevent extends React.Component {
       title: '攻击时间',
       dataIndex: 'attackTimes',
       key: 'attackTimes',
+      render: (time) => {
+        return <TimesLabel times={[time]}></TimesLabel>
+      }
     },];
     const tableProps = {
       columns: columns,

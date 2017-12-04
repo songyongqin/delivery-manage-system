@@ -28,7 +28,7 @@ export default {
       const list = result.payload.data;
       const total = result.payload.total ? result.payload.total : 500;
       const page = payload.page ? payload.page : 1;
-      const timestampRange = payload.timestampRange ? payload.timestampRange : 1;
+      const timestampRange = payload.timestampRange ? payload.timestampRange : [];
       const ip = payload.ip ? payload.ip : "";
       const userAccount = payload.userAccount ? payload.userAccount : "";
       const loginStatus = payload.loginStatus ? payload.loginStatus : "";
