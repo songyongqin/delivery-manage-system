@@ -64,10 +64,6 @@ class Tableevent extends React.Component {
       dataIndex: 'threatName',
       key: 'threatName',
     }, {
-      title: '匹配方式',
-      dataIndex: 'matchMethod',
-      key: 'matchMethod',
-    }, {
       title: '特征准确度',
       dataIndex: 'accuracy',
       key: 'accuracy',
