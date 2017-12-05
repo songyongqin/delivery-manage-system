@@ -11,7 +11,7 @@ export const encrypt = (message, key) => CryptoJS.AES.encrypt(
     iv: CryptoJS.enc.Latin1.parse(iv),
     padding: CryptoJS.pad.ZeroPadding
   }
-)
+).toString()
 
 export const decrypt = (message, key) => CryptoJS.AES.decrypt(
   message,

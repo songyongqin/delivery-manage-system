@@ -210,3 +210,6 @@ export const DEBUG_MODE = "@@__DEBUG__@@"
 export const SECRET_KEY_NAMESPACE = "@@__SECRET_KEY__@@"
 
 export const IV_NAMESPACE = "@@__IV__@@"
+
+
+export const LOG_NAMESPACE = "@@__LOG__@@"

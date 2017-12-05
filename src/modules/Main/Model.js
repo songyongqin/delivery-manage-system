@@ -16,137 +16,17 @@ import { DEBUG_MODE, SECRET_KEY_NAMESPACE, IV_NAMESPACE } from 'configs/ConstCon
 import { Modal, message as Message, Input } from 'antd'
 moment.locale('zh-cn');
 
-
-
+import initDebugModal from './extraModal/debug'
+import initKeyModal from './extraModal/key'
+import initLogModal from './extraModal/log'
 
 const baseModel = {
   namespace: NAMESPACE,
-  state: {
-    queryResults: {
-
-    }
-  },
-  effects: {
-  },
   subscriptions: {
     setup: ({ history, dispatch }) => {
-
-      let debugModalRef = null,
-        secretKeyModalRef = null
-
-      //debug窗口快捷监听
-      Mousetrap.bind(['command+alt+b', 'ctrl+alt+b'], function () {
-
-        if (debugModalRef) {
-          debugModalRef.destroy()
-          debugModalRef = null
-          return false
-        }
-
-        const currentMode = sessionStorage.getItem(DEBUG_MODE)
-
-
-
-        debugModalRef = currentMode
-          ?
-          Modal.confirm({
-            title: "DEBUG模式",
-            content: "关闭debug模式",
-            okText: "确定",
-            onOk: () => {
-              debugModalRef = null
-              sessionStorage.removeItem(DEBUG_MODE)
-              Message.success("DEBUG模式关闭成功,等待窗口刷新..")
-              setTimeout(() => {
-                window.location.reload()
-              }, 1200)
-            },
-            onCancel: () => {
-              debugModalRef = null
-            }
-          })
-          :
-          Modal.confirm({
-            title: "DEBUG模式",
-            content: "是否开启DEBUG模式，将关闭数据的加密和解密模块（关闭tab后重启或注销登录可取消DEBUG模式）",
-            okText: "确定",
-            onOk: () => {
-              debugModalRef = null
-              sessionStorage.setItem(DEBUG_MODE, DEBUG_MODE)
-              if (sessionStorage.getItem(DEBUG_MODE)) {
-                Message.success("DEBUG模式开启成功,等待窗口刷新..")
-                setTimeout(() => {
-                  window.location.reload()
-                }, 1200)
-              } else {
-                Message.error("DEBUG模式开启失败")
-              }
-
-            },
-            onCancel: () => {
-              debugModalRef = null
-            }
-          })
-
-
-
-
-        return false;
-      });
-
-
-
-      //secret窗口快捷监听
-      let secretKey = "", iv = ""
-      Mousetrap.bind(['command+alt+k', 'ctrl+alt+k'], function () {
-
-        if (secretKeyModalRef) {
-          secretKeyModalRef.destroy()
-          secretKeyModalRef = null
-          return false
-        }
-
-        secretKeyModalRef = Modal.confirm({
-          title: "SECRET KEY设置",
-          content: <p>
-            设置临时的SECRET KEY 和 IV（关闭tab后重启或注销登录可清除）<br />
-            设置的内容将会覆盖代码内置的 SECRET KEY 和 IV <br />
-            <span style={{ color: "red" }}>*key和iv的长度建议为16位</span>
-            <Input
-              style={{ "marginBottom": "15px" }}
-              placeholder="请输入key"
-              onChange={e => secretKey = e.target.value}
-              defaultValue={window.sessionStorage.getItem(SECRET_KEY_NAMESPACE)}>
-            </Input>
-            <Input
-              placeholder="请输入iv"
-              onChange={e => iv = e.target.value}
-              defaultValue={window.sessionStorage.getItem(IV_NAMESPACE)}>
-            </Input>
-          </p>,
-          okText: "确定",
-          onOk: () => {
-            sessionStorage.setItem(SECRET_KEY_NAMESPACE, secretKey)
-            sessionStorage.setItem(IV_NAMESPACE, iv)
-            secretKey = ""
-            iv = ""
-            secretKeyModalRef = null
-
-            Message.success(`${SECRET_KEY_NAMESPACE}设置成功，等待窗口刷新..`)
-
-            setTimeout(() => {
-              window.location.reload()
-            }, 1200)
-
-
-          },
-          onCancel: () => {
-            secretKeyModalRef = null
-          }
-        })
-
-        return false;
-      });
+      initDebugModal()
+      initKeyModal()
+      initLogModal()
     }
   }
 };
