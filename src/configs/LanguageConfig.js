@@ -23,7 +23,7 @@ const routesZHCN = {
         title: "失陷主机分析"
       },
       "ranking": {
-        title: "图表分析"
+        title: "图表统计"
       },
       "threat-distribution": {
         title: "威胁分布"

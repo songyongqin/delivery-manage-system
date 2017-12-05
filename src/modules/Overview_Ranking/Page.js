@@ -222,18 +222,11 @@ class Page extends React.Component {
         title={this.getQueryPanel()}
         style={{ marginTop: "15px" }}>
         <JoSpin spinning={this.props.queryLoading}>
-          {
-            productType !== IDS
-            &&
-            <span>
-              威胁事件
+
+          <span>
+            威胁事件
             </span>
-          }
-          {
-            productType !== IDS
-            &&
-            this.getContentPanel()
-          }
+          {this.getContentPanel()}
         </JoSpin>
         <OverviewFlow></OverviewFlow>
       </Card>

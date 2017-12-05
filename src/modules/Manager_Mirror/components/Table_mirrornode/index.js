@@ -16,6 +16,8 @@ import { WithModal } from 'domainComponents/HOSComponents'
 import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
 import { HOST_DATA_INDEX } from 'modules/Analyse_Overall_NetBasic/ConstConfig';
 const Panel = Collapse.Panel;
+import { NODE } from 'configs/ConstConfig'
+
 
 @WithAnimateRender
 @WithModal()
@@ -121,9 +123,10 @@ class mirrornode extends React.Component {
     const rowSelection = {
       onChange: this.onSelectChange,
     };
+
     const tableProps = {
       columns: columns,
-      rowSelection: rowSelection,
+      // rowSelection: rowSelection,
       dataSource: data.map((i, index) => {
         return {
           ...i,
@@ -131,6 +134,11 @@ class mirrornode extends React.Component {
         }
       }),
     }
+
+    if (this.props.productType !== NODE) {
+      tableProps.rowSelection = rowSelection
+    }
+
     const paginationProps = {
       total: this.props.total,
       current: this.props.page,
@@ -143,15 +151,23 @@ class mirrornode extends React.Component {
 
           <h4 className="line" className={classnames({ "lbl-dark": isDark })} style={{ marginBottom: "25px", marginTop: "50px" }}>蜜罐节点镜像状态</h4>
           <div style={{ overflow: "hidden" }}>
-            <Button
-              type="primary"
-              onClick={this.start}
-              loading={this.props.updateNodeLoading}
-              disabled={this.state.selectedRows.length === 0}
-              style={{ float: "right", marginBottom: "20px" }}
-            >
-              升级蜜罐节点镜像
-          </Button>
+            {
+              this.props.productType !== NODE
+                ?
+                <Button
+                  type="primary"
+                  onClick={this.start}
+                  loading={this.props.updateNodeLoading}
+                  disabled={this.state.selectedRows.length === 0}
+                  style={{ float: "right", marginBottom: "20px" }}
+                >
+                  升级蜜罐节点镜像
+                </Button>
+                :
+                null
+            }
+
+
           </div>
           <EnhanciveTable key="table" tableProps={tableProps} paginationProps={paginationProps} rowSelection={rowSelection}> </EnhanciveTable>
 
@@ -196,7 +212,9 @@ function mapStateToProps(state) {
     total,
     isDark: state.layout.commonLayout.darkTheme,
     updateNodeLoading: state.loading.effects[`${OPERATION_NAMESPACE}/updateNodeMirror`],
-    lastReqTime: state.lastEffectTime.effects[`${NAMESPACE_NODE}/fetch`]
+    lastReqTime: state.lastEffectTime.effects[`${NAMESPACE_NODE}/fetch`],
+    productType: state.user.productType.type,
+    productInfo: state.user.productType,
   };
 }
 

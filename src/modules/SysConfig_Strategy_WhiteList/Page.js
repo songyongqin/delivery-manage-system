@@ -71,10 +71,10 @@ const mapStateToProps = state => {
     [NAMESPACE]: state[NAMESPACE],
     commonLayout: state.layout.commonLayout,
     loading: effectLoading[`${NAMESPACE}/query`] ||
-    effectLoading[`${NAMESPACE}/put`] ||
-    effectLoading[`${NAMESPACE}/apply`] ||
-    effectLoading[`${NAMESPACE}/post`] ||
-    effectLoading[`${NAMESPACE}/delete`],
+      effectLoading[`${NAMESPACE}/put`] ||
+      effectLoading[`${NAMESPACE}/apply`] ||
+      effectLoading[`${NAMESPACE}/post`] ||
+      effectLoading[`${NAMESPACE}/delete`],
   }
 
 }
@@ -301,7 +301,7 @@ class Page extends React.Component {
           onCancel={this.switchCreateModal}
           key={`${createVisible}-modal-visible`}
           footer={null}
-          title={<p><Icon type="plus" />&nbsp;新增系统日志白名单</p>}>
+          title={<p><Icon type="plus" />&nbsp;新增白名单</p>}>
           <JoSpin spinning={loading}>
             {/*<RuleForm onSubmit={this.onSubmit}*/}
             {/*isDark={isDark}*/}

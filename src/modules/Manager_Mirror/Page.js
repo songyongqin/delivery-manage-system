@@ -29,7 +29,7 @@ import { WithModal } from 'domainComponents/HOSComponents'
 import UpdatePanel from './components/UpdatePanel'
 import Table_mirrorsummary from './components/Table_mirrorsummary'
 import Table_mirrornode from './components/Table_mirrornode'
-
+import { NODE, STAND_ALONE } from 'configs/ConstConfig'
 
 const mapStateToProps = state => {
   const effectsLoading = state.loading.effects
@@ -42,7 +42,9 @@ const mapStateToProps = state => {
       effectsLoading[`${OPERATION_NAMESPACE}/initUploadTask`] ||
       effectsLoading[`${OPERATION_NAMESPACE}/mergeUploadTask`] ||
       effectsLoading[`${OPERATION_NAMESPACE}/updateRemote`] ||
-      state[OPERATION_NAMESPACE].updateLoading
+      state[OPERATION_NAMESPACE].updateLoading,
+    productType: state.user.productType.type,
+    productInfo: state.user.productType,
   }
 }
 
@@ -100,7 +102,7 @@ class Page extends React.Component {
   getOperationPanel = () => {
     return <div key="operation" style={{ overflow: "hidden" }}>
       <Button type="primary" style={{ float: "right", marginBottom: "20px" }} onClick={this.updateModalSwitchHandle}>
-        升级控制中心镜像
+        {this.props.productType === STAND_ALONE ? "升级蜜罐镜像" : "升级控制中心镜像"}
       </Button>
     </div>
   }
@@ -110,22 +112,22 @@ class Page extends React.Component {
       ["lbl-dark"]: this.props.isDark
     })
 
-    const { modalVisible, mirrorUpdateLoading } = this.props;
+    const { modalVisible, mirrorUpdateLoading, productType } = this.props;
 
     return (
       <div>
         {this.props.animateRender([
           this.getHeader(),
-          <h4 key="h4" className={lblClasses} style={{ marginBottom: "25px", marginTop: "30px" }}>镜像汇总</h4>,
-          this.getOperationPanel(),
-          <Table_mirrorsummary key="Table_mirrorsummary" />,
-          <Table_mirrornode key="Table_mirrornode" />
+          productType === NODE ? null : <h4 key="h4" className={lblClasses} style={{ marginBottom: "25px", marginTop: "30px" }}>镜像汇总</h4>,
+          productType === NODE ? null : this.getOperationPanel(),
+          productType === NODE ? null : <Table_mirrorsummary key="Table_mirrorsummary" />,
+          productType === STAND_ALONE ? null : < Table_mirrornode key="Table_mirrornode" />
         ])}
         <Modal
           maskClosable={false}
           closable={!mirrorUpdateLoading}
           key={`${this.state.lastChangeTime}-update-modal`}
-          title="升级控制中心镜像"
+          title={productType === STAND_ALONE ? "升级蜜罐镜像" : "升级控制中心镜像"}
           footer={null}
           onCancel={this.updateModalSwitchHandle}
           visible={modalVisible["update"]}
