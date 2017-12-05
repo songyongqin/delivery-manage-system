@@ -95,7 +95,7 @@ class Tableevent extends React.Component {
       dataIndex: 'attackTimes',
       key: 'attackTimes',
       render: (time) => {
-        return <TimesLabel times={[time]}></TimesLabel>
+        return <TimesLabel times={time}></TimesLabel>
       }
     },];
     const tableProps = {
