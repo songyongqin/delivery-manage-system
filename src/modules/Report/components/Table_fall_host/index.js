@@ -57,20 +57,9 @@ class Tableevent extends React.Component {
       dataIndex: 'ip',
       key: 'ip',
     }, {
-      title: '攻击次数',
-      dataIndex: 'attackCounts',
-      key: 'attackCounts',
-    }, {
       title: '攻击事件类型',
       dataIndex: 'attackEventType',
       key: 'attackEventType',
-    }, {
-      title: '攻击时间范围',
-      dataIndex: 'attackTimes',
-      key: 'attackTimes',
-      render: (time) => {
-        return <TimesLabel times={[time]}></TimesLabel>
-      }
     }];
     const tableProps = {
       columns: columns,
