@@ -297,7 +297,7 @@ export default ({
             <EnhanciveTable
               key={`${lastReqTime}-device-table`}
               inverse={true}
-              pagination={isNode && productType.type !== NODE && productType.type !== IDS}
+              pagination={isNode && productType.type !== NODE && productType.type !== IDS && productType.type !== STAND_ALONE}
               tableProps={tableProps}
               paginationProps={paginationProps}
               isDark={commonLayout.darkTheme} />

@@ -10,7 +10,7 @@ import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import NodeDisk from '../Manager_Device_Node_Disk/Page'
 import DeviceManagerGenerator from 'domainComponents/DeviceManager'
 import { getTemp } from 'utils/tools'
-
+import { STAND_ALONE } from 'configs/ConstConfig'
 
 //产品形态为蜜罐节点时，需将本身作为控制中心来处理......
 let productType = ""
@@ -21,7 +21,7 @@ try {
   console.info(e)
 }
 
-let namespace = productType === NODE ? MANAGER_DEVICE_CONTROL_NAMESPACE : NAMESPACE
+let namespace = (productType === NODE || productType === STAND_ALONE) ? MANAGER_DEVICE_CONTROL_NAMESPACE : NAMESPACE
 
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
@@ -85,7 +85,7 @@ export default DeviceManagerGenerator({
   namespace: namespace,
   mapStateToProps,
   mapDispatchToProps,
-  title: "蜜罐节点设备",
+  title: productType === STAND_ALONE ? "单机版蜜罐设备" : "蜜罐节点设备",
   deviceType: NODE,
   getNodeDiskComponent: () => {
     return <div>
