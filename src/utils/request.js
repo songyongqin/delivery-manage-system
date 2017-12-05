@@ -38,7 +38,6 @@ const encryptBodyString = (options) => {
   if (typeof options.body === "string") {
     finalOptions.body = encryptData(options.body)
   }
-  console.info(finalOptions)
   return finalOptions
 }
 //解密res中的数据
