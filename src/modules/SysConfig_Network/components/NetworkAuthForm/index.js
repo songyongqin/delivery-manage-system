@@ -36,7 +36,10 @@ class WrappedForm extends React.Component {
       onSubmit && onSubmit({
         values,
         [IS_CONNECT]: 1,
-      }).then(result => this.setState({ connect: 1 }))
+      })
+        .then(result => this.setState({ connect: 1 }))
+        .then(result => Message.success("802.1x协议上网认证配置成功", 3))
+
     })
   }
   handleDisConnect = (e) => {
@@ -51,7 +54,6 @@ class WrappedForm extends React.Component {
         [IS_CONNECT]: 0,
       })
         .then(result => this.setState({ connect: 0 }))
-        .then(result => Message.success("802.1x协议上网认证配置成功", 3))
     })
   }
   render() {
