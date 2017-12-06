@@ -14,6 +14,21 @@ import LicenceForm from './components/LicenceForm';
 import CleanForm from './components/CleanForm';
 import Card from 'domainComponents/Card'
 import { NODE, IDS, DISTRIBUTION, STAND_ALONE } from 'configs/ConstConfig'
+import { connect } from 'dva'
+import { CONTROL_CONFIG_NAMESPACE } from 'modules/SysConfig_Network/ConstConfig'
+
+const extraMapStateToProps = state => {
+  return {
+    controlCenterIp: state[CONTROL_CONFIG_NAMESPACE].queryResults.ip,
+  }
+}
+
+const extraMapDispatchToProps = dispatch => ({
+  getControlConfig: payload => dispatch({
+    type: `${CONTROL_CONFIG_NAMESPACE}/query`,
+  }),
+})
+
 
 export default ({
   namespace,
@@ -27,6 +42,8 @@ export default ({
 
   const NAMESPACE = namespace;
 
+
+  @connect(extraMapStateToProps, extraMapDispatchToProps)
   @queryContainerGenerator({
     namespace: NAMESPACE,
     mapStateToProps,
@@ -48,7 +65,8 @@ export default ({
       }
     }
     componentDidMount = () => {
-      this.props.query();
+      this.props.query()
+      this.props.getControlConfig()
     }
     setSelectedRows = (selectedRows) => {
       this.setState({
@@ -189,11 +207,10 @@ export default ({
         "lbl-dark": isDark
       })
 
-
       return (productInfo.type === NODE || productInfo.type === IDS)
         ?
         <p className={lblClasses} style={{ fontSize: "20px", marginBottom: "10px" }}>
-          控制中心IP:{productInfo.controlCenterIp}
+          控制中心IP:{this.props.controlCenterIp}
         </p>
         :
         <div style={{ marginBottom: "15px" }}>
