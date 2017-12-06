@@ -423,6 +423,7 @@ class Page extends React.Component {
   onExport = () => {
     const checkedListNew = this.state.checkedListNew;
     const option = {
+      exportAll: "exportAll",
       eventStatistic: checkedListNew.includes("VALUE_ATTACK") ? 1 : 0,
       threatEvent:
       threateventItemList.every(i => this.haveChecked(i))
