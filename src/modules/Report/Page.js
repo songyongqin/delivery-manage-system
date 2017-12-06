@@ -91,7 +91,6 @@ const mindefaultCheckedList = [
   "VALUE_EXLOITVULNERABILITY",
   "VALUE_CHART_SOURCECOUNTRY",
   "VALUE_CHART_SOURCEPROVINCE",
-  "VALUE_RECORDSTATISTICAL",
   "VALUE_WATERMARK"
 ]
 const eventexportItemList = [
@@ -128,6 +127,13 @@ const chartItemList = [
   "VALUE_CHART_SOURCECOUNTRY",
   "VALUE_CHART_SOURCEPROVINCE",
   "VALUE_RECORDSTATISTICAL",
+]
+const minchartItemList = [
+  "VALUE_CHART_ATTACK",
+  "VALUE_EVENT_TYPE",
+  "VALUE_EXLOITVULNERABILITY",
+  "VALUE_CHART_SOURCECOUNTRY",
+  "VALUE_CHART_SOURCEPROVINCE",
 ]
 const TabPane = Tabs.TabPane;
 function Table_show() {
@@ -783,6 +789,7 @@ class Page extends React.Component {
     const eventreportdata = ["VALUE_FALL_HOST", "VALUE_THREATEVENT", "VALUE_THREATINFO", "VALUE_MALIP", "VALUE_MALDOMAIN", "VALUE_SUFFERHOSTCALLONRECORD", "VALUE_HAVECOMMUNICATEINSIDEIP", "VALUE_CALL_ON_IP", "VALUE_CALL_ON_DOMAIN", "VALUE_HIGH", "VALUE_MIDDLE", "VALUE_LOW"];
     const mineventreportdata = ["VALUE_FALL_HOST", "VALUE_THREATEVENT", "VALUE_THREATINFO", "VALUE_HIGH", "VALUE_MIDDLE", "VALUE_LOW"];
     const chartdata = ["VALUE_CHART_ATTACK", "VALUE_EVENT_TYPE", "VALUE_EXLOITVULNERABILITY", "VALUE_CHART_SOURCECOUNTRY", "VALUE_CHART_SOURCEPROVINCE", "VALUE_RECORDSTATISTICAL"];
+    const minchartdata = ["VALUE_CHART_ATTACK", "VALUE_EVENT_TYPE", "VALUE_EXLOITVULNERABILITY", "VALUE_CHART_SOURCECOUNTRY", "VALUE_CHART_SOURCEPROVINCE"];
     const { visible, loading } = this.state;
     const { isDark, productType } = this.props;
     const { timestampRange } = this.props.base;
@@ -982,8 +989,8 @@ class Page extends React.Component {
               <Checkbox
                 style={{ fontWeight: "bold" }}
                 value="VALUE_CHART"
-                checked={chartItemList.every(i => this.haveChecked(i))}
-                onChange={this.getOnChangeHandle(chartdata)}
+                checked={this.props.productType == STAND_ALONE ? minchartItemList.every(i => this.haveChecked(i)) : chartItemList.every(i => this.haveChecked(i))}
+                onChange={this.getOnChangeHandle(this.props.productType == STAND_ALONE ? minchartdata : chartdata)}
               >
                 图表统计
                       </Checkbox>
@@ -1028,14 +1035,16 @@ class Page extends React.Component {
                 攻击来源省份
                       </Checkbox>
             </Col>
-            <Col span={7} offset={1}>
-              <Checkbox
-                value="VALUE_RECORDSTATISTICAL"
-                onChange={this.getOnChangeHandle(["VALUE_RECORDSTATISTICAL"])}
-                checked={this.state.checkedListNew.includes("VALUE_RECORDSTATISTICAL")}>
-                威胁记录统计
+            <div style={{ display: (productType == STAND_ALONE) ? "none" : "block" }}>
+              <Col span={7} offset={1}>
+                <Checkbox
+                  value="VALUE_RECORDSTATISTICAL"
+                  onChange={this.getOnChangeHandle(["VALUE_RECORDSTATISTICAL"])}
+                  checked={this.state.checkedListNew.includes("VALUE_RECORDSTATISTICAL")}>
+                  威胁记录统计
                       </Checkbox>
-            </Col>
+              </Col>
+            </div>
             <Col span={24}>
               <Checkbox
                 value="VALUE_WATERMARK"
