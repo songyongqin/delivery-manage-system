@@ -23,6 +23,9 @@ export const ATTACKSTAGE_DATAINDEX = "attackStage",
   DETAILS_DATAINDEX = "details",
   ADVICE_DATAINDEX = "advice";
 
+
+export const EVENT_TYPE = "eventType"
+
 export const PERCEPTION_DATAINDEX = "perception",
   SOURCE_DATAINDEX = "source",
   HONEYPOT_NAME_DATAINDEX = "honeypotName",
@@ -48,6 +51,7 @@ export const rowDataIndexes = [
   ATTACKSTAGE_DATAINDEX,
   ACTION_DATAINDEX,
   LEVEL_DATAINDEX,
+  EVENT_TYPE,
   ACTIONSTATUS_DATAINDEX,
   DESCRIPTION_DATAINDEX
 ];
@@ -64,7 +68,8 @@ export const tableTextConfig = {
     [ACTIONSTATUS_DATAINDEX]: "操作状态",
     [DESCRIPTION_DATAINDEX]: "威胁描述",
     [COUNTS_DATAINDEX]: "次数",
-    [ATTACKTIMES_DATAINDEX]: "攻击时间"
+    [ATTACKTIMES_DATAINDEX]: "攻击时间",
+    [EVENT_TYPE]: "事件类型"
   },
   expandedRow: {
     title: EXPANDED_ROW_TITLE,

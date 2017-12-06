@@ -19,7 +19,7 @@ import WhiteListModule from '../SysConfig_Strategy_WhiteList/Page';
 import {
   NAMESPACE,
 } from './ConstConfig'
-
+import { IDS_STAND_ALONE } from 'configs/ConstConfig'
 
 import * as tools from '../../utils/tools';
 import RuleForm from '../SysConfig_Strategy_Rule/components/RuleForm';
@@ -35,6 +35,8 @@ const mapStateToProps = state => {
   return {
     [NAMESPACE]: state[NAMESPACE],
     commonLayout: state.layout.commonLayout,
+    productType: state.user.productType.type,
+    productInfo: state.user.productType,
   }
 
 }
@@ -67,9 +69,15 @@ class Page extends React.Component {
           <Tabs.TabPane key="strategy" tab="策略配置">
             <StrategyModule></StrategyModule>
           </Tabs.TabPane>
-          <Tabs.TabPane key="white-list" tab="白名单策略配置">
-            <WhiteListModule></WhiteListModule>
-          </Tabs.TabPane>
+          {
+            this.props.productType === IDS_STAND_ALONE
+              ?
+              null
+              :
+              <Tabs.TabPane key="white-list" tab="白名单策略配置">
+                <WhiteListModule></WhiteListModule>
+              </Tabs.TabPane>
+          }
         </Tabs>
       </div>
     )

@@ -32,6 +32,13 @@ export const shouldIdsHideRouteList = [
   "/manager/mirror"
 ]
 
+export const shouldIdsStandAloneHideRouteList = [
+  "/analyse/attack-chain",
+  "/manager/virtual-machine",
+  "/manager/mirror"
+]
+
+
 export const shouldNodeHideRouteList = [
   "/analyse/ranking",
   "/analyse/threat-distribution",
@@ -40,6 +47,7 @@ export const shouldNodeHideRouteList = [
   "/sys-config/strategy",
   "/user-manager"
 ]
+
 
 export default {
   "overview": {

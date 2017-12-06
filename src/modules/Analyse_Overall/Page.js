@@ -14,8 +14,11 @@ import {
   NAMESPACE,
   NODE,
   IDS,
-  STAND_ALONE
+  STAND_ALONE,
 } from './ConstConfig'
+import {
+  IDS_STAND_ALONE
+} from 'configs/ConstConfig'
 import {
   NAMESPACE as OVERALL_NET_BASIC_NAMESPACE,
 } from '../Analyse_Overall_NetBasic/ConstConfig'
@@ -167,7 +170,7 @@ class Page extends React.Component {
             </Tabs.TabPane>
         }
         {
-          productType === IDS
+          (productType === IDS || productType === IDS_STAND_ALONE)
             ?
             null
             :

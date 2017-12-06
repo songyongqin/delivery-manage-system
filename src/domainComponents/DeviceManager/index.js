@@ -66,7 +66,10 @@ export default ({
     }
     componentDidMount = () => {
       this.props.query()
-      this.props.getControlConfig()
+
+      if (this.props.productType === IDS || this.props.productType === NODE) {
+        this.props.getControlConfig()
+      }
     }
     setSelectedRows = (selectedRows) => {
       this.setState({

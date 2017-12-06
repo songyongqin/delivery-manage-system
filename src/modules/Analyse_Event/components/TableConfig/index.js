@@ -24,8 +24,8 @@ import {
   HONEYPOT_SOURCE,
   IDS_SOURCE,
   sourceTextConfig,
-} from '../../ConstConfig';
-import FilterInputNumber from 'components/FilterInputNumber/index';
+} from '../../ConstConfig'
+import FilterInputNumber from '../FilterInputNumber';
 import TimeLabel from 'components/TimesLabel';
 import CountUp from 'react-countup';
 
@@ -100,7 +100,7 @@ renderer[ACTIONSTATUS_DATAINDEX] = value => {
 
 }
 
-const FILTER_INPUT_LABEL = "归并次数阈值设置"
+const FILTER_INPUT_LABEL = ""
 
 export const getColumns = ({ queryFilters, onSubmit, filters, filterTextConfig = {} }) => tableColumnsGenerator({
   keys: rowDataIndexes,

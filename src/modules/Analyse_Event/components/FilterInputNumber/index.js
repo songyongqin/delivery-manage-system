@@ -62,7 +62,10 @@ export default class extends React.Component {
           {textConfig["label"]}
         </p>
         <Form>
-          <FormItem label=""
+          <FormItem label="≥"
+            wrapperCol={{ span: 17 }}
+            labelCol={{ span: 5 }}
+            colon={false}
             style={{ width: "110px", display: "inline-block" }}
             validateStatus={number.validateStatus}
             help={number.errorMsg}>

@@ -11,8 +11,9 @@ import {
   NODE,
   DISTRIBUTION,
   STAND_ALONE,
+  IDS_STAND_ALONE
 } from 'configs/ConstConfig'
-import { shouldIdsHideRouteList, shouldNodeHideRouteList } from 'configs/RouteConfig'
+import { shouldIdsHideRouteList, shouldNodeHideRouteList, shouldIdsStandAloneHideRouteList } from 'configs/RouteConfig'
 const SubMenu = Menu.SubMenu;
 const Item = Menu.Item;
 
@@ -28,7 +29,9 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType) => {
   if (productType === NODE && shouldNodeHideRouteList.includes(link)) {
     return null;
   }
-
+  if (productType === IDS_STAND_ALONE && shouldIdsStandAloneHideRouteList.includes(link)) {
+    return null
+  }
 
   const classes = classnames({
     [styles["item"]]: true,

@@ -32,7 +32,7 @@ import {
 } from '../../modules/Manager_Virtual/ConstConfig'
 import { getTemp } from '../../utils/tools'
 import { HONEYPOT_CREATE_LIST_CACHE_NAMESPACE } from '../../modules/Manager_Virtual/Model'
-import { NODE, IDS } from "configs/ConstConfig"
+import { NODE, IDS, STAND_ALONE, IDS_STAND_ALONE, DISTRIBUTION } from "configs/ConstConfig"
 const NAMESPACE = "main";
 
 const honeypotCreateStatusTip = {
@@ -249,7 +249,7 @@ class Page extends React.Component {
   getHeaderRight = () => {
 
     const { userAccount, role, isAdmin } = this.props.userData;
-    const { honeypotCreateList, createStatusPanelVisible, productInfo } = this.props;
+    const { honeypotCreateList, createStatusPanelVisible, productInfo, productType } = this.props;
 
     const tipTextConfig = {
       admin: "说明：管理员属于授权用户,可对系统所有界面进行查看和操作",
@@ -361,19 +361,25 @@ class Page extends React.Component {
           </a>
         </Dropdown>
         &nbsp;&nbsp;&nbsp;
-        <Popover
-          trigger="click"
-          onVisibleChange={value => this.props.switchStatusPanel(value)}
-          visible={createStatusPanelVisible}
-          title={<p><Icon type="desktop" />&nbsp;&nbsp;蜜罐虚拟机创建状态</p>}
-          placement="bottomRight"
-          content={createStatus}>
-          <Badge count={creatingCount}>
-            <a>
-              <Icon type="notification"></Icon>
-            </a>
-          </Badge>
-        </Popover>
+        {
+          (productType === DISTRIBUTION || productType === STAND_ALONE)
+            ?
+            <Popover
+              trigger="click"
+              onVisibleChange={value => this.props.switchStatusPanel(value)}
+              visible={createStatusPanelVisible}
+              title={<p><Icon type="desktop" />&nbsp;&nbsp;蜜罐虚拟机创建状态</p>}
+              placement="bottomRight"
+              content={createStatus}>
+              <Badge count={creatingCount}>
+                <a>
+                  <Icon type="notification"></Icon>
+                </a>
+              </Badge>
+            </Popover>
+            :
+            null
+        }
       </div>
     )
   }
