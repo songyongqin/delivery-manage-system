@@ -28,10 +28,11 @@ import {
   ID_DATAINDEX,
   MAIN_NAMESPACE,
   VM_ENUM_CONFIG_DATA_INDEX,
+  HONEYPOT_TYPE_ROW_KEY,
   NODE,
 } from './ConstConfig';
 
-
+const HONEYPOT_TYPE = "honeypotType"
 
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
@@ -41,6 +42,7 @@ function mapStateToProps(state) {
     productType: state.user.productType.type,
     postLoading: state.loading.effects[`${NAMESPACE}/postVM`],
     options: state[NAMESPACE].options,
+    honeypotTypeList: state[MAIN_NAMESPACE].queryResults[HONEYPOT_TYPE] || {}
     // vmOptions: state[MAIN_NAMESPACE].queryResults[VM_ENUM_CONFIG_DATA_INDEX] || {}
   }
 }
@@ -219,7 +221,7 @@ class Page extends React.Component {
 
   getDataResultPanel = () => {
 
-    const { commonLayout, pageOnChange, userData, options, productType } = this.props;
+    const { commonLayout, pageOnChange, userData, options, productType, honeypotTypeList } = this.props;
     const { queryResults, queryFilters, lastReqTime } = this.props[NAMESPACE];
     const { data } = queryResults;
     const isDark = commonLayout.darkTheme,
@@ -227,8 +229,12 @@ class Page extends React.Component {
 
     const filterOptions = {
       ...options,
+      [HONEYPOT_TYPE_ROW_KEY]: Object.keys(honeypotTypeList)
     };
 
+    const filterTextConfigs = {
+      [HONEYPOT_TYPE_ROW_KEY]: honeypotTypeList
+    }
 
     const tableProps = {
       className: classnames({
@@ -241,6 +247,7 @@ class Page extends React.Component {
         queryFilters,
         isAdmin,
         productType,
+        filterTextConfigs,
         onSubmit: this.onFilter,
         handle: {
           getDelHandle: this.getDelHandle,

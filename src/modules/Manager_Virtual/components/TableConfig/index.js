@@ -271,6 +271,7 @@ export const getColumns = ({
   productType,
   queryFilters,
   handle,
+  filterTextConfigs = {},
   filterOptions = {},
                          }) => {
 
@@ -291,7 +292,7 @@ export const getColumns = ({
     renderer,
     titleTextConfig: tableTextConfig.colTitles,
     filterOptions: { ...staticFilterOptions, ...filterOptions },
-    filterTextConfig,
+    filterTextConfig: { ...filterTextConfig, ...filterTextConfigs },
     filteredValue: queryFilters,
     extraProps: {
       [HOST_IP_DATAINDEX]: {
