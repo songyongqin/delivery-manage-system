@@ -76,7 +76,7 @@ const routesZHCN = {
     }
   },
   "manager": {
-    title: producType === IDS ? "流量监测管理" : "蜜罐管理",
+    title: (producType === IDS || producType === IDS_STAND_ALONE) ? "流量监测管理" : "蜜罐管理",
     items: {
       "device": {
         title: "设备管理"
