@@ -14,7 +14,7 @@ import MonitorControl from '../SysConfig_Monitor_Control/Page'
 import MonitorIDS from '../SysConfig_Monitor_IDS/Page';
 import MonitorNode from '../SysConfig_Monitor_Node/Page';
 import classnames from 'classnames';
-import { IDS, NODE, STAND_ALONE, DISTRIBUTION } from 'configs/ConstConfig'
+import { IDS, NODE, STAND_ALONE, DISTRIBUTION, IDS_STAND_ALONE } from 'configs/ConstConfig'
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
   return {
@@ -65,7 +65,7 @@ class Page extends React.Component {
           </Tabs.TabPane>
         }
         {
-          (productType === IDS || productType === DISTRIBUTION)
+          (productType === IDS || productType === DISTRIBUTION || productType === IDS_STAND_ALONE)
           &&
           <Tabs.TabPane key="ids" tab="流量监测系统">
             <MonitorIDS />
