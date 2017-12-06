@@ -196,7 +196,9 @@ export const systems = Object.keys(systemsTextConfig);
 export const STAND_ALONE = "standAlone",
   DISTRIBUTION = "distribution",
   IDS = "ids",
-  NODE = "node"
+  NODE = "node",
+
+  IDS_STAND_ALONE = "ids_stand_alone"
 
 
 
