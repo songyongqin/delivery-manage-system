@@ -12,9 +12,10 @@ import {
   USERACCOUNT_DATAINDEX,
   IDS,
   NODE,
+  IDS_STAND_ALONE,
 } from '../../configs/ConstConfig';
 import { getVerificationCode } from './Service';
-import { shouldIdsHideRouteList, shouldNodeHideRouteList } from 'configs/RouteConfig'
+import { shouldIdsHideRouteList, shouldNodeHideRouteList, shouldIdsStandAloneHideRouteList } from 'configs/RouteConfig'
 moment.locale('zh-cn');
 
 const NAMESPACE = "user";
@@ -154,7 +155,7 @@ const baseModel = {
       const nodeRouteBlackList = shouldNodeHideRouteList
 
       const productType = (tools.getTemp("productType") || {}).type
-      console.info(productType);
+
       return history.listen(({ pathname }) => {
 
         if (pathname === "/login") {
@@ -163,11 +164,13 @@ const baseModel = {
           });
         }
 
-        if (nodeRouteBlackList.includes(pathname) && productType === NODE) {
-          return dispatch({
-            type: "redirectMain"
-          });
-        }
+        if (shouldIdsStandAloneHideRouteList.includes(pathname) && productType === IDS_STAND_ALONE)
+
+          if (nodeRouteBlackList.includes(pathname) && productType === NODE) {
+            return dispatch({
+              type: "redirectMain"
+            });
+          }
 
         if (idsRouteBlackList.includes(pathname) && productType === IDS) {
           return dispatch({

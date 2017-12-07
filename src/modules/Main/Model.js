@@ -26,7 +26,7 @@ const baseModel = {
     setup: ({ history, dispatch }) => {
       initDebugModal()
       initKeyModal()
-      initLogModal()
+      // initLogModal()
     }
   }
 };
