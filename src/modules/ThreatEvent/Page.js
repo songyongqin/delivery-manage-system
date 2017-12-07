@@ -80,7 +80,7 @@ class Page extends React.Component {
                 <TabPane
                   tab={threatEventTextConfig.title[k]}
                   key={k}
-                  style={{ maxHeight: this.state.panelHeight - 100, overflowY: "scroll" }}>
+                  style={{ height: this.state.panelHeight - 100, overflowY: "scroll" }}>
                   <div className={styles["threat-event-item-wrapper"]}>
                     {this.getPane(k)}
                   </div>

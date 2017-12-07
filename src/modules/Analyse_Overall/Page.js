@@ -140,16 +140,16 @@ class Page extends React.Component {
     })
 
     const honeypotDataPanel = [
-      <Tabs.TabPane key={OVERALL_NET_NAMESPACE} tab="网络行为">
+      <Tabs.TabPane key={OVERALL_NET_NAMESPACE} tab="网络行为" style={{ minHeight: "400px" }}>
         <OverallNet lastTime={lastTime}></OverallNet>
       </Tabs.TabPane>,
-      <Tabs.TabPane key={OVERALL_SYSTEM_NAMESPACE} tab="系统行为">
+      <Tabs.TabPane key={OVERALL_SYSTEM_NAMESPACE} tab="系统行为" style={{ minHeight: "400px" }}>
         <OverallSystem lastTime={lastTime}></OverallSystem>
       </Tabs.TabPane>,
-      <Tabs.TabPane key={OVERALL_CAPTURE_NAMESPACE} tab="捕获文件">
+      <Tabs.TabPane key={OVERALL_CAPTURE_NAMESPACE} tab="捕获文件" style={{ minHeight: "400px" }}>
         <OverallCapture lastTime={lastTime}></OverallCapture>
       </Tabs.TabPane>,
-      <Tabs.TabPane key={OVERALL_PCAP_NAMESPACE} tab="Pcap下载">
+      <Tabs.TabPane key={OVERALL_PCAP_NAMESPACE} tab="Pcap下载" style={{ minHeight: "400px" }}>
         <OverallPcap lastTime={lastTime}></OverallPcap>
       </Tabs.TabPane>
     ]
@@ -165,7 +165,7 @@ class Page extends React.Component {
             ?
             null
             :
-            <Tabs.TabPane key={OVERALL_NET_BASIC_NAMESPACE} tab="网络基础数据">
+            <Tabs.TabPane key={OVERALL_NET_BASIC_NAMESPACE} tab="网络基础数据" style={{ minHeight: "400px" }}>
               <OverallNetBasic lastTime={lastTime}></OverallNetBasic>
             </Tabs.TabPane>
         }
