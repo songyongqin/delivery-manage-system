@@ -14,7 +14,8 @@ import CreateHoneypotForm from './components/CreateHoneypotForm';
 import { curry } from '../../utils/tools'
 import Modal from 'domainComponents/Modal'
 import { modal as ModalHandle } from 'antd'
-
+import OperationResultPanel from './components/OperationResultPanel'
+import { WithModal } from 'domainComponents/HOSComponents'
 
 import {
   tableTextConfig,
@@ -87,13 +88,20 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+const modalTitleConfig = {
+  [OPERATION_INIT_VALUE]: "批量初始化",
+  [OPERATION_SHUTDOWN_VALUE]: "批量关机",
+  [OPERATION_START_VALUE]: "批量开机",
+  ["delete"]: "批量删除"
+}
 
+
+@WithModal()
 @queryContainerGenerator({
   namespace: NAMESPACE,
   mapStateToProps,
   mapDispatchToProps: createMapDispatchWithPromise(mapDispatchToProps)
 })
-
 @WithBreadcrumb
 @WithOnQuery(NAMESPACE)
 @WithPageOnChange(NAMESPACE)
@@ -106,7 +114,9 @@ class Page extends React.Component {
       [HONEYPOT_NAME_DATAINDEX]: [],
       visible: false,
       selectedRows: [],
-      vmOptions: {}
+      vmOptions: {},
+      activeOperation: null,
+      results: []
     }
   }
   switchModal = () => {
@@ -189,14 +199,61 @@ class Page extends React.Component {
     .then(curry(Message.success, "创建蜜罐操作成功，请耐心等待蜜罐创建成功"))
 
   getDelHandle = payload => () => this.props.deleteVM(payload)
-    .then(curry(Message.success, "删除蜜罐虚拟机成功"))
-    .then(curry(this.props.onQuery))
-    .then(result => this.setSelectedRows([]))
+    .then(result => {
+      const { selectedRows } = this.state
+      this.setState({
+        activeOperation: "delete",
+        results: result.map(item => {
+          return {
+            ...item,
+            [HONEYPOT_IP_DATAINDEX]: (selectedRows.find(i => i[ID_DATAINDEX] == item[ID_DATAINDEX]) || {})[HONEYPOT_IP_DATAINDEX]
+          }
+
+        })
+      })
+
+      setTimeout(() => {
+        this.props.switchModal("delete")
+      }, 300)
+
+      this.setSelectedRows([])
+      return this.props.onQuery()
+    })
+
+  onOperationConfirm = () => {
+    this.props.switchModal(this.state.activeOperation)
+    setTimeout(() => {
+      this.setState({
+        activeOperation: null,
+        results: []
+      })
+    }, 300)
+  }
 
   getPutHandle = payload => () => this.props.putVM(payload)
-    .then(curry(Message.success, "操作蜜罐虚拟机成功"))
-    .then(curry(this.props.onQuery))
-    .then(result => this.setSelectedRows([]))
+    .then(result => {
+
+      const { selectedRows } = this.state
+      this.setState({
+        activeOperation: payload.value,
+        results: result.map(item => {
+          return {
+            ...item,
+            [HONEYPOT_IP_DATAINDEX]: (selectedRows.find(i => i[ID_DATAINDEX] == item[ID_DATAINDEX]) || {})[HONEYPOT_IP_DATAINDEX]
+          }
+
+        })
+      })
+
+      setTimeout(() => {
+        this.props.switchModal(payload.value)
+      }, 300)
+
+      this.setSelectedRows([])
+      return this.props.onQuery()
+    })
+
+
 
   getOperationSelectedHandle = (operation, message) => ModalHandle.confirm({
     title: message,
@@ -389,6 +446,20 @@ class Page extends React.Component {
               loading={this.props.postLoading}
               options={options} />
           </JoSpin>
+        </Modal>
+        <Modal
+          onCancel={this.onOperationConfirm}
+          title={modalTitleConfig[this.state.activeOperation]}
+          style={{ top: "50px" }}
+          visible={this.props.modalVisible[this.state.activeOperation]}
+          footer={null}>
+          <OperationResultPanel
+            type={this.state.activeOperation}
+            data={this.state.results}>
+          </OperationResultPanel>
+          <div style={{ textAlign: "center", marginTop: "15px" }}>
+            <Button type="primary" onClick={this.onOperationConfirm}>确定</Button>
+          </div>
         </Modal>
       </div>
     )
