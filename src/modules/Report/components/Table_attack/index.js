@@ -10,7 +10,6 @@ import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents';
 import classnames from 'classnames';
 import { NAMESPACE_ATTACK } from '../../ConstConfig'
-import { IDS_STAND_ALONE } from 'configs/ConstConfig'
 class Tableattack extends React.Component {
   constructor(props) {
     super(props);
@@ -66,31 +65,6 @@ class Tableattack extends React.Component {
       dataIndex: 'attackChain',
       key: 'attackChain',
     },];
-    const mincolumns = [{
-      title: '攻击次数',
-      dataIndex: 'attackCount',
-      key: 'attackCount',
-    }, {
-      title: '攻击成功事件',
-      dataIndex: 'attackSucessEvent',
-      key: 'attackSucessEvent',
-    }, {
-      title: '攻击高危事件',
-      dataIndex: 'attackHighLevelEvent',
-      key: 'attackHighLevelEvent',
-    }, {
-      title: '失陷主机',
-      dataIndex: 'fallHost',
-      key: 'fallHost',
-    }, {
-      title: '威胁情报',
-      dataIndex: 'threatInfo',
-      key: 'threatInfo',
-    }, {
-      title: '攻击链',
-      dataIndex: 'attackChain',
-      key: 'attackChain',
-    },];
     const dataSource = [{
       key: '1',
       attackCount: data.attackCount + "次",
@@ -102,7 +76,7 @@ class Tableattack extends React.Component {
       attackChain: data.attackChain + "条",
     }]
     const tableProps = {
-      columns: productType == IDS_STAND_ALONE ? mincolumns : columns,
+      columns: columns,
       dataSource: dataSource,
       pagination: false
     }
