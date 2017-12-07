@@ -115,7 +115,7 @@ class mirrornode extends React.Component {
       title: '操作',
       key: 'interaction',
       render: records => {
-        return <Button type="primary" onClick={this.getOnUpdateHandle(records)}>升级镜像</Button>
+        return <Button type="primary" disabled={this.props.productType === NODE} onClick={this.getOnUpdateHandle(records)}>升级镜像</Button>
       }
     },
     ];

@@ -49,7 +49,7 @@ const CardTitle = ({ selectedRows = [], createPutStrategy, applyHandle, switchEx
         icon="plus"
         onClick={switchCreateModal}
         style={{ marginLeft: "15px" }}>
-        新增系统日志白名单
+        新增白名单
       </Button>
     </div>
     <div style={{ float: "right" }}>
