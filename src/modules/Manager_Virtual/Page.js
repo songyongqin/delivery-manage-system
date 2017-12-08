@@ -16,6 +16,7 @@ import Modal from 'domainComponents/Modal'
 import { modal as ModalHandle } from 'antd'
 import OperationResultPanel from './components/OperationResultPanel'
 import { WithModal } from 'domainComponents/HOSComponents'
+import { DISTRIBUTION, STAND_ALONE } from 'configs/ConstConfig'
 
 import {
   tableTextConfig,
@@ -125,13 +126,16 @@ class Page extends React.Component {
     })
   }
   componentDidMount = () => {
-
+    const { productType } = this.props
     const { queryFilters } = this.props[NAMESPACE];
     if (queryFilters[HOST_IP_DATAINDEX].length !== 0) {
       // this.getVMIpList();
     }
-    this.props.getVMOption()
-      .then(result => this.setState({ vmOptions: result }))
+    if (productType === DISTRIBUTION || productType === STAND_ALONE) {
+      this.props.getVMOption()
+        .then(result => this.setState({ vmOptions: result }))
+    }
+
     // this.getNodeIpList();
     // this.getVMNameList();
   }

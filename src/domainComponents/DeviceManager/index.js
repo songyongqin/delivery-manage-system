@@ -66,8 +66,7 @@ export default ({
     }
     componentDidMount = () => {
       this.props.query()
-
-      if (this.props.productType === IDS || this.props.productType === NODE) {
+      if (this.props.productType.type === IDS || this.props.productType.type === NODE) {
         this.props.getControlConfig()
       }
     }
