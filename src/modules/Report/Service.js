@@ -105,8 +105,7 @@ export function getCHART_STATISTICAL(payload) {
 }
 //导出文件全部调用一个接口
 export function onExport(payload) {
-  const timestampRange = payload.timestampRange;
-  const unixTime = [timestampRange[0].unix(), timestampRange[1].unix()]
+  const timestampRange = tools.momentToTimestamp(payload.timestampRange);
   return request(httpApi.REPORT_EXPORT, {
     method: 'POST',
     header: {
@@ -114,7 +113,7 @@ export function onExport(payload) {
     },
     body: JSON.stringify({
       ...payload,
-      timestampRange: unixTime
+      timestampRange
     })
   });
 }

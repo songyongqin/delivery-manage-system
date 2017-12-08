@@ -1,7 +1,8 @@
 
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
-import * as service from './Service';
+import * as Service from './Service';
+import * as tools from '../../utils/tools.js';
 import { queryModelGenerator } from '../../utils/dvaModelGenerator';
 import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import { NAMESPACE_BASE, NAMESPACE_ATTACK } from './ConstConfig.js'
@@ -47,7 +48,13 @@ export default {
         })
       }
     },
-
+    *onExport({ payload }, { call, put }) {
+      const result = yield call(Service.onExport, payload);
+      const data = result.payload;
+      if (result.status === 1) {
+        tools.download(data);
+      }
+    }
 
   },
   subscriptions: {
