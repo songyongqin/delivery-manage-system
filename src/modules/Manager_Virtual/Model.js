@@ -15,7 +15,7 @@ import {
   NAMESPACE
 } from './ConstConfig';
 
-import { HIGH_INTERATION, LOW_INTERACTION } from 'configs/ConstConfig'
+import { HIGH_INTERATION, LOW_INTERACTION, NODE, STAND_ALONE } from 'configs/ConstConfig'
 
 import { delay, setTemp, getTemp } from '../../utils/tools';
 
@@ -322,9 +322,14 @@ const baseModel = {
     initOptions: ({ history, dispatch }) => {
       return history.listen(({ pathname }) => {
         if (pathname === "/manager/virtual-machine") {
-          dispatch({
-            type: "getNodeIpList"
-          })
+          const productType = getTemp("productType") || {}.type
+
+          if (productType === NODE || productType === STAND_ALONE) {
+            dispatch({
+              type: "getNodeIpList"
+            })
+          }
+
           dispatch({
             type: "query",
             payload: initFilters
