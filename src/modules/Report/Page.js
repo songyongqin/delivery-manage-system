@@ -556,9 +556,9 @@ class Page extends React.Component {
       checkedListNew.includes("VALUE_WATERMARK") ? 1 : 0,
 
     };
-    const timestampRange = this.props.base.timestampRange;
+    const { timestampRange } = this.props.base;
     this.props.dispatch({
-      type: `${NAMESPACE_ATTACK}/onExport`,
+      type: `${NAMESPACE_BASE}/onExport`,
       payload:
       { option, timestampRange }
 
