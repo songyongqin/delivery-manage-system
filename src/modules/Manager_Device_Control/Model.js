@@ -39,7 +39,6 @@ const payloadFilter = (payload) => {
     data: [
       {
         ...payload,
-        [CONNECT_STATUS_DATAINDEX]: CONNECT
       }
     ]
   }
