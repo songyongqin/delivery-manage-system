@@ -86,8 +86,8 @@ const mapStateToProps = state => {
     [NAMESPACE]: state[NAMESPACE],
     commonLayout: state.layout.commonLayout,
     loading: effectLoading[`${NAMESPACE}/query`] ||
-    effectLoading[`${NAMESPACE}/put`] ||
-    effectLoading[`${NAMESPACE}/apply`],
+      effectLoading[`${NAMESPACE}/put`] ||
+      effectLoading[`${NAMESPACE}/apply`],
     postRuleLoaidng: effectLoading[`${RULE_NAMESPACE}/post`],
     threatnames: state[THREAT_NAME_NAMESPACE].queryResults.data,
   }
@@ -257,6 +257,7 @@ class Page extends React.Component {
       columns: tableConfig.getColumns({
         getUsefulOnChangeHandle,
         getExpandRowOnChange,
+        expandedRowIndexes
       }),
       dataSource: data.map((i, index) => ({
         ...i,
@@ -321,7 +322,7 @@ class Page extends React.Component {
             height,
           }}
           id="strategy-expand-page">
-          <StrategyThreatnameModule />
+          <StrategyThreatnameModule switchExpandPage={this.switchExpandPage} />
         </div>
         <div className={contentClasses}>
           <JoSpin spinning={this.props.loading}>
