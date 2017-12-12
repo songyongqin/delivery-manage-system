@@ -12,13 +12,15 @@ export function search(payload) {
   });
 }
 export function onExport(payload) {
-  const times = payload.timestampRange;
-  const timestampRange = tools.momentToTimestamp(times);
+  const timestampRange = tools.momentToTimestamp(payload.timestampRange);
   return request(httpApi.SYS_LOG_LOGIN, {
     method: 'POST',
     header: {
       "Content-Type": "application/json; charset=utf-8",
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      ...payload,
+      timestampRange
+    })
   });
 }
