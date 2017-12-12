@@ -31,7 +31,7 @@ import {
 } from '../../utils/dvaExtraDispatch'
 
 import {
-  IDS,
+  IDS, NODE, STAND_ALONE
 } from 'configs/ConstConfig'
 
 const mapStateToProps = state => ({
@@ -216,7 +216,6 @@ class Page extends React.Component {
   render = () => {
 
     const { productType } = this.props;
-    console.info(productType)
     return (
       <Card
         title={this.getQueryPanel()}
@@ -228,7 +227,13 @@ class Page extends React.Component {
             </span>
           {this.getContentPanel()}
         </JoSpin>
-        <OverviewFlow></OverviewFlow>
+        {
+          (productType === NODE || productType === STAND_ALONE)
+            ?
+            null
+            :
+            <OverviewFlow></OverviewFlow>
+        }
       </Card>
 
     )

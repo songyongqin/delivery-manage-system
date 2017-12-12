@@ -1,6 +1,9 @@
 import createQueryModel from 'utils/models/query'
 import * as service from './Service';
 import { EVENT_NAMESPACE, STATISTICS_NAMESPACE, FLOW_NAMESPACE, RANKING_NAMESPACE } from './ConstConfig'
+import { NODE, STAND_ALONE } from 'configs/ConstConfig'
+import { getTemp } from 'utils/tools'
+
 const model = {
   namespace: EVENT_NAMESPACE,
   state: {
@@ -25,6 +28,10 @@ const model = {
 
 
       return history.listen(({ pathname }) => {
+
+        let productType = (getTemp("productType") || {}).type
+
+
         if (pathname === "/overview") {
 
           dispatch({
@@ -35,13 +42,16 @@ const model = {
             type: `queryInit`,
           })
 
-          dispatch({
-            type: `${RANKING_NAMESPACE}/queryInit`
-          })
+          if (productType !== NODE && productType !== STAND_ALONE) {
+            dispatch({
+              type: `${RANKING_NAMESPACE}/queryInit`
+            })
 
-          dispatch({
-            type: `${FLOW_NAMESPACE}/queryInit`
-          })
+            dispatch({
+              type: `${FLOW_NAMESPACE}/queryInit`
+            })
+          }
+
         }
       });
     },
