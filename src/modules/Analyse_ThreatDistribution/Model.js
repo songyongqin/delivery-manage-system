@@ -11,14 +11,14 @@ import {
 
 moment.locale('zh-cn');
 
-
+const initFilters = {
+  timestampRange: [],
+}
 
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters: {
-      timestampRange: [],
-    },
+    queryFilters: initFilters,
     queryResults: {
       data: {
         world: [],
@@ -34,6 +34,18 @@ const baseModel = {
         mapType: preState.mapType === "world" ? "china" : "world"
       }
     }
+  },
+  subscriptions: {
+    initData({ history, dispatch }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === "/analyse/threat-distribution") {
+          dispatch({
+            type: `query`,
+            payload: initFilters
+          })
+        }
+      });
+    },
   }
 };
 
@@ -50,6 +62,6 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig: commonCallConfig,
   queryService,
-  initPath: "/analyse/threat-distribution"
+  // initPath: "/analyse/threat-distribution"
 });
 

@@ -4,6 +4,8 @@ import * as service from './Service';
 import { queryModelGenerator } from '../../utils/dvaModelGenerator';
 import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import { statisticDataIndexes } from './ConstConfig';
+import { NODE, STAND_ALONE } from 'configs/ConstConfig'
+import { getTemp } from 'utils/tools'
 import {
   NAMESPACE
 } from './ConstConfig'
@@ -11,18 +13,31 @@ import {
 
 moment.locale('zh-cn');
 
-
+const initFilters = {
+  timestampRange: [],
+}
 
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters: {
-      timestampRange: [],
-    },
+    queryFilters: initFilters,
     queryResults: {
       data: []
     }
   },
+  subscriptions: {
+    setup({ history, dispatch }) {
+      return history.listen(({ pathname }) => {
+        const productType = (getTemp("productType") || {}).type
+        if (pathname === "/overview" && productType !== NODE && productType !== STAND_ALONE) {
+          dispatch({
+            type: `query`,
+            payload: initFilters
+          })
+        }
+      });
+    },
+  }
 };
 
 const payloadFilter = (payload) => {

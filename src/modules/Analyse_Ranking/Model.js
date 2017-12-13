@@ -11,18 +11,32 @@ import {
 
 moment.locale('zh-cn');
 
+const initFilters = {
+  timestampRange: [],
 
+}
 
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters: {
-      timestampRange: [],
-    },
+    queryFilters: initFilters,
     queryResults: {
       data: []
     }
   },
+  subscriptions: {
+    initData({ history, dispatch }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === "/analyse/ranking") {
+          dispatch({
+            type: `query`,
+            payload: initFilters
+          })
+        }
+      });
+    },
+  }
+
 };
 
 const payloadFilter = (payload) => {
@@ -38,7 +52,7 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig: commonCallConfig,
   queryService,
-  initPath: "/analyse/ranking"
+  // initPath: "/analyse/ranking"
 });
 
 

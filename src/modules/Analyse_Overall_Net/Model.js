@@ -17,18 +17,20 @@ import {
 } from './ConstConfig'
 moment.locale('zh-cn');
 
+export const initFilters = {
+  timestampRange: [],
+  limit: 10,
+  page: 1,
+  [SOURCE_IP_DATA_INDEX]: "",
+  [SOURCE_PORT_DATA_INDEX]: "",
+  [TARGET_IP_DATA_INDEX]: "",
+  [TARGET_PORT_DATA_INDEX]: ""
+}
+
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters: {
-      timestampRange: [],
-      limit: 10,
-      page: 1,
-      [SOURCE_IP_DATA_INDEX]: "",
-      [SOURCE_PORT_DATA_INDEX]: "",
-      [TARGET_IP_DATA_INDEX]: "",
-      [TARGET_PORT_DATA_INDEX]: ""
-    },
+    queryFilters: initFilters,
     queryResults: {
       total: 0,
       data: []

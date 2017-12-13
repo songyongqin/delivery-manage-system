@@ -9,23 +9,36 @@ import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import { NAMESPACE } from './ConstConfig';
 moment.locale('zh-cn');
 
+const initFilters = {
+  timestampRange: [],
+  attackCounts: 1,
+  attackEventType: [],
+  ip: null,
+  limit: 20,
+  page: 1,
+}
 
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters: {
-      timestampRange: [],
-      attackCounts: 1,
-      attackEventType: [],
-      ip: null,
-      limit: 20,
-      page: 1,
-    },
+    queryFilters: initFilters,
     queryResults: {
       total: 0,
       data: []
     }
   },
+  subscriptions: {
+    initData({ history, dispatch }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === "/analyse/fall-host") {
+          dispatch({
+            type: `query`,
+            payload: initFilters
+          })
+        }
+      });
+    },
+  }
 };
 
 const payloadFilter = (payload) => {
@@ -42,7 +55,7 @@ export default queryModelGenerator({
   payloadFilter,
   callConfig: commonCallConfig,
   queryService,
-  initPath: "/analyse/fall-host"
+  // initPath: "/analyse/fall-host"
 });
 
 

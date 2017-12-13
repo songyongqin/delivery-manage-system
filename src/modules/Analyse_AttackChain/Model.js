@@ -4,43 +4,56 @@
 import { routerRedux } from 'dva/router';
 import moment from 'moment';
 import * as service from './Service';
-import {queryModelGenerator} from '../../utils/dvaModelGenerator';
-import {commonCallConfig} from '../../configs/ExtraEffectsOptions';
+import { queryModelGenerator } from '../../utils/dvaModelGenerator';
+import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 
 moment.locale('zh-cn');
 
-const NAMESPACE="analyseAttackChain";
+const NAMESPACE = "analyseAttackChain";
 
-const baseModel={
+const initFilters = {
+  timestampRange: [],
+  attackStage: ["invade", "install", "control", "intention"],
+  limit: 20,
+  page: 1,
+}
+
+const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters:{
-      timestampRange:[],
-      attackStage:["invade","install","control","intention"],
-      limit:20,
-      page:1,
-    },
-    queryResults:{
-      total:0,
-      data:[]
+    queryFilters: initFilters,
+    queryResults: {
+      total: 0,
+      data: []
     }
   },
-};
-
-const payloadFilter=(payload)=>{
-  return {
-    total:payload.total,
-    data:payload.data,
+  subscriptions: {
+    initData({ history, dispatch }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === "/analyse/attack-chain") {
+          dispatch({
+            type: `query`,
+            payload: initFilters
+          })
+        }
+      });
+    },
   }
 };
 
-const queryService=service.query;
+const payloadFilter = (payload) => {
+  return {
+    total: payload.total,
+    data: payload.data,
+  }
+};
+
+const queryService = service.query;
 
 export default queryModelGenerator({
-  model:baseModel,
+  model: baseModel,
   payloadFilter,
-  callConfig:commonCallConfig,
+  callConfig: commonCallConfig,
   queryService,
-  initPath:"/analyse/attack-chain"
 });
 

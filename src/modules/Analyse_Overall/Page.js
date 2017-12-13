@@ -36,6 +36,30 @@ import {
 } from '../Analyse_Overall_PCAP/ConstConfig'
 
 
+import {
+  initFilters as captureInitFilters
+} from '../Analyse_Overall_Capture/Model.js'
+import {
+  initFilters as netInitFilters
+} from '../Analyse_Overall_Net/Model.js'
+import {
+  initFilters as netBasicInitFilters
+} from '../Analyse_Overall_NetBasic/Model'
+import {
+  initFilters as pcapInitFilters
+} from '../Analyse_Overall_PCAP/Model.js'
+import {
+  initFilters as systemInitFilters
+} from '../Analyse_Overall_System/Model.js'
+
+const initFiltersConfig = {
+  [OVERALL_CAPTURE_NAMESPACE]: captureInitFilters,
+  [OVERALL_NET_NAMESPACE]: netInitFilters,
+  [OVERALL_NET_BASIC_NAMESPACE]: netBasicInitFilters,
+  [OVERALL_PCAP_NAMESPACE]: pcapInitFilters,
+  [OVERALL_SYSTEM_NAMESPACE]: systemInitFilters
+}
+
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
   return {
@@ -81,7 +105,7 @@ class Page extends React.Component {
     }
   }
   componentDidMount = () => {
-    this.tabPanelFetchData(this.state.activeKey, this.props.timestampRange, this.props.lastTime);
+    this.tabPanelFetchData(this.state.activeKey, [], new Date().getTime());
   }
   tabPanelFetchData = (activeKey, timestampRange, lastTime) => {
     const { panelLastTime } = this.props
@@ -94,8 +118,10 @@ class Page extends React.Component {
     this.props.dispatch({
       type: `${activeKey}/query`,
       payload: {
-        ...this.props[activeKey].queryFilters,
-        page: 1,
+        // ...this.props[activeKey].queryFilters,
+        // page: 1,
+        // timestampRange,
+        ...initFiltersConfig[activeKey],
         timestampRange
       }
     })

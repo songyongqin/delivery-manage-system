@@ -4,19 +4,22 @@ import { EVENT_NAMESPACE, STATISTICS_NAMESPACE, FLOW_NAMESPACE, RANKING_NAMESPAC
 import { NODE, STAND_ALONE } from 'configs/ConstConfig'
 import { getTemp } from 'utils/tools'
 
+const initFilters = {
+  timestampRange: [],
+  mergeCounts: 10,
+  attackStage: [],
+  action: [],
+  level: [],
+  actionStatus: [],
+  limit: 5,
+  page: 1,
+}
+
+
 const model = {
   namespace: EVENT_NAMESPACE,
   state: {
-    filters: {
-      timestampRange: [],
-      mergeCounts: 10,
-      attackStage: [],
-      action: [],
-      level: [],
-      actionStatus: [],
-      limit: 5,
-      page: 1,
-    },
+    filters: initFilters,
     results: {
       total: 0,
       statistics: {},
@@ -25,35 +28,15 @@ const model = {
   },
   subscriptions: {
     initData({ history, dispatch }) {
-
-
       return history.listen(({ pathname }) => {
-
-        let productType = (getTemp("productType") || {}).type
-
-
         if (pathname === "/overview") {
-
           dispatch({
-            type: `${STATISTICS_NAMESPACE}/queryInit`
+            type: `query`,
+            payload: initFilters
           })
-
-          dispatch({
-            type: `queryInit`,
-          })
-
-          if (productType !== NODE && productType !== STAND_ALONE) {
-            dispatch({
-              type: `${RANKING_NAMESPACE}/queryInit`
-            })
-
-            dispatch({
-              type: `${FLOW_NAMESPACE}/queryInit`
-            })
-          }
-
         }
       });
+
     },
   }
 

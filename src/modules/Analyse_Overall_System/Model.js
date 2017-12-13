@@ -12,15 +12,17 @@ import {
 } from './ConstConfig'
 moment.locale('zh-cn');
 
+export const initFilters = {
+  timestampRange: [],
+  [PATH_DATA_INDEX]: "",
+  limit: 10,
+  page: 1
+}
+
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters: {
-      timestampRange: [],
-      [PATH_DATA_INDEX]: "",
-      limit: 10,
-      page: 1
-    },
+    queryFilters: initFilters,
     queryResults: {
       total: 0,
       data: []

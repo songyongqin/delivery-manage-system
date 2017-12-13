@@ -14,17 +14,19 @@ import {
 } from './ConstConfig'
 moment.locale('zh-cn');
 
+export const initFilters = {
+  timestampRange: [],
+  [FILE_NAME_DATA_INDEX]: "",
+  [MD5_DATA_INDEX]: "",
+  [FAMILY_DATA_INDEX]: "",
+  limit: 10,
+  page: 1
+}
+
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters: {
-      timestampRange: [],
-      [FILE_NAME_DATA_INDEX]: "",
-      [MD5_DATA_INDEX]: "",
-      [FAMILY_DATA_INDEX]: "",
-      limit: 10,
-      page: 1
-    },
+    queryFilters: initFilters,
     queryResults: {
       total: 0,
       data: []

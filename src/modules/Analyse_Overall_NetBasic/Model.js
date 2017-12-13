@@ -21,24 +21,26 @@ import {
 } from './ConstConfig'
 moment.locale('zh-cn');
 
+export const initFilters = {
+  timestampRange: [],
+  [PROTOCOL_TYPE_DATA_INDEX]: protocolTypeList[0],
+  [URL_DATA_INDEX]: "",
+  [SOURCE_IP_DATA_INDEX]: "",
+  [SOURCE_PORT_DATA_INDEX]: "",
+  [TARGET_IP_DATA_INDEX]: "",
+  [TARGET_PORT_DATA_INDEX]: "",
+  [REQUEST_DOMAIN_DATA_INDEX]: "",
+  [SENDER_DATA_INDEX]: "",
+  [RECEIVE_DATA_INDEX]: "",
+  value: "",
+  limit: 10,
+  page: 1
+}
+
 const baseModel = {
   namespace: NAMESPACE,
   state: {
-    queryFilters: {
-      timestampRange: [],
-      [PROTOCOL_TYPE_DATA_INDEX]: protocolTypeList[0],
-      [URL_DATA_INDEX]: "",
-      [SOURCE_IP_DATA_INDEX]: "",
-      [SOURCE_PORT_DATA_INDEX]: "",
-      [TARGET_IP_DATA_INDEX]: "",
-      [TARGET_PORT_DATA_INDEX]: "",
-      [REQUEST_DOMAIN_DATA_INDEX]: "",
-      [SENDER_DATA_INDEX]: "",
-      [RECEIVE_DATA_INDEX]: "",
-      value: "",
-      limit: 10,
-      page: 1
-    },
+    queryFilters: initFilters,
     queryResults: {
       total: 0,
       data: []
