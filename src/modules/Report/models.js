@@ -33,20 +33,26 @@ export default {
       const lastChangeTime = yield select(state => state[NAMESPACE_BASE].lastChangeTime)
       const timestampRange = yield select(state => state[NAMESPACE_ATTACK].timestampRange)
       const activeTabLastChangeTime = yield select(state => state[NAMESPACE_ATTACK].lastChangeTime)
-      if (lastChangeTime !== activeTabLastChangeTime) {
-        yield put({
-          type: `${NAMESPACE_ATTACK}/fetch`,
-          payload: {
-            timestampRange
-          }
-        })
-        yield put({
-          type: `${NAMESPACE_ATTACK}/save`,
-          payload: {
-            lastChangeTime
-          }
-        })
-      }
+      const lastTime = new Date().getTime();
+      // if (lastChangeTime !== activeTabLastChangeTime) {
+      yield put({
+        type: `${NAMESPACE_ATTACK}/fetch`,
+        payload: {
+          timestampRange
+        }
+      })
+      yield put({
+        type: `${NAMESPACE_ATTACK}/save`,
+        payload: {
+          lastChangeTime: lastTime
+        }
+      })
+      yield put({
+        type: `${NAMESPACE_BASE}/save`,
+        payload: {
+          lastChangeTime: lastTime
+        }
+      });
     },
     *onExport({ payload }, { call, put }) {
       const result = yield call(Service.onExport, payload);
