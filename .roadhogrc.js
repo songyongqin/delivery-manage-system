@@ -1,12 +1,14 @@
-{
-  "entry": "src/index.js",
+export default {
+  "entry": "./src/index.js",
+  "publicPath": '/static/',
+  "outputPath": './dist/static',
   "theme": {
-      "@primary-color": "#108ee9",
-      "@link-color": "#108ee9",
-      "@border-radius-base": "2px",
-      "@font-size-base": "16px",
-      "@line-height-base": "1.2"
-    },
+    "@primary-color": "#108ee9",
+    "@link-color": "#108ee9",
+    "@border-radius-base": "2px",
+    "@font-size-base": "16px",
+    "@line-height-base": "1.2"
+  },
   "autoprefixer": null,
   "proxy": {
     "/": {
