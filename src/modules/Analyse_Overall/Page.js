@@ -109,6 +109,7 @@ class Page extends React.Component {
   }
   tabPanelFetchData = (activeKey, timestampRange, lastTime) => {
     const { panelLastTime } = this.props
+    this.props.setTimestampRange({ timestampRange, lastTime })
     if (panelLastTime[activeKey] === lastTime) {
       return;
     }
