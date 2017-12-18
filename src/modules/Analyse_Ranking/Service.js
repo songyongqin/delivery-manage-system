@@ -6,5 +6,9 @@ import commonRequestCreator from '../../utils/commonRequestCreator';
 
 const httpApi = ApiConfig.http;
 
-export const get = commonRequestCreator.get(httpApi.ANALYSE_RANKING);
+export const get = payload => {
+  return commonRequestCreator.get(httpApi.ANALYSE_RANKING + payload.option)(payload, true)
+};
+
+export const getRankingOption = commonRequestCreator.get(httpApi.ANALYSE_RANKING_OPTION)
 

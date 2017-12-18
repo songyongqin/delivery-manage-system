@@ -21,9 +21,25 @@ import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageO
 import ReactEcharts from 'echarts-for-react';
 import BarChart from 'domainComponents/BarChart'
 
+const mapStateToProps = state => ({
+  options: state[NAMESPACE].options,
+  results: state[NAMESPACE].splitResults,
+  loading: state[NAMESPACE].loading,
+  optionLoading: state.loading.effects[`${NAMESPACE}/getRankingOption`]
+})
+
+const mapDispatchToProps = dispatch => ({
+  querySplit: payload => dispatch({
+    type: `${NAMESPACE}/querySplit`,
+    payload
+  })
+})
 
 @queryContainerGenerator({
   namespace: NAMESPACE,
+  mapStateToProps,
+  mapDispatchToProps
+
 })
 @WithOnQuery(NAMESPACE)
 @WithPageOnChange(NAMESPACE)
@@ -48,7 +64,14 @@ class Page extends React.Component {
   tableOnChange = (pagination, filters, sorter) => {
     this.props.onQuery({ ...filters, page: 1 })
   };
-  timestampRangeOnChange = payload => this.props.onQuery({ ...payload })
+  timestampRangeOnChange = payload => {
+
+    this.props.options.map(option => this.props.querySplit({
+      ...payload,
+      option
+    }))
+
+  }
   getQueryPanel = () => {
     const { routes, commonLayout } = this.props;
     const { queryFilters } = this.props[NAMESPACE];
@@ -65,22 +88,30 @@ class Page extends React.Component {
     )
   };
   getContentPanel = () => {
-    const { routes, commonLayout } = this.props;
+    const { routes, commonLayout, options, results, loading } = this.props;
 
     const { queryResults } = this.props[NAMESPACE];
     const { data: rankingListData } = queryResults;
 
 
     return (
-      <BarChart key="bar-chart" data={rankingListData} ></BarChart>
+      <div key="bar list">
+        {
+          options.map((i, index) => {
+            return (
+              <JoSpin key={`bar-chart-${index}`} spinning={loading[i]}>
+                <BarChart data={results[i] || []} ></BarChart>
+              </JoSpin>
+            )
+          })
+        }
+      </div>
     )
   }
   render = () => {
 
-
-
     return (
-      <JoSpin spinning={this.props.queryLoading}>
+      <JoSpin spinning={this.props.optionLoading}>
         {this.props.animateRender([
           this.getQueryPanel(),
           this.getContentPanel(),

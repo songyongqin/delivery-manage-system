@@ -49,7 +49,8 @@ export default {
 
     ANALYSE_ATTACK_CHAIN: "/analyse/attack-chain",
     ANALYSE_FALL_HOST: "/analyse/fall-host",
-    ANALYSE_RANKING: "/analyse/ranking",
+    ANALYSE_RANKING_OPTION: "/analyse/ranking/option",
+    ANALYSE_RANKING: "/analyse/ranking/",
     ANALYSE_OVERALL_NET_BASIC: "/analyse/overall/net-basic",
     ANALYSE_OVERALL_PCAP: "/analyse/overall/pcap",
     ANALYSE_OVERALL_CAPTURE: "/analyse/overall/capture",
@@ -58,6 +59,7 @@ export default {
     ANALYSE_OVERALL_NET: "/analyse/overall/net",
     SYS_CONFIG_NETWORK: "/sys-config/network",
     SYS_CONFIG_STRATEGY: "/sys-config/strategy",
+
     SYS_CONFIG_STRATEGY_APPLY: "/sys-config/strategy/apply",
     SYS_CONFIG_STRATEGY_THREATNAME: "/sys-config/strategy/threatname",
     SYS_CONFIG_STRATEGY_RULE: "/sys-config/strategy/rule",

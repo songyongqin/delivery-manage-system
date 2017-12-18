@@ -11,30 +11,30 @@ const commonHeader = {
 
 export default {
 
-  get: (url, withQuery = false) => async payload => request(url + tools.jsonToQueryString(payload), {
+  get: (url, withQuery = false) => payload => request(url + tools.jsonToQueryString(payload), {
     method: 'GET',
     headers: commonHeader
   }),
 
-  post: (url, body) => async payload => request(url, {
+  post: (url, body) => payload => request(url, {
     method: 'POST',
     headers: commonHeader,
     body: JSON.stringify(payload || {})
   }),
 
-  put: (url, body) => async payload => request(url, {
+  put: (url, body) => payload => request(url, {
     method: 'PUT',
     headers: commonHeader,
     body: JSON.stringify(payload || {})
   }),
 
 
-  delete: (url, withQuery = false) => async payload => request(url + tools.jsonToQueryString(payload), {
+  delete: (url, withQuery = false) => payload => request(url + tools.jsonToQueryString(payload), {
     method: "DELETE",
     headers: commonHeader,
   }),
 
-  patch: (url) => async payload => request(url, {
+  patch: (url) => payload => request(url, {
     method: 'PATCH',
     headers: commonHeader,
     body: JSON.stringify(payload || {})
