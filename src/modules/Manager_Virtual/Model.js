@@ -301,20 +301,17 @@ const baseModel = {
       )
       if (res.status === 1) {
 
-        let finalPayload = {}
+        // let finalPayload = {}
 
-        Object.entries(res.payload).forEach(([hostIp, value]) => {
+        // Object.entries(res.payload).forEach(([hostIp, value]) => {
 
-          finalPayload[hostIp] = {
-            ...value[HIGH_INTERATION],
-            [LOW_INTERACTION]: value[LOW_INTERACTION]["low_interaction"]
-          }
+        //   finalPayload[hostIp] = {
+        //     ...value[HIGH_INTERATION],
+        //     [LOW_INTERACTION]: value[LOW_INTERACTION]["low_interaction"]
+        //   }
 
-        })
-
-        console.info(finalPayload)
-
-        resolve && resolve(finalPayload)
+        // })
+        resolve && resolve(res.payload)
       }
     }
   },

@@ -124,11 +124,11 @@ class WrappedForm extends React.Component {
       }
       shouldTrimDataIndexes.forEach(i => values[i] = values[i].trim())
 
-      if (values[INTERCATION_DATAINDEX] === LOW_INTERACTION) {
-        values[SYSTEM_DATAINDEX] = LOW_INTERACTION;
-      }
-
-      onSubmit && onSubmit(values);
+      // if (values[INTERCATION_DATAINDEX] === LOW_INTERACTION) {
+      //   values[SYSTEM_DATAINDEX] = LOW_INTERACTION;
+      // }
+      console.info(values)
+      // onSubmit && onSubmit(values)
 
     });
   }
@@ -179,15 +179,23 @@ class WrappedForm extends React.Component {
     })
   }
   interactionOnChange = e => {
-    this.props.form.resetFields([SERVICES_DATAINDEX])
+    const targetInteraction = e.target.value
+    const { vmOptions, form } = this.props
+    const activeHostIp = form.getFieldValue(HOST_IP_DATAINDEX)
+    this.props.form.resetFields([SERVICES_DATAINDEX, SYSTEM_DATAINDEX])
+
+    this.props.form.setFieldsValue({ [SYSTEM_DATAINDEX]: Object.keys(vmOptions[activeHostIp][targetInteraction])[0] })
   }
   systemOnChange = () => {
     this.props.form.resetFields([SERVICES_DATAINDEX])
   }
   hostIpOnChange = (hostIp) => {
-    let activeSystem = (Object.keys(this.props.vmOptions[hostIp]) || {}).filter(k => k !== LOW_INTERACTION)[0]
-    this.props.form.setFieldsValue({ [SYSTEM_DATAINDEX]: activeSystem })
-    this.props.form.resetFields([SERVICES_DATAINDEX])
+    const { vmOptions, form } = this.props
+    let activeInteraction = form.getFieldValue(INTERCATION_DATAINDEX),
+      activeSystem = (Object.keys(this.props.vmOptions[hostIp]) || {}).filter(k => k !== LOW_INTERACTION)[0]
+    form.resetFields([SERVICES_DATAINDEX])
+    form.setFieldsValue({ [SYSTEM_DATAINDEX]: Object.keys(vmOptions[hostIp][activeInteraction])[0] })
+    this.props.form.setFieldsValue({ [SERVICES_DATAINDEX]: [] })
   }
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -200,25 +208,19 @@ class WrappedForm extends React.Component {
 
     const activeHostIp = getFieldValue(HOST_IP_DATAINDEX) || defaultHostIp;
 
-    const systemList = Object.entries(vmOptions[activeHostIp] || {})
-      .filter(([key, value]) => key !== LOW_INTERACTION)
+    const systemList = Object.entries((vmOptions[activeHostIp] || {})[activeInteraction] || {})
+
 
     const defaultSystem = (systemList[0] || [])[0]
 
-    const activeSystem = activeInteraction === LOW_INTERACTION
-      ?
-      LOW_INTERACTION
-      :
-      (getFieldValue(SYSTEM_DATAINDEX) || defaultSystem)
+    const activeSystem = getFieldValue(SYSTEM_DATAINDEX) || defaultSystem
 
-    const serviceList = Object.entries((((((vmOptions[activeHostIp] || {})[activeSystem]) || {})).services || {}) || {})
+    const serviceList = Object.entries((systemList.find(i => i[0] === activeSystem) || ["", {}])[1].services || {})
 
     const defaultService = []
 
     const activeService = getFieldValue(SERVICES_DATAINDEX) || defaultService
 
-
-    // console.info(activeSystem, getFieldValue(SYSTEM_DATAINDEX), (vmOptions[activeHostIp] || {})[activeSystem])
 
     const lblClasses = classnames({
       [styles["lbl-dark"]]: isDark
@@ -352,36 +354,30 @@ class WrappedForm extends React.Component {
               )
           }
         </FormItem>
-        {
-          activeInteraction === HIGH_INTERATION
-            ?
-            <FormItem  {...commonProps}
-              hasFeedback={false}
-              label={<Label className={lblClasses}
-                keyName={SYSTEM_DATAINDEX} />}>
+        <FormItem  {...commonProps}
+          hasFeedback={false}
+          label={activeInteraction === HIGH_INTERATION ? <Label className={lblClasses}
+            keyName={SYSTEM_DATAINDEX} /> : <span className={lblClasses}>模拟设备类型</span>}>
+          {
+            getFieldDecorator(
+              SYSTEM_DATAINDEX,
               {
-                getFieldDecorator(
-                  SYSTEM_DATAINDEX,
-                  {
-                    initialValue: defaultSystem
-                  }
-                )
-                  (
-                  <Select onChange={this.systemOnChange} disabled={loading}>
-                    {
-                      systemList.map(([key, value], index) => {
-                        return <Select.Option value={key} key={`${index}-option`}>
-                          {value.title}
-                        </Select.Option>
-                      })
-                    }
-                  </Select>
-                  )
+                initialValue: defaultSystem
               }
-            </FormItem>
-            :
-            null
-        }
+            )
+              (
+              <Select onChange={this.systemOnChange} disabled={loading}>
+                {
+                  systemList.map(([key, value], index) => {
+                    return <Select.Option value={key} key={`${index}-option`}>
+                      {value.title}
+                    </Select.Option>
+                  })
+                }
+              </Select>
+              )
+          }
+        </FormItem>
         <FormItem  {...commonProps}
           hasFeedback={false}
           label={<Label className={lblClasses}
