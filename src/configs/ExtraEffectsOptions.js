@@ -1,8 +1,11 @@
 /**
  * Created by jojo on 2017/8/4.
  */
-import { message as Message, Modal } from 'antd';
+import { message as Message, Modal } from 'antd'
+import app from '../index.js'
+import { OVER_DUE_NAMESPACE } from 'configs/ConstConfig'
 
+import { routerRedux } from 'dva/router'
 
 Message.config({
   duration: 3,
@@ -14,10 +17,12 @@ Message.config({
 *  处理全局错误信息
 *  ignoreActionTypes中保存不处理的action Type
 * */
+
+const overdueIgnoreActionTypes = ["user/postSign"]
 const ignoreActionTypes = ["user/postSign"]
 function messageHandle(res, type) {
 
-  if (res.status === -4 && !ignoreActionTypes.includes(res)) {
+  if (res.status === -4 && res.status !== -10 && !ignoreActionTypes.includes(type)) {
     Modal.error({
       title: "登录超时",
       content: "登录超时，请重新登录",
@@ -29,7 +34,12 @@ function messageHandle(res, type) {
     })
   }
 
-  if (res.status !== -4 && res.status !== 1 && !ignoreActionTypes.includes(type)) {
+  if (res.status === -10 && !overdueIgnoreActionTypes.includes(type)) {
+    window.sessionStorage.setItem(OVER_DUE_NAMESPACE, OVER_DUE_NAMESPACE)
+    app._store.dispatch(routerRedux.push("/manager/device"))
+  }
+
+  if (res.status !== -4 && res.status !== -10 && res.status !== 1 && !ignoreActionTypes.includes(type)) {
     Message.error(res.message || res.payload);
   }
 
@@ -57,7 +67,9 @@ export default {
 
     messageHandle(res, type);
 
-    rejectHandle(res, reject);
+    if (res.status !== -10) {
+      rejectHandle(res, reject)
+    }
 
     return;
   }

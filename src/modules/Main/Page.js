@@ -33,6 +33,7 @@ import {
 import { getTemp } from '../../utils/tools'
 import { HONEYPOT_CREATE_LIST_CACHE_NAMESPACE } from '../../modules/Manager_Virtual/Model'
 import { NODE, IDS, STAND_ALONE, IDS_STAND_ALONE, DISTRIBUTION } from "configs/ConstConfig"
+import { NAMESPACE as DEVICE_MANAGER_NAMESPACE } from 'modules/Manager_Device/ConstConfig'
 const NAMESPACE = "main";
 
 const honeypotCreateStatusTip = {
@@ -65,6 +66,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch, ownProps) {
   return {
     dispatch,
+    changeOverdueTipVisible: payload => dispatch({
+      type: `${DEVICE_MANAGER_NAMESPACE}/changeOverdueTipVisible`,
+      payload
+    }),
     setCommonLayout: (payload) => {
       return dispatch({
         type: "layout/setCommonLayout",
@@ -154,6 +159,7 @@ class Page extends React.Component {
     return (
       <div className={classes}>
         <Nav isMini={navMini}
+          changeOverdueTipVisible={this.props.changeOverdueTipVisible}
           activeKey={window.location.hash.substr(1)}
           isDark={darkTheme}
           isAdmin={userData.isAdmin}

@@ -17,8 +17,8 @@ import {
 import { getVerificationCode } from './Service';
 import { shouldIdsHideRouteList, shouldNodeHideRouteList, shouldIdsStandAloneHideRouteList } from 'configs/RouteConfig'
 moment.locale('zh-cn');
-
-const NAMESPACE = "user";
+import { OVER_DUE_NAMESPACE } from 'configs/ConstConfig'
+const NAMESPACE = "user"
 
 const callConfig = {
   withArgsCombiner: true,
@@ -66,8 +66,10 @@ const baseModel = {
         { ...payload || {} },
         commonCallConfig
       );
-
-      if (res.status === 1) {
+      if (res.status === -10) {
+        window.sessionStorage.setItem(OVER_DUE_NAMESPACE, OVER_DUE_NAMESPACE)
+      }
+      if (res.status === 1 || res.status === -10) {
 
         const userData = {
           ...res.payload,

@@ -75,7 +75,7 @@ export default DeviceManagerGenerator({
   mapStateToProps,
   mapDispatchToProps,
   title: "流量监测设备",
-  productType: IDS,
+  deviceType: IDS,
   getNodeDiskComponent: () => {
     return <NodeDisk></NodeDisk>
   }

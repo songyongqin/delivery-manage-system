@@ -1,8 +1,9 @@
 import {
   NAMESPACE
-} from './ConstConfig';
-import * as service from './Service';
-const SHOULD_EXPANDED_WIDTH_DIVIDE = 1600;
+} from './ConstConfig'
+import * as service from './Service'
+const SHOULD_EXPANDED_WIDTH_DIVIDE = 1600
+import { OVER_DUE_NAMESPACE } from 'configs/ConstConfig'
 
 const callConfig = {
   withStatusHandle: true,
@@ -12,9 +13,16 @@ const callConfig = {
 export default {
   namespace: NAMESPACE,
   state: {
-    versionColExpanded: true
+    versionColExpanded: true,
+    overdueTipVisible: window.sessionStorage.getItem(OVER_DUE_NAMESPACE) === OVER_DUE_NAMESPACE,
   },
   reducers: {
+    changeOverdueTipVisible: (preState, { payload }) => {
+      return {
+        ...preState,
+        overdueTipVisible: payload
+      }
+    },
     changeColExpanded: (preState, { payload }) => {
       return {
         ...preState,

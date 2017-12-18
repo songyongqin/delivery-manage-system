@@ -11,14 +11,17 @@ import {
   NODE,
   DISTRIBUTION,
   STAND_ALONE,
-  IDS_STAND_ALONE
+  IDS_STAND_ALONE,
+  OVER_DUE_NAMESPACE,
 } from 'configs/ConstConfig'
 import { shouldIdsHideRouteList, shouldNodeHideRouteList, shouldIdsStandAloneHideRouteList } from 'configs/RouteConfig'
 const SubMenu = Menu.SubMenu;
 const Item = Menu.Item;
+import app from '../../../index.js'
+import { routerRedux } from 'dva/router'
 
 
-const getItem = (item, isAdmin = false, activeKeys, isOuter, productType) => {
+const getItem = (item, isAdmin = false, activeKeys, isOuter, productType, changeOverdueTipVisible) => {
   const { adminOnly, items, link, icon, title, idsHide, nodeHide } = item;
   if (adminOnly && !isAdmin) {
     return null;
@@ -53,13 +56,19 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType) => {
       <SubMenu key={link}
         className={classes}
         title={subMenuTitle}>
-        {getMenu(items, isAdmin, activeKeys, false, productType)}
+        {getMenu(items, isAdmin, activeKeys, false, productType, changeOverdueTipVisible)}
       </SubMenu>
     )
   }
   return (
     <Item key={link} className={classes}>
-      <Link to={link} className={styles["link"]}>
+      <Link to={link} className={styles["link"]} onClick={(e) => {
+        if (window.sessionStorage.getItem(OVER_DUE_NAMESPACE)) {
+          e.preventDefault()
+          app._store.dispatch(routerRedux.push("/manager/device"))
+          changeOverdueTipVisible && changeOverdueTipVisible(true)
+        }
+      }}>
         <span style={{ padding: "0 10px" }}>{icon}</span>
         <span>{title}</span>
       </Link>
@@ -68,11 +77,11 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType) => {
 
 };
 
-const getMenu = (routeConfig, isAdmin = true, activeKeys, isOuter, productType) => {
+const getMenu = (routeConfig, isAdmin = true, activeKeys, isOuter, productType, changeOverdueTipVisible) => {
   const keys = Object.keys(routeConfig);
 
   return keys.map(k => {
-    return getItem(routeConfig[k], isAdmin, activeKeys, isOuter, productType)
+    return getItem(routeConfig[k], isAdmin, activeKeys, isOuter, productType, changeOverdueTipVisible)
   })
 
 
@@ -99,7 +108,8 @@ export default class extends React.Component {
       activeKey = "",
       routeConfig,
       isAdmin = false,
-      productType
+      productType,
+      changeOverdueTipVisible
     } = this.props;
 
     const classes = classnames({
@@ -147,7 +157,7 @@ export default class extends React.Component {
           onOpenChange={this.onOpenChange}
           style={{ height: "100%", width: "100%" }}
           theme="dark">
-          {getMenu(config, isAdmin, activeKeys, true, productType)}
+          {getMenu(config, isAdmin, activeKeys, true, productType, changeOverdueTipVisible)}
         </Menu>
       </nav>
     )

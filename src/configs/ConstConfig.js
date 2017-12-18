@@ -215,3 +215,9 @@ export const IV_NAMESPACE = "@@__IV__@@"
 
 
 export const LOG_NAMESPACE = "@@__LOG__@@"
+
+
+
+export const OVER_DUE_STATUS = -10
+
+export const OVER_DUE_NAMESPACE = "@@_OVER_DUE_@@"

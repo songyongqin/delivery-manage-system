@@ -13,7 +13,7 @@ import UpdateForm from './components/UpdateForm'
 import LicenceForm from './components/LicenceForm';
 import CleanForm from './components/CleanForm';
 import Card from 'domainComponents/Card'
-import { NODE, IDS, DISTRIBUTION, STAND_ALONE } from 'configs/ConstConfig'
+import { NODE, IDS, DISTRIBUTION, STAND_ALONE, IDS_STAND_ALONE, OVER_DUE_NAMESPACE } from 'configs/ConstConfig'
 import { connect } from 'dva'
 import { CONTROL_CONFIG_NAMESPACE } from 'modules/SysConfig_Network/ConstConfig'
 
@@ -37,7 +37,7 @@ export default ({
   title,
   getNodeDiskComponent,
   isNode = true,
-  deviceType = "distribution"
+  deviceType = "distribution",
 }) => {
 
   const NAMESPACE = namespace;
@@ -64,9 +64,25 @@ export default ({
         cleanVisible: false
       }
     }
+    componentWillReceiveProps = (newProps) => {
+      const { type } = newProps.productType
+
+      const masterOverdue = newProps.showLicence && deviceType === DISTRIBUTION && type === DISTRIBUTION,
+        idsStandAloneOverdue = newProps.showLicence && deviceType === IDS && type === IDS_STAND_ALONE,
+        honeypotStandAloneOverdue = newProps.showLicence && deviceType === NODE && type === STAND_ALONE
+
+      if (masterOverdue || idsStandAloneOverdue || honeypotStandAloneOverdue) {
+        this.setState({
+          activeItems: newProps[NAMESPACE].queryResults.data,
+          visible: true
+        })
+      }
+
+    }
     componentDidMount = () => {
       this.props.query()
-      if (this.props.productType.type === IDS || this.props.productType.type === NODE) {
+      const { type } = this.props.productType
+      if (type === IDS || type === NODE) {
         this.props.getControlConfig()
       }
     }
@@ -120,6 +136,7 @@ export default ({
         this.setState({
           activeItems: [],
         })
+        this.props.hideLicence()
       }
       this.setState({
         visible: !this.state.visible,
@@ -127,9 +144,23 @@ export default ({
     }
 
     postLicenceHandle = payload => this.props.postLicence(payload).then(result => {
+      const shouldReload = result.some(i => i.status === 1)
       this.setState({
-        shouldReload: result.some(i => i.status === 1)
+        shouldReload
       })
+
+      const { type } = this.props.productType
+
+
+      const masterOverdue = deviceType === DISTRIBUTION && type === DISTRIBUTION,
+        idsStandAloneOverdue = deviceType === IDS && type === IDS_STAND_ALONE,
+        honeypotStandAloneOverdue = deviceType === NODE && type === STAND_ALONE
+
+      if ((masterOverdue || idsStandAloneOverdue || honeypotStandAloneOverdue) && shouldReload) {
+        sessionStorage.removeItem(OVER_DUE_NAMESPACE)
+      }
+
+
       return result;
     })
 
