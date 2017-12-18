@@ -37,6 +37,9 @@ function messageHandle(res, type) {
   if (res.status === -10 && !overdueIgnoreActionTypes.includes(type)) {
     window.sessionStorage.setItem(OVER_DUE_NAMESPACE, OVER_DUE_NAMESPACE)
     app._store.dispatch(routerRedux.push("/manager/device"))
+    if (window.location.hash.slice(1) === "/manager/device") {
+      window.location.reload()
+    }
   }
 
   if (res.status !== -4 && res.status !== -10 && res.status !== 1 && !ignoreActionTypes.includes(type)) {
@@ -64,7 +67,6 @@ export default {
     // };
   },
   *statusHandle({ payload, resolve, reject, type }, { call, put }, res) {
-
     messageHandle(res, type);
 
     if (res.status !== -10) {
