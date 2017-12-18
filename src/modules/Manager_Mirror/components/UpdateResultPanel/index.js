@@ -31,9 +31,9 @@ export default ({ data, isDark, onCancel, res }) => {
           <td className={textClasses}>
             <Badge status="success"></Badge>新增镜像
           </td>
-          <td className={textClasses}>
+          {/* <td className={textClasses}>
             <Badge status="error"></Badge>删除镜像
-            </td>
+            </td> */}
         </tr>
         <tr>
           <td>
@@ -48,7 +48,7 @@ export default ({ data, isDark, onCancel, res }) => {
             </div>
           </td>
           <td>
-            <div>
+            {/* <div>
               {
                 remove.map((i, index) => {
                   return <JoTag key={`${index}-tag`} color="#108ee9">
@@ -56,7 +56,7 @@ export default ({ data, isDark, onCancel, res }) => {
                   </JoTag>
                 })
               }
-            </div>
+            </div> */}
           </td>
         </tr>
 

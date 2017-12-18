@@ -30,7 +30,7 @@ const columns = [
           <tbody>
             <tr>
               <td style={{ textAlign: "center" }}>新增的镜像</td>
-              <td style={{ textAlign: "center" }}>删除的镜像</td>
+              {/* <td style={{ textAlign: "center" }}>删除的镜像</td> */}
             </tr>
             <tr>
               <td>
@@ -47,7 +47,7 @@ const columns = [
                 </div>
               </td>
               <td>
-                <div>
+                {/* <div>
                   {
                     records["remove"].map((i, index) => {
                       return <div key={`${index}-tag`} style={{ textAlign: "center" }}>
@@ -57,7 +57,7 @@ const columns = [
                       </div>
                     })
                   }
-                </div>
+                </div> */}
               </td>
             </tr>
           </tbody>
