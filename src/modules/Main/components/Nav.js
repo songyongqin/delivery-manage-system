@@ -41,10 +41,23 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType, change
     [styles["active"]]: activeKeys.indexOf(link) !== -1 && isOuter,
     [styles['secondary-active']]: activeKeys.indexOf(link) !== -1 && !items,
   });
+
+  const clickHandle = e => {
+
+    if (window.sessionStorage.getItem(OVER_DUE_NAMESPACE)) {
+      e.preventDefault()
+      app._store.dispatch(routerRedux.push("/manager/device"))
+      changeOverdueTipVisible && changeOverdueTipVisible(true)
+    }
+    if (activeKeys.includes(link)) {
+      e.preventDefault()
+    }
+  }
+
   if (items) {
 
     const subMenuTitle = (
-      <Link to={link} className={styles["link"]}>
+      <Link to={link} className={styles["link"]} onClick={clickHandle}>
         <span>
           <span style={{ padding: "0 10px" }}>{icon}</span>
           <span>{title}</span>
@@ -60,15 +73,10 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType, change
       </SubMenu>
     )
   }
+
   return (
     <Item key={link} className={classes}>
-      <Link to={link} className={styles["link"]} onClick={(e) => {
-        if (window.sessionStorage.getItem(OVER_DUE_NAMESPACE)) {
-          e.preventDefault()
-          app._store.dispatch(routerRedux.push("/manager/device"))
-          changeOverdueTipVisible && changeOverdueTipVisible(true)
-        }
-      }}>
+      <Link to={link} className={styles["link"]} onClick={clickHandle}>
         <span style={{ padding: "0 10px" }}>{icon}</span>
         <span>{title}</span>
       </Link>
