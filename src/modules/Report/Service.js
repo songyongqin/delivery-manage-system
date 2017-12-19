@@ -95,8 +95,9 @@ export function getEPORT_CALL_ON_DOMAIN(payload) {
   });
 }
 //图表统计
+export const getRankingOption = commonRequestCreator.get(httpApi.ANALYSE_RANKING_OPTION)
 export function getCHART_STATISTICAL(payload) {
-  return request(httpApi.ANALYSE_RANKING + tools.jsonToQueryString(payload), {
+  return request(httpApi.ANALYSE_RANKING + payload.option + tools.jsonToQueryString(payload), {
     method: 'GET',
     header: {
       "Content-Type": "application/json; charset=utf-8"
