@@ -370,7 +370,7 @@ class Page extends React.Component {
       }
     } else if (this.props.base.keyvalue == 'chart_statistical') {
       this.props.dispatch({
-        type: `${NAMESPACE_CHART}/fetch`,
+        type: `${NAMESPACE_CHART}/getRankingOption`,
         payload: {
           timestampRange
         }
@@ -775,7 +775,7 @@ class Page extends React.Component {
             }
           });
           this.props.dispatch({
-            type: `${NAMESPACE_CHART}/fetch`,
+            type: `${NAMESPACE_CHART}/getRankingOption`,
             payload: {
               timestampRange
             }
