@@ -50,7 +50,7 @@ const tailFormItemLayout = {
   },
 };
 
-const commonItemCreater = ({ commonProps, lblClasses, dataIndex, loading }) => (
+const commonItemCreater = ({ commonProps, lblClasses, dataIndex, loading, defaultValue }) => (
   {
     props: {
       ...commonProps,
@@ -59,6 +59,7 @@ const commonItemCreater = ({ commonProps, lblClasses, dataIndex, loading }) => (
     },
     filed: {
       name: dataIndex,
+      initialValue: defaultValue,
       rules: dataIndex === EMAIL_DATAINDEX
         ?
         [{
