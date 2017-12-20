@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import * as moment from 'moment';
-import { Menu, Button, Breadcrumb, Tabs, Checkbox, Row, Col, Switch, Icon } from 'antd';
+import { Menu, Button, Breadcrumb, Tabs, Checkbox, Row, Col, Switch, Icon, Tooltip, } from 'antd';
 import EnhanciveTable from '../../domainComponents/EnhanciveTable';
 import Modal from '../../domainComponents/Modal';
 import JoSpin from '../../components/JoSpin';
@@ -65,8 +65,6 @@ const defaultCheckedList = [
   "VALUE_MALDOMAIN",
   "VALUE_SUFFERHOSTCALLONRECORD",
   "VALUE_HAVECOMMUNICATEINSIDEIP",
-  "VALUE_CALL_ON_IP",
-  "VALUE_CALL_ON_DOMAIN",
   "VALUE_HIGH",
   "VALUE_MIDDLE",
   "VALUE_LOW",
@@ -154,7 +152,6 @@ class Page extends React.Component {
     };
 
   }
-
   //导出选项卡
   showModal = () => {
     this.setState({
@@ -165,7 +162,10 @@ class Page extends React.Component {
     this.setState({ visible: false });
   }
   getOnChangeHandle = (key) => (e) => {
+    const value = ["VALUE_CALL_ON_IP", "VALUE_CALL_ON_DOMAIN"]
     const checked = e.target.checked;
+    // if(key.includes("VALUE_CALL_ON_IP")){return}
+    console.info(key);
     let { checkedListNew } = this.state;
     key.map((i, index) => {
       checkedListNew = checked
@@ -968,21 +968,30 @@ class Page extends React.Component {
                   有通讯记录的内网IP
                       </Checkbox>
               </Col>
+
               <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_CALL_ON_IP"
-                  onChange={this.getOnChangeHandle(["VALUE_CALL_ON_IP"])}
-                  checked={this.state.checkedListNew.includes("VALUE_CALL_ON_IP")}>
-                  访问的外网IP
-                      </Checkbox>
+                <Tooltip title="访问的外网IP数据量较大，最多导出2000条数据" placement="right">
+                  <Checkbox
+                    value="VALUE_CALL_ON_IP"
+                    onChange={this.getOnChangeHandle(["VALUE_CALL_ON_IP"])}
+                    checked={this.state.checkedListNew.includes("VALUE_CALL_ON_IP")}>
+
+                    <span>访问的外网IP</span>
+
+
+                  </Checkbox>
+                </Tooltip>
               </Col>
+
               <Col span={23} offset={1}>
-                <Checkbox
-                  value="VALUE_CALL_ON_DOMAIN"
-                  onChange={this.getOnChangeHandle(["VALUE_CALL_ON_DOMAIN"])}
-                  checked={this.state.checkedListNew.includes("VALUE_CALL_ON_DOMAIN")}>
-                  访问的域名
+                <Tooltip title="访问的域名数据量较大，最多导出2000条数据" placement="right">
+                  <Checkbox
+                    value="VALUE_CALL_ON_DOMAIN"
+                    onChange={this.getOnChangeHandle(["VALUE_CALL_ON_DOMAIN"])}
+                    checked={this.state.checkedListNew.includes("VALUE_CALL_ON_DOMAIN")}>
+                    访问的域名
                       </Checkbox>
+                </Tooltip>
               </Col>
             </div>
             <Col span={24}>
