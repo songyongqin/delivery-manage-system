@@ -6,7 +6,7 @@ import { InputNumber, Button, Form, Icon, Tooltip } from 'antd';
 import styles from './styles.css';
 const FormItem = Form.Item;
 function validatePrimeNumber(number) {
-  if (number >= (10e8 - 1)) {
+  if (number > (10e6 - 1)) {
     return {
       validateStatus: 'error',
       errorMsg: '最大次数不得超过9,999,999',
