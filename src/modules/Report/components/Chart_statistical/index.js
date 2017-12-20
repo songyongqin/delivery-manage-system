@@ -12,9 +12,19 @@ class Page extends React.Component {
   }
 
   getContentPanel = () => {
-    const { data } = this.props;
+    const { splitResults, options, loading } = this.props;
     return (
-      <BarChart key="bar-chart" data={data} ></BarChart>
+      <div key="bar list">
+        {
+          options.map((i, index) => {
+            return (
+              <JoSpin key={`bar-chart-${index}`}>
+                <BarChart data={splitResults[i] || []} ></BarChart>
+              </JoSpin>
+            )
+          })
+        }
+      </div>
     )
   }
   // onExport = () => {
@@ -32,19 +42,16 @@ class Page extends React.Component {
   render = () => {
     return (
       <JoSpin spinning={this.props.loading}>
-        {/* <div style={{ height: "40px" }} >
-          <Button style={{ float: "right" }} type="primary" onClick={this.onExport}>导出</Button>
-        </div> */}
         {this.getContentPanel()}
-
       </JoSpin>
     )
   }
 }
 function mapStateToProps(state) {
-  const { data, loading, timestampRange } = state[NAMESPACE_CHART];
+  const { splitResults, loading, timestampRange, options } = state[NAMESPACE_CHART];
   return {
-    data,
+    splitResults,
+    options,
     loading: state.loading.effects[`${NAMESPACE_CHART}/fetch`],
     timestampRange,
   };

@@ -9,31 +9,87 @@ export default {
   namespace: NAMESPACE_CHART,
   state: {
     data: [],
+    options: [],
     loading: false,
     timestampRange: [moment(), moment()],
     lastChangeTime: -1,
+    splitResults: {},
+    loading: {}
   },
   reducers: {
     save(state, { payload }) {
       return { ...state, ...payload };
+    },
+    saveLoading: (preState, { payload }) => {
+      return {
+        ...preState,
+        loading: {
+          ...preState.loading,
+          [payload.option]: payload.value
+        }
+      }
+    },
+    saveOptions(preState, { payload }) {
+      return {
+        ...preState,
+        options: payload
+      }
+    },
+    saveSplitResults(preState, { payload }) {
+      return {
+        ...preState,
+        splitResults: {
+          ...preState.splitResults,
+          [payload.option]: payload.data,
+        }
+      }
     }
   },
   effects: {
-    *fetch({ payload }, { call, put }) {
-      const result = yield call(Service.getCHART_STATISTICAL, payload);
+    *getRankingOption({ payload }, { callWithExtra, put }) {
+      const optionRes = yield callWithExtra(Service.getRankingOption, {});
       const timestampRange = payload.timestampRange ? payload.timestampRange : [moment(), moment()];
-      const limit = payload.limit ? payload.limit : 10;
+      const options = optionRes.status === 1 ? optionRes.payload : [];
+      yield put({
+        type: "saveOptions",
+        payload: options
+      })
+      yield options.map(option => put({
+        type: "fetch",
+        payload: {
+          timestampRange,
+          option
+        }
+      }))
+
+    },
+    *fetch({ payload }, { call, put }) {
+      const { option } = payload;
+      yield put({
+        type: "saveLoading",
+        payload: {
+          option,
+          value: true
+        }
+      })
+      const result = yield call(Service.getCHART_STATISTICAL, payload);
       const data = result.payload;
       if (result.status === 1) {
         yield put({
-          type: 'save',
+          type: "saveSplitResults",
           payload: {
-            data,
-            timestampRange
+            option,
+            data
           }
-        });
-      };
-
+        })
+      }
+      yield put({
+        type: "saveLoading",
+        payload: {
+          option,
+          value: false
+        }
+      })
     },
     *onExport({ payload }, { call, put }) {
       const result = yield call(Service.onExport, payload);
