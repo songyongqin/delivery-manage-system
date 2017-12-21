@@ -4,7 +4,7 @@
 /*
 *  攻击阶段枚举值
 * */
-export const INVADE_DATAINDEX = "invade",
+export const INVADE_DATAINDEX = "intrusion",
   INSTALL_DATAINDEX = "install",
   CONTROL_DATAINDEX = "control",
   INTENTION_DATAINDEX = "intention"
