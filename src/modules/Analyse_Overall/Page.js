@@ -167,9 +167,9 @@ class Page extends React.Component {
     })
 
     const honeypotDataPanel = [
-      <Tabs.TabPane key={OVERALL_NET_NAMESPACE} tab="网络行为" style={{ minHeight: "400px" }}>
-        <OverallNet lastTime={lastTime}></OverallNet>
-      </Tabs.TabPane>,
+      // <Tabs.TabPane key={OVERALL_NET_NAMESPACE} tab="网络行为" style={{ minHeight: "400px" }}>
+      //   <OverallNet lastTime={lastTime}></OverallNet>
+      // </Tabs.TabPane>,
       <Tabs.TabPane key={OVERALL_SYSTEM_NAMESPACE} tab="系统行为" style={{ minHeight: "400px" }}>
         <OverallSystem lastTime={lastTime}></OverallSystem>
       </Tabs.TabPane>,

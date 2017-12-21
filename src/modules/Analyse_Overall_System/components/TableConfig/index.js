@@ -3,11 +3,12 @@ import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
 import moment from 'moment';
 import classnames from 'classnames';
 import * as tools from '../../../../utils/tools';
+import TagList from 'components/TagList'
 import {
   dataIndexes,
   PROTOCOL_TYPE_DATA_INDEX,
   URL_DATA_INDEX,
-  TIME_DATA_INDEX,
+  // TIME_DATA_INDEX,
   PATH_DATA_INDEX,
   textConfig,
   DOWNLOAD_URL_DATA_INDEX,
@@ -24,6 +25,9 @@ import {
   ACTIONSTATUS_SUCCESS,
   ACTIONSTATUS_FAIL,
   DETAILS_DATA_INDEX,
+  TIME_DATA_INDEX,
+  ACTION_MAIN_DATA_INDEX,
+  ACTION_TARGET_DATA_INDEX
 
 } from '../../ConstConfig'
 import TimesLabel from '../../../../components/TimesLabel';
@@ -97,7 +101,10 @@ const renderer = {
         value.map((i, index) => <JoTag color="#108ee9" key={`${index}-tag`} >{i}</JoTag>)
       }
     </div>
-  }
+  },
+  // [TIME_DATA_INDEX]: value => {
+  //   return <TimesLabel times={[value]}></TimesLabel>
+  // },
 }
 
 export const getColumns = ({ onQuery, queryFilters, filterTextConfig = {}, filters = {} } = {}) =>
@@ -117,8 +124,11 @@ export const getColumns = ({ onQuery, queryFilters, filterTextConfig = {}, filte
 
 export const expandedRowRender = records => {
   const details = records[DETAILS_DATA_INDEX] || []
-  return <Card title="行为详细描述">
-    <Timeline>
+
+  const path = records[PATH_DATA_INDEX] || []
+  return <Card title="ObjectPath">
+    <TagList data={path}></TagList>
+    {/* <Timeline>
       {details.map((i, index) => {
         return (
           <Timeline.Item key={`${index}-timeline-item`}>
@@ -130,6 +140,6 @@ export const expandedRowRender = records => {
           </Timeline.Item>
         )
       })}
-    </Timeline>
+    </Timeline> */}
   </Card>
 }

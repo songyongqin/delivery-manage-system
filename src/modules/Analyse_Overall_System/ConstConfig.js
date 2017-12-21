@@ -19,13 +19,21 @@ export const HONEYPOT_IP_DATA_INDEX = "honeypotIp",
   LEVEL_DATAINDEX = "level",
   ACTIONSTATUS_DATAINDEX = "actionStatus";
 
+export const TIME_DATA_INDEX = "time",
+  ACTION_MAIN_DATA_INDEX = "actionMain",
+  ACTION_TARGET_DATA_INDEX = "actionTarget"
+
 export const dataIndexes = [
+  TIME_DATA_INDEX,
   HONEYPOT_IP_DATA_INDEX,
-  ATTACKSTAGE_DATAINDEX,
+  ACTION_MAIN_DATA_INDEX,
+
+  // ATTACKSTAGE_DATAINDEX,
   ACTION_DATAINDEX,
-  ACTIONSTATUS_DATAINDEX,
-  LEVEL_DATAINDEX,
-  PATH_DATA_INDEX,
+  ACTION_TARGET_DATA_INDEX,
+  // ACTIONSTATUS_DATAINDEX,
+  // LEVEL_DATAINDEX,
+  // PATH_DATA_INDEX,
 ]
 
 // export const filters={
@@ -40,7 +48,10 @@ export const textConfig = {
   [ACTION_DATAINDEX]: "行为",
   [LEVEL_DATAINDEX]: "威胁等级",
   [ACTIONSTATUS_DATAINDEX]: "操作状态",
-  [PATH_DATA_INDEX]: "操作路径"
+  [PATH_DATA_INDEX]: "操作路径",
+  [ACTION_MAIN_DATA_INDEX]: "行为主体",
+  [ACTION_TARGET_DATA_INDEX]: "行为目标",
+  [TIME_DATA_INDEX]: "时间"
 }
 
 
