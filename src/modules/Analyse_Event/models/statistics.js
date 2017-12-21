@@ -43,5 +43,5 @@ export default createQueryModel({
       statistics,
     }
   },
-  initPath: "/analyse/event",
+  // initPath: "/analyse/event",
 })
