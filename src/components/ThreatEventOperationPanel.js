@@ -13,7 +13,6 @@ export default ({ queryFilters, isDark, formTextConfig, handle = {}, loading, mu
       format: e.key
     })
   }}>
-    <Menu.Item key="json">导出为JSON</Menu.Item>
     <Menu.Item key="xml">导出为XML</Menu.Item>
   </Menu>
 
@@ -39,9 +38,11 @@ export default ({ queryFilters, isDark, formTextConfig, handle = {}, loading, mu
             ?
             <Dropdown.Button
               type="primary"
-              onClick={() => handle.onExport()}
+              onClick={() => handle.onExport({
+                format: "json"
+              })}
               overlay={menu}>
-              导出
+              导出为JSON
             </Dropdown.Button>
             :
             <Button type="primary"
