@@ -127,8 +127,8 @@ class WrappedForm extends React.Component {
       // if (values[INTERCATION_DATAINDEX] === LOW_INTERACTION) {
       //   values[SYSTEM_DATAINDEX] = LOW_INTERACTION;
       // }
-      console.info(values)
-      // onSubmit && onSubmit(values)
+      // console.info(values)
+      onSubmit && onSubmit(values)
 
     });
   }
