@@ -4,7 +4,7 @@
 import { message as Message, Modal } from 'antd'
 import app from '../index.js'
 import { OVER_DUE_NAMESPACE } from 'configs/ConstConfig'
-
+import { NAMESPACE as DEVICE_NAMESPACE } from 'modules/Manager_Device/ConstConfig'
 import { routerRedux } from 'dva/router'
 
 Message.config({
@@ -38,7 +38,11 @@ function messageHandle(res, type) {
     window.sessionStorage.setItem(OVER_DUE_NAMESPACE, OVER_DUE_NAMESPACE)
     app._store.dispatch(routerRedux.push("/manager/device"))
     if (window.location.hash.slice(1) === "/manager/device") {
-      window.location.reload()
+      // window.location.reload()
+      app._store.dispatch({
+        type: `${DEVICE_NAMESPACE}/changeOverdueTipVisible`,
+        payload: true
+      })
     }
   }
 
