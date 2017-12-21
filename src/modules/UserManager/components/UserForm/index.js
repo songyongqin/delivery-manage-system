@@ -50,23 +50,36 @@ const tailFormItemLayout = {
   },
 };
 
+const getRules = (dataIndex) => {
+  if (dataIndex === EMAIL_DATAINDEX) {
+    return [
+      {
+        type: 'email', message: '请输入正确的邮箱格式',
+      }
+    ]
+  }
+  if (dataIndex === PHONE_NUMBER_DATAINDEX) {
+    return [
+      {
+        pattern: /^(130|131|132|133|134|135|136|137|138|139|150|151|152|153|155|156|157|158|159|180|186|187|188|189)[0-9]{8}$/,
+        message: "请输入正确的中国大陆境内运营商提供的手机号码"
+      }
+    ]
+  }
+  return []
+}
+
 const commonItemCreater = ({ commonProps, lblClasses, dataIndex, loading, defaultValue }) => (
   {
     props: {
       ...commonProps,
-      requried: false,
+      required: false,
       label: <span className={lblClasses}>{tools.getKeyText(dataIndex, textConfig)}</span>
     },
     filed: {
       name: dataIndex,
       initialValue: defaultValue,
-      rules: dataIndex === EMAIL_DATAINDEX
-        ?
-        [{
-          type: 'email', message: '请输入正确的邮箱格式',
-        }]
-        :
-        []
+      rules: getRules(dataIndex)
     },
     component: <Input disabled={loading} />
   }
