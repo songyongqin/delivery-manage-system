@@ -16,6 +16,8 @@ import {
   THEME,
   SOURCE_IP_PORT,
   TARGET_IP_PORT,
+  SOURCE_IP,
+  TARGET_IP,
   SMTP_POP3,
   ruleItemPlaceholder
 } from '../../ConstConfig'
@@ -53,6 +55,32 @@ const isIpPort = (str = "") => {
   }
   return false;
 }
+
+const ipChecker = checkerDecorator(({ dataIndex, props, setCheckStatus, checkerStatus }) => {
+  let sourceIp = props.form.getFieldValue(SOURCE_IP) || "",
+    targetIp = props.form.getFieldValue(TARGET_IP) || "",
+    isSourceEmpty = sourceIp.trim().length === 0,
+    isTargetEmpty = targetIp.trim().length === 0
+
+  if (isSourceEmpty && isTargetEmpty) {
+    setCheckStatus(TARGET_IP, "error", "至少填写一项")
+    setCheckStatus(SOURCE_IP, "error", "至少填写一项")
+    return;
+  } else {
+    setCheckStatus(TARGET_IP, "", "")
+    setCheckStatus(SOURCE_IP, "", "")
+  }
+
+  if ((!ipReg.test(sourceIp)) && !isSourceEmpty) {
+    setCheckStatus(SOURCE_IP, "error", "请输入正确的IP")
+  }
+
+  if ((!ipReg.test(targetIp)) && !isTargetEmpty) {
+    setCheckStatus(TARGET_IP, "error", "请输入正确的IP")
+  }
+
+})
+
 
 const ipPortTypeChecker = checkerDecorator(({ dataIndex, props, setCheckStatus, checkerStatus }) => {
   let souceIpPort = props.form.getFieldValue(SOURCE_IP_PORT),
@@ -109,7 +137,7 @@ export default {
 
   [TCP]: ipPortTypeChecker,
 
-  [IP]: ipPortTypeChecker,
+  [IP]: ipChecker,
 
   [SSH]: ipPortTypeChecker,
 

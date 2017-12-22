@@ -49,7 +49,9 @@ export const URL = "url",
   TARGET_IP_PORT = "targetIpPort",
   REVEICER = "receiver",
   SENDER = "sender",
-  THEME = "theme"
+  THEME = "theme",
+  SOURCE_IP = "sourceIpPort",
+  TARGET_IP = "targetIpPort"
 
 export const ruleItemPlaceholder = {
   [URL]: "部分或完整的URL",
@@ -57,7 +59,9 @@ export const ruleItemPlaceholder = {
   [TARGET_IP_PORT]: "目的ip:port",
   [REVEICER]: "收件箱",
   [SENDER]: "发件箱",
-  [THEME]: "邮件主题"
+  [THEME]: "邮件主题",
+  [SOURCE_IP]: "源ip",
+  [TARGET_IP]: "目的ip"
 }
 
 
@@ -65,7 +69,7 @@ export const ruleItemsConfig = {
   [HTTP]: [URL],
   [DNS]: [URL],
   [TCP]: [SOURCE_IP_PORT, TARGET_IP_PORT],
-  [IP]: [SOURCE_IP_PORT, TARGET_IP_PORT],
+  [IP]: [SOURCE_IP, TARGET_IP],
   [SSH]: [SOURCE_IP_PORT, TARGET_IP_PORT],
   [FTP]: [SOURCE_IP_PORT, TARGET_IP_PORT],
   [SMTP_POP3]: [REVEICER, SENDER, THEME],
