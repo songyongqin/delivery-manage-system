@@ -44,7 +44,7 @@ export const PLACEHOLDER = "特征"
 
 export const tableTextConfig = {
   rowTitles: {
-    [THREAT_TYPE_DATAINDEX]: "威胁类型",
+    [THREAT_TYPE_DATAINDEX]: "情报类型",
     [FEATURE_DATAINDEX]: "情报特征",
     [THTREAT_NAME_DATAINDEX]: "威胁名称",
     [ACCURACY_DATAINDEX]: "特征准确度"

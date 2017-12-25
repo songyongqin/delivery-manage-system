@@ -12,11 +12,13 @@ import {
   FEATURE_DATAINDEX,
   filterOptions as staticFilterOptions,
   filterTextConfig as statistFilterTextConfig,
+  THTREAT_NAME_DATAINDEX
 } from '../ConstConfig'
 import { statisticsTextConfig } from 'modules/Analyse_Event/ConstConfig';
 
 const filterDataIndexes = [
-  FEATURE_DATAINDEX
+  FEATURE_DATAINDEX,
+  THTREAT_NAME_DATAINDEX
 ]
 
 const filterFormTextConfig = {
@@ -24,6 +26,10 @@ const filterFormTextConfig = {
     label: "特征",
     placeholder: ""
   },
+  [THTREAT_NAME_DATAINDEX]: {
+    label: "威胁名称",
+    placeholder: ""
+  }
 }
 
 export const getColumns = ({ queryFilters, onQuery, filtersOption, filterTextConfig }) => {
