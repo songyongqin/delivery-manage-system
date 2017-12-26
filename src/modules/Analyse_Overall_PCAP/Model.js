@@ -14,7 +14,7 @@ import {
 } from './ConstConfig'
 moment.locale('zh-cn');
 
-const initFilters = {
+export const initFilters = {
   timestampRange: [],
   [PACKAGE_NAME_DATA_INDEX]: "",
   limit: 10,
