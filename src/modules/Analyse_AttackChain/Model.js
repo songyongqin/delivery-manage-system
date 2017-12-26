@@ -6,6 +6,7 @@ import moment from 'moment';
 import * as service from './Service';
 import { queryModelGenerator } from '../../utils/dvaModelGenerator';
 import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
+import { attackStage } from 'configs/ConstConfig'
 
 moment.locale('zh-cn');
 
@@ -13,7 +14,7 @@ const NAMESPACE = "analyseAttackChain";
 
 const initFilters = {
   timestampRange: [],
-  attackStage: ["invade", "install", "control", "intention"],
+  attackStage,
   limit: 20,
   page: 1,
 }
