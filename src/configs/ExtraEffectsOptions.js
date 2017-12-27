@@ -19,7 +19,7 @@ Message.config({
 * */
 
 const overdueIgnoreActionTypes = ["user/postSign"]
-const ignoreActionTypes = ["user/postSign"]
+const ignoreActionTypes = ["user/postSign", 'managerVirtual/getStatus']
 function messageHandle(res, type) {
 
   if (res.status === -4 && res.status !== -10 && !ignoreActionTypes.includes(type)) {

@@ -7,11 +7,21 @@
   color:$txt-color;
   transition: background 0.2s,color 0.2s;
   overflow-y: hidden;
+  
 
 }
 .page-dark{
   background: $bg-color-level-3-dark;
   color:$txt-color-dark;
+}
+
+.step-error{
+  :global{
+    .ant-steps .ant-steps-item.ant-steps-status-process .ant-steps-head-inner{
+      background: red;
+      border-color:red;
+    }
+  }
 }
 /*
 
@@ -109,3 +119,4 @@ $nav-width-mini:80px;
 .footer-dark{
   background:  $bg-color-level-2-dark;
 }
+

@@ -40,7 +40,8 @@ const honeypotCreateStatusTip = {
   0: "正在获取蜜罐创建状态",
   1: "等待蜜罐获取配置",
   2: "蜜罐成功获取配置信息,等待蜜罐配置完成",
-  3: "蜜罐创建成功"
+  3: "正在创建快照",
+  4: "蜜罐创建成功"
 }
 
 
@@ -268,7 +269,6 @@ class Page extends React.Component {
       wordBreak: "break-all",
       color: "#cccccc"
     }
-
     const menu = (
       <Menu>
         <Menu.ItemGroup key="message" title={
@@ -305,25 +305,37 @@ class Page extends React.Component {
               <Icon type="frown"></Icon>&nbsp;没有正在创建的蜜罐
             </p>
             :
-            honeypotCreateListData.map(([honeypotId, { data, status }], index) => {
+            honeypotCreateListData.map(([honeypotId, { data, status, error }], index) => {
               const iconStyle = { color: "#108ee9", fontSize: "40px" };
+
               return (
                 <Card key={`${index}-row`} title={`蜜罐名称:${data.honeypotName}`} style={{ marginBottom: "10px" }}>
                   <Row gutter={20}>
                     <Col span={4} style={{ height: "40px", lineHeight: "40px", textAlign: "center" }}>
                       {
-                        status === 3
-                          ?
-                          <Icon type="check-circle-o" style={iconStyle} />
-                          :
-                          <Icon type="loading" style={iconStyle}></Icon>
+                        status === 4
+                        &&
+                        <Icon type="check-circle-o" style={iconStyle} />
+                      }
+                      {
+                        status !== 4 && !error
+                        &&
+                        <Icon type="loading" style={iconStyle}></Icon>
+                      }
+                      {
+                        error
+                        &&
+                        <Tooltip title="错误">
+                          <Icon type="close-circle-o" style={{ ...iconStyle, color: "red" }} />
+                        </Tooltip>
+
                       }
                     </Col>
-                    <Col span={20} style={{ paddingLeft: "20px" }}>
+                    <Col span={20} className={error ? styles["step-error"] : ""} style={{ paddingLeft: "20px" }} >
                       {/* <p style={{ marginBottom: "15px" }}>创建状态</p> */}
-                      <Steps direction="vertical" size="small" current={status}>
+                      <Steps direction="vertical" size="small" current={status} >
                         {
-                          [0, 1, 2, 3].map((i, index) => <Steps.Step
+                          [0, 1, 2, 3, 4].map((i, index) => <Steps.Step
                             key={`${i}-step`}
                             description={honeypotCreateStatusTip[i]} />)
                         }

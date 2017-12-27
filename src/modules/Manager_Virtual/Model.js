@@ -93,14 +93,15 @@ const baseModel = {
       }
     },
     saveCreateStatus: (preState, { payload }) => {
-      const { honeypotId, status } = payload;
+      const { honeypotId, status, error } = payload;
       return {
         ...preState,
         createList: {
           ...preState.createList,
           [honeypotId]: {
             ...preState.createList[honeypotId],
-            status
+            status,
+            error
           }
         }
       }
@@ -108,6 +109,9 @@ const baseModel = {
   },
   effects: {
     *getStatus({ resolve, payload = {} }, { callWithExtra, put, select }) {
+      const CREATE_SUCCESS = 4
+
+      const { count = 3 } = payload
 
       const res = yield callWithExtra(
         service.getStatus,
@@ -121,17 +125,41 @@ const baseModel = {
           type: "saveCreateStatus",
           payload: {
             honeypotId: payload.honeypotId,
-            status: res.payload
+            status: res.payload,
+            error: false
           }
         })
       }
 
-      if (res.status === 1 && res.payload !== 3) {
+      if (res.status === 1 && res.payload !== CREATE_SUCCESS) {
         yield delay(2000);
         yield put({
           type: "getStatus",
           payload: {
-            honeypotId: payload.honeypotId
+            honeypotId: payload.honeypotId,
+            count: 3
+          }
+        })
+      }
+
+      if (res.status !== 1 && count !== 0) {
+        yield delay(2000);
+        yield put({
+          type: "getStatus",
+          payload: {
+            honeypotId: payload.honeypotId,
+            count: count - 1
+          }
+        })
+      }
+
+      if (res.status !== 1 && count === 0) {
+        yield put({
+          type: "saveCreateStatus",
+          payload: {
+            honeypotId: payload.honeypotId,
+            status: res.payload,
+            error: true
           }
         })
       }
@@ -142,15 +170,25 @@ const baseModel = {
 
       const visible = yield select(state => state[NAMESPACE].createStatusPanelVisible);
 
-      if (res.status === 1 && res.payload === 3 && !visible) {
-        const item = yield select(state => state[NAMESPACE].createList[payload.honeypotId])
+      const item = yield select(state => state[NAMESPACE].createList[payload.honeypotId])
+
+      if (res.status === 1 && res.payload === CREATE_SUCCESS && !visible) {
         notification.success({
           message: '蜜罐虚拟机创建成功',
           description: `蜜罐${item.data.honeypotName}创建成功`,
+          duration: 5,
         });
       }
 
-      if (res.status === 1 && res.payload === 3) {
+      if (res.status !== 1 && !visible && count === 0) {
+        notification.error({
+          message: `蜜罐虚拟机创建失败`,
+          description: `蜜罐${item.data.honeypotName}创建失败，原因:${res.message}`,
+          duration: 5,
+        })
+      }
+
+      if (res.status === 1 && res.payload === CREATE_SUCCESS) {
         const queryFilters = yield select(state => state[NAMESPACE].queryFilters);
         yield put({
           type: "query",
@@ -165,14 +203,15 @@ const baseModel = {
 
     },
     *setCreateListTemp(action, { put, select }) {
+      const CREATE_SUCCESS = 4
       let createList = yield select(state => state[NAMESPACE].createList);
 
       createList = { ...createList };
 
       let ignoreList = [];
 
-      Object.entries(createList).map(([honeypotId, { data, status }]) => {
-        if (status === 3) {
+      Object.entries(createList).map(([honeypotId, { data, status, error }]) => {
+        if (status === CREATE_SUCCESS || error) {
           ignoreList.push(honeypotId);
         }
       })
