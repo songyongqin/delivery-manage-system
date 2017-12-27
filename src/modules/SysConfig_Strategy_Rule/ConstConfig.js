@@ -9,7 +9,7 @@ export const RULE_ID_DATAINDEX = "id",
 export const RULE_OPERATION_KEY = "operation";
 
 export const textConfig = {
-  [RULE_THREAT_TYPE_DATAINDEX]: "威胁行为",
+  [RULE_THREAT_TYPE_DATAINDEX]: "威胁类型",
   [RULE_DATAINDEX]: "规则",
   [RULE_DESCRIPTION]: "特征描述",
   [RULE_OPERATION_KEY]: "操作",
