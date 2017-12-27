@@ -205,12 +205,13 @@ class Page extends React.Component {
   getDelHandle = payload => () => this.props.deleteVM(payload)
     .then(result => {
       const { selectedRows } = this.state
+      const { data } = this.props[NAMESPACE].queryResults
       this.setState({
         activeOperation: "delete",
         results: result.map(item => {
           return {
             ...item,
-            [HONEYPOT_IP_DATAINDEX]: (selectedRows.find(i => i[ID_DATAINDEX] == item[ID_DATAINDEX]) || {})[HONEYPOT_IP_DATAINDEX]
+            [HONEYPOT_IP_DATAINDEX]: (data.find(i => i[ID_DATAINDEX] === item[ID_DATAINDEX]) || {})[HONEYPOT_IP_DATAINDEX]
           }
 
         })
@@ -238,12 +239,14 @@ class Page extends React.Component {
     .then(result => {
 
       const { selectedRows } = this.state
+      const { data } = this.props[NAMESPACE].queryResults
+
       this.setState({
         activeOperation: payload.value,
         results: result.map(item => {
           return {
             ...item,
-            [HONEYPOT_IP_DATAINDEX]: (selectedRows.find(i => i[ID_DATAINDEX] == item[ID_DATAINDEX]) || {})[HONEYPOT_IP_DATAINDEX]
+            [HONEYPOT_IP_DATAINDEX]: (data.find(i => i[ID_DATAINDEX] == item[ID_DATAINDEX]) || {})[HONEYPOT_IP_DATAINDEX]
           }
 
         })
