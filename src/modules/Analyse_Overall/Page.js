@@ -99,9 +99,7 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeKey: (props.productType === NODE || props.productType === STAND_ALONE)
-        ?
-        OVERALL_NET_NAMESPACE : OVERALL_NET_BASIC_NAMESPACE
+      activeKey: OVERALL_NET_BASIC_NAMESPACE
     }
   }
   componentDidMount = () => {
@@ -187,15 +185,15 @@ class Page extends React.Component {
         key="tabs-content"
         className={tabClasses}
         activeKey={this.state.activeKey}>
-        {
+        {/* {
           (productType === NODE || productType === STAND_ALONE)
             ?
             null
-            :
-            <Tabs.TabPane key={OVERALL_NET_BASIC_NAMESPACE} tab="网络基础数据" style={{ minHeight: "400px" }}>
-              <OverallNetBasic lastTime={lastTime}></OverallNetBasic>
-            </Tabs.TabPane>
-        }
+            : */}
+        <Tabs.TabPane key={OVERALL_NET_BASIC_NAMESPACE} tab="网络基础数据" style={{ minHeight: "400px" }}>
+          <OverallNetBasic lastTime={lastTime}></OverallNetBasic>
+        </Tabs.TabPane>
+        {/* } */}
         {
           (productType === IDS || productType === IDS_STAND_ALONE)
             ?
