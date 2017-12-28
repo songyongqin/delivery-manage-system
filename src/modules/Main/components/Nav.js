@@ -104,7 +104,12 @@ export default class extends React.Component {
       openKeys: []
     }
   }
-  onOpenChange = openKeys => this.setState({ openKeys: openKeys.reverse().slice(0, 1) })
+  onOpenChange = openKeys => {
+    if (window.sessionStorage.getItem(OVER_DUE_NAMESPACE)) {
+      return
+    }
+    this.setState({ openKeys: openKeys.reverse().slice(0, 1) })
+  }
   render() {
 
     const {
