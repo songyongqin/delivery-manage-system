@@ -69,7 +69,7 @@ class Tableevent extends React.Component {
       dataIndex: 'insideSufferHostIP',
       key: 'insideSufferHostIP',
     }, {
-      title: '访问的恶意域名/IP',
+      title: '访问的恶意IP',
       dataIndex: 'malCallOnRecord',
       key: 'malCallOnRecord',
     }];
@@ -92,7 +92,7 @@ class Tableevent extends React.Component {
     return (
       <div>
         <JoSpin spinning={this.props.loading}>
-          <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>内网受害主机访问外网恶意域名/IP</h4>
+          <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>内网受害主机访问外网恶意IP</h4>
           <div style={{ position: "absolute", top: "0px", right: "0px" }} >
             <Button type="primary" onClick={this.onExport}>导出</Button>
           </div>

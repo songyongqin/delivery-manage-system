@@ -957,7 +957,7 @@ class Page extends React.Component {
                   value="VALUE_SUFFERHOSTCALLONRECORD"
                   onChange={this.getOnChangeHandle(["VALUE_SUFFERHOSTCALLONRECORD"])}
                   checked={this.state.checkedListNew.includes("VALUE_SUFFERHOSTCALLONRECORD")}>
-                  内网受害主机访问外网恶意域名/IP
+                  内网受害主机访问外网恶意IP
                       </Checkbox>
               </Col>
               <Col span={23} offset={1}>
