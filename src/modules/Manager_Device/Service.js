@@ -109,7 +109,7 @@ export const getUpdateServiceHandle = (productType) => {
         console.info(e)
       }
       return request(
-        productType !== IDS ? httpApi.DEVICE_UPDATE_LOCAL : httpApi.DEVICE_UPDATE_INFO_LOCAL_IDS,
+        productType !== IDS ? httpApi.DEVICE_UPDATE_LOCAL : httpApi.DEVICE_UPDATE_LOCAL_IDS,
         options
       )
     },
@@ -122,7 +122,7 @@ export const getUpdateServiceHandle = (productType) => {
         body: JSON.stringify(payload)
       }
       return request(
-        productType !== IDS ? httpApi.DEVICE_UPDATE_ONLINE : httpApi.DEVICE_UPDATE_INFO_ONLINE_IDS,
+        productType !== IDS ? httpApi.DEVICE_UPDATE_ONLINE : httpApi.DEVICE_UPDATE_ONLINE_IDS,
         options)
     }
   }
