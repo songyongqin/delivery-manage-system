@@ -86,6 +86,9 @@ import AuthNetworkModel from './modules/SysConfig_Network/models/Auth802Network'
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
+  onError: error => {
+    console.error(error)
+  }
 });
 
 const importModelList = (modelList = []) => modelList.forEach(m => app.model(m))
