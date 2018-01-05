@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import styles from './index.css';
 import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
 import { routerRedux } from 'dva/router';
+import TagList from 'components/TagList'
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
 import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
@@ -58,8 +59,12 @@ class Tableevent extends React.Component {
       key: 'ip',
     }, {
       title: '攻击事件类型',
-      dataIndex: 'attackEventType',
-      key: 'attackEventType',
+      dataIndex: 'attackEventTypeList',
+      key: 'attackEventTypeList',
+      render: record => {
+
+        return <TagList data={record} maxCount={6}></TagList>
+      }
     }];
     const tableProps = {
       columns: columns,
