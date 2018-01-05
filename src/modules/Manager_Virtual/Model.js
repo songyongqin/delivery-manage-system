@@ -169,7 +169,7 @@ const baseModel = {
           type: "saveCreateStatus",
           payload: {
             honeypotId: payload.honeypotId,
-            status: res.payload,
+            // status: res.payload,
             error: true
           }
         })

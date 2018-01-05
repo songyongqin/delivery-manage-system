@@ -314,7 +314,7 @@ class Page extends React.Component {
             :
             honeypotCreateListData.map(([honeypotId, { data, status, error }], index) => {
               const iconStyle = { color: "#108ee9", fontSize: "40px" },
-                closable = status === FINAL_CREATE_STATUS
+                closable = status === FINAL_CREATE_STATUS || error
 
               return (
                 <Card
@@ -334,7 +334,7 @@ class Page extends React.Component {
                   <Row gutter={20}>
                     <Col span={4} style={{ height: "40px", lineHeight: "40px", textAlign: "center" }}>
                       {
-                        status === FINAL_CREATE_STATUS
+                        status === FINAL_CREATE_STATUS && !error
                         &&
                         <Icon type="check-circle-o" style={iconStyle} />
                       }
