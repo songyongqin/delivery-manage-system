@@ -35,12 +35,12 @@ class Tableevent extends React.Component {
   }
   onExport = () => {
 
-    const { timestampRange } = this.props;
+    const { timestampRange, page } = this.props;
     const option = {
       threatEvent:
       {
         limit: 10,
-        page: 1,
+        page,
         level: ["high", "middle", "low"]
       }
     };

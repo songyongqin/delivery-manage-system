@@ -427,6 +427,15 @@ class Page extends React.Component {
 
 
   onExport = () => {
+    const threateventpage = this.props.threatevent.page;
+    const fallhostlastpage = this.props.fallhost.page;
+    const threatinfolastpage = this.props.threatinfo.page;
+    const maliplastpage = this.props.malip.page;
+    const maldomainlastpage = this.props.maldomain.page;
+    const sufferhostcallpage = this.props.sufferhostcall.page;
+    const havecommunicatepage = this.props.havecommunicate.page;
+    const calloniplastpage = this.props.callonip.page;
+    const callondomainpage = this.props.callondomain.page;
     const checkedListNew = this.state.checkedListNew;
     const option = {
       exportAll: "exportAll",
@@ -436,7 +445,7 @@ class Page extends React.Component {
         ?
         {
           limit: 10,
-          page: 1,
+          page: threateventpage,
           level: ["high", "middle", "low"]
         }
         : this.selectLevel(checkedListNew),
@@ -445,7 +454,7 @@ class Page extends React.Component {
         ?
         {
           limit: 10,
-          page: 1
+          page: fallhostlastpage
         }
         : null,
       threatinfo:
@@ -453,7 +462,7 @@ class Page extends React.Component {
         ?
         {
           limit: 10,
-          page: 1
+          page: threatinfolastpage
         }
         : null,
       malip:
@@ -461,7 +470,7 @@ class Page extends React.Component {
         ?
         {
           limit: 10,
-          page: 1
+          page: maliplastpage
         }
         : null,
       maldomain:
@@ -469,7 +478,7 @@ class Page extends React.Component {
         ?
         {
           limit: 10,
-          page: 1
+          page: maldomainlastpage
         }
         : null,
       sufferhostcallonrecord:
@@ -477,7 +486,7 @@ class Page extends React.Component {
         ?
         {
           limit: 10,
-          page: 1
+          page: sufferhostcallpage
         }
         : null,
       havecommunicateinsideip:
@@ -485,7 +494,7 @@ class Page extends React.Component {
         ?
         {
           limit: 10,
-          page: 1
+          page: havecommunicatepage
         }
         : null,
       callonip:
@@ -493,7 +502,7 @@ class Page extends React.Component {
         ?
         {
           limit: 10,
-          page: 1
+          page: calloniplastpage
         }
         : null,
       callondomain:
@@ -501,7 +510,7 @@ class Page extends React.Component {
         ?
         {
           limit: 10,
-          page: 1
+          page: callondomainpage
         }
         : null,
       chartattackip:
