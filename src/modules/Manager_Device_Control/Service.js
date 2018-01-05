@@ -11,7 +11,7 @@ export async function query(payload) {
       "Content-Type": "application/json; charset=utf-8",
     }
   };
-  return request(httpApi.DEVICE_CONTROL, options);
+  return request(httpApi.DEVICE_CONTROL + tools.jsonToQueryString(payload), options);
 }
 
 
