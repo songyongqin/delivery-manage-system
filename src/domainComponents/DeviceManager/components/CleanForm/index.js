@@ -193,7 +193,7 @@ class WrappedForm extends React.Component {
 
     props.defaultValue.data.forEach(i => {
       optionCheckedList[i[ID_DATAINDEX]] = [...getOptions(props.productType)]
-      timeList[i[ID_DATAINDEX]] = 7
+      timeList[i[ID_DATAINDEX]] = 30
     });
 
 
