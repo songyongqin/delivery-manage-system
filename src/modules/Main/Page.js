@@ -34,6 +34,7 @@ import { getTemp } from '../../utils/tools'
 import { HONEYPOT_CREATE_LIST_CACHE_NAMESPACE } from '../../modules/Manager_Virtual/Model'
 import { NODE, IDS, STAND_ALONE, IDS_STAND_ALONE, DISTRIBUTION } from "configs/ConstConfig"
 import { NAMESPACE as DEVICE_MANAGER_NAMESPACE } from 'modules/Manager_Device/ConstConfig'
+import { ID_DATAINDEX } from 'modules/Manager_Virtual/ConstConfig'
 const NAMESPACE = "main";
 
 const honeypotCreateStatusTip = {
@@ -43,6 +44,8 @@ const honeypotCreateStatusTip = {
   3: "正在创建快照",
   4: "蜜罐创建成功"
 }
+
+const FINAL_CREATE_STATUS = 4
 
 
 function mapStateToProps(state) {
@@ -100,6 +103,10 @@ function mapDispatchToProps(dispatch, ownProps) {
     }),
     getStatus: payload => dispatch({
       type: `${VM_NAMESPACE}/getStatus`,
+      payload,
+    }),
+    removeCreateStatus: payload => dispatch({
+      type: `${VM_NAMESPACE}/removeCreateStatus`,
       payload,
     }),
     switchStatusPanel: payload => dispatch({
@@ -306,19 +313,33 @@ class Page extends React.Component {
             </p>
             :
             honeypotCreateListData.map(([honeypotId, { data, status, error }], index) => {
-              const iconStyle = { color: "#108ee9", fontSize: "40px" };
+              const iconStyle = { color: "#108ee9", fontSize: "40px" },
+                closable = status === FINAL_CREATE_STATUS
 
               return (
-                <Card key={`${index}-row`} title={`蜜罐名称:${data.honeypotName}`} style={{ marginBottom: "10px" }}>
+                <Card
+                  key={`${index}-row`}
+                  title={<div style={{ lineHeight: "48px", height: "48px" }}>
+                    {`蜜罐名称:${data.honeypotName}`}
+                    <div style={{ float: "right" }}>
+                      <Button
+                        onClick={() => this.props.removeCreateStatus({ [ID_DATAINDEX]: honeypotId })}
+                        icon="close"
+                        size="large"
+                        disabled={!closable}>
+                      </Button>
+                    </div>
+                  </div>}
+                  style={{ marginBottom: "10px" }}>
                   <Row gutter={20}>
                     <Col span={4} style={{ height: "40px", lineHeight: "40px", textAlign: "center" }}>
                       {
-                        status === 4
+                        status === FINAL_CREATE_STATUS
                         &&
                         <Icon type="check-circle-o" style={iconStyle} />
                       }
                       {
-                        status !== 4 && !error
+                        status !== FINAL_CREATE_STATUS && !error
                         &&
                         <Icon type="loading" style={iconStyle}></Icon>
                       }
@@ -350,7 +371,7 @@ class Page extends React.Component {
       </div>
     )
 
-    const creatingCount = honeypotCreateListData.filter(([honeypotId, item]) => item.status !== 3).length;
+    const creatingCount = honeypotCreateListData.filter(([honeypotId, item]) => item.status !== FINAL_CREATE_STATUS).length;
 
 
     return (

@@ -105,6 +105,17 @@ const baseModel = {
           }
         }
       }
+    },
+    removeCreateStatus: (preState, { payload }) => {
+      const { honeypotId } = payload
+
+      let newCreateList = { ...preState.createList }
+      delete newCreateList[honeypotId]
+
+      return {
+        ...preState,
+        createList: newCreateList
+      }
     }
   },
   effects: {
@@ -339,17 +350,6 @@ const baseModel = {
         callConfig
       )
       if (res.status === 1) {
-
-        // let finalPayload = {}
-
-        // Object.entries(res.payload).forEach(([hostIp, value]) => {
-
-        //   finalPayload[hostIp] = {
-        //     ...value[HIGH_INTERATION],
-        //     [LOW_INTERACTION]: value[LOW_INTERACTION]["low_interaction"]
-        //   }
-
-        // })
         resolve && resolve(res.payload)
       }
     }
