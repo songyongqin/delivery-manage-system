@@ -116,3 +116,5 @@ export {
   IDS,
   NODE
 } from 'configs/ConstConfig'
+
+export const ALLOW_AHEAD_LICENCE_DAY = 15

@@ -27,6 +27,7 @@ import {
   CODE_DATAINDEX,
   APPLIACTION_VERSION_DATAINDEX,
   VERSION_COMBINE_KEY,
+  ALLOW_AHEAD_LICENCE_DAY,
   STAND_ALONE,
   IDS,
   NODE
@@ -93,46 +94,49 @@ const getLicenceRenderer = isDark => value => (
   </div>
 )
 
+
 const getOperationRenderer = ({ isAdmin, isNode, handle, productType }) => {
   return records => {
-    const isLicence = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX] === LICENCE_VALID_VALUE,
+    let isLicence = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX] === LICENCE_VALID_VALUE,
       isConnect = isNode ? records[CONNECT_STATUS_DATAINDEX] === CONNECT : true,
       isNodeProductType = productType.type === NODE,
       isIdsProductType = productType.type === IDS,
-      menu = (
-        <Menu onClick={({ key }) => {
+      licenceExpiration = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_EXPIRATION_DATAINDEX],
+      canAheadLicence = (licenceExpiration - new Date().getTime() / 1000) <= ALLOW_AHEAD_LICENCE_DAY * 3600
 
-          const payload = [records]
+    const menu = (
+      <Menu onClick={({ key }) => {
 
-          if (key === "licence") {
-            return handle.licenceHandle(payload);
-          }
+        const payload = [records]
 
-          if (key === "update") {
-            return handle.updateHandle(payload)
-          }
+        if (key === "licence") {
+          return handle.licenceHandle(payload);
+        }
 
-          if (key === "clean") {
-            return handle.cleanHandle(payload)
-          }
+        if (key === "update") {
+          return handle.updateHandle(payload)
+        }
 
-        }}>
-          <Menu.Item key="licence" disabled={isLicence || !isAdmin || !isConnect || isNodeProductType || isIdsProductType}>
-            <Icon type="unlock" />&nbsp;授权
+        if (key === "clean") {
+          return handle.cleanHandle(payload)
+        }
+
+      }}>
+        <Menu.Item key="licence" disabled={(!canAheadLicence) || !isAdmin || !isConnect || isNodeProductType || isIdsProductType}>
+          <Icon type="unlock" />&nbsp;授权
           </Menu.Item>
-          <Menu.Item key="update" disabled={((!isAdmin || !isConnect) && isNode) || !isLicence || isNodeProductType || isIdsProductType}>
-            <span>
-              <Icon type="reload" />&nbsp;检查升级
+        <Menu.Item key="update" disabled={((!isAdmin || !isConnect) && isNode) || !isLicence || isNodeProductType || isIdsProductType}>
+          <span>
+            <Icon type="reload" />&nbsp;检查升级
                 </span>
-          </Menu.Item>
-          <Menu.Item key="clean" disabled={!isAdmin || !isConnect || isNodeProductType || isIdsProductType}>
-            <span>
-              <Icon type="delete" />&nbsp;磁盘清理
+        </Menu.Item>
+        <Menu.Item key="clean" disabled={!isAdmin || !isConnect || isNodeProductType || isIdsProductType}>
+          <span>
+            <Icon type="delete" />&nbsp;磁盘清理
                 </span>
-          </Menu.Item>
-        </Menu>
-      )
-
+        </Menu.Item>
+      </Menu>
+    )
 
     return (
       <div style={{ textAlign: "center" }}>

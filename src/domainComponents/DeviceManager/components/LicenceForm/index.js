@@ -28,6 +28,8 @@ import {
   LICENCE_VALID_VALUE,
   DEVICE_ID_DATAINDEX,
   CONNECT_STATUS_DATAINDEX,
+  ALLOW_AHEAD_LICENCE_DAY,
+  LICENCE_STATUS_EXPIRATION_DATAINDEX,
   CONNECT,
 } from '../../ConstConfig'
 import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
@@ -91,9 +93,10 @@ const getColumns = ({ result, getFieldDecorator, lblClasses, loading, disabledLi
             该设备连接异常，无法进行授权
         </p>
         }
-
+        const licenceExpiration = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_EXPIRATION_DATAINDEX],
+          canAheadLicence = (licenceExpiration - new Date().getTime() / 1000) <= ALLOW_AHEAD_LICENCE_DAY * 3600
         //已授权的显示内容
-        if (records[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE) {
+        if (records[LICENCE_STATUS_DATAINDEX].value === LICENCE_VALID_VALUE && !canAheadLicence) {
           return <p className={lblClasses} style={{ textAlign: "center" }}>
             该设备已授权且授权未即将过期，无需重新授权
           </p>
