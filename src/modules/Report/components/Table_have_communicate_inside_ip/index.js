@@ -32,12 +32,12 @@ class Tableevent extends React.Component {
   }
   onExport = () => {
 
-    const { timestampRange } = this.props;
+    const { timestampRange, page } = this.props;
     const option = {
       havecommunicateinsideip:
       {
         limit: 10,
-        page: 1
+        page
       }
     };
     this.props.dispatch({
