@@ -174,6 +174,8 @@ const getVersionListRenderer = () => value => {
   );
 }
 
+const commonVersionCellStyle = { borderLeft: "1px solid #cccccc", borderRight: "1px solid #cccccc" }
+
 const versionListTableRenderer = records => {
   return (
     <table className={styles["version-list"]} style={{ width: "100%" }}>
@@ -193,7 +195,7 @@ const versionListTableRenderer = records => {
           <td>
             <JoTag color="#108ee9">{records[APPLIACTION_VERSION_DATAINDEX]}</JoTag>
           </td>
-          <td>
+          <td style={commonVersionCellStyle}>
             {getVersionListRenderer()(records[LIBRARY_VERSION_LIST_DATAINDEX])}
           </td>
           <td>

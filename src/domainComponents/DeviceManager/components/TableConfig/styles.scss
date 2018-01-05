@@ -29,4 +29,10 @@
   td,th{
     text-align: center;
   }
+  .version-list-content-row{
+    td:nth-child(2){
+      border-left:1px solid #cccccc;
+      border-right:1px solid #cccccc;
+    }
+  }
 }
