@@ -14,6 +14,7 @@ class Tableevent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      key: 0,
     };
   }
 
@@ -51,11 +52,17 @@ class Tableevent extends React.Component {
   }
   render() {
     const data = this.props.data;
-    const { isDark } = this.props;
+    const { isDark, page, limit } = this.props;
+    const { key } = this.state;
+    console.info(key)
     const columns = [{
       title: '序号',
       dataIndex: 'key',
       key: 'key',
+      render: (key, record) => {
+        const key_ = ((page - 1) * limit) + (++key)
+        return key_
+      }
     }, {
       title: '时间',
       dataIndex: 'time',
