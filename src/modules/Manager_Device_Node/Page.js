@@ -85,6 +85,7 @@ export default DeviceManagerGenerator({
   namespace: namespace,
   mapStateToProps,
   mapDispatchToProps,
+  isNode: productType !== STAND_ALONE,
   title: productType === STAND_ALONE ? "单机版蜜罐设备" : "蜜罐节点设备",
   deviceType: NODE,
   getNodeDiskComponent: () => {

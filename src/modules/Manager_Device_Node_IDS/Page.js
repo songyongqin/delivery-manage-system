@@ -8,6 +8,19 @@ import {
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import NodeDisk from '../Manager_Device_Node_IDS_Disk/Page'
 import DeviceManagerGenerator from 'domainComponents/DeviceManager'
+import { STAND_ALONE, IDS_STAND_ALONE } from 'configs/ConstConfig'
+import { getTemp } from 'utils/tools'
+
+
+//产品形态为蜜罐节点时，需将本身作为控制中心来处理......
+let productType = ""
+
+try {
+  productType = (getTemp("productType") || {}).type
+} catch (e) {
+  console.info(e)
+}
+
 
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
@@ -76,6 +89,7 @@ export default DeviceManagerGenerator({
   mapDispatchToProps,
   title: "流量监测设备",
   deviceType: IDS,
+  isNode: productType !== IDS_STAND_ALONE,
   getNodeDiskComponent: () => {
     return <NodeDisk></NodeDisk>
   }
