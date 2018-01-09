@@ -90,10 +90,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 const modalTitleConfig = {
-  [OPERATION_INIT_VALUE]: "批量初始化",
-  [OPERATION_SHUTDOWN_VALUE]: "批量关机",
-  [OPERATION_START_VALUE]: "批量开机",
-  ["delete"]: "批量删除"
+  [OPERATION_INIT_VALUE]: "初始化操作",
+  [OPERATION_SHUTDOWN_VALUE]: "关机操作",
+  [OPERATION_START_VALUE]: "开机操作",
+  ["delete"]: "删除操作"
 }
 
 
