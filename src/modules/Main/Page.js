@@ -17,7 +17,8 @@ import {
   Row,
   Col,
   Steps,
-  Tooltip
+  Tooltip,
+  Collapse
 } from 'antd';
 import classnames from 'classnames';
 import Nav from './components/Nav';
@@ -312,61 +313,64 @@ class Page extends React.Component {
               <Icon type="frown"></Icon>&nbsp;没有正在创建的蜜罐
             </p>
             :
-            honeypotCreateListData.map(([honeypotId, { data, status, error }], index) => {
-              const iconStyle = { color: "#108ee9", fontSize: "40px" },
-                closable = status === FINAL_CREATE_STATUS || error
+            <Collapse defaultActiveKey={honeypotCreateListData.map((i, index) => `${index}-row`)}>
+              {
+                honeypotCreateListData.map(([honeypotId, { data, status, error }], index) => {
+                  const iconStyle = { color: "#108ee9", fontSize: "40px" },
+                    closable = status === FINAL_CREATE_STATUS || error
+                  return (
+                    <Collapse.Panel
+                      key={`${index}-row`}
+                      header={<div >
+                        {`蜜罐名称:${data.honeypotName}`}
+                        <div style={{ float: "right" }}>
+                          <Button
+                            onClick={() => this.props.removeCreateStatus({ [ID_DATAINDEX]: honeypotId })}
+                            icon="close"
+                            size="small"
+                            style={{ marginRight: "10px" }}
+                            disabled={!closable}>
+                          </Button>
+                        </div>
+                      </div>}
+                      style={{ marginBottom: "10px" }}>
+                      <Row gutter={20}>
+                        <Col span={4} style={{ height: "40px", lineHeight: "40px", textAlign: "center" }}>
+                          {
+                            status === FINAL_CREATE_STATUS && !error
+                            &&
+                            <Icon type="check-circle-o" style={iconStyle} />
+                          }
+                          {
+                            status !== FINAL_CREATE_STATUS && !error
+                            &&
+                            <Icon type="loading" style={iconStyle}></Icon>
+                          }
+                          {
+                            error
+                            &&
+                            <Tooltip title="错误">
+                              <Icon type="close-circle-o" style={{ ...iconStyle, color: "red" }} />
+                            </Tooltip>
 
-              return (
-                <Card
-                  key={`${index}-row`}
-                  title={<div style={{ lineHeight: "48px", height: "48px" }}>
-                    {`蜜罐名称:${data.honeypotName}`}
-                    <div style={{ float: "right" }}>
-                      <Button
-                        onClick={() => this.props.removeCreateStatus({ [ID_DATAINDEX]: honeypotId })}
-                        icon="close"
-                        size="large"
-                        disabled={!closable}>
-                      </Button>
-                    </div>
-                  </div>}
-                  style={{ marginBottom: "10px" }}>
-                  <Row gutter={20}>
-                    <Col span={4} style={{ height: "40px", lineHeight: "40px", textAlign: "center" }}>
-                      {
-                        status === FINAL_CREATE_STATUS && !error
-                        &&
-                        <Icon type="check-circle-o" style={iconStyle} />
-                      }
-                      {
-                        status !== FINAL_CREATE_STATUS && !error
-                        &&
-                        <Icon type="loading" style={iconStyle}></Icon>
-                      }
-                      {
-                        error
-                        &&
-                        <Tooltip title="错误">
-                          <Icon type="close-circle-o" style={{ ...iconStyle, color: "red" }} />
-                        </Tooltip>
-
-                      }
-                    </Col>
-                    <Col span={20} className={error ? styles["step-error"] : ""} style={{ paddingLeft: "20px" }} >
-                      {/* <p style={{ marginBottom: "15px" }}>创建状态</p> */}
-                      <Steps direction="vertical" size="small" current={status} >
-                        {
-                          [0, 1, 2, 3, 4].map((i, index) => <Steps.Step
-                            key={`${i}-step`}
-                            description={honeypotCreateStatusTip[i]} />)
-                        }
-                      </Steps>
-                    </Col>
-                  </Row>
-                </Card>
-              )
-
-            })
+                          }
+                        </Col>
+                        <Col span={20} className={error ? styles["step-error"] : ""} style={{ paddingLeft: "20px" }} >
+                          {/* <p style={{ marginBottom: "15px" }}>创建状态</p> */}
+                          <Steps direction="vertical" size="small" current={status} >
+                            {
+                              [0, 1, 2, 3, 4].map((i, index) => <Steps.Step
+                                key={`${i}-step`}
+                                description={honeypotCreateStatusTip[i]} />)
+                            }
+                          </Steps>
+                        </Col>
+                      </Row>
+                    </Collapse.Panel>
+                  )
+                })
+              }
+            </Collapse>
         }
       </div>
     )
