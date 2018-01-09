@@ -232,7 +232,11 @@ class WrappedForm extends React.Component {
     const { defaultValue } = this.props,
       { data } = defaultValue;
 
-    return data.filter(i => i[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE)
+    return data.filter(i => {
+      const licenceExpiration = i[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_EXPIRATION_DATAINDEX],
+        canAheadLicence = (licenceExpiration - new Date().getTime() / 1000) <= ALLOW_AHEAD_LICENCE_DAY * 3600
+      return canAheadLicence || (i[LICENCE_STATUS_DATAINDEX].value !== LICENCE_VALID_VALUE)
+    })
       .filter(i => i[CONNECT_STATUS_DATAINDEX] === CONNECT)
       .map((i, index) => ({
         ...i,
