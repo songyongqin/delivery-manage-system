@@ -93,7 +93,7 @@ export const createSetQueryFilters = (filtersKey = "queryFilters") => {
   }
 }
 
-export function download(url = "", fileName = url.substring(url.lastIndexOf("/"))) {
+export function download(url = "", fileName = url.substring(url.lastIndexOf("/")+1)) {
   let a = document.createElement('a');
   a.href = url;
   a.download = fileName;
