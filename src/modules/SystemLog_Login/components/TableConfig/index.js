@@ -215,14 +215,14 @@ class App extends React.Component {
     },];
     const tableProps = {
       onChange: (pagination, filters) => {
-        this.props.changeloginStatus({ loginStatus: filters.loginStatus[0] });
+        this.props.changeloginStatus({ loginStatus: filters.loginStatus[0] ? filters.loginStatus[0] : "" });
         const { userAccount, loginStatus, ip, timestampRange, limit } = this.props;
         this.props.dispatch({
           type: `${NAMESPACE}/fetch`,
           payload: {
             userAccount,
             ip,
-            loginStatus: filters.loginStatus[0],
+            loginStatus: filters.loginStatus[0] ? filters.loginStatus[0] : "",
             page: 1,
             limit,
             timestampRange
@@ -270,7 +270,7 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { list, page, loading, limit, timestampRange, ip, userAccount, loginStatus,total } = state[NAMESPACE];
+  const { list, page, loading, limit, timestampRange, ip, userAccount, loginStatus, total } = state[NAMESPACE];
   return {
     list,
     page,
