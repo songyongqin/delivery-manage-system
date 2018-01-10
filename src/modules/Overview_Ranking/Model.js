@@ -29,7 +29,7 @@ const baseModel = {
     setup({ history, dispatch }) {
       return history.listen(({ pathname }) => {
         const productType = (getTemp("productType") || {}).type
-        if (pathname === "/overview" && productType !== NODE && productType !== STAND_ALONE) {
+        if (pathname === "/overview") {
           dispatch({
             type: `query`,
             payload: initFilters
