@@ -175,7 +175,7 @@ export default {
     routes: routesENUS,
   },
   "zh-cn": {
-    title: (producType === IDS || producType === IDS_STAND_ALONE) ? "安天捕风蜜罐流量监测系统" : "安天捕风蜜罐系统",
+    title: (producType === IDS || producType === IDS_STAND_ALONE) ? "安天捕风流量监测系统" : "安天捕风蜜罐系统",
     routes: routesZHCN,
 
   }
