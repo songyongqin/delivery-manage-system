@@ -34,6 +34,8 @@ import {
   ACTIONSTATUS_FAIL,
   ACTIONSTATUS_UNKNOW,
 } from 'configs/ConstConfig';
+import { getProductType } from 'utils/domain'
+import { STAND_ALONE, IDS_STAND_ALONE } from 'configs/ConstConfig'
 
 import TagList from 'components/TagList'
 
@@ -102,6 +104,7 @@ renderer[ACTIONSTATUS_DATAINDEX] = value => {
 
 const FILTER_INPUT_LABEL = ""
 
+
 export const getColumns = ({ queryFilters, onSubmit, filters, filterTextConfig = {} }) => tableColumnsGenerator({
   keys: rowDataIndexes,
   titleTextConfig: tableTextConfig.colTitles,
@@ -112,15 +115,19 @@ export const getColumns = ({ queryFilters, onSubmit, filters, filterTextConfig =
     ...renderer,
     [ACTION_DATAINDEX]: value => tools.getKeyText(value, filterTextConfig[ACTION_DATAINDEX])
   },
-  extraProps: {
-    [COUNTS_DATAINDEX]: {
-      filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
-      filterDropdown: <FilterInputNumber textConfig={{ label: FILTER_INPUT_LABEL }}
-        defaultValue={queryFilters.mergeCounts}
-        onSubmit={onSubmit} />
+  extraProps: (getProductType() === IDS_STAND_ALONE || getProductType() === STAND_ALONE)
+    ?
+    {}
+    :
+    {
+      [COUNTS_DATAINDEX]: {
+        filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
+        filterDropdown: <FilterInputNumber textConfig={{ label: FILTER_INPUT_LABEL }}
+          defaultValue={queryFilters.mergeCounts}
+          onSubmit={onSubmit} />
 
+      }
     }
-  }
 });
 
 const nth1TdStyle = { padding: "10px", width: "120px", textAlign: "center" },
