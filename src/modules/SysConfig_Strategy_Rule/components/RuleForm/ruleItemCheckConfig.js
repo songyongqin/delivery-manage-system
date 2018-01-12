@@ -49,7 +49,7 @@ const isIpPort = (str = "") => {
     return true;
   }
   let port = items[1],
-    isPort = isNumberStr(port) && parseInt(port) >= 0 && parseInt(port) <= 65535
+    isPort = (isNumberStr(port) && parseInt(port) >= 0 && parseInt(port) <= 65535) || port === 'any'
   if (isPort && isIp) {
     return true;
   }
