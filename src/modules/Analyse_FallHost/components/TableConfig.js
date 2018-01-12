@@ -84,8 +84,78 @@ export const getColumns = ({
 
 };
 
+
+const { expandedRow } = tableTextConfig
+
+
+class ScrollLoadTimeLine extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      limit: 10
+    }
+  }
+  static defaultProps = {
+    data: []
+  }
+  componentDidMount = () => {
+    const { con } = this
+    con.addEventListener("scroll", this.limitHandle)
+  }
+  componentWillUnmount = () => {
+    const { con } = this
+    con.removeEventListener("scroll", this.limitHandle)
+  }
+  limitHandle = () => {
+    try {
+      const { con } = this
+      const { limit } = this.state
+      const { data } = this.props
+      if (limit > data.length) {
+        return
+      }
+      if (con.scrollTop + con.clientHeight >= con.scrollHeight) {
+        this.setState({
+          limit: limit + 10
+        })
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+  render() {
+
+    const { data } = this.props
+    const { limit } = this.state
+    return (
+      <div style={{
+        height: "600px",
+        overflowY: "scroll",
+        overflowX: "hidden",
+        paddingTop: "15px",
+        maxWidth: "500px"
+      }} ref={target => this.con = target}>
+        <Timeline>
+          {data.slice(0, limit).map((i, index) => {
+            return (
+              <Timeline.Item key={`${index}-timeline-item`}>
+                <div>
+                  <JoTag color="#108ee9">{i.title}</JoTag>
+                  <br /><br />
+                  {expandedRow.description + ":"}{i[DETAILS_DATAINDEX]}
+                </div>
+              </Timeline.Item>
+            )
+          })}
+        </Timeline>
+      </div>
+    )
+
+  }
+}
+
+
 export const getExpandedRowRender = ({ isDark }) => {
-  const { expandedRow } = tableTextConfig;
   return (records) => {
 
     const classes = classnames({
@@ -158,19 +228,7 @@ export const getExpandedRowRender = ({ isDark }) => {
                           {tools.getKeyText(DESCRIPTION_DATAINDEX, expandTextConfig)}
                         </td>
                         <td>
-                          <Timeline>
-                            {description.map((i, index) => {
-                              return (
-                                <Timeline.Item key={`${index}-timeline-item`}>
-                                  <div>
-                                    <JoTag color="#108ee9">{i.title}</JoTag>
-                                    <br /><br />
-                                    {expandedRow.description + ":"}{i[DETAILS_DATAINDEX]}
-                                  </div>
-                                </Timeline.Item>
-                              )
-                            })}
-                          </Timeline>
+                          <ScrollLoadTimeLine data={description}></ScrollLoadTimeLine>
                         </td>
                       </tr>
                       :
