@@ -63,5 +63,5 @@ export const referenceEmailTextConfig = {
     [SERVER_PORT_SSL_DATAINDEXES]: "服务器端口(SSL加密)"
   },
   tip: TIP,
-  referenceEmailTitle: REFERENCE_EMAIL_TITLE
+  referenceEmailTitle: "发送邮件服务器地址与端口填写参考"
 }
