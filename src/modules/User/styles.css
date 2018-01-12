@@ -37,6 +37,10 @@
   margin-bottom: 30px;
   padding: 10px 0;
   display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
 }
 
 .title:after {
