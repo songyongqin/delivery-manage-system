@@ -45,6 +45,7 @@ const mapStateToProps = state => {
       state[OPERATION_NAMESPACE].updateLoading,
     productType: state.user.productType.type,
     productInfo: state.user.productType,
+    userData: state.user.userData
   }
 }
 
@@ -100,11 +101,19 @@ class Page extends React.Component {
     </div>
   }
   getOperationPanel = () => {
-    return <div key="operation" style={{ overflow: "hidden" }}>
-      <Button type="primary" style={{ float: "right", marginBottom: "20px" }} onClick={this.updateModalSwitchHandle}>
-        {this.props.productType === STAND_ALONE ? "升级蜜罐镜像" : "升级控制中心镜像"}
-      </Button>
-    </div>
+
+    if (this.props.userData.isAdmin) {
+      return (
+        <div key="operation" style={{ overflow: "hidden" }}>
+          <Button type="primary" style={{ float: "right", marginBottom: "20px" }} onClick={this.updateModalSwitchHandle}>
+            {this.props.productType === STAND_ALONE ? "升级蜜罐镜像" : "升级控制中心镜像"}
+          </Button>
+        </div>
+      )
+    }
+    return null
+
+
   }
   render = () => {
 

@@ -119,6 +119,9 @@ class mirrornode extends React.Component {
       }
     },
     ];
+    if (!this.props.isAdmin) {
+      columns.pop()
+    }
     const { loading } = this.state;
     const rowSelection = {
       onChange: this.onSelectChange,
@@ -215,6 +218,7 @@ function mapStateToProps(state) {
     lastReqTime: state.lastEffectTime.effects[`${NAMESPACE_NODE}/fetch`],
     productType: state.user.productType.type,
     productInfo: state.user.productType,
+    isAdmin: state.user.userData.isAdmin
   };
 }
 
