@@ -23,6 +23,7 @@ import { Popover, Icon } from 'antd';
 import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
 import SearchFilterForm from 'domainComponents/SearchFilterForm'
 import getFilterForm from 'utils/getFilterForm'
+import { portReg, ipReg } from 'utils/tools'
 const OVER_FLOW_LENGTH = 40;
 
 const VALUE_DATA_INDEX = "value";
@@ -56,7 +57,7 @@ const filterFormTextConfig = {
     placeholder: "请输入端口"
   },
   [SOURCE_PORT_DATA_INDEX]: {
-    label: "目的端口搜索",
+    label: "源端口搜索",
     placeholder: "请输入端口"
   },
   [SENDER_DATA_INDEX]: {
@@ -71,6 +72,33 @@ const filterFormTextConfig = {
     label: "域名搜索",
     placeholder: "请输入域名"
   }
+}
+
+const ruleConfig = {
+  [SOURCE_IP_DATA_INDEX]: [
+    {
+      pattern: ipReg,
+      message: "请输入正确的ip"
+    }
+  ],
+  [TARGET_IP_DATA_INDEX]: [
+    {
+      pattern: ipReg,
+      message: "请输入正确的ip"
+    }
+  ],
+  [TARGET_PORT_DATA_INDEX]: [
+    {
+      pattern: portReg,
+      message: "请输入正确的端口"
+    }
+  ],
+  [SOURCE_PORT_DATA_INDEX]: [
+    {
+      pattern: portReg,
+      message: "请输入正确的端口"
+    }
+  ],
 }
 
 
@@ -98,6 +126,7 @@ export const getColumns = ({ queryFilters, onQuery } = {}) =>
         textConfig: filterFormTextConfig,
         onQuery,
         queryFilters,
+        ruleConfig
       })
     }
   })

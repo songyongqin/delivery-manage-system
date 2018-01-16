@@ -1,7 +1,7 @@
 import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
 import SearchFilterForm from 'domainComponents/SearchFilterForm'
 import { Icon } from 'antd'
-export default ({ dataIndexes = [], queryFilters = {}, onQuery, textConfig = {} }) => {
+export default ({ dataIndexes = [], queryFilters = {}, onQuery, textConfig = {}, ruleConfig = {} }) => {
   const result = {};
 
   dataIndexes.forEach(i => {
@@ -12,7 +12,8 @@ export default ({ dataIndexes = [], queryFilters = {}, onQuery, textConfig = {} 
           config={{
             dataIndex: i,
             placeholder: (textConfig[i] || {}).placeholder,
-            label: (textConfig[i] || {}).label
+            label: (textConfig[i] || {}).label,
+            rules: ruleConfig[i] || []
           }}
           defaultValue={queryFilters}
           onSubmit={onQuery}>
