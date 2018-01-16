@@ -162,14 +162,14 @@ class Page extends React.Component {
   }
   tableOnChange = (pagination, filters, sorter) => {
     //判断主机IP是否与上一次相同 不同则清空蜜罐ip选项
-    const { queryFilters } = this.props[NAMESPACE],
-      lastHostIP = queryFilters[HOST_IP_DATAINDEX][0],
-      newHostIP = filters[HOST_IP_DATAINDEX][0],
-      shouldInit = lastHostIP !== newHostIP,
-      finalFilter = shouldInit ? { ...filters, [HONEYPOT_IP_DATAINDEX]: [] } : { ...filters };
+    // const { queryFilters } = this.props[NAMESPACE],
+    //   lastHostIP = queryFilters[HOST_IP_DATAINDEX][0],
+    //   newHostIP = filters[HOST_IP_DATAINDEX][0],
+    //   shouldInit = lastHostIP !== newHostIP,
+    //   finalFilter = shouldInit ? { ...filters, [HONEYPOT_IP_DATAINDEX]: [] } : { ...filters };
 
-    this.props.onQuery(finalFilter)
-    this.getVMIpList(filters[HOST_IP_DATAINDEX]);
+    this.props.onQuery(filters)
+    // this.getVMIpList(filters[HOST_IP_DATAINDEX]);
   };
   getQueryPanel = () => {
     // const {onQuery,routes}=this.props;
@@ -290,9 +290,8 @@ class Page extends React.Component {
     const { data } = queryResults;
     const isDark = commonLayout.darkTheme,
       { isAdmin } = userData;
-
     const filterOptions = {
-      ...options,
+      // ...options,
       [HONEYPOT_TYPE_ROW_KEY]: Object.keys(honeypotTypeList)
     };
 
