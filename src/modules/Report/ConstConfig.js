@@ -34,7 +34,12 @@ export const
   VALUE_CHART_SOURCECOUNTRY = "sourcecountry",
   VALUE_CHART_SOURCEPROVINCE = "sourceprovince",
   VALUE_RECORDSTATISTICAL = "recordstatistical",
-  VALUE_WATERMARK = "watermark";
+  VALUE_WATERMARK = "watermark",
+
+
+  TOOLTIP_TITLE_IP = "访问的外网IP数据量较大，最多导出2000条数据",
+  TOOLTIP_TITLE_DOMAIN = "访问的域名数据量较大，最多导出2000条数据"
+
 
 
 

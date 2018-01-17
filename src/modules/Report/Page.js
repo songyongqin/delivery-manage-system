@@ -19,6 +19,8 @@ import Table_call_on_ip_components from './components/Table_call_on_ip/index'
 import Table_call_on_domain_components from './components/Table_call_on_domain/index'
 import Chart_statistical_components from './components/Chart_statistical/index'
 import { STAND_ALONE } from 'configs/ConstConfig'
+import Tooltip_ from './components/Tooltip_'
+import { TOOLTIP_TITLE_IP, TOOLTIP_TITLE_DOMAIN } from './ConstConfig'
 import {
   NAMESPACE_BASE,
   NAMESPACE_ATTACK,
@@ -979,7 +981,8 @@ class Page extends React.Component {
               </Col>
 
               <Col span={23} offset={1}>
-                <Tooltip title="访问的外网IP数据量较大，最多导出2000条数据" placement="right">
+                {/* <Tooltip title="访问的外网IP数据量较大，最多导出2000条数据" placement="right"> */}
+                <Tooltip_ title={TOOLTIP_TITLE_IP} placement="right">
                   <Checkbox
                     value="VALUE_CALL_ON_IP"
                     onChange={this.getOnChangeHandle(["VALUE_CALL_ON_IP"])}
@@ -989,18 +992,19 @@ class Page extends React.Component {
 
 
                   </Checkbox>
-                </Tooltip>
+                </Tooltip_>
+                {/* </Tooltip> */}
               </Col>
 
               <Col span={23} offset={1}>
-                <Tooltip title="访问的域名数据量较大，最多导出2000条数据" placement="right">
+                <Tooltip_ title={TOOLTIP_TITLE_DOMAIN} placement="right">
                   <Checkbox
                     value="VALUE_CALL_ON_DOMAIN"
                     onChange={this.getOnChangeHandle(["VALUE_CALL_ON_DOMAIN"])}
                     checked={this.state.checkedListNew.includes("VALUE_CALL_ON_DOMAIN")}>
                     访问的域名
                       </Checkbox>
-                </Tooltip>
+                </Tooltip_>
               </Col>
             </div>
             <Col span={24}>

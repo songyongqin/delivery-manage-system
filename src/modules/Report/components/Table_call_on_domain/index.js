@@ -9,6 +9,8 @@ import { WithContainerHeader, WithAnimateRender } from '../../../../components/H
 import { NAMESPACE_CALL_ON_DOMAIN } from '../../ConstConfig'
 import classnames from 'classnames';
 import TimesLabel from 'components/TimesLabel'
+import Tooltip_ from '../Tooltip_'
+import { TOOLTIP_TITLE_DOMAIN } from '../../ConstConfig'
 @WithAnimateRender
 class Tableevent extends React.Component {
   constructor(props) {
@@ -85,7 +87,9 @@ class Tableevent extends React.Component {
         <JoSpin spinning={this.props.loading}>
           <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>访问的域名</h4>
           <div style={{ position: "absolute", top: "0px", right: "0px" }} >
-            <Button type="primary" onClick={this.onExport}>导出</Button>
+            <Tooltip_ title={TOOLTIP_TITLE_DOMAIN} placement="left">
+              <Button type="primary" onClick={this.onExport}>导出</Button>
+            </Tooltip_>
           </div>
           <EnhanciveTable key="table" tableProps={tableProps} paginationProps={paginationProps}> </EnhanciveTable>
         </JoSpin>
