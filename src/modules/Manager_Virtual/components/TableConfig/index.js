@@ -249,10 +249,10 @@ const getOperationRenderer = (handle = {}, productType) => (value, records) => {
 
 
 const staticFilterOptions = {
-  [HONEYPOT_TYPE_ROW_KEY]: [
-    ...systems,
-    ...interactions
-  ],
+  // [HONEYPOT_TYPE_ROW_KEY]: [
+  //   ...systems,
+  //   ...interactions
+  // ],
   [HONEYPOT_STATUS_DATAINDEX]: [...honeypotStatusValues]
 }
 

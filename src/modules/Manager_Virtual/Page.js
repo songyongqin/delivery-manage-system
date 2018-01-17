@@ -32,6 +32,9 @@ import {
   VM_ENUM_CONFIG_DATA_INDEX,
   HONEYPOT_TYPE_ROW_KEY,
   NODE,
+  SERVICES_DATAINDEX,
+  PORTS_DATAINDEX
+
 } from './ConstConfig';
 
 const HONEYPOT_TYPE = "honeypotType"
@@ -44,7 +47,9 @@ function mapStateToProps(state) {
     productType: state.user.productType.type,
     postLoading: state.loading.effects[`${NAMESPACE}/postVM`],
     options: state[NAMESPACE].options,
-    honeypotTypeList: state[MAIN_NAMESPACE].queryResults[HONEYPOT_TYPE] || {}
+    honeypotTypeList: state[MAIN_NAMESPACE].queryResults[HONEYPOT_TYPE] || {},
+    services: state[MAIN_NAMESPACE].queryResults[SERVICES_DATAINDEX] || {},
+    ports: state[MAIN_NAMESPACE].queryResults[PORTS_DATAINDEX] || {}
     // vmOptions: state[MAIN_NAMESPACE].queryResults[VM_ENUM_CONFIG_DATA_INDEX] || {}
   }
 }
@@ -58,7 +63,8 @@ function mapDispatchToProps(dispatch) {
     },
     getVMIpList: (payload) => {
       return dispatch({
-        type: `${NAMESPACE}/getVMIpList`
+        type: `${NAMESPACE}/getVMIpList`,
+        payload
       })
     },
     getVMNameList: () => {
@@ -117,7 +123,9 @@ class Page extends React.Component {
       selectedRows: [],
       vmOptions: {},
       activeOperation: null,
-      results: []
+      results: [],
+      vmIpList: [],
+      nodeIpList: []
     }
   }
   switchModal = () => {
@@ -136,20 +144,21 @@ class Page extends React.Component {
         .then(result => this.setState({ vmOptions: result }))
     }
 
-    // this.getNodeIpList();
-    // this.getVMNameList();
+
+    this.getNodeIpList()
+
   }
   getNodeIpList = () => {
     this.props.getNodeIpList().then(result => {
       this.setState({
-        [HOST_IP_DATAINDEX]: result,
+        nodeIpList: result,
       })
     })
   }
   getVMIpList = (hostIp) => {
-    this.props.getVMIpList({ hostIp }).then(result => {
+    this.props.getVMIpList({ [HOST_IP_DATAINDEX]: hostIp }).then(result => {
       this.setState({
-        [HONEYPOT_IP_DATAINDEX]: result,
+        vmIpList: result,
       })
     })
   }
@@ -161,20 +170,13 @@ class Page extends React.Component {
     })
   }
   tableOnChange = (pagination, filters, sorter) => {
-    //判断主机IP是否与上一次相同 不同则清空蜜罐ip选项
-    // const { queryFilters } = this.props[NAMESPACE],
-    //   lastHostIP = queryFilters[HOST_IP_DATAINDEX][0],
-    //   newHostIP = filters[HOST_IP_DATAINDEX][0],
-    //   shouldInit = lastHostIP !== newHostIP,
-    //   finalFilter = shouldInit ? { ...filters, [HONEYPOT_IP_DATAINDEX]: [] } : { ...filters };
 
+    if (filters[HOST_IP_DATAINDEX].length !== 0) {
+      this.getVMIpList(filters[HOST_IP_DATAINDEX][0])
+    }
     this.props.onQuery(filters)
-    // this.getVMIpList(filters[HOST_IP_DATAINDEX]);
   };
   getQueryPanel = () => {
-    // const {onQuery,routes}=this.props;
-    // const {queryFilters,lastReqTime}=this.props[NAMESPACE];
-
     return (
       <div key={"query-panel"} style={{ margin: "15px 0" }}>
         {this.props.getBreadcrumb(this.props.routes)}
@@ -285,18 +287,25 @@ class Page extends React.Component {
 
   getDataResultPanel = () => {
 
-    const { commonLayout, pageOnChange, userData, options, productType, honeypotTypeList } = this.props;
+    const { commonLayout, pageOnChange, userData, options, productType, honeypotTypeList, services, ports } = this.props;
     const { queryResults, queryFilters, lastReqTime } = this.props[NAMESPACE];
     const { data } = queryResults;
     const isDark = commonLayout.darkTheme,
       { isAdmin } = userData;
+    const { vmOptions, vmIpList, nodeIpList } = this.state
     const filterOptions = {
       // ...options,
-      [HONEYPOT_TYPE_ROW_KEY]: Object.keys(honeypotTypeList)
+      [HONEYPOT_IP_DATAINDEX]: vmIpList,
+      [HOST_IP_DATAINDEX]: nodeIpList,
+      [HONEYPOT_TYPE_ROW_KEY]: Object.keys(honeypotTypeList),
+      [SERVICES_DATAINDEX]: Object.keys(services),
+      [PORTS_DATAINDEX]: Object.keys(ports)
     };
 
     const filterTextConfigs = {
-      [HONEYPOT_TYPE_ROW_KEY]: honeypotTypeList
+      [HONEYPOT_TYPE_ROW_KEY]: honeypotTypeList,
+      [SERVICES_DATAINDEX]: services,
+      [PORTS_DATAINDEX]: ports
     }
 
     const tableProps = {
