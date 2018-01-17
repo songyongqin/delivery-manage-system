@@ -127,14 +127,19 @@ class Page extends React.Component {
     ...payload,
   })
     .then(this.switchModal)
-    .then(this.get)
-    .then(tools.curry(Message.success, "修改成功"))
+    .then(() => {
+      this.get()
+      Message.success("修改成功")
+    })
 
   getDelHandle = id => () => this.props.delete({
     [RULE_ID_DATAINDEX]: id,
   })
-    .then(this.get)
-    .then(tools.curry(Message.success, "删除成功"))
+    .then(() => {
+      this.get()
+      this.props.getProtocol()
+      Message.success("删除成功")
+    })
 
   render = () => {
     const { loading, queryResults, queryFilters, createVisible, activeRule } = this.state;
