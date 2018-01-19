@@ -35,7 +35,7 @@ const callConfig = {
   withTime: true,
 }
 
-const initFilters = {
+export const initFilters = {
   [HOST_IP_DATAINDEX]: [],
   [HONEYPOT_IP_DATAINDEX]: [],
   [HONEYPOT_TYPE_ROW_KEY]: [],
@@ -203,10 +203,17 @@ const baseModel = {
         const queryFilters = yield select(state => state[NAMESPACE].queryFilters);
         yield put({
           type: "query",
-          payload: {
-            ...queryFilters,
-            page: 1
-          }
+          payload: initFilters
+        })
+
+        yield put({
+          type: "getVMIpList",
+          payload: {}
+        })
+
+        yield put({
+          type: "getNodeIpList",
+          payload: {}
         })
       }
 

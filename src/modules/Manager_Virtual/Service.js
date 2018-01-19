@@ -47,7 +47,7 @@ export async function getVMIpList(payload) {
       "Content-Type": "application/json; charset=utf-8",
     }
   };
-  return request(httpApi.OCCUPYING_VM_IP + tools.jsonToQueryString(payload), options);
+  return request(httpApi.OCCUPYING_VM_IP, options);
 }
 
 

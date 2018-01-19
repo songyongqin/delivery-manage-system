@@ -39,6 +39,8 @@ import {
 
 const HONEYPOT_TYPE = "honeypotType"
 
+import { initFilters } from './Model'
+
 function mapStateToProps(state) {
   const { commonLayout } = state.layout;
   return {
@@ -146,6 +148,7 @@ class Page extends React.Component {
 
 
     this.getNodeIpList()
+    this.getVMIpList()
 
   }
   getNodeIpList = () => {
@@ -171,9 +174,9 @@ class Page extends React.Component {
   }
   tableOnChange = (pagination, filters, sorter) => {
 
-    if (filters[HOST_IP_DATAINDEX].length !== 0) {
-      this.getVMIpList(filters[HOST_IP_DATAINDEX][0])
-    }
+    // if (filters[HOST_IP_DATAINDEX].length !== 0) {
+    //   this.getVMIpList(filters[HOST_IP_DATAINDEX][0])
+    // }
     this.props.onQuery(filters)
   };
   getQueryPanel = () => {
@@ -224,7 +227,9 @@ class Page extends React.Component {
       }, 300)
 
       this.setSelectedRows([])
-      return this.props.onQuery()
+      this.getNodeIpList()
+      this.getVMIpList()
+      return this.props.query(initFilters)
     })
 
   onOperationConfirm = () => {
@@ -259,7 +264,9 @@ class Page extends React.Component {
       }, 300)
 
       this.setSelectedRows([])
-      return this.props.onQuery()
+      // this.getNodeIpList()
+      // this.getVMIpList()
+      return this.props.query(initFilters)
     })
 
 
