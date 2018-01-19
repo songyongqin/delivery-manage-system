@@ -60,8 +60,8 @@ export const ruleItemPlaceholder = {
   [REVEICER]: "收件箱",
   [SENDER]: "发件箱",
   [THEME]: "邮件主题",
-  [SOURCE_IP]: "源ip",
-  [TARGET_IP]: "目的ip"
+  // [SOURCE_IP]: "源ip",
+  // [TARGET_IP]: "目的ip"
 }
 
 
@@ -69,7 +69,7 @@ export const ruleItemsConfig = {
   [HTTP]: [URL],
   [DNS]: [URL],
   [TCP]: [SOURCE_IP_PORT, TARGET_IP_PORT],
-  [IP]: [SOURCE_IP, TARGET_IP],
+  [IP]: [SOURCE_IP_PORT, TARGET_IP_PORT],
   [SSH]: [SOURCE_IP_PORT, TARGET_IP_PORT],
   [FTP]: [SOURCE_IP_PORT, TARGET_IP_PORT],
   [SMTP_POP3]: [REVEICER, SENDER, THEME],

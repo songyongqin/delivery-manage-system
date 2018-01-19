@@ -137,7 +137,7 @@ export default {
 
   [TCP]: ipPortTypeChecker,
 
-  [IP]: ipChecker,
+  [IP]: ipPortTypeChecker,
 
   [SSH]: ipPortTypeChecker,
 
