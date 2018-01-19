@@ -31,13 +31,17 @@ export const HTTP = "HTTP",
   DNS = "DNS",
 
   FTP = "FTP",
-  SMTP_POP3 = "SMTP/POP3";
+  SMTP_POP3 = "SMTP/POP3",
 
+  SMB = "SMB"
+
+export const protocolTypeList = [HTTP, TCP, SSH, IP, DNS, FTP, SMTP_POP3, SMB]
 
 export const placeholderTextConfig = {
   [HTTP]: "请输入URL",
   [TCP]: "请输入ip:port",
   [SSH]: "请输入ip:port",
+  [SMB]: "请输入ip:port",
   [IP]: "请输入ip",
   [DNS]: "请输入域名",
   [SMTP_POP3]: "请输入用户名或操作指令",
@@ -73,6 +77,7 @@ export const ruleItemsConfig = {
   [SSH]: [SOURCE_IP_PORT, TARGET_IP_PORT],
   [FTP]: [SOURCE_IP_PORT, TARGET_IP_PORT],
   [SMTP_POP3]: [REVEICER, SENDER, THEME],
+  [SMB]: [SOURCE_IP_PORT, TARGET_IP_PORT]
 }
 
 

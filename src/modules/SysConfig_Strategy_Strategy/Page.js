@@ -29,7 +29,8 @@ import {
 } from '../SysConfig_Strategy_Threatname/ConstConfig'
 import {
   RULE_THREAT_TYPE_DATAINDEX,
-  NAMESPACE as RULE_NAMESPACE
+  NAMESPACE as RULE_NAMESPACE,
+  protocolTypeList
 } from '../SysConfig_Strategy_Rule/ConstConfig'
 import StrategyThreatnameModule from '../SysConfig_Strategy_Threatname/Page';
 import * as tools from '../../utils/tools';
@@ -342,7 +343,7 @@ class Page extends React.Component {
           <JoSpin spinning={postRuleLoading}>
             <RuleForm onSubmit={this.onSubmit}
               isDark={isDark}
-              protocolTypes={data.map(i => i[PROTOCOLTYPE_DATAINDEX])}
+              protocolTypes={protocolTypeList}
               threatTypes={threatnames.map(i => ({
                 text: i.name,
                 value: i.key,

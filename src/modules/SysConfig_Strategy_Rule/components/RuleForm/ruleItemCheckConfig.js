@@ -9,7 +9,7 @@ import {
   IP,
   SSH,
   FTP,
-
+  SMB,
 
   REVEICER,
   SENDER,
@@ -142,6 +142,8 @@ export default {
   [SSH]: ipPortTypeChecker,
 
   [FTP]: ipPortTypeChecker,
+
+  [SMB]: ipPortTypeChecker,
 
   [SMTP_POP3]: checkerDecorator(({ props, setCheckStatus, dataIndex }) => {
     let receiver = props.form.getFieldValue(REVEICER),

@@ -14,6 +14,7 @@ import {
   placeholderTextConfig,
   RULE_PROTOCOLTYPE_DATAINDEX,
   RULE_ID_DATAINDEX,
+  protocolTypeList
 } from './ConstConfig'
 import {
   THREAT_NAME_NAME_DATAINDEX,
@@ -198,7 +199,7 @@ class Page extends React.Component {
               loading={this.props.putLoading}
               defaultValue={activeRule}
               threatTypes={threatnames}
-              protocolType={this.props[RULE_PROTOCOLTYPE_DATAINDEX]}
+              protocolType={protocolTypeList}
               onSubmit={this.onConfirmHandle} />
           </JoSpin>
 

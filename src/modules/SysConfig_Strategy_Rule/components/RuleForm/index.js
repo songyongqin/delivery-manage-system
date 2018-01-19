@@ -165,8 +165,6 @@ class WrappedForm extends React.Component {
     });
     const commonProps = { ...formItemLayout, colon: false, hasFeedback: true, required: true }
     let items = [];
-
-
     items = isCreate ? [
       {
         props: {
