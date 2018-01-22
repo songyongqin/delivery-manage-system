@@ -9,6 +9,7 @@ import { WithContainerHeader, WithAnimateRender } from '../../../../components/H
 import { NAMESPACE_THREATEVENT } from '../../ConstConfig'
 import classnames from 'classnames'
 import TimesLabel from 'components/TimesLabel'
+import JoTag from 'components/JoTag';
 import { levelTextConfig, actionStatusTextConfig, attackStageTextConfig } from 'configs/ConstConfig'
 import { getKeyText } from 'utils/tools'
 
@@ -86,6 +87,27 @@ class Tableevent extends React.Component {
       title: '威胁描述',
       dataIndex: 'description',
       key: 'description',
+      render: value => {
+
+        const color = "#108ee9";
+
+        try {
+          return <div>
+            {
+              value.map((i, index) => {
+                return <div key={`${index}-des`}
+                  style={{ marginBottom: "8px" }}>
+                  <JoTag color={color}>
+                    {i}
+                  </JoTag>
+                </div>
+              })
+            }
+          </div>
+        } catch (e) {
+          console.info(e);
+        }
+      },
     }, {
       title: '次数',
       dataIndex: 'counts',

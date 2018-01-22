@@ -54,7 +54,6 @@ class Tableevent extends React.Component {
     const data = this.props.data;
     const { isDark, page, limit } = this.props;
     const { key } = this.state;
-    console.info(key)
     const columns = [{
       title: '序号',
       dataIndex: 'key',
