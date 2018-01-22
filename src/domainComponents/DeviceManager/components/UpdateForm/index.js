@@ -453,12 +453,12 @@ class WrappedForm extends React.Component {
         {
           dataIndex: DEVICE_ID_DATAINDEX,
           title: <p style={{ textAlign: "center" }}>设备唯一标识</p>,
-          width: haveUpdateResult ? null : "140px"
+          width: "140px"
         },
         {
           dataIndex: HOST_IP_DATAINDEX,
           title: <p style={{ textAlign: "center" }}>主机IP</p>,
-          width: haveUpdateResult ? null : "140px",
+          width: "140px",
           render: value => <CommonCell value={value}></CommonCell>
         },
         ...(haveUpdateResult ? resultColumns : versionColumns)
