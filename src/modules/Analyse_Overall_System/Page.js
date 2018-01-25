@@ -79,7 +79,7 @@ class Page extends React.Component {
 
     const tableProps = {
       onChange: this.tableOnChange,
-      expandedRowRender: expandedRowRender,
+      // expandedRowRender: expandedRowRender,
       columns: getColumns({ queryFilters, filters, filterTextConfig, onQuery: this.props.onQuery }),
       dataSource: data.map((i, index) => ({
         ...i,
