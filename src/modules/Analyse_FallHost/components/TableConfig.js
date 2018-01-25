@@ -98,8 +98,22 @@ class ScrollLoadTimeLine extends React.Component {
   static defaultProps = {
     data: []
   }
+  initScroll = () => {
+    try {
+      $(this.con).niceScroll({
+        cursorborder: "",
+        cursorcolor: "#cccccc",
+        boxzoom: false,
+        autohidemode: true
+      })
+    } catch (e) {
+      console.error(e)
+
+    }
+  }
   componentDidMount = () => {
     const { con } = this
+    this.initScroll()
     con.addEventListener("scroll", this.limitHandle)
   }
   componentWillUnmount = () => {
@@ -129,7 +143,7 @@ class ScrollLoadTimeLine extends React.Component {
     const { limit } = this.state
     return (
       <div style={{
-        height: "600px",
+        maxHeight: "600px",
         overflowY: "scroll",
         overflowX: "hidden",
         paddingTop: "15px",
