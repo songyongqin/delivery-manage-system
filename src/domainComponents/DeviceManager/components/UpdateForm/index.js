@@ -562,7 +562,7 @@ class WrappedForm extends React.Component {
                 onChange={this.radioOnChange}>
                 <Row>
                   <Col span={12} style={{ textAlign: "center" }}>
-                    <Radio value="remote"><span className={lblClasses}>远程升级</span></Radio>
+                    <Radio value="remote"><span className={lblClasses}>在线升级</span></Radio>
                   </Col>
                   <Col span={12} style={{ textAlign: "center" }}>
                     <Radio value="local"><span className={lblClasses}>本地升级</span></Radio>
