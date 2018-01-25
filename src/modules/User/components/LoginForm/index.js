@@ -83,9 +83,10 @@ class WrappedForm extends React.Component {
           <Button type="primary"
             className={styles["btn"]}
             loading={loading}
+            icon="login"
             onClick={this.handleSubmit}
             style={{ width: "100%", marginTop: "10px" }}>
-            SIGN IN
+            登录
           </Button>
         </FormItem>
       </Form>
