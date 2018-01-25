@@ -151,7 +151,7 @@ class WrappedForm extends React.Component {
                 required: true, message: '用户账号不能为空',
               },
               {
-                pattern: /^[a-zA-Z0-9]{6,12}$/, message: "长度必须在6-12之间 只能由大小写字母和数字组成"
+                pattern: /^[a-zA-Z0-9]{1,}$/, message: "只能由大小写字母和数字组成"
               }
             ]
             :
