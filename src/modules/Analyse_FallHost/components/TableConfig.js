@@ -116,6 +116,13 @@ class ScrollLoadTimeLine extends React.Component {
     this.initScroll()
     con.addEventListener("scroll", this.limitHandle)
   }
+  componentDidUpdate = () => {
+    try {
+      $(this.con).getNiceScroll().resize()
+    } catch (e) {
+      console.error(e)
+    }
+  }
   componentWillUnmount = () => {
     const { con } = this
     con.removeEventListener("scroll", this.limitHandle)
@@ -156,7 +163,12 @@ class ScrollLoadTimeLine extends React.Component {
                 <div>
                   <JoTag color="#108ee9">{i.title}</JoTag>
                   <br /><br />
-                  {expandedRow.description + ":"}{i[DETAILS_DATAINDEX]}
+                  {expandedRow.description + ":"}
+                  {
+                    i[DETAILS_DATAINDEX].map((i, index) => {
+                      return <p key={`${index}-item`}>{i}</p>
+                    })
+                  }
                 </div>
               </Timeline.Item>
             )
