@@ -9,6 +9,8 @@ export const ipReg = /^((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2
 
 export const portReg = /^([0-9]|[1-9]\d|[1-9]\d{2}|[1-9]\d{3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/
 
+export const gatewayReg = /^(?:(?:2[0-4][0-9]\.)|(?:25[0-5]\.)|(?:1[0-9][0-9]\.)|(?:[1-9][0-9]\.)|(?:[0-9]\.)){3}(?:(?:2[0-5][0-5])|(?:25[0-5])|(?:1[0-9][0-9])|(?:[1-9][0-9])|(?:[0-9]))$/
+
 
 export const judgeIP = (str_ip = "") => {
   let ipReg = new RegExp("^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
@@ -93,7 +95,7 @@ export const createSetQueryFilters = (filtersKey = "queryFilters") => {
   }
 }
 
-export function download(url = "", fileName = url.substring(url.lastIndexOf("/")+1)) {
+export function download(url = "", fileName = url.substring(url.lastIndexOf("/") + 1)) {
   let a = document.createElement('a');
   a.href = url;
   a.download = fileName;

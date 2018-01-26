@@ -29,23 +29,23 @@ const formItemLayout = {
 };
 
 
-const Label=({dataIndex,className,textConfig})=><span className={className}>{textConfig[dataIndex]}</span>
+const Label = ({ dataIndex, className, textConfig }) => <span className={className}>{textConfig[dataIndex]}</span>
 
 
-const WrappedFormItem=({
+const WrappedFormItem = ({
                         dataIndex,
-                        itemProps={},
-                        lblClassName,
-                        getFieldDecorator,
-                        initialValue="",
-                        rules=[],
-                        labelTextConfig,
-                        loading})=>(
+  itemProps = {},
+  lblClassName,
+  getFieldDecorator,
+  initialValue = "",
+  rules = [],
+  labelTextConfig,
+  loading }) => (
 
     <FormItem  {...itemProps}
-               label={<Label className={lblClassName}
-                             textConfig={labelTextConfig}
-                             dataIndex={dataIndex}/>}>
+      label={<Label className={lblClassName}
+        textConfig={labelTextConfig}
+        dataIndex={dataIndex} />}>
       {
         getFieldDecorator(
           dataIndex,
@@ -54,37 +54,37 @@ const WrappedFormItem=({
             rules,
           }
         )
-        (
-          <Input disabled={loading}/>
-        )
+          (
+          <Input disabled={loading} />
+          )
       }
     </FormItem>
-)
+  )
 
 
 
 
 @Form.create()
 class WrappedForm extends React.Component {
-  static defaultProps={
-    defaultValue:{},
-    rulesConfig:{},
-    dataIndexes:[],
-    labelTextConfig:{}
+  static defaultProps = {
+    defaultValue: {},
+    rulesConfig: {},
+    dataIndexes: [],
+    labelTextConfig: {}
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    const {onSubmit,form,dataIndexes}=this.props;
+    const { onSubmit, form, dataIndexes } = this.props;
     form.validateFieldsAndScroll((err, values) => {
 
       if (err) {
         return
       }
 
-      dataIndexes.forEach(i=>values[i]=values[i].trim())
+      dataIndexes.forEach(i => values[i] = values[i].trim())
 
 
-      onSubmit&&onSubmit(values);
+      onSubmit && onSubmit(values);
 
     });
   }
@@ -92,34 +92,34 @@ class WrappedForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {isDark,loading,defaultValue,rulesConfig,dataIndexes,labelTextConfig}=this.props;
+    const { isDark, loading, defaultValue, rulesConfig, dataIndexes, labelTextConfig } = this.props;
 
-    const lblClasses=classnames({
-      [styles["lbl-dark"]]:isDark
+    const lblClasses = classnames({
+      [styles["lbl-dark"]]: isDark
     })
 
-    const commonProps={...formItemLayout,colon:false,hasFeedback:false,required:false}
+    const commonProps = { ...formItemLayout, colon: false, hasFeedback: false, required: false }
 
 
     return (
-      <Form layout="inline" style={{minWidth:"900px"}}>
+      <Form layout="inline" style={{ minWidth: "900px" }}>
         {
-          dataIndexes.map(i=><WrappedFormItem key={i} {...{
-            dataIndex:i,
-            itemProps:commonProps,
-            lblClassName:lblClasses,
+          dataIndexes.map(i => <WrappedFormItem key={i} {...{
+            dataIndex: i,
+            itemProps: commonProps,
+            lblClassName: lblClasses,
             getFieldDecorator,
-            initialValue:defaultValue[i]||"",
+            initialValue: defaultValue[i] || "",
             loading,
-            rules:rulesConfig[i],
+            rules: rulesConfig[i],
             labelTextConfig,
-          }}/>)
+          }} />)
         }
         <FormItem>
           <Button type="primary"
-                  loading={loading}
-                  icon="save"
-                  onClick={this.handleSubmit}>保存</Button>
+            loading={loading}
+            icon="save"
+            onClick={this.handleSubmit}>保存</Button>
         </FormItem>
       </Form>
     );

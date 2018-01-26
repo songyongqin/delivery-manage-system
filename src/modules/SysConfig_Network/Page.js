@@ -27,7 +27,11 @@ import {
   DNS_DATAINDEX,
   SYS_LOG_NETWORK_TITLE,
   CONTROL_CONFIG_NAMESPACE,
-  AUTH_NETWORK_802_NAMESPACE
+  AUTH_NETWORK_802_NAMESPACE,
+  ADAPTER_IP_DATAINDEX,
+  ADAPTER_GW_DATAINDEX,
+  ADAPTER_MAS_DATAINDEX,
+  adapterTextConfig
 } from './ConstConfig'
 import { IDS, DISTRIBUTION, NODE, STAND_ALONE } from 'configs/ConstConfig'
 import { connect } from 'dva';
@@ -38,6 +42,7 @@ import ControlConfigForm from './components/ControlConfigForm'
 import JoSpin from '../../components/JoSpin'
 import NetworkAuthForm from './components/NetworkAuthForm/'
 import classnames from 'classnames';
+import { ipReg, gatewayReg } from 'utils/tools'
 
 /*********************************************************/
 const DNSContent = ({ loading, defaultValue, onSubmit, isDark }) => (
@@ -49,6 +54,83 @@ const DNSContent = ({ loading, defaultValue, onSubmit, isDark }) => (
   </Card>
 )
 /*********************************************************/
+export const rulesConfig = {
+  [ADAPTER_IP_DATAINDEX]: [
+    {
+      required: true, message: "IP不能为空",
+    },
+    {
+      pattern: ipReg,
+      message: "请输入正确的IP"
+    }
+  ],
+  [ADAPTER_MAS_DATAINDEX]: [
+    {
+      required: true, message: "子网掩码不能为空",
+    },
+    {
+      pattern: ipReg,
+      message: "请输入正确的子网掩码"
+    }
+  ],
+  [ADAPTER_GW_DATAINDEX]: [
+    {
+      required: true, message: "网关不能为空",
+    },
+    {
+      pattern: gatewayReg,
+      message: "请输入正确的网关"
+    }
+  ]
+}
+
+const dataIndexes = [
+  ADAPTER_IP_DATAINDEX,
+  ADAPTER_MAS_DATAINDEX,
+  ADAPTER_GW_DATAINDEX,
+]
+
+export const toFinalValue = (originValue) => {
+  const prefix = originValue[ADAPTER_NAME_DATAINDEX]
+  return Object.entries(originValue).reduce((target, [key, value]) => {
+    target[`${prefix}/${key}`] = value
+    return target
+  }, {})
+}
+
+export const toOriginValue = (originValue, finalValue) => {
+  const prefix = originValue[ADAPTER_NAME_DATAINDEX]
+  return Object.entries(originValue).reduce((target, [key, value]) => {
+    target[key] = finalValue[`${prefix}/${key}`]
+    return target
+  }, {})
+}
+
+const toOriginValueFnCreator = (originValue) => {
+  return finalValue => toOriginValue(originValue, finalValue)
+}
+
+const toFinalRulesConfig = (originValue, rulesConfig) => {
+  const prefix = originValue[ADAPTER_NAME_DATAINDEX]
+  return Object.entries(originValue).reduce((target, [key, value]) => {
+    target[`${prefix}/${key}`] = rulesConfig[key]
+    return target
+  }, {})
+}
+
+const toFinalTextConfig = (originValue, rulesConfig) => {
+  const prefix = originValue[ADAPTER_NAME_DATAINDEX]
+  return Object.entries(rulesConfig).reduce((target, [key, value]) => {
+    target[`${prefix}/${key}`] = value
+    return target
+  }, {})
+}
+
+const toFinalDataIndexes = (originValue, dataIndexes) => {
+  const prefix = originValue[ADAPTER_NAME_DATAINDEX]
+  return dataIndexes.map(key => `${prefix}/${key}`)
+}
+
 const AdapterContent = ({ data = [], titleStyle, isDark, loading, getAdapterPutHandle }) => (
   <Card title={DNS_NETWORK_TITLE} style={{ marginBottom: "15px" }}>
     {data.map((i, index) => (
@@ -67,8 +149,11 @@ const AdapterContent = ({ data = [], titleStyle, isDark, loading, getAdapterPutH
         </h3>
         <NetworkForm isDark={isDark}
           loading={loading}
-          defaultValue={i}
-          onSubmit={getAdapterPutHandle(i[ADAPTER_MAC_DATAINDEX], i[ADAPTER_NAME_DATAINDEX])} />
+          rulesConfig={toFinalRulesConfig(i, rulesConfig)}
+          dataIndexes={toFinalDataIndexes(i, dataIndexes)}
+          labelTextConfig={toFinalTextConfig(i, adapterTextConfig)}
+          defaultValue={toFinalValue(i)}
+          onSubmit={getAdapterPutHandle(i[ADAPTER_MAC_DATAINDEX], i[ADAPTER_NAME_DATAINDEX], toOriginValueFnCreator(i))} />
       </div>
     ))}
   </Card>
@@ -206,11 +291,11 @@ class Page extends React.Component {
     .then(Message.success.call(null, "保存成功"))
     .then(this.props.get.call(this))
   /*********************************************************/
-  getAdapterPutHandle = (mac, name) => payload => this.props.put({
+  getAdapterPutHandle = (mac, name, toOriginValue) => payload => this.props.put({
     [ADAPTER]: {
       [ADAPTER_MAC_DATAINDEX]: mac,
       [ADAPTER_NAME_DATAINDEX]: name,
-      ...(payload || {})
+      ...(toOriginValue(payload) || {})
     }
   })
     .then(Message.success.call(null, "保存成功", 3))
