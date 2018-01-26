@@ -115,19 +115,19 @@ export const getColumns = ({ queryFilters, onSubmit, filters, filterTextConfig =
     ...renderer,
     [ACTION_DATAINDEX]: value => tools.getKeyText(value, filterTextConfig[ACTION_DATAINDEX])
   },
-  extraProps: (getProductType() === IDS_STAND_ALONE || getProductType() === STAND_ALONE)
-    ?
-    {}
-    :
-    {
-      [COUNTS_DATAINDEX]: {
-        filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
-        filterDropdown: <FilterInputNumber textConfig={{ label: FILTER_INPUT_LABEL }}
-          defaultValue={queryFilters.mergeCounts}
-          onSubmit={onSubmit} />
+  // extraProps: (getProductType() === IDS_STAND_ALONE || getProductType() === STAND_ALONE)
+  //   ?
+  //   {}
+  //   :
+  //   {
+  //     [COUNTS_DATAINDEX]: {
+  //       filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
+  //       filterDropdown: <FilterInputNumber textConfig={{ label: FILTER_INPUT_LABEL }}
+  //         defaultValue={queryFilters.mergeCounts}
+  //         onSubmit={onSubmit} />
 
-      }
-    }
+  //     }
+  //   }
 });
 
 const nth1TdStyle = { padding: "10px", width: "120px", textAlign: "center" },
