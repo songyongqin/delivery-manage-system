@@ -70,7 +70,10 @@ export default ({ namespace, title, getColumns }) => {
       this.props.getSetting();
       this.props.onQuery();
     }
-    onSubmit = values => this.props.putSetting(values).then(this.props.getSetting);
+    onSubmit = values => this.props.putSetting(values).then(() => {
+      this.props.getSetting();
+      this.props.onQuery();
+    });
     render = () => {
       const { commonLayout, moduleMonitorTextConfig, loading, productType } = this.props;
       const { queryResults, lastReqTime, queryFilters } = this.props[namespace];
