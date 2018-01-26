@@ -266,39 +266,29 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
 
   Object.entries(tableTextConfig.colTitles).forEach(i => {
 
-    if (i[0] === DISK_PER_DATAINDEX && isNode) {
-      finalTitleTextConfig[i[0]] = (
-        <p style={{ textAlign: "center", display: "inline-block", width: "60%" }}>
-          {i[1]}
-        </p>
-      )
-    } else {
-      finalTitleTextConfig[i[0]] = (
-        <p style={{ textAlign: "center" }}>
-          {i[1]}
-        </p>
-      )
-    }
-
-
+    finalTitleTextConfig[i[0]] = (
+      <p style={{ textAlign: "center" }}>
+        {i[1]}
+      </p>
+    )
   })
 
 
-  const extraProps =
-    isNode
-      ?
-      {
-        [DISK_PER_DATAINDEX]: {
-          filterIcon: <Icon type="filter"
-            style={{
-              color: "#108ee9",
-            }} />,
-          filterDropdown: <SliderForm defaultValue={queryFilters}
-            onSubmit={onSubmit} />
-        }
-      }
-      :
-      {}
+  // const extraProps =
+  //   isNode
+  //     ?
+  //     {
+  //       [DISK_PER_DATAINDEX]: {
+  //         filterIcon: <Icon type="filter"
+  //           style={{
+  //             color: "#108ee9",
+  //           }} />,
+  //         filterDropdown: <SliderForm defaultValue={queryFilters}
+  //           onSubmit={onSubmit} />
+  //       }
+  //     }
+  //     :
+  //     {}
 
 
   const tableDataIndexes = versionColExpanded
@@ -312,7 +302,7 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
     keys: tableDataIndexes,
     titleTextConfig: finalTitleTextConfig,
     renderer,
-    extraProps
+    // extraProps
   });
 
 
