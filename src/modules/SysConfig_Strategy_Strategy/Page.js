@@ -343,7 +343,7 @@ class Page extends React.Component {
           <JoSpin spinning={postRuleLoading}>
             <RuleForm onSubmit={this.onSubmit}
               isDark={isDark}
-              protocolTypes={protocolTypeList}
+              protocolTypes={data.map(i => i[PROTOCOLTYPE_DATAINDEX])}
               threatTypes={threatnames.map(i => ({
                 text: i.name,
                 value: i.key,

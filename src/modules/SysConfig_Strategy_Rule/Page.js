@@ -199,7 +199,7 @@ class Page extends React.Component {
               loading={this.props.putLoading}
               defaultValue={activeRule}
               threatTypes={threatnames}
-              protocolType={protocolTypeList}
+              protocolType={this.props[RULE_PROTOCOLTYPE_DATAINDEX]}
               onSubmit={this.onConfirmHandle} />
           </JoSpin>
 

@@ -228,11 +228,11 @@ class WrappedForm extends React.Component {
         filed: {
           name: r,
           initialValue: (defaultValue[RULE_DATAINDEX] || {})[r],
-          rules: [
-            {
-              required: true, message: "不能为空"
-            },
-          ]
+          // rules: [
+          //   {
+          //     required: true, message: "不能为空"
+          //   },
+          // ]
         },
         component: (
           <Input disabled={loading}
