@@ -230,7 +230,7 @@ const versionListRenderer = records => {
 
 const versionDataIndexes = [APPLIACTION_VERSION_DATAINDEX, LIBRARY_VERSION_LIST_DATAINDEX, ENGINE_VERSION_LIST_DATAINDEX]
 
-export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilters = {}, onSubmit, versionColExpanded = true, productType }) => {
+export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilters = {}, onSubmit, versionColExpanded = true, productType, diskFilter }) => {
 
   const renderer = {
     diskPer: diskPerRenderer,
@@ -274,21 +274,21 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
   })
 
 
-  // const extraProps =
-  //   isNode
-  //     ?
-  //     {
-  //       [DISK_PER_DATAINDEX]: {
-  //         filterIcon: <Icon type="filter"
-  //           style={{
-  //             color: "#108ee9",
-  //           }} />,
-  //         filterDropdown: <SliderForm defaultValue={queryFilters}
-  //           onSubmit={onSubmit} />
-  //       }
-  //     }
-  //     :
-  //     {}
+  const extraProps =
+    (isNode && diskFilter)
+      ?
+      {
+        [DISK_PER_DATAINDEX]: {
+          filterIcon: <Icon type="filter"
+            style={{
+              color: "#108ee9",
+            }} />,
+          filterDropdown: <SliderForm defaultValue={queryFilters}
+            onSubmit={onSubmit} />
+        }
+      }
+      :
+      {}
 
 
   const tableDataIndexes = versionColExpanded
@@ -300,9 +300,9 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
 
   let columns = tableColumnsGenerator({
     keys: tableDataIndexes,
-    titleTextConfig: finalTitleTextConfig,
+    titleTextConfig: tableTextConfig.colTitles,
     renderer,
-    // extraProps
+    extraProps
   });
 
 

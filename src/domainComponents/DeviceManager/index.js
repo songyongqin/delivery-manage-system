@@ -16,6 +16,7 @@ import Card from 'domainComponents/Card'
 import { NODE, IDS, DISTRIBUTION, STAND_ALONE, IDS_STAND_ALONE, OVER_DUE_NAMESPACE } from 'configs/ConstConfig'
 import { connect } from 'dva'
 import { CONTROL_CONFIG_NAMESPACE } from 'modules/SysConfig_Network/ConstConfig'
+import styles from './styles.css'
 
 const extraMapStateToProps = state => {
   return {
@@ -281,12 +282,15 @@ export default ({
       const { hasGetVersion } = this.state;
       const isDark = commonLayout.darkTheme;
 
+      const diskFilter = productType.type === DISTRIBUTION
+
       const tableProps = {
         columns: tableConfig.getColumns({
           isAdmin,
           queryFilters,
           isDark,
           isNode,
+          diskFilter,
           onSubmit: this.onSubmit,
           versionColExpanded,
           productType,
@@ -296,6 +300,7 @@ export default ({
             cleanHandle: this.cleanModalOpenHandle
           }
         }),
+        className: styles["device-table"],
         dataSource: queryResults.data.map((i, index) => {
           return {
             ...i,
