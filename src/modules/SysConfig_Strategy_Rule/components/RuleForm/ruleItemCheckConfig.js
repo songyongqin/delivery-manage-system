@@ -43,7 +43,7 @@ const isIpPort = (str = "") => {
     return false;
   }
 
-  let isIp = ipReg.test(items[0])
+  let isIp = ipReg.test(items[0]) || items[0] === "any"
 
   if (isIp && items.length === 1) {
     return true;
