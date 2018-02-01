@@ -192,6 +192,16 @@ class Page extends React.Component {
     )
   }
   render = () => {
+
+    const { routes, commonLayout } = this.props;
+
+    const { queryResults } = this.props[NAMESPACE];
+    const { data: rankingListData } = queryResults;
+
+    if (rankingListData.length === 0) {
+      return <div></div>
+    }
+
     return (
       <div
         style={{ marginTop: "15px" }}>
