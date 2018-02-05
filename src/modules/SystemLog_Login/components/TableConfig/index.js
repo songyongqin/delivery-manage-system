@@ -1,4 +1,4 @@
-
+import React from 'react'
 import { connect } from 'dva';
 import styles from './index.css';
 import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
@@ -9,7 +9,8 @@ import JoSpin from '../../../../components/JoSpin';
 import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
 import { NAMESPACE } from '../../ConstConfig'
 import TimesLabel from 'components/TimesLabel'
-
+import QueryIPForm from '../QueryIPForm'
+import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
 @WithAnimateRender
 @WithContainerHeader
 class App extends React.Component {
@@ -51,13 +52,26 @@ class App extends React.Component {
 
     });
   }
-  onInputChangeip = (e) => {
+  onInputChangeip = (value) => {
     this.props.dispatch({
       type: `${NAMESPACE}/save`,
       payload: {
-        ip: e.target.value
+        ip: value
       }
     });
+    const { userAccount, loginStatus, ip, timestampRange, limit } = this.props;
+    this.setState({ filterDropdownVisibleip: false });
+    this.props.dispatch({
+      type: `${NAMESPACE}/fetch`,
+      payload: {
+        userAccount,
+        ip: value,
+        loginStatus,
+        page: 1,
+        limit,
+        timestampRange
+      }
+    })
   }
   onInputChangename = (e) => {
     this.props.dispatch({
@@ -85,21 +99,6 @@ class App extends React.Component {
   onSearchname = () => {
     const { userAccount, loginStatus, ip, timestampRange, limit } = this.props;
     this.setState({ filterDropdownVisiblename: false });
-    this.props.dispatch({
-      type: `${NAMESPACE}/fetch`,
-      payload: {
-        userAccount,
-        ip,
-        loginStatus,
-        page: 1,
-        limit,
-        timestampRange
-      }
-    })
-  }
-  onSearchip = () => {
-    const { userAccount, loginStatus, ip, timestampRange, limit } = this.props;
-    this.setState({ filterDropdownVisibleip: false });
     this.props.dispatch({
       type: `${NAMESPACE}/fetch`,
       payload: {
@@ -172,31 +171,15 @@ class App extends React.Component {
       title: '登录IP',
       dataIndex: 'ip',
       key: 'ip',
-      filterDropdown: (
-        <div className={styles["panel"]}>
-          <p style={{
-            color: "rgba(0, 0, 0, 0.65)",
-            textAlign: "justify",
-            marginBottom: "3px"
-          }}>
-            输入你要搜索的IP
-        </p>
-          <Input
-            ref={ele => this.searchInputip = ele}
-            placeholder="Search IP"
-            value={this.props.ip}
-            onChange={this.onInputChangeip}
-            onPressEnter={this.onSearchip}
-          />
-          <Button icon="search" type="primary" onClick={this.onSearchip} style={{ marginTop: "10px" }}>搜索</Button>
-        </div>
-      ),
       filterIcon: <Icon type="filter" style={{ color: '#108ee9' }} />,
+      filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
+        <QueryIPForm defaultValue="" onSave={this.onInputChangeip}></QueryIPForm>
+      </FilterDropdownWrapper>,
       filterDropdownVisible: this.state.filterDropdownVisibleip,
       onFilterDropdownVisibleChange: (visible) => {
         this.setState({
           filterDropdownVisibleip: visible,
-        }, () => this.searchInputip.focus());
+        });
       },
     },
     {
