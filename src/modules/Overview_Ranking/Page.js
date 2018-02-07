@@ -62,7 +62,7 @@ class Page extends React.Component {
 
     return (
       <div key="query-panel" style={{ overflow: "hidden" }}>
-        <span>
+        <span style={{ float: "left" }}>
           统计数据
         </span>
         <div style={{ float: "right", marginTop: "8px" }}>
