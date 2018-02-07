@@ -293,9 +293,9 @@ class Page extends React.Component {
   /*********************************************************/
   getAdapterPutHandle = (mac, name, toOriginValue) => payload => this.props.put({
     [ADAPTER]: {
+      ...(toOriginValue(payload) || {}),
       [ADAPTER_MAC_DATAINDEX]: mac,
       [ADAPTER_NAME_DATAINDEX]: name,
-      ...(toOriginValue(payload) || {})
     }
   })
     .then(Message.success.call(null, "保存成功", 3))
