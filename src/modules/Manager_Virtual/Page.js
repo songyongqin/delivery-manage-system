@@ -33,7 +33,8 @@ import {
   HONEYPOT_TYPE_ROW_KEY,
   NODE,
   SERVICES_DATAINDEX,
-  PORTS_DATAINDEX
+  PORTS_DATAINDEX,
+  HONEYPOT_STATUS_DATAINDEX
 
 } from './ConstConfig';
 
@@ -127,7 +128,8 @@ class Page extends React.Component {
       activeOperation: null,
       results: [],
       vmIpList: [],
-      nodeIpList: []
+      nodeIpList: [],
+      activeFilter: ""
     }
   }
   switchModal = () => {
@@ -174,11 +176,26 @@ class Page extends React.Component {
   }
   tableOnChange = (pagination, filters, sorter) => {
 
-    // if (filters[HOST_IP_DATAINDEX].length !== 0) {
-    //   this.getVMIpList(filters[HOST_IP_DATAINDEX][0])
-    // }
-    this.props.onQuery(filters)
+    const dataIndexes = [HOST_IP_DATAINDEX,
+      HONEYPOT_IP_DATAINDEX,
+      HONEYPOT_TYPE_ROW_KEY,
+      SERVICES_DATAINDEX,
+      PORTS_DATAINDEX,
+      HONEYPOT_STATUS_DATAINDEX]
+
+    const finalFilters = dataIndexes.reduce((_finalFilters, dataIndex) => {
+      _finalFilters[dataIndex] = []
+      return _finalFilters
+    }, {})
+
+    finalFilters[this.state.activeFilter] = filters[this.state.activeFilter]
+    this.props.onQuery(finalFilters)
   };
+  setActiveFilter = (dataIndex) => {
+    this.setState({
+      activeFilter: dataIndex
+    })
+  }
   getQueryPanel = () => {
     return (
       <div key={"query-panel"} style={{ margin: "15px 0" }}>
@@ -328,6 +345,7 @@ class Page extends React.Component {
         productType,
         filterTextConfigs,
         onSubmit: this.onFilter,
+        setActiveFilter: this.setActiveFilter,
         handle: {
           getDelHandle: this.getDelHandle,
           getPutHandle: this.getPutHandle

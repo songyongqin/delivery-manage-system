@@ -43,7 +43,7 @@ import { Progress, Row, Col, Badge, Button, Popover, Tooltip, Menu, Dropdown, Ic
 import JoTag from 'components/JoTag';
 import classnames from 'classnames';
 import * as tools from 'utils/tools';
-
+import getFilterIcon from 'utils/getFilterIcon'
 
 
 const X_LAYOUT = "x", Y_LAYOUT = "y";
@@ -273,6 +273,7 @@ export const getColumns = ({
   handle,
   filterTextConfigs = {},
   filterOptions = {},
+  setActiveFilter
                          }) => {
 
   const renderer = {
@@ -286,7 +287,6 @@ export const getColumns = ({
     [HONEYPOT_NAME_DATAINDEX]: commonRenderer,
   }
 
-
   const columns = tableColumnsGenerator({
     keys: tableRowDataIndexes,
     renderer,
@@ -295,15 +295,20 @@ export const getColumns = ({
     filterTextConfig: { ...filterTextConfig, ...filterTextConfigs },
     filteredValue: queryFilters,
     extraProps: {
-      [HOST_IP_DATAINDEX]: {
-        filterMultiple: false,
-      },
-      [HONEYPOT_IP_DATAINDEX]: {
-        filterMultiple: false,
-      }
+      ...tableRowDataIndexes.reduce((finalExtraProps, dataIndex) => {
+
+        finalExtraProps[dataIndex] = {
+          filterMultiple: ![HOST_IP_DATAINDEX, HONEYPOT_IP_DATAINDEX].includes(dataIndex),
+          onFilterDropdownVisibleChange: visible => {
+            visible && setActiveFilter && setActiveFilter(dataIndex)
+          },
+          // filterIcon: getFilterIcon(queryFilters[dataIndex])
+        }
+
+        return finalExtraProps
+      }, {})
     }
   });
-
   return isAdmin
     ?
     columns

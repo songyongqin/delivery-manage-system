@@ -1,7 +1,9 @@
 import { Icon } from 'antd'
 export default (value) => {
   try {
-    return value.trim().length !== 0
+    let isFiltered = Array.isArray(value) ? value.length !== 0 : value.trim().length !== 0
+
+    return isFiltered
       ?
       <Icon type="filter" style={{ color: "#108ee9" }} className="anticon anticon-filter ant-dropdown-trigger" />
       :
