@@ -40,6 +40,7 @@ import moment from 'moment';
 import classnames from 'classnames';
 import * as tools from '../../../../utils/tools';
 import SliderForm from '../SliderForm';
+import getFilterIcon from 'utils/getFilterIcon'
 
 const diskPerRenderer = value => {
   return <div style={{ textAlign: "center" }}>
@@ -279,10 +280,7 @@ export const getColumns = ({ isDark, isAdmin, handle, isNode = true, queryFilter
       ?
       {
         [DISK_PER_DATAINDEX]: {
-          filterIcon: <Icon type="filter"
-            style={{
-              color: "#108ee9",
-            }} />,
+          filterIcon: getFilterIcon(queryFilters[DISK_PER_DATAINDEX] + ""),
           filterDropdown: <SliderForm defaultValue={queryFilters}
             onSubmit={onSubmit} />
         }

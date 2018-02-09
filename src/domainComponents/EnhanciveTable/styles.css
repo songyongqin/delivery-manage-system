@@ -1,3 +1,7 @@
+.table :global .ant-table-thead .anticon.anticon-filter.ant-dropdown-trigger:hover {
+  color: #999;
+}
+
 .table :global .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body {
   background: transparent;
   margin-top: 20px;

@@ -118,6 +118,28 @@ const getOperationColumn = ({ handle = {} } = {}) => {
   }
 }
 
+import getFilterForm from 'utils/getFilterForm'
+
+const filterDataIndexes = [
+  USERACCOUNT_DATAINDEX,
+  USER_NAME_DATAINDEX
+]
+
+
+const filterFormTextConfig = {
+  [USERACCOUNT_DATAINDEX]: {
+    placeholder: "请输入用户账号",
+    label: "用户账号搜索"
+  },
+  [USER_NAME_DATAINDEX]: {
+    label: "用户名搜搜",
+    placeholder: "请输入用户名"
+  },
+}
+
+const ruleConfig = {
+
+}
 
 export const getColumns = ({ handle = {}, queryFilters, onQuery } = {}) => {
 
@@ -129,34 +151,41 @@ export const getColumns = ({ handle = {}, queryFilters, onQuery } = {}) => {
       [FREEZE_DATAINDEX]: freezeRenderer,
     },
     extraProps: {
-      [USERACCOUNT_DATAINDEX]: {
-        filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
-        filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
-          <SearchFilterForm
-            config={{
-              dataIndex: USERACCOUNT_DATAINDEX,
-              placeholder: "请输入用户账号",
-              label: "用户账号搜索"
-            }}
-            defaultValue={queryFilters}
-            onSubmit={onQuery}>
-          </SearchFilterForm>
-        </FilterDropdownWrapper>
-      },
-      [USER_NAME_DATAINDEX]: {
-        filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
-        filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
-          <SearchFilterForm
-            config={{
-              dataIndex: USER_NAME_DATAINDEX,
-              placeholder: "请输入用名",
-              label: "用户名搜索"
-            }}
-            defaultValue={queryFilters}
-            onSubmit={onQuery}>
-          </SearchFilterForm>
-        </FilterDropdownWrapper>
-      }
+      ...getFilterForm({
+        dataIndexes: filterDataIndexes,
+        textConfig: filterFormTextConfig,
+        onQuery,
+        queryFilters,
+        ruleConfig
+      })
+      // [USERACCOUNT_DATAINDEX]: {
+      //   filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
+      //   filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
+      //     <SearchFilterForm
+      //       config={{
+      //         dataIndex: USERACCOUNT_DATAINDEX,
+      //         placeholder: "请输入用户账号",
+      //         label: "用户账号搜索"
+      //       }}
+      //       defaultValue={queryFilters}
+      //       onSubmit={onQuery}>
+      //     </SearchFilterForm>
+      //   </FilterDropdownWrapper>
+      // },
+      // [USER_NAME_DATAINDEX]: {
+      //   filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
+      //   filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
+      //     <SearchFilterForm
+      //       config={{
+      //         dataIndex: USER_NAME_DATAINDEX,
+      //         placeholder: "请输入用名",
+      //         label: "用户名搜索"
+      //       }}
+      //       defaultValue={queryFilters}
+      //       onSubmit={onQuery}>
+      //     </SearchFilterForm>
+      //   </FilterDropdownWrapper>
+      // }
     }
   });
 

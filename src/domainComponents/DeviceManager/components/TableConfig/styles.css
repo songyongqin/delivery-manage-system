@@ -31,4 +31,9 @@
 .version-list td, .version-list th {
   text-align: center;
 }
+
+.version-list .version-list-content-row td:nth-child(2) {
+  border-left: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
+}
 /*# sourceMappingURL=styles.css.map */

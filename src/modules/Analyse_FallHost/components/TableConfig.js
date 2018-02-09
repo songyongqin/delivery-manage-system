@@ -45,6 +45,8 @@ const rowsRenderer = {
 };
 
 
+import getFilterIcon from 'utils/getFilterIcon'
+
 export const getColumns = ({
   queryFilters,
   onSubmit,
@@ -73,12 +75,11 @@ export const getColumns = ({
     renderer,
     extraProps: {
       [IP_DATAINDEX]: {
-        filterIcon: <Icon type="filter" style={{ color: "#108ee9" }} />,
         filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
           <QueryIPForm defaultValue={queryFilters} onSubmit={onQuery}></QueryIPForm>
-        </FilterDropdownWrapper>
-
-      }
+        </FilterDropdownWrapper>,
+        filterIcon: getFilterIcon(queryFilters[IP_DATAINDEX])
+      },
     }
   });
 
