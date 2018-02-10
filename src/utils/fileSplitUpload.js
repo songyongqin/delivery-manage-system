@@ -19,7 +19,6 @@ export const uploadFile = ({ url, headers = {}, body, onProgress }) => {
         try {
           resolve(JSON.parse(xhr.responseText))
         } catch (e) {
-          console.error(`fileSplitUpload:`, e)
           resolve(xhr.responseText)
         }
       }

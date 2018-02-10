@@ -42,11 +42,16 @@ export const putFileChunk = payload => {
     body: fd,
   }).then(res => {
 
-    if (sessionStorage.getItem(DEBUG_MODE)) {
-      return res
-    }
+    try {
+      if (sessionStorage.getItem(DEBUG_MODE)) {
+        return res
+      }
 
-    return decrypt(res, SecretKey)
+      return JSON.parse(decrypt(res, SecretKey))
+    } catch (e) {
+      console.info("putFileChunk:", e)
+      return { status: -1, message: e.message }
+    }
   })
 
 }
