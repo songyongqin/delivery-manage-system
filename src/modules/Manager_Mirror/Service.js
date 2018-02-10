@@ -1,6 +1,6 @@
 import request from '../../utils/request';
 import ApiConfig from '../../configs/ApiConfig';
-import { uploadFile, getTemp, jsonToQueryString } from 'utils/tools';
+import { uploadFile, getTemp, jsonToQueryString, decrypt } from 'utils/tools';
 import commonRequestCreator from 'utils/commonRequestCreator'
 const httpApi = ApiConfig.http;
 import {
@@ -10,6 +10,9 @@ import {
   CHUNK_DATA_INDEX,
   CURRENT_CHUNK_DATA_INDEX
 } from './ConstConfig'
+import SecretKey from 'configs/SecretKey';
+import { DEBUG_MODE } from 'configs/ConstConfig'
+
 export const updateRemote = commonRequestCreator.post(httpApi.MIRROR_UPDATE_REMOTE)
 
 export const createUploadTask = commonRequestCreator.post(httpApi.MIRROR_UPDATE_LOCAL)
@@ -37,6 +40,13 @@ export const putFileChunk = payload => {
       "access-token": (getTemp("userData") || {}).token
     },
     body: fd,
+  }).then(res => {
+
+    if (sessionStorage.getItem(DEBUG_MODE)) {
+      return res
+    }
+
+    return decrypt(res, SecretKey)
   })
 
 }
