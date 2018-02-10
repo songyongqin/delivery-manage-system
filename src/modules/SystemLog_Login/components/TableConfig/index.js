@@ -11,6 +11,7 @@ import { NAMESPACE } from '../../ConstConfig'
 import TimesLabel from 'components/TimesLabel'
 import QueryIPForm from '../QueryIPForm'
 import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
+import getFilterIcon from 'utils/getFilterIcon'
 @WithAnimateRender
 @WithContainerHeader
 class App extends React.Component {
@@ -159,7 +160,7 @@ class App extends React.Component {
           <Button icon="search" type="primary" onClick={this.onSearchname} style={{ marginTop: "10px" }}>搜索</Button>
         </div>
       ),
-      filterIcon: <Icon type="filter" style={{ color: '#108ee9' }} />,
+      filterIcon: getFilterIcon(this.props.userAccount),
       filterDropdownVisible: this.state.filterDropdownVisiblename,
       onFilterDropdownVisibleChange: (visible) => {
         this.setState({
@@ -171,7 +172,7 @@ class App extends React.Component {
       title: '登录IP',
       dataIndex: 'ip',
       key: 'ip',
-      filterIcon: <Icon type="filter" style={{ color: '#108ee9' }} />,
+      filterIcon: getFilterIcon(this.props.ip),
       filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
         <QueryIPForm defaultValue="" onSave={this.onInputChangeip}></QueryIPForm>
       </FilterDropdownWrapper>,
@@ -184,7 +185,7 @@ class App extends React.Component {
     },
     {
       title: '登录状态',
-      filterIcon: <Icon type="filter" style={{ color: '#108ee9' }} />,
+      filterIcon: getFilterIcon(this.props.loginStatus),
       dataIndex: 'loginStatus',
       key: 'loginStatus',
       filters: [{
