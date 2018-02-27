@@ -17,24 +17,31 @@ import {
   dataIndexes,
   textConfig,
 } from '../../ConstConfig';
-import { getKeyText } from '../../../../utils/tools'
+import { getKeyText, pick } from 'utils/tools'
+import { ruleItemsConfig } from '../../ConstConfig'
 
 
-function getRenderer({ getModifyOpenHandle, getDelHandle, threatnames }) {
+
+function getRenderer({ getModifyOpenHandle, getDelHandle, threatnames, protocolType }) {
   let keyTextConfig = {
 
   };
   threatnames.forEach(i => {
     keyTextConfig[i.key] = i.name;
   })
+  const ruleKeys = ruleItemsConfig[protocolType] || []
+
   return {
     [RULE_THREAT_TYPE_DATAINDEX]: value => getKeyText(value, keyTextConfig),
-    [RULE_DATAINDEX]: value => Object.values(value).map(i => (
-      [
-        <JoTag color="#108ee9" key={`${i}-tag`}>{i}</JoTag>,
-        <br key={`${i}-br`} />
-      ]
-    )),
+    [RULE_DATAINDEX]: value => {
+      return Object.values(pick(ruleKeys, value)).map(i => (
+        [
+          <JoTag color="#108ee9" key={`${i}-tag`}>{i}</JoTag>,
+          <br key={`${i}-br`} />
+        ]
+      ))
+
+    },
     [RULE_OPERATION_KEY]: (value, records) => {
       const menu = (
         <Menu>
@@ -71,11 +78,11 @@ function getRenderer({ getModifyOpenHandle, getDelHandle, threatnames }) {
 
 }
 
-export const getColumns = ({ getModifyOpenHandle, getDelHandle, threatnames } = {}) =>
+export const getColumns = ({ getModifyOpenHandle, getDelHandle, threatnames, protocolType } = {}) =>
   tableColumnsGenerator({
     keys: dataIndexes,
     titleTextConfig: textConfig,
-    renderer: getRenderer({ getModifyOpenHandle, getDelHandle, threatnames }),
+    renderer: getRenderer({ getModifyOpenHandle, getDelHandle, threatnames, protocolType }),
   })
 
 

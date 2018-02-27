@@ -155,7 +155,10 @@ class Page extends React.Component {
       size: "small",
       expandIconColumnIndex: -1,
       columns: tableConfig.getColumns({
-        getModifyOpenHandle, getDelHandle, threatnames
+        getModifyOpenHandle,
+        getDelHandle,
+        threatnames,
+        protocolType: this.props[RULE_PROTOCOLTYPE_DATAINDEX]
       }),
       dataSource: data.map((i, index) => ({
         ...i,

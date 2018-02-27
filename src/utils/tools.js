@@ -200,3 +200,14 @@ export { default as getFileMd5, getMD5 } from './hashCalc'
 export { splitFileToChunk, uploadFile } from './fileSplitUpload.js'
 
 export { encrypt, decrypt } from './aes.js'
+
+export const pick = (keys, target) => {
+  try {
+    return keys.reduce((final, key) => {
+      final[key] = target[key]
+      return final
+    }, {})
+  } catch (e) {
+    throw new Error(`function pick:${e.message}`)
+  }
+}
