@@ -88,6 +88,9 @@ const routesZHCN = {
         title: "镜像管理"
       }
     }
+  },
+  "snort": {
+    title: "Snort规则上传"
   }
 };
 
