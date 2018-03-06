@@ -24,7 +24,7 @@ function mapStateToProps(state) {
       || effectsLoading[`${MANAGER_DEVICE_NODE_CONTROL_NAMESPACE}/put`]
       || effectsLoading[`${MANAGER_DEVICE_NODE_CONTROL_NAMESPACE}/query`],
 
-    postLicenceLoading: state.loading.effects[`${NAMESPACE}/postLicence`],
+    postLicenceLoading: state.loading.effects[`${MANAGER_DEVICE_NAMESPACE}/postLicence`],
 
     updateLoading: effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoLocal`]
       || effectsLoading[`${MANAGER_DEVICE_NAMESPACE}/getUpdateInfoRemote`]
