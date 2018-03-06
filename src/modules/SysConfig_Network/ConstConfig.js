@@ -15,15 +15,15 @@ export const DNS_DATAINDEX = "dns",
   ADAPTER_IP_DATAINDEX = "adapterIp",
   ADAPTER_MAS_DATAINDEX = "adapterMas",
   ADAPTER_GW_DATAINDEX = "adapterGW",
-  ADAPTER_STATUS_DATAINDEX = "adapterStatus";
+  ADAPTER_STATUS_DATAINDEX = "adapterStatus",
+  VIRTUAL_DATA_INDEX = "virtual"
+
+export const VIRTUAL = 1
 
 export const adapterTextConfig = {
-  // [ADPATER_NAME_DATAINDEX]:"",
-  // [ADPATER_MAC_DATAINDEX]:"",
   [ADAPTER_IP_DATAINDEX]: "IP",
   [ADAPTER_MAS_DATAINDEX]: "子网掩码",
   [ADAPTER_GW_DATAINDEX]: "网关",
-  // [ADPATER_STATUS_DATAINDEX]:"adapterStatus"
 }
 
 export const dnsTextConfig = {

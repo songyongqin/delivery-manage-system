@@ -31,7 +31,9 @@ import {
   ADAPTER_IP_DATAINDEX,
   ADAPTER_GW_DATAINDEX,
   ADAPTER_MAS_DATAINDEX,
-  adapterTextConfig
+  adapterTextConfig,
+  VIRTUAL,
+  VIRTUAL_DATA_INDEX
 } from './ConstConfig'
 import { IDS, DISTRIBUTION, NODE, STAND_ALONE } from 'configs/ConstConfig'
 import { connect } from 'dva';
@@ -149,6 +151,7 @@ const AdapterContent = ({ data = [], titleStyle, isDark, loading, getAdapterPutH
         </h3>
         <NetworkForm isDark={isDark}
           loading={loading}
+          disabled={i[VIRTUAL_DATA_INDEX] === VIRTUAL}
           rulesConfig={toFinalRulesConfig(i, rulesConfig)}
           dataIndexes={toFinalDataIndexes(i, dataIndexes)}
           labelTextConfig={toFinalTextConfig(i, adapterTextConfig)}

@@ -33,13 +33,14 @@ const Label = ({ dataIndex, className, textConfig }) => <span className={classNa
 
 
 const WrappedFormItem = ({
-                        dataIndex,
+  dataIndex,
   itemProps = {},
   lblClassName,
   getFieldDecorator,
   initialValue = "",
   rules = [],
   labelTextConfig,
+  disabled,
   loading }) => (
 
     <FormItem  {...itemProps}
@@ -55,7 +56,7 @@ const WrappedFormItem = ({
           }
         )
           (
-          <Input disabled={loading} />
+          <Input disabled={loading || disabled} />
           )
       }
     </FormItem>
@@ -92,7 +93,16 @@ class WrappedForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { isDark, loading, defaultValue, rulesConfig, dataIndexes, labelTextConfig } = this.props;
+    const {
+      isDark,
+      loading,
+      defaultValue,
+      rulesConfig,
+      dataIndexes,
+      labelTextConfig,
+      disabled = false,
+      btnDisabledTip
+    } = this.props;
 
     const lblClasses = classnames({
       [styles["lbl-dark"]]: isDark
@@ -113,13 +123,27 @@ class WrappedForm extends React.Component {
             loading,
             rules: rulesConfig[i],
             labelTextConfig,
+            disabled
           }} />)
         }
         <FormItem>
-          <Button type="primary"
-            loading={loading}
-            icon="save"
-            onClick={this.handleSubmit}>保存</Button>
+          {
+            disabled
+              ?
+              <Tooltip title={btnDisabledTip} >
+                <Button type="primary"
+                  disabled={true}
+                  icon="save"
+                  size="large"
+                  onClick={this.handleSubmit}>保存</Button>
+              </Tooltip>
+              :
+              <Button type="primary"
+                loading={loading}
+                disabled={disabled}
+                icon="save"
+                onClick={this.handleSubmit}>保存</Button>
+          }
         </FormItem>
       </Form>
     );

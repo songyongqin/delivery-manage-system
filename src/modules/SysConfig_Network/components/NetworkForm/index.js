@@ -12,7 +12,9 @@ import {
   ADAPTER_MAS_DATAINDEX,
   ADAPTER_GW_DATAINDEX,
   ADAPTER_STATUS_DATAINDEX,
-  adapterTextConfig
+  adapterTextConfig,
+  VIRTUAL,
+  VIRTUAL_DATA_INDEX
 } from '../../ConstConfig'
 
 
@@ -59,6 +61,7 @@ const dataIndexes = [
 
 export default (props) => {
   return <CommonForm {...props}
+    btnDisabledTip="该网卡是被br0桥接网卡，所有信息均为只读"
   // rulesConfig={rulesConfig}
   // dataIndexes={dataIndexes}
   // labelTextConfig={adapterTextConfig} 
