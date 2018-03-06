@@ -90,7 +90,7 @@ const routesZHCN = {
     }
   },
   "snort": {
-    title: "Snort规则上传"
+    title: "Snort规则"
   }
 };
 

@@ -44,6 +44,8 @@ import WhiteList from './modules/SysConfig_Strategy_WhiteList/Page';
 import SystemLog from './modules/SystemLog/Page';
 import SystemLogLogin from './modules/SystemLog_Login/Page';
 
+import Snort from 'modules/Snort/Page'
+
 
 function RouterConfig({ history, app }) {
 
@@ -94,8 +96,12 @@ function RouterConfig({ history, app }) {
           <IndexRedirect to="login" />
           <Route path="login" components={SystemLogLogin} />
         </Route>
-
+        <Route path="sys-log" components={SystemLog}>
+          <IndexRedirect to="login" />
+          <Route path="login" components={SystemLogLogin} />
+        </Route>
         {/*<Redirect from="*" to="error"/>*/}
+        <Route path="snort" components={Snort} />
       </Route>
 
     </Router>

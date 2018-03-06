@@ -281,7 +281,6 @@ export default ({
       const { isAdmin } = userData;
       const { hasGetVersion } = this.state;
       const isDark = commonLayout.darkTheme;
-
       const diskFilter = productType.type === DISTRIBUTION
 
       const tableProps = {
@@ -359,7 +358,7 @@ export default ({
           </JoSpin>
           <Modal
             width="800px"
-            closable={postLicenceLoading}
+            closable={!postLicenceLoading}
             maskClosable={false}
             style={{ top: "40" }}
             key={`${this.state.visible}-licence-modal`}
