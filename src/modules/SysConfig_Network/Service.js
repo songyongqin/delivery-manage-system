@@ -19,3 +19,7 @@ export const putControlConfig = commonRequestCreator.put(httpApi.SYS_CONFIG_NETW
 export const getAuthNetworkConfig = commonRequestCreator.get(httpApi.AUTH_NETWORK_802)
 
 export const putAuthNetworkConfig = commonRequestCreator.put(httpApi.AUTH_NETWORK_802)
+
+export const getCloudDetectionConfig = commonRequestCreator.get(httpApi.SYS_CONFIG_CLOUD_DETECTION)
+
+export const putCloudDetectionConfig = commonRequestCreator.put(httpApi.SYS_CONFIG_CLOUD_DETECTION)

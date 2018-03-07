@@ -33,9 +33,10 @@ import {
   ADAPTER_MAS_DATAINDEX,
   adapterTextConfig,
   VIRTUAL,
-  VIRTUAL_DATA_INDEX
+  VIRTUAL_DATA_INDEX,
+  CLOUD_DETECTION_NAMESPACE
 } from './ConstConfig'
-import { IDS, DISTRIBUTION, NODE, STAND_ALONE } from 'configs/ConstConfig'
+import { IDS, DISTRIBUTION, NODE, STAND_ALONE, IDS_STAND_ALONE } from 'configs/ConstConfig'
 import { connect } from 'dva';
 import NetworkForm from './components/NetworkForm';
 import DNSForm from './components/DNSForm';
@@ -43,6 +44,7 @@ import SysLogServerConfigForm from './components/SysLogServerConfigForm'
 import ControlConfigForm from './components/ControlConfigForm'
 import JoSpin from '../../components/JoSpin'
 import NetworkAuthForm from './components/NetworkAuthForm/'
+import CloudDetectionForm from './components/CloudDetectionForm'
 import classnames from 'classnames';
 import { ipReg, gatewayReg } from 'utils/tools'
 
@@ -211,7 +213,28 @@ const NetworkAuthContent = ({ data = {}, isDark, loading, onSubmit }) => {
     </JoSpin>
   </Card>
 }
-
+/*********************************************************/
+const CloudDetectionContent = ({ data, isDark, loading, onSubmit }) => {
+  return <Card
+    title={
+      <p>
+        云检测功能
+        &nbsp;
+      <Tooltip title="此功能需要连接到云检测服务器，请确保设备可连接到云检测服务器">
+          <a style={{ color: "#108ee9" }}>
+            <Icon type="question-circle-o" />
+          </a>
+        </Tooltip>
+      </p>
+    } style={{ marginBottom: "15px" }}>
+    <CloudDetectionForm
+      onSubmit={onSubmit}
+      loading={loading}
+      isDark={isDark}
+      defaultValue={data}>
+    </CloudDetectionForm>
+  </Card>
+}
 /*********************************************************/
 const mapStateToProps = state => ({
   [NAMESPACE]: state[NAMESPACE],
@@ -228,7 +251,10 @@ const mapStateToProps = state => ({
   controlConfigLoading: state.loading.effects[`${CONTROL_CONFIG_NAMESPACE}/query`] ||
     state.loading.effects[`${CONTROL_CONFIG_NAMESPACE}/put`],
   authNetworkLoading: state.loading.effects[`${AUTH_NETWORK_802_NAMESPACE}/query`] ||
-    state.loading.effects[`${AUTH_NETWORK_802_NAMESPACE}/put`]
+    state.loading.effects[`${AUTH_NETWORK_802_NAMESPACE}/put`],
+  cloudDetectionConfig: state[CLOUD_DETECTION_NAMESPACE].queryResults,
+  cloudDetectionLoading: state.loading.effects[`${CLOUD_DETECTION_NAMESPACE}/query`] ||
+    state.loading.effects[`${CLOUD_DETECTION_NAMESPACE}/put`]
 })
 /*********************************************************/
 const mapDispatchToProps = dispatch => ({
@@ -260,6 +286,13 @@ const mapDispatchToProps = dispatch => ({
     type: `${AUTH_NETWORK_802_NAMESPACE}/put`,
     payload,
   }),
+  getCloudDetectionConfig: payload => dispatch({
+    type: `${CLOUD_DETECTION_NAMESPACE}/query`,
+  }),
+  putCloudDetectionConfig: payload => dispatch({
+    type: `${CLOUD_DETECTION_NAMESPACE}/put`,
+    payload,
+  }),
 })
 /*********************************************************/
 const ADAPTER = "adapter";
@@ -274,12 +307,19 @@ class Page extends React.Component {
   }
   /*********************************************************/
   componentDidMount = () => {
-    this.props.get();
+
+    const { productType } = this.props
+
+    this.props.get()
     this.props.getSysLogConfig()
     this.props.getAuthNetworkConfig()
-    if (this.props.productType === IDS || this.props.productType === NODE) {
+    if (productType === IDS || productType === NODE) {
       this.props.getControlConfig()
     }
+    if (productType == IDS_STAND_ALONE || productType === DISTRIBUTION || productType === STAND_ALONE) {
+      this.props.getCloudDetectionConfig()
+    }
+
   }
   /*********************************************************/
   getBreadcrumb = () => {
@@ -311,10 +351,14 @@ class Page extends React.Component {
     .then(result => Message.success("保存成功", 3))
   /*********************************************************/
   putAuthNetworkConfig = payload => this.props.putAuthNetworkConfig(payload)
+    .then(result => Message.success("保存成功", 3))
+  /*********************************************************/
+  putCloudDetectionConfig = payload => this.props.putCloudDetectionConfig(payload)
+    .then(result => Message.success("保存成功", 3))
 
   getContentPanel = () => {
     const { queryResults } = this.props[NAMESPACE],
-      { putLoading, getLoading, commonLayout, sysConfigLoading, sysLogConfig, controlConfigLoading, controlConfig } = this.props,
+      { putLoading, getLoading, commonLayout, sysConfigLoading, sysLogConfig, controlConfigLoading, controlConfig, productType } = this.props,
       isDark = commonLayout.darkTheme;
 
     let titleStyle = { fontSize: "16px", marginBottom: "10px" };
@@ -339,7 +383,7 @@ class Page extends React.Component {
             isDark={isDark}>
           </SysLogServerContent>
           {
-            (this.props.productType === IDS || this.props.productType === NODE)
+            (productType === IDS || productType === NODE)
             &&
             <ControlCenterConfigContent
               loading={controlConfigLoading}
@@ -354,6 +398,16 @@ class Page extends React.Component {
             data={this.props.authNetworkConfig}
             onSubmit={this.putAuthNetworkConfig}>
           </NetworkAuthContent>
+          {
+            (productType == IDS_STAND_ALONE || productType === DISTRIBUTION || productType === STAND_ALONE)
+            &&
+            <CloudDetectionContent
+              isDark={isDark}
+              loading={this.props.cloudDetectionLoading}
+              data={this.props.cloudDetectionConfig}
+              onSubmit={this.putCloudDetectionConfig}>
+            </CloudDetectionContent>
+          }
         </JoSpin>
       </div>
     )

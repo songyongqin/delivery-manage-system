@@ -6,6 +6,7 @@ export const NAMESPACE = "network";
 export const SYS_LOG_CONFIG_NAMESPACE = "sysLogConfig"
 export const CONTROL_CONFIG_NAMESPACE = "controlConfig"
 export const AUTH_NETWORK_802_NAMESPACE = "authNetwork802"
+export const CLOUD_DETECTION_NAMESPACE = "cloudDetection"
 
 export const DNS_DATAINDEX = "dns",
   ADAPTER_LIST_DATAINDEX = "adapterList",
@@ -62,3 +63,9 @@ export const sysLogServerFormTextConfig = {
 export const AUTH_USER_ACCOUNT = "authUserAccount",
   AUTH_PASSWORD = "authUserPassword",
   IS_CONNECT = "isConnect"
+
+
+export const OPEN_DATA_INDEX = "open",
+  OPEN = 1,
+  CONNECT_CLOUD_DATA_INDEX = "connectCloud",
+  CONNECT = 1

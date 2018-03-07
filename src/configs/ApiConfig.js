@@ -134,7 +134,9 @@ export default {
 
     AUTH_NETWORK_802: "/sys-config/auth-network",
 
-    SNORT: "/snort"
+    SNORT: "/snort",
+
+    SYS_CONFIG_CLOUD_DETECTION: "/sys-config/cloud-detection"
 
   }
 }
