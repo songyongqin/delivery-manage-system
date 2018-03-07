@@ -158,7 +158,15 @@ const baseModel = {
 
       const productType = (tools.getTemp("productType") || {}).type
 
+      const snort = (tools.getTemp("productType") || {}).snort === 1
+
       return history.listen(({ pathname }) => {
+
+        if ((!snort) && pathname === "/snort") {
+          return dispatch({
+            type: "redirect"
+          })
+        }
 
         if (pathname === "/login") {
           return dispatch({

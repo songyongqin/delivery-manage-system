@@ -63,8 +63,8 @@ function mapStateToProps(state) {
     productType: state.user.productType.type,
     productInfo: state.user.productType,
     honeypotCreateList: state[VM_NAMESPACE].createList,
-    createStatusPanelVisible: state[VM_NAMESPACE].createStatusPanelVisible
-
+    createStatusPanelVisible: state[VM_NAMESPACE].createStatusPanelVisible,
+    snort: state.user.productType.snort === 1
   }
 }
 
@@ -156,7 +156,7 @@ class Page extends React.Component {
   };
 
   getNav = () => {
-    const { languageConfig, commonLayout, routeConfig, userData } = this.props;
+    const { languageConfig, commonLayout, routeConfig, userData, snort } = this.props;
     const { navMini, language, darkTheme } = commonLayout;
 
     const classes = classnames({
@@ -168,6 +168,7 @@ class Page extends React.Component {
     return (
       <div className={classes}>
         <Nav isMini={navMini}
+          snort={snort}
           changeOverdueTipVisible={this.props.changeOverdueTipVisible}
           activeKey={window.location.hash.substr(1)}
           isDark={darkTheme}
@@ -204,7 +205,7 @@ class Page extends React.Component {
           {this.props.children}
         </div>
         <BackTop style={{ right: "30px" }} />
-        <footer>
+        <footer style={{ zIndex: "10", position: "relative" }}>
           <p className={footerClasses}>
             © 2017 Antiy Labs
           </p>

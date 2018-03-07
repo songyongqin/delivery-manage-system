@@ -197,7 +197,7 @@ export default {
   "snort": {
     link: "/snort",
     adminOnly: false,
-    icon: <Icon type="filetext1"></Icon>
+    icon: <Icon type="addfile"></Icon>
   }
 }
 

@@ -21,7 +21,7 @@ import app from '../../../index.js'
 import { routerRedux } from 'dva/router'
 
 
-const getItem = (item, isAdmin = false, activeKeys, isOuter, productType, changeOverdueTipVisible) => {
+const getItem = (item, isAdmin = false, activeKeys, isOuter, productType, changeOverdueTipVisible, snort) => {
   const { adminOnly, items, link, icon, title, idsHide, nodeHide } = item;
   if (adminOnly && !isAdmin) {
     return null;
@@ -33,6 +33,10 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType, change
     return null;
   }
   if (productType === IDS_STAND_ALONE && shouldIdsStandAloneHideRouteList.includes(link)) {
+    return null
+  }
+
+  if ((!snort) && link === "/snort") {
     return null
   }
 
@@ -69,7 +73,7 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType, change
       <SubMenu key={link}
         className={classes}
         title={subMenuTitle}>
-        {getMenu(items, isAdmin, activeKeys, false, productType, changeOverdueTipVisible)}
+        {getMenu(items, isAdmin, activeKeys, false, productType, changeOverdueTipVisible, snort)}
       </SubMenu>
     )
   }
@@ -85,11 +89,11 @@ const getItem = (item, isAdmin = false, activeKeys, isOuter, productType, change
 
 };
 
-const getMenu = (routeConfig, isAdmin = true, activeKeys, isOuter, productType, changeOverdueTipVisible) => {
+const getMenu = (routeConfig, isAdmin = true, activeKeys, isOuter, productType, changeOverdueTipVisible, snort) => {
   const keys = Object.keys(routeConfig);
 
   return keys.map(k => {
-    return getItem(routeConfig[k], isAdmin, activeKeys, isOuter, productType, changeOverdueTipVisible)
+    return getItem(routeConfig[k], isAdmin, activeKeys, isOuter, productType, changeOverdueTipVisible, snort)
   })
 
 
@@ -122,7 +126,8 @@ export default class extends React.Component {
       routeConfig,
       isAdmin = false,
       productType,
-      changeOverdueTipVisible
+      changeOverdueTipVisible,
+      snort,
     } = this.props;
 
     const classes = classnames({
@@ -170,7 +175,7 @@ export default class extends React.Component {
           onOpenChange={this.onOpenChange}
           style={{ height: "100%", width: "100%" }}
           theme="dark">
-          {getMenu(config, isAdmin, activeKeys, true, productType, changeOverdueTipVisible)}
+          {getMenu(config, isAdmin, activeKeys, true, productType, changeOverdueTipVisible, snort)}
         </Menu>
       </nav>
     )
