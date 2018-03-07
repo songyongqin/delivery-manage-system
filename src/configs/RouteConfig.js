@@ -194,10 +194,10 @@ export default {
       }
     }
   },
-  "snort": {
-    link: "/snort",
-    adminOnly: false,
-    icon: <Icon type="addfile"></Icon>
-  }
+  // "snort": {
+  //   link: "/snort",
+  //   adminOnly: false,
+  //   icon: <Icon type="addfile"></Icon>
+  // }
 }
 
