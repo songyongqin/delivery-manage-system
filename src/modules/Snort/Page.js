@@ -166,7 +166,7 @@ class Page extends React.Component {
                     }
                   }}>
                     <Button type="primary" icon="select">
-                      选择本地的规则文件
+                      选择文件替换自定义规则
                 </Button>
                   </Upload>
                 </div>

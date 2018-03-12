@@ -19,7 +19,7 @@ import { shouldIdsHideRouteList, shouldNodeHideRouteList, shouldIdsStandAloneHid
 moment.locale('zh-cn');
 import { OVER_DUE_NAMESPACE } from 'configs/ConstConfig'
 const NAMESPACE = "user"
-
+const LAST_URL_CACHE = "@@__last_url__@@"
 const callConfig = {
   withArgsCombiner: true,
   withStatusHandle: true,
@@ -107,7 +107,7 @@ const baseModel = {
       const result = yield callWithExtra(service.deleteSign, {}, callConfig)
 
       window.sessionStorage.clear();
-      yield put(routerRedux.push('/login'));
+      // yield put(routerRedux.push('/login'));
       window.location.reload();
     },
     *redirect({ payload }, { call, put, select }) {
@@ -118,17 +118,30 @@ const baseModel = {
 
     },
     *redirectMain({ payload }, { call, put, select }) {
+      console.info("redirect main")
       yield put(routerRedux.push('/'));
     },
     /*
      *
      * */
     *checkLogin({ payload }, { call, put, select }) {
-      const user = yield select(state => state.user);
+      try {
+        const user = yield select(state => state.user);
+        const lastUrl = tools.getTemp(LAST_URL_CACHE) || ""
+        if (!user.signin) {
+          yield put(routerRedux.push('/login'))
+          return
+        }
 
-      if (!user.signin) {
-        yield put(routerRedux.push('/login'));
+        if (lastUrl.trim().length !== 0 && lastUrl === "/snort") {
+          tools.getTemp(LAST_URL_CACHE, "")
+          yield put(routerRedux.push(lastUrl))
+        }
+
+      } catch (e) {
+        console.error(e)
       }
+
 
     },
     *checkAdmin({ payload }, { call, put, select }) {
@@ -151,7 +164,7 @@ const baseModel = {
     setup({ history, dispatch }) {
       // 监听 history 变化，当进入 `/` 时触发 `load` action
 
-      const adminOnlyRoutes = ["/sys-config", "/user-manager", "/sys-log/login"];
+      const adminOnlyRoutes = ["/sys-config", "/user-manager", "/sys-log/login", '/snort'];
 
       const idsRouteBlackList = shouldIdsHideRouteList
 
@@ -163,9 +176,15 @@ const baseModel = {
 
       return history.listen(({ pathname }) => {
 
-        if ((!snort) && pathname === "/snort") {
+        const signin = !!tools.getTemp("userData")
+
+        if (!signin && pathname !== '/login') {
+          tools.setTemp(LAST_URL_CACHE, pathname)
+        }
+
+        if ((!snort) && pathname === "/snort" && signin) {
           return dispatch({
-            type: "redirect"
+            type: "redirectMain"
           })
         }
 
@@ -175,7 +194,7 @@ const baseModel = {
           });
         }
 
-        if (shouldIdsStandAloneHideRouteList.includes(pathname) && productType === IDS_STAND_ALONE)
+        if (shouldIdsStandAloneHideRouteList.includes(pathname) && productType === IDS_STAND_ALONE && signin)
 
           if (nodeRouteBlackList.includes(pathname) && productType === NODE) {
             return dispatch({
@@ -183,13 +202,13 @@ const baseModel = {
             });
           }
 
-        if (idsRouteBlackList.includes(pathname) && productType === IDS) {
+        if (idsRouteBlackList.includes(pathname) && productType === IDS && signin) {
           return dispatch({
             type: "redirectMain"
           });
         }
 
-        if (adminOnlyRoutes.includes(pathname)) {
+        if (adminOnlyRoutes.includes(pathname) && signin) {
           return dispatch({
             type: "checkAdmin"
           })
