@@ -134,7 +134,7 @@ const baseModel = {
         }
 
         if (lastUrl.trim().length !== 0 && lastUrl === "/snort") {
-          tools.getTemp(LAST_URL_CACHE, "")
+          tools.setTemp(LAST_URL_CACHE, "")
           yield put(routerRedux.push(lastUrl))
         }
 
@@ -178,7 +178,7 @@ const baseModel = {
 
         const signin = !!tools.getTemp("userData")
 
-        if (!signin && pathname !== '/login') {
+        if ((!signin) && pathname === "/snort") {
           tools.setTemp(LAST_URL_CACHE, pathname)
         }
 
