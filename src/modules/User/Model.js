@@ -107,6 +107,7 @@ const baseModel = {
       const result = yield callWithExtra(service.deleteSign, {}, callConfig)
 
       window.sessionStorage.clear();
+      yield put(routerRedux.push('/login'));
       window.location.reload();
     },
     *redirect({ payload }, { call, put, select }) {
