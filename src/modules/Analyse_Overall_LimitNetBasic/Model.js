@@ -8,9 +8,11 @@ import { queryModelGenerator } from '../../utils/dvaModelGenerator';
 import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
 import {
   NAMESPACE,
+} from './ConstConfig'
+import {
   PROTOCOL_TYPE_DATA_INDEX,
-  protocolTypeList,
   THREATJUDGE_DATA_INDEX,
+  protocolTypeList,
   URL_DATA_INDEX,
   SOURCE_IP_DATA_INDEX,
   SOURCE_PORT_DATA_INDEX,
@@ -19,13 +21,13 @@ import {
   REQUEST_DOMAIN_DATA_INDEX,
   SENDER_DATA_INDEX,
   RECEIVE_DATA_INDEX
-} from './ConstConfig'
+} from '../Analyse_Overall_NetBasic/ConstConfig'
 moment.locale('zh-cn');
 
 export const initFilters = {
   timestampRange: [],
   [PROTOCOL_TYPE_DATA_INDEX]: protocolTypeList[0],
-  [THREATJUDGE_DATA_INDEX]: "",
+  [THREATJUDGE_DATA_INDEX]: ["doubtful", "abnormal"],
   [URL_DATA_INDEX]: "",
   [SOURCE_IP_DATA_INDEX]: "",
   [SOURCE_PORT_DATA_INDEX]: "",

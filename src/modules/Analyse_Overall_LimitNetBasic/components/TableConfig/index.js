@@ -1,10 +1,10 @@
 import React from 'react';
-import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
+import tableColumnsGenerator from 'utils/tableColumnsGenerator';
 import moment from 'moment';
 import classnames from 'classnames';
-import * as tools from '../../../../utils/tools';
+import * as tools from 'utils/tools';
 import {
-  dataIndexesConfig,
+  dataLimitIndexesConfig,
   PROTOCOL_TYPE_DATA_INDEX,
   URL_DATA_INDEX,
   TIME_DATA_INDEX,
@@ -20,9 +20,9 @@ import {
   THREAT_TYPE_TEXT,
   THREAT_TYPE
 
-} from '../../ConstConfig'
-import TimesLabel from '../../../../components/TimesLabel';
-import JoTag from '../../../../components/JoTag';
+} from '../../../Analyse_Overall_NetBasic/ConstConfig'
+import TimesLabel from 'components/TimesLabel';
+import JoTag from 'components/JoTag';
 import { Popover, Icon } from 'antd';
 import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
 import SearchFilterForm from 'domainComponents/SearchFilterForm'
@@ -106,17 +106,11 @@ const ruleConfig = {
 }
 
 
-export const getColumns = ({ queryFilters, onQuery, filters, filterTextConfig = {} } = {}) =>
+export const getColumns = ({ queryFilters, onQuery } = {}) =>
   tableColumnsGenerator({
-    keys: dataIndexesConfig[queryFilters[PROTOCOL_TYPE_DATA_INDEX]],
+    keys: dataLimitIndexesConfig[queryFilters[PROTOCOL_TYPE_DATA_INDEX]],
     titleTextConfig: textConfig,
     filteredValue: queryFilters,
-    filterOptions: {
-      [THREATJUDGE_DATA_INDEX]: THREAT_TYPE
-    },
-    filterTextConfig: {
-      [THREATJUDGE_DATA_INDEX]: THREAT_TYPE_TEXT
-    },
     renderer: {
       [TIME_DATA_INDEX]: value => <TimesLabel times={[value]}></TimesLabel>,
       [URL_DATA_INDEX]: value => value.length > OVER_FLOW_LENGTH

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.css'
 import { Menu, Button, Breadcrumb } from 'antd';
-import SelectForm from './components/SelectForm'
+import SelectForm from '../../modules/Analyse_Overall_NetBasic/components/SelectForm'
 import classnames from 'classnames';
 import { connect } from 'dva';
 import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'

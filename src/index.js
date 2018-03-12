@@ -51,6 +51,7 @@ import MonitorControlModel from './modules/SysConfig_Monitor_Control/Model';
 import MonitorIDSModel from './modules/SysConfig_Monitor_IDS/Model';
 import MonitorNodeModel from './modules/SysConfig_Monitor_Node/Model';
 import OverallNetBasicModel from './modules/Analyse_Overall_NetBasic/Model';
+import OverallLimitNetBasicModel from './modules/Analyse_Overall_LimitNetBasic/Model';
 import OverallModel from './modules/Analyse_Overall/Model';
 import AnalyseRankingModel from './modules/Analyse_Ranking/Model';
 import AnalyseDistributionModel from './modules/Analyse_ThreatDistribution/Model'
@@ -83,8 +84,6 @@ import ManagerMirrorModelList from './modules/Manager_Mirror/Model'
 import SysLogConfigModel from './modules/SysConfig_Network/models/sysLog.js'
 import ControlConfigModel from './modules/SysConfig_Network/models/controlConfig'
 import AuthNetworkModel from './modules/SysConfig_Network/models/Auth802Network'
-import SnortModel from 'modules/Snort/Model'
-import CloudDetectionModel from 'modules/SysConfig_Network/models/cloudDetection'
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -129,6 +128,7 @@ app.model(MonitorControlModel);
 app.model(MonitorIDSModel);
 app.model(MonitorNodeModel);
 app.model(OverallNetBasicModel);
+app.model(OverallLimitNetBasicModel);
 app.model(OverallModel);
 app.model(AnalyseRankingModel);
 app.model(AnalyseDistributionModel);
@@ -160,8 +160,6 @@ importModelList(ManagerMirrorModelList)
 app.model(SysLogConfigModel)
 app.model(ControlConfigModel)
 app.model(AuthNetworkModel)
-app.model(SnortModel)
-app.model(CloudDetectionModel)
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);

@@ -4,6 +4,7 @@ import { Menu, Button, Breadcrumb, Tabs } from 'antd';
 import { WithAnimateRender, WithBreadcrumb, WithContainerHeader } from '../../components/HOSComponents';
 import { connect } from 'dva';
 import OverallNetBasic from '../Analyse_Overall_NetBasic/Page';
+import OverallLimitNetBasic from '../Analyse_Overall_LimitNetBasic/Page';
 import OverallPcap from '../Analyse_Overall_PCAP/Page'
 import OverallCapture from '../Analyse_Overall_Capture/Page'
 import OverallSystem from '../Analyse_Overall_System/Page';
@@ -22,6 +23,9 @@ import {
 import {
   NAMESPACE as OVERALL_NET_BASIC_NAMESPACE,
 } from '../Analyse_Overall_NetBasic/ConstConfig'
+import {
+  NAMESPACE as OVERALL_NET_BASIC_LIMIT_NAMESPACE,
+} from '../Analyse_Overall_LimitNetBasic/ConstConfig'
 import {
   NAMESPACE as OVERALL_NET_NAMESPACE,
 } from '../Analyse_Overall_Net/ConstConfig'
@@ -46,6 +50,9 @@ import {
   initFilters as netBasicInitFilters
 } from '../Analyse_Overall_NetBasic/Model'
 import {
+  initFilters as LimitNetBasicInitFilters
+} from '../Analyse_Overall_LimitNetBasic/Model'
+import {
   initFilters as pcapInitFilters
 } from '../Analyse_Overall_PCAP/Model.js'
 import {
@@ -56,6 +63,7 @@ const initFiltersConfig = {
   [OVERALL_CAPTURE_NAMESPACE]: captureInitFilters,
   [OVERALL_NET_NAMESPACE]: netInitFilters,
   [OVERALL_NET_BASIC_NAMESPACE]: netBasicInitFilters,
+  [OVERALL_NET_BASIC_LIMIT_NAMESPACE]: LimitNetBasicInitFilters,
   [OVERALL_PCAP_NAMESPACE]: pcapInitFilters,
   [OVERALL_SYSTEM_NAMESPACE]: systemInitFilters
 }
@@ -66,6 +74,7 @@ function mapStateToProps(state) {
     isDark: commonLayout.darkTheme,
     [NAMESPACE]: state[NAMESPACE],
     [OVERALL_NET_BASIC_NAMESPACE]: state[OVERALL_NET_BASIC_NAMESPACE],
+    [OVERALL_NET_BASIC_LIMIT_NAMESPACE]: state[OVERALL_NET_BASIC_LIMIT_NAMESPACE],
     [OVERALL_NET_NAMESPACE]: state[OVERALL_NET_NAMESPACE],
     [OVERALL_CAPTURE_NAMESPACE]: state[OVERALL_CAPTURE_NAMESPACE],
     [OVERALL_SYSTEM_NAMESPACE]: state[OVERALL_SYSTEM_NAMESPACE],
@@ -79,6 +88,10 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    saveActiveKey: payload => dispatch({
+      type: `${OVERALL_NET_BASIC_LIMIT_NAMESPACE}/onQuery`,
+      payload,
+    }),
     setTimestampRange: payload => dispatch({
       type: `${NAMESPACE}/setTimestampRange`,
       payload,
@@ -156,6 +169,7 @@ class Page extends React.Component {
     this.setState({
       activeKey: key
     })
+    this.props.saveActiveKey({ activeKey: key })
     this.tabPanelFetchData(key, this.props.timestampRange, this.props.lastTime)
   }
   getTabsContent = () => {
@@ -193,6 +207,10 @@ class Page extends React.Component {
         <Tabs.TabPane key={OVERALL_NET_BASIC_NAMESPACE} tab="网络基础数据" style={{ minHeight: "400px" }}>
           <OverallNetBasic lastTime={lastTime}></OverallNetBasic>
         </Tabs.TabPane>
+        <Tabs.TabPane key={OVERALL_NET_BASIC_LIMIT_NAMESPACE} tab="异常可疑网络数据" style={{ minHeight: "400px" }}>
+          <OverallLimitNetBasic lastTime={lastTime}></OverallLimitNetBasic>
+        </Tabs.TabPane>
+
         {/* } */}
         {
           (productType === IDS || productType === IDS_STAND_ALONE)

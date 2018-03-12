@@ -13,6 +13,9 @@ import {
   NAMESPACE as OVERALL_NET_BASIC_NAMESPACE,
 } from '../Analyse_Overall_NetBasic/ConstConfig'
 import {
+  NAMESPACE as OVERALL_NET_BASIC_LIMIT_NAMESPACE,
+} from '../Analyse_Overall_LimitNetBasic/ConstConfig'
+import {
   NAMESPACE as OVERALL_NET_NAMESPACE,
 } from '../Analyse_Overall_Net/ConstConfig'
 import {
@@ -34,6 +37,7 @@ const baseModel = {
     lastTime: 0,
     panelLastTime: {
       [OVERALL_NET_BASIC_NAMESPACE]: -1,
+      [OVERALL_NET_BASIC_LIMIT_NAMESPACE]: -1,
       [OVERALL_NET_NAMESPACE]: -1,
       [OVERALL_SYSTEM_NAMESPACE]: -1,
       [OVERALL_CAPTURE_NAMESPACE]: -1,
