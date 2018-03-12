@@ -7,7 +7,7 @@ import { Button, Modal, Upload, message as Message, Row, Col, Tooltip } from 'an
 import { WithBreadcrumb, WithAnimateRender } from 'components/HOSComponents/index'
 import exampleRule from './exampleRule'
 import { getCache, setCache } from 'utils/tools'
-import { NAMESPACE, POST_SNORT_RULE_ACTION, RULE_CONTENT_DATA_INDEX } from './ConstConfig'
+import { NAMESPACE, POST_SNORT_RULE_ACTION, RULE_CONTENT_DATA_INDEX, FETCH_SNORT_RULE_ACTION } from './ConstConfig'
 import { connect } from 'dva'
 import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
 import Spin from 'components/JoSpin'
@@ -31,7 +31,8 @@ const getInitValue = () => {
 
 const mapStateToProps = state => {
   return {
-    postSnortRuleLoading: state.loading.effects[`${NAMESPACE}/${POST_SNORT_RULE_ACTION}`]
+    postSnortRuleLoading: state.loading.effects[`${NAMESPACE}/${POST_SNORT_RULE_ACTION}`],
+    fetchSnortRuleLoading: state.loading.effects[`${NAMESPACE}/${FETCH_SNORT_RULE_ACTION}`]
   }
 }
 
@@ -39,6 +40,10 @@ const mapDispatchToProps = dispatch => {
   return {
     postSnortRule: payload => dispatch({
       type: `${NAMESPACE}/${POST_SNORT_RULE_ACTION}`,
+      payload
+    }),
+    fetchSnortRule: payload => dispatch({
+      type: `${NAMESPACE}/${FETCH_SNORT_RULE_ACTION}`,
       payload
     })
   }
@@ -51,8 +56,11 @@ class Page extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: getInitValue()
+      value: ""
     }
+  }
+  componentDidMount() {
+    this.fetchSnortRule()
   }
   getBreadcrumb = () => {
     return (
@@ -60,6 +68,11 @@ class Page extends React.Component {
         {this.props.getBreadcrumb(this.props.routes)}
       </div>
     )
+  }
+  fetchSnortRule = () => {
+    this.props
+      .fetchSnortRule()
+      .then(value => this.setState({ value }))
   }
   postSnortRule = () => {
     this.props
@@ -74,9 +87,9 @@ class Page extends React.Component {
       this.setState({
         value
       })
-      setCache(SNORT_CACHE_NAMESPACE, {
-        value
-      })
+      // setCache(SNORT_CACHE_NAMESPACE, {
+      //   value
+      // })
 
     } catch (e) {
       Message.error(e.message)
@@ -85,12 +98,12 @@ class Page extends React.Component {
   render() {
 
     const { updateEditorContent } = this
-    const { postSnortRuleLoading } = this.props
+    const { postSnortRuleLoading, fetchSnortRuleLoading } = this.props
     const { value } = this.state
 
     return (
       <div>
-        <Spin spinning={postSnortRuleLoading}>
+        <Spin spinning={postSnortRuleLoading || fetchSnortRuleLoading}>
           {
             this.props.animateRender([
               this.getBreadcrumb(),

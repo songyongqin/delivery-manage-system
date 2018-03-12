@@ -1,6 +1,7 @@
 import {
   NAMESPACE,
-  POST_SNORT_RULE_ACTION
+  POST_SNORT_RULE_ACTION,
+  FETCH_SNORT_RULE_ACTION
 } from './ConstConfig'
 import * as services from './Service.js'
 import { commonCallConfig } from '../../configs/ExtraEffectsOptions'
@@ -13,6 +14,13 @@ export default {
 
       if (res.status === 1) {
         resolve && resolve()
+      }
+    },
+    [FETCH_SNORT_RULE_ACTION]: function* ({ resolve, reject, payload }, { callWithExtra, select, put }) {
+      const res = yield callWithExtra(services.getSnortRule, payload, commonCallConfig)
+
+      if (res.status === 1) {
+        resolve && resolve(res.payload)
       }
     }
   }
