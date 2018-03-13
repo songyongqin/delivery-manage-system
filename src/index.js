@@ -84,6 +84,9 @@ import ManagerMirrorModelList from './modules/Manager_Mirror/Model'
 import SysLogConfigModel from './modules/SysConfig_Network/models/sysLog.js'
 import ControlConfigModel from './modules/SysConfig_Network/models/controlConfig'
 import AuthNetworkModel from './modules/SysConfig_Network/models/Auth802Network'
+import SnortModel from 'modules/Snort/Model'
+import CloudDetectionModel from 'modules/SysConfig_Network/models/cloudDetection'
+
 // 1. Initialize
 const app = dva({
   history: useRouterHistory(createHashHistory)({ queryKey: false }),
@@ -160,6 +163,9 @@ importModelList(ManagerMirrorModelList)
 app.model(SysLogConfigModel)
 app.model(ControlConfigModel)
 app.model(AuthNetworkModel)
+app.model(SnortModel)
+app.model(CloudDetectionModel)
+
 
 combineExtraEffectsWithApp(app, extraEffectsOptions);
 combineExtraReducersWithApp(app);
