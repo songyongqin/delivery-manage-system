@@ -48,6 +48,17 @@ export const shouldNodeHideRouteList = [
   "/user-manager"
 ]
 
+export const adminOnlyRoutes = [
+  "/sys-config",
+  "/user-manager",
+  "/sys-log/login",
+  '/snort',
+  '/sys-config/network',
+  '/sys-config/monitor',
+  '/sys-config/strategy'
+]
+
+export const openRoutes = ["/login"]
 
 export default {
   "overview": {

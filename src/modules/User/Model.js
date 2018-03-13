@@ -13,9 +13,16 @@ import {
   IDS,
   NODE,
   IDS_STAND_ALONE,
+  DISTRIBUTION
 } from '../../configs/ConstConfig';
 import { getVerificationCode } from './Service';
-import { shouldIdsHideRouteList, shouldNodeHideRouteList, shouldIdsStandAloneHideRouteList } from 'configs/RouteConfig'
+import {
+  shouldIdsHideRouteList,
+  shouldNodeHideRouteList,
+  shouldIdsStandAloneHideRouteList,
+  adminOnlyRoutes,
+  openRoutes
+} from 'configs/RouteConfig'
 moment.locale('zh-cn');
 import { OVER_DUE_NAMESPACE } from 'configs/ConstConfig'
 const NAMESPACE = "user"
@@ -24,6 +31,14 @@ const callConfig = {
   withArgsCombiner: true,
   withStatusHandle: true,
   withLoading: true,
+}
+
+const isAdmin = () => {
+  try {
+    return tools.getTemp("userData").isAdmin
+  } catch (e) {
+    return false
+  }
 }
 
 const baseModel = {
@@ -110,48 +125,59 @@ const baseModel = {
       // yield put(routerRedux.push('/login'));
       window.location.reload();
     },
-    *redirect({ payload }, { call, put, select }) {
-      const user = yield select(state => state.user);
-      if (user.signin) {
-        yield put(routerRedux.push('/'));
-      }
+    // *redirect({ payload }, { call, put, select }) {
+    //   const user = yield select(state => state.user);
+    //   if (user.signin) {
+    //     yield put(routerRedux.push('/'));
+    //   }
 
-    },
+    // },
     *redirectMain({ payload }, { call, put, select }) {
-      console.info("redirect main")
       yield put(routerRedux.push('/'));
+    },
+    *toLogin(_, { put }) {
+      yield put(routerRedux.push("/login"))
+    },
+    *loginRedirect(_, { call, put }) {
+      const lastUrl = tools.getTemp(LAST_URL_CACHE) || ""
+      if (lastUrl.trim().length !== 0) {
+        tools.setTemp(LAST_URL_CACHE, "")
+        yield put(routerRedux.push(lastUrl))
+      } else {
+        yield put(routerRedux.push("/"))
+      }
     },
     /*
      *
      * */
-    *checkLogin({ payload }, { call, put, select }) {
-      try {
-        const user = yield select(state => state.user);
-        const lastUrl = tools.getTemp(LAST_URL_CACHE) || ""
-        if (!user.signin) {
-          yield put(routerRedux.push('/login'))
-          return
-        }
+    // *checkLogin({ payload }, { call, put, select }) {
+    //   try {
+    //     const user = yield select(state => state.user);
+    //     const lastUrl = tools.getTemp(LAST_URL_CACHE) || ""
+    //     if (!user.signin) {
+    //       yield put(routerRedux.push('/login'))
+    //       return
+    //     }
 
-        if (lastUrl.trim().length !== 0 && lastUrl === "/snort") {
-          tools.setTemp(LAST_URL_CACHE, "")
-          yield put(routerRedux.push(lastUrl))
-        }
+    //     if (lastUrl.trim().length !== 0 && lastUrl === "/snort") {
+    //       tools.setTemp(LAST_URL_CACHE, "")
+    //       yield put(routerRedux.push(lastUrl))
+    //     }
 
-      } catch (e) {
-        console.error(e)
-      }
+    //   } catch (e) {
+    //     console.error(e)
+    //   }
 
 
-    },
-    *checkAdmin({ payload }, { call, put, select }) {
-      const user = yield select(state => state.user);
+    // },
+    // *checkAdmin({ payload }, { call, put, select }) {
+    //   const user = yield select(state => state.user);
 
-      if (!user.userData.isAdmin) {
-        yield put(routerRedux.push('/'));
-      }
+    //   if (!user.userData.isAdmin) {
+    //     yield put(routerRedux.push('/'));
+    //   }
 
-    },
+    // },
     *getVerificationCode({ payload, resolve }, { callWithExtra }) {
       const res = yield callWithExtra(service.getVerificationCode, {}, callConfig)
 
@@ -164,8 +190,6 @@ const baseModel = {
     setup({ history, dispatch }) {
       // 监听 history 变化，当进入 `/` 时触发 `load` action
 
-      const adminOnlyRoutes = ["/sys-config", "/user-manager", "/sys-log/login", '/snort'];
-
       const idsRouteBlackList = shouldIdsHideRouteList
 
       const nodeRouteBlackList = shouldNodeHideRouteList
@@ -176,56 +200,56 @@ const baseModel = {
 
       return history.listen(({ pathname }) => {
 
-        const signin = !!tools.getTemp("userData")
+        const signin = !!tools.getTemp("userData"),
 
-        if ((!signin) && pathname === "/snort") {
+          open = openRoutes.includes(pathname)
+
+        if (signin && !isRouteAuth({ pathname, productType })) {
+          return dispatch({
+            type: "redirectMain"
+          })
+        }
+
+        if (pathname === "/login" && signin) {
+          return dispatch({
+            type: "loginRedirect"
+          })
+        }
+
+        if (adminOnlyRoutes.includes(pathname) && !isAdmin()) {
+
+          return dispatch({
+            type: "redirectMain"
+          })
+        }
+
+        if (pathname !== "/login" && !signin) {
           tools.setTemp(LAST_URL_CACHE, pathname)
-        }
-
-        if ((!snort) && pathname === "/snort" && signin) {
           return dispatch({
-            type: "redirectMain"
+            type: "toLogin"
           })
         }
 
-        if (pathname === "/login") {
-          return dispatch({
-            type: "redirect"
-          });
-        }
-
-        if (shouldIdsStandAloneHideRouteList.includes(pathname) && productType === IDS_STAND_ALONE && signin)
-
-          if (nodeRouteBlackList.includes(pathname) && productType === NODE) {
-            return dispatch({
-              type: "redirectMain"
-            });
-          }
-
-        if (idsRouteBlackList.includes(pathname) && productType === IDS && signin) {
-          return dispatch({
-            type: "redirectMain"
-          });
-        }
-
-        if (adminOnlyRoutes.includes(pathname) && signin) {
-          return dispatch({
-            type: "checkAdmin"
-          })
-        }
-
-
-        dispatch({
-          type: "checkLogin"
-        });
-
-      });
+      })
     },
   },
 };
 
-export default baseModel;
 
+const isRouteAuth = ({ productType, pathname }) => {
+  switch (productType) {
+    case IDS_STAND_ALONE:
+      return !shouldIdsStandAloneHideRouteList.includes(pathname)
+    case NODE:
+      return !shouldNodeHideRouteList.includes(pathname)
+    case IDS:
+      return !idsRouteBlackList.includes(pathname)
+    case DISTRIBUTION:
+      return true
+    default:
+      return true
+  }
+}
 
 // user active listener , send a request to server for keep active status
 // debounceTime:number   judge active 
@@ -299,3 +323,6 @@ try {
 } catch (e) {
   console.info(`heart beat:`, e)
 }
+
+
+export default baseModel
