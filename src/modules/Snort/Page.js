@@ -29,6 +29,23 @@ const getInitValue = () => {
   }
 }
 
+
+const getDraft = () => {
+  try {
+    const cache = getCache(SNORT_CACHE_NAMESPACE).value
+    if (cache === null) {
+      return null
+    }
+    if (cache.trim().length !== 0) {
+      return cache
+    }
+    return null
+  } catch (e) {
+
+    return null
+  }
+}
+
 const mapStateToProps = state => {
   return {
     postSnortRuleLoading: state.loading.effects[`${NAMESPACE}/${POST_SNORT_RULE_ACTION}`],
@@ -61,6 +78,22 @@ class Page extends React.Component {
   }
   componentDidMount() {
     this.fetchSnortRule()
+    this.checkDraft()
+  }
+  checkDraft = () => {
+    const draft = getDraft()
+    if (draft !== null) {
+      Modal.confirm({
+        title: "草稿",
+        content: "检测到存在未上传到草稿，是否显示草稿内容？",
+        onOk: _ => {
+          this.setState({
+            value: draft
+          })
+          return Promise.resolve()
+        }
+      })
+    }
   }
   getBreadcrumb = () => {
     return (
@@ -79,6 +112,7 @@ class Page extends React.Component {
       .postSnortRule({ [RULE_CONTENT_DATA_INDEX]: this.state.value })
       .then(_ => {
         Message.success("上传成功")
+        setCache(SNORT_CACHE_NAMESPACE, null)
         // this.updateEditorContent("")
       })
   }
@@ -87,9 +121,9 @@ class Page extends React.Component {
       this.setState({
         value
       })
-      // setCache(SNORT_CACHE_NAMESPACE, {
-      //   value
-      // })
+      setCache(SNORT_CACHE_NAMESPACE, {
+        value
+      })
 
     } catch (e) {
       Message.error(e.message)
@@ -171,27 +205,13 @@ class Page extends React.Component {
                   </Upload>
                 </div>
                 <div style={{ float: "right" }}>
-                  {
-                    value.trim().length === 0
-                      ?
-                      <Tooltip title="不能上传为空的内容">
-                        <Button
-                          disabled={true}
-                          type="primary"
-                          icon="upload">
-                          上传编辑的内容
-                        </Button>
-                      </Tooltip>
-                      :
-                      <Button
-                        disabled={false}
-                        type="primary"
-                        icon="upload"
-                        onClick={this.postSnortRule}>
-                        上传编辑的内容
-                      </Button>
-                  }
-
+                  <Button
+                    disabled={false}
+                    type="primary"
+                    icon="upload"
+                    onClick={this.postSnortRule}>
+                    上传编辑的内容
+                  </Button>
                 </div>
               </div>
             ])
