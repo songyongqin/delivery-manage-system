@@ -355,6 +355,7 @@ class Page extends React.Component {
   /*********************************************************/
   putCloudDetectionConfig = payload => this.props.putCloudDetectionConfig(payload)
     .then(result => Message.success("保存成功", 3))
+    .then(this.props.getCloudDetectionConfig)
 
   getContentPanel = () => {
     const { queryResults } = this.props[NAMESPACE],
