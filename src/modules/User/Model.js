@@ -230,6 +230,12 @@ const baseModel = {
           })
         }
 
+        if (pathname === "/snort" && (!snort)) {
+          return dispatch({
+            type: "redirectMain"
+          })
+        }
+
       })
     },
   },
