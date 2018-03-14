@@ -18,6 +18,9 @@ const Tag = props => {
     }
 
   }
+  if (children === "" || children === null || children === undefined) {
+    return null
+  }
   return <AntTag
     {...props}
     style={{ textAlign: "center", cursor: "text", borderRadius: "4px", margin: "0 5px 5px 0", ...(props.style || {}) }}
