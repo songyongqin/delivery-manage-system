@@ -179,17 +179,17 @@ export const THREATJUDGE_TYPE = "threat_type",
   JUDGE_SAFE = "safe"
 
 export const THREAT_TYPE = [
-  JUDGE_THREAT,
-  JUDGE_DOUBTFUL,
-  JUDGE_ABNORMAL,
+  // JUDGE_THREAT,
+  // JUDGE_DOUBTFUL,
+  // JUDGE_ABNORMAL,
   JUDGE_UNKNOWN,
   JUDGE_SAFE
 ]
 
 export const THREAT_TYPE_TEXT = {
-  [JUDGE_THREAT]: "威胁",
-  [JUDGE_DOUBTFUL]: "可疑",
-  [JUDGE_ABNORMAL]: "异常",
+  // [JUDGE_THREAT]: "威胁",
+  // [JUDGE_DOUBTFUL]: "可疑",
+  // [JUDGE_ABNORMAL]: "异常",
   [JUDGE_UNKNOWN]: "未知",
   [JUDGE_SAFE]: "安全"
 }
