@@ -11,6 +11,7 @@ import { NAMESPACE, POST_SNORT_RULE_ACTION, RULE_CONTENT_DATA_INDEX, FETCH_SNORT
 import { connect } from 'dva'
 import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
 import Spin from 'components/JoSpin'
+import { hasSnort } from 'domain/production'
 
 const SNORT_CACHE_NAMESPACE = "@@__SNORT__@@"
 
@@ -77,8 +78,11 @@ class Page extends React.Component {
     }
   }
   componentDidMount() {
-    this.fetchSnortRule()
-    this.checkDraft()
+    if (hasSnort()) {
+      console.info("...")
+      this.fetchSnortRule()
+      this.checkDraft()
+    }
   }
   checkDraft = () => {
     const draft = getDraft()

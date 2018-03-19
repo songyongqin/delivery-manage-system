@@ -37,7 +37,8 @@ module.exports = (webpackConfig, env) => {
     'utils': path.resolve(__dirname, './src/utils'),
     'modules': path.resolve(__dirname, './src/modules'),
     'configs': path.resolve(__dirname, "./src/configs"),
-    "Generators": path.resolve(__dirname, "./src/Generators")
+    "Generators": path.resolve(__dirname, "./src/Generators"),
+    "domain": path.resolve(__dirname, "./src/domain")
   }
 
   return webpackConfig;
