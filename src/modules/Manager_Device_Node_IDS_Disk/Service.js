@@ -1,17 +1,10 @@
 import request from '../../utils/request';
 import ApiConfig from '../../configs/ApiConfig';
 const httpApi = ApiConfig.http;
+import commonRequestCreator from '../../utils/commonRequestCreator';
 
-export async function query() {
 
-  const options = {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-  return request(httpApi.DEVICE_NODE_IDS_DISK, options);
-}
+export const query = commonRequestCreator.get(httpApi.DEVICE_NODE_IDS_DISK)
 
 export async function put(payload) {
 

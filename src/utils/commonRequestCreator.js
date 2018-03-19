@@ -11,10 +11,13 @@ const commonHeader = {
 
 export default {
 
-  get: (url, withQuery = false) => payload => request(url + tools.jsonToQueryString(payload), {
-    method: 'GET',
-    headers: commonHeader
-  }),
+  get: (url, withQuery = false) => (payload = {}) => request(url + tools.jsonToQueryString({
+    ...payload,
+    ["request-id"]: new Date().getTime()
+  }), {
+      method: 'GET',
+      headers: commonHeader
+    }),
 
   post: (url, body) => payload => request(url, {
     method: 'POST',

@@ -5,17 +5,7 @@ import commonRequestCreator from '../../utils/commonRequestCreator';
 const httpApi = ApiConfig.http;
 import { IDS } from 'configs/ConstConfig'
 
-export function query(payload) {
-
-  const options = {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-
-  return request(httpApi.DEVICE_NODE + tools.jsonToQueryString(payload), options);
-}
+export const query = commonRequestCreator.get(httpApi.DEVICE_NODE)
 
 
 export const postLicence = ({ data }) => {

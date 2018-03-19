@@ -18,59 +18,12 @@ export const getVMOption = commonRequestCreator.get(httpApi.VM_OPTION)
 
 export const getStatus = commonRequestCreator.get(httpApi.CREATE_STATUS);
 
+export const query = commonRequestCreator.get(httpApi.VIRTUAL_MACHINE);
 
-export async function query(payload) {
+export const getNodeIpList = commonRequestCreator.get(httpApi.OCCUPYING_NODE_IP)
 
-  const options = {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-  return request(httpApi.VIRTUAL_MACHINE + tools.jsonToQueryString(payload), options);
-}
+export const getVMIpList = commonRequestCreator.get(httpApi.OCCUPYING_VM_IP)
 
-export async function getNodeIpList() {
+export const getVMNameList = commonRequestCreator.get(httpApi.OCCUPYING_VM_NAME)
 
-  const options = {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-  return request(httpApi.OCCUPYING_NODE_IP, options);
-}
-
-export async function getVMIpList(payload) {
-
-  const options = {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-  return request(httpApi.OCCUPYING_VM_IP, options);
-}
-
-
-export async function getVMNameList() {
-
-  const options = {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-  return request(httpApi.OCCUPYING_VM_NAME, options);
-}
-
-
-export async function validate(payload) {
-  const options = {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-  return request(httpApi.VALIDATE + tools.jsonToQueryString(payload), options);
-}
+export const validate = commonRequestCreator.get(httpApi.VALIDATE)

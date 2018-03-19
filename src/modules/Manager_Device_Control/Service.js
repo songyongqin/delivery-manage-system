@@ -1,19 +1,11 @@
 import request from '../../utils/request';
 import ApiConfig from '../../configs/ApiConfig';
 import * as tools from '../../utils/tools';
-import commonRequestCreator from '../../utils/commonRequestCreator';
-const httpApi = ApiConfig.http;
+import commonRequestCreator from '../../utils/commonRequestCreator'
+const httpApi = ApiConfig.http
 
-export async function query(payload) {
-  const options = {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-  return request(httpApi.DEVICE_CONTROL + tools.jsonToQueryString(payload), options);
-}
 
+export const query = commonRequestCreator.get(httpApi.DEVICE_CONTROL)
 
 
 export const postLicence = ({ data }) => {

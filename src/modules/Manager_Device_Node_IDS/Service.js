@@ -4,18 +4,7 @@ import * as tools from '../../utils/tools';
 import commonRequestCreator from '../../utils/commonRequestCreator';
 const httpApi = ApiConfig.http;
 
-export async function query(payload) {
-
-  const options = {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    }
-  };
-
-  return request(httpApi.DEVICE_NODE_IDS + tools.jsonToQueryString(payload), options);
-}
-
+export const query = commonRequestCreator.get(httpApi.DEVICE_NODE_IDS)
 
 export const postLicence = ({ data }) => {
   const options = {
