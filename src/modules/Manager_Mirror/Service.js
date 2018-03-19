@@ -55,19 +55,5 @@ export const putFileChunk = payload => {
   })
 
 }
-export function getMIRROR_SUMMARY(payload) {
-  return request(httpApi.MIRROR_SUMMARY + jsonToQueryString(payload), {
-    method: 'GET',
-    header: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-  });
-}
-export function getMIRROR_NODE(payload) {
-  return request(httpApi.MIRROR_NODE + jsonToQueryString(payload), {
-    method: 'GET',
-    header: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-  });
-}
+export const getMIRROR_SUMMARY = commonRequestCreator.get(httpApi.MIRROR_SUMMARY)
+export const getMIRROR_NODE = commonRequestCreator.get(httpApi.MIRROR_NODE)
