@@ -1,9 +1,13 @@
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CSSSplitWebpackPlugin from './CSSSplitWebpackPlugin'
 
 module.exports = (webpackConfig, env) => {
 
   const production = env === 'production'
+
+  webpackConfig.output.filename = '[name].[hash].bundle.js';
+  webpackConfig.output.chunkFilename = '[name].[chunkhash].async.js';
 
   webpackConfig.module.loaders.map(item => {
     if (item.test && item.test.toString() === "/\\.html$/") {
@@ -11,10 +15,21 @@ module.exports = (webpackConfig, env) => {
     }
   })
 
-  webpackConfig.plugins.push(new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, "./devPublic/index.html"),
-    filename: "index.html"
-  }))
+  if (production) {
+    webpackConfig.plugins.push(new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "./devPublic/index.html"),
+      filename: "../index.html"
+    }))
+
+    webpackConfig.plugins.push(new CSSSplitWebpackPlugin({
+      splitCount: 4
+    }))
+  } else {
+    webpackConfig.plugins.push(new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "./devPublic/index.html"),
+      filename: "index.html"
+    }))
+  }
 
   webpackConfig.resolve.alias = {
     'components': path.resolve(__dirname, './src/components'),
