@@ -1,0 +1,47 @@
+@import '~themes/vars';
+
+@nav-bar-width:180px;
+@nav-bar-width-mini:70px;
+@header-height:60px;
+
+
+.page{
+  width: 100%;  
+  // height:100vh;
+  overflow-x:hidden;
+  overflow-y: auto;
+  min-height: 100vh;
+  &.light{
+    background: @light-bg-level-1;
+    color:@light-txt-color;
+  }
+
+  &.dark{
+    background: @dark-bg-level-1;
+    color:@dark-txt-color;
+  }
+}
+
+.content-wrapper{
+  position: relative;  
+  padding:25px;
+  margin-top:@header-height;
+  overflow: hidden;
+  &.expandable{
+    margin-left:@nav-bar-width;
+    width:calc(~"100% - @{nav-bar-width}"); 
+  }
+  &.mini{
+    margin-left:@nav-bar-width-mini;
+    width:calc(~"100% - @{nav-bar-width-mini}");
+  }
+
+  &.animate{
+    transition: margin 0.3s;
+  }
+
+  &.loading{
+    height:calc(~"100vh - @{header-height}");
+    overflow: hidden;
+  }
+}

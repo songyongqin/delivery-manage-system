@@ -1,0 +1,68 @@
+@import '~themes/vars';
+@import '../../styles.less';
+.nav{
+  width: @nav-bar-width;
+  position: fixed;
+  top:@header-height;
+  left:0;
+  bottom:0;
+  z-index: 888;
+
+  &.mini{
+    width:@nav-bar-width-mini;
+  }
+
+  &.animate{
+    transition: width 0.3s;
+  }
+
+  &.light{
+    background: @light-bg-level-2;
+    color:@light-txt-color;
+  }
+
+  &.dark{
+    background:@dark-bg-level-2;
+    color:@dark-txt-color;
+
+    :global{
+      .ant-menu{
+        color:@dark-txt-color;
+      }
+      .ant-menu-item>a{
+        color:@dark-txt-color;
+      }
+      .ant-menu-item:active{
+        background-color: rgba(2,2,2,0.3);
+      }
+      .ant-menu-item-selected{
+        background-color: rgba(2,2,2,0.3);
+      }
+      .ant-menu-item-selected > a, .ant-menu-item-selected > a:hover {
+        color: @primary-color;
+    }
+    }
+
+  }
+
+  :global{
+    .ant-menu{
+      background: transparent;
+      border: none;
+    }
+    .ant-menu-item{
+      margin-top:0px;
+      user-select: none;
+    }
+    .ant-menu-vertical > .ant-menu-item, .ant-menu-vertical-left > .ant-menu-item, .ant-menu-vertical-right > .ant-menu-item, .ant-menu-inline > .ant-menu-item, .ant-menu-vertical > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-vertical-left > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-vertical-right > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+      line-height: 50px;
+      height: 50px;
+  }
+  }
+
+  .link{
+    display: inline-block;
+    width: @nav-bar-width;
+  }
+}
+

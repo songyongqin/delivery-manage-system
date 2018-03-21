@@ -1,0 +1,24 @@
+@import '~themes/vars';
+
+@dark-border-color:rgba(0,0,0,0.2);
+
+.collapse{
+  &.dark{
+    background: @dark-bg-level-3;
+    border-color:@dark-border-color;
+    :global{
+      .ant-collapse-item,.ant-collapse-content{
+        border-color:@dark-border-color;    
+      }
+      .ant-collapse-item > .ant-collapse-header{
+        color:white;
+      }
+      .ant-collapse-content-box{
+        color:white;
+      }
+      .ant-collapse-content{
+        background: @dark-bg-level-2;
+      }
+    }
+  }
+}

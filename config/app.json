@@ -1,0 +1,76 @@
+{
+  "title": "attack-capture-system",
+  "routerRegister": {
+    "/overview": true,
+    "/analyse": true,
+    "/analyse/event": true,
+    "/analyse/attack-chain": true,
+    "/analyse/fall-host": true,
+    "/analyse/ranking": true,
+    "/analyse/threat-distribution": true,
+    "/analyse/overall": true,
+    "/early-warning": true,
+    "/early-warning/email": true,
+    "/report": true,
+    "/sys-config": true,
+    "/sys-config/network": true,
+    "/sys-config/monitor": true,
+    "/sys-config/strategy": true,
+    "/user-manager": true,
+    "/manager": true,
+    "/manager/device": true,
+    "/manager/virtual-machine": true,
+    "/manager/mirror": true,
+    "/sys-log": true,
+    "/sys-log/login": true,
+    "/snort": true
+  },
+  "adminOnly": [
+    "/sys-config",
+    "/sys-config/network",
+    "/sys-config/monitor",
+    "/sys-config/strategy",
+    "/sys-log",
+    "/sys-log/login",
+    "/user-manager"
+  ],
+  "vmCreateNotification": true,
+  "overview": {
+    "captureFlow": true,
+    "threatFlow": true
+  },
+  "analyse": {},
+  "overall": {
+    "capture": true,
+    "netBasic": true,
+    "limitNetBasic": true,
+    "pcap": true,
+    "system": true
+  },
+  "networkConfig": {
+    "masterIPConfig": true,
+    "cloudDetection": true
+  },
+  "strategyConfig": {
+    "white": true
+  },
+  "monitor": {
+    "master": true,
+    "honeypotNode": true,
+    "idsNode": true,
+    "honeypot": true,
+    "ids": true
+  },
+  "deviceManager": {
+    "master": true,
+    "honeypotNode": true,
+    "idsNode": true,
+    "honeypot": true,
+    "ids": true
+  },
+  "mirrorImageManager": {
+    "collection": true,
+    "honeypotNode": true,
+    "honeypot": true
+  }
+}

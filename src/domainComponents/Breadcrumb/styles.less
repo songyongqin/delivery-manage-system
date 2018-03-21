@@ -1,0 +1,125 @@
+@import "~themes/vars";
+@breadcrumb-height:30px;
+@border-width:15px;
+.breadcrumb-list{
+  height:@breadcrumb-height;
+  line-height: @breadcrumb-height;
+  background: transparent;
+  font-weight: 100;
+  padding-left:0;
+  //  item style
+  .item{
+    display: inline-block;
+    margin-right:20px;
+    min-width: 30px;
+    padding:0 15px 0 10px;
+    position: relative;
+    cursor: pointer;
+    &:first-child{
+      padding:0 0 0 15px;
+    }
+    a:focus{
+      text-decoration: none;
+    }
+
+    &:not(:last-child){
+      &:after{
+        content:"";
+        position: absolute;
+        height:0;
+        width: 0;
+        z-index: 2;
+        top:0;
+        left:100%;
+        border-right:@border-width solid transparent;
+        border-bottom:@border-width solid transparent;
+        border-top:@border-width solid transparent;
+      }
+    }
+    &:not(:first-child){
+      &:before{
+        content:"";
+        position: absolute;
+        height:0;
+        width: 0;
+        z-index: 2;
+        top:0;
+        left:0;
+        margin-left:-15px;
+        border-right:@border-width solid transparent;
+        border-left:@border-width solid transparent;
+      }
+    }
+  }
+  // light theme item style
+  &.light{
+
+    .item{
+      background: @light-bg-level-3; 
+      a{
+        color:@light-txt-color;
+      }
+      
+      &:not(:last-child){
+        &:after{
+          border-left:@border-width solid @light-bg-level-3;
+
+        }
+      }
+      &:not(:first-child){
+        &:before{
+          border-top:@border-width solid @light-bg-level-3;          
+          border-bottom:@border-width solid @light-bg-level-3;
+        }
+      }
+      &:last-child{
+        background: @primary-color;
+        color:white;
+        a{
+          color:white;
+          cursor: default;
+        }
+        &:before{
+          border-top-color:@primary-color;
+          border-bottom-color:@primary-color;
+        }
+      }
+
+    }
+  }
+  // dark theme item style
+  &.dark{
+    .item{
+      background: @dark-bg-level-3;
+      a{
+        color:@dark-txt-color;
+      }
+      &:not(:last-child){
+        &:after{
+          border-left:@border-width solid @dark-bg-level-3;
+        }
+      }
+      &:not(:first-child){
+        &:before{
+          border-top:@border-width solid @dark-bg-level-3;
+          border-bottom:@border-width solid @dark-bg-level-3;
+        }
+      }
+      &:last-child{
+        background: @primary-color;
+        color:white;
+        a{
+          color:white;
+          cursor: default;
+        }
+        &:before{
+          border-top-color:@primary-color;
+          border-bottom-color:@primary-color;
+        }
+      }
+    }
+    
+    
+  }
+}
+
