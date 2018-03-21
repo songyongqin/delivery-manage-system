@@ -1,0 +1,35 @@
+@import '../../../../styles/_var';
+
+
+
+.panel{
+  .table{
+    width: 100%;
+    border-collapse: collapse;
+    tr{
+      background:$bg-color-level-1;
+    }
+    td{
+      padding:10px;
+    }
+    td:last-child{
+      text-align: right;
+    }
+  }
+  .title{
+    text-align: center;
+    margin-bottom:5px;
+  }
+}
+
+.panel-dark{
+  color:$txt-color-dark;
+  .table{
+    tr{
+      background: $bg-color-level-1-dark;
+    }
+
+  }
+
+}
+

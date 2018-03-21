@@ -6,6 +6,9 @@ export default props => {
   let { overflow = 30, children } = props,
     value = children
 
+  if (children === null || children === undefined || children === "") {
+    return null
+  }
   if (typeof children === 'string') {
 
     if (children.length > overflow) {
@@ -13,9 +16,8 @@ export default props => {
         {children.substr(0, overflow) + "..."}
       </Popover>;
     } else {
-      value = children;
+      value = children
     }
-
   }
 
   return <Tag

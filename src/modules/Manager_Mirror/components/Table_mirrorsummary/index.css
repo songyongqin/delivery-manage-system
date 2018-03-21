@@ -1,0 +1,6 @@
+.line{
+  padding: 0 20px 0;
+  margin: 20px 0;
+  line-height: 1px;
+  border-right: 200px solid #ddd;
+}

@@ -1,1 +1,0 @@
-export { MAIN_NAMESPACE as NAMESPACE } from 'configs/ConstConfig'

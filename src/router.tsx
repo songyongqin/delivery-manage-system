@@ -37,11 +37,11 @@ function RouterConfig({ history, app }) {
               exact
               path={ANALYSE_URL}
               render={() => (<Redirect to={ANALYSE_EVENT_URL} />)} />
-            <Route
+            {/* <Route
               exact
               component={getThreatAnalyseEventPage(app, ANALYSE_EVENT_URL)}
               path={ANALYSE_EVENT_URL} >
-            </Route>
+            </Route> */}
           </Switch>
         </MainWrapper>
       </LocaleProvider>

@@ -1,0 +1,55 @@
+@import '../../styles/var';
+@import '../../styles/mixin';
+
+
+
+.page{
+  @include common-page();
+}
+
+.page-dark{
+  @include common-page-dark();
+}
+
+
+.statistic-list{
+  padding:0 0 20px;
+  margin-left: -5px;
+  margin-right:-5px;
+  .counts{
+    font-size:22px;
+  }
+  .title{
+    font-size: 18px;
+  }
+  .statistic-item-icon{
+    color:$primary-color;
+    font-size:36px;
+    text-align: center;
+    b{
+      margin:0;
+    }
+  }
+  .statistic-item-wrapper{
+    padding:5px;
+  }
+  //.statistic-item-wrapper:first-child{
+  //  padding-left:0;
+  //}
+  //.statistic-item-wrapper:last-child{
+  //  padding-right:0;
+  //}
+  .statistic-item{
+    height:120px;
+    background: white;
+    border-radius: 3px;
+    text-align: center;
+    padding-top:15px;
+  }
+}
+
+.statistic-list-dark{
+  .statistic-item{
+    background: $bg-color-level-1-dark;
+  }
+}

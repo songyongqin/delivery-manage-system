@@ -19,7 +19,8 @@ module.exports = [
   'styles',
   'themes',
   'utils',
-  'navConfig'
+  'navConfig',
+  'modules',
 ].reduce((final, item) => {
   final[item] = getCommonAbsPath(item)
   return final

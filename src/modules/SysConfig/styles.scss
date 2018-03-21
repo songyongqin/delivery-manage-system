@@ -1,0 +1,27 @@
+@import '../../styles/var';
+@import '../../styles/mixin';
+
+.page{
+  background: $bg-color-level-3;
+  :global{
+    .ant-tabs-tab-active{
+      color:$primary-color;
+    }
+  }
+
+}
+
+
+.page-dark{
+  background: $bg-color-level-3-dark;
+
+  :global{
+    .ant-tabs-tab{
+      color:$txt-color-dark;
+    }
+
+    .ant-tabs-tab-active{
+      color:$primary-color;
+    }
+  }
+}

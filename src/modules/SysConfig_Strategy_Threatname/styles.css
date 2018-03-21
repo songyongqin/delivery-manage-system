@@ -1,0 +1,25 @@
+.title {
+  font-size: 18px;
+  padding: 5px 0;
+  margin-bottom: 15px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.title:before {
+  content: "";
+  position: absolute;
+  top: 35px;
+  width: 120%;
+  left: -15px;
+  height: 2px;
+  background: #F1F1F1;
+}
+
+.title-dark {
+  color: #b7c1cc;
+}
+
+.title-dark:before {
+  background: #1c233b;
+}
+/*# sourceMappingURL=styles.css.map */

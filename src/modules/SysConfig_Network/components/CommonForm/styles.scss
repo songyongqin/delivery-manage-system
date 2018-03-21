@@ -1,0 +1,34 @@
+@import '../../../../styles/_var';
+
+
+
+.lbl-dark{
+  color:$txt-color-dark;
+}
+
+.radio{
+  :global{
+    .ant-radio-button-wrapper-checked{
+      background: $primary-color;
+      color:white;
+      user-select: none;
+    }
+  }
+}
+
+.check-box-dark{
+  :global{
+    .ant-checkbox-wrapper{
+      color:$txt-color-dark;
+    }
+  }
+}
+
+.slider-dark{
+  :global{
+    .ant-slider-mark-text{
+      color:$txt-color-dark;
+      user-select: none;
+    }
+  }
+}

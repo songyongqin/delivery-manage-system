@@ -1,0 +1,22 @@
+.layout-operate-list {
+  list-style: none;
+}
+
+.layout-operate-list .item {
+  display: inline-block;
+  padding-left: 25px;
+  font-size: 18px;
+}
+
+.layout-operate-list .item * {
+  color: #108ee9;
+}
+
+.layout-operate-list .item-active * {
+  color: #108ee9;
+}
+
+.layout-operate-list-dark .item * {
+  color: #b7c1cc;
+}
+/*# sourceMappingURL=LayoutOperateList.css.map */

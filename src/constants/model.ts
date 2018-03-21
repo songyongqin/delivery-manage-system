@@ -1,3 +1,9 @@
 export const LAYOUT_NAMESPACE = "layout",
   DOMAIN_USER_NAMESPACE = "domainUser",
-  SET_UP_NAMESPACE = "setup"
+  SET_UP_NAMESPACE = "setup",
+  LAST_EVENT_NAMESPACE = "lastEvent",
+  ANALYSE_EVENT_NAMESPACE = "analyseEvent",
+  THREAT_EVENT_EXPLOIT_NAMESPACE = "threatEventExploit",
+  THREAT_EVENT_TOOL_NAMESPACE = "threatEventTool",
+  THREAT_EVENT_THREAT_INFO_NAMESPACE = "threatEventTreatInfo",
+  EVENT_STATISTICS_NAMESPACE = "eventStatistic"

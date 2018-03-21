@@ -1,0 +1,10 @@
+.flex {
+  display: flex;
+}
+
+.flex .flex-item {
+  align-items: stretch;
+  width: 50%;
+  margin: 5px;
+}
+/*# sourceMappingURL=styles.css.map */

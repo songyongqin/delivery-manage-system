@@ -37,4 +37,8 @@ import lodash from 'lodash'
 
 export const throttle = lodash.throttle
 
+export const isFunction = func => {
+  return Object.prototype.toString.call(func) === "[object Function]"
+}
+
 

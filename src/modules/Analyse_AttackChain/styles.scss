@@ -1,0 +1,28 @@
+@import '../../styles/var';
+@import '../../styles/mixin';
+
+.page{
+  @include common-page();
+}
+
+.page-dark{
+  @include common-page-dark();
+}
+
+
+.results-table{
+  td{
+    //vertical-align: top;
+  }
+}
+
+//.timeline{
+//  :global{
+//    .ant-timeline-item-head{
+//      //background: #108ee9;
+//    }
+//    .ant-timeline-item-tail{
+//      border-color:white;
+//    }
+//  }
+//}

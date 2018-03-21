@@ -1,0 +1,15 @@
+.expanded-table{
+  td{
+    padding:10px;
+  }
+  td:nth-child(1){
+    text-align: right;
+    width: 140px;
+  }
+  td{
+    vertical-align: top;
+  }
+
+  border-bottom:1px solid #cccccc;
+  margin-bottom: 15px;
+}

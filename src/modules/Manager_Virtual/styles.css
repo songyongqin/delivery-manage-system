@@ -1,0 +1,12 @@
+.table :global .ant-table-thead > tr > th {
+  text-align: center;
+}
+
+.vm-modal :global .ant-modal-content {
+  height: 100%;
+}
+
+.vm-modal :global .ant-modal-body {
+  height: calc(100% - 48px);
+}
+/*# sourceMappingURL=styles.css.map */

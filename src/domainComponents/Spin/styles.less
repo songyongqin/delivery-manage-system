@@ -1,18 +1,19 @@
 @import "~themes/vars";
 
+@effect-delay-time:0.5s;
 
 .spin{
   position: relative;
   width: 100%;
   z-index: 3;
   opacity: 1;
-  min-height:300px;
+  // min-height:300px;
 
   &.spinning{
     width: 100%;
     user-select: none;
     pointer-events: none;
-    min-height:300px;
+    // min-height:300px;
   }
 
   // &.light{
@@ -40,7 +41,7 @@
 
   &.fullScreen {
     position: fixed;
-    transition: opacity 0.5s ease 0.5s, z-index 0.1s ease 1.5s;    
+    transition: opacity 0.2s ease 0.2s, z-index 0.1s ease @effect-delay-time;      
   }
   
   .wrapper {
@@ -53,10 +54,9 @@
     transform: translateX(-50%) translateY(-50%);
     opacity: 1;
     &.hidden {
-      transition: opacity 0.5s ease 0.5s, z-index 0.1s ease 1.5s;          
       z-index: -999;
       opacity: 0;
-      transition: opacity 0.5s ease 0.5s, z-index 0.1s ease 1.5s;    
+      transition: opacity 0.2s ease 0.2s, z-index 0.1s ease @effect-delay-time;    
     }
   }
 
@@ -70,7 +70,7 @@
     user-select: none;
   }
   .content-wrapper{
-    transition: filter 0.3s ease 0.5s;
+    // transition: filter 0.3s ease 0.5s;
   }
 }
 

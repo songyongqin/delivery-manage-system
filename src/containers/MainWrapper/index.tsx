@@ -15,7 +15,7 @@ import Spin from 'domainComponents/Spin'
 import Breadcrumb from 'domainComponents/Breadcrumb'
 import BuildingHolder from 'domainComponents/BuildingHolder'
 import SecretParse from 'domainComponents/SecretParse'
-import Setup from 'containers/Setup'
+import Setup from 'modules/Setup'
 
 import { LOGIN_URL, ROOT_URL } from 'routes/config/path'
 import { DOMAIN_USER_NAMESPACE, LAYOUT_NAMESPACE } from 'constants/model'

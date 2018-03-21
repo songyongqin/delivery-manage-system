@@ -1,0 +1,59 @@
+.page {
+  padding: 15px;
+  background: #F1F1F1;
+  color: rgba(0, 0, 0, 0.85);
+  height: 100%;
+  position: relative;
+  background: white;
+}
+
+.page-dark {
+  background: #1c233b;
+  color: #b7c1cc;
+}
+
+.login-modal {
+  width: 360px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.login-modal-form {
+  width: 100%;
+  background: white;
+  padding: 30px 30px 20px;
+}
+
+.login-modal-form-dark {
+  background: #1c233b;
+}
+
+.title {
+  color: rgba(0, 0, 0, 0.85);
+  position: relative;
+  font-size: 24px;
+  margin-bottom: 30px;
+  padding: 10px 0;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+
+.title:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #108ee9;
+}
+
+.title-dark {
+  color: #b7c1cc;
+}
+/*# sourceMappingURL=styles.css.map */
