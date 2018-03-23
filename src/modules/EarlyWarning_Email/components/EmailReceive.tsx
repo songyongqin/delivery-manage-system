@@ -1,63 +1,71 @@
-/**
- * Created by jojo on 2017/9/11.
- */
-import React from 'react';
-import { Input, Row, Col, Button, Tooltip, message as Message, Spin, Switch, Checkbox } from 'antd';
-import { Form, Icon } from 'antd';
-import { level, textConfig } from '../ConstConfig';
-import styles from './ReceiveEmailConfigForm.css';
-import classnames from 'classnames';
-import { WithDefaultValueHandle } from '../../../components/HOSComponents/index'
-const FormItem = Form.Item;
-const CheckboxGroup = Checkbox.Group;
+import * as React from 'react'
+import { connect } from 'dva'
+import classnames from 'classnames'
+// import { textConfig, NAMESPACE } from './ConstConfig'
+import Spin from 'domainComponents/Spin'
+import ReceiveEmailConfigForm from './ReceiveEmailConfigForm'
+import { EARLY_WARNING_EMAIL_RECEIVE_NAMESPACE } from 'constants/model'
+import * as tools from 'utils'
+import extraConnect from 'domainUtils/extraConnect'
+import { Choose, When } from 'components/ControlStatements'
+import { Input, Row, Col, Button, Tooltip, message as Message, Switch, Checkbox, Form, Icon } from 'antd'
+import { level, textConfig } from '../ConstConfig'
+import styles from './ReceiveEmailConfigForm.css'
+const FormItem = Form.Item
+const CheckboxGroup = Checkbox.Group
 
 function isPositiveInteger(s) {//是否为正整数
   let re = /^[0-9]+$/;
   return re.test(s)
 }
-let uuid = 0;
 
 
-@WithDefaultValueHandle
-@Form.create()
-class WrappedForm extends React.Component {
+let uuid = 0
+
+
+class ReceiveForm extends React.Component<any, any> {
+  static defaultProps = {
+    defaultValue: {
+      open: 0,
+      level: [],
+
+    }
+  }
   remove = (index) => {
-    const { form } = this.props;
-    const keys = form.getFieldValue('keys');
+    const { form } = this.props
+    const keys = form.getFieldValue('keys')
     form.setFieldsValue({
       keys: keys.filter((key, i) => index !== i),
-    });
-  };
+    })
+  }
 
   add = () => {
-    uuid++;
+    uuid++
     const { form } = this.props;
-    const keys = form.getFieldValue('keys');
-
-    const nextKeys = keys.concat([""]);
+    const keys = form.getFieldValue('keys')
+    const nextKeys = keys.concat([""])
     form.setFieldsValue({
       keys: nextKeys,
-    });
-  };
+    })
+  }
 
   handleSubmit = (e) => {
-    e.preventDefault();
-    const { form, onConfirm } = this.props;
+    e.preventDefault()
+    const { form, onSubmit } = this.props
     form.validateFields((err, values) => {
-
       if (!err) {
-        let payload = {};
-        payload.open = values.open ? 1 : 0;
-        payload.level = values.level;
+        let payload = {
+          open: values.open ? 1 : 0,
+          level: values.level,
+          emails: []
+        };
         delete values.open
-        delete values.level;
+        delete values.level
         payload.emails = Object.values(values)
-        console.info(payload);
-        onConfirm && onConfirm(payload);
+        onSubmit && onSubmit(payload)
       }
-    });
-  };
-
+    })
+  }
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { defaultValue = {}, isDark, loading } = this.props;
@@ -68,20 +76,20 @@ class WrappedForm extends React.Component {
       wrapperCol: {
         sm: { span: 18 },
       },
-    };
+    }
     const formItemLayoutWithOutLabel = {
       wrapperCol: {
         sm: { span: 18, offset: 6 },
       },
-    };
+    }
     // console.info(defaultValue);
     getFieldDecorator('keys', { initialValue: defaultValue.emails || [""] });
-    const keys = getFieldValue('keys');
+    const keys = getFieldValue('keys')
     const formItems = keys.map((k, index) => {
       // let defaultValue=isPositiveInteger(k)?"":k;
       return (
         <FormItem
-          {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel) }
+          {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
           label={index === 0 ? <span className={isDark ? "lbl-dark" : null}>接收邮箱设置</span> : ''}
           required={false}
           key={`${index}-email`}
@@ -98,15 +106,14 @@ class WrappedForm extends React.Component {
             ],
           })(
             <Input style={{ width: '90%', marginRight: "8px" }} />
-            )}
+          )}
           <Icon
             type="minus-circle-o"
-            disabled={keys.length === 1}
             onClick={() => this.remove(index)}
           />
         </FormItem>
-      );
-    });
+      )
+    })
     return (
       <Form style={{ maxWidth: "600px", paddingBottom: "300px" }}>
         <FormItem {...formItemLayout}
@@ -117,13 +124,13 @@ class WrappedForm extends React.Component {
           })(
             <Switch checkedChildren={"开"}
               unCheckedChildren={"关"} />
-            )}
+          )}
         </FormItem>
         <FormItem {...formItemLayout}
           label={<span className={isDark ? "lbl-dark" : null}>威胁等级报警设置</span>}>
           {getFieldDecorator('level', {
             valuePropName: 'checked',
-            initialOption: defaultValue.level
+            initialValue: defaultValue.level[0]
           })(
             <CheckboxGroup
               className={classnames({
@@ -138,10 +145,9 @@ class WrappedForm extends React.Component {
                   label: textConfig.form.receive.level[k]
                 }
               })} >
-
             </CheckboxGroup>
 
-            )}
+          )}
         </FormItem>
         {formItems}
         <FormItem {...formItemLayoutWithOutLabel}>
@@ -154,12 +160,84 @@ class WrappedForm extends React.Component {
         <FormItem {...formItemLayoutWithOutLabel}>
           <Button type="primary"
             loading={loading}
-            onClick={this.handleSubmit}
-            size="large">保存设置</Button>
+            icon="save"
+            onClick={this.handleSubmit}>
+            保存设置
+          </Button>
         </FormItem>
       </Form>
     );
   }
 }
 
-export default WrappedForm;
+
+const WrappedReceiveForm: any = Form.create()(ReceiveForm)
+
+
+function mapStateToProps(state) {
+  const effectsLoading = state.loading.effects
+  return {
+    loading: effectsLoading[`${EARLY_WARNING_EMAIL_RECEIVE_NAMESPACE}/put`] ||
+      effectsLoading[`${EARLY_WARNING_EMAIL_RECEIVE_NAMESPACE}/fetch`],
+
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    put: payload => dispatch({
+      type: `${EARLY_WARNING_EMAIL_RECEIVE_NAMESPACE}/put`,
+      payload
+    }),
+    fetch: payload => dispatch({
+      type: `${EARLY_WARNING_EMAIL_RECEIVE_NAMESPACE}/fetch`,
+      payload
+    })
+  }
+}
+
+@extraConnect(mapStateToProps, mapDispatchToProps)
+export default class EmailReceive extends React.Component<any, any> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: {
+        open: 0,
+        level: [],
+      },
+      lastReqTime: 0
+    }
+  }
+  componentDidMount() {
+    this.fetchData()
+  }
+  fetchData = () => {
+    this.props.fetch().then(res => {
+      this.setState({
+        data: res,
+        lastReqTime: new Date().getTime()
+      })
+    })
+  }
+  put = payload => this.props.put(payload)
+    .then(_ => {
+      Message.success("修改成功")
+    })
+  render() {
+
+    const { loading } = this.props
+
+    return (
+      <Spin spinning={loading}>
+        <WrappedReceiveForm
+          onSubmit={this.put}
+          key={`receive-from-${this.state.lastReqTime}`}
+          defaultValue={this.state.data} />
+      </Spin>
+    )
+  }
+}
+
+
+
+

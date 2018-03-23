@@ -8,4 +8,6 @@ export const LAYOUT_NAMESPACE = "layout",
   THREAT_EVENT_EXPLOIT_NAMESPACE = "threatEventExploit",
   THREAT_EVENT_TOOL_NAMESPACE = "threatEventTool",
   THREAT_EVENT_THREAT_INFO_NAMESPACE = "threatEventTreatInfo",
-  EVENT_STATISTICS_NAMESPACE = "eventStatistic"
+  EVENT_STATISTICS_NAMESPACE = "eventStatistic",
+  EARLY_WARNING_EMAIL_RECEIVE_NAMESPACE = "earlyWarningReceive",
+  EARLY_WARNING_EMAIL_SEND_NAMESPACE = "earlyWarningSend"

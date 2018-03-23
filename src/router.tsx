@@ -9,13 +9,17 @@ import getOverviewPage from 'routes/Overview'
 import getAnalyseEventPage from 'routes/Analyse_Event'
 import getAnalyseAttackChainPage from 'routes/Analyse_AttackChain'
 import getAnalyseFallHostPage from 'routes/Analyse_FallHost'
+import getEarlyWarningEmailPage from 'routes/EarlyWarning_Email'
+
 import {
   OVERVIEW_URL,
   LOGIN_URL,
   ANALYSE_EVENT_URL,
   ANALYSE_URL,
   ANALYSE_ATTACK_CHAIN_URL,
-  ANALYSE_FALL_HOST_URL
+  ANALYSE_FALL_HOST_URL,
+  EARLY_WARNING_URL,
+  EARLY_WARNING_EMAIL_URL
 } from 'routes/config/path'
 
 function RouterConfig({ history, app }) {
@@ -55,6 +59,15 @@ function RouterConfig({ history, app }) {
               exact
               component={getAnalyseFallHostPage(app, ANALYSE_FALL_HOST_URL)}
               path={ANALYSE_FALL_HOST_URL} >
+            </Route>
+            <Route
+              exact
+              path={EARLY_WARNING_URL}
+              render={() => (<Redirect to={EARLY_WARNING_URL} />)} />
+            <Route
+              exact
+              component={getEarlyWarningEmailPage(app, EARLY_WARNING_EMAIL_URL)}
+              path={EARLY_WARNING_EMAIL_URL} >
             </Route>
           </Switch>
         </MainWrapper>
