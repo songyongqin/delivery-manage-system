@@ -128,6 +128,7 @@ class ScrollLoadTimeLine extends React.Component<any, any> {
   componentWillUnmount() {
     const { con } = this
     con.removeEventListener("scroll", this.limitHandle)
+    $(this.con).getNiceScroll().remove()
   }
   limitHandle = () => {
     try {
