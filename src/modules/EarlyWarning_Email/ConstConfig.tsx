@@ -6,9 +6,9 @@ import { Icon } from "antd"
 
 export const NAMESPACE = "earylyWarningEmail"
 
-export const RECEIVE_EMAIL_CONFIG_TITLE = "接收告警邮箱配置"
+export const RECEIVE_EMAIL_CONFIG_TITLE = <span><Icon type="mail"></Icon> &nbsp; 接收告警邮箱配置</span>
 
-export const SEND_CONFIG_TITLE = "发送告警邮箱配置"
+export const SEND_CONFIG_TITLE = <span><Icon type="setting"></Icon> &nbsp;发送告警邮箱配置</span>
 
 // export const level = [...commonLevel].reverse();
 

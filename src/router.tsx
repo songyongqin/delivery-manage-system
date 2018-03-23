@@ -63,7 +63,7 @@ function RouterConfig({ history, app }) {
             <Route
               exact
               path={EARLY_WARNING_URL}
-              render={() => (<Redirect to={EARLY_WARNING_URL} />)} />
+              render={() => (<Redirect to={EARLY_WARNING_EMAIL_URL} />)} />
             <Route
               exact
               component={getEarlyWarningEmailPage(app, EARLY_WARNING_EMAIL_URL)}
