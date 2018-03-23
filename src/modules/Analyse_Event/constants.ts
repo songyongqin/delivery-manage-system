@@ -2,11 +2,11 @@
  * Created by jojo on 2017/9/5.
  */
 
-import React from 'react';
-import JoIcon from '../../components/JoIcon';
+import * as React from 'react'
+import ExtraIcon from 'components/Icon'
 
 
-export const NAMESPACE = "analyseEvent";
+export const NAMESPACE = "analyseEvent"
 export const STATISTICS_NAMESPACE = "analyseEventStatistics"
 /**************************************************
  * table
@@ -106,34 +106,35 @@ export const haveDetailsDataIndexes = [
   THREATINFOS_DATAINDEX,
 ]
 
-export const statisticsTextConfig = {
-  title: STATISTICS_TITLE,
-  items: {
-    [_COUNTS_DATAINDEX]: "攻击次数",
-    [HIGHEVENTS_DATAINDEX]: "攻击高危次数",
-    [EXPLOITS_DATAINDEX]: "攻击利用漏洞",
-    [TOOLS_DATAINDEX]: "攻击武器",
-    [THREATINFOS_DATAINDEX]: "威胁情报",
-    [FALLHOST_DATAINDEX]: "失陷主机"
-  },
-  units: {
-    [_COUNTS_DATAINDEX]: "次",
-    [HIGHEVENTS_DATAINDEX]: "起",
-    [EXPLOITS_DATAINDEX]: "个",
-    [TOOLS_DATAINDEX]: "个",
-    [THREATINFOS_DATAINDEX]: "条",
-    [FALLHOST_DATAINDEX]: "台"
-  },
-  icons: {
-    [_COUNTS_DATAINDEX]: <JoIcon type="hacker" />,
-    [HIGHEVENTS_DATAINDEX]: <JoIcon type="exclamationcircleo" />,
-    [EXPLOITS_DATAINDEX]: <JoIcon type="bug" />,
-    [TOOLS_DATAINDEX]: <JoIcon type="eyedropper" />,
-    [THREATINFOS_DATAINDEX]: <JoIcon type="filetext1" />,
-    [FALLHOST_DATAINDEX]: <JoIcon type="iconfontdesktop" />
-  }
-};
+// export const statisticsTextConfig = {
+//   title: STATISTICS_TITLE,
+//   items: {
+//     [_COUNTS_DATAINDEX]: "攻击次数",
+//     [HIGHEVENTS_DATAINDEX]: "攻击高危次数",
+//     [EXPLOITS_DATAINDEX]: "攻击利用漏洞",
+//     [TOOLS_DATAINDEX]: "攻击武器",
+//     [THREATINFOS_DATAINDEX]: "威胁情报",
+//     [FALLHOST_DATAINDEX]: "失陷主机"
+//   },
+//   units: {
+//     [_COUNTS_DATAINDEX]: "次",
+//     [HIGHEVENTS_DATAINDEX]: "起",
+//     [EXPLOITS_DATAINDEX]: "个",
+//     [TOOLS_DATAINDEX]: "个",
+//     [THREATINFOS_DATAINDEX]: "条",
+//     [FALLHOST_DATAINDEX]: "台"
+//   },
+//   icons: {
+//     [_COUNTS_DATAINDEX]: <ExtraIcon type="hacker" />,
+//     [HIGHEVENTS_DATAINDEX]: <ExtraIcon type="exclamationcircleo" />,
+//     [EXPLOITS_DATAINDEX]: <ExtraIcon type="bug" />,
+//     [TOOLS_DATAINDEX]: <ExtraIcon type="eyedropper" />,
+//     [THREATINFOS_DATAINDEX]: <ExtraIcon type="filetext1" />,
+//     [FALLHOST_DATAINDEX]: <ExtraIcon type="iconfontdesktop" />
+//   }
+// };
 
-
-export { EVENT_ACTION_DATA_INDEX, EVENT_TYPE_DATA_INDEX } from '../../configs/ConstConfig';
-export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig';
+export const EVENT_ACTION_DATA_INDEX = "eventAction",
+  EVENT_TYPE_DATA_INDEX = "eventType"
+// export { EVENT_ACTION_DATA_INDEX, EVENT_TYPE_DATA_INDEX } from '../../configs/ConstConfig';
+export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig'

@@ -87,9 +87,11 @@ class TableWithRemote extends React.Component<any, any>{
   render() {
 
     const { data, total, filters } = this.state
-    const { theme, effectsLoading, remoteNamespace } = this.props
+    const { theme, effectsLoading, remoteNamespace, getExpandedRowRenderer } = this.props
     const controlledLoading = "loading" in this.props
     const loading = controlledLoading ? this.props.loading : effectsLoading[`${remoteNamespace}/fetch`]
+
+
 
     return (
       <Spin spinning={loading}>
@@ -99,9 +101,10 @@ class TableWithRemote extends React.Component<any, any>{
             total,
             onChange: this.pageOnChange,
             pageSize: filters.limit,
-            current: filters.page
+            current: filters.page,
           }}
           tableProps={{
+            expandedRowRender: getExpandedRowRenderer && getExpandedRowRenderer({ filters, data, total }),
             columns: this.props.getColumns({
               fetchData: this.fetchData,
               filters

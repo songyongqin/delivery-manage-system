@@ -6,7 +6,7 @@ import dynamic from 'dva/dynamic'
 import MainWrapper from 'containers/MainWrapper'
 import getLoginPage from 'routes/Login'
 import getOverviewPage from 'routes/Overview'
-import getThreatAnalyseEventPage from 'routes/ThreatAnalyse_Event'
+import getAnalyseEventPage from 'routes/Analyse_Event'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -37,11 +37,11 @@ function RouterConfig({ history, app }) {
               exact
               path={ANALYSE_URL}
               render={() => (<Redirect to={ANALYSE_EVENT_URL} />)} />
-            {/* <Route
+            <Route
               exact
-              component={getThreatAnalyseEventPage(app, ANALYSE_EVENT_URL)}
+              component={getAnalyseEventPage(app, ANALYSE_EVENT_URL)}
               path={ANALYSE_EVENT_URL} >
-            </Route> */}
+            </Route>
           </Switch>
         </MainWrapper>
       </LocaleProvider>
