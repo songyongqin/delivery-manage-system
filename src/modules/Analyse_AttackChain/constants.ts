@@ -43,3 +43,4 @@ export const tableTextConfig = {
 export default {
   tableTextConfig,
 }
+

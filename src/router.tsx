@@ -7,11 +7,13 @@ import MainWrapper from 'containers/MainWrapper'
 import getLoginPage from 'routes/Login'
 import getOverviewPage from 'routes/Overview'
 import getAnalyseEventPage from 'routes/Analyse_Event'
+import getAnalyseAttackChainPage from 'routes/Analyse_AttackChain'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
   ANALYSE_EVENT_URL,
   ANALYSE_URL,
+  ANALYSE_ATTACK_CHAIN_URL
 } from 'routes/config/path'
 
 function RouterConfig({ history, app }) {
@@ -41,6 +43,11 @@ function RouterConfig({ history, app }) {
               exact
               component={getAnalyseEventPage(app, ANALYSE_EVENT_URL)}
               path={ANALYSE_EVENT_URL} >
+            </Route>
+            <Route
+              exact
+              component={getAnalyseAttackChainPage(app, ANALYSE_ATTACK_CHAIN_URL)}
+              path={ANALYSE_ATTACK_CHAIN_URL} >
             </Route>
           </Switch>
         </MainWrapper>

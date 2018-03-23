@@ -1,40 +1,38 @@
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, DatePicker } from 'antd';
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, DatePicker } from 'antd'
 import React from 'react';
-import classnames from 'classnames';
+import classnames from 'classnames'
 import {
   ATTACK_STAGE_DATA_INDEX,
   stageRowDataIndexes,
   tableTextConfig,
-} from '../../ConstConfig'
-const FormItem = Form.Item;
+} from '../../constants'
+const FormItem = Form.Item
 
-class QueryForm extends React.Component {
+class QueryForm extends React.Component<any, any> {
   constructor(props) {
     super(props);
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    const { onSubmit, form } = this.props;
+    const { onSubmit, form } = this.props
     form.validateFieldsAndScroll((err, values) => {
-      if (this.props.loading) {
-        return;
-      }
 
       if (err) {
-        return;
+        return
       }
-      onSubmit && onSubmit(values);
 
-    });
-  };
+      onSubmit && onSubmit(values)
+
+    })
+  }
+
   selectAll = e => {
     this.props.form.setFieldsValue({ [ATTACK_STAGE_DATA_INDEX]: e.target.checked ? stageRowDataIndexes : [] })
   }
   render() {
 
-    const { getFieldDecorator, getFieldValue } = this.props.form;
-    const { defaultValue = {}, loading = false, textConfig = {}, style = {}, isDark } = this.props;
-    const { value = "" } = defaultValue;
+    const { getFieldDecorator, getFieldValue } = this.props.form
+    const { defaultValue = {}, loading = false, textConfig = {}, style = {}, isDark } = this.props
 
     const lblClasses = classnames({
       ["lbl-dark"]: isDark,
@@ -73,12 +71,11 @@ class QueryForm extends React.Component {
                 ))
               }
             </Checkbox.Group>
-            )
+          )
           }
         </FormItem>
         <Button
           type="primary"
-          size="large"
           icon="filter"
           onClick={this.handleSubmit}>确定</Button>
       </Form>
@@ -86,4 +83,6 @@ class QueryForm extends React.Component {
   }
 }
 
-export default Form.create()(QueryForm);
+const WrappedForm: any = Form.create()(QueryForm)
+
+export default WrappedForm
