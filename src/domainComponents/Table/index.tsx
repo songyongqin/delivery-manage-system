@@ -2,55 +2,11 @@ import { Table, Pagination } from 'antd'
 import * as React from 'react'
 import classnames from 'classnames'
 import { connect } from 'dva'
-import { LAYOUT_NAMESPACE, DARK_THEME, LIGHT_THEME } from 'configs/ConstConfig'
 import Tag from 'components/Tag'
 const styles = require("./styles.less")
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import $ from 'jquery'
 import 'jquery.nicescroll'
-
-class ExpandControlTable extends React.Component<any, any> {
-  state = {
-    expandedRowKeys: []
-  }
-  constructor(props) {
-    super(props)
-  }
-  onRowClick = record => {
-    this.handleExpandedRowKeys(record.key)
-  }
-  onExpand = record => {
-    this.handleExpandedRowKeys(record.key)
-  }
-  handleExpandedRowKeys = key => {
-
-    const { expandedRowKeys } = this.state
-
-    let keyIndex = expandedRowKeys.indexOf(key)
-
-    if (keyIndex === -1) {
-      return this.setState({
-        expandedRowKeys: [...expandedRowKeys, key]
-      })
-    }
-
-    this.setState({
-      expandedRowKeys: [
-        ...expandedRowKeys.slice(0, keyIndex),
-        ...expandedRowKeys.slice(keyIndex + 1)]
-    })
-  }
-  render() {
-    return (
-      <Table
-        pagination={false}
-        size={"small"}
-        {...this.props}>
-      </Table>
-    )
-  }
-}
-
 
 class EnhancedTable extends React.Component<any, any>{
   constructor(props) {
@@ -105,43 +61,34 @@ class EnhancedTable extends React.Component<any, any>{
   }
   render() {
     const {
-      expanded = false,
       title = null,
       tableProps = { className: "" },
       paginationProps = { total: 0, pageSize: 10 },
       pagination = true,
       theme
-     } = this.props
+    } = this.props
+
+    const expanded = "expandedRowRender" in tableProps && tableProps["expandedRowRender"]
 
     const classes = classnames({
       [styles[theme]]: true,
       [styles["table"]]: true,
-      [tableProps.className]: tableProps.className
-    });
-
+      [tableProps.className]: tableProps.className,
+      [styles["expandable-table"]]: expanded
+    })
 
     const paginationClasses = classnames({
       [styles["pagination"]]: true,
       [styles[theme]]: true
     })
 
-
     return <div style={{ height: "100%", width: "100%" }} ref={target => this.target = target}>
-      {
-        expanded
-          ?
-          <ExpandControlTable
-            {...tableProps}
-            className={classes}
-          />
-          :
-          <Table
-            pagination={false}
-            size={"small"}
-            {...tableProps}
-
-            className={classes} />
-      }
+      <Table
+        pagination={false}
+        size={"small"}
+        {...tableProps}
+        expandRowByClick={expanded}
+        className={classes} />
       {
         pagination
           ?
