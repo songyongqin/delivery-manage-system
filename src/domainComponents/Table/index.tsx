@@ -87,7 +87,7 @@ class EnhancedTable extends React.Component<any, any>{
         pagination={false}
         size={"small"}
         {...tableProps}
-        expandRowByClick={expanded}
+        expandRowByClick={!!expanded}
         className={classes} />
       {
         pagination
