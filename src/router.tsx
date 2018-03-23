@@ -8,12 +8,14 @@ import getLoginPage from 'routes/Login'
 import getOverviewPage from 'routes/Overview'
 import getAnalyseEventPage from 'routes/Analyse_Event'
 import getAnalyseAttackChainPage from 'routes/Analyse_AttackChain'
+import getAnalyseFallHostPage from 'routes/Analyse_FallHost'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
   ANALYSE_EVENT_URL,
   ANALYSE_URL,
-  ANALYSE_ATTACK_CHAIN_URL
+  ANALYSE_ATTACK_CHAIN_URL,
+  ANALYSE_FALL_HOST_URL
 } from 'routes/config/path'
 
 function RouterConfig({ history, app }) {
@@ -48,6 +50,11 @@ function RouterConfig({ history, app }) {
               exact
               component={getAnalyseAttackChainPage(app, ANALYSE_ATTACK_CHAIN_URL)}
               path={ANALYSE_ATTACK_CHAIN_URL} >
+            </Route>
+            <Route
+              exact
+              component={getAnalyseFallHostPage(app, ANALYSE_FALL_HOST_URL)}
+              path={ANALYSE_FALL_HOST_URL} >
             </Route>
           </Switch>
         </MainWrapper>

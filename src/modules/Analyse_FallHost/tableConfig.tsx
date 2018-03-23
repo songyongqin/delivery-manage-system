@@ -1,20 +1,19 @@
-/**
- * Created by jojo on 2017/9/5.
- */
-import React from 'react';
-import styles from './styles.css'
-import tableColumnsGenerator from 'utils/tableColumnsGenerator';
-import JoTag from 'components/JoTag';
-import { Icon, Switch, Card, Timeline, InputNumber, Button } from 'antd';
-import classnames from 'classnames';
-import * as tools from '../../../utils/tools';
-import commonConstConfig from '../../../configs/ConstConfig';
-import { filterRowDataIndexes, rowDataIndexes, tableTextConfig } from '../ConstConfig';
-import FilterInputNumber from 'components/FilterInputNumber/index';
-import TimeLabel from 'components/TimesLabel';
-import QueryIPForm from './QueryIPForm'
-import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
+import * as React from 'react'
+const styles = require("./styles.less")
+import columnsCreator from 'domainUtils/columnsCreator'
+import Tag from 'components/Tag'
+import { Icon, Switch, Timeline, InputNumber, Button } from 'antd'
+import classnames from 'classnames'
+import * as tools from 'utils'
+import {
+  // filterRowDataIndexes, 
+  rowDataIndexes, tableTextConfig
+} from './constants'
+import TimeLabel from 'components/TimeLabel'
+// import QueryIPForm from './QueryIPForm'
+// import FilterDropdownWrapper from 'domainComponents/FilterDropdownWrapper'
 import TagList from 'components/TagList'
+import Card from 'domainComponents/Card'
 import {
   ATTACK_COUNTS_DATAINDEX,
   ITEMS_DATAINDEX,
@@ -36,7 +35,8 @@ import {
   IDS_SOURCE_DES_PROTOCOL_DATAINDEX,
   DETAILS_DATAINDEX,
   IP_DATAINDEX
-} from '../ConstConfig'
+} from './constants'
+import $ from 'jquery'
 
 const rowsRenderer = {
   [ATTACK_EVENT_TYPE_LIST_DATAINDEX]: value => (
@@ -45,7 +45,7 @@ const rowsRenderer = {
 };
 
 
-import getFilterIcon from 'utils/getFilterIcon'
+// import getFilterIcon from 'utils/getFilterIcon'
 
 export const getColumns = ({
   queryFilters,
@@ -63,24 +63,24 @@ export const getColumns = ({
 
 
 
-  return tableColumnsGenerator({
-    keys: rowDataIndexes,
-    titleTextConfig: tableTextConfig.rowTitles,
-    filterTextConfig: {
-      ...commonConstConfig.textConfig,
-      ...filterTextConfig
-    },
-    filterOptions: filterOptions,
-    filteredValue: queryFilters,
+  return columnsCreator({
+    dataIndexes: rowDataIndexes,
+    titleConfig: tableTextConfig.rowTitles,
+    // filterConfig: {
+    //   ...commonConstConfig.textConfig,
+    //   ...filterTextConfig
+    // },
+    // filtersConfig: filterOptions,
+    // filteredValue: queryFilters,
     renderer,
-    extraProps: {
-      [IP_DATAINDEX]: {
-        filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
-          <QueryIPForm defaultValue={queryFilters} onSubmit={onQuery}></QueryIPForm>
-        </FilterDropdownWrapper>,
-        filterIcon: getFilterIcon(queryFilters[IP_DATAINDEX])
-      },
-    }
+    // extraProps: {
+    //   [IP_DATAINDEX]: {
+    //     filterDropdown: <FilterDropdownWrapper style={{ width: "320px" }}>
+    //       <QueryIPForm defaultValue={queryFilters} onSubmit={onQuery}></QueryIPForm>
+    //     </FilterDropdownWrapper>,
+    //     filterIcon: getFilterIcon(queryFilters[IP_DATAINDEX])
+    //   },
+    // }
   });
 
 };
@@ -89,7 +89,7 @@ export const getColumns = ({
 const { expandedRow } = tableTextConfig
 
 
-class ScrollLoadTimeLine extends React.Component {
+class ScrollLoadTimeLine extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
@@ -99,6 +99,7 @@ class ScrollLoadTimeLine extends React.Component {
   static defaultProps = {
     data: []
   }
+  con = null
   initScroll = () => {
     try {
       $(this.con).niceScroll({
@@ -112,19 +113,19 @@ class ScrollLoadTimeLine extends React.Component {
 
     }
   }
-  componentDidMount = () => {
+  componentDidMount() {
     const { con } = this
     this.initScroll()
     con.addEventListener("scroll", this.limitHandle)
   }
-  componentDidUpdate = () => {
+  componentDidUpdate() {
     try {
       $(this.con).getNiceScroll().resize()
     } catch (e) {
       console.error(e)
     }
   }
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     const { con } = this
     con.removeEventListener("scroll", this.limitHandle)
   }
@@ -162,7 +163,7 @@ class ScrollLoadTimeLine extends React.Component {
             return (
               <Timeline.Item key={`${index}-timeline-item`}>
                 <div>
-                  <JoTag color="#108ee9">{i.title}</JoTag>
+                  <Tag color="#108ee9">{i.title}</Tag>
                   <br /><br />
                   {expandedRow.description + ":"}
                   {
@@ -244,7 +245,7 @@ export const getExpandedRowRender = ({ isDark }) => {
                       {tools.getKeyText(ATTACKTIMES_DATAINDEX, expandTextConfig)}
                     </td>
                     <td>
-                      <TimeLabel times={attackTime} />
+                      <TimeLabel value={attackTime} />
                     </td>
                   </tr>
                   {
@@ -284,7 +285,7 @@ export const getExpandedRowRender = ({ isDark }) => {
           })
         }
       </Card>
-    );
-  };
-};
+    )
+  }
+}
 

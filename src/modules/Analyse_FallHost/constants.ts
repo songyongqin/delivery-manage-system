@@ -2,8 +2,6 @@
  * Created by jojo on 2017/9/5.
  */
 
-import React from 'react';
-import JoIcon from '../../components/JoIcon';
 
 
 export const NAMESPACE = "analyseFallHost";
@@ -77,6 +75,4 @@ export const IDS_SOURCE_DES_SOURCE_IP_DATAINDEX = "sourceIp",
   IDS_SOURCE_DES_OTHER_DATAINDEX = "other"
 
 
-export { EVENT_TYPE_DATA_INDEX } from '../../configs/ConstConfig'
-
-export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig'
+export const EVENT_TYPE_DATA_INDEX = "eventType"
