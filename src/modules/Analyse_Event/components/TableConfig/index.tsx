@@ -5,9 +5,10 @@ import React from 'react';
 // import tableColumnsGenerator from 'utils/tableColumnsGenerator';
 import columnsCreator from 'domainUtils/columnsCreator'
 import Tag from 'components/Tag'
-import { Icon, Switch, Card, Timeline, InputNumber, Button, Badge } from 'antd'
+import { Icon, Switch, Timeline, InputNumber, Button, Badge } from 'antd'
 import classnames from 'classnames'
 import * as tools from 'utils'
+import Card from 'domainComponents/Card'
 // import commonConstConfig from 'configs/ConstConfig';
 import {
   filterRowDataIndexes,
