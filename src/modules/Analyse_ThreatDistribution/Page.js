@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles.css'
+// import styles from './styles.css'
 import { Menu, Button, Breadcrumb, Radio } from 'antd';
 import echarts from 'echarts';
 import ReactEcharts from 'echarts-for-react';
@@ -33,10 +33,7 @@ const getOption = ({ data, isDark, mapType = "world" }) => {
     tooltip: {
       trigger: 'item',
       formatter: function (params) {
-        // var value = (params.value + '').split('.');
-        // console.info(value);
-        // value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,')
-        //   + '.' + value[1];
+
         const { name } = params;
         const itemData = data.filter(i => i.name === name)
         if (itemData.length === 0) {
@@ -45,17 +42,6 @@ const getOption = ({ data, isDark, mapType = "world" }) => {
         return "威胁分布" + '<br/>' + itemData[0].title + ' : ' + (params.value || 0) + "(攻击次数)";
       }
     },
-    // toolbox: {
-    //   show: true,
-    //   orient: 'vertical',
-    //   left: 'right',
-    //   top: 'center',
-    //   feature: {
-    //     dataView: { readOnly: false },
-    //     restore: {},
-    //     saveAsImage: {}
-    //   }
-    // },
     grid: {
       left: '0',
       right: '0',
@@ -104,7 +90,7 @@ const getOption = ({ data, isDark, mapType = "world" }) => {
     }
   }
 
-  return option;
+  return option
 
 }
 
@@ -169,14 +155,6 @@ class Page extends React.Component {
           </Radio.Button>
         </Radio.Group>
         <ReactEcharts
-          onEvents={{
-            georoam: (...rest) => {
-              console.info(rest)
-            }
-          }}
-          onChartReady={() => {
-            console.info("xxxxx");
-          }}
           option={getOption({ isDark, data: data[mapType], mapType })}
           style={{ width: "100%", height: this.state.height + "px" }}></ReactEcharts>
       </div>

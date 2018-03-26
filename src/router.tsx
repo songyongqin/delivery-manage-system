@@ -11,6 +11,7 @@ import getAnalyseAttackChainPage from 'routes/Analyse_AttackChain'
 import getAnalyseFallHostPage from 'routes/Analyse_FallHost'
 import getEarlyWarningEmailPage from 'routes/EarlyWarning_Email'
 import getAnalyseRankingPage from 'routes/Analyse_Ranking'
+import getAnalyseThreatDistributionPage from 'routes/Analyse_ThreatDistribution'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -19,6 +20,7 @@ import {
   ANALYSE_ATTACK_CHAIN_URL,
   ANALYSE_RANKING_URL,
   ANALYSE_FALL_HOST_URL,
+  ANALYSE_THREAT_DIS_URL,
   EARLY_WARNING_URL,
   EARLY_WARNING_EMAIL_URL
 } from 'routes/config/path'
@@ -65,6 +67,11 @@ function RouterConfig({ history, app }) {
               exact
               component={getAnalyseRankingPage(app, ANALYSE_RANKING_URL)}
               path={ANALYSE_RANKING_URL} >
+            </Route>
+            <Route
+              exact
+              component={getAnalyseThreatDistributionPage(app, ANALYSE_THREAT_DIS_URL)}
+              path={ANALYSE_THREAT_DIS_URL} >
             </Route>
             <Route
               exact
