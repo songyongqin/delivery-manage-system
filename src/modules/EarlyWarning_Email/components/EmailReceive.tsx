@@ -221,7 +221,7 @@ export default class EmailReceive extends React.Component<any, any> {
   }
   put = payload => this.props.put(payload)
     .then(_ => {
-      Message.success("修改成功")
+      Message.success("保存设置成功")
     })
   render() {
 
