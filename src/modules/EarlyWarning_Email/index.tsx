@@ -8,7 +8,7 @@ import {
 import WithAnimateRender from 'components/WithAnimateRender'
 import classnames from 'classnames'
 import EmailReceive from './components/EmailReceive'
-// import EmailSend from '../EarlyWarning_EmailSend/Page'
+import EmailSend from './components/EmailSend'
 
 const TabPane = Tabs.TabPane
 
@@ -24,7 +24,7 @@ class Page extends React.Component<any, any>{
             <EmailReceive />
           </TabPane>
           <TabPane tab={SEND_CONFIG_TITLE} key={"send-email"} >
-            {/* <EmailSend /> */}
+            <EmailSend />
           </TabPane>
         </Tabs>
       ])

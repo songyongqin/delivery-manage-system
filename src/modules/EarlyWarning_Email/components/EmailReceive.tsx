@@ -3,7 +3,6 @@ import { connect } from 'dva'
 import classnames from 'classnames'
 // import { textConfig, NAMESPACE } from './ConstConfig'
 import Spin from 'domainComponents/Spin'
-import ReceiveEmailConfigForm from './ReceiveEmailConfigForm'
 import { EARLY_WARNING_EMAIL_RECEIVE_NAMESPACE } from 'constants/model'
 import * as tools from 'utils'
 import extraConnect from 'domainUtils/extraConnect'
@@ -134,8 +133,6 @@ class ReceiveForm extends React.Component<any, any> {
           })(
             <CheckboxGroup
               className={classnames({
-                [styles["check-box"]]: true,
-                ["lbl-dark"]: isDark
               })}
               key={`${loading}-check-box-group`}
               defaultValue={defaultValue.level}
