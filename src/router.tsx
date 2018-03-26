@@ -10,13 +10,14 @@ import getAnalyseEventPage from 'routes/Analyse_Event'
 import getAnalyseAttackChainPage from 'routes/Analyse_AttackChain'
 import getAnalyseFallHostPage from 'routes/Analyse_FallHost'
 import getEarlyWarningEmailPage from 'routes/EarlyWarning_Email'
-
+import getAnalyseRankingPage from 'routes/Analyse_Ranking'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
   ANALYSE_EVENT_URL,
   ANALYSE_URL,
   ANALYSE_ATTACK_CHAIN_URL,
+  ANALYSE_RANKING_URL,
   ANALYSE_FALL_HOST_URL,
   EARLY_WARNING_URL,
   EARLY_WARNING_EMAIL_URL
@@ -59,6 +60,11 @@ function RouterConfig({ history, app }) {
               exact
               component={getAnalyseFallHostPage(app, ANALYSE_FALL_HOST_URL)}
               path={ANALYSE_FALL_HOST_URL} >
+            </Route>
+            <Route
+              exact
+              component={getAnalyseRankingPage(app, ANALYSE_RANKING_URL)}
+              path={ANALYSE_RANKING_URL} >
             </Route>
             <Route
               exact
