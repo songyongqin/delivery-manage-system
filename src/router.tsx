@@ -13,6 +13,7 @@ import getEarlyWarningEmailPage from 'routes/EarlyWarning_Email'
 import getAnalyseRankingPage from 'routes/Analyse_Ranking'
 import getAnalyseThreatDistributionPage from 'routes/Analyse_ThreatDistribution'
 import getSysConfigMonitorPage from 'routes/SysConfig_Monitor'
+import getSysConfigNetworkPage from 'routes/SysConfig_Network'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -26,6 +27,7 @@ import {
   EARLY_WARNING_EMAIL_URL,
   SYS_CONFIG_URL,
   SYS_CONFIG_MONITOR_URL,
+  SYS_CONFIG_NETWORK_URL
 } from 'routes/config/path'
 
 function RouterConfig({ history, app }) {
@@ -93,7 +95,12 @@ function RouterConfig({ history, app }) {
             <Route
               exact
               path={SYS_CONFIG_URL}
-              render={() => (<Redirect to={SYS_CONFIG_MONITOR_URL} />)} />
+              render={() => (<Redirect to={SYS_CONFIG_NETWORK_URL} />)} />
+            <Route
+              exact
+              component={getSysConfigNetworkPage(app, SYS_CONFIG_NETWORK_URL)}
+              path={SYS_CONFIG_NETWORK_URL} >
+            </Route>
             <Route
               exact
               component={getSysConfigMonitorPage(app, SYS_CONFIG_MONITOR_URL)}
