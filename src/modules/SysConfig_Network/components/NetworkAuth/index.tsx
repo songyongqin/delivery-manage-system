@@ -1,14 +1,17 @@
-import React from 'react';
-import { Input, Row, Col, Button, Tooltip, message as Message, Spin, Switch, Checkbox, Popconfirm } from 'antd';
-import { Form, Icon } from 'antd';
-
-import classnames from 'classnames';
-const FormItem = Form.Item;
-const CheckboxGroup = Checkbox.Group;
-import { ipReg, portReg } from '../../../../utils/tools.js'
+import * as React from 'react'
+import { Input, Row, Col, Button, Tooltip, message as Message, Spin, Switch, Checkbox, Popconfirm } from 'antd'
+import { Form, Icon } from 'antd'
+import classnames from 'classnames'
+const FormItem = Form.Item
+const CheckboxGroup = Checkbox.Group
+import { ipReg, portReg } from 'utils/tools.js'
 import {
   AUTH_USER_ACCOUNT, AUTH_PASSWORD, IS_CONNECT
-} from '../../ConstConfig'
+} from '../../constants'
+import extraConnect from 'domainUtils/extraConnect'
+import Card from 'domainComponents/Card'
+import { SYS_CONFIG_NETWORK_AUTH_NAMESPACE } from 'constants/model'
+import { When, Otherwise, Choose } from 'components/ControlStatements'
 
 
 const labelConfig = {
@@ -17,8 +20,7 @@ const labelConfig = {
 }
 
 
-@Form.create()
-class WrappedForm extends React.Component {
+class WrappedForm extends React.Component<any, any> {
   constructor(props) {
     super(props)
 
@@ -27,11 +29,11 @@ class WrappedForm extends React.Component {
     }
   }
   handleConnect = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const { form, onSubmit } = this.props;
     form.validateFields((err, values) => {
       if (err) {
-        return;
+        return
       }
       onSubmit && onSubmit({
         values,
@@ -47,7 +49,7 @@ class WrappedForm extends React.Component {
     const { form, onSubmit } = this.props;
     form.validateFields((err, values) => {
       if (err) {
-        return;
+        return
       }
       onSubmit && onSubmit({
         values,
@@ -66,22 +68,16 @@ class WrappedForm extends React.Component {
       wrapperCol: {
         span: 12,
       },
-    };
+    }
 
-    const lblClasses = classnames({
-      ["lbl-dark"]: isDark,
-    })
-
-    const connect = this.state.connect !== null ? this.state.connect : defaultValue[IS_CONNECT];
-
-
+    const connect = this.state.connect !== null ? this.state.connect : defaultValue[IS_CONNECT]
 
     const formContent = (
       <Form style={{ width: "800px" }}>
         <FormItem {...formItemLayout}
           colon={false}
           required={true}
-          label={<span className={lblClasses}>
+          label={<span >
             {labelConfig[AUTH_USER_ACCOUNT]}
           </span>}>
           {getFieldDecorator(AUTH_USER_ACCOUNT, {
@@ -93,12 +89,12 @@ class WrappedForm extends React.Component {
             ]
           })(
             <Input disabled={loading}></Input>
-            )}
+          )}
         </FormItem>
         <FormItem {...formItemLayout}
           colon={false}
           required={true}
-          label={<span className={lblClasses}>
+          label={<span >
             {labelConfig[AUTH_PASSWORD]}
           </span>}>
           {getFieldDecorator(AUTH_PASSWORD, {
@@ -110,7 +106,7 @@ class WrappedForm extends React.Component {
             ]
           })(
             <Input disabled={loading} type="password"></Input>
-            )}
+          )}
         </FormItem>
         <FormItem {...formItemLayout}
           label={" "}
@@ -147,4 +143,70 @@ class WrappedForm extends React.Component {
   }
 }
 
-export default WrappedForm;
+const NetWorkAuth: any = Form.create()(WrappedForm)
+
+
+
+@extraConnect(
+  state => {
+    const effectsLoading = state.loading.effects
+    return {
+      loading: effectsLoading[`${SYS_CONFIG_NETWORK_AUTH_NAMESPACE}/fetch`] ||
+        effectsLoading[`${SYS_CONFIG_NETWORK_AUTH_NAMESPACE}/put`]
+    }
+  },
+  dispatch => {
+    return {
+      fetch: _ => dispatch({
+        type: `${SYS_CONFIG_NETWORK_AUTH_NAMESPACE}/fetch`,
+      }),
+      put: payload => dispatch({
+        type: `${SYS_CONFIG_NETWORK_AUTH_NAMESPACE}/put`
+      })
+    }
+  }
+)
+export default class extends React.Component<any, any>{
+  state = {
+    data: {},
+    initial: false
+  }
+  componentDidMount() {
+    this.fetchData()
+  }
+  fetchData = () => {
+    this.props.fetch().then(res => this.setState({ data: res, initial: true }))
+  }
+  onSubmit = payload => {
+    this.props.put(payload)
+      .then(_ => Message.success("保存成功"))
+      .then(this.fetchData)
+  }
+  render() {
+
+    const { onSubmit } = this
+    const { loading } = this.props
+    const { data, initial } = this.state
+    return (
+      <Card
+        title={
+          <div>
+            <Icon type="setting"></Icon> &nbsp;SYS-LOG服务器网络配置&nbsp;&nbsp;
+          </div>
+        } style={{ marginBottom: "15px" }}>
+        <Choose>
+          <When condition={initial}>
+            <NetWorkAuth
+              onSubmit={onSubmit}
+              loading={loading}
+              defaultValue={data}>
+            </NetWorkAuth>
+          </When>
+          <Otherwise>
+            <Icon type="loading"></Icon>
+          </Otherwise>
+        </Choose>
+      </Card>
+    )
+  }
+}

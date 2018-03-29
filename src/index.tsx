@@ -13,7 +13,7 @@ import onError, { initGlobalOnErrorListener } from 'domainUtils/error'
 
 // 1.history
 const app = dva({
-  history: createHistory(),
+  // history: createHistory(),
   onError: onError
 })
 
