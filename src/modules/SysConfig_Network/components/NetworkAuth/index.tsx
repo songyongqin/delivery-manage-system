@@ -209,7 +209,12 @@ export default class extends React.Component<any, any>{
       <Card
         title={
           <div>
-            <Icon type="setting"></Icon> &nbsp;SYS-LOG服务器网络配置&nbsp;&nbsp;
+            <Icon type="setting"></Icon> &nbsp;802.1x认证配置&nbsp;&nbsp;
+            <Tooltip title="此配置适用于需要进行802.1x协议端口上网认证的网络环境，需输入认证的账号名和密码">
+              <a style={{ color: "#108ee9" }}>
+                <Icon type="question-circle-o" />
+              </a>
+            </Tooltip>
           </div>
         } style={{ marginBottom: "15px" }}>
         <Choose>
