@@ -25,7 +25,8 @@ class WrappedForm extends React.Component<any, any> {
     super(props)
 
     this.state = {
-      connect: null
+      connect: null,
+      loading: false
     }
   }
   handleConnect = (e) => {
@@ -35,12 +36,19 @@ class WrappedForm extends React.Component<any, any> {
       if (err) {
         return
       }
+
+      this.setState({
+        loading: true
+      })
+
       onSubmit && onSubmit({
         values,
         [IS_CONNECT]: 1,
       })
         .then(result => this.setState({ connect: 1 }))
-        .then(result => Message.success("802.1x协议上网认证配置成功", 3))
+        .then(_ => this.setState({
+          loading: false
+        }))
 
     })
   }
@@ -51,16 +59,25 @@ class WrappedForm extends React.Component<any, any> {
       if (err) {
         return
       }
+
+      this.setState({
+        loading: true
+      })
+
       onSubmit && onSubmit({
         values,
         [IS_CONNECT]: 0,
       })
         .then(result => this.setState({ connect: 0 }))
+        .then(_ => this.setState({
+          loading: false
+        }))
     })
   }
   render() {
-    const { getFieldDecorator, getFieldValue } = this.props.form;
-    const { defaultValue = {}, isDark, loading, isAdmin } = this.props;
+    const { getFieldDecorator, getFieldValue } = this.props.form
+    const { defaultValue = {}, isDark, isAdmin } = this.props
+    const { loading } = this.state
     const formItemLayout = {
       labelCol: {
         span: 3,
@@ -113,10 +130,11 @@ class WrappedForm extends React.Component<any, any> {
           colon={false}>
           <Button type="primary"
             style={{ marginRight: "10px" }}
+            loading={loading && connect !== 1}
             disabled={connect === 1}
             icon="link"
             onClick={this.handleConnect}
-            size="large">
+            size="default">
             {
               connect === 1
                 ?
@@ -127,10 +145,10 @@ class WrappedForm extends React.Component<any, any> {
           </Button>
           <Popconfirm onConfirm={this.handleDisConnect} title="将断开802.1x协议上网认证功能">
             <Button type="primary"
+              loading={loading && connect === 1}
               disabled={connect !== 1}
               icon="disconnect"
-
-              size="large">
+              size="default">
               断开
           </Button>
           </Popconfirm>
@@ -178,8 +196,8 @@ export default class extends React.Component<any, any>{
     this.props.fetch().then(res => this.setState({ data: res, initial: true }))
   }
   onSubmit = payload => {
-    this.props.put(payload)
-      .then(_ => Message.success("保存成功"))
+    return this.props.put(payload)
+      .then(_ => Message.success("802.1x协议上网认证配置成功"))
       .then(this.fetchData)
   }
   render() {

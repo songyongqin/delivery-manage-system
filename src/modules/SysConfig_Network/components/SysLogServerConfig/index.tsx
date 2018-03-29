@@ -134,8 +134,9 @@ class WrappedForm extends React.Component<any, any> {
 
         <FormItem wrapperCol={{ span: 4, push: 6 }}
           colon={false}>
-          <Button type="primary"
-            disabled={loading}
+          <Button
+            type="primary"
+            loading={loading}
             icon="save"
             onClick={this.handleSubmit}
             size="default">保存</Button>
