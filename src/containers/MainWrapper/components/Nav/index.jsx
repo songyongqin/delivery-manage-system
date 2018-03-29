@@ -8,6 +8,14 @@ import { getProduction } from 'domain/production'
 import { last } from 'utils'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
 
+const getFinalLink = config => {
+  try {
+    return "items" in config ? config.items[0].link : config.link
+  } catch (e) {
+    return config.link
+  }
+}
+
 const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem = false }) => {
   return navConfig.map(i => {
 
@@ -17,8 +25,10 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
     })
 
     // console.info(i["icon"], mini, i.link)
+    const link = getFinalLink(i)
+
     const title = (
-      <Link to={i.link} className={classes}>
+      <Link to={link} className={classes}>
         <Choose>
           <When condition={i["icon"]} >
             {i.icon}
