@@ -92,7 +92,6 @@ class TableWithRemote extends React.Component<any, any>{
     const loading = controlledLoading ? this.props.loading : effectsLoading[`${remoteNamespace}/fetch`]
 
 
-
     return (
       <Spin spinning={loading}>
         <Table

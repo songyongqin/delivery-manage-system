@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react'
 import {
   Form,
   Input,
@@ -11,8 +11,8 @@ import {
   Checkbox,
   Button,
   AutoComplete,
-} from 'antd';
-import classnames from 'classnames';
+} from 'antd'
+import classnames from 'classnames'
 import {
   MONITOR_PERIOD_DATA_INDEX,
   MODULE_LIST_DATA_INDEX,
@@ -27,7 +27,7 @@ const periodConfig = {
   720: "每月"
 }
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 
 
@@ -38,16 +38,16 @@ const formItemLayout = {
   wrapperCol: {
     span: 24
   },
-};
+}
 
 @Form.create()
-class WrappedForm extends React.Component {
+class WrappedForm extends React.Component<any, any> {
   static defaultProps = {
     items: ["web"],
     itemTextConfig: {}
   }
   handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const { onSubmit, form, items } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (err) {
@@ -60,8 +60,8 @@ class WrappedForm extends React.Component {
       })
       values[MODULE_LIST_DATA_INDEX] = moduleList;
       values[MONITOR_PERIOD_DATA_INDEX] = parseInt(values[MONITOR_PERIOD_DATA_INDEX])
-      onSubmit && onSubmit(values);
-    });
+      onSubmit && onSubmit(values)
+    })
   }
   checkAllOnChange = (e) => {
     const { form, items } = this.props;
@@ -77,14 +77,14 @@ class WrappedForm extends React.Component {
 
     const { getFieldDecorator } = this.props.form;
     const {
-            isDark,
+      isDark,
       loading,
       defaultValue = {},
       style,
       form,
       items,
       itemTextConfig
-        } = this.props;
+    } = this.props;
 
     const lblClasses = classnames({
       "lbl-dark": isDark
@@ -110,7 +110,7 @@ class WrappedForm extends React.Component {
                 ))
               }
             </Select>
-            )}
+          )}
         </FormItem>
         <FormItem {...formItemLayout}
           style={{ marginBottom: "10px" }}
@@ -124,7 +124,7 @@ class WrappedForm extends React.Component {
             <Checkbox onChange={this.checkAllOnChange} disabled={loading}>
               <span className={lblClasses}>全选</span>
             </Checkbox>
-            )}
+          )}
         </FormItem>
         <FormItem {...formItemLayout}
           label={""}>
@@ -144,7 +144,7 @@ class WrappedForm extends React.Component {
                 ))
               }
             </Checkbox.Group>
-            )}
+          )}
         </FormItem>
         <FormItem
           style={{

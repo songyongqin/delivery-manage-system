@@ -12,6 +12,7 @@ import getAnalyseFallHostPage from 'routes/Analyse_FallHost'
 import getEarlyWarningEmailPage from 'routes/EarlyWarning_Email'
 import getAnalyseRankingPage from 'routes/Analyse_Ranking'
 import getAnalyseThreatDistributionPage from 'routes/Analyse_ThreatDistribution'
+import getSysConfigMonitorPage from 'routes/SysConfig_Monitor'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -22,7 +23,9 @@ import {
   ANALYSE_FALL_HOST_URL,
   ANALYSE_THREAT_DIS_URL,
   EARLY_WARNING_URL,
-  EARLY_WARNING_EMAIL_URL
+  EARLY_WARNING_EMAIL_URL,
+  SYS_CONFIG_URL,
+  SYS_CONFIG_MONITOR_URL,
 } from 'routes/config/path'
 
 function RouterConfig({ history, app }) {
@@ -35,15 +38,18 @@ function RouterConfig({ history, app }) {
               exact
               path="/"
               render={() => (<Redirect to={OVERVIEW_URL} />)} />
+            {/* 登录 */}
             <Route
               path={LOGIN_URL}
               exact
               component={getLoginPage(app, LOGIN_URL)}>
             </Route>
+            {/* 威胁概览 */}
             <Route
               path={OVERVIEW_URL}
               exact
               component={getOverviewPage(app, OVERVIEW_URL)} />
+            {/* 威胁分析 */}
             <Route
               exact
               path={ANALYSE_URL}
@@ -73,6 +79,7 @@ function RouterConfig({ history, app }) {
               component={getAnalyseThreatDistributionPage(app, ANALYSE_THREAT_DIS_URL)}
               path={ANALYSE_THREAT_DIS_URL} >
             </Route>
+            {/* 威胁预警 */}
             <Route
               exact
               path={EARLY_WARNING_URL}
@@ -81,6 +88,16 @@ function RouterConfig({ history, app }) {
               exact
               component={getEarlyWarningEmailPage(app, EARLY_WARNING_EMAIL_URL)}
               path={EARLY_WARNING_EMAIL_URL} >
+            </Route>
+            {/* 系统配置 */}
+            <Route
+              exact
+              path={SYS_CONFIG_URL}
+              render={() => (<Redirect to={SYS_CONFIG_MONITOR_URL} />)} />
+            <Route
+              exact
+              component={getSysConfigMonitorPage(app, SYS_CONFIG_MONITOR_URL)}
+              path={SYS_CONFIG_MONITOR_URL} >
             </Route>
           </Switch>
         </MainWrapper>

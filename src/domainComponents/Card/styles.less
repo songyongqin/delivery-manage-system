@@ -2,9 +2,11 @@
 
 
 .card{
-  box-shadow: 0 0 3px 0 rgba(0,0,0,0.65);
   transition: none;
   :global{
+    .ant-card-head{
+      margin-bottom:-2px;      
+    }
     .ant-card-body{
       width: 100%;
       &>div{
@@ -13,43 +15,57 @@
       }
     }
   }
+ 
   &.dark{
     background: @dark-bg-level-2;
+
+    &:hover{
+      box-shadow: 0 0 3px 0 rgba(0,0,0,1);    
+    }
+    
     :global{
       .ant-card-head{
-        background: @dark-bg-level-3;
-        
+        background: @dark-bg-level-3;        
       }
       .ant-card-head-title{
         color:@dark-txt-color;
       }
       .ant-card-body{
-        background: @dark-bg-level-2;
+        background: @dark-bg-level-3;
         color:@dark-txt-color;
+        border-top: 1px solid @dark-bg-level-2; 
       }
     }
   }
   &.light{
     background: @light-bg-level-1;
+    &:hover{
+      box-shadow: 0 0 3px 0 rgba(0,0,0,0.65);    
+    }
+
     :global{
-      // .ant-card-head{
-      //   background: @light-bg-level-3;
-      // }
-      // .ant-card-head-title{
-      //   color:@light-txt-color;
-      // }
+      .ant-card{
+        background: red;
+      }
       .ant-card-body{
-        background: @light-bg-level-1;
+        background: @light-bg-level-3;
         color:@light-txt-color;
+        border-top: 1px solid rgb(233, 233, 233);       
       }
     }
   }
-
-  
 }
 
 :global{
   .ant-card-bordered{
     border:none;
   }
+}
+
+.dark:global(.ant-card){
+  background: @dark-bg-level-3;
+}
+
+.light:global(.ant-card){
+  background: @light-bg-level-3;
 }
