@@ -16,7 +16,7 @@ import Breadcrumb from 'domainComponents/Breadcrumb'
 import BuildingHolder from 'domainComponents/BuildingHolder'
 import SecretParse from 'domainComponents/SecretParse'
 import Setup from 'modules/Setup'
-
+import Footer from './components/Footer'
 import { LOGIN_URL, ROOT_URL } from 'routes/config/path'
 import { DOMAIN_USER_NAMESPACE, LAYOUT_NAMESPACE } from 'constants/model'
 import { ADMIN_ROLE, ROLE_DATA_INDEX } from 'constants/user'
@@ -184,6 +184,7 @@ class IndexPage extends React.Component<any, any>{
               children
           }
         </div>
+        <Footer></Footer>
         <Modal
           footer={null}
           onCancel={this.hideModifyPassword}
