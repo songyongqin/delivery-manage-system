@@ -7,6 +7,8 @@ import { getNavConfig } from 'navConfig'
 import { getProduction } from 'domain/production'
 import { last } from 'utils'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
+import $ from 'jquery'
+import 'jquery.nicescroll'
 
 const getFinalLink = config => {
   try {
@@ -91,6 +93,41 @@ export default class extends React.Component {
       })
     }
   }
+  con = null
+  componentDidMount() {
+    this.initNiceScroll()
+  }
+  componentWillUnmount() {
+    this.removeNiceScroll()
+  }
+  componentDidUpdate() {
+    this.resizeNiceScroll()
+  }
+  initNiceScroll = () => {
+    try {
+      $(this.con).niceScroll({
+        cursorborder: "",
+        cursorcolor: "#cccccc",
+        boxzoom: false,
+        autohidemode: true
+      })
+    } catch (e) {
+    }
+  }
+  resizeNiceScroll = () => {
+    try {
+      $(this.con).getNiceScroll().resize()
+    } catch (e) {
+
+    }
+  }
+  removeNiceScroll = () => {
+    try {
+      $(this.con).getNiceScroll().remove()
+    } catch (e) {
+
+    }
+  }
   render() {
     const { theme, mini = true, animate = true, active = "", isAdmin = false } = this.props
     const wrapperClasses = classnames({
@@ -112,7 +149,7 @@ export default class extends React.Component {
     }, [])
 
     return (
-      <nav className={wrapperClasses}>
+      <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu
           openKeys={this.state.openKeys}
           onOpenChange={this.onOpenChange}
