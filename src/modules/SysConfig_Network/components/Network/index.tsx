@@ -136,7 +136,7 @@ export default class extends React.Component<any, any>{
             finalPayload[realKeyMap[key]] = value
           })
 
-          this.props.put(finalPayload)
+          return this.props.put(finalPayload)
             .then(_ => Message.success("保存成功"))
             .then(this.fetchData)
         }

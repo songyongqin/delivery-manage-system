@@ -30,6 +30,9 @@ class WrappedForm extends React.Component<any, any> {
     dataIndexes: [],
     labelTextConfig: {}
   }
+  state = {
+    loading: false
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     const { onSubmit, form, dataIndexes } = this.props;
@@ -41,9 +44,13 @@ class WrappedForm extends React.Component<any, any> {
 
       dataIndexes.forEach(i => values[i] = values[i].trim())
 
-      onSubmit && onSubmit(values)
+      this.setState({
+        loading: true
+      })
 
-    });
+      onSubmit && onSubmit(values).then(_ => { }).then(_ => this.setState({ loading: false }))
+
+    })
   }
 
 
@@ -51,7 +58,6 @@ class WrappedForm extends React.Component<any, any> {
     const { getFieldDecorator } = this.props.form
     const {
       isDark,
-      loading,
       defaultValue,
       rulesConfig,
       dataIndexes,
@@ -59,6 +65,8 @@ class WrappedForm extends React.Component<any, any> {
       disabled = false,
       btnDisabledTip
     } = this.props
+
+    const { loading } = this.state
 
     const lblClasses = classnames({
       // [styles["lbl-dark"]]: isDark
