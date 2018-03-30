@@ -16,6 +16,12 @@ import { When, Otherwise, Choose } from 'components/ControlStatements'
 
 
 class WrappedForm extends React.Component<any, any> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showInfo: props.defaultValue[OPEN_DATA_INDEX]
+    }
+  }
   remove = (index) => {
     const { form } = this.props
     const keys = form.getFieldValue('keys')
@@ -48,6 +54,15 @@ class WrappedForm extends React.Component<any, any> {
     }
     callback("请输入正确的端口")
   }
+  onSwitchChange = (value) => {
+    const { onSubmit } = this.props
+    onSubmit && onSubmit({
+      [OPEN_DATA_INDEX]: value ? 1 : 0
+    })
+    this.setState({
+      showInfo: value
+    })
+  }
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { defaultValue = {}, isDark, loading, isAdmin } = this.props;
@@ -63,6 +78,17 @@ class WrappedForm extends React.Component<any, any> {
     const lblClasses = classnames({
       ["lbl-dark"]: isDark,
     })
+
+
+    const statusContent = defaultValue[CONNECT_CLOUD_DATA_INDEX] === 1
+      ?
+      <p style={{ color: "#00a854" }}>
+        设备可连接到云检测服务器，云检测功能正常运行
+      </p>
+      :
+      <p style={{ color: "#f04134" }}>
+        设备无法连接到云检测服务器，无法上传数据到云服务器
+      </p>
 
     const formContent = (
       <Form style={{ width: "800px" }}>
@@ -80,14 +106,15 @@ class WrappedForm extends React.Component<any, any> {
                 initialValue: defaultValue[OPEN_DATA_INDEX] === 1,
                 valuePropName: "checked"
               })(
-                <Switch checkedChildren={"开启"}
-                  unCheckedChildren={"禁用"}
+                <Switch checkedChildren={loading ? <Icon type="loading"></Icon> : "开启"}
+                  onChange={this.onSwitchChange}
+                  unCheckedChildren={loading ? <Icon type="loading"></Icon> : "禁用"}
                   disabled={loading} />
               )}
             </FormItem>
           </div>
           <div style={{ float: "left", height: "40px", lineHeight: "40px" }}>
-            <FormItem wrapperCol={{ span: 4 }}
+            {/* <FormItem wrapperCol={{ span: 4 }}
               colon={false}>
               <Button type="primary"
                 loading={loading}
@@ -95,22 +122,17 @@ class WrappedForm extends React.Component<any, any> {
                 size="default"
                 onClick={this.handleSubmit}
               >保存</Button>
-            </FormItem>
+            </FormItem> */}
           </div>
         </div>
-
-        {
-          defaultValue[CONNECT_CLOUD_DATA_INDEX] === 1
-            ?
-            <p style={{ color: "#00a854" }}>
-              设备可连接到云检测服务器，云检测功能正常运行
-            </p>
-            :
-            <p style={{ color: "#f04134" }}>
-              设备无法连接到云检测服务器，无法上传数据到云服务器
-            </p>
-        }
-
+        <Choose>
+          <When condition={loading && this.state.showInfo}>
+            <Icon type="loading"></Icon>
+          </When>
+          <When condition={this.state.showInfo}>
+            {statusContent}
+          </When>
+        </Choose>
       </Form>
     )
     return formContent

@@ -83,6 +83,7 @@ class WrappedForm extends React.Component<any, any> {
             return (
               <FormItem
                 required={false}
+                colon={false}
                 key={dataIndex}
                 label={<Label
                   textConfig={labelTextConfig}
