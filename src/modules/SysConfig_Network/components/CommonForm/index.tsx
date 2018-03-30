@@ -68,7 +68,7 @@ class WrappedForm extends React.Component<any, any> {
 
 
     return (
-      <Form layout="inline" style={{ minWidth: "900px" }}>
+      <Form layout="inline" >
         {
           dataIndexes.map(dataIndex => {
 
