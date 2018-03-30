@@ -13,6 +13,7 @@ import {
   ADAPTER_MAS_DATAINDEX,
 } from '../../constants'
 import { ipReg } from 'utils/tools'
+import Spin from 'domainComponents/Spin'
 
 const rulesConfig = {
   [ADAPTER_IP_DATAINDEX]: [
@@ -156,7 +157,6 @@ export default class extends React.Component<any, any>{
   }
   render() {
 
-    const { onSubmit } = this
     const { loading } = this.props
     const { data, initial } = this.state
 
@@ -169,25 +169,27 @@ export default class extends React.Component<any, any>{
         } style={{ marginBottom: "15px" }}>
         <Choose>
           <When condition={initial}>
-            {
-              data["adapterList"].map((i, index) => {
+            <Spin spinning={loading}>
+              {
+                data["adapterList"].map((i, index) => {
 
-                const { adapterStatus, adapterName } = i
+                  const { adapterStatus, adapterName } = i
 
-                return (
-                  <div key={`${index}-item`} style={{ marginBottom: "10px" }}>
-                    <Badge status={adapterStatus === 1 ? "success" : "error"}>
-                    </Badge>
-                    {adapterName}
-                    {`(${adapterStatus === 1 ? "已连接" : "未连接"})`}
-                    <CommonForm
-                      {...this.getFormConfig(i)}
-                      key={`${index}-common-form`}>
-                    </CommonForm>
-                  </div>
-                )
-              })
-            }
+                  return (
+                    <div key={`${adapterName}-item`} style={{ marginBottom: "10px" }}>
+                      <Badge status={adapterStatus === 1 ? "success" : "error"}>
+                      </Badge>
+                      {adapterName}
+                      {`(${adapterStatus === 1 ? "已连接" : "未连接"})`}
+                      <CommonForm
+                        {...this.getFormConfig(i)}
+                        key={`${index}-common-form`}>
+                      </CommonForm>
+                    </div>
+                  )
+                })
+              }
+            </Spin>
           </When>
           <Otherwise>
             <Icon type="loading"></Icon>
