@@ -128,7 +128,7 @@ export default class extends React.Component<any, any>{
   }
   onSubmit = payload => {
     return this.props.put(payload)
-      .then(_ => Message.success("802.1x协议上网认证配置成功"))
+      .then(_ => Message.success("保存成功"))
       .then(this.fetchData)
   }
   render() {
