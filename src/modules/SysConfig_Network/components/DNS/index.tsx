@@ -11,8 +11,7 @@ import { Form, Icon } from 'antd'
 import classnames from 'classnames'
 const FormItem = Form.Item
 const CheckboxGroup = Checkbox.Group
-import { ipReg, portReg } from 'utils/tools.js'
-
+import { ipReg, portReg } from 'utils/tools'
 import extraConnect from 'domainUtils/extraConnect'
 import Card from 'domainComponents/Card'
 import { SYS_CONFIG_NETWORK_DNS_NAMESPACE } from 'constants/model'
@@ -33,11 +32,7 @@ class WrappedForm extends React.Component<any, any> {
       if (err) {
         return
       }
-
-
-      onSubmit && onSubmit({
-        values,
-      })
+      onSubmit && onSubmit(values)
     })
   }
 
@@ -65,7 +60,10 @@ class WrappedForm extends React.Component<any, any> {
             initialValue: defaultValue[DNS_DATAINDEX],
             rules: [
               {
-                required: true, message: "请输入用户名"
+                required: true, message: "请输入DNS"
+              },
+              {
+                pattern: ipReg, message: "请输入正确的DNS"
               }
             ]
           })(
@@ -110,7 +108,8 @@ const DNS: any = Form.create()(WrappedForm)
         type: `${SYS_CONFIG_NETWORK_DNS_NAMESPACE}/fetch`,
       }),
       put: payload => dispatch({
-        type: `${SYS_CONFIG_NETWORK_DNS_NAMESPACE}/put`
+        type: `${SYS_CONFIG_NETWORK_DNS_NAMESPACE}/put`,
+        payload
       })
     }
   }
