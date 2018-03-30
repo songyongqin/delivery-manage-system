@@ -6,6 +6,7 @@ import { connect } from 'dva'
 import LastEvent from 'modules/LastEvent'
 import EventStatistics from 'modules/EventStatistics'
 import DateRangePicker from 'domainComponents/DateRangePicker'
+import OverviewStatistics from 'modules/Overview_Statistics'
 
 @WithAnimateRender
 class Page extends React.Component<any, any> {
@@ -54,6 +55,9 @@ class Page extends React.Component<any, any> {
                 initialFilters={filters}
                 key={`last-event-${lastChangeTime}`}>
               </LastEvent>
+            </div>,
+            <div key="overview-statistics" style={{ marginTop: "15px" }}>
+              <OverviewStatistics ></OverviewStatistics>
             </div>
           ])
         }

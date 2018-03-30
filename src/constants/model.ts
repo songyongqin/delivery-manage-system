@@ -22,4 +22,6 @@ export const LAYOUT_NAMESPACE = "layout",
   SYS_CONFIG_SYS_LOG_NAMESPACE = "sysConfigSysLog",
   SYS_CONFIG_NETWORK_MASTER_NAMESPACE = "sysConfigNetworkMaster",
   SYS_CONFIG_NETWORK_AUTH_NAMESPACE = "sysConfigNetworkAuth",
-  SYS_CONFIG_CLOUD_DETECTION_NAMESPACE = "sysConfigCloudDetection"
+  SYS_CONFIG_CLOUD_DETECTION_NAMESPACE = "sysConfigCloudDetection",
+  OVERVIEW_STATISTICS_EVENT_NAMESPACE = "overviewStatisticsEvent",
+  OVERVIEW_STATISTICS_FLOW_NAMESPACE = "overviewStatisticsFlow"  

@@ -12,6 +12,8 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "ThreatEventExploitModel" */'modules/ThreatEvent/models/exploit'),
       System.import(/* webpackChunkName: "ThreatEventToolModel" */'modules/ThreatEvent/models/tool'),
       System.import(/* webpackChunkName: "ThreatEventThreatInfoModel" */'modules/ThreatEvent/models/threatInfo'),
+      System.import(/* webpackChunkName: "OverviewEventModel" */'modules/Overview_Statistics/models/event'),
+      System.import(/* webpackChunkName: "OverviewFlowModel" */'modules/Overview_Statistics/models/flow'),
     ],
     component: () => System.import(/* webpackChunkName: "OverviewPage" */'modules/Overview')
       .then(page => WithRouteInit(url)(page)),

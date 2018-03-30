@@ -3,10 +3,13 @@ import * as React from 'react'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import { DARK_THEME, LIGHT_THEME } from 'constants/theme'
 import 'echarts/lib/chart/bar'
-import 'echarts/lib/component/title'
+import extraConnect from 'domainUtils/extraConnect'
+import { OVERVIEW_STATISTICS_FLOW_NAMESPACE } from 'constants/model'
+import Spin from 'domainComponents/Spin'
+import { Choose, When, Otherwise } from 'components/ControlStatements'
 
 @WithCommonProps
-export default class RankingBarCharts extends React.Component<any, any>{
+class FlowBarCharts extends React.Component<any, any>{
   render() {
     const { theme, data } = this.props
     const textStyle = theme === DARK_THEME
@@ -29,6 +32,24 @@ export default class RankingBarCharts extends React.Component<any, any>{
         color: "black"
       }
 
+
+    const itemStyleList = [
+      {
+        normal: {
+          borderColor: "#1890ff",
+          borderWidth: 2,
+          color: "rgba(46,136,252,0.6)"
+        }
+      },
+      {
+        normal: {
+          borderColor: "rgba(245,34,45,1)",
+          borderWidth: 2,
+          color: "rgba(245,34,45,0.6)"
+        }
+      }
+    ]
+
     return (
       <div key="content-panel">
         {
@@ -36,19 +57,18 @@ export default class RankingBarCharts extends React.Component<any, any>{
 
             const xData = i.data.map(i => i.name);
             const yData = i.data.map(i => i.value);
-
             return (
               <div key={`${index}-bar-chart`}
-                style={{ marginBottom: "50px", height: "480px" }}>
+                style={{ marginBottom: "50px", height: "600px" }}>
                 <ReactEcharts
                   style={{ height: "100%" }}
                   option={{
                     title: {
                       text: i.title,
                       x: 'center',
-                      textStyle: titleStyle
+                      // textStyle: titleStyle
+                      show: true
                     },
-                    color: ['#108ee9'],
                     tooltip: {
                       trigger: 'axis',
                       axisPointer: {
@@ -61,10 +81,8 @@ export default class RankingBarCharts extends React.Component<any, any>{
                       bottom: '50px',
                       containLabel: true
                     },
-                    xAxis: [
+                    yAxis: [
                       {
-                        name: i.xTitle,
-                        nameTextStyle: textStyle,
                         type: 'category',
                         data: xData,
                         axisTick: {
@@ -72,14 +90,15 @@ export default class RankingBarCharts extends React.Component<any, any>{
                         },
                         axisLabel: {
                           interval: 0,
-                          rotate: 30,
                           textStyle: textStyle
                         },
 
                       }
                     ],
-                    yAxis: [
+                    xAxis: [
                       {
+                        name: i.xTitle,
+                        nameTextStyle: textStyle,
                         type: 'value',
                         axisLabel: {
                           textStyle: textStyle
@@ -91,13 +110,7 @@ export default class RankingBarCharts extends React.Component<any, any>{
                         type: 'bar',
                         barWidth: '22px',
                         data: yData,
-                        itemStyle: {
-                          normal: {
-                            borderColor: "#1890ff",
-                            borderWidth: 2,
-                            color: "rgba(46,136,252,0.6)"
-                          }
-                        },
+                        itemStyle: itemStyleList[index % itemStyleList.length],
                         label: {
                           normal: {
                             position: 'top',
@@ -115,4 +128,59 @@ export default class RankingBarCharts extends React.Component<any, any>{
       </div>
     )
   }
-} 
+}
+
+
+const mapStateToProps = state => {
+  return {
+    loading: state.loading.effects[`${OVERVIEW_STATISTICS_FLOW_NAMESPACE}/fetch`]
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetch: payload => dispatch({
+      type: `${OVERVIEW_STATISTICS_FLOW_NAMESPACE}/fetch`,
+      payload
+    })
+  }
+}
+
+@extraConnect(mapStateToProps, mapDispatchToProps)
+export default class extends React.Component<any, any>{
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: []
+    }
+  }
+  componentDidMount() {
+    this.fetchData(this.props.initialFilters)
+  }
+  fetchData = (filters) => {
+    this.props.fetch(filters).then(res => {
+      this.setState({
+        data: res
+      })
+    })
+  }
+  render() {
+
+    const { data } = this.state
+
+    return <div>
+      <h4>主要协议排行</h4>
+      <Choose>
+        <When condition={this.props.loading}>
+          <Spin spinning={true}>
+            <div style={{ height: "480px" }}></div>
+          </Spin>
+        </When>
+        <Otherwise>
+          <FlowBarCharts data={data} ></FlowBarCharts>
+        </Otherwise>
+      </Choose>
+    </div>
+  }
+}
+

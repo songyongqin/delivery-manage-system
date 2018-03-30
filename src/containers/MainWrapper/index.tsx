@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { createDispatchWithPromise, createMapDispatchWithPromise } from 'domainUtils/dvaExtraDispatch'
 
 import { connect } from 'dva'
-import { Button, Icon, Modal, message as Message } from 'antd'
+import { Button, Icon, Modal, message as Message, BackTop } from 'antd'
 import { Link, withRouter } from 'dva/router'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import Header from './components/Header'
@@ -185,6 +185,7 @@ class IndexPage extends React.Component<any, any>{
           }
         </div>
         <Footer></Footer>
+        <BackTop style={{ right: "30px" }} />
         <Modal
           footer={null}
           onCancel={this.hideModifyPassword}
