@@ -56,6 +56,12 @@ module.exports = (webpackConfig, env) => {
       to: webpackConfig.output.outputPath,
     },
   ]))
+  webpackConfig.plugins.push(new CopyWebpackPlugin([
+    {
+      from: './config',
+      to: path.join(__dirname, './dist/config'),
+    },
+  ]))
   webpackConfig.plugins.push(new webpack.HashedModuleIdsPlugin())
   webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
