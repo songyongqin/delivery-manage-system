@@ -2,6 +2,7 @@ import * as React from 'react'
 import CloudDetection from './components/CloudDetection'
 import SysLogServerConfig from './components/SysLogServerConfig'
 import NetworkAuth from './components/NetworkAuth'
+import DNS from './components/DNS'
 import WithAnimateRender from 'components/WithAnimateRender'
 
 @WithAnimateRender
@@ -11,6 +12,7 @@ export default class SysConfigNetwork extends React.Component<any, any>{
       <div>
         {
           this.props.animateRender([
+            <DNS key="dns"></DNS>,
             <SysLogServerConfig
               key="sys-log-server-config">
             </SysLogServerConfig>,

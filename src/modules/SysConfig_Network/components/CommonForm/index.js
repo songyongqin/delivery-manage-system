@@ -62,9 +62,6 @@ const WrappedFormItem = ({
     </FormItem>
   )
 
-
-
-
 @Form.create()
 class WrappedForm extends React.Component {
   static defaultProps = {
@@ -150,4 +147,4 @@ class WrappedForm extends React.Component {
   }
 }
 
-export default WrappedForm;
+export default WrappedForm

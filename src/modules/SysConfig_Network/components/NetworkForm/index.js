@@ -28,38 +28,11 @@ const dataIndexes = [
   ADAPTER_GW_DATAINDEX,
 ];
 
-// export const rulesConfig = {
-//   [ADAPTER_IP_DATAINDEX]: [
-//     {
-//       required: true, message: "IP不能为空",
-//     },
-//     {
-//       pattern: ipReg,
-//       message: "请输入正确的IP"
-//     }
-//   ],
-//   [ADAPTER_MAS_DATAINDEX]: [
-//     {
-//       required: true, message: "子网掩码不能为空",
-//     },
-//     {
-//       pattern: ipReg,
-//       message: "请输入正确的子网掩码"
-//     }
-//   ],
-//   [ADAPTER_GW_DATAINDEX]: [
-//     {
-//       required: true, message: "网关不能为空",
-//     },
-//     {
-//       pattern: gatewayReg,
-//       message: "请输入正确的网关"
-//     }
-//   ]
-// }
+
 
 
 export default (props) => {
+  console.info(props)
   return <CommonForm {...props}
     btnDisabledTip="该网卡是被br0桥接网卡，所有信息均为只读"
   // rulesConfig={rulesConfig}
