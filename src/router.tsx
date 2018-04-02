@@ -14,6 +14,7 @@ import getAnalyseRankingPage from 'routes/Analyse_Ranking'
 import getAnalyseThreatDistributionPage from 'routes/Analyse_ThreatDistribution'
 import getSysConfigMonitorPage from 'routes/SysConfig_Monitor'
 import getSysConfigNetworkPage from 'routes/SysConfig_Network'
+import getDeviceManagerPage from 'routes/Manager_Device'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -27,7 +28,8 @@ import {
   EARLY_WARNING_EMAIL_URL,
   SYS_CONFIG_URL,
   SYS_CONFIG_MONITOR_URL,
-  SYS_CONFIG_NETWORK_URL
+  SYS_CONFIG_NETWORK_URL,
+  MANAGER_DEVICE_URL,
 } from 'routes/config/path'
 
 function RouterConfig({ history, app }) {
@@ -105,6 +107,12 @@ function RouterConfig({ history, app }) {
               exact
               component={getSysConfigMonitorPage(app, SYS_CONFIG_MONITOR_URL)}
               path={SYS_CONFIG_MONITOR_URL} >
+            </Route>
+
+            <Route
+              exact
+              component={getDeviceManagerPage(app, MANAGER_DEVICE_URL)}
+              path={MANAGER_DEVICE_URL} >
             </Route>
           </Switch>
         </MainWrapper>

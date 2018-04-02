@@ -32,9 +32,14 @@ import Spin from 'domainComponents/Spin'
   })
 class TableWithRemote extends React.Component<any, any>{
   static defaultProps = {
-    initialFilters: {},
+    initialFilters: {
+      limit: 10,
+      page: 1,
+    },
     initialData: [],
     initialTotal: 0,
+    pagination: true,
+    lastReqTime: 0,
   }
   constructor(props) {
     super(props)
@@ -71,7 +76,8 @@ class TableWithRemote extends React.Component<any, any>{
       })
       .then(_ => {
         this.setState({
-          loading: false
+          loading: false,
+          lastReqTime: new Date().getTime()
         })
       })
   }
@@ -86,35 +92,38 @@ class TableWithRemote extends React.Component<any, any>{
   }
   render() {
 
-    const { data, total, filters } = this.state
-    const { theme, effectsLoading, remoteNamespace, getExpandedRowRenderer } = this.props
+    const { data, total, filters, lastReqTime } = this.state
+    const { theme, effectsLoading, remoteNamespace, getExpandedRowRenderer, pagination, rowSelection } = this.props
     const controlledLoading = "loading" in this.props
     const loading = controlledLoading ? this.props.loading : effectsLoading[`${remoteNamespace}/fetch`]
 
+    const tableProps: any = {
+      expandedRowRender: getExpandedRowRenderer && getExpandedRowRenderer({ filters, data, total }),
+      columns: this.props.getColumns({
+        fetchData: this.fetchData,
+        filters
+      }),
+      dataSource: data.map((i, index) => {
+        return {
+          ...i,
+          key: `${index}-${lastReqTime}-item`
+        }
+      }),
+      rowSelection
+    }
 
     return (
       <Spin spinning={loading}>
         <Table
           theme={theme}
+          pagination={pagination}
           paginationProps={{
             total,
             onChange: this.pageOnChange,
             pageSize: filters.limit,
             current: filters.page,
           }}
-          tableProps={{
-            expandedRowRender: getExpandedRowRenderer && getExpandedRowRenderer({ filters, data, total }),
-            columns: this.props.getColumns({
-              fetchData: this.fetchData,
-              filters
-            }),
-            dataSource: data.map((i, index) => {
-              return {
-                ...i,
-                key: `${index}-item`
-              }
-            })
-          }}>
+          tableProps={tableProps}>
         </Table>
       </Spin>
     )

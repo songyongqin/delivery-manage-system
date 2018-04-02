@@ -23,16 +23,40 @@ enum HttpApiConfig {
   WARNING_EMAIL = "/warning/email",
   WARNING_EMAIL_CONFIG = "/warning/email/config",
 
-  DEVICE_CONTROL = "/device/control",
-  DEVICE_NODE = "/device/node",
-
-  DEVICE_NODE_IDS = "/device/node-ids",
-
-  DEVICE_NODE_IDS_DISK = "/device/disk/ids",
-
-  DEVICE_CONTROL_DISK = "/device/disk",
-  DEVICE_NODE_DISK = "/device/disk",
   DEVICE_DISK = "/device/disk",
+
+  DEVICE_MASTER = "/device/control",
+  DEVICE_MASTER_DISK = "/device/disk",
+
+  DEVICE_HONEYPOT_NODE = "/device/node",
+  DEVICE_HONEYPOT_NODE_DISK = "/device/disk",
+
+  DEVICE_IDS_NODE = "/device/node-ids",
+  DEVICE_IDS_NODE_DISK = "/device/disk/ids",
+
+  DEVICE_HONEYPOT = "/device/control",
+  DEVICE_HONEYPOT_DISK = "/device/disk",
+
+  DEVICE_IDS = "/device/node-ids",
+  DEVICE_IDS_DISK = "/device/disk/ids",
+
+  DEVICE_HONEYPOT_STANDALONE = "/device/control",
+  DEVICE_HONEYPOT_STANDALONE_DISK = "/device/disk",
+
+  DEVICE_IDS_STANDALONE = "/device/node-ids",
+  DEVICE_IDS_STANDALONE_DISK = "/device/disk/ids",
+
+  DEVICE_UPDATE_ONLINE = "/device/update/online",
+  DEVICE_UPDATE_LOCAL = "/device/update/local",
+  DEVICE_UPDATE_INFO_ONLINE = "/device/update-info/online",
+  DEVICE_UPDATE_INFO_LOCAL = "/device/update-info/local",
+
+
+  DEVICE_UPDATE_ONLINE_IDS = "/device/update/online/ids",
+  DEVICE_UPDATE_LOCAL_IDS = "/device/update/local/ids",
+  DEVICE_UPDATE_INFO_ONLINE_IDS = "/device/update-info/online/ids",
+  DEVICE_UPDATE_INFO_LOCAL_IDS = "/device/update-info/local/ids",
+
   VIRTUAL_MACHINE = "/virtual-machine",
 
   OCCUPYING_NODE_IP = "/occupying/node/ip",
@@ -80,17 +104,6 @@ enum HttpApiConfig {
 
   DEVICE_LICENCE = "/device/licence",
 
-
-  DEVICE_UPDATE_ONLINE = "/device/update/online",
-  DEVICE_UPDATE_LOCAL = "/device/update/local",
-  DEVICE_UPDATE_INFO_ONLINE = "/device/update-info/online",
-  DEVICE_UPDATE_INFO_LOCAL = "/device/update-info/local",
-
-
-  DEVICE_UPDATE_ONLINE_IDS = "/device/update/online/ids",
-  DEVICE_UPDATE_LOCAL_IDS = "/device/update/local/ids",
-  DEVICE_UPDATE_INFO_ONLINE_IDS = "/device/update-info/online/ids",
-  DEVICE_UPDATE_INFO_LOCAL_IDS = "/device/update-info/local/ids",
 
   SYS_LOG_LOGIN = "/user/sys-log/login",
 
