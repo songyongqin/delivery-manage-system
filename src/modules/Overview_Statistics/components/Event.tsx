@@ -25,33 +25,51 @@ export default class extends React.Component<any, any>{
   constructor(props) {
     super(props)
     this.state = {
-      data: []
+      data: [],
+      initial: false
     }
   }
   componentDidMount() {
     this.fetchData(this.props.initialFilters)
   }
+  componentWillReceiveProps(nextProps) {
+    const updateFilters = nextProps.initialFilters === this.props.initialFilters
+    if (!updateFilters) {
+      this.fetchData(nextProps.initialFilters)
+    }
+  }
   fetchData = (filters) => {
-    this.props.fetch(filters).then(res => {
-      this.setState({
-        data: res
+    this.props.fetch(filters)
+      .then(res => {
+        this.setState({
+          data: res,
+        })
       })
-    })
+      .then(_ => {
+        this.setState({
+          initial: true
+        })
+      })
   }
   render() {
-    return <div>
-      <h4>威胁事件</h4>
-      <Choose>
-        <When condition={this.props.loading}>
-          <Spin spinning={true}>
-            <div style={{ height: "480px" }}></div>
-          </Spin>
-        </When>
-        <Otherwise>
-          <RankingBarCharts data={this.state.data}></RankingBarCharts>
-        </Otherwise>
-      </Choose>
 
-    </div>
+    const { initial, data } = this.state
+
+    return (
+      <div>
+        <h4>威胁事件</h4>
+        <Spin spinning={this.props.loading}>
+          <Choose>
+            <When condition={initial}>
+              <RankingBarCharts data={data}></RankingBarCharts>
+            </When>
+            <Otherwise>
+              <div style={{ minHeight: "480px" }}>
+              </div>
+            </Otherwise>
+          </Choose>
+        </Spin>
+      </div>
+    )
   }
 }

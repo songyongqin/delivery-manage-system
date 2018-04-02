@@ -113,7 +113,7 @@ class FlowBarCharts extends React.Component<any, any>{
                         itemStyle: itemStyleList[index % itemStyleList.length],
                         label: {
                           normal: {
-                            position: 'top',
+                            position: 'right',
                             show: true
                           }
                         },
@@ -151,35 +151,49 @@ export default class extends React.Component<any, any>{
   constructor(props) {
     super(props)
     this.state = {
-      data: []
+      data: [],
+      initial: false
     }
   }
   componentDidMount() {
     this.fetchData(this.props.initialFilters)
   }
+  componentWillReceiveProps(nextProps) {
+    const updateFilters = nextProps.initialFilters === this.props.initialFilters
+    if (!updateFilters) {
+      this.fetchData(nextProps.initialFilters)
+    }
+  }
   fetchData = (filters) => {
-    this.props.fetch(filters).then(res => {
-      this.setState({
-        data: res
+    this.props.fetch(filters)
+      .then(res => {
+        this.setState({
+          data: res,
+        })
       })
-    })
+      .then(_ => {
+        this.setState({
+          initial: true
+        })
+      })
   }
   render() {
 
-    const { data } = this.state
+    const { data, initial } = this.state
 
     return <div>
       <h4>主要协议排行</h4>
-      <Choose>
-        <When condition={this.props.loading}>
-          <Spin spinning={true}>
-            <div style={{ height: "480px" }}></div>
-          </Spin>
-        </When>
-        <Otherwise>
-          <FlowBarCharts data={data} ></FlowBarCharts>
-        </Otherwise>
-      </Choose>
+      <Spin spinning={this.props.loading}>
+        <Choose>
+          <When condition={initial}>
+            <FlowBarCharts data={data} ></FlowBarCharts>
+          </When>
+          <Otherwise>
+            <div style={{ minHeight: "480px" }}>
+            </div>
+          </Otherwise>
+        </Choose>
+      </Spin>
     </div>
   }
 }

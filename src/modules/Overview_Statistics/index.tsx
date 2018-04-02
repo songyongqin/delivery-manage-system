@@ -35,12 +35,12 @@ export default class extends React.Component<any, any>{
         <div style={{ float: "right" }}>
           <DateRangePicker
             onChange={this.onChange}
-            defaultValue={this.state.filters}>
+            value={this.state.filters.timestampRange}>
           </DateRangePicker>
         </div>
       </div>}>
-        <Event key={`${lastReqTime}-event`} initialFilters={filters}></Event>
-        <Flow key={`${lastReqTime}-flow`} initialFilters={filters}></Flow>
+        <Event initialFilters={filters}></Event>
+        <Flow initialFilters={filters}></Flow>
       </Card>
     )
   }
