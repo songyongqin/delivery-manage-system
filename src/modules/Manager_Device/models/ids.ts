@@ -5,10 +5,10 @@ import {
   putDeviceIDSDisk,
   postLicence,
   postDisk,
-  updateByLocal,
-  fetchVersionInfoByLocal,
-  updateByRemote,
-  fetchVersionInfoByRemote
+  updateByLocalIDS,
+  fetchVersionInfoByLocalIDS,
+  updateByRemoteIDS,
+  fetchVersionInfoByRemoteIDS
 } from '../services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
 
@@ -22,9 +22,9 @@ export default {
 
     postDisk: commonEffectCreator(postDisk, 500),
 
-    fetchVersionInfoByLocal: commonEffectCreator(fetchVersionInfoByLocal),
-    updateByLocal: commonEffectCreator(updateByLocal),
-    fetchVersionInfoByRemote: commonEffectCreator(fetchVersionInfoByRemote),
-    updateByRemote: commonEffectCreator(updateByRemote)
+    fetchVersionInfoByLocal: commonEffectCreator(fetchVersionInfoByLocalIDS),
+    updateByLocal: commonEffectCreator(updateByLocalIDS),
+    fetchVersionInfoByRemote: commonEffectCreator(fetchVersionInfoByRemoteIDS),
+    updateByRemote: commonEffectCreator(updateByRemoteIDS)
   }
 }

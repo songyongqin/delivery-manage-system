@@ -4,7 +4,11 @@ import {
   fetchDeviceHoneypotStandaloneDisk,
   putDeviceHoneypotStandaloneDisk,
   postLicence,
-  postDisk
+  postDisk,
+  updateByLocal,
+  fetchVersionInfoByLocal,
+  updateByRemote,
+  fetchVersionInfoByRemote
 } from '../services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
 
@@ -15,6 +19,10 @@ export default {
     fetchDeviceDisk: commonEffectCreator(fetchDeviceHoneypotStandaloneDisk),
     putDeviceDisk: commonEffectCreator(putDeviceHoneypotStandaloneDisk, 500),
     postLicence: commonEffectCreator(postLicence, 500),
-    postDisk: commonEffectCreator(postDisk, 500)
+    postDisk: commonEffectCreator(postDisk, 500),
+    fetchVersionInfoByLocal: commonEffectCreator(fetchVersionInfoByLocal),
+    updateByLocal: commonEffectCreator(updateByLocal),
+    fetchVersionInfoByRemote: commonEffectCreator(fetchVersionInfoByRemote),
+    updateByRemote: commonEffectCreator(updateByRemote)
   }
 }

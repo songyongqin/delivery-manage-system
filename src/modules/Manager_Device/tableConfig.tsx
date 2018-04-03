@@ -89,7 +89,7 @@ const getLicenceRenderer = isDark => value => (
 
 
 const getOperationRenderer = ({ handle, readonly = false }) => {
-  return records => {
+  return (_, records) => {
     let licence = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX] === LICENCE_VALID_VALUE,
       connect = records[CONNECT_STATUS_DATAINDEX] === CONNECT,
       // isNodeProductType = productType.type === NODE,
@@ -243,7 +243,8 @@ const renderer = {
 export const getColumns = ({
   handle = {},
   versionColExpanded = true,
-  readonly = false
+  readonly = false,
+  shouldHideCols
 }) => {
 
 
@@ -275,23 +276,18 @@ export const getColumns = ({
   })
 
 
-  // columns = isNode
-  //   ?
-  //   columns
-  //   :
-  //   columns.filter(i => i.dataIndex !== CONNECT_STATUS_DATAINDEX)
-
-
-  return [
+  columns = [
     ...columns,
     {
       title: <p style={{ textAlign: "center" }}>
         {tableTextConfig.colTitles[OPERATION_ROW_KEY]}
       </p>,
-      key: OPERATION_ROW_KEY,
+      dataIndex: OPERATION_ROW_KEY,
       render: getOperationRenderer({ handle, readonly })
     }
   ]
+
+  return columns.filter(i => !shouldHideCols.includes(i.dataIndex))
 
 }
 

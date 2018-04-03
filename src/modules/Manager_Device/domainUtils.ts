@@ -98,3 +98,16 @@ export const getUpdateOptionsByPayload = payload => {
   }
   return options
 }
+
+export const fetchDeviceInfoResPipe = res => {
+  if (isSuccess(res)) {
+    return {
+      ...res,
+      payload: {
+        total: 1,
+        data: [{ ...res.payload, [CONNECT_STATUS_DATAINDEX]: CONNECT }]
+      }
+    }
+  }
+  return res
+}

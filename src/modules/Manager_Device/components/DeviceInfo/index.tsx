@@ -40,6 +40,7 @@ export default class DeviceInfo extends React.Component<any, any>{
     multiple: false,
     disk: true,
     masterIP: false,
+    shouldHideCols: []
   }
   state = {
     activeItems: [],
@@ -189,7 +190,7 @@ export default class DeviceInfo extends React.Component<any, any>{
     }
   }
   render() {
-    const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading, masterIP, readonly } = this.props
+    const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading, masterIP, readonly, shouldHideCols } = this.props
     const { modalReload, lastReqTime } = this.state
 
     let props: any = {
@@ -204,7 +205,8 @@ export default class DeviceInfo extends React.Component<any, any>{
             update: this.onUpdateClick,
             clean: this.onCleanClick
           },
-          readonly
+          readonly,
+          shouldHideCols: shouldHideCols
         })
       },
       onChange: this.onChange
