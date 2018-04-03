@@ -2,8 +2,10 @@ import commonRequestCreator from 'domainUtils/commonRequestCreator'
 import ApiConfig from 'services/apiConfig'
 import isSuccess from 'domainUtils/isSuccess'
 const httpApi = ApiConfig.http
-import { fetchDiskResPipeCreator } from './domainUtils'
+import { fetchDiskResPipeCreator, getUpdateOptionsByPayload } from './domainUtils'
 import { CONNECT_STATUS_DATAINDEX, CONNECT } from './constants'
+import isDev from 'utils/isDev'
+import request from 'domainUtils/request'
 /**
  *Master 
  */
@@ -95,16 +97,23 @@ export const postLicence = commonRequestCreator.post(httpApi.DEVICE_LICENCE)
 
 export const postDisk = commonRequestCreator.post(httpApi.DEVICE_DISK)
 
-export const updateOnline = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE)
-
-export const updateLocal = commonRequestCreator.post(httpApi.DEVICE_UPDATE_LOCAL)
-
 export const fetchUpdateOnlineInfo = commonRequestCreator.post(httpApi.DEVICE_UPDATE_INFO_ONLINE)
 
 export const fetchUpdateLocalInfo = commonRequestCreator.post(httpApi.DEVICE_UPDATE_INFO_LOCAL)
 
 export const fetchMasterIP = commonRequestCreator.get(httpApi.SYS_CONFIG_NETWORK_MASTER)
 
+export const fetchVersionInfoLocal = payload => {
+  return request(httpApi.DEVICE_UPDATE_INFO_LOCAL, getUpdateOptionsByPayload(payload))
+}
+
+export const updateLocal = payload => {
+  return request(httpApi.DEVICE_UPDATE_LOCAL, getUpdateOptionsByPayload(payload))
+}
+
+export const fetchVersionInfoRemote = commonRequestCreator.get(httpApi.DEVICE_UPDATE_INFO_ONLINE)
+
+export const updateRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE)
 /**
  *Honeypot Node
  */
@@ -128,3 +137,18 @@ export const fetchDeviceHoneypotNode = payload => {
  *IDS Node
  */
 export const fetchDeviceIDSNode = commonRequestCreator.getWithQueryString(httpApi.DEVICE_IDS_NODE)
+
+/**
+ *  IDS common
+ */
+export const fetchVersionInfoLocalIDS = payload => {
+  return request(httpApi.DEVICE_UPDATE_INFO_LOCAL_IDS, getUpdateOptionsByPayload(payload))
+}
+
+export const updateLocalIDS = payload => {
+  return request(httpApi.DEVICE_UPDATE_LOCAL_IDS, getUpdateOptionsByPayload(payload))
+}
+
+export const fetchVersionInfoRemoteIDS = commonRequestCreator.get(httpApi.DEVICE_UPDATE_INFO_ONLINE_IDS)
+
+export const updateRemoteIDS = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE_IDS)

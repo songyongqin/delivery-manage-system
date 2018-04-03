@@ -1,6 +1,7 @@
 import isSuccess from 'domainUtils/isSuccess'
 import { LICENCE_STATUS_DATAINDEX, LICENCE_STATUS_EXPIRATION_DATAINDEX, LICENCE_VALID_VALUE, ALLOW_AHEAD_LICENCE_DAY, CONNECT_STATUS_DATAINDEX } from './constants'
-import { CONNECT } from '../SysConfig_Network/constants';
+import { CONNECT } from './constants'
+import isDev from 'utils/isDev'
 
 
 export const fetchDiskResPipeCreator = (key) => {
@@ -78,4 +79,22 @@ export const getCanNotLicenceReason = (info) => {
   } catch (e) {
     return ""
   }
+}
+
+
+export const getUpdateOptionsByPayload = payload => {
+  const fd = new FormData()
+  fd.append("file", payload.file)
+  fd.append("idList", payload.idList.join(","))
+
+  const options = {
+    method: "POST",
+    headers: {},
+    body: fd
+  }
+
+  if (isDev()) {
+    options.headers["idList"] = payload.idList.join(",")
+  }
+  return options
 }
