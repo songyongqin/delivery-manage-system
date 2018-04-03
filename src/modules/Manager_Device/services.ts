@@ -30,7 +30,11 @@ export const fetchDeviceMasterDisk = payload => {
   return _fetchDeviceMasterDisk(payload).then(fetchDiskResPipeCreator("control"))
 }
 
-export const putDeviceMasterDisk = commonRequestCreator.put(httpApi.DEVICE_MASTER_DISK)
+const _putDeviceMasterDisk = commonRequestCreator.put(httpApi.DEVICE_MASTER_DISK)
+
+export const putDeviceMasterDisk = payload => {
+  return _putDeviceMasterDisk({ ...payload, control: 1 })
+}
 
 /**
  *Honeypot Node
@@ -40,11 +44,14 @@ export const fetchDeviceHoneypotNode = commonRequestCreator.getWithQueryString(h
 const _fetchDeviceHoneypotNodeDisk = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT_NODE_DISK)
 
 export const fetchDeviceHoneypotNodeDisk = payload => {
-  return _fetchDeviceHoneypotNodeDisk(payload).then(fetchDiskResPipeCreator("node"))
+  return _fetchDeviceHoneypotNodeDisk(payload).then(fetchDiskResPipeCreator("control"))
 }
 
-export const putDeviceHoneypotNodeDisk = commonRequestCreator.put(httpApi.DEVICE_HONEYPOT_NODE_DISK)
+const _putDeviceHoneypotNodeDisk = commonRequestCreator.put(httpApi.DEVICE_HONEYPOT_NODE_DISK)
 
+export const putDeviceHoneypotNodeDisk = payload => {
+  return _putDeviceHoneypotNodeDisk({ ...payload, control: 1 })
+}
 /**
  *IDS Node
  */
@@ -64,7 +71,11 @@ export const putDeviceIDSNodeDisk = commonRequestCreator.put(httpApi.DEVICE_IDS_
  */
 export const fetchDeviceHoneypotStandalone = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT_STANDALONE)
 
-export const fetchDeviceHoneypotStandaloneDisk = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT_STANDALONE_DISK)
+const _fetchDeviceHoneypotStandaloneDisk = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT_STANDALONE_DISK)
+
+export const fetchDeviceHoneypotStandaloneDisk = payload => {
+  return _fetchDeviceHoneypotStandaloneDisk(payload).then(fetchDiskResPipeCreator("control"))
+}
 
 export const putDeviceHoneypotStandaloneDisk = commonRequestCreator.put(httpApi.DEVICE_HONEYPOT_STANDALONE_DISK)
 
@@ -84,11 +95,17 @@ export const putDeviceIDSStandaloneDisk = commonRequestCreator.put(httpApi.DEVIC
  */
 export const fetchDeviceHoneypot = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT)
 
-export const fetchDeviceHoneypotDisk = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT_DISK)
+const _fetchDeviceHoneypotDisk = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT_DISK)
 
-export const putDeviceHoneypotDisk = commonRequestCreator.put(httpApi.DEVICE_HONEYPOT_DISK)
+export const fetchDeviceHoneypotDisk = payload => {
+  return _fetchDeviceHoneypotDisk(payload).then(fetchDiskResPipeCreator("node"))
+}
 
+const _putDeviceHoneypotDisk = commonRequestCreator.put(httpApi.DEVICE_HONEYPOT_DISK)
 
+export const putDeviceHoneypotDisk = payload => {
+  return _putDeviceHoneypotDisk({ ...payload, control: 0 })
+}
 /**
  *IDS 
  */

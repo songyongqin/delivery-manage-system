@@ -3,6 +3,8 @@ import WithAnimateRender from 'components/WithAnimateRender'
 import Master from './components/Master'
 import HoneypotNode from './components/HoneypotNode'
 import IDSNode from './components/IDSNode'
+import Honeypot from './components/Honeypot'
+import IDS from './components/IDS'
 
 @WithAnimateRender
 export default class ManagerDevice extends React.Component<any, any>{
@@ -17,14 +19,14 @@ export default class ManagerDevice extends React.Component<any, any>{
             key="master"
             style={{ marginBottom: "15px" }}>
           </Master>,
-          <HoneypotNode
-            key="honeypot-node"
+          <Honeypot
+            key="honeypot"
             style={{ marginBottom: "15px" }}>
-          </HoneypotNode>,
-          <IDSNode
-            key="ids-node"
+          </Honeypot>,
+          <IDS
+            key="ids"
             style={{ marginBottom: "15px" }}>
-          </IDSNode>
+          </IDS>
         ])
       }
     </div>

@@ -28,17 +28,17 @@ enum HttpApiConfig {
   DEVICE_MASTER = "/device/control",
   DEVICE_MASTER_DISK = "/device/disk",
 
-  DEVICE_HONEYPOT_NODE = "/device/node",
-  DEVICE_HONEYPOT_NODE_DISK = "/device/disk",
-
-  DEVICE_IDS_NODE = "/device/node-ids",
-  DEVICE_IDS_NODE_DISK = "/device/disk/ids",
-
-  DEVICE_HONEYPOT = "/device/control",
+  DEVICE_HONEYPOT = "/device/node",
   DEVICE_HONEYPOT_DISK = "/device/disk",
 
   DEVICE_IDS = "/device/node-ids",
   DEVICE_IDS_DISK = "/device/disk/ids",
+
+  DEVICE_HONEYPOT_NODE = "/device/control",
+  DEVICE_HONEYPOT_NODE_DISK = "/device/disk",
+
+  DEVICE_IDS_NODE = "/device/node-ids",
+  DEVICE_IDS_NODE_DISK = "/device/disk/ids",
 
   DEVICE_HONEYPOT_STANDALONE = "/device/control",
   DEVICE_HONEYPOT_STANDALONE_DISK = "/device/disk",
