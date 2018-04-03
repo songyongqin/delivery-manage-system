@@ -7,6 +7,7 @@ import DiskClear from './DiskClear'
 import { Modal, Icon, Menu, Dropdown } from 'antd'
 import WithModal from 'components/WithModal'
 import Licence from './Licence'
+import Spin from 'domainComponents/Spin'
 import { If, When, Choose, Otherwise } from 'components/ControlStatements'
 
 interface Props {
@@ -40,6 +41,9 @@ export default class DeviceInfo extends React.Component<any, any>{
     activeItems: [],
     lastReqTime: 0,
     lastVisibleChange: 0,
+    modalReload: {
+      licence: false
+    }
   }
   onChange = _ => {
     this.setState({
@@ -53,10 +57,43 @@ export default class DeviceInfo extends React.Component<any, any>{
     this.props.switchModal("licence")
   }
   onLicenceSubmit = payload => {
-    console.info(payload)
+    return this.props.dispatch({
+      type: `${this.props.remoteNamespace}/postLicence`,
+      payload
+    })
+      .then(res => {
+        try {
+          if (res.some(i => i["status"] === 1)) {
+            this.setState({
+              modalReload: {
+                ...this.state.modalReload,
+                licence: true,
+              }
+            })
+          }
+        } catch (e) {
+          console.error(e)
+        }
+        return res
+      })
+  }
+  getClosableValueByKey = (key) => {
+    const { modalReload } = this.state
+    const { effectsLoading, remoteNamespace } = this.props
+    if (modalReload[key]) {
+      return false
+    }
+    if (key === "licence") {
+      return !effectsLoading[`${remoteNamespace}/postLicence`]
+    }
+    return true
+  }
+  getOnCancelHandleByKey = (key) => {
+
   }
   render() {
-    const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk } = this.props
+    const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading } = this.props
+    const { modalReload } = this.state
 
     let props: any = {
       pagination,
@@ -121,9 +158,10 @@ export default class DeviceInfo extends React.Component<any, any>{
         <Modal
           width={800}
           maskClosable={false}
+          closable={this.getClosableValueByKey("licence")}
           footer={null}
           onCancel={_ => {
-            switchModal("licence")
+            this.props.setModalVisible("licence", false)
             setTimeout(() => {
               this.setState({
                 lastVisibleChange: new Date().getTime()
@@ -132,11 +170,22 @@ export default class DeviceInfo extends React.Component<any, any>{
           }}
           visible={modalVisible["licence"]}
           title={<div><Icon type="lock"></Icon>&nbsp;设备授权</div>}>
-          <Licence
-            key={`${this.state.lastVisibleChange}- licence`}
-            onSubmit={this.onLicenceSubmit}
-            deviceList={this.state.activeItems}>
-          </Licence>
+          <Spin spinning={effectsLoading[`${this.props.remoteNamespace}/postLicence`]}>
+            <Licence
+              key={`${this.state.lastVisibleChange}- licence`}
+              onSubmit={this.onLicenceSubmit}
+              onCancel={_ => {
+                this.props.setModalVisible("licence", false)
+                setTimeout(() => {
+                  this.setState({
+                    lastVisibleChange: new Date().getTime()
+                  })
+                }, 100)
+              }}
+              loading={effectsLoading[`${this.props.remoteNamespace}/postLicence`]}
+              deviceList={this.state.activeItems}>
+            </Licence>
+          </Spin>
         </Modal>
       </div>
     )
