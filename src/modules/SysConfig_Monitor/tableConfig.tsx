@@ -63,7 +63,7 @@ const getRenderer = ({ moduleMonitorTextConfig }) => (
       return <div>
         {
           data.map((i, index) => (
-            <Tag color={"#5cdbd3"}
+            <Tag color={"green"}
               key={`${index}-tag`}>
               {tools.getKeyText(i, moduleMonitorTextConfig)}
             </Tag>
@@ -77,7 +77,7 @@ const getRenderer = ({ moduleMonitorTextConfig }) => (
       return <div>
         {
           data.map((i, index) => (
-            <Tag color={"#ff4d4f"}
+            <Tag color={"red"}
               key={`${index}-tag`}>
               {tools.getKeyText(i, moduleMonitorTextConfig)}
             </Tag>
