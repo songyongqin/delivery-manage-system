@@ -3,13 +3,12 @@
  */
 
 import React from 'react';
-import JoIcon from '../../components/JoIcon';
 import {
-  ROLE_DATAINDEX as COMMON_ROLE_DATAINDEX,
+  ROLE_DATA_INDEX as COMMON_ROLE_DATAINDEX,
   ADMIN_ROLE as COMMON_ADMIN_DATAINDEX,
-  COMMON_USER_ROLE as COMMON_COMMON_USER_ROLE
-} from '../../configs/ConstConfig';
-
+  COMMON_ROLE as COMMON_COMMON_USER_ROLE
+} from 'constants/user'
+import { Icon } from 'antd'
 export const NAMESPACE = "userManager";
 /**************************************************
  * table
@@ -42,17 +41,17 @@ export const rowDataIndexes = [
   REMARK_DATAINDEX
 ];
 
-const TABLE_TITLE = <span><JoIcon type="team" />&nbsp;用户列表</span>
+const TABLE_TITLE = <span><Icon type="team" />&nbsp;用户列表</span>
 
 
-export const IS_FREEZE = 1, IS_NOT_FREEZE = 0;
+export const IS_FREEZE = 1, IS_NOT_FREEZE = 0
 
 export const ADMIN_ROLE = COMMON_ADMIN_DATAINDEX,
   COMMON_USER_ROLE = COMMON_COMMON_USER_ROLE;
 
-const FREEZE_BUTTON = "解除该用户冻结";
+const FREEZE_BUTTON = "解除该用户冻结"
 const LIMIT_BUTTON = "编辑"
-const CREATE_BUTTON = "添加用户";
+const CREATE_BUTTON = "添加用户"
 
 export const tableTextConfig = {
   title: TABLE_TITLE,
@@ -96,7 +95,7 @@ export const tableTextConfig = {
 *
 *
 * */
-const CONFIG_TITLE = <span><JoIcon type="setting" />&nbsp;用户相关设置</span>
+const CONFIG_TITLE = <span><Icon type="setting" />&nbsp;用户相关设置</span>
 
 const CONFIG_BUTTON = "保存修改"
 
@@ -112,7 +111,7 @@ export const configPanelTextConfig = {
 }
 
 
-const LIMIT_TITLE = <span><JoIcon type="edit1" />&nbsp;用户信息修改</span>
+const LIMIT_TITLE = <span><Icon type="edit1" />&nbsp;用户信息修改</span>
 
 const LIMIT_BASIC_TITLE = "基础信息";
 
@@ -143,7 +142,7 @@ export const limitPanelTextConfig = {
   }
 }
 
-const CREATE_USER_TITLE = <span><JoIcon type="plus2" />&nbsp;添加新用户</span>
+const CREATE_USER_TITLE = <span><Icon type="plus2" />&nbsp;添加新用户</span>
 
 const CREATE_NOTIFICATION_MESSAGE = "添加成功"
 
