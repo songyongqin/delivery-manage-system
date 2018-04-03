@@ -26,7 +26,15 @@ export default class ManagerDevice extends React.Component<any, any>{
           <IDS
             key="ids"
             style={{ marginBottom: "15px" }}>
-          </IDS>
+          </IDS>,
+          <HoneypotNode
+            key="honeypot-node"
+            style={{ marginBottom: "15px" }}>
+          </HoneypotNode>,
+          <IDSNode
+            key="ids-node"
+            style={{ marginBottom: "15px" }}>
+          </IDSNode>
         ])
       }
     </div>

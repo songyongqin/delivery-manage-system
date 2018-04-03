@@ -7,6 +7,7 @@ import DiskClear from './DiskClear'
 import { Modal, Icon, Menu, Dropdown } from 'antd'
 import WithModal from 'components/WithModal'
 import Licence from './Licence'
+import MasterIP from './MasterIP'
 import Spin from 'domainComponents/Spin'
 import { If, When, Choose, Otherwise } from 'components/ControlStatements'
 
@@ -35,7 +36,8 @@ export default class DeviceInfo extends React.Component<any, any>{
   static defaultProps = {
     readonly: false,
     multiple: false,
-    disk: true
+    disk: true,
+    masterIP: false,
   }
   state = {
     activeItems: [],
@@ -92,7 +94,7 @@ export default class DeviceInfo extends React.Component<any, any>{
 
   }
   render() {
-    const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading } = this.props
+    const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading, masterIP, readonly } = this.props
     const { modalReload } = this.state
 
     let props: any = {
@@ -103,7 +105,8 @@ export default class DeviceInfo extends React.Component<any, any>{
           ...options,
           handle: {
             licence: this.onLicenceClick
-          }
+          },
+          readonly
         })
       },
       onChange: this.onChange
@@ -122,6 +125,11 @@ export default class DeviceInfo extends React.Component<any, any>{
     return (
       <div className={styles["device-info-wrapper"]}>
         <div style={{ marginBottom: "10px", overflow: "hidden" }}>
+          <If condition={masterIP}>
+            <div style={{ float: "left", marginRight: "15px" }}>
+              <MasterIP remoteNamespace={remoteNamespace}></MasterIP>
+            </div>
+          </If>
 
           <If condition={disk}>
             <div style={{ float: "left", marginRight: "15px" }}>

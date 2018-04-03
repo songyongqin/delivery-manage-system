@@ -35,36 +35,34 @@ const _putDeviceMasterDisk = commonRequestCreator.put(httpApi.DEVICE_MASTER_DISK
 export const putDeviceMasterDisk = payload => {
   return _putDeviceMasterDisk({ ...payload, control: 1 })
 }
-
 /**
- *Honeypot Node
+ *Honeypot 
  */
-export const fetchDeviceHoneypotNode = commonRequestCreator.getWithQueryString(httpApi.DEVICE_HONEYPOT_NODE)
+export const fetchDeviceHoneypot = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT)
 
-const _fetchDeviceHoneypotNodeDisk = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT_NODE_DISK)
+const _fetchDeviceHoneypotDisk = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT_DISK)
 
-export const fetchDeviceHoneypotNodeDisk = payload => {
-  return _fetchDeviceHoneypotNodeDisk(payload).then(fetchDiskResPipeCreator("control"))
+export const fetchDeviceHoneypotDisk = payload => {
+  return _fetchDeviceHoneypotDisk(payload).then(fetchDiskResPipeCreator("node"))
 }
 
-const _putDeviceHoneypotNodeDisk = commonRequestCreator.put(httpApi.DEVICE_HONEYPOT_NODE_DISK)
+const _putDeviceHoneypotDisk = commonRequestCreator.put(httpApi.DEVICE_HONEYPOT_DISK)
 
-export const putDeviceHoneypotNodeDisk = payload => {
-  return _putDeviceHoneypotNodeDisk({ ...payload, control: 1 })
+export const putDeviceHoneypotDisk = payload => {
+  return _putDeviceHoneypotDisk({ ...payload, control: 0 })
 }
 /**
- *IDS Node
+ *IDS 
  */
-export const fetchDeviceIDSNode = commonRequestCreator.getWithQueryString(httpApi.DEVICE_IDS_NODE)
+export const fetchDeviceIDS = commonRequestCreator.get(httpApi.DEVICE_IDS)
 
-const _fetchDeviceIDSNodeDisk = commonRequestCreator.get(httpApi.DEVICE_IDS_NODE_DISK)
+const _fetchDeviceIDSDisk = commonRequestCreator.get(httpApi.DEVICE_IDS_DISK)
 
-export const fetchDeviceIDSNodeDisk = payload => {
-  return _fetchDeviceIDSNodeDisk(payload).then(fetchDiskResPipeCreator("ids"))
+export const fetchDeviceIDSDisk = payload => {
+  return _fetchDeviceIDSDisk(payload).then(fetchDiskResPipeCreator("ids"))
 }
 
-export const putDeviceIDSNodeDisk = commonRequestCreator.put(httpApi.DEVICE_IDS_NODE_DISK)
-
+export const putDeviceIDSDisk = commonRequestCreator.put(httpApi.DEVICE_IDS_DISK)
 
 /**
  *Honeypot Standalone  
@@ -90,31 +88,6 @@ export const fetchDeviceIDSStandaloneDisk = commonRequestCreator.get(httpApi.DEV
 export const putDeviceIDSStandaloneDisk = commonRequestCreator.put(httpApi.DEVICE_IDS_STANDALONE_DISK)
 
 
-/**
- *Honeypot 
- */
-export const fetchDeviceHoneypot = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT)
-
-const _fetchDeviceHoneypotDisk = commonRequestCreator.get(httpApi.DEVICE_HONEYPOT_DISK)
-
-export const fetchDeviceHoneypotDisk = payload => {
-  return _fetchDeviceHoneypotDisk(payload).then(fetchDiskResPipeCreator("node"))
-}
-
-const _putDeviceHoneypotDisk = commonRequestCreator.put(httpApi.DEVICE_HONEYPOT_DISK)
-
-export const putDeviceHoneypotDisk = payload => {
-  return _putDeviceHoneypotDisk({ ...payload, control: 0 })
-}
-/**
- *IDS 
- */
-export const fetchDeviceIDS = commonRequestCreator.get(httpApi.DEVICE_IDS)
-
-export const fetchDeviceIDSDisk = commonRequestCreator.get(httpApi.DEVICE_IDS_DISK)
-
-export const putDeviceIDSDisk = commonRequestCreator.put(httpApi.DEVICE_IDS_DISK)
-
 /*
 * Common
 */
@@ -130,3 +103,28 @@ export const fetchUpdateOnlineInfo = commonRequestCreator.post(httpApi.DEVICE_UP
 
 export const fetchUpdateLocalInfo = commonRequestCreator.post(httpApi.DEVICE_UPDATE_INFO_LOCAL)
 
+export const fetchMasterIP = commonRequestCreator.get(httpApi.SYS_CONFIG_NETWORK_MASTER)
+
+/**
+ *Honeypot Node
+ */
+const _fetchDeviceHoneypotNode = commonRequestCreator.getWithQueryString(httpApi.DEVICE_HONEYPOT_NODE)
+
+export const fetchDeviceHoneypotNode = payload => {
+  return _fetchDeviceHoneypotNode(payload).then(res => {
+    if (isSuccess(res)) {
+      return {
+        ...res,
+        payload: {
+          total: 1,
+          data: [{ ...res.payload, [CONNECT_STATUS_DATAINDEX]: CONNECT }]
+        }
+      }
+    }
+    return res
+  })
+}
+/**
+ *IDS Node
+ */
+export const fetchDeviceIDSNode = commonRequestCreator.getWithQueryString(httpApi.DEVICE_IDS_NODE)
