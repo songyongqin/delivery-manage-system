@@ -10,6 +10,7 @@ export default class Master extends React.Component<any, any>{
       <Card title="控制中心" style={this.props.style}>
         <DeviceInfo
           remoteNamespace={MANAGER_DEVICE_MASTER_NAMESPACE}
+          type="master"
           pagination={false}>
         </DeviceInfo>
       </Card>

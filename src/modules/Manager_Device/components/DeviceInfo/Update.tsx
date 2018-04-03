@@ -39,6 +39,8 @@ const Dragger = Upload.Dragger
 import Tag from 'components/Tag'
 import Card from 'domainComponents/Card'
 const LICENCE_SUCCESS = 1
+const styles = require('./styles.less')
+
 const CommonCell = ({ value }) => (
   <div style={{ textAlign: "center" }}>{value}</div>
 )
@@ -51,15 +53,15 @@ const LicenceBackPlaceholder = ({ isDark = false, shouldReload = false, onCancel
     }}>
       感谢您使用本产品，本次批量升级操作已完成，若存在升级失败的设备请尝试重新升级
     </h4>
-    <table style={{ width: 500, margin: "0 auto" }}>
-      <tbody style={{ width: "100%" }}>
-        <tr className={isDark ? "lbl-dark" : ""}>
-          <td style={{ textAlign: "right" }}>售后联系邮箱:</td>
-          <td style={{ textAlign: "left" }}> antiy_shenzhen@antiy.cn</td>
+    <table className={styles["placeholder-table"]}>
+      <tbody>
+        <tr >
+          <td >售后联系邮箱:</td>
+          <td > antiy_shenzhen@antiy.cn</td>
         </tr>
-        <tr className={isDark ? "lbl-dark" : ""}>
-          <td style={{ textAlign: "right" }}>售后联系电话:</td>
-          <td style={{ textAlign: "left" }}>0755-26806561</td>
+        <tr >
+          <td >售后联系电话:</td>
+          <td >0755-26806561</td>
         </tr>
       </tbody>
     </table>

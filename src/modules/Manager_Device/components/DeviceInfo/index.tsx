@@ -8,6 +8,7 @@ import { Modal, Icon, Menu, Dropdown } from 'antd'
 import WithModal from 'components/WithModal'
 import Licence from './Licence'
 import Update from './Update'
+import Clean from './Clean'
 import MasterIP from './MasterIP'
 import Spin from 'domainComponents/Spin'
 import { If, When, Choose, Otherwise } from 'components/ControlStatements'
@@ -47,7 +48,8 @@ export default class DeviceInfo extends React.Component<any, any>{
     modalReload: {
       licence: false,
       update: false
-    }
+    },
+    refreshDataOnClose: false
   }
   onChange = _ => {
     this.setState({
@@ -65,6 +67,12 @@ export default class DeviceInfo extends React.Component<any, any>{
       activeItems
     })
     this.props.switchModal("update")
+  }
+  onCleanClick = activeItems => {
+    this.setState({
+      activeItems
+    })
+    this.props.switchModal("clean")
   }
   onLicenceSubmit = payload => {
     return this.props.dispatch({
@@ -134,6 +142,18 @@ export default class DeviceInfo extends React.Component<any, any>{
       return res
     })
 
+
+  postClean = payload => this.props.dispatch({
+    type: `${this.props.remoteNamespace}/postDisk`,
+    payload
+  })
+    .then(res => {
+      this.setState({
+        refreshDataOnClose: true
+      })
+      return res
+    })
+
   getLoadingStatusByKey = key => {
     const { effectsLoading, remoteNamespace } = this.props
     if (key === "licence") {
@@ -145,13 +165,35 @@ export default class DeviceInfo extends React.Component<any, any>{
         effectsLoading[`${remoteNamespace}/updateByRemote`] ||
         effectsLoading[`${remoteNamespace}/updateByLocal`]
     }
+    if (key === "clean") {
+      return effectsLoading[`${remoteNamespace}/postDisk`]
+    }
   }
 
+  createOnCancelHandleByKey = key => {
+    return _ => {
+      this.props.setModalVisible(key, false)
+
+      if (this.state.refreshDataOnClose) {
+        this.setState({
+          lastReqTime: new Date().getTime(),
+          refreshDataOnClose: false
+        })
+      }
+
+      setTimeout(() => {
+        this.setState({
+          lastVisibleChange: new Date().getTime()
+        })
+      }, 100)
+    }
+  }
   render() {
     const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading, masterIP, readonly } = this.props
-    const { modalReload } = this.state
+    const { modalReload, lastReqTime } = this.state
 
     let props: any = {
+      key: `${lastReqTime}-table`,
       pagination,
       remoteNamespace,
       getColumns: (options) => {
@@ -159,7 +201,8 @@ export default class DeviceInfo extends React.Component<any, any>{
           ...options,
           handle: {
             licence: this.onLicenceClick,
-            update: this.onUpdateClick
+            update: this.onUpdateClick,
+            clean: this.onCleanClick
           },
           readonly
         })
@@ -226,33 +269,39 @@ export default class DeviceInfo extends React.Component<any, any>{
           maskClosable={false}
           closable={this.getClosableValueByKey("licence")}
           footer={null}
-          onCancel={_ => {
-            this.props.setModalVisible("licence", false)
-            setTimeout(() => {
-              this.setState({
-                lastVisibleChange: new Date().getTime()
-              })
-            }, 100)
-          }}
+          onCancel={this.createOnCancelHandleByKey("licence")}
           visible={modalVisible["licence"]}
           title={<div><Icon type="lock"></Icon>&nbsp;设备授权</div>}>
           <Spin spinning={this.getLoadingStatusByKey("licence")}>
             <Licence
               key={`${this.state.lastVisibleChange}- licence`}
               onSubmit={this.onLicenceSubmit}
-              onCancel={_ => {
-                this.props.setModalVisible("licence", false)
-                setTimeout(() => {
-                  this.setState({
-                    lastVisibleChange: new Date().getTime()
-                  })
-                }, 100)
-              }}
+              onCancel={this.createOnCancelHandleByKey("licence")}
               loading={this.getLoadingStatusByKey("licence")}
               deviceList={this.state.activeItems}>
             </Licence>
           </Spin>
         </Modal>
+        {/* 清理的Modal */}
+        <Modal
+          width={1000}
+          maskClosable={false}
+          footer={null}
+          onCancel={this.createOnCancelHandleByKey("clean")}
+          visible={modalVisible["clean"]}
+          title={<div><Icon type="clear"></Icon>&nbsp;清理磁盘</div>}>
+          <Spin spinning={this.getLoadingStatusByKey("clean")}>
+            <Clean
+              key={`${this.state.lastVisibleChange}- clean`}
+              onCancel={this.createOnCancelHandleByKey("clean")}
+              onSubmit={this.postClean}
+              type={this.props.type}
+              loading={this.getLoadingStatusByKey("clean")}
+              defaultValue={{ data: this.state.activeItems }}>
+            </Clean>
+          </Spin>
+        </Modal>
+
 
         {/* 更新的Modal*/}
         <Modal
@@ -260,27 +309,13 @@ export default class DeviceInfo extends React.Component<any, any>{
           maskClosable={false}
           closable={this.getClosableValueByKey("update")}
           footer={null}
-          onCancel={_ => {
-            this.props.setModalVisible("update", false)
-            setTimeout(() => {
-              this.setState({
-                lastVisibleChange: new Date().getTime()
-              })
-            }, 100)
-          }}
+          onCancel={this.createOnCancelHandleByKey("update")}
           visible={modalVisible["update"]}
           title={<div><Icon type="info-circle-o"></Icon>&nbsp;设备更新</div>}>
           <Spin spinning={this.getLoadingStatusByKey("update")}>
             <Update
               key={`${this.state.lastVisibleChange}- update`}
-              onCancel={_ => {
-                this.props.setModalVisible("update", false)
-                setTimeout(() => {
-                  this.setState({
-                    lastVisibleChange: new Date().getTime()
-                  })
-                }, 100)
-              }}
+              onCancel={this.createOnCancelHandleByKey("update")}
               handle={{
                 getUpdateInfoLocal: this.fetchUpdateInfoByLocal,
                 getUpdateInfoRemote: this.fetchUpdateInfoByRemote,

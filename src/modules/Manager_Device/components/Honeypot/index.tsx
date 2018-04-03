@@ -11,6 +11,7 @@ export default class Master extends React.Component<any, any>{
         <DeviceInfo
           remoteNamespace={MANAGER_DEVICE_HONEYPOT_NAMESPACE}
           multiple={true}
+          type="honeypot"
           pagination={true}>
         </DeviceInfo>
       </Card>

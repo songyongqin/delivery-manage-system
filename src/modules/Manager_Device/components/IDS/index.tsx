@@ -11,6 +11,7 @@ export default class Master extends React.Component<any, any>{
         <DeviceInfo
           remoteNamespace={MANAGER_DEVICE_IDS_NAMESPACE}
           multiple={true}
+          type="ids"
           pagination={true}>
         </DeviceInfo>
       </Card>
