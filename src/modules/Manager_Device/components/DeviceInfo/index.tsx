@@ -7,6 +7,7 @@ import DiskClear from './DiskClear'
 import { Modal, Icon, Menu, Dropdown } from 'antd'
 import WithModal from 'components/WithModal'
 import Licence from './Licence'
+import Update from './Update'
 import MasterIP from './MasterIP'
 import Spin from 'domainComponents/Spin'
 import { If, When, Choose, Otherwise } from 'components/ControlStatements'
@@ -44,7 +45,8 @@ export default class DeviceInfo extends React.Component<any, any>{
     lastReqTime: 0,
     lastVisibleChange: 0,
     modalReload: {
-      licence: false
+      licence: false,
+      update: false
     }
   }
   onChange = _ => {
@@ -58,26 +60,35 @@ export default class DeviceInfo extends React.Component<any, any>{
     })
     this.props.switchModal("licence")
   }
+  onUpdateClick = activeItems => {
+    this.setState({
+      activeItems
+    })
+    this.props.switchModal("update")
+  }
   onLicenceSubmit = payload => {
     return this.props.dispatch({
       type: `${this.props.remoteNamespace}/postLicence`,
       payload
     })
       .then(res => {
-        try {
-          if (res.some(i => i["status"] === 1)) {
-            this.setState({
-              modalReload: {
-                ...this.state.modalReload,
-                licence: true,
-              }
-            })
-          }
-        } catch (e) {
-          console.error(e)
-        }
+        this.setModalReloadByKey("licence", res)
         return res
       })
+  }
+  setModalReloadByKey = (key, res) => {
+    try {
+      if (res.some(i => i["status"] === 1)) {
+        this.setState({
+          modalReload: {
+            ...this.state.modalReload,
+            [key]: true,
+          }
+        })
+      }
+    } catch (e) {
+      console.error(e)
+    }
   }
   getClosableValueByKey = (key) => {
     const { modalReload } = this.state
@@ -90,9 +101,52 @@ export default class DeviceInfo extends React.Component<any, any>{
     }
     return true
   }
-  getOnCancelHandleByKey = (key) => {
-
+  /*通过本地文件的方式获取可更新的信息*/
+  fetchUpdateInfoByLocal = payload => {
+    return this.props.dispatch({
+      type: `${this.props.remoteNamespace}/fetchVersionInfoByLocal`,
+      payload
+    })
   }
+  /*通过远程服务器的方式获取可更新的信息*/
+  fetchUpdateInfoByRemote = payload => {
+    return this.props.dispatch({
+      type: `${this.props.remoteNamespace}/fetchVersionInfoByRemote`,
+      payload
+    })
+  }
+  /*通过本地文件的方式更新*/
+  updateByRemote = payload => this.props.dispatch({
+    type: `${this.props.remoteNamespace}/updateByRemote`,
+    payload
+  })
+    .then(res => {
+      this.setModalReloadByKey("update", res)
+      return res
+    })
+  /*通过远程服务器的方式更新*/
+  updateByLocal = payload => this.props.dispatch({
+    type: `${this.props.remoteNamespace}/updateByLocal`,
+    payload
+  })
+    .then(res => {
+      this.setModalReloadByKey("update", res)
+      return res
+    })
+
+  getLoadingStatusByKey = key => {
+    const { effectsLoading, remoteNamespace } = this.props
+    if (key === "licence") {
+      return effectsLoading[`${remoteNamespace}/postLicence`]
+    }
+    if (key === "update") {
+      return effectsLoading[`${remoteNamespace}/fetchVersionInfoByLocal`] ||
+        effectsLoading[`${remoteNamespace}/fetchVersionInfoByRemote`] ||
+        effectsLoading[`${remoteNamespace}/updateByRemote`] ||
+        effectsLoading[`${remoteNamespace}/updateByLocal`]
+    }
+  }
+
   render() {
     const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading, masterIP, readonly } = this.props
     const { modalReload } = this.state
@@ -104,7 +158,8 @@ export default class DeviceInfo extends React.Component<any, any>{
         return getColumns({
           ...options,
           handle: {
-            licence: this.onLicenceClick
+            licence: this.onLicenceClick,
+            update: this.onUpdateClick
           },
           readonly
         })
@@ -143,7 +198,7 @@ export default class DeviceInfo extends React.Component<any, any>{
             <div style={{ float: "left" }}>
               <Dropdown.Button
                 overlay={<Menu onClick={({ key }) => {
-                  console.info(key)
+                  this.props.setModalVisible(key, true)
                 }}>
                   <Menu.Item key="clean">批量磁盘清理</Menu.Item>
                   <Menu.Item key="update">批量检查更新</Menu.Item>
@@ -159,10 +214,13 @@ export default class DeviceInfo extends React.Component<any, any>{
         </div>
 
 
+        {/* 设备信息列表 */}
         <TableWithRemote
           {...props}>
         </TableWithRemote>
 
+
+        {/* 授权的Modal*/}
         <Modal
           width={800}
           maskClosable={false}
@@ -178,7 +236,7 @@ export default class DeviceInfo extends React.Component<any, any>{
           }}
           visible={modalVisible["licence"]}
           title={<div><Icon type="lock"></Icon>&nbsp;设备授权</div>}>
-          <Spin spinning={effectsLoading[`${this.props.remoteNamespace}/postLicence`]}>
+          <Spin spinning={this.getLoadingStatusByKey("licence")}>
             <Licence
               key={`${this.state.lastVisibleChange}- licence`}
               onSubmit={this.onLicenceSubmit}
@@ -190,9 +248,48 @@ export default class DeviceInfo extends React.Component<any, any>{
                   })
                 }, 100)
               }}
-              loading={effectsLoading[`${this.props.remoteNamespace}/postLicence`]}
+              loading={this.getLoadingStatusByKey("licence")}
               deviceList={this.state.activeItems}>
             </Licence>
+          </Spin>
+        </Modal>
+
+        {/* 更新的Modal*/}
+        <Modal
+          width={1200}
+          maskClosable={false}
+          closable={this.getClosableValueByKey("update")}
+          footer={null}
+          onCancel={_ => {
+            this.props.setModalVisible("update", false)
+            setTimeout(() => {
+              this.setState({
+                lastVisibleChange: new Date().getTime()
+              })
+            }, 100)
+          }}
+          visible={modalVisible["update"]}
+          title={<div><Icon type="info-circle-o"></Icon>&nbsp;设备更新</div>}>
+          <Spin spinning={this.getLoadingStatusByKey("update")}>
+            <Update
+              key={`${this.state.lastVisibleChange}- update`}
+              onCancel={_ => {
+                this.props.setModalVisible("update", false)
+                setTimeout(() => {
+                  this.setState({
+                    lastVisibleChange: new Date().getTime()
+                  })
+                }, 100)
+              }}
+              handle={{
+                getUpdateInfoLocal: this.fetchUpdateInfoByLocal,
+                getUpdateInfoRemote: this.fetchUpdateInfoByRemote,
+                updateLocal: this.updateByLocal,
+                updateRemote: this.updateByRemote,
+              }}
+              loading={this.getLoadingStatusByKey("update")}
+              defaultValue={{ data: this.state.activeItems }}>
+            </Update>
           </Spin>
         </Modal>
       </div>

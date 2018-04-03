@@ -97,23 +97,19 @@ export const postLicence = commonRequestCreator.post(httpApi.DEVICE_LICENCE)
 
 export const postDisk = commonRequestCreator.post(httpApi.DEVICE_DISK)
 
-export const fetchUpdateOnlineInfo = commonRequestCreator.post(httpApi.DEVICE_UPDATE_INFO_ONLINE)
-
-export const fetchUpdateLocalInfo = commonRequestCreator.post(httpApi.DEVICE_UPDATE_INFO_LOCAL)
-
 export const fetchMasterIP = commonRequestCreator.get(httpApi.SYS_CONFIG_NETWORK_MASTER)
 
-export const fetchVersionInfoLocal = payload => {
+export const fetchVersionInfoByLocal = payload => {
   return request(httpApi.DEVICE_UPDATE_INFO_LOCAL, getUpdateOptionsByPayload(payload))
 }
 
-export const updateLocal = payload => {
+export const updateByLocal = payload => {
   return request(httpApi.DEVICE_UPDATE_LOCAL, getUpdateOptionsByPayload(payload))
 }
 
-export const fetchVersionInfoRemote = commonRequestCreator.get(httpApi.DEVICE_UPDATE_INFO_ONLINE)
+export const fetchVersionInfoByRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_INFO_ONLINE)
 
-export const updateRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE)
+export const updateByRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE)
 /**
  *Honeypot Node
  */
@@ -141,14 +137,14 @@ export const fetchDeviceIDSNode = commonRequestCreator.getWithQueryString(httpAp
 /**
  *  IDS common
  */
-export const fetchVersionInfoLocalIDS = payload => {
+export const fetchVersionInfoByLocalIDS = payload => {
   return request(httpApi.DEVICE_UPDATE_INFO_LOCAL_IDS, getUpdateOptionsByPayload(payload))
 }
 
-export const updateLocalIDS = payload => {
+export const updateByLocalIDS = payload => {
   return request(httpApi.DEVICE_UPDATE_LOCAL_IDS, getUpdateOptionsByPayload(payload))
 }
 
-export const fetchVersionInfoRemoteIDS = commonRequestCreator.get(httpApi.DEVICE_UPDATE_INFO_ONLINE_IDS)
+export const fetchVersionInfoByRemoteIDS = commonRequestCreator.post(httpApi.DEVICE_UPDATE_INFO_ONLINE_IDS)
 
-export const updateRemoteIDS = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE_IDS)
+export const updateByRemoteIDS = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE_IDS)

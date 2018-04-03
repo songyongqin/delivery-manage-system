@@ -380,7 +380,7 @@ class Licence extends React.Component<any, any>{
     const { step } = this.state
 
     return (
-      <If condition={step === INPUT_CODE}>
+      <If condition={step === INPUT_CODE && deviceList.filter(canLicenceDevice).length !== 0}>
         <Operation
           loading={loading}
           onAutoInputClick={this.onAutoInputClick}
