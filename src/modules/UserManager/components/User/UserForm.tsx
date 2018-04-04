@@ -1,11 +1,7 @@
-/**
- * Created by jojo on 2017/9/8.
- */
-
-import React from 'react';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
-import styles from './styles.css';
-import classnames from 'classnames';
+import * as  React from 'react'
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd'
+import styles from './styles.css'
+import classnames from 'classnames'
 import {
   USER_NAME_DATAINDEX,
   REMARK_DATAINDEX,
@@ -17,10 +13,8 @@ import {
   tableTextConfig,
   USER_PASSWORD_DATAINDEX,
   COMMON_USER_ROLE
-} from '../../ConstConfig'
-
-import * as tools from 'utils/tools';
-
+} from '../../constants'
+import * as tools from 'utils'
 
 const textConfig = tableTextConfig.rowTitles
 
@@ -86,8 +80,7 @@ const commonItemCreater = ({ commonProps, lblClasses, dataIndex, loading, defaul
 )
 
 
-@Form.create()
-class WrappedForm extends React.Component {
+class UserForm extends React.Component<any, any> {
   state = {
     confirmDirty: false,
   };
@@ -95,46 +88,43 @@ class WrappedForm extends React.Component {
     e.preventDefault();
     const { onSubmit, form } = this.props;
     form.validateFieldsAndScroll((err, values) => {
-
       if (err) {
         return
       }
-
-      delete values.confirm;
-
-      onSubmit && onSubmit(values);
+      delete values.confirm
+      onSubmit && onSubmit(values)
 
     });
   }
   handleConfirmBlur = (e) => {
     const value = e.target.value;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value })
   }
   checkPassword = (rule, value, callback) => {
     const form = this.props.form;
     console.info((form.getFieldValue('confirm') !== form.getFieldValue('userPassword')));
     if (value && (form.getFieldValue('confirm') !== form.getFieldValue('userPassword'))) {
-      callback('两次输入的密码不一致');
+      callback('两次输入的密码不一致')
     } else {
-      callback();
+      callback()
     }
   }
   checkConfirm = (rule, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
+      form.validateFields(['confirm'], { force: true })
     }
-    callback();
+    callback()
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { isDark, loading, isCreate = true, defaultValue = {} } = this.props;
+    const { isDark, loading, isCreate = true, defaultValue = {} } = this.props
     const lblClasses = classnames({
       [styles["lbl-dark"]]: isDark
     })
     const commonProps = { ...formItemLayout, colon: false, hasFeedback: true }
 
-    let items = [
+    let items: any = [
       {
         props: {
           ...commonProps,
@@ -269,4 +259,6 @@ class WrappedForm extends React.Component {
   }
 }
 
-export default WrappedForm;
+const WrappedForm: any = Form.create()(UserForm)
+
+export default WrappedForm

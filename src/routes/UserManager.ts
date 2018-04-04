@@ -8,6 +8,7 @@ export default (app: any, url: string): React.Component => {
     app,
     models: () => [
       System.import(/* webpackChunkName: "UserManagerUserModel" */'modules/UserManager/models/user'),
+      System.import(/* webpackChunkName: "UserManagerIPLimitModel" */'modules/UserManager/models/ipLimit'),
     ],
     component: () => System.import(/* webpackChunkName: "UserManagerPage */'modules/UserManager')
       .then(page => WithRouteInit(url)(page)),

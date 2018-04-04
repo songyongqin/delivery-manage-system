@@ -34,5 +34,6 @@ export const LAYOUT_NAMESPACE = "layout",
   MANAGER_DEVICE_HONEYPOT_NAMESPACE = "managerDeviceHoneypot",
   MANAGER_DEVICE_IDS_NAMESPACE = "managerDeviceIDS",
 
-  USER_MANAGER_NAMESPACE = "userManager"
+  USER_MANAGER_NAMESPACE = "userManager",
+  USER_MANAGER_IP_LIMIT_NAMESPACE = "userManagerIPLimit"
 
