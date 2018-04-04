@@ -13,7 +13,7 @@ import UserForm from './UserForm'
 import extraConnect from 'domainUtils/extraConnect'
 
 const mapStateToProps = state => {
-  const effectsLoading = state.loading.effects,
+  const effectsLoading = state.loading.effects
   return {
     editLoading: effectsLoading[`${USER_MANAGER_NAMESPACE}/putUser`]
   }

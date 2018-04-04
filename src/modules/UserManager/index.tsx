@@ -10,6 +10,7 @@ import Card from 'domainComponents/Card'
 import WithModal from 'components/WithModal'
 import IPLimit from './components/IPLimit'
 import User from './components/User'
+import UserConfig from './components/UserConfig'
 
 @WithAnimateRender
 export default class UserManager extends React.Component<any, any>{
@@ -19,6 +20,9 @@ export default class UserManager extends React.Component<any, any>{
     return <div>
       {
         this.props.animateRender([
+          <div style={{ marginBottom: "15px" }} key="user-config">
+            <UserConfig></UserConfig>
+          </div>,
           <div style={{ marginBottom: "15px" }} key="ip-limit">
             <IPLimit></IPLimit>
           </div>,

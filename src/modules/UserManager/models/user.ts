@@ -19,6 +19,6 @@ export default {
     delUser: commonEffectCreator(delUser),
     patchUser: commonEffectCreator(patchUser),
     fetchUserConfig: commonEffectCreator(fetchUserConfig),
-    putUseConfig: commonEffectCreator(putUserConfig, 500)
+    putUserConfig: commonEffectCreator(putUserConfig, 500)
   }
 }
