@@ -16,6 +16,14 @@ import AddIpLimitForm from '../AddIpLimitForm'
 import { ADMIN_ROLE } from 'constants/user'
 import { USER_MANAGER_IP_LIMIT_NAMESPACE } from 'constants/model'
 import TableWithRemote from 'domainComponents/TableWithRemote'
+import WithModal from 'components/WithModal'
+import extraConnect from 'domainUtils/extraConnect'
+import { Choose, When, Otherwise } from 'components/ControlStatements'
+
+Notification.config({
+  placement: 'bottomRight',
+  bottom: 50,
+})
 
 function mapStateToProps(state) {
   const effectLoading = state.loading.effects
@@ -44,55 +52,127 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-
+@extraConnect(mapStateToProps, mapDispatchToProps)
+@WithModal()
 class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
       visible: false,
-      activeType: null,
+      hasRegIPList: [],
+      type: null,
+      lastReqTime: 0,
+      data: [],
+      open: 0,
+      initial: false
     }
   }
+  onAddClick = item => {
+    this.setState({
+      hasRegIPList: item.ipRange,
+      type: item.role
+    })
+    this.props.setModalVisible("add", true)
+  }
+
+  onDelClick = payload => this.props.delete(payload)
+    .then(_ => {
+      Message.success("删除成功")
+      this.setState({
+        lastReqTime: new Date().getTime()
+      })
+    })
+
+  onSubmit = payload => this.props.put({
+    ...payload,
+    type: this.state.type
+  })
+    .then(_ => {
+      Message.success("添加成功")
+      this.props.setModalVisible("add", false)
+      this.setState({
+        lastReqTime: new Date().getTime()
+      })
+    })
+
+  onDataChange = payload => {
+    this.setState({
+      data: payload.data,
+      open: payload.open,
+      initial: true
+    })
+  }
+
+  onOpenChange = value => {
+    this.props.put({
+      open: value ? 1 : 0
+    })
+    if (value) {
+      Notification["warning"]({
+        message: '警告',
+        description: '该系统仅可在限制的IP范围内登录',
+        duration: 5,
+      })
+    }
+  }
+
   render() {
 
-
+    const { initial } = this.state
+    const disabled = this.state.data.filter(i => i.role === "admin").some(i => i.ipRange.length === 0) || this.props.loading
 
     const title = (
       <div><Icon type="filter" />
-        &nbsp;限制IP登录范围
-        {/* <span style={{ paddingLeft: "15px" }}>
-          <Tooltip title={disabled ? "管理员无IP范围设置，无法开启该功能" : null}>
-            <Switch checkedChildren={"开"}
-              unCheckedChildren={"关"}
-              disabled={disabled}
-              onChange={this.onOpenChange}
-              defaultChecked={isOpen} />
-          </Tooltip>
-        </span> */}
+        &nbsp;限制IP登录范围&nbsp;&nbsp;
+        <Choose>
+          <When condition={initial}>
+            <Tooltip title={disabled ? "管理员无IP范围设置，无法开启该功能" : null}>
+              <Switch checkedChildren={"开"}
+                unCheckedChildren={"关"}
+                disabled={disabled}
+                onChange={this.onOpenChange}
+                defaultChecked={this.state.open === 1}
+              />
+            </Tooltip>
+          </When>
+          <Otherwise>
+            <Icon type="loading"></Icon>
+          </Otherwise>
+        </Choose>
       </div>
     )
 
-
     return (
-      <div>
-        <Card title={title} >
-          <TableWithRemote
-            pagination={false}
-            getColumns={tableConfig.getColumns}
-            remoteNamespace={USER_MANAGER_IP_LIMIT_NAMESPACE}>
-          </TableWithRemote>
-        </Card>
-        {/* <Modal visible={this.state.visible}
+      <Card title={title} >
+        <TableWithRemote
+          loading={this.props.loading}
+          key={`${this.state.lastReqTime}-table`}
+          onDataChange={this.onDataChange}
+          pagination={false}
+          getColumns={options => {
+            return tableConfig.getColumns({
+              ...options,
+              handle: {
+                add: this.onAddClick,
+                delete: this.onDelClick
+              }
+            })
+          }}
+          remoteNamespace={USER_MANAGER_IP_LIMIT_NAMESPACE}>
+        </TableWithRemote>
+        <Modal
+          visible={this.props.modalVisible["add"]}
           footer={null}
-          key={`${this.state.visible}-modal`}
-          onCancel={this.switchModal}
-          title={<p><Icon type="plus" />&nbsp;添加IP</p>}>
-          <AddIpLimitForm isDark={isDark}
-            onSubmit={this.onPostHandle}
-            loading={loading}
-            ipList={(data.find(i => i.role === this.state.activeType) || {}).ipRange} />
-        </Modal> */}
-      </div>
+          onCancel={_ => this.props.setModalVisible("add", false)}
+          title={<div><Icon type="plus" />&nbsp;添加IP</div>}>
+          <AddIpLimitForm
+            key={`${this.props.modalVisible["add"]}-add`}
+            onSubmit={this.onSubmit}
+            loading={this.props.loading}
+            ipList={this.state.hasRegIPList} />
+        </Modal>
+      </Card>
+
     )
   }
 }

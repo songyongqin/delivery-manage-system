@@ -288,8 +288,7 @@ export default class extends React.Component<any, any> {
           <FormItem wrapperCol={{ span: 18, push: 4 }}>
             <Button type="primary"
               loading={loading}
-              onClick={this.submitHandle}
-              size="large">确定</Button>
+              onClick={this.submitHandle}>确定</Button>
           </FormItem>
 
         </Form>

@@ -35,7 +35,7 @@ const extraProps = {
   }
 }
 
-export const getColumns = ({ }) => {
+export const getColumns = ({ handle = {} }) => {
 
   return columnsCreator({
     dataIndexes: dataIndexes,
@@ -48,7 +48,7 @@ export const getColumns = ({ }) => {
             <Tag color={"#108ee9"}
               key={`${index}-tag`}>
               {i}
-              <Popconfirm title={`是否删除${value[index]}?`}>
+              <Popconfirm title={`是否删除${value[index]}?`} onConfirm={_ => handle["delete"] && handle["delete"]({ ip: i, type: records.role })}>
                 <a>
                   &nbsp;
                   <Icon type="delete" />
@@ -60,7 +60,7 @@ export const getColumns = ({ }) => {
       ),
       [OPERATION_KEY]: (value, records) => (
         <div style={{ textAlign: "center" }}>
-          <Button icon="plus" type="primary">
+          <Button icon="plus" type="primary" onClick={_ => handle["add"] && handle["add"](records)}>
             添加
           </Button>
         </div>

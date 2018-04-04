@@ -56,7 +56,7 @@ class TableWithRemote extends React.Component<any, any>{
   }
   fetchData = filters => {
 
-    const { onChange } = this.props
+    const { onChange, onDataChange } = this.props
 
     onChange && onChange(filters)
 
@@ -69,6 +69,9 @@ class TableWithRemote extends React.Component<any, any>{
       payload: filters
     })
       .then(res => {
+
+        onDataChange && onDataChange(res)
+
         this.setState({
           data: res.data,
           total: res.total
