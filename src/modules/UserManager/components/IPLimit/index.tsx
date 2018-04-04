@@ -30,7 +30,7 @@ function mapStateToProps(state) {
   return {
     loading: effectLoading[`${USER_MANAGER_IP_LIMIT_NAMESPACE}/delete`] ||
       effectLoading[`${USER_MANAGER_IP_LIMIT_NAMESPACE}/put`] ||
-      effectLoading[`${USER_MANAGER_IP_LIMIT_NAMESPACE}/post`]
+      effectLoading[`${USER_MANAGER_IP_LIMIT_NAMESPACE}/post`],
   }
 }
 
@@ -144,22 +144,23 @@ class Page extends React.Component<any, any> {
 
     return (
       <Card title={title} >
-        <TableWithRemote
-          loading={this.props.loading}
-          key={`${this.state.lastReqTime}-table`}
-          onDataChange={this.onDataChange}
-          pagination={false}
-          getColumns={options => {
-            return tableConfig.getColumns({
-              ...options,
-              handle: {
-                add: this.onAddClick,
-                delete: this.onDelClick
-              }
-            })
-          }}
-          remoteNamespace={USER_MANAGER_IP_LIMIT_NAMESPACE}>
-        </TableWithRemote>
+        <Spin spinning={this.props.loading}>
+          <TableWithRemote
+            key={`${this.state.lastReqTime}-table`}
+            onDataChange={this.onDataChange}
+            pagination={false}
+            getColumns={options => {
+              return tableConfig.getColumns({
+                ...options,
+                handle: {
+                  add: this.onAddClick,
+                  delete: this.onDelClick
+                }
+              })
+            }}
+            remoteNamespace={USER_MANAGER_IP_LIMIT_NAMESPACE}>
+          </TableWithRemote>
+        </Spin>
         <Modal
           visible={this.props.modalVisible["add"]}
           footer={null}
