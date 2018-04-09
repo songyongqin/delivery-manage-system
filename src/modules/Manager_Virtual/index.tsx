@@ -18,7 +18,9 @@ import Spin from 'domainComponents/Spin'
       loading: effectsLoading[`${MANAGER_VM_NAMESPACE}/fetch`] ||
         effectsLoading[`${MANAGER_VM_NAMESPACE}/putVM`] ||
         effectsLoading[`${MANAGER_VM_NAMESPACE}/postVM`] ||
-        effectsLoading[`${MANAGER_VM_NAMESPACE}/deleteVM`]
+        effectsLoading[`${MANAGER_VM_NAMESPACE}/deleteVM`],
+      fetchLoading: effectsLoading[`${MANAGER_VM_NAMESPACE}/fetch`]
+
     }
   },
   dispatch => {
@@ -46,23 +48,69 @@ export default class VMManager extends React.Component<any, any>{
   state = {
     activeItems: []
   }
-  onLogoutClick = payload => {
-    console.info(payload)
 
-  }
   onLoginClick = payload => this.loginHandle({ honeypotList: [payload["honeypotId"]] })
-  onDelClick = payload => {
-    console.info(payload)
 
-  }
-  onReloadClick = payload => {
-    console.info(payload)
-  }
+  onLogoutClick = payload => this.logoutHandle({ honeypotList: [payload["honeypotId"]] }, payload["honeypotName"])
+
+  onReloadClick = payload => this.reloadHandle({ honeypotList: [payload["honeypotId"]] }, payload["honeypotName"])
+
+  onDelClick = payload => this.deleteHandle({ honeypotId: [payload["honeypotId"]] }, payload["honeypotName"])
+
   loginHandle = payload => this.props.put({
     value: 1,
     ...payload
   })
     .then(this.props.updateLastReqTime)
+
+  logoutHandle = (payload, info) => Modal.confirm({
+    title: <div style={{ fontSize: "17px" }}>关闭蜜罐</div>,
+    content: <div><span style={{ color: "red" }}>{info}</span> 关闭后，将无法再感知威胁信息</div>,
+    onOk: _ => this.props.put({
+      value: 0,
+      ...payload
+    })
+      .then(this.props.updateLastReqTime)
+  })
+
+  reloadHandle = (payload, info) => Modal.confirm({
+    title: <div style={{ fontSize: "17px" }}>还原蜜罐</div>,
+    content: <div><span style={{ color: "red" }}>{info}</span> 还原初始镜像后，将无法返回蜜罐当前状态</div>,
+    onOk: _ => this.props.put({
+      value: -1,
+      ...payload
+    })
+      .then(this.props.updateLastReqTime)
+  })
+
+  deleteHandle = (payload, info) => Modal.confirm({
+    title: <div style={{ fontSize: "17px" }}>删除蜜罐</div>,
+    content: <div><span style={{ color: "red" }}>{info}</span> 删除后，将无法再恢复</div>,
+    onOk: _ => this.props.delete({
+      ...payload
+    })
+      .then(this.props.updateLastReqTime)
+  })
+
+  multipleHandle = (key) => {
+    const { activeItems } = this.state
+
+    const info = activeItems.map(i => i["honeypotName"]).join(",")
+    const honeypotList = activeItems.map(i => i["honeypotId"])
+
+    if (key === "login") {
+      return this.loginHandle({ honeypotList })
+    }
+    if (key === "logout") {
+      return this.logoutHandle({ honeypotList }, info)
+    }
+    if (key === "reload") {
+      return this.reloadHandle({ honeypotList }, info)
+    }
+    if (key === "delete") {
+      return this.deleteHandle({ honeypotId: honeypotList }, info)
+    }
+  }
 
   render() {
 
@@ -87,14 +135,20 @@ export default class VMManager extends React.Component<any, any>{
             activeItems: selectedRows
           })
         }
+      },
+      onChange: _ => {
+        this.setState({
+          activeItems: []
+        })
       }
     }
 
 
     const menu = (
       <Menu onClick={({ key }) => {
+        this.multipleHandle && this.multipleHandle(key)
       }}>
-        <Menu.Item key="poweroff" >
+        <Menu.Item key="logout" >
           批量关机
         </Menu.Item>
         <Menu.Item key="delete">
@@ -113,6 +167,7 @@ export default class VMManager extends React.Component<any, any>{
             <div style={{ marginBottom: "10px" }}>
               <Button type="primary" icon="plus" disabled={this.props.loading}>创建虚拟蜜罐</Button>
               <Dropdown.Button
+                onClick={_ => this.multipleHandle("login")}
                 style={{ marginLeft: "20px" }}
                 disabled={this.state.activeItems.length === 0 || this.props.loading}
                 overlay={menu}

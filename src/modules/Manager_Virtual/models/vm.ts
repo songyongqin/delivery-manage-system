@@ -25,11 +25,14 @@ export default {
     putVM: commonEffectCreator(putVM, 500),
     postVM: commonEffectCreator(postVM, 500),
     deleteVM: commonEffectCreator(deleteVM, 500),
-    updateLastReqTime: function* (_, { put }) {
+    updateLastReqTime: function* ({ resolve }, { put }) {
+
       yield put({
         type: "_updateLastReqTime",
         payload: new Date().getTime()
       })
+
+      resolve && resolve()
     }
   }
 }
