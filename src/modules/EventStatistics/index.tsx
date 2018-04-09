@@ -233,14 +233,14 @@ class EventStatistics extends React.Component<any, any>{
         <Modal
           className={styles["event-modal"]}
           width={"90%"}
+          destroyOnClose={true}
           style={{ position: "absolute", top: "30px", bottom: "30px", left: "5%", right: "5%" }}
           visible={this.state.visible}
           onCancel={this.modalOnCancel}
           footer={null}>
           <ThreatEvent
             initialFilters={this.props.initialFilters}
-            activeKey={this.state.activeKey}
-            key={`${this.state.visible}-threat-event`}>
+            activeKey={this.state.activeKey}>
           </ThreatEvent>
         </Modal>
       </Spin>
