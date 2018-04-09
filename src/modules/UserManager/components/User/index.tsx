@@ -117,12 +117,12 @@ export default class UserManager extends React.Component<any, any>{
           onCancel={_ => {
             setModalVisible("edit", false)
           }}
+          destroyOnClose={true}
           title={<div><Icon type="edit"></Icon>&nbsp;修改用户信息</div>}
           visible={modalVisible["edit"]}
           footer={null}>
           <UserForm
             loading={editLoading}
-            key={`${modalVisible["edit"]}-user-form`}
             isCreate={false}
             onSubmit={this.onEdit}
             defaultValue={this.state.activeItem}>

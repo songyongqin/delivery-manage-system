@@ -163,11 +163,11 @@ class Page extends React.Component<any, any> {
         </Spin>
         <Modal
           visible={this.props.modalVisible["add"]}
+          destroyOnClose={true}
           footer={null}
           onCancel={_ => this.props.setModalVisible("add", false)}
           title={<div><Icon type="plus" />&nbsp;添加IP</div>}>
           <AddIpLimitForm
-            key={`${this.props.modalVisible["add"]}-add`}
             onSubmit={this.onSubmit}
             loading={this.props.loading}
             ipList={this.state.hasRegIPList} />
