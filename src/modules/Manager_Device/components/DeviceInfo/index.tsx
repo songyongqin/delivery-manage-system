@@ -182,11 +182,6 @@ export default class DeviceInfo extends React.Component<any, any>{
         })
       }
 
-      setTimeout(() => {
-        this.setState({
-          lastVisibleChange: new Date().getTime()
-        })
-      }, 100)
     }
   }
   render() {
@@ -269,6 +264,7 @@ export default class DeviceInfo extends React.Component<any, any>{
         <Modal
           width={800}
           maskClosable={false}
+          destroyOnClose={true}
           closable={this.getClosableValueByKey("licence")}
           footer={null}
           onCancel={this.createOnCancelHandleByKey("licence")}
@@ -276,7 +272,6 @@ export default class DeviceInfo extends React.Component<any, any>{
           title={<div><Icon type="lock"></Icon>&nbsp;设备授权</div>}>
           <Spin spinning={this.getLoadingStatusByKey("licence")}>
             <Licence
-              key={`${this.state.lastVisibleChange}- licence`}
               onSubmit={this.onLicenceSubmit}
               onCancel={this.createOnCancelHandleByKey("licence")}
               loading={this.getLoadingStatusByKey("licence")}
@@ -288,13 +283,13 @@ export default class DeviceInfo extends React.Component<any, any>{
         <Modal
           width={1000}
           maskClosable={false}
+          destroyOnClose={true}
           footer={null}
           onCancel={this.createOnCancelHandleByKey("clean")}
           visible={modalVisible["clean"]}
           title={<div><Icon type="clear"></Icon>&nbsp;清理磁盘</div>}>
           <Spin spinning={this.getLoadingStatusByKey("clean")}>
             <Clean
-              key={`${this.state.lastVisibleChange}- clean`}
               onCancel={this.createOnCancelHandleByKey("clean")}
               onSubmit={this.postClean}
               type={this.props.type}
@@ -308,6 +303,7 @@ export default class DeviceInfo extends React.Component<any, any>{
         {/* 更新的Modal*/}
         <Modal
           width={1200}
+          destroyOnClose={true}
           maskClosable={false}
           closable={this.getClosableValueByKey("update")}
           footer={null}
@@ -316,7 +312,6 @@ export default class DeviceInfo extends React.Component<any, any>{
           title={<div><Icon type="info-circle-o"></Icon>&nbsp;设备更新</div>}>
           <Spin spinning={this.getLoadingStatusByKey("update")}>
             <Update
-              key={`${this.state.lastVisibleChange}- update`}
               onCancel={this.createOnCancelHandleByKey("update")}
               handle={{
                 getUpdateInfoLocal: this.fetchUpdateInfoByLocal,
