@@ -3,5 +3,5 @@ import { createMapDispatchWithPromise } from './dvaExtraDispatch'
 
 export default (mapStateToProps = null, mapDispatchToProps = null) => {
 
-  return connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
+  return connect(mapStateToProps, mapDispatchToProps ? createMapDispatchWithPromise(mapDispatchToProps) : null)
 }

@@ -2,8 +2,6 @@
  * Created by jojo on 2017/9/5.
  */
 
-import React from 'react';
-import JoIcon from '../../components/JoIcon';
 
 
 export const NAMESPACE = "managerVirtual";
@@ -95,6 +93,6 @@ export const VM_ENUM_CONFIG_DATA_INDEX = "vm",
   SERVICE_LIST_DATA_INDEX = "serviceList"
 
 
-export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig.js'
+// export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig.js'
 
-export { NODE } from 'configs/ConstConfig'
+// export { NODE } from 'configs/ConstConfig'

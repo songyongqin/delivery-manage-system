@@ -16,6 +16,7 @@ import getSysConfigMonitorPage from 'routes/SysConfig_Monitor'
 import getSysConfigNetworkPage from 'routes/SysConfig_Network'
 import getDeviceManagerPage from 'routes/Manager_Device'
 import getUserManagerPage from 'routes/UserManager'
+import getVMManagerPage from 'routes/Manager_VM'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -31,7 +32,8 @@ import {
   SYS_CONFIG_MONITOR_URL,
   SYS_CONFIG_NETWORK_URL,
   MANAGER_DEVICE_URL,
-  USER_MANAGER_URL
+  USER_MANAGER_URL,
+  MANAGER_VM_URL,
 } from 'routes/config/path'
 
 function RouterConfig({ history, app }) {
@@ -121,6 +123,12 @@ function RouterConfig({ history, app }) {
               exact
               component={getUserManagerPage(app, USER_MANAGER_URL)}
               path={USER_MANAGER_URL} >
+            </Route>
+
+            <Route
+              exact
+              component={getVMManagerPage(app, MANAGER_VM_URL)}
+              path={MANAGER_VM_URL} >
             </Route>
           </Switch>
         </MainWrapper>

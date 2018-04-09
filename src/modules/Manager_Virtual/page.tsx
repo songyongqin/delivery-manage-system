@@ -1,22 +1,21 @@
-import React from 'react';
-import classnames from 'classnames';
-import { Menu, Button, Table, Icon, Row, Col, Card, Dropdown, message as Message } from 'antd';
-import { queryContainerGenerator } from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
-import JoSpin from '../../components/JoSpin/index';
-import EnhanciveTable from '../../domainComponents/EnhanciveTable/index';
-import * as tableConfig from './components/TableConfig/index';
-import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
-import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
-import { WithBreadcrumb } from '../../components/HOSComponents/index'
+import * as  React from 'react'
+import classnames from 'classnames'
+import { Menu, Button, Icon, Row, Col, Card, Modal, Dropdown, message as Message } from 'antd'
+// import { queryContainerGenerator } from '../../Generators/QueryContainerrGenerator/QueryContainerGenerator';
+import Spin from 'domainComponents/Spin'
+import Table from 'domainComponents/Table'
+import * as tableConfig from './components/TableConfig'
+// import WithOnQuery from '../../Generators/QueryContainerDecorator/WithOnQuery';
+// import WithPageOnChange from '../../Generators/QueryContainerDecorator/WithPageOnChangeQuery';
+// import { WithBreadcrumb } from '../../components/HOSComponents/index'
 import styles from './styles.css'
-import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
+// import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
 import CreateHoneypotForm from './components/CreateHoneypotForm';
-import { curry } from '../../utils/tools'
-import Modal from 'domainComponents/Modal'
-import { modal as ModalHandle } from 'antd'
+// import { curry } from '../../utils/tools'
+// import Modal from 'domainComponents/Modal'
 import OperationResultPanel from './components/OperationResultPanel'
-import { WithModal } from 'domainComponents/HOSComponents'
-import { DISTRIBUTION, STAND_ALONE } from 'configs/ConstConfig'
+import WithModal from 'components/WithModal'
+// import { DISTRIBUTION, STAND_ALONE } from 'configs/ConstConfig'
 
 import {
   tableTextConfig,
@@ -106,16 +105,7 @@ const modalTitleConfig = {
 }
 
 
-@WithModal()
-@queryContainerGenerator({
-  namespace: NAMESPACE,
-  mapStateToProps,
-  mapDispatchToProps: createMapDispatchWithPromise(mapDispatchToProps)
-})
-@WithBreadcrumb
-@WithOnQuery(NAMESPACE)
-@WithPageOnChange(NAMESPACE)
-class Page extends React.Component {
+class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -137,20 +127,20 @@ class Page extends React.Component {
       visible: !this.state.visible
     })
   }
-  componentDidMount = () => {
+  componentDidMount() {
     const { productType } = this.props
     const { queryFilters } = this.props[NAMESPACE];
     if (queryFilters[HOST_IP_DATAINDEX].length !== 0) {
       // this.getVMIpList();
     }
-    if (productType === DISTRIBUTION || productType === STAND_ALONE) {
-      this.props.getVMOption()
-        .then(result => this.setState({ vmOptions: result }))
-    }
+    // if (productType === DISTRIBUTION || productType === STAND_ALONE) {
+    //   this.props.getVMOption()
+    //     .then(result => this.setState({ vmOptions: result }))
+    // }
 
 
-    this.getNodeIpList()
-    this.getVMIpList()
+    // this.getNodeIpList()
+    // this.getVMIpList()
 
   }
   getNodeIpList = () => {
@@ -212,7 +202,7 @@ class Page extends React.Component {
     )
   };
   onFilter = (value) => {
-    this.onQuery({ attackCounts: value })
+    // this.onQuery({ attackCounts: value })
   };
   setSelectedRows = (selectedRows) => {
     this.setState({
@@ -222,7 +212,7 @@ class Page extends React.Component {
 
   onSubmit = payload => this.props.postVM(payload)
     .then(this.switchModal)
-    .then(curry(Message.success, "创建蜜罐操作成功，请耐心等待蜜罐创建成功"))
+  // .then(curry(Message.success, "创建蜜罐操作成功，请耐心等待蜜罐创建成功"))
 
   getDelHandle = payload => () => this.props.deleteVM(payload)
     .then(result => {
@@ -245,7 +235,7 @@ class Page extends React.Component {
 
       this.setSelectedRows([])
       this.getNodeIpList()
-      this.getVMIpList()
+      // this.getVMIpList()
       return this.props.query(initFilters)
     })
 
@@ -296,12 +286,12 @@ class Page extends React.Component {
     })
   })
 
-  getDelSelectedHandle = message => ModalHandle.confirm({
-    title: message,
-    onOk: this.getDelHandle({
-      [ID_DATAINDEX]: this.state.selectedRows.map(i => i[ID_DATAINDEX])
-    })
-  })
+  // getDelSelectedHandle = message => ModalHandle.confirm({
+  //   title: message,
+  //   onOk: this.getDelHandle({
+  //     [ID_DATAINDEX]: this.state.selectedRows.map(i => i[ID_DATAINDEX])
+  //   })
+  // })
 
   startSelectedHandle = () => this.getPutHandle({
     value: OPERATION_START_VALUE,
@@ -474,18 +464,18 @@ class Page extends React.Component {
           style={{ position: "absolute", top: "30px", bottom: "30px", left: "50%", right: "50px", marginLeft: "-350px", marginRight: "0", maxHeight: "750px" }}
           footer={null}
           width={700}>
-          <JoSpin
+          <Spin
             spinning={this.props.postLoading}
             style={{ height: "100%" }}
             contentWrapperStyle={{ height: "100%" }}>
-            <CreateHoneypotForm isDark={isDark}
+            <CreateHoneypotForm
               key={`${Object.keys(vmOptions).length}-create-vm`}
               validatorHandle={this.props.validate}
               vmOptions={vmOptions}
               onSubmit={this.onSubmit}
               loading={this.props.postLoading}
               options={options} />
-          </JoSpin>
+          </Spin>
         </Modal>
         <Modal
           onCancel={this.onOperationConfirm}

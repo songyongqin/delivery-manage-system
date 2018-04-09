@@ -8,7 +8,8 @@ export default {
     "/analyse": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system",
     "/warning": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system",
     "/sys-config": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system",
-    "/device": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system"
+    "/device": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system",
+    "/virtual-machine": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system"
   },
   "theme": "./theme.config.js",
   "env": {

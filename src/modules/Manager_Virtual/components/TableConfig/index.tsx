@@ -1,9 +1,9 @@
 /**
  * Created by jojo on 2017/9/5.
  */
-import React from 'react';
-import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
-import styles from './styles.css';
+import * as React from 'react'
+import columnsCreator from 'domainUtils/columnsCreator'
+import styles from './styles.css'
 import {
   tableRowDataIndexes,
   tableTextConfig,
@@ -27,29 +27,28 @@ import {
   OPERATION_INIT_VALUE,
   OPERATION_SHUTDOWN_VALUE,
   OPERATION_START_VALUE,
-  NODE,
-} from '../../ConstConfig';
+} from '../../constants'
 
-import {
-  INDUSTRIAL_CONTROL_SERVICE,
-  systemsTextConfig,
-  interactionsTextConfig,
-  servicesTextConfig,
-  systems,
-  interactions,
-} from 'configs/ConstConfig';
+// import {
+//   INDUSTRIAL_CONTROL_SERVICE,
+//   systemsTextConfig,
+//   interactionsTextConfig,
+//   servicesTextConfig,
+//   systems,
+//   interactions,
+// } from 'configs/ConstConfig';
 
 import { Progress, Row, Col, Badge, Button, Popover, Tooltip, Menu, Dropdown, Icon, Popconfirm, Modal } from 'antd'
-import JoTag from 'components/JoTag';
-import classnames from 'classnames';
-import * as tools from 'utils/tools';
-import getFilterIcon from 'utils/getFilterIcon'
+import Tag from 'components/Tag'
+import classnames from 'classnames'
+import * as tools from 'utils'
+// import getFilterIcon from 'utils/getFilterIcon'
 
 
 const X_LAYOUT = "x", Y_LAYOUT = "y";
 
 const TagList = ({
-                 style = {},
+  style = {},
   className = "",
   layout = Y_LAYOUT,
   color = [],
@@ -77,7 +76,7 @@ const TagList = ({
           </div>
 
         }>
-        <JoTag key="overflow" style={{ cursor: "pointer" }}>更多内容...</JoTag>
+        <Tag key="overflow" style={{ cursor: "pointer" }}>更多内容...</Tag>
       </Popover>
       :
       null
@@ -88,18 +87,18 @@ const TagList = ({
         ?
         [
           ...outerTags.map((i, index) => (
-            <JoTag key={i} color={color[index % colorCount]}>
+            <Tag key={i} color={color[index % colorCount]}>
               {i}
-            </JoTag>
+            </Tag>
           )),
           extraTag,
         ]
         :
         [
           outerTags.map((i, index) => [
-            <JoTag key={i} color={color[index % colorCount]}>
+            <Tag key={i} color={color[index % colorCount]}>
               {i}
-            </JoTag>,
+            </Tag>,
             <br key={`${i}-br`} />
           ]),
           extraTag,
@@ -111,7 +110,7 @@ const TagList = ({
 }
 
 
-const commonRenderer = value => <p style={{ textAlign: "center" }}>{value}</p>
+const commonRenderer = value => <div style={{ textAlign: "center" }}>{value}</div>
 
 const honeypotTypeRenderer = (value, records) => {
 
@@ -120,13 +119,13 @@ const honeypotTypeRenderer = (value, records) => {
     services = records[SERVICES_DATAINDEX];
 
   let data = [
-    tools.getKeyText(system, systemsTextConfig),
-    tools.getKeyText(interactions, interactionsTextConfig),
+    system,
+    interactions
   ]
 
-  services.includes(INDUSTRIAL_CONTROL_SERVICE)
-    &&
-    data.push(tools.getKeyText(INDUSTRIAL_CONTROL_SERVICE, servicesTextConfig))
+  // services.includes(INDUSTRIAL_CONTROL_SERVICE)
+  //   &&
+  //   data.push(tools.getKeyText(INDUSTRIAL_CONTROL_SERVICE, servicesTextConfig))
 
   return <TagList data={data}
     color={["#108ee9"]}
@@ -136,7 +135,7 @@ const honeypotTypeRenderer = (value, records) => {
 const servicesRenderer = value => (
   <TagList style={{ textAlign: "center" }}
     color={["#108ee9"]}
-    data={value.map(i => tools.getKeyText(i, servicesTextConfig))} />
+    data={value} />
 )
 
 const portsRenderer = value => (
@@ -178,60 +177,26 @@ const honeypotStatusRenderer = value => {
 
 }
 
-const getOperationRenderer = (handle = {}, productType) => (value, records) => {
+const getOperationRenderer = (handle = {}) => (value, records) => {
   let status = records[HONEYPOT_STATUS_DATAINDEX]
   const isLicenceOverdue = status.includes(STATUS_LICENCE_OVERDUE),
     isRunning = (status.includes(STATUS_RUNNING_VALUE)),
     isStop = (status.includes(STATUS_STOP_VALUE)),
-    isNodeProductType = productType === NODE,
+    // isNodeProductType = productType === NODE,
     menu = (
       <Menu onClick={({ key }) => {
-        if (key === "start") {
-          handle.getPutHandle({
-            value: OPERATION_START_VALUE,
-            honeypotList: [records[ID_DATAINDEX]]
-          })()
-        }
-
-        if (key === "poweroff") {
-          Modal.confirm({
-            onOk: handle.getPutHandle({
-              value: OPERATION_SHUTDOWN_VALUE,
-              honeypotList: [records[ID_DATAINDEX]]
-            }),
-            title: `关闭蜜罐 ${records[HONEYPOT_NAME_DATAINDEX]}  后，将无法再感知威胁信息`
-          })
-        }
-
-        if (key === "delete") {
-          Modal.confirm({
-            onOk: handle.getDelHandle({
-              [ID_DATAINDEX]: records[ID_DATAINDEX]
-            }),
-            title: `删除蜜罐 ${records[HONEYPOT_NAME_DATAINDEX]}  后，将无法再恢复`
-          })
-        }
-
-        if (key === "reload") {
-          Modal.confirm({
-            onOk: handle.getPutHandle({
-              value: OPERATION_INIT_VALUE,
-              honeypotList: [records[ID_DATAINDEX]]
-            }),
-            title: `还原蜜罐 ${records[HONEYPOT_NAME_DATAINDEX]}  初始镜像后，将无法返回蜜罐当前状态`
-          })
-        }
+        handle && handle[key] && handle[key](records)
       }}>
-        <Menu.Item key="start" disabled={isRunning || isLicenceOverdue || isNodeProductType}>
+        <Menu.Item key="login" >
           <Icon type="login" />&nbsp;开机
         </Menu.Item>
-        <Menu.Item key="poweroff" disabled={isStop || isLicenceOverdue || isNodeProductType}>
+        <Menu.Item key="logout" >
           <Icon type="poweroff" />&nbsp;关机
         </Menu.Item>
-        <Menu.Item key="delete" disabled={isNodeProductType}>
+        <Menu.Item key="delete" >
           <Icon type="delete" />&nbsp; 删除蜜罐
         </Menu.Item>
-        <Menu.Item key="reload" disabled={isLicenceOverdue || isNodeProductType}>
+        <Menu.Item key="reload" >
           <Icon type="reload" />&nbsp; 还原初始蜜罐
         </Menu.Item>
       </Menu>
@@ -258,8 +223,8 @@ const staticFilterOptions = {
 
 const filterTextConfig = {
   [HONEYPOT_TYPE_ROW_KEY]: {
-    ...interactionsTextConfig,
-    ...systemsTextConfig,
+    // ...interactionsTextConfig,
+    // ...systemsTextConfig,
   },
   [HONEYPOT_STATUS_DATAINDEX]: honeypotStatusTextConfig
 }
@@ -274,48 +239,54 @@ export const getColumns = ({
   filterTextConfigs = {},
   filterOptions = {},
   setActiveFilter
-                         }) => {
+}) => {
 
   const renderer = {
     [HONEYPOT_TYPE_ROW_KEY]: honeypotTypeRenderer,
     [SERVICES_DATAINDEX]: servicesRenderer,
     [PORTS_DATAINDEX]: portsRenderer,
     [HONEYPOT_STATUS_DATAINDEX]: honeypotStatusRenderer,
-    [OPERATION_ROW_KEY]: getOperationRenderer(handle, productType),
+    [OPERATION_ROW_KEY]: getOperationRenderer(handle),
     [HOST_IP_DATAINDEX]: commonRenderer,
     [HONEYPOT_IP_DATAINDEX]: commonRenderer,
     [HONEYPOT_NAME_DATAINDEX]: commonRenderer,
   }
 
-  const columns = tableColumnsGenerator({
-    keys: tableRowDataIndexes,
+  const columns = columnsCreator({
+    dataIndexes: tableRowDataIndexes,
     renderer,
-    titleTextConfig: tableTextConfig.colTitles,
-    filterOptions: { ...staticFilterOptions, ...filterOptions },
-    filterTextConfig: { ...filterTextConfig, ...filterTextConfigs },
-    filteredValue: queryFilters,
-    extraProps: {
-      ...tableRowDataIndexes.reduce((finalExtraProps, dataIndex) => {
+    titleConfig: Object.entries(tableTextConfig.colTitles)
+      .reduce((target, [dataIndex, title]) => {
+        target[dataIndex] = <div style={{ textAlign: "center" }}>{title}</div>
+        return target
+      }, {}),
+    // filterOptions: { ...staticFilterOptions, ...filterOptions },
+    // filterTextConfig: { ...filterTextConfig, ...filterTextConfigs },
+    // filteredValue: queryFilters,
+    // extraProps: {
+    //   ...tableRowDataIndexes.reduce((finalExtraProps, dataIndex) => {
 
-        finalExtraProps[dataIndex] = {
-          filterMultiple: ![HOST_IP_DATAINDEX, HONEYPOT_IP_DATAINDEX].includes(dataIndex),
-          onFilterDropdownVisibleChange: visible => {
-            visible && setActiveFilter && setActiveFilter(dataIndex)
-          },
-          // filterIcon: getFilterIcon(queryFilters[dataIndex])
-        }
+    //     finalExtraProps[dataIndex] = {
+    //       filterMultiple: ![HOST_IP_DATAINDEX, HONEYPOT_IP_DATAINDEX].includes(dataIndex),
+    //       onFilterDropdownVisibleChange: visible => {
+    //         visible && setActiveFilter && setActiveFilter(dataIndex)
+    //       },
+    //       // filterIcon: getFilterIcon(queryFilters[dataIndex])
+    //     }
 
-        return finalExtraProps
-      }, {})
-    }
-  });
-  return isAdmin
-    ?
-    columns
-    :
-    [
-      ...columns.slice(0, columns.length - 1),
-    ]
+    //     return finalExtraProps
+    //   }, {})
+    // }
+  })
+
+  return columns
+  // return isAdmin
+  //   ?
+  //   columns
+  //   :
+  //   [
+  //     ...columns.slice(0, columns.length - 1),
+  //   ]
 
 
 };
