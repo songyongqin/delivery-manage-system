@@ -10,3 +10,7 @@ export const postVM = commonRequestCreator.post(httpApi.VIRTUAL_MACHINE)
 export const putVM = commonRequestCreator.put(httpApi.VIRTUAL_MACHINE)
 
 export const deleteVM = commonRequestCreator.deleteWithQueryString(httpApi.VIRTUAL_MACHINE)
+
+export const fetchVMOption = commonRequestCreator.get(httpApi.VM_OPTION)
+
+export const validate = commonRequestCreator.get(httpApi.VALIDATE)

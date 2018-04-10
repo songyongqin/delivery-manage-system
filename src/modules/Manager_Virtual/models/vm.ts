@@ -3,9 +3,12 @@ import {
   fetchVM,
   deleteVM,
   postVM,
-  putVM
+  putVM,
+  fetchVMOption,
+  validate
 } from '../services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
+import isSuccess from 'domainUtils/isSuccess'
 
 export default {
   namespace: MANAGER_VM_NAMESPACE,
@@ -25,6 +28,7 @@ export default {
     putVM: commonEffectCreator(putVM, 500),
     postVM: commonEffectCreator(postVM, 500),
     deleteVM: commonEffectCreator(deleteVM, 500),
+    fetchVMOption: commonEffectCreator(fetchVMOption),
     updateLastReqTime: function* ({ resolve }, { put }) {
 
       yield put({
@@ -33,6 +37,7 @@ export default {
       })
 
       resolve && resolve()
-    }
+    },
+    validate: commonEffectCreator(validate)
   }
 }

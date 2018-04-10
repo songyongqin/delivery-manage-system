@@ -2,7 +2,7 @@
  * Created by jojo on 2017/9/8.
  */
 
-import React from 'react';
+import * as React from 'react'
 import {
   Form,
   Input,
@@ -19,8 +19,8 @@ import {
   Radio
 } from 'antd';
 
-import styles from './styles.css';
-import classnames from 'classnames';
+import styles from './styles.css'
+import classnames from 'classnames'
 
 import {
   HOST_IP_DATAINDEX,
@@ -43,19 +43,31 @@ import {
   WINDOW_SERVER_TYPE,
   LINUX_SERVER_TYPE,
   SERVICE_LIST_DATA_INDEX,
-} from '../../ConstConfig'
+} from '../../constants'
 
-import {
-  interactions,
-  interactionsTextConfig,
-  HIGH_INTERATION,
-  LOW_INTERACTION,
-  systems,
-  systemsTextConfig,
-  services,
-  servicesTextConfig,
-  INTENTION_DATAINDEX
-} from '../../../../configs/ConstConfig'
+// import {
+//   interactions,
+//   interactionsTextConfig,
+//   HIGH_INTERATION,
+//   LOW_INTERACTION,
+//   systems,
+//   systemsTextConfig,
+//   services,
+//   servicesTextConfig,
+//   INTENTION_DATAINDEX
+// } from '../../../../configs/ConstConfig'
+
+
+export const HIGH_INTERATION = "HighInteraction",
+  LOW_INTERACTION = "LowInteraction";
+
+
+export const interactionsTextConfig = {
+  [HIGH_INTERATION]: "高交互",
+  [LOW_INTERACTION]: "低交互"
+}
+
+export const interactions = Object.keys(interactionsTextConfig);
 
 const gatewayReg = /^(?:(?:2[0-4][0-9]\.)|(?:25[0-5]\.)|(?:1[0-9][0-9]\.)|(?:[1-9][0-9]\.)|(?:[0-9]\.)){3}(?:(?:2[0-5][0-5])|(?:25[0-5])|(?:1[0-9][0-9])|(?:[1-9][0-9])|(?:[0-9]))$/
 
@@ -108,7 +120,7 @@ const defaultVmOptions = {
 }
 
 @Form.create()
-class WrappedForm extends React.Component {
+class WrappedForm extends React.Component<any, any> {
   state = {
     [INTERCATION_DATAINDEX]: null,
     systemList: [],
@@ -132,9 +144,13 @@ class WrappedForm extends React.Component {
 
     });
   }
-  timer = {}
+  timer = {
+    honeypotName: null,
+    honeypotIp: null,
+    gateway: null,
+  }
   honeypotNameCheck = (rule, value, callback) => {
-    clearTimeout(this.timer.honeypotName);
+    clearTimeout(this.timer.honeypotName)
     value.trim().length === 0 && callback();
     this.timer.honeypotName = setTimeout(() => {
       this.props.validatorHandle({ type: "honeypotName", value: value.trim() }).then(({ payload, message }) => {
@@ -157,7 +173,7 @@ class WrappedForm extends React.Component {
 
   }
   gatewayCheck = (rule, value, callback) => {
-    clearTimeout(this.timer.gateway);
+    clearTimeout(this.timer.gateway)
     value.trim().length === 0 && callback();
     this.timer.gateway = setTimeout(() => {
       this.props.validatorHandle({ type: "gateway", value: value.trim() }).then(({ payload, message }) => {
@@ -166,11 +182,11 @@ class WrappedForm extends React.Component {
     }, 500)
 
   }
-  componentDidMount = () => {
+  componentDidMount() {
     this.setFormType(this.props)
   }
-  componentWillReceiveProps = (newProps) => {
-    this.setFormType(newProps);
+  componentWillReceiveProps(newProps) {
+    this.setFormType(newProps)
   }
   setFormType = (props) => {
     const intercation = props.form.getFieldValue(INTERCATION_DATAINDEX)
@@ -346,7 +362,7 @@ class WrappedForm extends React.Component {
               (
               <Radio.Group className={radioClasses} onChange={this.interactionOnChange} disabled={loading}>
                 {
-                  interactions.map(i => <Radio.Button value={i} key={i}>
+                  interactions.map(i => <Radio.Button value={i} key={i} disabled={loading}>
                     {interactionsTextConfig[i]}
                   </Radio.Button>)
                 }
@@ -428,7 +444,7 @@ class WrappedForm extends React.Component {
               className={sliderClasses}
               tipFormatter={value => `${value}GB`}
               marks={{ 1: '1GB', 2: '2GB', 3: '3GB', 4: '4GB' }} />
-            )}
+          )}
         </FormItem>
         <FormItem {...formItemLayout}
           colon={false}
@@ -448,7 +464,7 @@ class WrappedForm extends React.Component {
               disabled={loading}
               className={sliderClasses}
               marks={{ 1: '1', 2: '2', 3: '3', 4: '4' }} />
-            )}
+          )}
         </FormItem>
         {/* <Row style={{ marginBottom: "15px" }}>
           <Col span={10} push={6}>

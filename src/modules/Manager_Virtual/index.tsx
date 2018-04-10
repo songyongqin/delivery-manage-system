@@ -6,9 +6,12 @@ import { getColumns } from './components/TableConfig'
 import Card from 'domainComponents/Card'
 import extraConnect from 'domainUtils/extraConnect'
 import WithAnimateRender from 'components/WithAnimateRender'
-import { Button, Dropdown, Menu, Modal } from 'antd'
+import { Button, Dropdown, Menu, Modal, Icon } from 'antd'
 import Spin from 'domainComponents/Spin'
+import CreateVM from './components/CreateVM'
+import WithModal from 'components/WithModal'
 
+@WithModal()
 @WithAnimateRender
 @extraConnect(
   state => {
@@ -19,8 +22,8 @@ import Spin from 'domainComponents/Spin'
         effectsLoading[`${MANAGER_VM_NAMESPACE}/putVM`] ||
         effectsLoading[`${MANAGER_VM_NAMESPACE}/postVM`] ||
         effectsLoading[`${MANAGER_VM_NAMESPACE}/deleteVM`],
-      fetchLoading: effectsLoading[`${MANAGER_VM_NAMESPACE}/fetch`]
-
+      fetchLoading: effectsLoading[`${MANAGER_VM_NAMESPACE}/fetch`],
+      postVMLoading: effectsLoading[`${MANAGER_VM_NAMESPACE}/postVM`]
     }
   },
   dispatch => {
@@ -34,7 +37,7 @@ import Spin from 'domainComponents/Spin'
         type: `${MANAGER_VM_NAMESPACE}/deleteVM`,
         payload
       }),
-      post: payload => dispatch({
+      postVM: payload => dispatch({
         type: `${MANAGER_VM_NAMESPACE}/postVM`,
         payload
       }),
@@ -112,6 +115,9 @@ export default class VMManager extends React.Component<any, any>{
     }
   }
 
+  onPost = payload => this.props.postVM(payload).then(_ => {
+    this.props.setModalVisible("create", false)
+  })
   render() {
 
     const props = {
@@ -165,7 +171,13 @@ export default class VMManager extends React.Component<any, any>{
         <Card title="虚拟蜜罐" key="vm">
           <Spin spinning={this.props.loading}>
             <div style={{ marginBottom: "10px" }}>
-              <Button type="primary" icon="plus" disabled={this.props.loading}>创建虚拟蜜罐</Button>
+              <Button
+                type="primary"
+                icon="plus"
+                disabled={this.props.loading}
+                onClick={_ => this.props.setModalVisible("create", true)}>
+                创建虚拟蜜罐
+              </Button>
               <Dropdown.Button
                 onClick={_ => this.multipleHandle("login")}
                 style={{ marginLeft: "20px" }}
@@ -175,6 +187,17 @@ export default class VMManager extends React.Component<any, any>{
                 批量开机
               </Dropdown.Button>
             </div>
+            <Modal
+              maskClosable={false}
+              closable={!this.props.postVMLoading}
+              onCancel={_ => this.props.setModalVisible("create", false)}
+              destroyOnClose={true}
+              width={600}
+              footer={null}
+              visible={this.props.modalVisible["create"]}
+              title={<div><Icon type="plus"></Icon>&nbsp;创建虚拟蜜罐</div>}>
+              <CreateVM onSubmit={this.onPost} loading={this.props.postVMLoading}></CreateVM>
+            </Modal>
             <TableWithRemote
               {...props}>
             </TableWithRemote>
