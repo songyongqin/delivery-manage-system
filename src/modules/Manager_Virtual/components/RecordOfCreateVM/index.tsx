@@ -73,7 +73,7 @@ export default class RecordOfCreateVM extends React.PureComponent<any, any>{
 
     const { con } = this
 
-    const recordList: any[] = Object.values(record).sort(({ order: beforeOrder }, { after: afterOrder }) => {
+    const recordList: any[] = Object.values(record).sort(({ order: beforeOrder }, { order: afterOrder }) => {
       return afterOrder - beforeOrder
     })
 
@@ -89,7 +89,7 @@ export default class RecordOfCreateVM extends React.PureComponent<any, any>{
           title={<div><Icon type="desktop" />&nbsp;&nbsp;蜜罐虚拟机创建状态</div>}
           placement="bottomRight"
           content={
-            <div style={{ width: "420px" }}>
+            <div style={{ width: "420px", maxHeight: "700px", overflowY: "scroll" }}>
               <Choose>
                 <When condition={recordList.length === 0}>
                   <div style={{ textAlign: "center", height: "50px", lineHeight: "50px" }}>
@@ -97,14 +97,16 @@ export default class RecordOfCreateVM extends React.PureComponent<any, any>{
                   </div>
                 </When>
                 <Otherwise>
-                  <Collapse defaultActiveKey={recordList.map(({ honeypotId }, index) => `${honeypotId}`)}>
+                  <Collapse
+                    key={`${recordList.length}-collapse`}
+                    defaultActiveKey={recordList.map(({ honeypotId }, index) => `${index}-item`)}>
                     {
                       recordList.map(({ status, honeypotName, honeypotId, error }, index) => {
                         const closable = status === FINAL_CREATE_STATUS || error
                         const iconStyle = { color: "#108ee9", fontSize: "40px" }
                         return (
                           <Collapse.Panel
-                            key={`${honeypotId}`}
+                            key={`${index}-item`}
                             header={<div >
                               {`蜜罐名称:${honeypotName}`}
                               <div style={{ float: "right" }}>

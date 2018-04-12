@@ -56,11 +56,9 @@ export default {
     removeRecordItem: function* ({ payload }, { put, take }) {
 
       yield put({
-        type: "removeRecordItem",
+        type: "_removeRecordItem",
         payload
       })
-
-      yield take(`_removeRecordItem/@@end`)
 
       yield put({
         type: "cacheRecordOfCreateVM"

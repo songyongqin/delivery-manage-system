@@ -6,7 +6,7 @@ import { getColumns } from './components/TableConfig'
 import Card from 'domainComponents/Card'
 import extraConnect from 'domainUtils/extraConnect'
 import WithAnimateRender from 'components/WithAnimateRender'
-import { Button, Dropdown, Menu, Modal, Icon } from 'antd'
+import { Button, Dropdown, Menu, Modal, Icon, message as Message } from 'antd'
 import Spin from 'domainComponents/Spin'
 import CreateVM from './components/CreateVM'
 import WithModal from 'components/WithModal'
@@ -131,6 +131,7 @@ export default class VMManager extends React.PureComponent<any, any>{
       honeypotId
     })
     this.props.changePanelVisible(true)
+    Message.success('创建蜜罐操作成功，请耐心等待蜜罐创建成功')
   })
 
   render() {
