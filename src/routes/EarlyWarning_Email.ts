@@ -11,7 +11,7 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "EarlyWarningEmailSendModel" */'modules/EarlyWarning_Email/models/send'),
     ],
     component: () => System.import(/* webpackChunkName: "EmailWarningEmailPage" */'modules/EarlyWarning_Email')
-      .then(page => WithRouteInit(url)(page)),
+      .then(page => WithRouteInit(url)(page.default)),
   })
 
 }

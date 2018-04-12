@@ -36,7 +36,7 @@ import {
   MANAGER_VM_URL,
 } from 'routes/config/path'
 
-function RouterConfig({ history, app }) {
+export default ({ history, app }) => {
   return (
     <Router history={history}>
       <LocaleProvider locale={zhCN}>
@@ -138,4 +138,4 @@ function RouterConfig({ history, app }) {
   );
 }
 
-export default RouterConfig
+

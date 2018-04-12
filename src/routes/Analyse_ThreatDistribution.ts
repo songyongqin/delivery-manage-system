@@ -10,7 +10,7 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "AnalyseThreatDistributionModel" */'modules/Analyse_ThreatDistribution/model'),
     ],
     component: () => System.import(/* webpackChunkName: "AnalyseThreatDistributionPage" */'modules/Analyse_ThreatDistribution')
-      .then(page => WithRouteInit(url)(page)),
+      .then(page => WithRouteInit(url)(page.default)),
   })
 
 }

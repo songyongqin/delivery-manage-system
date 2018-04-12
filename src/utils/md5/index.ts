@@ -1,4 +1,4 @@
-import SparkMD5 from './spark-md5.min.js'
+import SparkMD5 from 'spark-md5'
 
 export const getMD5 = (value: string | number) => {
   const spark = new SparkMD5()

@@ -1,7 +1,11 @@
+const alias = require('./alias.configs')
+
 export default {
+  "alias": alias,
   "entry": "./src/index.tsx",
-  "publicPath": '/static/',
-  "outputPath": './dist/static',
+  "html": { "template": "./src/index.ejs" },
+  "publicPath": '/',
+  "outputPath": './dist',
   "proxy": {
     "/user": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system",
     "/overview": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system",
@@ -12,19 +16,17 @@ export default {
     "/virtual-machine": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system",
     "/occupying": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system"
   },
-  "theme": "./theme.config.js",
   "env": {
     "development": {
       "extraBabelPlugins": [
         "dva-hmr",
-        "transform-runtime",
         "transform-decorators-legacy",
         ["import", { "libraryName": "antd", "style": true }]
       ]
     },
     "production": {
+      enableSourcemaps: true,
       "extraBabelPlugins": [
-        "transform-runtime",
         "transform-decorators-legacy",
         ["import", { "libraryName": "antd", "style": true }]
       ]

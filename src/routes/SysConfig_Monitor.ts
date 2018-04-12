@@ -12,7 +12,7 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "SysConfigMonitorHoneypotModel" */'modules/SysConfig_Monitor/models/honeypot'),
     ],
     component: () => System.import(/* webpackChunkName: "SysConfigMonitorPage" */'modules/SysConfig_Monitor')
-      .then(page => WithRouteInit(url)(page)),
+      .then(page => WithRouteInit(url)(page.default)),
   })
 
 }

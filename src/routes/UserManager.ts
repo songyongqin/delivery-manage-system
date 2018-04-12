@@ -11,7 +11,7 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "UserManagerIPLimitModel" */'modules/UserManager/models/ipLimit'),
     ],
     component: () => System.import(/* webpackChunkName: "UserManagerPage */'modules/UserManager')
-      .then(page => WithRouteInit(url)(page)),
+      .then(page => WithRouteInit(url)(page.default)),
   })
 
 }

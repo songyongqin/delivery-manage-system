@@ -11,7 +11,7 @@ export default (app: any, url: string): React.Component => {
 
     ],
     component: () => System.import(/* webpackChunkName: "ManagerVMPage" */'modules/Manager_Virtual')
-      .then(page => WithRouteInit(url)(page)),
+      .then(page => WithRouteInit(url)(page.default)),
   })
 
 }

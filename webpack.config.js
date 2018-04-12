@@ -8,8 +8,8 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin")
 module.exports = (webpackConfig, env) => {
   const production = env === 'production'
 
-  webpackConfig.output.filename = '[name].[hash].bundle.js';
-  webpackConfig.output.chunkFilename = '[name].[chunkhash].async.js';
+  webpackConfig.output.filename = 'static/[name].[hash].bundle.js';
+  webpackConfig.output.chunkFilename = 'static/[name].[chunkhash].async.js';
 
 
   webpackConfig.entry.vendor = [
@@ -65,18 +65,18 @@ module.exports = (webpackConfig, env) => {
   webpackConfig.plugins.push(new webpack.HashedModuleIdsPlugin())
   webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
-    filename: "vendor.[hash].js"
+    filename: "static/vendor.[hash].js"
   }))
 
   const finalPlugins = webpackConfig.plugins.map(item => {
     if (item instanceof HtmlWebpackPlugin) {
       return new HtmlWebpackPlugin({
         template: `${__dirname}/src/index.ejs`,
-        filename: production ? '../index.html' : 'index.html',
+        filename: production ? 'index.html' : 'index.html',
       })
     }
     if (item instanceof ExtractTextPlugin) {
-      item.filename = '[name].[chunkhash].css'
+      item.filename = 'static/[name].[chunkhash].css'
       return item
     }
     return item

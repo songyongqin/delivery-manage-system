@@ -18,8 +18,8 @@
       "dom"
     ],
     "paths": {
-      "*": [
-        "*"
+      "routes": [
+        "routes"
       ]
     }
   },

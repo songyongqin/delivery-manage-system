@@ -15,7 +15,7 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "SysConfigSysLogModel" */'modules/SysConfig_Network/models/sysLog'),
     ],
     component: () => System.import(/* webpackChunkName: "SysConfigNetworkPage" */'modules/SysConfig_Network')
-      .then(page => WithRouteInit(url)(page)),
+      .then(page => WithRouteInit(url)(page.default)),
   })
 
 }

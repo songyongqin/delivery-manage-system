@@ -18,7 +18,7 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "ManagerDeviceIDSStandaloneModel" */'modules/Manager_Device/models/idsStandalone'),
     ],
     component: () => System.import(/* webpackChunkName: "ManagerDevicePage" */'modules/Manager_Device')
-      .then(page => WithRouteInit(url)(page)),
+      .then(page => WithRouteInit(url)(page.default)),
   })
 
 }

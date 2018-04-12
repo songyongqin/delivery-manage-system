@@ -1,5 +1,4 @@
 import dva from 'dva'
-import router from './router'
 import createLoading from 'dva-loading'
 import createLastEffectTime from 'domainUtils/dvaLastEffectTime'
 import createHistory from 'history/createBrowserHistory'
@@ -10,7 +9,8 @@ import './themes/common.less'
 import { initProductionConfig, getProduction } from 'domain/production'
 import request from 'domainUtils/request'
 import onError, { initGlobalOnErrorListener } from 'domainUtils/error'
-
+import * as React from 'react'
+const router = require('./router').default
 // 1.history
 const app = dva({
   // history: createHistory(),
@@ -25,8 +25,7 @@ app.use(createLastEffectTime())
 app.model(SetupModel)
 app.model(DomainUserModel)
 app.model(LayoutModel)
-
 // 4. Router
 app.router(router)
 
-app.start("#root")
+app.start(document.getElementById('root'))

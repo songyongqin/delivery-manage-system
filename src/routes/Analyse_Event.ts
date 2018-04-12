@@ -14,7 +14,7 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "ThreatEventThreatInfoModel" */'modules/ThreatEvent/models/threatInfo'),
     ],
     component: () => System.import(/* webpackChunkName: "AnalyseEventPage" */'modules/Analyse_Event')
-      .then(page => WithRouteInit(url)(page)),
+      .then(page => WithRouteInit(url)(page.default)),
   })
 
 }

@@ -5,13 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title></title>
-  <% if (process.env.NODE_ENV === 'development') { %>
-    <script>
-      //解决开发环境下 CSS lazy load导致的样式闪动问题
-      _Blob = Blob
-      Blob = void 0
-    </script>
-    <% } %>
+
 
 </head>
 <script>
@@ -21,9 +15,6 @@
 
 <body>
   <div id="root"></div>
-  <% if (process.env.NODE_ENV === 'development') { %>
-    <iframe src="about:blank" style="display: none"></iframe>
-    <% } %>
 </body>
 
 </html>
