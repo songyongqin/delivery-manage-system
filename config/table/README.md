@@ -4,7 +4,7 @@
     {
       "dataIndex":"name",//数据对应的列
       "title":"",//列标题
-      "filterType":""//过滤条件类型 【input】【select】,
+      "filterType":""//过滤条件类型 【input】【selector】,
       
       //select类型的配置
       "filters":[

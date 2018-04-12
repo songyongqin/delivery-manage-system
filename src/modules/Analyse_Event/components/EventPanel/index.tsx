@@ -1,11 +1,12 @@
 import * as tableConfig from '../TableConfig'
 import {
-
   NAMESPACE,
 } from '../../constants'
 import * as React from 'react'
 
 import TableWithRemote from 'domainComponents/TableWithRemote'
+import WithConfig from 'domainComponents/WithConfig'
+import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 
 const initialFilters = {
   timestampRange: [],
@@ -19,11 +20,13 @@ const initialFilters = {
 
 }
 
+@WithConfig("/config/table/analyseEvent.json")
 export default class EventPanel extends React.Component<any, any> {
   static defaultProps = {
     initialFilters: {}
   }
   render() {
+
     return (
       <TableWithRemote
         initialFilters={{
@@ -31,7 +34,9 @@ export default class EventPanel extends React.Component<any, any> {
           ...this.props.initialFilters,
         }}
         getExpandedRowRenderer={tableConfig.getExpandedRowRender}
-        getColumns={tableConfig.getColumns}
+        getColumns={options => {
+          return combineColumnsConfig(tableConfig.getColumns(options), this.props.config.columns)
+        }}
         remoteNamespace={NAMESPACE}
       />
     )

@@ -91,7 +91,11 @@ class TableWithRemote extends React.Component<any, any>{
     })
   }
   tableOnChange = (_, filters) => {
-    this.fetchData(filters)
+    this.fetchData({
+      ...this.state.filters,
+      ...filters,
+      page: 1
+    })
   }
   render() {
 
@@ -112,7 +116,8 @@ class TableWithRemote extends React.Component<any, any>{
           key: `${index}-${lastReqTime}-item`
         }
       }),
-      rowSelection
+      rowSelection,
+      onChange: this.tableOnChange
     }
 
     return (
