@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { MANAGER_VM_NAMESPACE } from 'constants/model'
+import { MANAGER_VM_NAMESPACE, RECORD_OF_CREATE_VM_NAMESPACE } from 'constants/model'
 import TableWithRemote from 'domainComponents/TableWithRemote'
 import { If, Choose, When, } from 'components/ControlStatements'
 import { getColumns } from './components/TableConfig'
@@ -23,7 +23,8 @@ import WithModal from 'components/WithModal'
         effectsLoading[`${MANAGER_VM_NAMESPACE}/postVM`] ||
         effectsLoading[`${MANAGER_VM_NAMESPACE}/deleteVM`],
       fetchLoading: effectsLoading[`${MANAGER_VM_NAMESPACE}/fetch`],
-      postVMLoading: effectsLoading[`${MANAGER_VM_NAMESPACE}/postVM`]
+      postVMLoading: effectsLoading[`${MANAGER_VM_NAMESPACE}/postVM`],
+      record: state[RECORD_OF_CREATE_VM_NAMESPACE].recordOfCreateVM
     }
   },
   dispatch => {
@@ -43,15 +44,23 @@ import WithModal from 'components/WithModal'
       }),
       updateLastReqTime: _ => dispatch({
         type: `${MANAGER_VM_NAMESPACE}/updateLastReqTime`
-      })
+      }),
+      monitorVMCreate: payload => dispatch({
+        type: `${RECORD_OF_CREATE_VM_NAMESPACE}/monitorVMCreate`,
+        payload
+      }),
+      changePanelVisible: payload => dispatch({
+        type: `${RECORD_OF_CREATE_VM_NAMESPACE}/changePanelVisible`,
+        payload
+      }),
     }
   }
 )
-export default class VMManager extends React.Component<any, any>{
+export default class VMManager extends React.PureComponent<any, any>{
   state = {
-    activeItems: []
+    activeItems: [],
+    count: 1
   }
-
   onLoginClick = payload => this.loginHandle({ honeypotList: [payload["honeypotId"]] })
 
   onLogoutClick = payload => this.logoutHandle({ honeypotList: [payload["honeypotId"]] }, payload["honeypotName"])
@@ -115,9 +124,15 @@ export default class VMManager extends React.Component<any, any>{
     }
   }
 
-  onPost = payload => this.props.postVM(payload).then(_ => {
+  onPost = payload => this.props.postVM(payload).then(honeypotId => {
     this.props.setModalVisible("create", false)
+    this.props.monitorVMCreate({
+      ...payload,
+      honeypotId
+    })
+    this.props.changePanelVisible(true)
   })
+
   render() {
 
     const props = {

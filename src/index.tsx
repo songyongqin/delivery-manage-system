@@ -25,6 +25,11 @@ app.use(createLastEffectTime())
 app.model(SetupModel)
 app.model(DomainUserModel)
 app.model(LayoutModel)
+<<<<<<< 9cc085055f3e569b60948a81907ad8663746baff
+=======
+app.model(RecordOfCreateVMModel)
+
+>>>>>>> refactor/record of vm create
 // 4. Router
 app.router(router)
 

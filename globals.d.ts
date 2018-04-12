@@ -15,23 +15,14 @@ declare module "*.json" {
   export default content;
 }
 
-declare const require: {
-  <T>(path: string): T;
-  (paths: string[], callback: (...modules: any[]) => void): void;
-  ensure: (paths: string[], callback: (require: <T>(path: string) => T) => void) => void;
-};
 
 interface System {
   import<T = any>(module: string): Promise<T>
 }
 
-declare const _Blob: any
 
 declare const System: System
 
-declare module 'react-async-component'
-
-declare const process: any
 
 declare namespace Mocha {
   export interface IContextDefinition { }

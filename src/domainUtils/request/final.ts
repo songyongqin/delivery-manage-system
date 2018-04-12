@@ -1,5 +1,7 @@
 import isSuccess from 'domainUtils/isSuccess'
 import { message as Message } from 'antd'
+import ApiConfig from 'services/apiConfig'
+const httpApi = ApiConfig.http
 
 Message.config({
   duration: 5,
@@ -7,7 +9,7 @@ Message.config({
 })
 
 const isIgnoreApi = (url: string, options: object) => {
-  return false
+  return [httpApi.CREATE_STATUS].includes(url)
 }
 
 export default (url: string, options: object, result: any): void => {

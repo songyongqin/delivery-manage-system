@@ -8,7 +8,7 @@ export default (app: any, url: string): React.Component => {
     app,
     models: () => [
       System.import(/* webpackChunkName: "ManagerDeviceMasterModel" */'modules/Manager_Virtual/models/vm'),
-
+      // System.import(/* webpackChunkName: "ManagerDeviceMasterModel" */'modules/Manager_Virtual/models/recordOfCreateVM'),
     ],
     component: () => System.import(/* webpackChunkName: "ManagerVMPage" */'modules/Manager_Virtual')
       .then(page => WithRouteInit(url)(page.default)),

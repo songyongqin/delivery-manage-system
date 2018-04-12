@@ -36,6 +36,8 @@ export const LAYOUT_NAMESPACE = "layout",
 
   MANAGER_VM_NAMESPACE = "managerVM",
 
+  RECORD_OF_CREATE_VM_NAMESPACE = "recordOfCreateVM",
+
   USER_MANAGER_NAMESPACE = "userManager",
   USER_MANAGER_IP_LIMIT_NAMESPACE = "userManagerIPLimit"
 
