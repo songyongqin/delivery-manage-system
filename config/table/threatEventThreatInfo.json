@@ -3,7 +3,7 @@
     {
       "dataIndex": "threatType",
       "title": "情报类型",
-      "filterType": "selector",
+      "conditionType": "selector",
       "filters": [
         {
           "text": "请到/config/table/threatEventThreatInfo.json设置选项配置",
@@ -14,17 +14,17 @@
     {
       "dataIndex": "feature",
       "title": "情报特征",
-      "filterType": "input"
+      "conditionType": "input"
     },
     {
       "dataIndex": "threatName",
       "title": "威胁名称",
-      "filterType": "input"
+      "conditionType": "input"
     },
     {
       "dataIndex": "accuracy",
       "title": "特征精确度",
-      "filterType": "selector",
+      "conditionType": "selector",
       "filters": [
         {
           "value": "exact",

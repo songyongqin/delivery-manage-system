@@ -4,7 +4,7 @@
     {
       "dataIndex":"name",//数据对应的列
       "title":"",//列标题
-      "filterType":""//过滤条件类型 【input】【selector】,
+      "conditionType":""//条件表单类型 【input】【selector】,
       
       //select类型的配置
       "filters":[
@@ -18,10 +18,10 @@
 
       //input类型的配置
       //输入规则校验
-      "filterInputRule":{
+      "inputRule":{
         "type":"ip", //内置类型 【ip】 【port】 
         "placeholder":"",
-        "text":""
+        "label":""
       }
     }
   ]

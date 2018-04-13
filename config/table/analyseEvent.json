@@ -3,7 +3,7 @@
     {
       "dataIndex": "attackStage",
       "title": "攻击阶段",
-      "filterType": "selector",
+      "conditionType": "selector",
       "filters": [
         {
           "text": "入侵",
@@ -26,7 +26,7 @@
     {
       "dataIndex": "action",
       "title": "行为",
-      "filterType": "selector",
+      "conditionType": "selector",
       "filters": [
         {
           "text": "请到/config/table/analyseEvent.json设置选项配置",
@@ -37,7 +37,7 @@
     {
       "dataIndex": "level",
       "title": "威胁等级",
-      "filterType": "selector",
+      "conditionType": "selector",
       "filters": [
         {
           "text": "高危",
@@ -56,7 +56,7 @@
     {
       "dataIndex": "actionStatus",
       "title": "操作状态",
-      "filterType": "selector",
+      "conditionType": "selector",
       "filters": [
         {
           "text": "成功",

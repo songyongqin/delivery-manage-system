@@ -117,7 +117,8 @@ class TableWithRemote extends React.Component<any, any>{
         }
       }),
       rowSelection,
-      onChange: this.tableOnChange
+      onChange: this.tableOnChange,
+      filters: this.state.filters,
     }
 
     return (

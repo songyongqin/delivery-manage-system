@@ -1,4 +1,4 @@
-import { Table, Pagination } from 'antd'
+import { Table, Pagination, Icon } from 'antd'
 import * as React from 'react'
 import classnames from 'classnames'
 import { connect } from 'dva'
@@ -7,10 +7,71 @@ const styles = require("./styles.less")
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import $ from 'jquery'
 import 'jquery.nicescroll'
+import InputDropdown from './InputDropdown'
+import { primaryColor } from 'themes/vars'
+
+const isFiltered = (filter) => {
+  try {
+    return filter.length !== 0
+  } catch (e) {
+    return false
+  }
+}
+
+const extraColumns = (columns, {
+  onFilterDropdownVisibleChange,
+  filterDropdownVisibleList,
+  filters,
+  inputFilterOnChange
+}) => {
+  return columns.map(column => {
+    if (column["conditionType"] === "input") {
+      const dataIndex = column.dataIndex
+      const visible = filterDropdownVisibleList.includes(dataIndex)
+
+      return {
+        ...column,
+        filterDropdown: <InputDropdown
+          dataIndex={dataIndex}
+          onSubmit={filter => {
+            onFilterDropdownVisibleChange(dataIndex, false)
+            inputFilterOnChange(filter)
+          }}
+          type={column.type || "any"}
+          value={filters[dataIndex]}
+          visible={visible}>
+        </InputDropdown>,
+        filterDropdownVisible: visible,
+        filterIcon: isFiltered(filters[dataIndex])
+          ?
+          <Icon type="search" style={{ color: primaryColor }}></Icon>
+          :
+          <Icon type="search"></Icon>,
+        onFilterDropdownVisibleChange: value => onFilterDropdownVisibleChange(dataIndex, value)
+      }
+    }
+    return column
+  })
+}
+
 
 class EnhancedTable extends React.Component<any, any>{
   constructor(props) {
     super(props)
+    this.state = {
+      filterDropdownVisibleList: []
+    }
+  }
+  onFilterDropdownVisibleChange = (dataIndex, value) => {
+    const { filterDropdownVisibleList } = this.state
+    this.setState({
+      filterDropdownVisibleList: value
+        ?
+        [...filterDropdownVisibleList, dataIndex]
+        :
+        filterDropdownVisibleList.filter(i => i !== dataIndex)
+    })
+
   }
   target = null
   componentDidMount() {
@@ -42,7 +103,6 @@ class EnhancedTable extends React.Component<any, any>{
     $('.ant-table-body', this.target).getNiceScroll().remove()
   }
   initNiceScroll = () => {
-
     if (!this.haveScroll()) {
       return
     }
@@ -59,10 +119,18 @@ class EnhancedTable extends React.Component<any, any>{
         })
     }, 1000)
   }
+  inputFilterOnChange = (filter) => {
+    try {
+      const { onChange, filters } = this.props.tableProps
+      onChange && onChange({}, { ...filters, ...filter }, {})
+    } catch (e) {
+
+    }
+  }
   render() {
-    const {
+    let {
       title = null,
-      tableProps = { className: "" },
+      tableProps = { className: "", filters: {} },
       paginationProps = { total: 0, pageSize: 10 },
       pagination = true,
       theme
@@ -82,31 +150,44 @@ class EnhancedTable extends React.Component<any, any>{
       [styles[theme]]: true
     })
 
-    return <div style={{ height: "100%", width: "100%" }} ref={target => this.target = target}>
-      <Table
-        pagination={false}
-        size={"small"}
-        {...tableProps}
-        expandRowByClick={!!expanded}
-        className={classes} />
-      {
-        pagination
-          ?
-          <Pagination style={{ marginTop: "15px" }}
-            className={paginationClasses}
-            showTotal={(total, range) => (
-              <div className={paginationClasses}>
-                共找到&nbsp;
+    tableProps = {
+      ...tableProps,
+      columns: extraColumns(tableProps.columns,
+        {
+          onFilterDropdownVisibleChange: this.onFilterDropdownVisibleChange,
+          filterDropdownVisibleList: this.state.filterDropdownVisibleList,
+          filters: tableProps.filters,
+          inputFilterOnChange: this.inputFilterOnChange
+        }),
+    }
+
+    return (
+      <div style={{ height: "100%", width: "100%" }} ref={target => this.target = target}>
+        <Table
+          pagination={false}
+          size={"small"}
+          {...tableProps}
+          expandRowByClick={!!expanded}
+          className={classes} />
+        {
+          pagination
+            ?
+            <Pagination style={{ marginTop: "15px" }}
+              className={paginationClasses}
+              showTotal={(total, range) => (
+                <div className={paginationClasses}>
+                  共找到&nbsp;
                 <Tag color={"#108ee9"} >
-                  {paginationProps.total}
-                </Tag>
-                个结果
+                    {paginationProps.total}
+                  </Tag>
+                  个结果
               </div>
-            )}
-            {...paginationProps} />
-          : null
-      }
-    </div>
+              )}
+              {...paginationProps} />
+            : null
+        }
+      </div>
+    )
   }
 }
 

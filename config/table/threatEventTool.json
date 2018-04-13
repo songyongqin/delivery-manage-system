@@ -3,12 +3,12 @@
     {
       "dataIndex": "toolName",
       "title": "攻击武器",
-      "filterType": "input"
+      "conditionType": "input"
     },
     {
       "dataIndex": "md5",
       "title": "MD5",
-      "filterType": "input"
+      "conditionType": "input"
     }
   ]
 }
