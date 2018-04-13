@@ -4,6 +4,7 @@
 */
 import React from 'react'
 import { Icon } from 'antd'
+import { head } from 'utils'
 import {
   LOGIN_URL,
 
@@ -35,7 +36,8 @@ import {
   MANAGER_MIRROR_URL,
 
   SYS_LOG_URL,
-  SYS_LOG_LOGIN_URL
+  SYS_LOG_LOGIN_URL,
+  ROOT_URL
 } from 'routes/config/path'
 import {
   shouldHoneypotNodeHide,
@@ -51,6 +53,7 @@ import {
   HONEYPOT_STANDALONE,
   HONEYPOT_NODE
 } from 'constants/production'
+import { getAppConfig } from 'domain/app'
 
 export const _navConfig = [
   {
@@ -163,7 +166,7 @@ export const _navConfig = [
 
 interface RemoveShouldHideNavOption {
   navConfig: any[],
-  admin: boolean,
+  // admin: boolean,
   shouldHideNav: string[]
 }
 
@@ -173,17 +176,17 @@ interface RemoveShouldHideNav {
 
 
 
-const removeShouldHideNav: RemoveShouldHideNav = ({ navConfig = [], admin = false, shouldHideNav = [] }) => {
+const removeShouldHideNav: RemoveShouldHideNav = ({ navConfig = [], shouldHideNav = [] }) => {
   try {
     return navConfig
       .filter(i => !shouldHideNav.includes(i.link))
-      .filter(i => admin || (!adminOnly.includes(i.link)))
+      // .filter(i => admin || (!adminOnly.includes(i.link)))
       .map(i => (
         "items" in i
           ?
           {
             ...i,
-            items: removeShouldHideNav({ navConfig: i.items, admin, shouldHideNav })
+            items: removeShouldHideNav({ navConfig: i.items, shouldHideNav })
           }
           :
           i
@@ -194,21 +197,62 @@ const removeShouldHideNav: RemoveShouldHideNav = ({ navConfig = [], admin = fals
   }
 }
 
+const removeItemsEmptyNav = (navConfig) => {
+  try {
+    return navConfig.filter(navItem => {
+      if ('items' in navItem && navItem["items"].length === 0) {
+        return false
+      }
+      return true
+    })
+  } catch (e) {
+    return navConfig
+  }
+}
+
+export const getNavConfig = ({ appConfig, admin = false }) => {
+
+  try {
+    const { routerRegister = {}, adminOnly = [] } = appConfig
+
+    const shouldHideNav = [
+      ...Object.entries(routerRegister).filter(([link, open]) => !open).map(([link]) => link),
+      ...(admin ? [] : adminOnly)
+    ]
+
+    return removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav }))
+  } catch (e) {
+    return _navConfig
+  }
+}
 
 
-export const getNavConfig = ({ production, admin = false }) => {
-  switch (production) {
-    case MASTER:
-      return removeShouldHideNav({ navConfig: _navConfig, admin, shouldHideNav: [] })
-    case HONEYPOT_NODE:
-      return removeShouldHideNav({ navConfig: _navConfig, admin, shouldHideNav: shouldHoneypotNodeHide })
-    case IDS_NODE:
-      return removeShouldHideNav({ navConfig: _navConfig, admin, shouldHideNav: shouldIdsNodeHide })
-    case HONEYPOT_STANDALONE:
-      return removeShouldHideNav({ navConfig: _navConfig, admin, shouldHideNav: [] })
-    case IDS_STANDALONE:
-      return removeShouldHideNav({ navConfig: _navConfig, admin, shouldHideNav: shouldIdsStandAloneHide })
-    default:
-      return _navConfig
+export const getAuthRoutes = ({ admin = false }) => {
+  try {
+    const { routerRegister = {}, adminOnly = [] } = getAppConfig() as any
+
+    const authRoutes = Object.entries(routerRegister).filter(([link, open]) => open).map(([link]) => link)
+
+    return admin ? [...authRoutes, LOGIN_URL] : [...authRoutes, LOGIN_URL].filter(link => !adminOnly.includes(link))
+
+  } catch (e) {
+    return []
+  }
+}
+
+
+
+export const getDefaultRoute = (link = ROOT_URL) => {
+  try {
+    const navConfig = getNavConfig({ appConfig: getAppConfig(), admin: false })
+
+    if (link === ROOT_URL) {
+      return head(navConfig).link
+    }
+
+    return head(navConfig.find(item => item.link === link).items).link
+
+  } catch (e) {
+    return ROOT_URL
   }
 }

@@ -21,6 +21,7 @@ import { LOGIN_URL, ROOT_URL } from 'routes/config/path'
 import { DOMAIN_USER_NAMESPACE, LAYOUT_NAMESPACE } from 'constants/model'
 import { ADMIN_ROLE, ROLE_DATA_INDEX } from 'constants/user'
 import { SET_UP_NAMESPACE } from 'constants/model'
+import { getAuthRoutes } from 'navConfig'
 
 const styles = require("./styles.less")
 
@@ -58,6 +59,9 @@ const mapDispatchToProps = dispatch => {
     modifyPassword: payload => dispatch({
       type: `${DOMAIN_USER_NAMESPACE}/${"modifyPassword"}`,
       payload
+    }),
+    redirect: _ => dispatch({
+      type: `${DOMAIN_USER_NAMESPACE}/${"redirect"}`
     })
   }
 }
@@ -152,6 +156,13 @@ class IndexPage extends React.Component<any, any>{
     const activeRouteConfig = { building: false },
       activeRouteBuilding = activeRouteConfig.building,
       isAdmin = userData[ROLE_DATA_INDEX] === ADMIN_ROLE
+
+    const authRoutes = getAuthRoutes({ admin: true })
+
+    if (!authRoutes.includes(activeRoute)) {
+      this.props.redirect()
+      return <div></div>
+    }
 
     return (
       <div className={pageClasses}>

@@ -34,7 +34,10 @@ import {
   MANAGER_DEVICE_URL,
   USER_MANAGER_URL,
   MANAGER_VM_URL,
+  ROOT_URL
 } from 'routes/config/path'
+import { getNavConfig, getDefaultRoute } from 'navConfig'
+
 
 export default ({ history, app }) => {
   return (
@@ -45,7 +48,7 @@ export default ({ history, app }) => {
             <Route
               exact
               path="/"
-              render={() => (<Redirect to={OVERVIEW_URL} />)} />
+              render={() => (<Redirect to={getDefaultRoute(ROOT_URL)} />)} />
             {/* 登录 */}
             <Route
               path={LOGIN_URL}
@@ -61,7 +64,7 @@ export default ({ history, app }) => {
             <Route
               exact
               path={ANALYSE_URL}
-              render={() => (<Redirect to={ANALYSE_EVENT_URL} />)} />
+              render={() => (<Redirect to={getDefaultRoute(ANALYSE_URL)} />)} />
             <Route
               exact
               component={getAnalyseEventPage(app, ANALYSE_EVENT_URL)}
@@ -91,7 +94,7 @@ export default ({ history, app }) => {
             <Route
               exact
               path={EARLY_WARNING_URL}
-              render={() => (<Redirect to={EARLY_WARNING_EMAIL_URL} />)} />
+              render={() => (<Redirect to={getDefaultRoute(EARLY_WARNING_URL)} />)} />
             <Route
               exact
               component={getEarlyWarningEmailPage(app, EARLY_WARNING_EMAIL_URL)}
@@ -101,7 +104,7 @@ export default ({ history, app }) => {
             <Route
               exact
               path={SYS_CONFIG_URL}
-              render={() => (<Redirect to={SYS_CONFIG_NETWORK_URL} />)} />
+              render={() => (<Redirect to={getDefaultRoute(SYS_CONFIG_URL)} />)} />
             <Route
               exact
               component={getSysConfigNetworkPage(app, SYS_CONFIG_NETWORK_URL)}

@@ -4,6 +4,8 @@
 {
   "title": "attack-capture-system",//应用的标题
 
+  "secret":true //生产环境下是否启用加密
+
   "vmCreateNotification": true,//虚拟机创建通知
   
   "routerRegister": {//路由注册，决定加载哪些路由

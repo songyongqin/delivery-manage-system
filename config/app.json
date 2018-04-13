@@ -1,7 +1,8 @@
 {
   "title": "attack-capture-system",
+  "secret": true,
   "routerRegister": {
-    "/overview": true,
+    "/overview": false,
     "/analyse": true,
     "/analyse/event": true,
     "/analyse/attack-chain": true,
@@ -34,7 +35,7 @@
     "/sys-log/login",
     "/user-manager"
   ],
-  "vmCreateNotification": true,
+  "recordOfCreatingVM": true,
   "overview": {
     "captureFlow": true,
     "threatFlow": true

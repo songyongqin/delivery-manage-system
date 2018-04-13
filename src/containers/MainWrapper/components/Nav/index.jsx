@@ -4,7 +4,7 @@ const styles = require("./styles.less")
 import { Menu } from 'antd'
 import { Link } from 'dva/router'
 import { getNavConfig } from 'navConfig'
-import { getProduction } from 'domain/production'
+import { getAppConfig } from 'domain/app'
 import { last } from 'utils'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
 import $ from 'jquery'
@@ -129,7 +129,7 @@ export default class extends React.Component {
     }
   }
   render() {
-    const { theme, mini = true, animate = true, active = "", isAdmin = false } = this.props
+    const { theme, mini = true, animate = true, active = "", isAdmin = false, appConfig } = this.props
     const wrapperClasses = classnames({
       [styles["nav"]]: true,
       [styles["animate"]]: animate,
@@ -137,7 +137,7 @@ export default class extends React.Component {
       [styles[theme]]: true,
     })
 
-    const navConfig = getNavConfig({ production: getProduction(), admin: isAdmin })
+    const navConfig = getNavConfig({ admin: isAdmin, appConfig: getAppConfig() })
 
     const selectedKeys = active.split("/").slice(1).reduce((target, item) => {
       return target.length === 0

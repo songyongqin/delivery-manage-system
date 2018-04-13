@@ -1,10 +1,12 @@
 import { SET_UP_NAMESPACE } from 'constants/model'
-import { initProductionConfig } from 'domain/production'
+import { initAppConfig as initAppConfigService } from 'domain/app'
 
 const initEffectCreator = (payload) => {
   return function* (_, { call, put }) {
     try {
-      const result = yield call(initProductionConfig)
+
+      const result = yield call(initAppConfigService)
+
       yield put({
         type: "updateInitialDependenciesStatus",
         payload: payload || {}
@@ -24,7 +26,7 @@ export default {
     initial: false,
     initialError: false,
     initialDependencies: {
-      production: false,
+      appConfig: false,
       locale: false
     }
   },
@@ -52,14 +54,14 @@ export default {
     },
   },
   effects: {
-    initProduction: initEffectCreator({ production: true }),
+    initAppConfig: initEffectCreator({ app: true }),
     setup: function* (_, { put, take }) {
 
       yield put({
-        type: "initProduction"
+        type: "initAppConfig"
       })
 
-      yield take("initProduction/@@end")
+      yield take("initAppConfig/@@end")
 
       yield put({
         type: "updateInitialStatus",
