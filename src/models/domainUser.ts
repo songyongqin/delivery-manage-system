@@ -40,24 +40,24 @@ const subscriptions = {
     return history.listen(({ pathname, search }) => {
       const open = openRoutes.includes(pathname)
 
-      // const initStates = getInitStates()
-      // if (pathname === LOGIN_URL && initStates.isLogin) {
-      //   return dispatch({
-      //     type: "redirect"
-      //   })
-      // }
+      const initStates = getInitStates()
+      if (pathname === LOGIN_URL && initStates.isLogin) {
+        return dispatch({
+          type: "redirect"
+        })
+      }
 
-      // if (!open && !initStates.isLogin) {
-      //   setTemp(LAST_TARGET_URL, { [LAST_TARGET_URL]: pathname + search })
-      //   return dispatch({
-      //     type: "toLogin"
-      //   })
-      // }
-      // if (adminOnlyRoute.includes(pathname) && !initStates.isAdmin) {
-      //   return dispatch({
-      //     type: "redirect"
-      //   })
-      // }
+      if (!open && !initStates.isLogin) {
+        setTemp(LAST_TARGET_URL, { [LAST_TARGET_URL]: pathname + search })
+        return dispatch({
+          type: "toLogin"
+        })
+      }
+      if (adminOnlyRoute.includes(pathname) && !initStates.isAdmin) {
+        return dispatch({
+          type: "redirect"
+        })
+      }
 
     })
   }

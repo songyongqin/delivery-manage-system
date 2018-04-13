@@ -1,6 +1,7 @@
 import * as React from 'react'
 import dynamic from 'dva/dynamic'
 import WithRouteInit from 'domainComponents/WithRouteInit'
+import asyncModulePipe from './utils/asyncModulePipe'
 
 export default (app: any, url: string): React.Component => {
 
@@ -12,7 +13,7 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "ThreatEventExploitModel" */'modules/ThreatEvent/models/exploit'),
       System.import(/* webpackChunkName: "ThreatEventToolModel" */'modules/ThreatEvent/models/tool'),
       System.import(/* webpackChunkName: "ThreatEventThreatInfoModel" */'modules/ThreatEvent/models/threatInfo'),
-    ],
+    ].map(asyncModulePipe),
     component: () => System.import(/* webpackChunkName: "AnalyseEventPage" */'modules/Analyse_Event')
       .then(page => WithRouteInit(url)(page.default)),
   })

@@ -3,8 +3,8 @@
   "name": "threat-info-system",
   "version": "0.4.0",
   "scripts": {
-    "start": "cross-env PORT=8010 ESLINT=none TSLINT=none roadhog dev",
-    "dev": "cross-env PORT=8011 ESLINT=none TSLINT=none roadhog dev",
+    "start": "cross-env PORT=8010 ESLINT=none TSLINT=none BROWSER=none roadhog dev",
+    "dev": "cross-env PORT=8011 ESLINT=none TSLINT=none BROWSER=none roadhog dev",
     "build": "echo \"building is finish\"",
     "test": "mocha -r ./test/register -r tsconfig-paths/register src/**/*.test.ts",
     "prebuild": "cross-env ESLINT=none TSLINT=none roadhog  build"

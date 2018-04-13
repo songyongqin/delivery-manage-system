@@ -1,7 +1,9 @@
 const alias = require('./alias.configs')
+const theme = require('./theme')
 
 export default {
   "alias": alias,
+  "theme": theme,
   "entry": "./src/index.tsx",
   "html": { "template": "./src/index.ejs" },
   "publicPath": '/',

@@ -50,12 +50,12 @@ module.exports = (webpackConfig, env) => {
   // return
 
   webpackConfig.resolve.alias = aliasConfig
-  webpackConfig.plugins.push(new CopyWebpackPlugin([
-    {
-      from: 'src/public',
-      to: webpackConfig.output.outputPath,
-    },
-  ]))
+  // webpackConfig.plugins.push(new CopyWebpackPlugin([
+  //   {
+  //     from: 'src/public',
+  //     to: webpackConfig.output.outputPath,
+  //   },
+  // ]))
   webpackConfig.plugins.push(new CopyWebpackPlugin([
     {
       from: './config',

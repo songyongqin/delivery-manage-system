@@ -1,6 +1,7 @@
 import * as React from 'react'
 import dynamic from 'dva/dynamic'
 import WithRouteInit from 'domainComponents/WithRouteInit'
+import asyncModulePipe from './utils/asyncModulePipe'
 
 export default (app: any, url: string): React.Component => {
 
@@ -13,7 +14,7 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "SysConfigNetworkDNSModel" */'modules/SysConfig_Network/models/networkDNS'),
       System.import(/* webpackChunkName: "SysConfigNetworkMasterModel" */'modules/SysConfig_Network/models/networkMaster'),
       System.import(/* webpackChunkName: "SysConfigSysLogModel" */'modules/SysConfig_Network/models/sysLog'),
-    ],
+    ].map(asyncModulePipe),
     component: () => System.import(/* webpackChunkName: "SysConfigNetworkPage" */'modules/SysConfig_Network')
       .then(page => WithRouteInit(url)(page.default)),
   })
