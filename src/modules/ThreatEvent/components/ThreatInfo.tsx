@@ -6,6 +6,8 @@ import * as React from 'react'
 import LimitSelect from 'domainComponents/LimitSelect'
 import TableWithRemote from 'domainComponents/TableWithRemote'
 import Spin from 'domainComponents/Spin'
+import WithConfig from 'domainComponents/WithConfig'
+import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 
 const initialFilters = {
   timestampRange: [],
@@ -13,6 +15,7 @@ const initialFilters = {
   page: 1,
 }
 
+@WithConfig("/config/table/threatEventThreatInfo.json")
 export default class extends React.Component<any, any>{
   static defaultProps = {
     initialFilters: {}
@@ -55,7 +58,9 @@ export default class extends React.Component<any, any>{
         </div>
         <TableWithRemote
           onChange={this.onChange}
-          getColumns={getThreatInfoColumns}
+          getColumns={options=>{
+            return combineColumnsConfig(getThreatInfoColumns(options),this.props.config.columns)
+          }}
           remoteNamespace={THREAT_EVENT_THREAT_INFO_NAMESPACE}
           theme={LIGHT_THEME}
           initialFilters={{ ...this.state.filters, ...this.props.initialFilters }}

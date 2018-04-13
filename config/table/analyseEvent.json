@@ -29,16 +29,8 @@
       "filterType": "selector",
       "filters": [
         {
-          "text": "高危",
-          "value": "high"
-        },
-        {
-          "text": "中危",
-          "value": "middle"
-        },
-        {
-          "text": "低危",
-          "value": "low"
+          "text": "请到/config/table/analyseEvent.json设置选项配置",
+          "value": "0"
         }
       ]
     },

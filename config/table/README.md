@@ -19,7 +19,6 @@
       //input类型的配置
       //输入规则校验
       "filterInputRule":{
-        "required":false,
         "type":"ip", //内置类型 【ip】 【port】 
         "placeholder":"",
         "text":""
