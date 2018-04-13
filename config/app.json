@@ -2,7 +2,7 @@
   "title": "attack-capture-system",
   "secret": true,
   "routerRegister": {
-    "/overview": false,
+    "/overview": true,
     "/analyse": true,
     "/analyse/event": true,
     "/analyse/attack-chain": true,

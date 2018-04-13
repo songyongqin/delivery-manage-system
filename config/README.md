@@ -11,7 +11,10 @@
   "routerRegister": {//路由注册，决定加载哪些路由
     "/overview": true,
     "/analyse": true,
-    "/snort":true
+    "/snort":true,
+    //注：若路由为嵌套关系 父路由设置为false,子路也将为false
+    "/analyse": false,
+    "/analyse/event": true,
   },
   
   "adminOnly": [//只允许管理员访问的路由

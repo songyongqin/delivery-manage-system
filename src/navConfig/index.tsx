@@ -175,7 +175,7 @@ interface RemoveShouldHideNav {
 }
 
 
-
+//根据shouldHideNav 移除 navConfig 中匹配 的 nav项
 const removeShouldHideNav: RemoveShouldHideNav = ({ navConfig = [], shouldHideNav = [] }) => {
   try {
     return navConfig
@@ -197,6 +197,7 @@ const removeShouldHideNav: RemoveShouldHideNav = ({ navConfig = [], shouldHideNa
   }
 }
 
+//将拥有items且数量为0的nav移除
 const removeItemsEmptyNav = (navConfig) => {
   try {
     return navConfig.filter(navItem => {
@@ -210,15 +211,59 @@ const removeItemsEmptyNav = (navConfig) => {
   }
 }
 
-export const getNavConfig = ({ appConfig, admin = false }) => {
+//获取所有导航中的路由连接
+export const getNavLink = (navConfig, total = []) => {
 
+  return navConfig.reduce((_total, navItem) => {
+
+    _total.push(navItem.link)
+
+    if ("items" in navItem) {
+      getNavLink(navItem.items, _total)
+    }
+
+    return _total
+
+  }, total)
+}
+
+const navLinkList = getNavLink(_navConfig)
+
+//获取 linkList 中拥有嵌套关系的 nav link 包括自身
+const getNestLinkList = (linkList) => {
+  return [...new Set(navLinkList.filter(link => linkList.some(innerLink => link.startsWith(innerLink))))]
+}
+
+export const getShouldHideNav = ({ admin = false }) => {
   try {
-    const { routerRegister = {}, adminOnly = [] } = appConfig
-
+    const { routerRegister = {}, adminOnly = [] } = getAppConfig() as any
+    //根据appConfig中配置获取应该隐藏的nav项
     const shouldHideNav = [
       ...Object.entries(routerRegister).filter(([link, open]) => !open).map(([link]) => link),
       ...(admin ? [] : adminOnly)
     ]
+    //获取嵌套关系的子路由应该隐藏的项
+    const extraHideNav = getNestLinkList(shouldHideNav)
+
+    return [
+      ...new Set([
+        ...shouldHideNav,
+        ...extraHideNav
+      ])
+    ]
+
+  } catch (e) {
+    return []
+  }
+}
+
+
+//获取 nav 所需要使用的navConfig
+export const getNavConfig = ({ admin = false }) => {
+  try {
+    const { routerRegister = {}, adminOnly = [] } = getAppConfig() as any
+
+    const shouldHideNav = getShouldHideNav({ admin })
 
     return removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav }))
   } catch (e) {
@@ -227,24 +272,24 @@ export const getNavConfig = ({ appConfig, admin = false }) => {
 }
 
 
+//根据用户身份获取可以授权的路由
 export const getAuthRoutes = ({ admin = false }) => {
   try {
     const { routerRegister = {}, adminOnly = [] } = getAppConfig() as any
 
-    const authRoutes = Object.entries(routerRegister).filter(([link, open]) => open).map(([link]) => link)
+    const shouldHideNavList = getShouldHideNav({ admin })
 
-    return admin ? [...authRoutes, LOGIN_URL] : [...authRoutes, LOGIN_URL].filter(link => !adminOnly.includes(link))
-
+    return navLinkList.filter(link => !shouldHideNavList.includes(link))
   } catch (e) {
     return []
   }
 }
 
 
-
+//根据父路由 获取 默认路由的地址
 export const getDefaultRoute = (link = ROOT_URL) => {
   try {
-    const navConfig = getNavConfig({ appConfig: getAppConfig(), admin: false })
+    const navConfig = getNavConfig({ admin: false })
 
     if (link === ROOT_URL) {
       return head(navConfig).link

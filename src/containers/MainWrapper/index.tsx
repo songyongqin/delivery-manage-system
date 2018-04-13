@@ -159,10 +159,19 @@ class IndexPage extends React.Component<any, any>{
 
     const authRoutes = getAuthRoutes({ admin: true })
 
+    if (authRoutes.length === 0) {
+      return (
+        <div style={{ fontSize: "24px", height: "500px", lineHeight: "500px", textAlign: "center" }}>
+          <Icon type="frown" /> &nbsp;什么都没有
+        </div>
+      )
+    }
+
     if (!authRoutes.includes(activeRoute)) {
       this.props.redirect()
       return <div></div>
     }
+
 
     return (
       <div className={pageClasses}>

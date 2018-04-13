@@ -34,7 +34,8 @@ import {
   MANAGER_DEVICE_URL,
   USER_MANAGER_URL,
   MANAGER_VM_URL,
-  ROOT_URL
+  ROOT_URL,
+  MANAGER_URL
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
 
@@ -115,11 +116,20 @@ export default ({ history, app }) => {
               component={getSysConfigMonitorPage(app, SYS_CONFIG_MONITOR_URL)}
               path={SYS_CONFIG_MONITOR_URL} >
             </Route>
-
+            {/* 设备管理 */}
+            <Route
+              exact
+              path={MANAGER_URL}
+              render={() => (<Redirect to={getDefaultRoute(MANAGER_URL)} />)} />
             <Route
               exact
               component={getDeviceManagerPage(app, MANAGER_DEVICE_URL)}
               path={MANAGER_DEVICE_URL} >
+            </Route>
+            <Route
+              exact
+              component={getVMManagerPage(app, MANAGER_VM_URL)}
+              path={MANAGER_VM_URL} >
             </Route>
 
             <Route
@@ -128,11 +138,7 @@ export default ({ history, app }) => {
               path={USER_MANAGER_URL} >
             </Route>
 
-            <Route
-              exact
-              component={getVMManagerPage(app, MANAGER_VM_URL)}
-              path={MANAGER_VM_URL} >
-            </Route>
+
           </Switch>
         </MainWrapper>
       </LocaleProvider>
