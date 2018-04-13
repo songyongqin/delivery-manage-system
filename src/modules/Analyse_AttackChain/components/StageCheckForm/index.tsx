@@ -46,6 +46,7 @@ class QueryForm extends React.Component<any, any> {
           label={<span className={lblClasses}>攻击阶段筛选</span>}
           style={{ float: "left" }}>
           <Checkbox
+            disabled={loading}
             onChange={this.selectAll}
             checked={values.length === stageRowDataIndexes.length}
             indeterminate={values.length > 0 && values.length < stageRowDataIndexes.length}>
@@ -60,7 +61,7 @@ class QueryForm extends React.Component<any, any> {
           {getFieldDecorator(ATTACK_STAGE_DATA_INDEX, {
             initialValue: defaultValue[ATTACK_STAGE_DATA_INDEX],
           })(
-            <Checkbox.Group>
+            <Checkbox.Group disabled={loading}>
               {
                 stageRowDataIndexes.map((i, index) => (
                   <Checkbox key={`${index}-check`} value={i}>
@@ -76,6 +77,7 @@ class QueryForm extends React.Component<any, any> {
         </FormItem>
         <Button
           type="primary"
+          loading={loading}
           icon="filter"
           onClick={this.handleSubmit}>确定</Button>
       </Form>

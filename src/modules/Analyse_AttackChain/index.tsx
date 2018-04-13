@@ -8,6 +8,7 @@ import WithAnimateRender from 'components/WithAnimateRender'
 import TableWithRemote from 'domainComponents/TableWithRemote'
 import StageCheckForm from './components/StageCheckForm'
 import DateRangePicker from 'domainComponents/DateRangePicker'
+import extraConnect from 'domainUtils/extraConnect'
 
 
 const initialFilters = {
@@ -18,6 +19,12 @@ const initialFilters = {
 
 }
 
+@extraConnect(
+  state => {
+    return {
+      loading: state.loading.effects[`${ANALYSE_ATTACK_CHAIN_NAMESPACE}/fetch`]
+    }
+  })
 @WithAnimateRender
 export default class EventPanel extends React.Component<any, any> {
   constructor(props) {
@@ -58,7 +65,11 @@ export default class EventPanel extends React.Component<any, any> {
         {
           this.props.animateRender([
             <div key="stage-check">
-              <StageCheckForm onSubmit={this.stageOnSubmit} defaultValue={filters}></StageCheckForm>
+              <StageCheckForm
+                onSubmit={this.stageOnSubmit}
+                defaultValue={filters}
+                loading={this.props.loading}>
+              </StageCheckForm>
             </div>,
             <div key="attack-chain">
               <TableWithRemote
