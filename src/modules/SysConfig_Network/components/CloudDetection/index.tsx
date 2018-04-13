@@ -13,6 +13,7 @@ import extraConnect from 'domainUtils/extraConnect'
 import Card from 'domainComponents/Card'
 import { SYS_CONFIG_CLOUD_DETECTION_NAMESPACE } from 'constants/model'
 import { When, Otherwise, Choose } from 'components/ControlStatements'
+import LoadModuleErrorInfo from 'domainComponents/LoadModuleErrorInfo'
 
 
 class WrappedForm extends React.Component<any, any> {
@@ -189,13 +190,15 @@ const CloudDetectionContent = ({ data, isDark, loading, onSubmit }) => {
 export default class extends React.Component<any, any>{
   state = {
     data: {},
-    initial: false
+    initial: false,
+    error: false
   }
   componentDidMount() {
-    this.fetchData()
+    this.fetchData().catch(error => this.setState({ error }))
   }
   fetchData = () => {
-    this.props.fetch().then(res => this.setState({ data: res, initial: true }))
+    return this.props.fetch()
+      .then(res => this.setState({ data: res, initial: true }))
   }
   onSubmit = payload => {
     this.props.put(payload)
@@ -227,6 +230,9 @@ export default class extends React.Component<any, any>{
               loading={loading}
               defaultValue={data}>
             </CloudDetectionForm>
+          </When>
+          <When condition={this.state.error}>
+            <LoadModuleErrorInfo error={this.state.error}></LoadModuleErrorInfo>
           </When>
           <Otherwise>
             <Icon type="loading"></Icon>

@@ -14,6 +14,7 @@ import {
 } from '../../constants'
 import { ipReg } from 'utils/tools'
 import Spin from 'domainComponents/Spin'
+import LoadModuleErrorInfo from 'domainComponents/LoadModuleErrorInfo'
 
 const rulesConfig = {
   [ADAPTER_IP_DATAINDEX]: [
@@ -82,13 +83,15 @@ export default class extends React.Component<any, any>{
     data: {
       adapterList: []
     },
-    initial: false
+    initial: false,
+    error: false
   }
   componentDidMount() {
-    this.fetchData()
+    this.fetchData().catch(error => this.setState({ error }))
   }
   fetchData = () => {
-    this.props.fetch().then(res => this.setState({ data: res, initial: true }))
+    return this.props.fetch()
+      .then(res => this.setState({ data: res, initial: true }))
   }
   // onSubmit = payload => {
   //   return this.props.put(payload)
@@ -190,6 +193,9 @@ export default class extends React.Component<any, any>{
                 })
               }
             </Spin>
+          </When>
+          <When condition={this.state.error}>
+            <LoadModuleErrorInfo error={this.state.error}></LoadModuleErrorInfo>
           </When>
           <Otherwise>
             <Icon type="loading"></Icon>
