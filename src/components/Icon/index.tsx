@@ -1,6 +1,6 @@
 import * as React from 'react'
 import classnames from 'classnames'
-const styles = require("./style.css")
+// const styles = require("./style.css")
 interface Props {
   type: string,
   style?: object,
@@ -10,7 +10,7 @@ interface Props {
 export default ({ type, children, style = {}, className }: Props) => {
 
   const classNames = classnames({
-    [styles[`icon-${type}`]]: !!type,
+    [`icon-${type}`]: !!type,
     [className]: !!className
   })
   return <b className={classNames}
