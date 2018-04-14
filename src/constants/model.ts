@@ -39,5 +39,13 @@ export const LAYOUT_NAMESPACE = "layout",
   RECORD_OF_CREATE_VM_NAMESPACE = "recordOfCreateVM",
 
   USER_MANAGER_NAMESPACE = "userManager",
-  USER_MANAGER_IP_LIMIT_NAMESPACE = "userManagerIPLimit"
+  USER_MANAGER_IP_LIMIT_NAMESPACE = "userManagerIPLimit",
+
+  SYS_CONFIG_STRATEGY_SETTING = "sysConfigStrategySetting",
+
+  SYS_CONFIG_STRATEGY_RULE = "sysConfigStrategyRule",
+
+  SYS_CONFIG_STRATEGY_WHITE_LIST = "sysConfigStrategyWhiteList",
+
+  SYS_CONFIG_STRATEGY_THREAT_NAME = "sysConfigStrategyThreatName"
 

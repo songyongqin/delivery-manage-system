@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import styles from './styles.css';
 import {
   Menu,
@@ -6,16 +6,15 @@ import {
   Breadcrumb,
   Icon,
   message as Message,
-  Popover
+  Popover,
+  Modal
 } from 'antd';
-import { WithAnimateRender, WithBreadcrumb } from '../../components/HOSComponents/index'
-import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
-import JoSpin from '../../components/JoSpin';
+import Spin from 'domainComponents/Spin'
 import { connect } from 'dva';
 import classnames from 'classnames';
 import * as tableConfig from './components/TableConfig';
-import EnhanciveTable from '../../domainComponents/EnhanciveTable';
-import Card from '../../domainComponents/Card';
+import Table from 'domainComponents/Table'
+import Card from 'domainComponents/Card';
 import {
   NAMESPACE,
   USERFUL_VALUE,
@@ -32,12 +31,10 @@ import {
   NAMESPACE as RULE_NAMESPACE,
   protocolTypeList
 } from '../SysConfig_Strategy_Rule/ConstConfig'
-import StrategyThreatnameModule from '../SysConfig_Strategy_Threatname/Page';
-import * as tools from '../../utils/tools';
+import StrategyThreatnameModule from 'modules/SysConfig_Strategy_Threatname'
+import * as tools from 'utils'
 import RuleForm from '../SysConfig_Strategy_Rule/components/RuleForm';
-import Modal from '../../domainComponents/Modal';
 
-const { curry } = tools;
 
 const CardTitle = ({ selectedRows = [], createPutStrategy, applyHandle, switchExpandPage, switchCreateModal }) => (
   <div style={{ overflow: "hidden" }}>
@@ -85,12 +82,14 @@ const mapStateToProps = state => {
 
   return {
     [NAMESPACE]: state[NAMESPACE],
-    commonLayout: state.layout.commonLayout,
-    loading: effectLoading[`${NAMESPACE}/query`] ||
-      effectLoading[`${NAMESPACE}/put`] ||
-      effectLoading[`${NAMESPACE}/apply`],
-    postRuleLoaidng: effectLoading[`${RULE_NAMESPACE}/post`],
-    threatnames: state[THREAT_NAME_NAMESPACE].queryResults.data,
+    loading: false,
+    threatnames: []
+    // commonLayout: state.layout.commonLayout,
+    // loading: effectLoading[`${NAMESPACE}/query`] ||
+    //   effectLoading[`${NAMESPACE}/put`] ||
+    //   effectLoading[`${NAMESPACE}/apply`],
+    // postRuleLoaidng: effectLoading[`${RULE_NAMESPACE}/post`],
+    // threatnames: state[THREAT_NAME_NAMESPACE].queryResults.data,
   }
 
 }
@@ -119,10 +118,8 @@ const getTableRowKey = (index, lastReqTime) => `item-${index}-${lastReqTime}`
 
 
 
-@connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
-@WithAnimateRender
-@WithBreadcrumb
-class Page extends React.Component {
+@connect(mapStateToProps, mapDispatchToProps)
+class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -160,7 +157,7 @@ class Page extends React.Component {
     this.setState({
       expanded: !this.state.expanded
     })
-    this.setOffsetBottom();
+    this.setOffsetBottom()
   }
   getBreadcrumb = () => {
     return (
@@ -170,7 +167,7 @@ class Page extends React.Component {
     )
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.props.get();
     this.props.getThreatname().then(result => {
       this.setState({
@@ -184,13 +181,13 @@ class Page extends React.Component {
     // this.setOffsetBottom();
     window.addEventListener("resize", this.setOffsetBottom);
   }
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     window.removeEventListener("resize", this.setOffsetBottom);
   }
   setOffsetBottom = () => {
     let dom = document.querySelector("#strategy-expand-page")
     let wrapper = document.querySelector("#main-children-wrapper")
-    let offsetBottom = wrapper.scrollHeight - dom.offsetHeight;
+    let offsetBottom = wrapper.scrollHeight - dom.offsetHeight
     this.setState({
       height: wrapper.scrollHeight
     })
@@ -214,13 +211,13 @@ class Page extends React.Component {
     let payload = {};
     this.state.selectedRows.forEach(i => payload[i[PROTOCOLTYPE_DATAINDEX]] = value)
     this.props.put(payload)
-      .then(curry(Message.success, "修改成功"))
+      .then(_ => Message.success("修改成功"))
       .then(this.props.get)
       .then(this.initSelected)
   }
 
   applyHandle = () => this.props.apply()
-    .then(curry(Message.success, "应用成功"))
+    .then(_ => Message.success("应用成功"))
     .then(this.props.get)
 
 
@@ -233,7 +230,7 @@ class Page extends React.Component {
   })
 
   onSubmit = payload => this.props.postRule(payload)
-    .then(curry(Message.success, "添加成功"))
+    .then(_ => Message.success("添加成功"))
     .then(this.switchCreateModal)
     .then(this.props.get)
 
@@ -280,7 +277,7 @@ class Page extends React.Component {
     return (
       <div key="content-panel" style={{ padding: "15px 0" }}>
         <Card title={title}>
-          <EnhanciveTable title={null}
+          <Table title={null}
             expanded={false}
             key={`${lastReqTime}-table`}
             inverse={true}
@@ -290,23 +287,23 @@ class Page extends React.Component {
       </div>
     )
   }
-  render = () => {
+  render() {
 
 
     const { commonLayout, postRuleLoading, threatnames } = this.props,
-      isDark = commonLayout.darkTheme,
       {
         expanded,
         createVisible,
         offsetBottom,
         height,
       } = this.state
-    const { queryResults } = this.props[NAMESPACE];
-    const { data } = queryResults;
+    // const { queryResults } = this.props[NAMESPACE];
+    const queryResults = { total: 0 }
+    const { data } = queryResults
 
     const expandPageClasses = classnames({
       [styles["expand-page"]]: true,
-      [styles["expand-page-dark"]]: isDark,
+      // [styles["expand-page-dark"]]: isDark,
       [styles["expanded"]]: expanded,
     })
 
@@ -326,31 +323,28 @@ class Page extends React.Component {
           <StrategyThreatnameModule switchExpandPage={this.switchExpandPage} />
         </div>
         <div className={contentClasses}>
-          <JoSpin spinning={this.props.loading}>
+          <Spin spinning={this.props.loading}>
             {
               this.props.animateRender([
                 this.getContentPanel()
               ])
             }
-          </JoSpin>
+          </Spin>
         </div>
         <Modal visible={createVisible}
-          isDark={isDark}
+
           onCancel={this.switchCreateModal}
           key={`${createVisible}-modal-visible`}
           footer={null}
           title={<p><Icon type="plus" />&nbsp;新增特征</p>}>
-          <JoSpin spinning={postRuleLoading}>
+          <Spin spinning={postRuleLoading}>
             <RuleForm onSubmit={this.onSubmit}
-              isDark={isDark}
               protocolTypes={data.map(i => i[PROTOCOLTYPE_DATAINDEX])}
               threatTypes={threatnames.map(i => ({
                 text: i.name,
                 value: i.key,
               }))} />
-
-
-          </JoSpin>
+          </Spin>
         </Modal>
       </div>
     )

@@ -21,7 +21,9 @@ export const compose = Ramda.compose,
 
   is = Ramda.is,
 
-  omit = Ramda.omit
+  omit = Ramda.omit,
+
+  pick = Ramda.pick
 
 export { default as getKeyText } from './getKeyText'
 

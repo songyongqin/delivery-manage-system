@@ -40,6 +40,7 @@ class TableWithRemote extends React.Component<any, any>{
     initialTotal: 0,
     pagination: true,
     lastReqTime: 0,
+    tableProps: {}
   }
   constructor(props) {
     super(props)
@@ -100,11 +101,11 @@ class TableWithRemote extends React.Component<any, any>{
   render() {
 
     const { data, total, filters, lastReqTime } = this.state
-    const { theme, effectsLoading, remoteNamespace, getExpandedRowRenderer, pagination, rowSelection } = this.props
+    const { theme, effectsLoading, remoteNamespace, getExpandedRowRenderer, pagination, rowSelection, getKey, tableProps } = this.props
     const controlledLoading = "loading" in this.props
     const loading = controlledLoading ? this.props.loading : effectsLoading[`${remoteNamespace}/fetch`]
 
-    const tableProps: any = {
+    const finalTableProps: any = {
       expandedRowRender: getExpandedRowRenderer && getExpandedRowRenderer({ filters, data, total }),
       columns: this.props.getColumns({
         fetchData: this.fetchData,
@@ -113,12 +114,13 @@ class TableWithRemote extends React.Component<any, any>{
       dataSource: data.map((i, index) => {
         return {
           ...i,
-          key: `${index}-${lastReqTime}-item`
+          key: getKey ? getKey(i, index) : `${index}-${lastReqTime}-item`
         }
       }),
       rowSelection,
       onChange: this.tableOnChange,
       filters: this.state.filters,
+      ...tableProps
     }
 
     return (
@@ -132,7 +134,7 @@ class TableWithRemote extends React.Component<any, any>{
             pageSize: filters.limit,
             current: filters.page,
           }}
-          tableProps={tableProps}>
+          tableProps={finalTableProps}>
         </Table>
       </Spin>
     )

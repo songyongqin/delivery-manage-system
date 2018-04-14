@@ -1,21 +1,19 @@
-import React from 'react';
-import styles from './styles.css';
+import * as React from 'react'
+import styles from './styles.css'
 import {
   Menu,
   Button,
   Breadcrumb,
   Icon,
   message as Message,
-  Popover
-} from 'antd';
-import { WithAnimateRender, WithBreadcrumb } from '../../components/HOSComponents/index'
-import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
-import JoSpin from '../../components/JoSpin';
-import { connect } from 'dva';
-import classnames from 'classnames';
-import * as tableConfig from './components/TableConfig';
-import EnhanciveTable from '../../domainComponents/EnhanciveTable';
-import Card from '../../domainComponents/Card';
+  Popover,
+  Modal,
+} from 'antd'
+import Spin from 'domainComponents/Spin'
+import classnames from 'classnames'
+import * as tableConfig from './components/TableConfig'
+import Table from 'domainComponents/Table'
+import Card from 'domainComponents/Card'
 import {
   NAMESPACE,
   OPEN_VALUE,
@@ -23,12 +21,11 @@ import {
   ID_DATAINDEX,
 } from './ConstConfig'
 
-import StrategyThreatnameModule from '../SysConfig_Strategy_Threatname/Page';
+import StrategyThreatnameModule from '../SysConfig_Strategy_Threatname/Page'
 import * as tools from '../../utils/tools';
-import Modal from '../../domainComponents/Modal';
 import PostForm from './components/PostForm';
-const { curry } = tools;
-
+// const { curry } = tools;
+import extraConnect from 'domainUtils/extraConnect'
 const CardTitle = ({ selectedRows = [], createPutStrategy, applyHandle, switchExpandPage, switchCreateModal }) => (
   <div style={{ overflow: "hidden" }}>
     <div style={{ float: "left" }}>
@@ -103,12 +100,8 @@ const mapDispatchToProps = dispatch => ({
 
 const getTableRowKey = (index, lastReqTime) => `item-${index}-${lastReqTime}`
 
-
-
-@connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
-@WithAnimateRender
-@WithBreadcrumb
-class Page extends React.Component {
+@extraConnect(mapStateToProps, mapDispatchToProps)
+class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -153,8 +146,8 @@ class Page extends React.Component {
     )
   }
 
-  componentDidMount = () => {
-    this.props.get();
+  componentDidMount() {
+    this.props.get()
   }
 
   setSelectedRows = (selectedRows) => this.setState({
@@ -176,13 +169,13 @@ class Page extends React.Component {
     let payload = {};
     this.state.selectedRows.forEach(i => payload[i[ID_DATAINDEX]] = value)
     this.props.put(payload)
-      .then(curry(Message.success, "修改成功"))
+      .then(_ => Message.success("修改成功"))
       .then(this.props.get)
       .then(this.initSelected)
   }
 
   applyHandle = () => this.props.apply()
-    .then(curry(Message.success, "应用成功"))
+    .then(_ => Message.success("应用成功"))
     .then(this.props.get)
 
 
@@ -195,7 +188,7 @@ class Page extends React.Component {
   })
 
   onSubmit = payload => this.props.post(payload)
-    .then(curry(Message.success, "添加成功"))
+    .then(_ => Message.success("添加成功"))
     .then(this.switchCreateModal)
     .then(this.props.get)
 
@@ -203,7 +196,7 @@ class Page extends React.Component {
   getDelHandle = id => () => this.props.delete({
     [ID_DATAINDEX]: id,
   })
-    .then(curry(Message.success, "删除成功"))
+    .then(_ => Message.success("删除成功"))
     .then(this.props.get)
 
   getContentPanel = () => {
@@ -247,7 +240,7 @@ class Page extends React.Component {
     return (
       <div key="content-panel" style={{ padding: "15px 0" }}>
         <Card title={title}>
-          <EnhanciveTable title={null}
+          <Table title={null}
             expanded={false}
             key={`${lastReqTime}-table`}
             inverse={true}
@@ -257,15 +250,15 @@ class Page extends React.Component {
       </div>
     )
   }
-  render = () => {
+  render() {
 
 
     const { commonLayout, loading } = this.props,
       isDark = commonLayout.darkTheme,
       {
-            expanded,
+        expanded,
         createVisible,
-          } = this.state
+      } = this.state
 
     const { queryResults } = this.props[NAMESPACE];
 
@@ -288,28 +281,27 @@ class Page extends React.Component {
           <StrategyThreatnameModule />
         </div>
         <div className={contentClasses}>
-          <JoSpin spinning={this.props.loading}>
+          <Spin spinning={this.props.loading}>
             {
               this.props.animateRender([
                 this.getContentPanel()
               ])
             }
-          </JoSpin>
+          </Spin>
         </div>
         <Modal visible={createVisible}
-          isDark={isDark}
           onCancel={this.switchCreateModal}
           key={`${createVisible}-modal-visible`}
           footer={null}
           title={<p><Icon type="plus" />&nbsp;新增白名单</p>}>
-          <JoSpin spinning={loading}>
+          <Spin spinning={loading}>
             {/*<RuleForm onSubmit={this.onSubmit}*/}
             {/*isDark={isDark}*/}
             {/*protocolTypes={data.map(i=>i[PROTOCOLTYPE_DATAINDEX])}*/}
             {/*threatTypes={threatnames}/>*/}
             <PostForm isDark={isDark} onSubmit={this.onSubmit} />
 
-          </JoSpin>
+          </Spin>
         </Modal>
       </div>
     )

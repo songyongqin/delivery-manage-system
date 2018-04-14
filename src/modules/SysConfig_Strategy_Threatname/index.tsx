@@ -1,22 +1,20 @@
-import React from 'react';
+import * as React from 'react'
 import styles from './styles.css'
-import { Menu, Button, Breadcrumb, Popover, Icon, Tooltip, message as Message } from 'antd';
-import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
-import JoSpin from '../../components/JoSpin';
-import { connect } from 'dva';
-import classnames from 'classnames';
-import CreateForm from './components/CreateForm';
+import { Menu, Button, Breadcrumb, Popover, Icon, Tooltip, message as Message, Modal } from 'antd'
+import Spin from 'domainComponents/Spin'
+import { connect } from 'dva'
+import classnames from 'classnames'
+import CreateForm from './components/CreateForm'
+import $ from 'jquery'
 import {
   NAMESPACE,
   THREAT_NAME_NAME_DATAINDEX,
   THREAT_NAME_LEVEL_DATAINDEX,
 } from './ConstConfig'
-import * as tableConfig from './components/TableConfig';
-import EnhanciveTable from '../../domainComponents/EnhanciveTable';
-import Modal from '../../domainComponents/Modal'
-import * as tools from '../../utils/tools';
+import * as tableConfig from './components/TableConfig'
+import Table from 'domainComponents/Table'
+import * as tools from 'utils'
 
-const { curry } = tools;
 /******************************************/
 
 const mapStateToProps = state => {
@@ -62,8 +60,8 @@ const mapDispatchToProps = dispatch => ({
 
 /******************************************/
 
-@connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
-class Page extends React.Component {
+@connect(mapStateToProps, mapDispatchToProps)
+class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -78,18 +76,18 @@ class Page extends React.Component {
   /******************************************/
   switchCreatePopover = () => this.setState({ createVisible: !this.state.createVisible })
   /******************************************/
-  componentDidMount = () => {
-    this.props.get();
-    this.addScroll();
+  componentDidMount() {
+    this.props.get()
+    this.addScroll()
     addAutoResizeTableScrollHeight(this.addScroll);
   }
   /******************************************/
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     removeAutoResizeTableScrollHeight(this.addScroll);
   }
   /******************************************/
-  componentDidUpdate = () => {
-    this.addScroll();
+  componentDidUpdate() {
+    this.addScroll()
   }
   /******************************************/
   addScroll = () => {
@@ -108,10 +106,10 @@ class Page extends React.Component {
   getLevelOnChangeHandle = index => value => this.props.modify({ index, [THREAT_NAME_LEVEL_DATAINDEX]: value })
   /******************************************/
   putThreatnameHandle = () => this.props.put()
-    .then(curry(Message.success, "保存成功"))
+    .then(_ => Message.success("保存成功"))
     .then(this.props.get)
   /******************************************/
-  render = () => {
+  render() {
     const { commonLayout } = this.props;
     const { queryResults, lastReqTime } = this.props[NAMESPACE];
     const { data } = queryResults;
@@ -143,7 +141,7 @@ class Page extends React.Component {
         </Modal>
 
 
-        <JoSpin spinning={this.props.loading}>
+        <Spin spinning={this.props.loading}>
           <h4 className={classnames({
             [styles["title"]]: true,
             [styles["title-dark"]]: isDark,
@@ -179,12 +177,11 @@ class Page extends React.Component {
             </Tooltip>
           </div>
 
-
-          <EnhanciveTable tableProps={tableProps}
+          <Table tableProps={tableProps}
             inverse={true}
             pagination={false} />
 
-        </JoSpin>
+        </Spin>
       </div>
     )
   }

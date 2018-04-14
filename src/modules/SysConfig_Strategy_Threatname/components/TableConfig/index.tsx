@@ -1,10 +1,10 @@
 /**
  * Created by jojo on 2017/9/5.
  */
-import React from 'react';
-import tableColumnsGenerator from '../../../../utils/tableColumnsGenerator';
-import * as tools from '../../../../utils/tools';
-import { Popconfirm } from 'antd';
+import * as React from 'react'
+import * as tools from 'utils'
+import { Popconfirm } from 'antd'
+import columnsCreator from 'domainUtils/columnsCreator'
 
 import {
   THREAT_NAME_LEVEL_DATAINDEX,
@@ -50,9 +50,9 @@ const getRenderer = ({ getDelHandle, getLevelOnChangeHandle }) => ({
 
 
 
-export const getColumns = ({ getDelHandle, getLevelOnChangeHandle }) => tableColumnsGenerator({
-  keys: dataIndexes,
-  titleTextConfig: textConfig,
+export const getColumns = ({ getDelHandle, getLevelOnChangeHandle }) => columnsCreator({
+  dataIndexes,
+  titleConfig: textConfig,
   renderer: getRenderer({ getDelHandle, getLevelOnChangeHandle }),
   extraProps: {
     [THREAT_NAME_LEVEL_DATAINDEX]: {

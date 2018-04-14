@@ -17,6 +17,7 @@ import getSysConfigNetworkPage from 'routes/SysConfig_Network'
 import getDeviceManagerPage from 'routes/Manager_Device'
 import getUserManagerPage from 'routes/UserManager'
 import getVMManagerPage from 'routes/Manager_VM'
+import getStrategyPage from 'routes/SysConfig_Strategy'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -31,6 +32,7 @@ import {
   SYS_CONFIG_URL,
   SYS_CONFIG_MONITOR_URL,
   SYS_CONFIG_NETWORK_URL,
+  SYS_CONFIG_STRATEGY_URL,
   MANAGER_DEVICE_URL,
   USER_MANAGER_URL,
   MANAGER_VM_URL,
@@ -115,6 +117,11 @@ export default ({ history, app }) => {
               exact
               component={getSysConfigMonitorPage(app, SYS_CONFIG_MONITOR_URL)}
               path={SYS_CONFIG_MONITOR_URL} >
+            </Route>
+            <Route
+              exact
+              component={getStrategyPage(app, SYS_CONFIG_STRATEGY_URL)}
+              path={SYS_CONFIG_STRATEGY_URL} >
             </Route>
             {/* 设备管理 */}
             <Route

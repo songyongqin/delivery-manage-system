@@ -1,14 +1,12 @@
-import React from 'react';
+import * as React from 'react'
 import styles from './styles.css'
-import { Menu, Button, Breadcrumb, Icon, message as Message } from 'antd';
-import { WithAnimateRender, WithBreadcrumb } from '../../components/HOSComponents/index'
-import { createMapDispatchWithPromise } from '../../utils/dvaExtraDispatch'
-import JoSpin from '../../components/JoSpin';
+import { Menu, Button, Breadcrumb, Icon, message as Message, Modal } from 'antd'
+import Spin from 'domainComponents/Spin'
 import { connect } from 'dva';
 import classnames from 'classnames';
-import EnhanciveTable from '../../domainComponents/EnhanciveTable';
-import * as tools from '../../utils/tools';
-import * as tableConfig from './components/TableConfig';
+import Table from 'domainComponents/Table'
+import * as tools from 'utils/tools'
+import * as tableConfig from './components/TableConfig'
 import {
   NAMESPACE,
   placeholderTextConfig,
@@ -21,8 +19,8 @@ import {
   THREAT_NAME_KEY_DATAINDEX,
   NAMESPACE as THREAT_NAME_NAMESPACE
 } from '../SysConfig_Strategy_Threatname/ConstConfig'
-import QueryForm from '../../components/QueryForm';
-import Modal from '../../domainComponents/Modal';
+// import QueryForm from '../../components/QueryForm';
+
 import RuleBasicForm from './components/RuleForm';
 
 
@@ -52,8 +50,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-@connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
-class Page extends React.Component {
+@connect(mapStateToProps, mapDispatchToProps)
+class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,7 +60,6 @@ class Page extends React.Component {
       queryFilters: {
         page: 1,
         limit: 10,
-        page: 1,
         [RULE_PROTOCOLTYPE_DATAINDEX]: props[RULE_PROTOCOLTYPE_DATAINDEX],
         value: "",
       },
@@ -74,8 +71,8 @@ class Page extends React.Component {
       activeRule: {}
     }
   }
-  componentDidMount = () => {
-    this.get();
+  componentDidMount() {
+    this.get({})
     this.props.getThreatname().then(result => {
       this.setState({
         threatnames: result.map(i => ({
@@ -95,7 +92,7 @@ class Page extends React.Component {
     this.switchModal();
     this.setActiveRule(data);
   }
-  get = payload => {
+  get = (payload = {}) => {
     payload = payload || {};
     let _payload = { ...this.state.queryFilters, ...payload }
 
@@ -142,7 +139,7 @@ class Page extends React.Component {
       Message.success("删除成功")
     })
 
-  render = () => {
+  render() {
     const { loading, queryResults, queryFilters, createVisible, activeRule } = this.state;
     const { isDark, threatnames } = this.props;
     const { data } = queryResults;
@@ -162,7 +159,7 @@ class Page extends React.Component {
       }),
       dataSource: data.map((i, index) => ({
         ...i,
-        key: tools.getTableRowKey(index, ""),
+        key: `${index}-item`,
       })),
 
     };
@@ -176,8 +173,8 @@ class Page extends React.Component {
 
     return (
       <div >
-        <JoSpin spinning={loading}>
-          <QueryForm textConfig={{
+        <Spin spinning={loading}>
+          {/* <QueryForm textConfig={{
             placeholder: placeholderTextConfig[queryFilters[RULE_PROTOCOLTYPE_DATAINDEX]]
           }}
             onSubmit={this.onQuery}
@@ -185,18 +182,18 @@ class Page extends React.Component {
               width: "100%",
               marginBottom: "15px",
               padding: "0 8px"
-            }} />
-          <EnhanciveTable title={null}
+            }} /> */}
+          <Table title={null}
             expanded={false}
             tableProps={tableProps}
             paginationProps={paginationProps} />
-        </JoSpin>
+        </Spin>
         <Modal visible={createVisible}
           key={`${createVisible}-modal-visible`}
           onCancel={this.switchModal}
           title={<p><Icon type="edit" />&nbsp;修改特征</p>}
           footer={null}>
-          <JoSpin spinning={this.props.putLoading}>
+          <Spin spinning={this.props.putLoading}>
             <RuleBasicForm isDark={isDark}
               isCreate={false}
               loading={this.props.putLoading}
@@ -204,7 +201,7 @@ class Page extends React.Component {
               threatTypes={threatnames}
               protocolType={this.props[RULE_PROTOCOLTYPE_DATAINDEX]}
               onSubmit={this.onConfirmHandle} />
-          </JoSpin>
+          </Spin>
 
         </Modal>
       </div>
