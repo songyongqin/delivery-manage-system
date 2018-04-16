@@ -16,17 +16,16 @@ import {
   dataIndexes,
   levels,
   USER_DEFINED_VALUE,
-} from '../../ConstConfig';
+} from './constants'
 
 
 import { Button, Switch, Icon, Select, Tooltip } from 'antd'
 
-const getRenderer = ({ getDelHandle, getLevelOnChangeHandle }) => ({
+const getRenderer = ({ handle }) => ({
 
   [THREAT_NAME_LEVEL_DATAINDEX]: (value, records, index) => (
-    <Select value={value}
-      onChange={getLevelOnChangeHandle(index)}
-      size="large"
+    <Select defaultValue={value}
+      onChange={value => handle && handle["put"] && handle["put"]({ ...records, level: value })}
       style={{ width: "100px" }}>
       {levels.map((i, index) => (
         <Select.Option value={i}
@@ -37,10 +36,12 @@ const getRenderer = ({ getDelHandle, getLevelOnChangeHandle }) => ({
     </Select>
   ),
 
-  [THREAT_NAME_USER_DEFINED_DATAINDEX]: (value, records, index) => value === USER_DEFINED_VALUE &&
+  [THREAT_NAME_USER_DEFINED_DATAINDEX]: (value, records, index) =>
+    value === USER_DEFINED_VALUE
+    &&
     <Popconfirm title="删除该类型，该类型对应的特征也应一并删除，请确认是否删除？"
       placement="topLeft"
-      onConfirm={getDelHandle(index, records[THREAT_NAME_KEY_DATAINDEX])}>
+      onConfirm={_ => handle && handle["delete"] && handle["delete"](records)}>
       <a style={{ color: "#d73435" }} >
         <Icon type="minus-circle" />
       </a>
@@ -50,10 +51,10 @@ const getRenderer = ({ getDelHandle, getLevelOnChangeHandle }) => ({
 
 
 
-export const getColumns = ({ getDelHandle, getLevelOnChangeHandle }) => columnsCreator({
+export const getColumns = ({ handle }) => columnsCreator({
   dataIndexes,
   titleConfig: textConfig,
-  renderer: getRenderer({ getDelHandle, getLevelOnChangeHandle }),
+  renderer: getRenderer({ handle }),
   extraProps: {
     [THREAT_NAME_LEVEL_DATAINDEX]: {
       width: "45%"

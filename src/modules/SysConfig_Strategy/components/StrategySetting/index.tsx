@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TableWithRemote from 'domainComponents/TableWithRemote'
-import { SYS_CONFIG_STRATEGY_SETTING, SYS_CONFIG_STRATEGY_RULE } from 'constants/model'
+import { SYS_CONFIG_STRATEGY_SETTING, SYS_CONFIG_STRATEGY_RULE, SYS_CONFIG_STRATEGY_THREAT_NAME } from 'constants/model'
 import { getColumns, getExpandedRowRenderer } from './tableConfig'
 import Card from 'domainComponents/Card'
 import { Button, Icon, message as Message, Modal } from 'antd'
@@ -9,15 +9,18 @@ import Spin from 'domainComponents/Spin'
 import WithModal from 'components/WithModal'
 import RuleForm from './RuleForm'
 import { PROTOCOLTYPE_DATAINDEX } from '../../constants'
+import ThreatName from '../ThreatName'
 
 
 @WithModal()
 @extraConnect(
   state => {
+    const effectsLoading = state.loading.effects
     return {
-      putLoading: state.loading.effects[`${SYS_CONFIG_STRATEGY_SETTING}/put`],
-      applyLoading: state.loading.effects[`${SYS_CONFIG_STRATEGY_SETTING}/apply`],
-      postLoading: state.loading.effects[`${SYS_CONFIG_STRATEGY_RULE}/post`]
+      putLoading: effectsLoading[`${SYS_CONFIG_STRATEGY_SETTING}/put`],
+      applyLoading: effectsLoading[`${SYS_CONFIG_STRATEGY_SETTING}/apply`],
+      postLoading: effectsLoading[`${SYS_CONFIG_STRATEGY_RULE}/post`],
+      threatNameList: state[SYS_CONFIG_STRATEGY_THREAT_NAME].threatNameList
     }
   },
   dispatch => {
@@ -43,7 +46,8 @@ export default class StrategySetting extends React.Component<any, any>{
       selectedRows: [],
       lastReqTime: 0,
       expandedRowKeys: [],
-      data: []
+      data: [],
+      expanded: false
     }
   }
   onSwitchClick = (payload) => {
@@ -136,6 +140,7 @@ export default class StrategySetting extends React.Component<any, any>{
           <Button
             disabled={putLoading || applyLoading}
             type="primary"
+            onClick={_ => this.setState({ expanded: !this.state.expanded })}
             style={{ marginLeft: "15px" }}
             icon="setting">
             威胁等级配置
@@ -147,7 +152,11 @@ export default class StrategySetting extends React.Component<any, any>{
     return (
       <div style={{ padding: "5px" }}>
         <Spin spinning={putLoading}>
-          <Card title={title}>
+          <Card title={title} style={{
+            marginRight: this.state.expanded ? "400px" : "0px",
+            transitionProperty: "margin",
+            transitionDuration: "0.3s",
+          }}>
             <TableWithRemote
               onDataChange={payload => this.setState({ data: payload.data })}
               getExpandedRowRenderer={option => {
@@ -201,9 +210,28 @@ export default class StrategySetting extends React.Component<any, any>{
             loading={this.props.postLoading}
             onSubmit={this.onSubmit}
             create={true}
+            threatTypes={this.props.threatNameList.map(i => {
+              return {
+                text: i.name,
+                value: i.key
+              }
+            })}
             protocolTypes={[...new Set(this.state.data.map(i => i[PROTOCOLTYPE_DATAINDEX]))]}>
           </RuleForm>
         </Modal>
+        <div style={{
+          position: "fixed",
+          top: "60px",
+          right: this.state.expanded ? 0 : "-400px",
+          transitionProperty: "right",
+          transitionDuration: "0.3s",
+          bottom: 0,
+          zIndex: 50,
+          background: "white",
+          width: "400px"
+        }}>
+          <ThreatName onExpandChange={expanded => this.setState({ expanded })}></ThreatName>
+        </div>
       </div>
     )
   }

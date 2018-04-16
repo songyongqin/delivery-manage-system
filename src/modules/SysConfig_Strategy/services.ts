@@ -38,4 +38,29 @@ export const deleteRule = commonRequestCreator.deleteWithQueryString(httpApi.SYS
 
 export const postRule = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY_RULE)
 
-// export const getThreatName=commonRequestCreator.get(httpApi.SYS_CONFIG_STRATEGY_THREATNAME)
+/*
+  threatName
+*/
+const _fetchThreatName = commonRequestCreator.get(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)
+
+export const fetchThreatName = _ => {
+  return _fetchThreatName().then(res => {
+    if (isSuccess(res)) {
+      return {
+        ...res,
+        payload: {
+          total: 0,
+          data: res.payload
+        }
+      }
+    }
+    return res
+  })
+}
+
+
+export const putThreatName = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)
+
+export const postThreatName = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)
+
+export const deleteThreatName = commonRequestCreator.deleteWithQueryString(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)

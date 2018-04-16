@@ -1,8 +1,5 @@
-/**
- * Created by jojo on 2017/10/10.
- */
-import React from 'react';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import * as React from 'react'
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd'
 import styles from './styles.css';
 import classnames from 'classnames';
 import {
@@ -14,9 +11,9 @@ import {
   levelTextConfig,
   USER_DEFINED_VALUE,
   THREAT_NAME_USER_DEFINED_DATAINDEX
-} from '../../ConstConfig'
-import * as tools from 'utils/tools';
-const { getMD5 } = tools;
+} from '../constants'
+import * as tools from 'utils'
+const { getMD5 } = tools
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -43,38 +40,38 @@ const tailFormItemLayout = {
 };
 
 
-@Form.create()
-class WrappedForm extends React.Component {
+@(Form.create() as any)
+class WrappedForm extends React.Component<any, any> {
   handleSubmit = (e) => {
-    e.preventDefault();
-    const { onSubmit, form } = this.props;
+    e.preventDefault()
+    const { onSubmit, form } = this.props
     form.validateFieldsAndScroll((err, values) => {
       if (err) {
         return
       }
 
-      let _values = {};
+      let _values = {}
 
       Object.keys(values).forEach(i => _values[i] = values[i].trim())
-
 
       onSubmit && onSubmit({
         ..._values,
         [THREAT_NAME_USER_DEFINED_DATAINDEX]: USER_DEFINED_VALUE,
         [THREAT_NAME_KEY_DATAINDEX]: "KEY" + getMD5(values[THREAT_NAME_NAME_DATAINDEX])
-      });
+      })
 
-    });
+    })
   }
 
   checkInput = (rule, value, callback) => {
-    const { threatnameList = [] } = this.props;
-    let _value = value.trim();
+    const { threatNameList = [] } = this.props
+    value = value || ""
+    let _value = value.trim()
 
-    if (threatnameList.includes(_value)) {
-      callback("该行为已经存在");
+    if (threatNameList.includes(_value)) {
+      callback("该行为已经存在")
     } else {
-      callback();
+      callback()
     }
   }
 
@@ -123,7 +120,8 @@ class WrappedForm extends React.Component {
           initialValue: levels[0]
         },
         component: (
-          <Select size="large"
+          <Select
+            disabled={loading}
             style={{ width: "100px" }}>
             {levels.map((i, index) => (
               <Select.Option value={i}

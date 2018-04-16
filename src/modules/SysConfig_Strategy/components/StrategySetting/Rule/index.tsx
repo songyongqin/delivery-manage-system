@@ -1,15 +1,21 @@
 import * as React from 'react'
 import TableWithRemote from 'domainComponents/TableWithRemote'
-import { SYS_CONFIG_STRATEGY_RULE } from 'constants/model'
+import { SYS_CONFIG_STRATEGY_RULE, SYS_CONFIG_STRATEGY_THREAT_NAME } from 'constants/model'
 import { getColumns } from './tableConfig'
 import Card from 'domainComponents/Card'
 import extraConnect from 'domainUtils/extraConnect'
 import WithModal from 'components/WithModal'
 import { Modal, Icon, message as Message } from 'antd'
 import RuleForm from '../RuleForm'
+import Search from './Search'
 
 @extraConnect(
-  null,
+  state => {
+    return {
+      threatNameList: state[SYS_CONFIG_STRATEGY_THREAT_NAME].threatNameList,
+      fetchLoading: state.loading.effects[`${SYS_CONFIG_STRATEGY_RULE}/fetch`]
+    }
+  },
   dispatch => {
     return {
       put: payload => dispatch({
@@ -30,7 +36,11 @@ export default class Rule extends React.Component<any, any>{
     this.state = {
       loading: false,
       putLoading: false,
-      activeRule: {}
+      lastReqTime: 0,
+      activeRule: {},
+      initialFilters: {
+        page: 1, limit: 10, protocolType: props.records["protocolType"], value: ""
+      }
     }
   }
   onEditClick = (records) => {
@@ -74,11 +84,25 @@ export default class Rule extends React.Component<any, any>{
         })
     })
   }
+  onSubmit = payload => {
+    this.setState({
+      initialFilters: {
+        ...this.state.initialFilters,
+        ...payload
+      },
+      lastReqTime: new Date().getTime()
+    })
+  }
   render() {
     return (
       <Card style={{ margin: "0 10px" }}>
+        <Search
+          onSubmit={this.onSubmit}
+          loading={this.props.fetchLoading}>
+        </Search>
         <TableWithRemote
-          initialFilters={{ page: 1, limit: 10, protocolType: this.props.records["protocolType"], value: "" }}
+          key={`${this.state.lastReqTime}-table`}
+          initialFilters={this.state.initialFilters}
           onChange={_ => this.setState({ loading: true })}
           onFinal={_ => this.setState({ loading: false })}
           loading={this.state.loading}
@@ -107,6 +131,12 @@ export default class Rule extends React.Component<any, any>{
           visible={this.props.modalVisible["edit"]}>
           <RuleForm
             onSubmit={this.onPut}
+            threatTypes={this.props.threatNameList.map(i => {
+              return {
+                text: i.name,
+                value: i.key
+              }
+            })}
             loading={this.state.putLoading}
             defaultValue={this.state.activeRule}
             protocolType={this.props.records["protocolType"]}

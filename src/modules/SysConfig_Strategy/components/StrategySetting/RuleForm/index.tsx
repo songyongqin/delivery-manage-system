@@ -186,6 +186,7 @@ class WrappedForm extends React.Component<any, any> {
         },
         component: (
           <Select
+            disabled={loading}
             onChange={this.onChange}
             style={{ width: "140px" }}>
             {protocolTypes.map((i, index) => (
@@ -213,6 +214,7 @@ class WrappedForm extends React.Component<any, any> {
         },
         component: (
           <Select
+            disabled={loading}
             style={{ width: "140px" }}>
             {threatTypes.map((i, index) => (
               <Select.Option value={i.key || i.value}
