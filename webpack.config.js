@@ -61,11 +61,17 @@ module.exports = (webpackConfig, env) => {
       to: path.join(__dirname, './dist/config'),
     },
   ]))
-  webpackConfig.plugins.push(new webpack.HashedModuleIdsPlugin())
-  webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    filename: "static/vendor.[hash].js"
-  }))
+
+
+  if (production) {
+
+    webpackConfig.plugins.push(new webpack.HashedModuleIdsPlugin())
+    webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: "static/vendor.[hash].js"
+    }))
+  }
+
 
   const finalPlugins = webpackConfig.plugins.map(item => {
     if (item instanceof HtmlWebpackPlugin) {
@@ -74,7 +80,7 @@ module.exports = (webpackConfig, env) => {
         filename: production ? 'index.html' : 'index.html',
       })
     }
-    if (item instanceof ExtractTextPlugin) {
+    if (item instanceof ExtractTextPlugin && production) {
       item.filename = 'static/[name].[chunkhash].css'
       return item
     }
