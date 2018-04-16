@@ -57,7 +57,7 @@ class TableWithRemote extends React.Component<any, any>{
   }
   fetchData = filters => {
 
-    const { onChange, onDataChange } = this.props
+    const { onChange, onDataChange, onFinal } = this.props
 
     onChange && onChange(filters)
 
@@ -79,10 +79,13 @@ class TableWithRemote extends React.Component<any, any>{
         })
       })
       .then(_ => {
+
         this.setState({
           loading: false,
           lastReqTime: new Date().getTime()
         })
+
+        onFinal && onFinal()
       })
   }
   pageOnChange = current => {
@@ -109,7 +112,8 @@ class TableWithRemote extends React.Component<any, any>{
       expandedRowRender: getExpandedRowRenderer && getExpandedRowRenderer({ filters, data, total }),
       columns: this.props.getColumns({
         fetchData: this.fetchData,
-        filters
+        filters,
+        data
       }),
       dataSource: data.map((i, index) => {
         return {

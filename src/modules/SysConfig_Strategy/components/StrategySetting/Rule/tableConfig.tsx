@@ -19,13 +19,13 @@ import { pick } from 'utils'
 
 
 
-function getRenderer({ getModifyOpenHandle, getDelHandle, threatnames, protocolType }) {
+function getRenderer({ protocolType, handle }) {
   let keyTextConfig = {
 
   };
-  threatnames.forEach(i => {
-    keyTextConfig[i.key] = i.name;
-  })
+  // threatnames.forEach(i => {
+  //   keyTextConfig[i.key] = i.name;
+  // })
   const ruleKeys = ruleItemsConfig[protocolType] || []
 
   return {
@@ -41,16 +41,14 @@ function getRenderer({ getModifyOpenHandle, getDelHandle, threatnames, protocolT
     },
     [RULE_OPERATION_KEY]: (value, records) => {
       const menu = (
-        <Menu>
-          <Menu.Item >
-            <span onClick={getModifyOpenHandle(records)}>
-              <Icon type="edit" />&nbsp;修改
-                </span>
+        <Menu onClick={({ key }) => {
+          handle && handle[key] && handle[key](records)
+        }}>
+          <Menu.Item key="edit">
+            <Icon type="edit" />&nbsp;修改
           </Menu.Item>
-          <Menu.Item >
-            <span onClick={getDelHandle(records[RULE_ID_DATAINDEX])}>
-              <Icon type="delete" />&nbsp;删除
-                </span>
+          <Menu.Item key="delete">
+            <Icon type="delete" />&nbsp;删除
           </Menu.Item>
         </Menu>
       )
@@ -67,11 +65,14 @@ function getRenderer({ getModifyOpenHandle, getDelHandle, threatnames, protocolT
 
 }
 
-export const getColumns = () =>
-  columnsCreator({
+export const getColumns = ({ protocolType, handle }) => {
+
+  return columnsCreator({
     dataIndexes,
     titleConfig: textConfig,
-    // renderer: getRenderer({ getModifyOpenHandle, getDelHandle, threatnames, protocolType }),
+    renderer: getRenderer({ protocolType, handle }),
   })
+}
+
 
 

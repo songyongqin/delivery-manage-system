@@ -18,7 +18,7 @@ import {
 
 
 
-function getRenderer({ handle }) {
+function getRenderer({ handle, expandedRowKeys }) {
   return {
     [TOTAL_DATAINDEX]: value => <CountUp start={value}
       end={value}
@@ -35,32 +35,36 @@ function getRenderer({ handle }) {
     ),
 
     [STRATEGY_OPERATION_KEY]: (value, records, index) => (
-      <Button type="primary"
-      // onClick={getExpandRowOnChange(index)}
+      <Button
+        type="primary"
+        onClick={_ => handle && handle["show"] && handle["show"](records)}
       >
+        {expandedRowKeys.includes(records["key"]) ? <Icon type="minus" /> : <Icon type="plus" />}
         配置
-      {/* {expandedRowIndexes.includes(index) ? <Icon type="arrow-up" /> : <Icon type="arrow-down" />} */}
       </Button>
     )
   }
 }
 
-export const getColumns = ({ handle }) =>
+export const getColumns = ({ handle, expandedRowKeys }) =>
   columnsCreator({
     dataIndexes,
     titleConfig: textConfig,
-    renderer: getRenderer({ handle }),
+    renderer: getRenderer({ handle, expandedRowKeys }),
   })
 
 
-export const getExpandedRowRenderer = ({ expandedRowIndexes, getProtocol }) => (records, index) => (
-  <div style={{ marginLeft: "20px" }}>
-    <Rule></Rule>
-    {/* <StrategyRule key={`${expandedRowIndexes.includes(index)}-rule-item`}
-      getProtocol={getProtocol}
-      {...{
-        [PROTOCOLTYPE_DATAINDEX]: records[PROTOCOLTYPE_DATAINDEX]
-      }
-      } /> */}
-  </div>
-)
+export const getExpandedRowRenderer = ({ expandedRowKeys, onChange }) => (records, index) => {
+
+  return (
+    expandedRowKeys.includes(records["key"])
+      ?
+      <Rule
+        onChange={onChange}
+        key={`${expandedRowKeys.includes(records["key"])}-rule-item`}
+        records={records} />
+      :
+      <div>
+      </div>
+  )
+}

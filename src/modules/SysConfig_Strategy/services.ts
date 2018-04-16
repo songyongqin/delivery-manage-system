@@ -34,7 +34,7 @@ export const fetchRule = commonRequestCreator.getWithQueryString(httpApi.SYS_CON
 
 export const putRule = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEGY_RULE)
 
-export const deleteRule = commonRequestCreator.delete(httpApi.SYS_CONFIG_STRATEGY_RULE)
+export const deleteRule = commonRequestCreator.deleteWithQueryString(httpApi.SYS_CONFIG_STRATEGY_RULE)
 
 export const postRule = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY_RULE)
 
