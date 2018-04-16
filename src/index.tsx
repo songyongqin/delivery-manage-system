@@ -1,3 +1,4 @@
+import "@babel/polyfill"
 import dva from 'dva'
 import createLoading from 'dva-loading'
 import createLastEffectTime from 'domainUtils/dvaLastEffectTime'
@@ -7,7 +8,7 @@ import DomainUserModel from 'models/domainUser'
 import RecordOfCreateVMModel from 'modules/Manager_Virtual/models/recordOfCreateVM'
 import SetupModel from 'models/setup'
 import './themes/common.less'
-import { initProductionConfig, getProduction } from 'domain/production'
+// import { initProductionConfig, getProduction } from 'domain/production'
 import request from 'domainUtils/request'
 import onError, { initGlobalOnErrorListener } from 'domainUtils/error'
 import * as React from 'react'

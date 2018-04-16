@@ -13,7 +13,6 @@ module.exports = (webpackConfig, env) => {
 
 
   webpackConfig.entry.vendor = [
-    "babel-polyfill",
     "dva",
     "dva-loading",
     "react",
