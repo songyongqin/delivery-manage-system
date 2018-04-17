@@ -37,7 +37,7 @@ export default class extends React.Component<any, any>{
   }
 
   componentDidMount() {
-    Mousetrap.bind(['command+alt+p', 'ctrl+alt+p'], () => {
+    Mousetrap.bind(['command+alt+p', 'ctrl+alt+p', 'command+alt+0', 'ctrl+alt+0'], () => {
       this.setState({
         visible: !this.state.visible
       })

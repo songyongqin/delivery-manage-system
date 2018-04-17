@@ -58,7 +58,7 @@ module.exports = (webpackConfig, env) => {
   webpackConfig.plugins.push(new CopyWebpackPlugin([
     {
       from: './config',
-      to: path.join(__dirname, './dist/config'),
+      to: path.join(__dirname, './dist/static/config'),
     },
   ]))
 
@@ -81,7 +81,7 @@ module.exports = (webpackConfig, env) => {
         filename: production ? 'index.html' : 'index.html',
       })
     }
-    if (item instanceof ExtractTextPlugin && production) {
+    if (item instanceof ExtractTextPlugin) {
       item.filename = 'static/[name].[chunkhash].css'
       return item
     }

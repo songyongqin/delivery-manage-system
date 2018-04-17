@@ -18,7 +18,6 @@ export default {
     "/virtual-machine": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system",
     "/occupying": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system",
     "/report": "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system"
-
   },
   "env": {
     "development": {
