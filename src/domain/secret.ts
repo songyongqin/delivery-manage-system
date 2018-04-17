@@ -8,7 +8,7 @@ export const isSecret = () => {
   if (isDev()) {
     return false
   }
-  return false
+  return true
 }
 
 const getSecretKey = () => {
