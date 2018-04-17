@@ -20,7 +20,7 @@ const initialFilters = {
 
 }
 
-@WithConfig("/config/table/analyseEvent.json")
+@WithConfig("/static/config/table/analyseEvent.json")
 export default class EventPanel extends React.Component<any, any> {
   static defaultProps = {
     initialFilters: {}

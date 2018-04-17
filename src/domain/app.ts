@@ -2,7 +2,7 @@ import request from 'utils/request'
 import { getTemp, setTemp } from 'utils'
 import combineNamespace from 'domainUtils/combineNamespace'
 
-const APP_CONFIG = "/config/app.json"
+const APP_CONFIG = "/static/config/app.json"
 
 const PRODUCTION_STORAGE_NAMESPACE = combineNamespace("@@__production__@@")
 

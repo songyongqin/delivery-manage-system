@@ -15,7 +15,7 @@ const initialFilters = {
   page: 1,
 }
 
-@WithConfig("/config/table/threatEventThreatInfo.json")
+@WithConfig("/static/config/table/threatEventThreatInfo.json")
 export default class extends React.Component<any, any>{
   static defaultProps = {
     initialFilters: {}
@@ -58,8 +58,8 @@ export default class extends React.Component<any, any>{
         </div>
         <TableWithRemote
           onChange={this.onChange}
-          getColumns={options=>{
-            return combineColumnsConfig(getThreatInfoColumns(options),this.props.config.columns)
+          getColumns={options => {
+            return combineColumnsConfig(getThreatInfoColumns(options), this.props.config.columns)
           }}
           remoteNamespace={THREAT_EVENT_THREAT_INFO_NAMESPACE}
           theme={LIGHT_THEME}
