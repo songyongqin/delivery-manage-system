@@ -12,13 +12,13 @@ module.exports = (webpackConfig, env) => {
   webpackConfig.output.chunkFilename = 'static/[name].[chunkhash].async.js';
 
 
-  webpackConfig.entry.vendor = [
-    "dva",
-    "dva-loading",
-    "react",
-    "react-dom",
-    "moment"
-  ]
+  // webpackConfig.entry.vendor = [
+  //   "dva",
+  //   "dva-loading",
+  //   "react",
+  //   "react-dom",
+  //   "moment"
+  // ]
 
 
   if (production) {
@@ -65,10 +65,10 @@ module.exports = (webpackConfig, env) => {
   if (production) {
 
     webpackConfig.plugins.push(new webpack.HashedModuleIdsPlugin())
-    webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: "static/vendor.[hash].js"
-    }))
+    // webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   filename: "static/vendor.[hash].js"
+    // }))
   }
 
 
