@@ -11,6 +11,7 @@ export default class CommonItem extends React.Component<any, any>{
     return (
       <div>
         <TableWithRemote
+          initialFilters={this.props.initialFilters}
           getColumns={this.props.getColumns}
           remoteNamespace={this.props.remoteNamespace}>
         </TableWithRemote>
