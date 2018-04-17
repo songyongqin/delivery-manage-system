@@ -104,17 +104,27 @@ class TableWithRemote extends React.Component<any, any>{
   render() {
 
     const { data, total, filters, lastReqTime } = this.state
-    const { theme, effectsLoading, remoteNamespace, getExpandedRowRenderer, pagination, rowSelection, getKey, tableProps } = this.props
+    const {
+      theme,
+      effectsLoading,
+      remoteNamespace,
+      getExpandedRowRenderer,
+      pagination,
+      rowSelection,
+      getKey,
+      tableProps,
+      getColumns
+    } = this.props
     const controlledLoading = "loading" in this.props
     const loading = controlledLoading ? this.props.loading : effectsLoading[`${remoteNamespace}/fetch`]
 
     const finalTableProps: any = {
       expandedRowRender: getExpandedRowRenderer && getExpandedRowRenderer({ filters, data, total }),
-      columns: this.props.getColumns({
+      columns: getColumns ? getColumns({
         fetchData: this.fetchData,
         filters,
         data
-      }),
+      }) : [],
       dataSource: data.map((i, index) => {
         return {
           ...i,

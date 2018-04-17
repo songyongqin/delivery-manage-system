@@ -18,6 +18,7 @@ import getDeviceManagerPage from 'routes/Manager_Device'
 import getUserManagerPage from 'routes/UserManager'
 import getVMManagerPage from 'routes/Manager_VM'
 import getStrategyPage from 'routes/SysConfig_Strategy'
+import getOverallPage from 'routes/Analyse_Overall'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -27,6 +28,7 @@ import {
   ANALYSE_RANKING_URL,
   ANALYSE_FALL_HOST_URL,
   ANALYSE_THREAT_DIS_URL,
+  ANALYSE_OVERALL_URL,
   EARLY_WARNING_URL,
   EARLY_WARNING_EMAIL_URL,
   SYS_CONFIG_URL,
@@ -92,6 +94,11 @@ export default ({ history, app }) => {
               exact
               component={getAnalyseThreatDistributionPage(app, ANALYSE_THREAT_DIS_URL)}
               path={ANALYSE_THREAT_DIS_URL} >
+            </Route>
+            <Route
+              exact
+              component={getOverallPage(app, ANALYSE_OVERALL_URL)}
+              path={ANALYSE_OVERALL_URL} >
             </Route>
             {/* 威胁预警 */}
             <Route

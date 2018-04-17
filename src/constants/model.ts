@@ -47,5 +47,16 @@ export const LAYOUT_NAMESPACE = "layout",
 
   SYS_CONFIG_STRATEGY_WHITE_LIST = "sysConfigStrategyWhiteList",
 
-  SYS_CONFIG_STRATEGY_THREAT_NAME = "sysConfigStrategyThreatName"
+  SYS_CONFIG_STRATEGY_THREAT_NAME = "sysConfigStrategyThreatName",
 
+  ANALYSE_OVERALL_NAMESPACE = "analyseOverall",
+
+  ANALYSE_OVERALL_NET_BASIC_NAMESPACE = "analyseOverallNetBasic",
+
+  ANALYSE_OVERALL_LIMIT_NET_BASIC_NAMESPACE = "analyseOverallLimitNetBasic",
+
+  ANALYSE_OVERALL_SYSTEM_NAMESPACE = "analyseOverallSystem",
+
+  ANALYSE_OVERALL_CAPTURE_NAMESPACE = "analyseOverallCapture",
+
+  ANALYSE_OVERALL_PCAP_NAMESPACE = "analyseOverallPcap"

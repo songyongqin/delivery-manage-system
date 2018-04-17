@@ -1,4 +1,4 @@
-import "@babel/polyfill"
+import 'babel-polyfill'
 import dva from 'dva'
 import createLoading from 'dva-loading'
 import createLastEffectTime from 'domainUtils/dvaLastEffectTime'
