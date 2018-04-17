@@ -7,6 +7,7 @@ import classnames from 'classnames'
 
 const styles = require("./styles.less")
 const FormItem = Form.Item
+import isSuccess from 'domainUtils/isSuccess'
 
 import {
   VERIFICATION_CODE_DATA_INDEX,
@@ -23,10 +24,14 @@ class WrappedForm extends React.Component<any, any> {
       if (err) {
         return
       }
-      onSubmit && onSubmit(values).then(res => {
-        form.setFields({ [VERIFICATION_CODE_DATA_INDEX]: { value: "" } })
-        form.setFields({ [USER_PASSWORD_DATA_INDEX]: { value: "" } })
-      })
+      onSubmit && onSubmit(values)
+        .then(res => {
+          if (isSuccess(res)) {
+            form.setFields({ [USER_ACCOUNT_DATA_INDEX]: { value: "" } })
+          }
+          form.setFields({ [VERIFICATION_CODE_DATA_INDEX]: { value: "" } })
+          form.setFields({ [USER_PASSWORD_DATA_INDEX]: { value: "" } })
+        })
     })
   }
   render() {

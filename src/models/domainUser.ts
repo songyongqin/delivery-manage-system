@@ -105,7 +105,7 @@ const effects = {
           ...res.payload
         }
         setUserData(finalPayload)
-
+        yield delay(500)
         window.location.reload()
       }
       return res
@@ -119,7 +119,8 @@ const effects = {
     function* ({ payload }, { call, put }) {
       const res = yield call(services.delSign)
       delUserData()
-      window.location.href = LOGIN_URL
+      // window.location.href = LOGIN_URL
+      window.location.reload()
       return res
     },
     {

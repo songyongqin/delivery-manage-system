@@ -1,5 +1,5 @@
 {
-  "title": "attack-capture-system",
+  "title": "Attack capture System",
   "secret": true,
   "routerRegister": {
     "/overview": true,

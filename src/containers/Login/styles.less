@@ -2,10 +2,8 @@
 
 
 .wrapper{
-  position: absolute;
-  top:100px;
-  left:50%;
-  transform: translateX(-50%);
+  margin:0 auto;
+  padding-top:30px;
 }
 
 .login-wrapper{
@@ -13,6 +11,8 @@
   width:340px;
   height:400px;
   padding:20px;
+  margin:0 auto;
+
   &.dark{
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.65);
   }
@@ -22,3 +22,15 @@
   }
 }
 
+.title{
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom:8px;
+  font-weight: 400;
+  &.dark{
+    color:@dark-txt-color;
+  }
+  &.light{
+    color:@light-txt-color;    
+  }
+}

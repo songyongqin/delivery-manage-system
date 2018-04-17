@@ -6,6 +6,7 @@ import ExtraIcon from 'components/Icon'
 import { LIGHT_THEME, DARK_THEME } from 'constants/theme'
 import { USER_ACCOUNT_DATA_INDEX } from 'constants/user'
 import RecordOfCreateVM from 'modules/Manager_Virtual/components/RecordOfCreateVM'
+import { getAppConfig } from 'domain/app';
 
 interface Props {
   theme?: string,
@@ -89,7 +90,7 @@ export default class Header extends React.PureComponent<Props, any>{
         }
         {
           <h1 className={styles['title']}>
-            {title}
+            {(getAppConfig() as any).title}
           </h1>
         }
 

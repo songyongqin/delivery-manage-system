@@ -16,6 +16,7 @@ import LoginForm from './components/LoginForm'
 import { DOMAIN_USER_NAMESPACE } from 'constants/model'
 import { DARK_THEME } from 'constants/theme'
 import isSuccess from 'domainUtils/isSuccess'
+import { getAppConfig } from 'domain/app'
 
 
 const mapStateToProps = state => {
@@ -89,6 +90,9 @@ class Page extends React.Component<any, any> {
 
     return (
       <div className={styles["wrapper"]}>
+        <h1 className={styles["title"]}>
+          {(getAppConfig() as any).title}
+        </h1>
         <div>
           {
             error

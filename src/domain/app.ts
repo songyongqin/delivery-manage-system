@@ -17,6 +17,14 @@ export const getAppConfig = () => {
   return appConfig
 }
 
+const initHTMLTitle = () => {
+  try {
+    document.title = (getAppConfig() as any).title
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 export const initAppConfig = () => {
   return request(APP_CONFIG, {
     method: "GET",
@@ -25,6 +33,7 @@ export const initAppConfig = () => {
     }
   }).then(data => {
     saveConfig(data)
+    initHTMLTitle()
     return data
   })
 }
