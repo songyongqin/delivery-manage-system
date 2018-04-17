@@ -1,11 +1,10 @@
 
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
-import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
-import { NAMESPACE_THREATINFO, VALUE_THREATINFO } from '../ConstConfig';
-import * as tools from '../../../utils/tools.js';
+import { NAMESPACE_FALL_HOST, VALUE_FALL_HOST } from '../ConstConfig';
+import * as tools from 'utils'
 export default {
-  namespace: NAMESPACE_THREATINFO,
+  namespace: NAMESPACE_FALL_HOST,
   state: {
     data: [],
     loading: false,
@@ -22,7 +21,7 @@ export default {
   },
   effects: {
     *fetch({ payload }, { call, put }) {
-      const result = yield call(Service.getREPORT_THREAT_INFO, payload);
+      const result = yield call(Service.getREPORT_FALL_HOST, payload);
       const data = result.payload.data;
       const page = payload.page ? payload.page : 1;
       const total = result.payload.total ? result.payload.total : 0;
@@ -49,6 +48,5 @@ export default {
     }
   },
   subscriptions: {
-
   }
 }

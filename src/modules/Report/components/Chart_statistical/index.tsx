@@ -1,11 +1,12 @@
-import BarChart from '../../../../domainComponents/BarChart';
-import JoSpin from '../../../../components/JoSpin';
+import BarChart from 'domainComponents/RankingBarCharts'
+import EnhanciveTable from 'domainComponents/Table'
+import JoSpin from 'domainComponents/Spin'
+import * as React from 'react'
 import { Input, Button, Icon, Pagination, Spin } from 'antd';
-import { WithAnimateRender } from '../../../../components/HOSComponents';
 import { NAMESPACE_CHART } from '../../ConstConfig';
 import { connect } from 'dva'
-@WithAnimateRender
-class Page extends React.Component {
+
+class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {}
@@ -39,7 +40,7 @@ class Page extends React.Component {
   //     }
   //   });
   // }
-  render = () => {
+  render() {
     return (
       <JoSpin spinning={this.props.loading}>
         {this.getContentPanel()}

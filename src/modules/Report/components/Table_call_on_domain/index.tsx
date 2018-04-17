@@ -3,16 +3,17 @@ import { connect } from 'dva';
 import styles from './index.css';
 import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
 import { routerRedux } from 'dva/router';
-import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
-import JoSpin from '../../../../components/JoSpin';
-import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
+import BarChart from 'domainComponents/BarCharts'
+import EnhanciveTable from 'domainComponents/Table'
+import JoSpin from 'domainComponents/Spin'
 import { NAMESPACE_CALL_ON_DOMAIN } from '../../ConstConfig'
 import classnames from 'classnames';
-import TimesLabel from 'components/TimesLabel'
+import TimesLabel from 'components/TimeLabel'
 import Tooltip_ from '../Tooltip_'
 import { TOOLTIP_TITLE_DOMAIN } from '../../ConstConfig'
-@WithAnimateRender
-class Tableevent extends React.Component {
+import * as React from 'react'
+
+class Tableevent extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,10 +34,10 @@ class Tableevent extends React.Component {
     const { timestampRange, page } = this.props;
     const option = {
       callondomain:
-      {
-        limit: 10,
-        page
-      }
+        {
+          limit: 10,
+          page
+        }
     }
     this.props.onExport({ option, timestampRange })
   }
@@ -58,7 +59,7 @@ class Tableevent extends React.Component {
         dataIndex: 'time',
         key: 'time',
         render: (time) => {
-          return <TimesLabel times={[time]}></TimesLabel>
+          return <TimesLabel value={time}></TimesLabel>
         }
 
       },
@@ -109,7 +110,7 @@ function mapStateToProps(state) {
     page,
     limit,
     total,
-    isDark: state.layout.commonLayout.darkTheme,
+    isDark: false,
   };
 }
 

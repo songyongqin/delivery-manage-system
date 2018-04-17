@@ -1,11 +1,10 @@
-import React from 'react';
+import * as React from 'react'
 import { connect } from 'dva';
 import * as moment from 'moment';
-import { Menu, Button, Breadcrumb, Tabs, Checkbox, Row, Col, Switch, Icon, Tooltip, } from 'antd';
-import EnhanciveTable from '../../domainComponents/EnhanciveTable';
-import Modal from '../../domainComponents/Modal';
-import JoSpin from '../../components/JoSpin';
-import { WithContainerHeader, WithAnimateRender } from '../../components/HOSComponents';
+import { Menu, Button, Breadcrumb, Tabs, Checkbox, Row, Col, Switch, Icon, Tooltip, Modal } from 'antd';
+import Table from 'domainComponents/Table'
+import Spin from 'domainComponents/Spin'
+// import { WithContainerHeader, WithAnimateRender } from '../../components/HOSComponents';
 import classnames from 'classnames';
 import Table_attack_components from './components/Table_attack/index'
 import Table_threat_event_components from './components/Table_threat_event/index'
@@ -18,9 +17,12 @@ import Table_have_communicate_inside_ip_components from './components/Table_have
 import Table_call_on_ip_components from './components/Table_call_on_ip/index'
 import Table_call_on_domain_components from './components/Table_call_on_domain/index'
 import Chart_statistical_components from './components/Chart_statistical/index'
-import { STAND_ALONE } from 'configs/ConstConfig'
 import Tooltip_ from './components/Tooltip_'
 import { TOOLTIP_TITLE_IP, TOOLTIP_TITLE_DOMAIN } from './ConstConfig'
+import WithAnimateRender from 'components/WithAnimateRender'
+import DateRangePicker from 'domainComponents/DateRangePicker'
+const STAND_ALONE = "standAlone"
+
 import {
   NAMESPACE_BASE,
   NAMESPACE_ATTACK,
@@ -140,9 +142,9 @@ function Table_show() {
 
 
 }
+
 @WithAnimateRender
-@WithContainerHeader
-class Page extends React.Component {
+class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -199,16 +201,13 @@ class Page extends React.Component {
       timestampRange
     }
     return (
-      <div key="query-panel" style={{ marginTop: "15px" }}>
-        {this.props.getContainerHeader({
-          routes,
-          queryFilters,
-          onQuery: this.timestampRangeOnChange
-        })}
+      <div key="query-panel" style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
+        <DateRangePicker value={timestampRange} onChange={this.timestampRangeOnChange}></DateRangePicker>
       </div>
     )
   };
   timestampRangeOnChange = ({ timestampRange }) => {
+    console.info(timestampRange)
     const lastChangeTime = new Date().getTime();
     this.props.dispatch({
       type: `${NAMESPACE_BASE}/save`,
@@ -443,135 +442,135 @@ class Page extends React.Component {
       exportAll: "exportAll",
       eventStatistic: checkedListNew.includes("VALUE_ATTACK") ? 1 : 0,
       threatEvent:
-      threateventItemList.every(i => this.haveChecked(i))
-        ?
-        {
-          limit: 10,
-          page: threateventpage,
-          level: ["high", "middle", "low"]
-        }
-        : this.selectLevel(checkedListNew),
+        threateventItemList.every(i => this.haveChecked(i))
+          ?
+          {
+            limit: 10,
+            page: threateventpage,
+            level: ["high", "middle", "low"]
+          }
+          : this.selectLevel(checkedListNew),
       fallhost:
-      checkedListNew.includes("VALUE_FALL_HOST")
-        ?
-        {
-          limit: 10,
-          page: fallhostlastpage
-        }
-        : null,
+        checkedListNew.includes("VALUE_FALL_HOST")
+          ?
+          {
+            limit: 10,
+            page: fallhostlastpage
+          }
+          : null,
       threatinfo:
-      checkedListNew.includes("VALUE_THREATINFO")
-        ?
-        {
-          limit: 10,
-          page: threatinfolastpage
-        }
-        : null,
+        checkedListNew.includes("VALUE_THREATINFO")
+          ?
+          {
+            limit: 10,
+            page: threatinfolastpage
+          }
+          : null,
       malip:
-      checkedListNew.includes("VALUE_MALIP")
-        ?
-        {
-          limit: 10,
-          page: maliplastpage
-        }
-        : null,
+        checkedListNew.includes("VALUE_MALIP")
+          ?
+          {
+            limit: 10,
+            page: maliplastpage
+          }
+          : null,
       maldomain:
-      checkedListNew.includes("VALUE_MALDOMAIN")
-        ?
-        {
-          limit: 10,
-          page: maldomainlastpage
-        }
-        : null,
+        checkedListNew.includes("VALUE_MALDOMAIN")
+          ?
+          {
+            limit: 10,
+            page: maldomainlastpage
+          }
+          : null,
       sufferhostcallonrecord:
-      checkedListNew.includes("VALUE_SUFFERHOSTCALLONRECORD")
-        ?
-        {
-          limit: 10,
-          page: sufferhostcallpage
-        }
-        : null,
+        checkedListNew.includes("VALUE_SUFFERHOSTCALLONRECORD")
+          ?
+          {
+            limit: 10,
+            page: sufferhostcallpage
+          }
+          : null,
       havecommunicateinsideip:
-      checkedListNew.includes("VALUE_HAVECOMMUNICATEINSIDEIP")
-        ?
-        {
-          limit: 10,
-          page: havecommunicatepage
-        }
-        : null,
+        checkedListNew.includes("VALUE_HAVECOMMUNICATEINSIDEIP")
+          ?
+          {
+            limit: 10,
+            page: havecommunicatepage
+          }
+          : null,
       callonip:
-      checkedListNew.includes("VALUE_CALL_ON_IP")
-        ?
-        {
-          limit: 10,
-          page: calloniplastpage
-        }
-        : null,
+        checkedListNew.includes("VALUE_CALL_ON_IP")
+          ?
+          {
+            limit: 10,
+            page: calloniplastpage
+          }
+          : null,
       callondomain:
-      checkedListNew.includes("VALUE_CALL_ON_DOMAIN")
-        ?
-        {
-          limit: 10,
-          page: callondomainpage
-        }
-        : null,
+        checkedListNew.includes("VALUE_CALL_ON_DOMAIN")
+          ?
+          {
+            limit: 10,
+            page: callondomainpage
+          }
+          : null,
       chartattackip:
-      checkedListNew.includes("VALUE_CHART_ATTACK")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_CHART_ATTACK")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       eventtype:
-      checkedListNew.includes("VALUE_EVENT_TYPE")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_EVENT_TYPE")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       exploitvulnerability:
-      checkedListNew.includes("VALUE_EXLOITVULNERABILITY")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_EXLOITVULNERABILITY")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       sourcecountry:
-      checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_CHART_SOURCECOUNTRY")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       sourceprovince:
-      checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_CHART_SOURCEPROVINCE")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       recordstatistical:
-      checkedListNew.includes("VALUE_RECORDSTATISTICAL")
-        ?
-        {
-          limit: 10,
-          page: 1
-        }
-        : null,
+        checkedListNew.includes("VALUE_RECORDSTATISTICAL")
+          ?
+          {
+            limit: 10,
+            page: 1
+          }
+          : null,
       watermark:
-      checkedListNew.includes("VALUE_WATERMARK") ? 1 : 0,
+        checkedListNew.includes("VALUE_WATERMARK") ? 1 : 0,
 
     };
     const { timestampRange } = this.props.base;
     this.props.dispatch({
       type: `${NAMESPACE_BASE}/onExport`,
       payload:
-      { option, timestampRange }
+        { option, timestampRange }
 
     });
   }
@@ -814,11 +813,12 @@ class Page extends React.Component {
     }
 
     return (
-      <div>
-
+      <div style={{ position: "relative" }}>
+        {
+          this.getQueryPanel()
+        }
         {
           this.props.animateRender([
-            this.getQueryPanel(),
             <div key="operation-panel" style={{ overflow: "hidden" }}>
               <h2 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "10px" }}>威胁报告</h2>
               <h5 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center" }} >
@@ -1110,8 +1110,8 @@ function mapStateToProps(state) {
     callonip,
     callondomain,
     chartstatistical,
-    isDark: state.layout.commonLayout.darkTheme,
-    productType: state.user.productType.type,
+    isDark: false,
+    // productType: state.user.productType.type,
   };
 }
 

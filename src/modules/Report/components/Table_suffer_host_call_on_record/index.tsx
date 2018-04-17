@@ -3,57 +3,56 @@ import { connect } from 'dva';
 import styles from './index.css';
 import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
 import { routerRedux } from 'dva/router';
-import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
-import JoSpin from '../../../../components/JoSpin';
-import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
-import { NAMESPACE_MALIP } from '../../ConstConfig'
-import TimesLabel from 'components/TimesLabel'
+import EnhanciveTable from 'domainComponents/Table'
+import JoSpin from 'domainComponents/Spin'
+import * as React from 'react'
+import TimesLabel from 'components/TimeLabel'
+
+import { NAMESPACE_SUFFERHOSTCALLONRECORD } from '../../ConstConfig'
 import classnames from 'classnames';
-@WithAnimateRender
-class Tableevent extends React.Component {
+
+class Tableevent extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      key: 0,
     };
   }
 
   pageChangeHandler = (page) => {
     const { timestampRange, limit } = this.props;
     this.props.dispatch({
-      type: `${NAMESPACE_MALIP}/fetch`,
+      type: `${NAMESPACE_SUFFERHOSTCALLONRECORD}/fetch`,
       payload:
-      {
-        page,
-        limit,
-        timestampRange
+        {
+          page,
+          limit,
+          timestampRange
 
-      }
+        }
     })
   }
   onExport = () => {
 
     const { timestampRange, page } = this.props;
     const option = {
-      malip:
-      {
-        limit: 10,
-        page
-      }
+      sufferhostcallonrecord:
+        {
+          limit: 10,
+          page
+        }
     };
     this.props.dispatch({
-      type: `${NAMESPACE_MALIP}/onExport`,
+      type: `${NAMESPACE_SUFFERHOSTCALLONRECORD}/onExport`,
       payload:
-      {
-        option,
-        timestampRange
-      }
+        {
+          option,
+          timestampRange
+        }
     });
   }
   render() {
     const data = this.props.data;
     const { isDark, page, limit } = this.props;
-    const { key } = this.state;
     const columns = [{
       title: '序号',
       dataIndex: 'key',
@@ -65,14 +64,18 @@ class Tableevent extends React.Component {
     }, {
       title: '时间',
       dataIndex: 'time',
-      key: 'action',
+      key: 'time',
       render: (time) => {
-        return <TimesLabel times={[time]}></TimesLabel>
+        return <TimesLabel value={time}></TimesLabel>
       }
     }, {
-      title: '恶意IP',
-      dataIndex: 'ip',
-      key: 'ip',
+      title: '内网受害主机',
+      dataIndex: 'insideSufferHostIP',
+      key: 'insideSufferHostIP',
+    }, {
+      title: '访问的恶意IP',
+      dataIndex: 'malCallOnRecord',
+      key: 'malCallOnRecord',
     }];
     const tableProps = {
       columns: columns,
@@ -93,7 +96,7 @@ class Tableevent extends React.Component {
     return (
       <div>
         <JoSpin spinning={this.props.loading}>
-          <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>恶意IP</h4>
+          <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>内网受害主机访问外网恶意IP</h4>
           <div style={{ position: "absolute", top: "0px", right: "0px" }} >
             <Button type="primary" onClick={this.onExport}>导出</Button>
           </div>
@@ -107,15 +110,16 @@ class Tableevent extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { data, loading, timestampRange, page, limit, total } = state[NAMESPACE_MALIP];
+  const { data, loading, timestampRange, page, limit, total } = state[NAMESPACE_SUFFERHOSTCALLONRECORD];
   return {
     data,
-    loading: state.loading.effects[`${NAMESPACE_MALIP}/fetch`],
+    loading: state.loading.effects[`${NAMESPACE_SUFFERHOSTCALLONRECORD}/fetch`],
     timestampRange,
     page,
     limit,
     total,
-    isDark: state.layout.commonLayout.darkTheme,
+    isDark: false,
+    productType: "standAlone",
   };
 }
 export default connect(mapStateToProps)(Tableevent);

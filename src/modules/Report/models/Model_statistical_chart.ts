@@ -1,9 +1,9 @@
 
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
-import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
 import { NAMESPACE_ATTACK, VALUE_ATTACK } from '../ConstConfig';
-import * as tools from '../../../utils/tools.js';
+import { NAMESPACE_CHART } from '../ConstConfig'
+import * as tools from 'utils';
 import moment from 'moment';
 export default {
   namespace: NAMESPACE_CHART,

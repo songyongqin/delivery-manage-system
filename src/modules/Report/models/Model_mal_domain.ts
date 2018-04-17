@@ -1,11 +1,10 @@
 
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
-import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
-import { NAMESPACE_CALL_ON_IP, VALUE_CALL_ON_IP } from '../ConstConfig';
-import * as tools from '../../../utils/tools.js';
+import { NAMESPACE_MALDOMAIN, VALUE_MALDOMAIN } from '../ConstConfig';
+import * as tools from 'utils'
 export default {
-  namespace: NAMESPACE_CALL_ON_IP,
+  namespace: NAMESPACE_MALDOMAIN,
   state: {
     data: [],
     loading: false,
@@ -22,7 +21,7 @@ export default {
   },
   effects: {
     *fetch({ payload }, { call, put }) {
-      const result = yield call(Service.getREPORT_CALL_ON_IP, payload);
+      const result = yield call(Service.getREPORT_MAL_DOMAIN, payload);
       const data = result.payload.data;
       const total = result.payload.total ? result.payload.total : 0;
       const page = payload.page ? payload.page : 1;

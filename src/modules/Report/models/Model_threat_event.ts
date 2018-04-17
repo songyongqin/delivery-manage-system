@@ -1,9 +1,8 @@
 
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
-import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
 import { NAMESPACE_THREATEVENT } from '../ConstConfig';
-import * as tools from '../../../utils/tools.js';
+import * as tools from 'utils'
 export default {
   namespace: NAMESPACE_THREATEVENT,
   state: {

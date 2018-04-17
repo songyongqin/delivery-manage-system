@@ -1,10 +1,8 @@
 
-import { routerRedux } from 'dva/router';
+import { routerRedux } from 'dva/router'
 import moment from 'moment';
-import * as Service from './Service';
-import * as tools from '../../utils/tools.js';
-import { queryModelGenerator } from '../../utils/dvaModelGenerator';
-import { commonCallConfig } from '../../configs/ExtraEffectsOptions';
+import * as Service from './Service'
+import * as tools from 'utils'
 import { NAMESPACE_BASE, NAMESPACE_ATTACK } from './ConstConfig.js'
 moment.locale('zh-cn');
 

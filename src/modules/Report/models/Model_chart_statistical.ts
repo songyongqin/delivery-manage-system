@@ -1,16 +1,15 @@
 
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
-import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
 import { NAMESPACE_CHART } from '../ConstConfig';
-import * as tools from '../../../utils/tools.js';
+import * as tools from 'utils'
 import moment from 'moment';
 export default {
   namespace: NAMESPACE_CHART,
   state: {
     data: [],
     options: [],
-    loading: false,
+    // loading: false,
     timestampRange: [moment(), moment()],
     lastChangeTime: -1,
     splitResults: {},
@@ -46,8 +45,8 @@ export default {
     }
   },
   effects: {
-    *getRankingOption({ payload }, { callWithExtra, put }) {
-      const optionRes = yield callWithExtra(Service.getRankingOption, {});
+    *getRankingOption({ payload }, { call, put }) {
+      const optionRes = yield call(Service.getRankingOption, {});
       const timestampRange = payload.timestampRange ? payload.timestampRange : [moment(), moment()];
       const options = optionRes.status === 1 ? optionRes.payload : [];
       yield put({

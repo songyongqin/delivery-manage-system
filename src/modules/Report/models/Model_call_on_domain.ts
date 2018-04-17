@@ -1,11 +1,10 @@
 
 import { routerRedux } from 'dva/router';
 import * as Service from '../Service';
-import { queryModelGenerator } from '../../../utils/dvaModelGenerator';
-import { NAMESPACE_FALL_HOST, VALUE_FALL_HOST } from '../ConstConfig';
-import * as tools from '../../../utils/tools.js';
+import { NAMESPACE_CALL_ON_DOMAIN } from '../ConstConfig';
+import * as tools from 'utils'
 export default {
-  namespace: NAMESPACE_FALL_HOST,
+  namespace: NAMESPACE_CALL_ON_DOMAIN,
   state: {
     data: [],
     loading: false,
@@ -22,10 +21,10 @@ export default {
   },
   effects: {
     *fetch({ payload }, { call, put }) {
-      const result = yield call(Service.getREPORT_FALL_HOST, payload);
+      const result = yield call(Service.getEPORT_CALL_ON_DOMAIN, payload);
       const data = result.payload.data;
-      const page = payload.page ? payload.page : 1;
       const total = result.payload.total ? result.payload.total : 0;
+      const page = payload.page ? payload.page : 1;
       const timestampRange = payload.timestampRange ? payload.timestampRange : [];
       if (result.status === 1) {
         yield put({

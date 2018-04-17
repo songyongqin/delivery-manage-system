@@ -9,6 +9,9 @@ const defaultInitState = {
   theme: LIGHT_THEME,
   navMini: true,
   animate: true,
+  commonLayout: {
+    darkTheme: false
+  }
 }
 
 const getInitState = () => {

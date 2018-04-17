@@ -3,15 +3,13 @@ import { connect } from 'dva';
 import styles from './index.css';
 import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
 import { routerRedux } from 'dva/router';
-import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
-import JoSpin from '../../../../components/JoSpin';
-import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
-import { NAMESPACE_SUFFERHOSTCALLONRECORD } from '../../ConstConfig'
+import EnhanciveTable from 'domainComponents/Table'
+import JoSpin from 'domainComponents/Spin'
+import * as React from 'react'
+import { NAMESPACE_MALDOMAIN } from '../../ConstConfig'
+import TimesLabel from 'components/TimeLabel'
 import classnames from 'classnames';
-import TimesLabel from 'components/TimesLabel'
-
-@WithAnimateRender
-class Tableevent extends React.Component {
+class Tableevent extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,33 +19,33 @@ class Tableevent extends React.Component {
   pageChangeHandler = (page) => {
     const { timestampRange, limit } = this.props;
     this.props.dispatch({
-      type: `${NAMESPACE_SUFFERHOSTCALLONRECORD}/fetch`,
+      type: `${NAMESPACE_MALDOMAIN}/fetch`,
       payload:
-      {
-        page,
-        limit,
-        timestampRange
+        {
+          page,
+          limit,
+          timestampRange
 
-      }
+        }
     })
   }
   onExport = () => {
 
     const { timestampRange, page } = this.props;
     const option = {
-      sufferhostcallonrecord:
-      {
-        limit: 10,
-        page
-      }
+      maldomain:
+        {
+          limit: 10,
+          page
+        }
     };
     this.props.dispatch({
-      type: `${NAMESPACE_SUFFERHOSTCALLONRECORD}/onExport`,
+      type: `${NAMESPACE_MALDOMAIN}/onExport`,
       payload:
-      {
-        option,
-        timestampRange
-      }
+        {
+          option,
+          timestampRange
+        }
     });
   }
   render() {
@@ -66,16 +64,12 @@ class Tableevent extends React.Component {
       dataIndex: 'time',
       key: 'time',
       render: (time) => {
-        return <TimesLabel times={[time]}></TimesLabel>
+        return <TimesLabel value={time}></TimesLabel>
       }
     }, {
-      title: '内网受害主机',
-      dataIndex: 'insideSufferHostIP',
-      key: 'insideSufferHostIP',
-    }, {
-      title: '访问的恶意IP',
-      dataIndex: 'malCallOnRecord',
-      key: 'malCallOnRecord',
+      title: '恶意域名',
+      dataIndex: 'domain',
+      key: 'domain',
     }];
     const tableProps = {
       columns: columns,
@@ -96,7 +90,7 @@ class Tableevent extends React.Component {
     return (
       <div>
         <JoSpin spinning={this.props.loading}>
-          <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>内网受害主机访问外网恶意IP</h4>
+          <h4 className={classnames({ "lbl-dark": isDark })} style={{ textAlign: "center", marginBottom: "25px", marginTop: "50px" }}>恶意域名</h4>
           <div style={{ position: "absolute", top: "0px", right: "0px" }} >
             <Button type="primary" onClick={this.onExport}>导出</Button>
           </div>
@@ -110,15 +104,16 @@ class Tableevent extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { data, loading, timestampRange, page, limit, total } = state[NAMESPACE_SUFFERHOSTCALLONRECORD];
+  const { data, loading, timestampRange, page, limit, total } = state[NAMESPACE_MALDOMAIN];
   return {
     data,
-    loading: state.loading.effects[`${NAMESPACE_SUFFERHOSTCALLONRECORD}/fetch`],
+    loading: state.loading.effects[`${NAMESPACE_MALDOMAIN}/fetch`],
     timestampRange,
     page,
-    limit,
     total,
-    isDark: state.layout.commonLayout.darkTheme,
+    limit,
+    isDark: false,
+    productType: "standAlone",
   };
 }
 export default connect(mapStateToProps)(Tableevent);

@@ -3,16 +3,15 @@ import { connect } from 'dva';
 import styles from './index.css';
 import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
 import { routerRedux } from 'dva/router';
-import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
-import JoSpin from '../../../../components/JoSpin';
-import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
+import EnhanciveTable from 'domainComponents/Table'
+import JoSpin from 'domainComponents/Spin'
+import * as React from 'react'
 import { NAMESPACE_CALL_ON_IP } from '../../ConstConfig'
 import classnames from 'classnames';
-import TimesLabel from 'components/TimesLabel'
+import TimesLabel from 'components/TimeLabel'
 import Tooltip_ from '../Tooltip_'
 import { TOOLTIP_TITLE_IP } from '../../ConstConfig'
-@WithAnimateRender
-class Tableevent extends React.Component {
+class Tableevent extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,12 +23,12 @@ class Tableevent extends React.Component {
     this.props.dispatch({
       type: `${NAMESPACE_CALL_ON_IP}/fetch`,
       payload:
-      {
-        page,
-        limit,
-        timestampRange
+        {
+          page,
+          limit,
+          timestampRange
 
-      }
+        }
     })
   }
   onExport = () => {
@@ -37,18 +36,18 @@ class Tableevent extends React.Component {
     const { timestampRange, page } = this.props;
     const option = {
       callonip:
-      {
-        limit: 10,
-        page
-      }
+        {
+          limit: 10,
+          page
+        }
     };
     this.props.dispatch({
       type: `${NAMESPACE_CALL_ON_IP}/onExport`,
       payload:
-      {
-        option,
-        timestampRange
-      }
+        {
+          option,
+          timestampRange
+        }
     });
   }
   render() {
@@ -69,7 +68,7 @@ class Tableevent extends React.Component {
         dataIndex: 'time',
         key: 'time',
         render: (time) => {
-          return <TimesLabel times={[time]}></TimesLabel>
+          return <TimesLabel value={time}></TimesLabel>
         }
       },
       {
@@ -120,7 +119,8 @@ function mapStateToProps(state) {
     page,
     limit,
     total,
-    isDark: state.layout.commonLayout.darkTheme,
+    isDark: false,
+    productType: "standAlone",
   };
 }
 export default connect(mapStateToProps)(Tableevent);

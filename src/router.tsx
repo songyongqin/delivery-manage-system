@@ -19,6 +19,7 @@ import getUserManagerPage from 'routes/UserManager'
 import getVMManagerPage from 'routes/Manager_VM'
 import getStrategyPage from 'routes/SysConfig_Strategy'
 import getOverallPage from 'routes/Analyse_Overall'
+import getReportPage from 'routes/Report'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -39,7 +40,8 @@ import {
   USER_MANAGER_URL,
   MANAGER_VM_URL,
   ROOT_URL,
-  MANAGER_URL
+  MANAGER_URL,
+  REPORT_URL
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
 
@@ -152,6 +154,12 @@ export default ({ history, app }) => {
               path={USER_MANAGER_URL} >
             </Route>
 
+
+            <Route
+              exact
+              component={getReportPage(app, REPORT_URL)}
+              path={REPORT_URL} >
+            </Route>
 
           </Switch>
         </MainWrapper>

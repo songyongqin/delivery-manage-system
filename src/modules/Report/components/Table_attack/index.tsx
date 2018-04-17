@@ -4,13 +4,12 @@ import * as moment from 'moment';
 import styles from './index.css';
 import { Table, Input, Button, Icon, Pagination, Spin } from 'antd';
 import { routerRedux } from 'dva/router';
-import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
-import Modal from '../../../../domainComponents/Modal';
-import JoSpin from '../../../../components/JoSpin';
-import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents';
+import EnhanciveTable from 'domainComponents/Table'
+import JoSpin from 'domainComponents/Spin'
+import * as React from 'react'
 import classnames from 'classnames';
 import { NAMESPACE_ATTACK } from '../../ConstConfig'
-class Tableattack extends React.Component {
+class Tableattack extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,10 +26,10 @@ class Tableattack extends React.Component {
     this.props.dispatch({
       type: `${NAMESPACE_ATTACK}/onExport`,
       payload:
-      {
-        option,
-        timestampRange
-      }
+        {
+          option,
+          timestampRange
+        }
     });
   }
   render() {
@@ -106,8 +105,8 @@ function mapStateToProps(state) {
     data,
     loading: state.loading.effects[`${NAMESPACE_ATTACK}/fetch`],
     timestampRange,
-    isDark: state.layout.commonLayout.darkTheme,
-    productType: state.user.productType.type,
+    isDark: false,
+    productType: "standAlone",
   };
 }
 
