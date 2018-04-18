@@ -11,6 +11,7 @@ export { default as queryString } from './queryString'
 
 import * as Ramda from 'ramda'
 
+
 export const compose = Ramda.compose,
 
   isNil = Ramda.isNil,
@@ -38,6 +39,8 @@ export { default as exportData } from './exportData'
 import lodash from 'lodash'
 
 export const throttle = lodash.throttle
+
+export const get = lodash.get
 
 export const isFunction = func => {
   return Object.prototype.toString.call(func) === "[object Function]"

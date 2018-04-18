@@ -21,6 +21,7 @@ import {
 
 import styles from './styles.css'
 import classnames from 'classnames'
+import { get } from 'utils'
 
 import {
   HOST_IP_DATAINDEX,
@@ -82,7 +83,7 @@ const Option = Select.Option;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 6 },
+    sm: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 24 },
@@ -210,6 +211,7 @@ class WrappedForm extends React.Component<any, any> {
     let activeInteraction = form.getFieldValue(INTERCATION_DATAINDEX),
       activeSystem = (Object.keys(this.props.vmOptions[hostIp]) || {}).filter(k => k !== LOW_INTERACTION)[0]
     form.resetFields([SERVICES_DATAINDEX])
+    form.resetField(["adapter"])
     form.setFieldsValue({ [SYSTEM_DATAINDEX]: Object.keys(vmOptions[hostIp][activeInteraction])[0] })
     this.props.form.setFieldsValue({ [SERVICES_DATAINDEX]: [] })
   }
@@ -226,6 +228,9 @@ class WrappedForm extends React.Component<any, any> {
 
     const systemList = Object.entries((vmOptions[activeHostIp] || {})[activeInteraction] || {})
 
+    const adapterList = Object.entries(get(vmOptions, [activeHostIp, 'adapter'], {}))
+
+    const activeAdapter = adapterList[0] || ""
 
     const defaultSystem = (systemList[0] || [])[0]
 
@@ -282,8 +287,11 @@ class WrappedForm extends React.Component<any, any> {
           }
         </FormItem>
         <FormItem  {...commonProps}
-          label={<Label className={lblClasses}
-            keyName={HOST_IP_DATAINDEX} />}>
+          label={
+            <span>
+              主机管理IP - 设备ID
+            </span>
+          }>
           {
             getFieldDecorator(
               HOST_IP_DATAINDEX,
@@ -296,6 +304,30 @@ class WrappedForm extends React.Component<any, any> {
                 {
                   hostIpList.map(i => <Option value={i} key={i}>
                     {i}
+                  </Option>)
+                }
+              </Select>
+              )
+          }
+        </FormItem>
+        <FormItem  {...commonProps}
+          label={
+            <span>
+              待监控 VLAN IP - 网卡
+            </span>
+          }>
+          {
+            getFieldDecorator(
+              "adapter",
+              {
+                initialValue: adapterList[0][0]
+              }
+            )
+              (
+              <Select disabled={loading}>
+                {
+                  adapterList.map(([key, text]) => <Option value={key} key={key}>
+                    {text}
                   </Option>)
                 }
               </Select>

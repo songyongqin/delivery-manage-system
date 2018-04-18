@@ -208,7 +208,7 @@ export default class VMManager extends React.PureComponent<any, any>{
               closable={!this.props.postVMLoading}
               onCancel={_ => this.props.setModalVisible("create", false)}
               destroyOnClose={true}
-              width={600}
+              width={640}
               footer={null}
               visible={this.props.modalVisible["create"]}
               title={<div><Icon type="plus"></Icon>&nbsp;创建虚拟蜜罐</div>}>
