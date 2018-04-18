@@ -60,7 +60,7 @@ export default class Header extends React.PureComponent<Props, any>{
               <Icon type="menu-fold" />
             </a>
         }
-        {
+        {/* {
           theme === LIGHT_THEME
             ?
             <a style={themeBtnStyle} onClick={() => themeOnChange(DARK_THEME)}>
@@ -70,7 +70,7 @@ export default class Header extends React.PureComponent<Props, any>{
             <a style={themeBtnStyle} onClick={() => themeOnChange(LIGHT_THEME)}>
               <ExtraIcon type="sun"></ExtraIcon>
             </a>
-        }
+        } */}
         <div style={{ float: "right", marginLeft: "15px" }}>
           <RecordOfCreateVM></RecordOfCreateVM>
         </div>

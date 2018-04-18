@@ -1,132 +1,141 @@
 @import '~themes/vars';
 
 
-.table{
-  :global{
+// .table{
+//   :global{
   
-    .ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr > th, 
-    .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th,
-    .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th, 
-    .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr > th,
-    .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th, 
-    .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th,
-    .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th,
-    .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th {
-      background: transparent;
-      border:none;  
-    }
-    .ant-table-small>.ant-table-content>.ant-table-body>table{
-      padding:0;
-    }
-    // table{
-    //   border-collapse:separate;   
-    //   border-spacing: 0 10px;
+//     .ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr > th, 
+//     .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th,
+//     .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th, 
+//     .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr > th,
+//     .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th, 
+//     .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th,
+//     .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th,
+//     .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th {
+//       background: transparent;
+//       border:none;  
+//     }
+//     .ant-table-small>.ant-table-content>.ant-table-body>table{
+//       padding:0;
+//     }
+//     // table{
+//     //   border-collapse:separate;   
+//     //   border-spacing: 0 10px;
 
-    // }
-    .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body{
-      background: transparent;
-      margin-top:20px;
-    }
-    .ant-table-fixed-header .ant-table-scroll .ant-table-header{
-      overflow: hidden;
-      z-index: 11;
-      position: relative;
-    }
-    .ant-table-small .ant-table-header table{
-      border:none;
-      padding:0;
-    }
-    .ant-table-small{
-      border: none;
-    }
-    .ant-table-small .ant-table-header{
-      background: transparent;
-    }
-    tr.ant-table-expanded-row {
-      background: transparent;
-      td{
-        background: transparent;
-      }
-    }
-    .ant-table-thead>tr>th,
-    .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th{
-      background: transparent;
-      border-bottom:none;
-    }
-    tr{
-      transition: none 0s;
-    }
+//     // }
+//     .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body{
+//       background: transparent;
+//       margin-top:20px;
+//     }
+//     .ant-table-fixed-header .ant-table-scroll .ant-table-header{
+//       overflow: hidden;
+//       z-index: 11;
+//       position: relative;
+//     }
+//     .ant-table-small .ant-table-header table{
+//       border:none;
+//       padding:0;
+//     }
+//     .ant-table-small{
+//       border: none;
+//     }
+//     .ant-table-small .ant-table-header{
+//       background: transparent;
+//     }
+//     tr.ant-table-expanded-row {
+//       background: transparent;
+//       td{
+//         background: transparent;
+//       }
+//     }
+//     .ant-table-thead>tr>th,
+//     .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th{
+//       background: transparent;
+//       border-bottom:none;
+//     }
+//     tr{
+//       transition: none 0s;
+//     }
 
-  }
+//   }
 
-  &.dark{      
-    .common-table-style(@dark-bg-level-3,@dark-txt-color,@primary-color,@dark-txt-color) 
-  }
-  &.light{
-    .common-table-style(@light-bg-level-3,@light-txt-color,@primary-color,#cccccc)
-  }
-}
+//   &.dark{      
+//     .common-table-style(@dark-bg-level-3,@dark-txt-color,@primary-color,@dark-txt-color) 
+//   }
+//   &.light{
+//     .common-table-style(@light-bg-level-3,@light-txt-color,@primary-color,#cccccc)
+//   }
+// }
 
-.common-table-style(@bg-level-3,@txt-color,@primary-color,@border-color){
-  @td-border-width:1.4px;
-  :global{
-    .ant-table-placeholder{
-      background: @bg-level-3;
-    }
-    .ant-table-row{
-      &>td{
-        color:@txt-color;
-        background: @bg-level-3;
-        border-top:@td-border-width solid @border-color;
-        border-bottom:@td-border-width solid @border-color;
-        transition: none 0s;
-      }
-      &>td:first-child{
-        border-left:@td-border-width solid @border-color;
-      }
-      &>td:last-child{
-        border-right:@td-border-width solid @border-color;
-      }
+// .common-table-style(@bg-level-3,@txt-color,@primary-color,@border-color){
+//   @td-border-width:1.4px;
+//   :global{
+//     .ant-table-placeholder{
+//       background: @bg-level-3;
+//     }
+//     .ant-table-row{
+//       &>td{
+//         color:@txt-color;
+//         background: @bg-level-3;
+//         border-top:@td-border-width solid @border-color;
+//         border-bottom:@td-border-width solid @border-color;
+//         transition: none 0s;
+//       }
+//       &>td:first-child{
+//         border-left:@td-border-width solid @border-color;
+//       }
+//       &>td:last-child{
+//         border-right:@td-border-width solid @border-color;
+//       }
       
-      &:hover{
-        &>td{
-          border-color:@primary-color;
-          border-width:1.5px;
-        }
-      } 
-    }
-    .ant-table-content .ant-table-row:last-child>td,{
-      border-bottom: @td-border-width solid @border-color; 
-    }
-    .ant-table-content .ant-table-row:hover:last-child>td {
-      border-color: @primary-color;
-      border-width:1.5px;
-    }
-    tr.ant-table-expanded-row, 
-    tr.ant-table-expanded-row:hover,
-    .ant-table-row,
-    .ant-table-thead>tr>th,
-    .ant-table-placeholder{
-      color: @txt-color;
-    }
-  }
-}
+//       &:hover{
+//         &>td{
+//           border-color:@primary-color;
+//           border-width:1.5px;
+//         }
+//       } 
+//     }
+//     .ant-table-content .ant-table-row:last-child>td,{
+//       border-bottom: @td-border-width solid @border-color; 
+//     }
+//     .ant-table-content .ant-table-row:hover:last-child>td {
+//       border-color: @primary-color;
+//       border-width:1.5px;
+//     }
+//     tr.ant-table-expanded-row, 
+//     tr.ant-table-expanded-row:hover,
+//     .ant-table-row,
+//     .ant-table-thead>tr>th,
+//     .ant-table-placeholder{
+//       color: @txt-color;
+//     }
+//   }
+// }
 
 
-.pagination{
-  &.dark{
-    color:@dark-txt-color;
-  }
-  &.light{
-    color:@light-txt-color;
-  }
+// .pagination{
+//   &.dark{
+//     color:@dark-txt-color;
+//   }
+//   &.light{
+//     color:@light-txt-color;
+//   }
+//   :global{
+
+//     .ant-pagination-item-active{
+//       background: @primary-color;
+//       a{
+//         color:white;
+//       }
+//     }
+//   }
+// }
+
+.table{
+  margin-top:10px;
   :global{
-
-    .ant-pagination-item-active{
-      background: @primary-color;
-      a{
-        color:white;
-      }
+    tr.ant-table-expanded-row{
+      background: transparent;
     }
   }
 }
@@ -140,9 +149,9 @@
 }
 
 
-.input-dropdown{
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-  min-width: 240px;
-  background: white;
-  padding: 10px;
-}
+// .input-dropdown{
+//   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+//   min-width: 240px;
+//   background: white;
+//   padding: 10px;
+// }

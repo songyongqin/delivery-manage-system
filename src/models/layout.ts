@@ -26,7 +26,10 @@ const getInitState = () => {
   }
 }
 
-const initState = getInitState()
+const initState = {
+  ...getInitState(),
+  theme: LIGHT_THEME,
+}
 
 const reducers = {
   _changeTheme: (preState, { payload }) => {

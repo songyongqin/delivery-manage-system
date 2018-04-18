@@ -20,7 +20,7 @@ import columnsCreator from 'domainUtils/columnsCreator'
 const titleConfig = {}
 
 Object.keys(textConfig).forEach(i => {
-  titleConfig[i] = <p style={{ textAlign: "center" }}>{textConfig[i]}</p>
+  titleConfig[i] = <div style={{ textAlign: "center" }}>{textConfig[i]}</div>
 })
 
 const extraProps = {

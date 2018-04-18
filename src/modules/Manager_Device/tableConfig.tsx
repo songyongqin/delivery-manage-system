@@ -192,7 +192,7 @@ const versionListTableRenderer = records => {
 const versionListRenderer = records => {
 
   return (
-    <p style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center" }}>
       <Popover
         title="版本信息"
         placement="left"
@@ -203,7 +203,7 @@ const versionListRenderer = records => {
           <Icon type="eye-o"></Icon>
         </a>
       </Popover>
-    </p>
+    </div>
   )
 }
 
@@ -253,9 +253,9 @@ export const getColumns = ({
   Object.entries(tableTextConfig.colTitles).forEach(i => {
 
     finalTitleTextConfig[i[0]] = (
-      <p style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center" }}>
         {i[1]}
-      </p>
+      </div>
     )
   })
 
@@ -279,9 +279,9 @@ export const getColumns = ({
   columns = [
     ...columns,
     {
-      title: <p style={{ textAlign: "center" }}>
+      title: <div style={{ textAlign: "center" }}>
         {tableTextConfig.colTitles[OPERATION_ROW_KEY]}
-      </p>,
+      </div>,
       dataIndex: OPERATION_ROW_KEY,
       render: getOperationRenderer({ handle, readonly })
     }
