@@ -1,8 +1,9 @@
 import request from 'utils/request'
 import { getTemp, setTemp } from 'utils'
 import combineNamespace from 'domainUtils/combineNamespace'
+import path from 'constants/path'
 
-const APP_CONFIG = "/static/config/app.json"
+const APP_CONFIG = path.layoutConfig.app
 
 const PRODUCTION_STORAGE_NAMESPACE = combineNamespace("@@__production__@@")
 

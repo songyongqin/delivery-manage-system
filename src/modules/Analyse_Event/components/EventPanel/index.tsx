@@ -7,6 +7,7 @@ import * as React from 'react'
 import TableWithRemote from 'domainComponents/TableWithRemote'
 import WithConfig from 'domainComponents/WithConfig'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
+import path from 'constants/path'
 
 const initialFilters = {
   timestampRange: [],
@@ -20,7 +21,7 @@ const initialFilters = {
 
 }
 
-@WithConfig("/static/config/table/analyseEvent.json")
+@WithConfig(path.layoutConfig.analyseEvent)
 export default class EventPanel extends React.Component<any, any> {
   static defaultProps = {
     initialFilters: {}

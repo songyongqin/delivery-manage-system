@@ -8,6 +8,7 @@ import TableWithRemote from 'domainComponents/TableWithRemote'
 import Spin from 'domainComponents/Spin'
 import WithConfig from 'domainComponents/WithConfig'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
+import path from 'constants/path'
 
 const initialFilters = {
   timestampRange: [],
@@ -15,7 +16,7 @@ const initialFilters = {
   page: 1,
 }
 
-@WithConfig("/static/config/table/threatEventThreatInfo.json")
+@WithConfig(path.layoutConfig.threatEventThreatInfo)
 export default class extends React.Component<any, any>{
   static defaultProps = {
     initialFilters: {}
