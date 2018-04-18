@@ -4,6 +4,7 @@ import aliasConfig from './alias.configs'
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const CSSSplitWebpackPlugin = require('css-split-webpack-plugin').default
 
 module.exports = (webpackConfig, env) => {
   const production = env === 'production'
@@ -61,8 +62,10 @@ module.exports = (webpackConfig, env) => {
       to: path.join(__dirname, './dist/static/config'),
     },
   ]))
-
-
+  webpackConfig.plugins.push(new CSSSplitWebpackPlugin({
+    size: 2000,
+    filename: "static/[name]-[part].[ext]"
+  }))
   if (production) {
 
     webpackConfig.plugins.push(new webpack.HashedModuleIdsPlugin())
