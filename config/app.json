@@ -1,5 +1,5 @@
 {
-  "title": "Attack capture System",
+  "title": "安天捕风蜜罐系统",
   "secret": false,
   "routerRegister": {
     "/overview": true,
