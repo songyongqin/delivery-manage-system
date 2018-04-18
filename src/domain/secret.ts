@@ -1,14 +1,19 @@
 import CryptoJS from "crypto-js"
 import isDev from 'utils/isDev'
 import combineNamespace from 'domainUtils/combineNamespace'
+import { getAppConfig } from './app'
 
 const SECRET_NAMESPACE = combineNamespace("@@__secret__@@")
 
 export const isSecret = () => {
-  if (isDev()) {
+  try {
+    if (isDev()) {
+      return false
+    }
+    return (getAppConfig() as any).secret
+  } catch (e) {
     return false
   }
-  return false
 }
 
 const getSecretKey = () => {
