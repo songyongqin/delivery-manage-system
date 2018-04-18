@@ -85,6 +85,9 @@ export default class extends React.Component {
     this.setState({
       openKeys: [last(openKeys)]
     })
+    setTimeout(() => {
+      this.resizeNiceScroll()
+    }, 300)
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.mini !== this.props.mini) {
