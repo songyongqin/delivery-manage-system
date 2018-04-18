@@ -211,7 +211,7 @@ class WrappedForm extends React.Component<any, any> {
     let activeInteraction = form.getFieldValue(INTERCATION_DATAINDEX),
       activeSystem = (Object.keys(this.props.vmOptions[hostIp]) || {}).filter(k => k !== LOW_INTERACTION)[0]
     form.resetFields([SERVICES_DATAINDEX])
-    form.resetField(["adapter"])
+    form.resetFields(["adapter"])
     form.setFieldsValue({ [SYSTEM_DATAINDEX]: Object.keys(vmOptions[hostIp][activeInteraction])[0] })
     this.props.form.setFieldsValue({ [SERVICES_DATAINDEX]: [] })
   }
