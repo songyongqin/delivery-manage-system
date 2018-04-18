@@ -1,27 +1,26 @@
-
-import { connect } from 'dva';
-import { Table, Input, Button, Icon, Pagination, Spin, Collapse } from 'antd';
+import * as React from 'react'
+import { connect } from 'dva'
+import { Table, Input, Button, Icon, Pagination, Spin, Collapse, Modal } from 'antd';
 import { routerRedux } from 'dva/router';
-import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
-import JoSpin from '../../../../components/JoSpin';
-import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
+import EnhanciveTable from 'domainComponents/Table';
+import JoSpin from 'domainComponents/Spin'
 import { NAMESPACE_NODE, OPERATION_NAMESPACE, HOST_IP_DATA_INDEX } from '../../ConstConfig'
 import classnames from 'classnames'
 import styles from './index.css'
 import TagList from 'components/TagList'
-import JoTag from 'components/JoTag'
-import Modal from 'domainComponents/Modal'
+import JoTag from 'components/Tag'
 import NodeUpdateResultPanel from '../NodeUpdateResultPanel'
-import { WithModal } from 'domainComponents/HOSComponents'
-import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
+// import { WithModal } from 'domainComponents/HOSComponents'
 import { HOST_DATA_INDEX } from 'modules/Analyse_Overall_NetBasic/ConstConfig';
 const Panel = Collapse.Panel;
-import { NODE } from 'configs/ConstConfig'
-
+// import { NODE } from 'configs/ConstConfig'
+import WithAnimateRender from 'components/WithAnimateRender'
+import WithModal from 'components/WithModal'
+import extraConnect from 'domainUtils/extraConnect'
 
 @WithAnimateRender
 @WithModal()
-class mirrornode extends React.Component {
+class MirrorNode extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +30,8 @@ class mirrornode extends React.Component {
   }
   getOnUpdateHandle = payload => () => {
     const selectedRows = [payload];
-    this.props.switchModal("nodeUpdate")
+    // this.props.switchModal("nodeUpdate")
+    this.props.setModalVisible("nodeUpdate", true)
     this.props.updateNodeMirror({ idList: selectedRows.map(i => i.id) })
       .then(result => this.setState({
         result: result.map(item => ({
@@ -115,7 +115,7 @@ class mirrornode extends React.Component {
       title: '操作',
       key: 'interaction',
       render: records => {
-        return <Button type="primary" disabled={this.props.productType === NODE} onClick={this.getOnUpdateHandle(records)}>升级镜像</Button>
+        return <Button type="primary" onClick={this.getOnUpdateHandle(records)}>升级镜像</Button>
       }
     },
     ];
@@ -138,9 +138,9 @@ class mirrornode extends React.Component {
       }),
     }
 
-    if (this.props.productType !== NODE) {
-      tableProps.rowSelection = rowSelection
-    }
+    // if (this.props.productType !== NODE) {
+    //   tableProps.rowSelection = rowSelection
+    // }
 
     const paginationProps = {
       total: this.props.total,
@@ -152,24 +152,17 @@ class mirrornode extends React.Component {
       <div>
         <JoSpin spinning={this.props.loading}>
 
-          <h4 className="line" className={classnames({ "lbl-dark": isDark })} style={{ marginBottom: "25px", marginTop: "50px" }}>蜜罐节点镜像状态</h4>
+          <h4 className={classnames({ "lbl-dark": isDark })} style={{ marginBottom: "25px", marginTop: "50px" }}>蜜罐节点镜像状态</h4>
           <div style={{ overflow: "hidden" }}>
-            {
-              this.props.productType !== NODE
-                ?
-                <Button
-                  type="primary"
-                  onClick={this.start}
-                  loading={this.props.updateNodeLoading}
-                  disabled={this.state.selectedRows.length === 0}
-                  style={{ float: "right", marginBottom: "20px" }}
-                >
-                  升级蜜罐节点镜像
+            <Button
+              type="primary"
+              onClick={this.start}
+              loading={this.props.updateNodeLoading}
+              disabled={this.state.selectedRows.length === 0}
+              style={{ float: "right", marginBottom: "20px" }}
+            >
+              升级蜜罐节点镜像
                 </Button>
-                :
-                null
-            }
-
 
           </div>
           <EnhanciveTable key="table" tableProps={tableProps} paginationProps={paginationProps} rowSelection={rowSelection}> </EnhanciveTable>
@@ -216,9 +209,9 @@ function mapStateToProps(state) {
     isDark: state.layout.commonLayout.darkTheme,
     updateNodeLoading: state.loading.effects[`${OPERATION_NAMESPACE}/updateNodeMirror`],
     lastReqTime: state.lastEffectTime.effects[`${NAMESPACE_NODE}/fetch`],
-    productType: state.user.productType.type,
-    productInfo: state.user.productType,
-    isAdmin: state.user.userData.isAdmin
+    // productType: state.user.productType.type,
+    // productInfo: state.user.productType,
+    // isAdmin: state.user.userData.isAdmin
   };
 }
 
@@ -235,4 +228,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))(mirrornode);
+export default connect(mapStateToProps, mapDispatchToProps)(MirrorNode);

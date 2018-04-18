@@ -1,15 +1,16 @@
 import classnames from 'classnames';
-import JoTag from 'components/JoTag'
+import JoTag from 'components/Tag'
 import { Badge } from 'antd'
 import ContactTip from 'domainComponents/ContactTip'
+import * as React from 'react'
 
-export default ({ data, isDark, onCancel, res }) => {
-  const { status, payload = {}, message } = res || {}
+export default ({ data, onCancel, res }) => {
+  const { status, payload = {}, message } = (res || {}) as any
   const { add = [], remove = [] } = payload;
 
   if (status !== 1) {
     return <div>
-      <h3 className={textClasses} style={{ margin: "5px", textAlign: "center", color: "red" }}>
+      <h3 style={{ margin: "5px", textAlign: "center", color: "red" }}>
         更新失败，原因：{message}
       </h3>
       <ContactTip onCancel={onCancel}>
@@ -18,7 +19,7 @@ export default ({ data, isDark, onCancel, res }) => {
   }
 
   const textClasses = classnames({
-    ["lbl-dark"]: isDark
+    // ["lbl-dark"]: isDark
   })
 
   return <div >

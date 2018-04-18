@@ -1,9 +1,6 @@
 import React from 'react';
-import { Menu, Badge, Button, Breadcrumb, Upload, Icon, Progress, Row, Col, Radio } from 'antd';
-import {
-  WithAnimateRender,
-  WithBreadcrumb
-} from 'components/HOSComponents';
+import { Modal, Menu, Badge, Button, Breadcrumb, Upload, Icon, Progress, Row, Col, Radio } from 'antd';
+
 import { connect } from 'dva'
 import {
   OPERATION_NAMESPACE,
@@ -12,17 +9,15 @@ import {
   COMMON_STATUS,
   INIT_STATUS,
 } from '../../ConstConfig.js'
-import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
 import classnames from 'classnames';
-import EnhanciveTable from 'domainComponents/EnhanciveTable';
-import { getFileMd5 } from 'utils/tools'
-import JoSpin from 'components/JoSpin'
-import JoTag from 'components/JoTag'
+import EnhanciveTable from 'domainComponents/Table';
+import { getFileMD5 } from 'utils'
+import JoSpin from 'domainComponents/Spin'
+import JoTag from 'components/Tag'
 const { Dragger } = Upload;
 import LocalUpdatePanel from '../LocalUpdatePanel'
 import RemoteUpdatePanel from '../RemoteUpdatePanel'
-import Modal from 'domainComponents/Modal'
-import { WithModal } from 'domainComponents/HOSComponents'
+import extraConnect from 'domainUtils/extraConnect'
 
 const mapStateToProps = state => ({
   isDark: state.layout.commonLayout.darkTheme,
@@ -50,8 +45,8 @@ const mapDispatchToProps = dispatch => {
 const REMOTE_METHOD = "remote",
   LOCAL_METHOD = "local"
 
-@connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
-class UpdatePanel extends React.Component {
+@connect(mapStateToProps, mapDispatchToProps)
+class UpdatePanel extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +65,7 @@ class UpdatePanel extends React.Component {
     // })
 
   }
-  render = () => {
+  render() {
 
 
     // const { visible } = this.state;
@@ -86,7 +81,7 @@ class UpdatePanel extends React.Component {
 
     return (
       <div key="local" >
-        <div style={{ textAlgin: "center", marginBottom: "30px" }}>
+        <div style={{ textAlign: "center", marginBottom: "30px" }}>
           {
             visible
               ?

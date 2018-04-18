@@ -21,6 +21,7 @@ import getStrategyPage from 'routes/SysConfig_Strategy'
 import getOverallPage from 'routes/Analyse_Overall'
 import getReportPage from 'routes/Report'
 import getSystemLogLoginPage from 'routes/SysLog_Login'
+import getManagerMirrorPage from 'routes/Manager_Mirror'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -44,7 +45,8 @@ import {
   MANAGER_URL,
   REPORT_URL,
   SYS_LOG_URL,
-  SYS_LOG_LOGIN_URL
+  SYS_LOG_LOGIN_URL,
+  MANAGER_MIRROR_URL
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
 
@@ -152,9 +154,17 @@ export default ({ history, app }) => {
             </Route>
             <Route
               exact
+              component={getManagerMirrorPage(app, MANAGER_MIRROR_URL)}
+              path={MANAGER_MIRROR_URL} >
+            </Route>
+            {/*  */}
+
+            <Route
+              exact
               component={getUserManagerPage(app, USER_MANAGER_URL)}
               path={USER_MANAGER_URL} >
             </Route>
+
             <Route
               exact
               component={getReportPage(app, REPORT_URL)}
@@ -164,7 +174,7 @@ export default ({ history, app }) => {
             <Route
               exact
               path={SYS_LOG_URL}
-              render={() => (<Redirect to={getDefaultRoute(SYS_LOG_URL} />)} />
+              render={() => (<Redirect to={getDefaultRoute(SYS_LOG_URL)} />)} />
             <Route
               exact
               component={getSystemLogLoginPage(app, SYS_LOG_LOGIN_URL)}

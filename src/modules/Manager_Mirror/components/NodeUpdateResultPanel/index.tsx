@@ -1,5 +1,6 @@
-import EnhanviceTable from 'domainComponents/EnhanciveTable'
-import JoTag from 'components/JoTag'
+import EnhanviceTable from 'domainComponents/Table'
+import JoTag from 'components/Tag'
+import React from 'react'
 import {
   HOST_IP_DATA_INDEX,
 } from '../../ConstConfig'

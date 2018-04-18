@@ -1,17 +1,19 @@
-import request from '../../utils/request';
-import ApiConfig from '../../configs/ApiConfig';
-import { uploadFile, getTemp, jsonToQueryString, decrypt } from 'utils/tools';
-import commonRequestCreator from 'utils/commonRequestCreator'
-const httpApi = ApiConfig.http;
+import { getTemp } from 'utils'
+import { uploadFile } from 'utils/fileSplitUpload'
+import commonRequestCreator from 'domainUtils/commonRequestCreator'
+import ApiConfig from 'services/apiConfig'
+import isSuccess from 'domainUtils/isSuccess'
+const httpApi = ApiConfig.http
+import isDev from 'utils/isDev'
+import { isSecret, decrypt } from 'domain/secret'
+import request from 'domainUtils/request'
 import {
-  MIRROR_SUMMARY,
+  // MIRROR_SUMMARY,
   OPERATION_NAMESPACE,
   MD5_DATA_INDEX,
   CHUNK_DATA_INDEX,
   CURRENT_CHUNK_DATA_INDEX
 } from './ConstConfig'
-import SecretKey from 'configs/SecretKey';
-import { DEBUG_MODE } from 'configs/ConstConfig'
 
 export const updateRemote = commonRequestCreator.post(httpApi.MIRROR_UPDATE_REMOTE)
 
@@ -43,31 +45,17 @@ export const putFileChunk = payload => {
   }).then(res => {
 
     try {
-      if (sessionStorage.getItem(DEBUG_MODE)) {
+      if (!isSecret()) {
         return res
       }
 
-      return JSON.parse(decrypt(res, SecretKey))
+      return JSON.parse(decrypt(res))
     } catch (e) {
-      console.info("putFileChunk:", e)
       return { status: -1, message: e.message }
     }
   })
 
 }
-export function getMIRROR_SUMMARY(payload) {
-  return request(httpApi.MIRROR_SUMMARY + jsonToQueryString(payload), {
-    method: 'GET',
-    header: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-  });
-}
-export function getMIRROR_NODE(payload) {
-  return request(httpApi.MIRROR_NODE + jsonToQueryString(payload), {
-    method: 'GET',
-    header: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-  });
-}
+export const fetchMirrorSummary = commonRequestCreator.getWithQueryString(httpApi.MIRROR_SUMMARY)
+
+export const fetchMirrorNode = commonRequestCreator.getWithQueryString(httpApi.MIRROR_NODE)

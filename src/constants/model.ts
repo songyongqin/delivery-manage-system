@@ -61,4 +61,9 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ANALYSE_OVERALL_PCAP_NAMESPACE = "analyseOverallPcap",
 
-  SYSTEM_LOG_LOGIN_NAMESPACE = "systemLogLogin"
+  SYSTEM_LOG_LOGIN_NAMESPACE = "systemLogLogin",
+
+  MANAGER_MIRROR_NODE_NAMESPACE = "managerMirrorNode",
+
+  MANAGER_MIRROR_SUMMARY_NAMESPACE = "managerMirrorSummary"
+

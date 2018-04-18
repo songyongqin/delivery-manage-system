@@ -1,4 +1,4 @@
-import { Menu, Badge, Button, Breadcrumb, Upload, Icon, Progress, Row, Col } from 'antd';
+import { Menu, Badge, Button, Breadcrumb, Upload, Icon, Progress, Row, Col } from 'antd'
 import { connect } from 'dva'
 import {
   OPERATION_NAMESPACE,
@@ -7,18 +7,19 @@ import {
   COMMON_STATUS,
   INIT_STATUS,
 } from '../../ConstConfig'
-import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
-import classnames from 'classnames';
-import EnhanciveTable from 'domainComponents/EnhanciveTable';
-import { getFileMd5 } from 'utils/tools'
-import JoSpin from 'components/JoSpin'
-import JoTag from 'components/JoTag'
-const { Dragger } = Upload;
+import classnames from 'classnames'
+import EnhanciveTable from 'domainComponents/Table'
+import { getFileMD5 } from 'utils'
+import JoSpin from 'domainComponents/Spin'
+import JoTag from 'components/Tag'
+const { Dragger } = Upload
 import UpdateResultPanel from '../UpdateResultPanel'
+import * as React from 'react'
+import extraConnect from 'domainUtils/extraConnect'
 
 const mapStateToProps = state => (
   {
-    isDark: state.layout.commonLayout.darkTheme,
+    // isDark: state.layout.commonLayout.darkTheme,
     creating: state.loading.effects[`${OPERATION_NAMESPACE}/createUploadTask`],
     uploading: state.loading.effects[`${OPERATION_NAMESPACE}/putFileChunk`],
     merging: state.loading.effects[`${OPERATION_NAMESPACE}/mergeUploadTask`],
@@ -49,7 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const DraggerPanel = ({ onChange, isDark }) => {
 
   const lblClasses = classnames({
-    ["lbl-dark"]: isDark
+    // ["lbl-dark"]: isDark
   })
 
   const fileProps = {
@@ -85,18 +86,18 @@ const UploadPanel = ({
   uploading,
   onRemove,
   merging,
-  localUploadInfo = {},
+  localUploadInfo,
   initLoading,
   onCancel
- }) => {
+}) => {
 
-  const { status, mergeResult } = localUploadInfo
+  const { status, mergeResult } = (localUploadInfo || {}) as any
 
 
 
   if (status === MERGE_STATUS && !merging) {
 
-    return <UpdateResultPanel isDark={isDark} onCancel={onCancel} res={mergeResult}></UpdateResultPanel>
+    return <UpdateResultPanel onCancel={onCancel} res={mergeResult}></UpdateResultPanel>
 
   }
 
@@ -243,4 +244,4 @@ const _LocalUpdatePanel = ({
 }
 
 
-export default connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))(_LocalUpdatePanel)
+export default extraConnect(mapStateToProps, mapDispatchToProps)(_LocalUpdatePanel)

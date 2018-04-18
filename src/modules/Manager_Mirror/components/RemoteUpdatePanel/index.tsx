@@ -1,5 +1,4 @@
 import { connect } from 'dva';
-import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, DatePicker } from 'antd';
 import React from 'react';
 import classnames from 'classnames'
@@ -7,10 +6,11 @@ const FormItem = Form.Item;
 import {
   OPERATION_NAMESPACE,
 } from '../../ConstConfig'
-import JoSpin from 'components/JoSpin'
+import JoSpin from 'domainComponents/Spin'
 import UpdateResultPanel from '../UpdateResultPanel'
+import extraConnect from 'domainUtils/extraConnect'
 
-class RemoteUpdate extends React.Component {
+class RemoteUpdate extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,7 +73,7 @@ class RemoteUpdate extends React.Component {
                   <Input placeholder={"请输入服务器地址"}
                     disabled={loading}
                     onPressEnter={this.handleSubmit} />
-                  )}
+                )}
               </FormItem>
               <FormItem required={false}
                 colon={false}
@@ -96,7 +96,6 @@ class RemoteUpdate extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isDark: state.layout.commonLayout.darkTheme,
     loading: state.loading.effects[`${OPERATION_NAMESPACE}/updateRemote`]
   }
 }
@@ -114,9 +113,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(
+export default extraConnect(
   mapStateToProps,
-  createMapDispatchWithPromise(mapDispatchToProps)
+  (mapDispatchToProps)
 )(Form.create()(RemoteUpdate));
 
 

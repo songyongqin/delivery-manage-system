@@ -2,18 +2,20 @@
 import { connect } from 'dva';
 import { Table, Input, Button, Icon, Pagination, Spin, Modal, Collapse, Tooltip, Popover } from 'antd';
 import { routerRedux } from 'dva/router';
-import EnhanciveTable from '../../../../domainComponents/EnhanciveTable';
-import JoSpin from '../../../../components/JoSpin';
-import { WithContainerHeader, WithAnimateRender } from '../../../../components/HOSComponents'
+import EnhanciveTable from 'domainComponents/Table';
+import JoSpin from 'domainComponents/Spin'
 import { NAMESPACE_SUMMARY } from '../../ConstConfig'
 import classnames from 'classnames'
 import styles from './index.css'
-import TimesLabel from '../../../../components/TimesLabel'
-import JoTag from '../../../../components/JoTag'
+import TimesLabel from 'components/TimeLabel'
+import JoTag from 'components/Tag'
 import TagList from 'components/TagList'
 const Panel = Collapse.Panel;
+import WithAnimateRender from 'components/WithAnimateRender'
+import * as React from 'react'
+
 @WithAnimateRender
-class mirrorsummary extends React.Component {
+class MirrorSummary extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -170,7 +172,7 @@ function mapStateToProps(state) {
     page,
     limit,
     total,
-    isDark: state.layout.commonLayout.darkTheme,
+    // isDark: state.layout.commonLayout.darkTheme,
   };
 }
-export default connect(mapStateToProps)(mirrorsummary);
+export default connect(mapStateToProps)(MirrorSummary);
