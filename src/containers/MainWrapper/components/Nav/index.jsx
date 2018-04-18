@@ -104,7 +104,9 @@ export default class extends React.Component {
     this.removeNiceScroll()
   }
   componentDidUpdate() {
-    this.resizeNiceScroll()
+    setTimeout(() => {
+      this.resizeNiceScroll()
+    }, 300)
   }
   initNiceScroll = () => {
     try {
