@@ -16,7 +16,8 @@ import {
   Button,
   AutoComplete,
   Slider,
-  Radio
+  Radio,
+  Popover
 } from 'antd';
 
 import styles from './styles.css'
@@ -57,7 +58,7 @@ import {
 //   servicesTextConfig,
 //   INTENTION_DATAINDEX
 // } from '../../../../configs/ConstConfig'
-
+import { primaryColor } from 'themes/vars'
 
 export const HIGH_INTERATION = "HighInteraction",
   LOW_INTERACTION = "LowInteraction";
@@ -120,10 +121,10 @@ const defaultVmOptions = {
   }
 }
 
-@Form.create()
+@(Form.create() as any)
 class WrappedForm extends React.Component<any, any> {
   state = {
-    [INTERCATION_DATAINDEX]: null,
+    [INTERCATION_DATAINDEX]: "HighInteraction",
     systemList: [],
     serviceList: []
   }
@@ -196,53 +197,64 @@ class WrappedForm extends React.Component<any, any> {
     })
   }
   interactionOnChange = e => {
-    const targetInteraction = e.target.value
-    const { vmOptions, form } = this.props
-    const activeHostIp = form.getFieldValue(HOST_IP_DATAINDEX)
-    this.props.form.resetFields([SERVICES_DATAINDEX, SYSTEM_DATAINDEX])
+    try {
+      const targetInteraction = e.target.value
+      const { vmOptions, form } = this.props
+      const activeHostIp = form.getFieldValue(HOST_IP_DATAINDEX)
+      this.props.form.resetFields([SERVICES_DATAINDEX, SYSTEM_DATAINDEX])
 
-    this.props.form.setFieldsValue({ [SYSTEM_DATAINDEX]: Object.keys(vmOptions[activeHostIp][targetInteraction])[0] })
+      this.props.form.setFieldsValue({ [SYSTEM_DATAINDEX]: Object.keys(vmOptions[activeHostIp][targetInteraction])[0] })
+    } catch (e) {
+      console.error(e)
+    }
   }
   systemOnChange = () => {
-    this.props.form.resetFields([SERVICES_DATAINDEX])
+    try {
+      this.props.form.resetFields([SERVICES_DATAINDEX])
+    } catch (e) {
+      console.error(e)
+    }
   }
   hostIpOnChange = (hostIp) => {
-    const { vmOptions, form } = this.props
-    let activeInteraction = form.getFieldValue(INTERCATION_DATAINDEX),
-      activeSystem = (Object.keys(this.props.vmOptions[hostIp]) || {}).filter(k => k !== LOW_INTERACTION)[0]
-    form.resetFields([SERVICES_DATAINDEX])
-    form.resetFields(["adapter"])
-    form.setFieldsValue({ [SYSTEM_DATAINDEX]: Object.keys(vmOptions[hostIp][activeInteraction])[0] })
-    this.props.form.setFieldsValue({ [SERVICES_DATAINDEX]: [] })
+    try {
+      const { vmOptions, form } = this.props
+      let activeInteraction = form.getFieldValue(INTERCATION_DATAINDEX),
+        activeSystem = (Object.keys(this.props.vmOptions[hostIp]) || {}).filter(k => k !== LOW_INTERACTION)[0]
+      form.resetFields([SERVICES_DATAINDEX])
+      form.resetFields(["adapter"])
+      form.setFieldsValue({ [SYSTEM_DATAINDEX]: Object.keys(vmOptions[hostIp][activeInteraction])[0] })
+      this.props.form.setFieldsValue({ [SERVICES_DATAINDEX]: [] })
+    } catch (e) {
+      console.error(e)
+    }
   }
   render() {
-    const { getFieldDecorator, getFieldValue } = this.props.form;
-    const { isDark, loading, defaultValue = {} } = this.props;
-    const activeInteraction = this.state[INTERCATION_DATAINDEX];
-    let { vmOptions } = this.props;
-    const hostIpList = Object.keys(vmOptions)
+    const { getFieldDecorator, getFieldValue } = this.props.form
+    const { isDark, loading, defaultValue = {} } = this.props
+    const activeInteraction = this.state[INTERCATION_DATAINDEX]
+    let { vmOptions } = this.props
 
-    const defaultHostIp = hostIpList[0]
+    //hostIP
+    const hostIPList = Object.keys(vmOptions)
+    const defaultHostIP = get(hostIPList, ['0'], '')
+    const activeHostIP = getFieldValue("hostIp") || defaultHostIP
 
-    const activeHostIp = getFieldValue(HOST_IP_DATAINDEX) || defaultHostIp;
-
-    const systemList = Object.entries((vmOptions[activeHostIp] || {})[activeInteraction] || {})
-
-    const adapterList = Object.entries(get(vmOptions, [activeHostIp, 'adapter'], {}))
-
-    const activeAdapter = adapterList[0] || ""
-
-    const defaultSystem = (systemList[0] || [])[0]
-
+    //system
+    const systemList = Object.entries(get(vmOptions, [activeHostIP, activeInteraction], {}))
+    const defaultSystem = get(systemList, ['0', '0'])
     const activeSystem = getFieldValue(SYSTEM_DATAINDEX) || defaultSystem
 
-    const serviceList = Object.entries((systemList.find(i => i[0] === activeSystem) || ["", {}])[1].services || {})
+    //adapter
+    const adapterList = Object.entries(get(vmOptions, [activeHostIP, 'adapter'], {}))
+    const defaultAdapter = get(adapterList, ['0', '0'])
+    const activeAdapter = getFieldValue(HOST_IP_DATAINDEX) || defaultAdapter
 
+    //service
+    const serviceList = Object.entries(get(systemList.find(([systemName, option]) => systemName === activeSystem), ['1', 'services'], {}))
     const defaultService = []
-
     const activeService = getFieldValue(SERVICES_DATAINDEX) || defaultService
 
-
+    console.info(serviceList)
     const lblClasses = classnames({
       [styles["lbl-dark"]]: isDark
     })
@@ -270,7 +282,7 @@ class WrappedForm extends React.Component<any, any> {
             getFieldDecorator(
               HONEYPOT_NAME_DATAINDEX,
               {
-                initialValue: defaultValue[HONEYPOT_NAME_DATAINDEX] || "",
+                initialValue: "",
                 rules: [
                   {
                     required: true, message: '蜜罐名称不能为空',
@@ -296,19 +308,28 @@ class WrappedForm extends React.Component<any, any> {
             getFieldDecorator(
               HOST_IP_DATAINDEX,
               {
-                initialValue: hostIpList[0]
+                initialValue: defaultHostIP
               }
             )
               (
               <Select onChange={this.hostIpOnChange} disabled={loading}>
                 {
-                  hostIpList.map(i => <Option value={i} key={i}>
+                  hostIPList.map(i => <Option value={i} key={i}>
                     {i}
                   </Option>)
                 }
               </Select>
               )
           }
+          <span style={{ position: "absolute", marginLeft: "5px" }}>
+            <Popover content={
+              <div style={{ width: "400px", wordBreak: "break-all" }}>
+                {activeAdapter}
+              </div>
+            }>
+              <Icon type="eye" style={{ color: primaryColor }}></Icon>
+            </Popover>
+          </span>
         </FormItem>
         <FormItem  {...commonProps}
           label={
@@ -320,15 +341,17 @@ class WrappedForm extends React.Component<any, any> {
             getFieldDecorator(
               "adapter",
               {
-                initialValue: adapterList[0][0]
+                initialValue: defaultAdapter
               }
             )
               (
               <Select disabled={loading}>
                 {
-                  adapterList.map(([key, text]) => <Option value={key} key={key}>
-                    {text}
-                  </Option>)
+                  adapterList.map(([key, text]) =>
+                    <Option value={key} key={key} >
+                      {text}
+                    </Option>
+                  )
                 }
               </Select>
               )
@@ -341,7 +364,7 @@ class WrappedForm extends React.Component<any, any> {
             getFieldDecorator(
               HONEYPOT_IP_DATAINDEX,
               {
-                initialValue: defaultValue[HONEYPOT_IP_DATAINDEX] || "",
+                initialValue: "",
                 rules: [
                   {
                     required: true, message: '蜜罐IP不能为空',
@@ -388,7 +411,7 @@ class WrappedForm extends React.Component<any, any> {
             getFieldDecorator(
               INTERCATION_DATAINDEX,
               {
-                initialValue: defaultValue[INTERCATION_DATAINDEX] || interactions[0]
+                initialValue: interactions[0]
               }
             )
               (
@@ -418,7 +441,7 @@ class WrappedForm extends React.Component<any, any> {
                 {
                   systemList.map(([key, value], index) => {
                     return <Select.Option value={key} key={`${index}-option`}>
-                      {value.title}
+                      {get(value, "title", "")}
                     </Select.Option>
                   })
                 }

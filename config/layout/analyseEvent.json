@@ -1,0 +1,76 @@
+{
+  "columns": [
+    {
+      "dataIndex": "attackStage",
+      "title": "攻击阶段",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "入侵",
+          "value": "intrusion"
+        },
+        {
+          "text": "安装",
+          "value": "install"
+        },
+        {
+          "text": "控制",
+          "value": "control"
+        },
+        {
+          "text": "意图",
+          "value": "intention"
+        }
+      ]
+    },
+    {
+      "dataIndex": "action",
+      "title": "行为",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "请到/config/table/analyseEvent.json设置选项配置",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "dataIndex": "level",
+      "title": "威胁等级",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "高危",
+          "value": "high"
+        },
+        {
+          "text": "中危",
+          "value": "middle"
+        },
+        {
+          "text": "低危",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "dataIndex": "actionStatus",
+      "title": "操作状态",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "成功",
+          "value": 1
+        },
+        {
+          "text": "失败",
+          "value": 0
+        },
+        {
+          "text": "未知",
+          "value": -1
+        }
+      ]
+    }
+  ]
+}

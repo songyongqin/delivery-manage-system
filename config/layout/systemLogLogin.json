@@ -1,0 +1,27 @@
+{
+  "columns": [
+    {
+      "dataIndex": "userAccount",
+      "conditionType": "input"
+    },
+    {
+      "dataIndex": "ip",
+      "conditionType": "input"
+    },
+    {
+      "dataIndex": "loginStatus",
+      "conditionType": "selector",
+      "filterMultiple": false,
+      "filters": [
+        {
+          "text": "成功",
+          "value": 1
+        },
+        {
+          "text": "失败",
+          "value": 0
+        }
+      ]
+    }
+  ]
+}
