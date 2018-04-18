@@ -1,4 +1,3 @@
-import columnsCreator from 'utils/columnsCreator'
 import * as React from 'react'
 import { Popover } from 'antd'
 const styles = require("./styles.less")
