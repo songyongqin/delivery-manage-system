@@ -8,11 +8,15 @@ import DomainUserModel from 'models/domainUser'
 import RecordOfCreateVMModel from 'modules/Manager_Virtual/models/recordOfCreateVM'
 import SetupModel from 'models/setup'
 import './themes/common.less'
-// import { initProductionConfig, getProduction } from 'domain/production'
-import request from 'domainUtils/request'
 import onError, { initGlobalOnErrorListener } from 'domainUtils/error'
+import initVersionInfo from 'domain/versionInfo'
 import * as React from 'react'
 const router = require('./router').default
+
+//output versionInfo in Console panel
+initVersionInfo()
+
+
 // 1.history
 const app = dva({
   // history: createHistory(),
