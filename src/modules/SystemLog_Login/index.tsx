@@ -9,6 +9,13 @@ import path from 'constants/path'
 import WithConfig from 'domainComponents/WithConfig'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import { Button } from 'antd'
+import { download } from 'utils'
+
+const initialFilters = {
+  timestampRange: [],
+  page: 1,
+  limit: 10
+}
 
 
 @extraConnect(
@@ -35,11 +42,8 @@ export default class SystemLogLogin extends React.Component<any, any>{
     super(props)
     this.state = {
       lastReqTime: 0,
-      initialFilters: {
-        timestampRange: [],
-        page: 1,
-        limit: 10
-      }
+      initialFilters,
+      filters: initialFilters
     }
   }
   timestampRangeOnChange = (filters) => {
@@ -52,8 +56,13 @@ export default class SystemLogLogin extends React.Component<any, any>{
     })
   }
   onExportClick = () => {
-    this.props.exportLoginLog().then(res => {
-      console.info(res)
+    this.props.exportLoginLog(this.state.filters).then(res => {
+      download(res)
+    })
+  }
+  onChange = filters => {
+    this.setState({
+      filters
     })
   }
   render() {
@@ -77,6 +86,7 @@ export default class SystemLogLogin extends React.Component<any, any>{
           this.props.animateRender([
             <div key="table">
               <TableWithRemote
+                onChange={this.onChange}
                 initialFilters={this.state.initialFilters}
                 key={`${this.state.lastReqTime}-table`}
                 getColumns={option => {

@@ -9,7 +9,7 @@ export default (url: string) => (WrappedComponent: any) => {
       super(props)
     }
     componentDidMount() {
-      request(url, {
+      request(url + `?${new Date().getTime()}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json; charset=utf-8",

@@ -59,4 +59,6 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ANALYSE_OVERALL_CAPTURE_NAMESPACE = "analyseOverallCapture",
 
-  ANALYSE_OVERALL_PCAP_NAMESPACE = "analyseOverallPcap"
+  ANALYSE_OVERALL_PCAP_NAMESPACE = "analyseOverallPcap",
+
+  SYSTEM_LOG_LOGIN_NAMESPACE = "systemLogLogin"

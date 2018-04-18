@@ -27,7 +27,7 @@ const initHTMLTitle = () => {
 }
 
 export const initAppConfig = () => {
-  return request(APP_CONFIG, {
+  return request(APP_CONFIG + `?${new Date().getTime()}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8",

@@ -20,6 +20,7 @@ import getVMManagerPage from 'routes/Manager_VM'
 import getStrategyPage from 'routes/SysConfig_Strategy'
 import getOverallPage from 'routes/Analyse_Overall'
 import getReportPage from 'routes/Report'
+import getSystemLogLoginPage from 'routes/SysLog_Login'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -41,7 +42,9 @@ import {
   MANAGER_VM_URL,
   ROOT_URL,
   MANAGER_URL,
-  REPORT_URL
+  REPORT_URL,
+  SYS_LOG_URL,
+  SYS_LOG_LOGIN_URL
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
 
@@ -147,20 +150,26 @@ export default ({ history, app }) => {
               component={getVMManagerPage(app, MANAGER_VM_URL)}
               path={MANAGER_VM_URL} >
             </Route>
-
             <Route
               exact
               component={getUserManagerPage(app, USER_MANAGER_URL)}
               path={USER_MANAGER_URL} >
             </Route>
-
-
             <Route
               exact
               component={getReportPage(app, REPORT_URL)}
               path={REPORT_URL} >
             </Route>
-
+            {/* 系统日志 */}
+            <Route
+              exact
+              path={SYS_LOG_URL}
+              render={() => (<Redirect to={getDefaultRoute(SYS_LOG_URL} />)} />
+            <Route
+              exact
+              component={getSystemLogLoginPage(app, SYS_LOG_LOGIN_URL)}
+              path={SYS_LOG_LOGIN_URL} >
+            </Route>
           </Switch>
         </MainWrapper>
       </LocaleProvider>

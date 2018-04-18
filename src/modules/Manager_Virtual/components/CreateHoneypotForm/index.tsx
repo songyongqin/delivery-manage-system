@@ -254,7 +254,6 @@ class WrappedForm extends React.Component<any, any> {
     const defaultService = []
     const activeService = getFieldValue(SERVICES_DATAINDEX) || defaultService
 
-    console.info(serviceList)
     const lblClasses = classnames({
       [styles["lbl-dark"]]: isDark
     })
