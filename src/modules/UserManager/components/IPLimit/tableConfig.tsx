@@ -46,6 +46,7 @@ export const getColumns = ({ handle = {} }) => {
         <div style={{ textAlign: "center", overflow: "hidden" }}>
           {value.map((i, index) => (
             <Tag color={"#108ee9"}
+              style={{ marginBottom: "5px" }}
               key={`${index}-tag`}>
               {i}
               <Popconfirm title={`是否删除${value[index]}?`} onConfirm={_ => handle["delete"] && handle["delete"]({ ip: i, type: records.role })}>
