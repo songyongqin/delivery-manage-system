@@ -3,7 +3,6 @@ import { Modal, Menu, Badge, Button, Breadcrumb, Upload, Icon, Progress, Row, Co
 
 import { connect } from 'dva'
 import {
-  OPERATION_NAMESPACE,
   UPLOAD_STATUS,
   MERGE_STATUS,
   COMMON_STATUS,
@@ -18,9 +17,11 @@ const { Dragger } = Upload;
 import LocalUpdatePanel from '../LocalUpdatePanel'
 import RemoteUpdatePanel from '../RemoteUpdatePanel'
 import extraConnect from 'domainUtils/extraConnect'
+import { MANAGER_MIRROR_OPERATION_NAMESPACE as OPERATION_NAMESPACE } from 'constants/model'
+
+
 
 const mapStateToProps = state => ({
-  isDark: state.layout.commonLayout.darkTheme,
   activePanel: state[OPERATION_NAMESPACE].activePanel,
   panelVisible: state[OPERATION_NAMESPACE].panelVisible
 })
@@ -72,12 +73,12 @@ class UpdatePanel extends React.Component<any, any> {
     const visible = this.props.panelVisible
 
     const lblClasses = classnames({
-      ["lbl-dark"]: this.props.isDark
+      // ["lbl-dark"]: this.props.isDark
     })
 
     const activeMethod = this.props.activePanel;
 
-    const { modalVisible } = this.props;
+    const { modalVisible } = this.props
 
     return (
       <div key="local" >
@@ -106,7 +107,12 @@ class UpdatePanel extends React.Component<any, any> {
           activeMethod === REMOTE_METHOD
           &&
           <RemoteUpdatePanel
-            onCancel={this.props.onCancel}
+            onCancel={_ => {
+              this.props.onCancel()
+              this.props.changePanelVisible(true)
+              this.props.initLocalUploadInfo()
+
+            }}
             hideOptionPanel={this.hideOptionPanel}>
           </RemoteUpdatePanel>
         }
@@ -114,7 +120,11 @@ class UpdatePanel extends React.Component<any, any> {
           activeMethod === LOCAL_METHOD
           &&
           <LocalUpdatePanel
-            onCancel={this.props.onCancel}
+            onCancel={_ => {
+              this.props.onCancel()
+              this.props.changePanelVisible(true)
+              this.props.initLocalUploadInfo()
+            }}
             hideOptionPanel={this.hideOptionPanel}>
           </LocalUpdatePanel>
         }

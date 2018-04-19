@@ -65,5 +65,7 @@ export const LAYOUT_NAMESPACE = "layout",
 
   MANAGER_MIRROR_NODE_NAMESPACE = "managerMirrorNode",
 
-  MANAGER_MIRROR_SUMMARY_NAMESPACE = "managerMirrorSummary"
+  MANAGER_MIRROR_SUMMARY_NAMESPACE = "managerMirrorSummary",
+
+  MANAGER_MIRROR_OPERATION_NAMESPACE = "managerMirrorOperation"
 

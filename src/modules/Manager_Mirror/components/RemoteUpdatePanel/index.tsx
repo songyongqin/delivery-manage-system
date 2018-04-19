@@ -59,7 +59,7 @@ class RemoteUpdate extends React.Component<any, any> {
             <JoSpin spinning={loading}>
               <FormItem required={false}
                 colon={false}
-                labelCol={{ span: 4 }}
+                labelCol={{ span: 7 }}
                 wrapperCol={{ span: 10 }}
                 label={<span className={lblClasses}>升级服务器地址</span>}>
                 {getFieldDecorator(keyConfig, {
@@ -77,7 +77,7 @@ class RemoteUpdate extends React.Component<any, any> {
               </FormItem>
               <FormItem required={false}
                 colon={false}
-                labelCol={{ span: 4 }}
+                labelCol={{ span: 7 }}
                 wrapperCol={{ span: 10 }}
                 label={"  "}>
                 <Button

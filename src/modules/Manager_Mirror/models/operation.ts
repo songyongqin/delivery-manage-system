@@ -1,13 +1,10 @@
 /**
  * Created by jojo on 2017/8/21.
  */
-import { routerRedux, hashHistory } from 'dva/router';
-import moment from 'moment';
-import * as service from '../Service';
-import { queryModelGenerator } from 'utils/dvaModelGenerator';
-import { commonCallConfig } from 'configs/ExtraEffectsOptions';
+import { routerRedux, hashHistory } from 'dva/router'
+import moment from 'moment'
+import * as service from '../services'
 import {
-  OPERATION_NAMESPACE,
   MD5_DATA_INDEX,
   CURRENT_CHUNK_DATA_INDEX,
   CHUNK_DATA_INDEX,
@@ -17,10 +14,13 @@ import {
   INIT_STATUS,
   REMOTE_METHOD,
   LOCAL_METHOD,
-} from '../ConstConfig';
+} from '../ConstConfig'
 
-import { delay, setTemp, getTemp, getFileMd5, splitFileToChunk } from 'utils/tools';
-import { getUploadTask } from '../Service';
+import { delay, setTemp, getTemp, } from 'utils'
+import { splitFileToChunk } from 'utils/fileSplitUpload'
+import { getFileMD5 } from 'utils/md5'
+import { getUploadTask } from '../services'
+import { MANAGER_MIRROR_OPERATION_NAMESPACE } from 'constants/model'
 
 moment.locale('zh-cn');
 
@@ -47,7 +47,7 @@ const initLocalUploadInfo = {
 }
 
 const baseModel = {
-  namespace: OPERATION_NAMESPACE,
+  namespace: MANAGER_MIRROR_OPERATION_NAMESPACE,
   state: {
     queryFilters: {
 
@@ -103,7 +103,7 @@ const baseModel = {
     }
   },
   effects: {
-    *initUploadTask({ resolve, payload }, { call, put, select, callWithExtra }) {
+    *initUploadTask({ resolve, payload }, { call, put, select }) {
 
       const { file } = payload;
 
@@ -117,8 +117,8 @@ const baseModel = {
       })
 
       const [md5, res] = yield [
-        call(getFileMd5, file),
-        callWithExtra(service.getUploadTask, {}, { withStatusHandle: true })
+        call(getFileMD5, file),
+        call(service.getUploadTask, {})
       ]
 
       if (res.status !== 1) {
@@ -162,13 +162,13 @@ const baseModel = {
         return
       }
       //服务器上不存在任务，初始化任务
-      const newTaskRes = yield callWithExtra(service.createUploadTask, {
+      const newTaskRes = yield call(service.createUploadTask, {
         md5,
         fileName: file.name,
         fileSize: file.size,
         chunkSize: CHUNK_SIZE,
         chunkCount
-      }, commonCallConfig)
+      })
 
 
       if (newTaskRes.status === 1) {
@@ -184,9 +184,9 @@ const baseModel = {
 
     },
 
-    *putFileChunk({ resolve, payload }, { call, put, callWithExtra, select }) {
+    *putFileChunk({ resolve, payload }, { call, put, select }) {
 
-      const { chunkList, currentChunk, file, md5, chunkCount } = yield select(state => state[OPERATION_NAMESPACE].localUploadInfo)
+      const { chunkList, currentChunk, file, md5, chunkCount } = yield select(state => state[MANAGER_MIRROR_OPERATION_NAMESPACE].localUploadInfo)
 
       yield put({
         type: "saveLocalUploadInfo",
@@ -200,7 +200,7 @@ const baseModel = {
         payload: true
       })
 
-      const res = yield callWithExtra(service.putFileChunk, {
+      const res = yield call(service.putFileChunk, {
         chunk: chunkList[currentChunk].chunk,
         currentChunk,
         md5,
@@ -260,7 +260,7 @@ const baseModel = {
 
     },
     //合并上传的任务
-    *mergeUploadTask({ resolve, payload }, { callWithExtra, put }) {
+    *mergeUploadTask({ resolve, payload }, { call, put }) {
 
       yield put({
         type: "saveLocalUploadInfo",
@@ -269,7 +269,7 @@ const baseModel = {
         }
       })
 
-      const res = yield callWithExtra(service.mergeUploadTask, payload)
+      const res = yield call(service.mergeUploadTask, payload)
 
       // if (res.status === 1) {
 
@@ -293,8 +293,8 @@ const baseModel = {
       resolve && resolve()
       // }
     },
-    *updateRemote({ resolve, payload }, { callWithExtra, put }) {
-      const res = yield callWithExtra(service.updateRemote, payload)
+    *updateRemote({ resolve, payload }, { call, put }) {
+      const res = yield call(service.updateRemote, payload)
 
       // if (res.status === 1) {
       yield put({
@@ -305,22 +305,13 @@ const baseModel = {
       // }
 
     },
-    *updateNodeMirror({ resolve, payload }, { callWithExtra, put }) {
-      const res = yield callWithExtra(service.updateNodeMirror, payload)
+    *updateNodeMirror({ resolve, payload }, { call, put }) {
+      const res = yield call(service.updateNodeMirror, payload)
       if (res.status === 1) {
         resolve && resolve(res.payload)
       }
     }
   },
-};
-
-// const queryService = service.query;
-
-// export default queryModelGenerator({
-//   model: baseModel,
-//   payloadFilter,
-//   callConfig: commonCallConfig,
-//   queryService,
-// });
+}
 
 export default baseModel

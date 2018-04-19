@@ -10,6 +10,8 @@ export default (app: any, url: string): React.Component => {
     models: () => [
       System.import(/* webpackChunkName: "ManagerMirrorSummaryModel" */'modules/Manager_Mirror/models/summary'),
       System.import(/* webpackChunkName: "ManagerMirrorNodeMirrorModel" */'modules/Manager_Mirror/models/node'),
+      System.import(/* webpackChunkName: "ManagerMirrorOperationModel" */'modules/Manager_Mirror/models/operation'),
+
     ].map(asyncModulePipe),
     component: () => System.import(/* webpackChunkName: "ManagerDevicePage" */'modules/Manager_Mirror')
       .then(page => WithRouteInit(url)(page.default)),

@@ -84,7 +84,7 @@ class Page extends React.Component<any, any> {
       <div>
         {this.props.animateRender([
           <div key="summary" style={{ marginBottom: "15px" }}>
-            <Summary></Summary>,
+            <Summary></Summary>
           </div>,
           <div key="node">
             <NodeMirror></NodeMirror>
