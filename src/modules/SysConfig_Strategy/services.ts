@@ -64,3 +64,32 @@ export const putThreatName = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEG
 export const postThreatName = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)
 
 export const deleteThreatName = commonRequestCreator.deleteWithQueryString(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)
+
+/**
+ * whiteList
+ */
+
+const _fetchWhiteList = commonRequestCreator.get(httpApi.SYS_CONFIG_STRATEGY_WHITELIST)
+
+export const fetchWhiteList = _ => {
+  return _fetchWhiteList().then(res => {
+    if (isSuccess(res)) {
+      return {
+        ...res,
+        payload: {
+          total: 0,
+          data: res.payload
+        }
+      }
+    }
+    return res
+  })
+}
+
+export const putWhiteList = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEGY_WHITELIST)
+
+export const postWhiteList = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY_WHITELIST)
+
+export const deleteWhiteList = commonRequestCreator.deleteWithQueryString(httpApi.SYS_CONFIG_STRATEGY_WHITELIST)
+
+export const applyWhiteList = commonRequestCreator.post(httpApi.SYS_CONFIG_WHITELIST_APPLY)

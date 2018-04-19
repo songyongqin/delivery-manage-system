@@ -1,5 +1,6 @@
 import * as React from 'react'
 import StrategySetting from './components/StrategySetting'
+import WhiteList from './components/WhiteList'
 import { Tabs } from 'antd'
 
 export default class Strategy extends React.Component<any, any>{
@@ -12,7 +13,7 @@ export default class Strategy extends React.Component<any, any>{
             <StrategySetting></StrategySetting>
           </Tabs.TabPane>
           <Tabs.TabPane tab="白名单配置" key="white-strategy-setting">
-
+            <WhiteList></WhiteList>
           </Tabs.TabPane>
         </Tabs>
       </div>
