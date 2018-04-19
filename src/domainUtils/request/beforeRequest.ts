@@ -1,7 +1,9 @@
 import { getToken } from 'domain/user'
 import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
 import { isSecret, encrypt } from 'domain/secret'
+import UUID from 'uuid-js'
 
+const uuid = UUID.create().toString()
 
 const combinerAccessToken = (url: string, options?: any) => {
   try {
@@ -9,7 +11,8 @@ const combinerAccessToken = (url: string, options?: any) => {
       ...options,
       headers: {
         ...options.headers,
-        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken()
+        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+        "user-uuid": uuid,
       }
     }
   } catch (e) {

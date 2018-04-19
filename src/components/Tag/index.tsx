@@ -22,7 +22,7 @@ export default props => {
 
   return <Tag
     {...props}
-    style={{ textAlign: "center", cursor: "text", ...(props.style || {}) }}
+    style={{ textAlign: "center", cursor: "text", marginBottom: "5px", ...(props.style || {}) }}
     children={value} />
 
 }
