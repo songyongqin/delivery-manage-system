@@ -39,7 +39,7 @@
   "recordOfCreatingVM": true,
   "overview": {
     "captureFlow": true,
-    "threatFlow": true
+    "threatEvent": true
   },
   "analyse": {},
   "overall": {
@@ -58,17 +58,18 @@
   },
   "monitor": {
     "master": true,
-    "honeypotNode": true,
-    "idsNode": true,
+    "honeypotStandalone": true,
     "honeypot": true,
     "ids": true
   },
   "deviceManager": {
     "master": true,
+    "honeypot": true,
+    "ids": true,
     "honeypotNode": true,
     "idsNode": true,
-    "honeypot": true,
-    "ids": true
+    "honeypotStandalone": true,
+    "idsStandalone": true
   },
   "mirrorImageManager": {
     "collection": true,

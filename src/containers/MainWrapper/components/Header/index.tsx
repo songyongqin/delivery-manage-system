@@ -6,7 +6,8 @@ import ExtraIcon from 'components/Icon'
 import { LIGHT_THEME, DARK_THEME } from 'constants/theme'
 import { USER_ACCOUNT_DATA_INDEX } from 'constants/user'
 import RecordOfCreateVM from 'modules/Manager_Virtual/components/RecordOfCreateVM'
-import { getAppConfig } from 'domain/app';
+import { getAppConfig } from 'domain/app'
+import { If, Choose, When, Otherwise } from 'components/ControlStatements'
 
 interface Props {
   theme?: string,
@@ -81,17 +82,18 @@ export default class Header extends React.PureComponent<Props, any>{
 
     return (
       <header className={wrapperClasses} style={style}>
-        {
-          mini
-            ?
+        <Choose>
+          <When condition={mini}>
             <a style={expandBtnStyle} onClick={() => onChange && onChange(false)}>
               <Icon type="menu-unfold" />
             </a>
-            :
+          </When>
+          <Otherwise>
             <a style={expandBtnStyle} onClick={() => onChange && onChange(true)}>
               <Icon type="menu-fold" />
             </a>
-        }
+          </Otherwise>
+        </Choose>
         {/* {
           theme === LIGHT_THEME
             ?
@@ -103,29 +105,24 @@ export default class Header extends React.PureComponent<Props, any>{
               <ExtraIcon type="sun"></ExtraIcon>
             </a>
         } */}
-        <div style={{ float: "right", marginLeft: "15px" }}>
-          <RecordOfCreateVM></RecordOfCreateVM>
-        </div>
-        {
-          login
-            ?
-            <div style={{ float: "right" }}>
-              <Icon type="user"></Icon>&nbsp;{userData[USER_ACCOUNT_DATA_INDEX]}&nbsp;
+        <If condition={getAppConfig()['recordOfCreatingVM']}>
+          <div style={{ float: "right", marginLeft: "15px" }}>
+            <RecordOfCreateVM></RecordOfCreateVM>
+          </div>
+        </If>
+        <If condition={login}>
+          <div style={{ float: "right" }}>
+            <Icon type="user"></Icon>&nbsp;{userData[USER_ACCOUNT_DATA_INDEX]}&nbsp;
               <Dropdown overlay={menu}>
-                <a>
-                  <Icon type="down" />
-                </a>
-              </Dropdown>
-            </div>
-            :
-            null
-        }
-        {
-          <h1 className={styles['title']}>
-            {(getAppConfig() as any).title}
-          </h1>
-        }
-
+              <a>
+                <Icon type="down" />
+              </a>
+            </Dropdown>
+          </div>
+        </If>
+        <h1 className={styles['title']}>
+          {(getAppConfig() as any).title}
+        </h1>
       </header>
     )
   }
