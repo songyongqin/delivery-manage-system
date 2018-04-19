@@ -184,6 +184,7 @@ class IndexPage extends React.Component<any, any>{
           themeOnChange={changeTheme}
           login={login}
           userData={userData}
+          admin={this.props.admin}
           onChange={changeNavStatus}>
         </Header>
         <Nav

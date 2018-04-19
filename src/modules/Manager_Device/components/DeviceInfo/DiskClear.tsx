@@ -35,7 +35,7 @@ class DiskClearForm extends React.Component<any, any> {
     onSubmit && onSubmit({ threshold: parseInt(value) })
   }
   render() {
-    const { defaultValue, isDark, loading, disabled } = this.props
+    const { defaultValue, isDark, loading, readonly } = this.props
     const classes = classnames({
       ["lbl-dark"]: isDark
     })
@@ -43,7 +43,7 @@ class DiskClearForm extends React.Component<any, any> {
       <div className={classes}>
         <span>&nbsp;自动清理磁盘阈值设置&nbsp;</span>
         <Select style={{ width: "100px" }}
-          disabled={loading || disabled}
+          disabled={loading || readonly}
           defaultValue={defaultValue + ""}
           onChange={this.handleChange}>
           {
@@ -114,7 +114,7 @@ export default class DiskClear extends React.Component<any, any>{
   }
   render() {
 
-    const { effectsLoading } = this.props
+    const { effectsLoading, readonly } = this.props
 
     return (
       <Choose>
@@ -123,6 +123,7 @@ export default class DiskClear extends React.Component<any, any>{
         </When>
         <Otherwise>
           <DiskClearForm
+            readonly={readonly}
             loading={effectsLoading[`${this.props.remoteNamespace}/putDeviceDisk`]}
             defaultValue={this.state.threshold}
             onSubmit={this.onSubmit}>

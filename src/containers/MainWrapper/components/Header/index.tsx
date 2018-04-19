@@ -19,13 +19,29 @@ interface Props {
   expandable?: boolean,
   login?: boolean,
   userData?: any,
+  admin?: boolean
 }
 
-
+const tipTextConfig = {
+  admin: "说明：管理员属于授权用户,可对系统所有界面进行查看和操作",
+  common: "说明：普通用户属于非授权用户，可对系统部分界面进行查看和操作"
+}
 
 export default class Header extends React.PureComponent<Props, any>{
   render() {
-    const { theme, style, mini, onChange, themeOnChange, handle = {}, title, expandable = true, login = false, userData = {} } = this.props
+    const {
+      theme,
+      style,
+      mini,
+      onChange,
+      themeOnChange,
+      handle = {},
+      title,
+      expandable = true,
+      login = false,
+      userData = {},
+      admin
+    } = this.props
 
     const wrapperClasses = classnames({
       [styles["header"]]: true,
@@ -38,6 +54,22 @@ export default class Header extends React.PureComponent<Props, any>{
 
     const menu = (
       <Menu>
+        <Menu.ItemGroup key="message" title={
+          <div style={{ padding: "5px" }}>
+            <span style={{ color: "#108ee9", fontWeight: 900 }}>{userData["userAccount"]}</span>
+            &nbsp;&nbsp;
+            <span>{admin ? "管理员" : "普通用户"}</span>
+            <div style={{
+              wordBreak: "break-all",
+              maxWidth: "240px",
+              overflow: "hidden",
+              color: "#cccccc"
+            }}>
+              {admin ? tipTextConfig.admin : tipTextConfig.common}
+            </div>
+          </div>
+        }>
+        </Menu.ItemGroup>
         <Menu.Item key="modify-password">
           <a onClick={handle.showModifyPassword}><Icon type="edit"></Icon>&nbsp;修改密码</a>
         </Menu.Item>

@@ -33,7 +33,8 @@
     "/sys-config/strategy",
     "/sys-log",
     "/sys-log/login",
-    "/user-manager"
+    "/user-manager",
+    "/snort"
   ],
   "recordOfCreatingVM": true,
   "overview": {

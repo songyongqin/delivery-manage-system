@@ -67,7 +67,7 @@ class ReceiveForm extends React.Component<any, any> {
   }
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    const { defaultValue = {}, isDark, loading } = this.props;
+    const { defaultValue = {}, isDark, loading, readonly } = this.props;
     const formItemLayout = {
       labelCol: {
         sm: { span: 6 },
@@ -104,12 +104,19 @@ class ReceiveForm extends React.Component<any, any> {
               }
             ],
           })(
-            <Input style={{ width: '90%', marginRight: "8px" }} />
+            <Input style={{ width: '90%', marginRight: "8px" }} disabled={readonly} />
           )}
-          <Icon
-            type="minus-circle-o"
-            onClick={() => this.remove(index)}
-          />
+          {
+            readonly
+              ?
+              null
+              :
+              <Icon
+                type="minus-circle-o"
+                onClick={() => this.remove(index)}
+              />
+          }
+
         </FormItem>
       )
     })
@@ -121,7 +128,9 @@ class ReceiveForm extends React.Component<any, any> {
             valuePropName: 'checked',
             initialValue: defaultValue.open === 1
           })(
-            <Switch checkedChildren={"开"}
+            <Switch
+              disabled={readonly}
+              checkedChildren={"开"}
               unCheckedChildren={"关"} />
           )}
         </FormItem>
@@ -132,6 +141,7 @@ class ReceiveForm extends React.Component<any, any> {
             initialValue: defaultValue.level[0]
           })(
             <CheckboxGroup
+              disabled={readonly}
               className={classnames({
               })}
               key={`${loading}-check-box-group`}
@@ -149,6 +159,7 @@ class ReceiveForm extends React.Component<any, any> {
         {formItems}
         <FormItem {...formItemLayoutWithOutLabel}>
           <Button type="dashed"
+            disabled={readonly}
             onClick={this.add}
             style={{ width: '90%' }}>
             <Icon type="plus" /> 添加新的提醒邮箱
@@ -158,6 +169,7 @@ class ReceiveForm extends React.Component<any, any> {
           <Button type="primary"
             loading={loading}
             icon="save"
+            disabled={readonly}
             onClick={this.handleSubmit}>
             保存设置
           </Button>
@@ -222,11 +234,12 @@ export default class EmailReceive extends React.Component<any, any> {
     })
   render() {
 
-    const { loading } = this.props
+    const { loading, readonly } = this.props
 
     return (
       <Spin spinning={loading}>
         <WrappedReceiveForm
+          readonly={readonly}
           onSubmit={this.put}
           key={`receive-from-${this.state.lastReqTime}`}
           defaultValue={this.state.data} />

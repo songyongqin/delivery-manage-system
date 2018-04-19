@@ -10,7 +10,9 @@ import { Button, Dropdown, Menu, Modal, Icon, message as Message } from 'antd'
 import Spin from 'domainComponents/Spin'
 import CreateVM from './components/CreateVM'
 import WithModal from 'components/WithModal'
+import WithCommonProps from 'domainComponents/WithCommonProps'
 
+@WithCommonProps
 @WithModal()
 @WithAnimateRender
 @extraConnect(
@@ -135,7 +137,8 @@ export default class VMManager extends React.PureComponent<any, any>{
   })
 
   render() {
-
+    const { admin } = this.props
+    const readonly = !admin
     const props = {
       key: `${this.props.lastReqTime}-vm-table`,
       loading: false,
@@ -167,9 +170,10 @@ export default class VMManager extends React.PureComponent<any, any>{
 
 
     const menu = (
-      <Menu onClick={({ key }) => {
-        this.multipleHandle && this.multipleHandle(key)
-      }}>
+      <Menu
+        onClick={({ key }) => {
+          this.multipleHandle && this.multipleHandle(key)
+        }}>
         <Menu.Item key="logout" >
           批量关机
         </Menu.Item>
@@ -190,14 +194,14 @@ export default class VMManager extends React.PureComponent<any, any>{
               <Button
                 type="primary"
                 icon="plus"
-                disabled={this.props.loading}
+                disabled={this.props.loading || readonly}
                 onClick={_ => this.props.setModalVisible("create", true)}>
                 创建虚拟蜜罐
               </Button>
               <Dropdown.Button
                 onClick={_ => this.multipleHandle("login")}
                 style={{ marginLeft: "20px" }}
-                disabled={this.state.activeItems.length === 0 || this.props.loading}
+                disabled={this.state.activeItems.length === 0 || this.props.loading || readonly}
                 overlay={menu}
                 type="primary">
                 批量开机

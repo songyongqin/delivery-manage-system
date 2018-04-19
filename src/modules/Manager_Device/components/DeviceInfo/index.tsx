@@ -12,6 +12,7 @@ import Clean from './Clean'
 import MasterIP from './MasterIP'
 import Spin from 'domainComponents/Spin'
 import { If, When, Choose, Otherwise } from 'components/ControlStatements'
+import WithCommonProps from 'domainComponents/WithCommonProps'
 
 interface Props {
   readonly?: boolean,
@@ -32,6 +33,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
+@WithCommonProps
 @WithModal()
 @extraConnect(mapStateToProps, mapDispatchToProps)
 export default class DeviceInfo extends React.Component<any, any>{
@@ -185,8 +187,10 @@ export default class DeviceInfo extends React.Component<any, any>{
     }
   }
   render() {
-    const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading, masterIP, readonly, shouldHideCols } = this.props
+    const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading, masterIP, shouldHideCols } = this.props
     const { modalReload, lastReqTime } = this.state
+
+    const readonly = (!this.props.admin) || this.props.readonly
 
     let props: any = {
       key: `${lastReqTime}-table`,
@@ -207,7 +211,7 @@ export default class DeviceInfo extends React.Component<any, any>{
       onChange: this.onChange
     }
 
-    if (multiple) {
+    if (multiple && !readonly) {
       props["rowSelection"] = {
         onChange: (selectedRowKeys, selectedRows) => {
           this.setState({
@@ -229,6 +233,7 @@ export default class DeviceInfo extends React.Component<any, any>{
           <If condition={disk}>
             <div style={{ float: "left", marginRight: "15px" }}>
               <DiskClear
+                readonly={readonly}
                 remoteNamespace={remoteNamespace}>
               </DiskClear>
             </div>
@@ -243,7 +248,7 @@ export default class DeviceInfo extends React.Component<any, any>{
                   <Menu.Item key="clean">批量磁盘清理</Menu.Item>
                   <Menu.Item key="update">批量检查更新</Menu.Item>
                 </Menu>}
-                disabled={this.state.activeItems.length === 0}
+                disabled={this.state.activeItems.length === 0 || readonly}
                 onClick={_ => switchModal("licence")}
                 type="primary">
                 批量授权
