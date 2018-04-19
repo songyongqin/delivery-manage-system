@@ -22,6 +22,7 @@ import { DOMAIN_USER_NAMESPACE, LAYOUT_NAMESPACE } from 'constants/model'
 import { ADMIN_ROLE, ROLE_DATA_INDEX } from 'constants/user'
 import { SET_UP_NAMESPACE } from 'constants/model'
 import { getAuthRoutes } from 'navConfig'
+import ContactInfo from 'domainComponents/ContactInfo'
 
 const styles = require("./styles.less")
 

@@ -1,7 +1,9 @@
 import * as React from 'react'
+import ContactInfo from 'domainComponents/ContactInfo'
+import WithModal from 'components/WithModal'
+import { Icon, Modal } from 'antd'
 
-
-export default () => {
+const Footer = ({ modalVisible, setModalVisible }) => {
   return (
     <footer style={{
       height: "40px",
@@ -15,7 +17,20 @@ export default () => {
     }}>
       <div style={{ textAlign: "center" }}>
         © 2017 Antiy Labs
+        &nbsp;
+        <a onClick={_ => setModalVisible("contacts", true)}>
+          <Icon type="contacts"></Icon>
+        </a>
       </div>
+
+      <Modal
+        visible={modalVisible["contacts"]}
+        footer={null}
+        onCancel={_ => setModalVisible("contacts", false)}>
+        <ContactInfo></ContactInfo>
+      </Modal>
     </footer>
   )
 }
+
+export default WithModal()(Footer)

@@ -73,5 +73,9 @@
     "collection": true,
     "honeypotNode": true,
     "honeypot": true
+  },
+  "contactInfo": {
+    "phoneNumber": "0755-26806561",
+    "email": "antiy_shenzhen@antiy.cn"
   }
 }
