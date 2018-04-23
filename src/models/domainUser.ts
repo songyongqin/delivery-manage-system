@@ -9,6 +9,21 @@ import { DOMAIN_USER_NAMESPACE } from 'constants/model'
 import isSuccess from 'domainUtils/isSuccess'
 import { getAuthRoutes, getDefaultRoute } from 'navConfig'
 import { getAppConfig } from 'domain/app'
+import { fetchBaseInfo } from 'services/user'
+let basicInfo = {}
+
+export const getIP = () => {
+  return basicInfo["ip"]
+}
+
+const initBasicInfo = () => {
+  fetchBaseInfo().then(res => {
+    if (isSuccess(res)) {
+      basicInfo = res.payload
+    }
+  })
+}
+
 
 const LAST_TARGET_URL = "@@__last_target_url__@@"
 const openRoutes = openRouteList,
@@ -38,6 +53,9 @@ const getInitStates = () => {
 
 const subscriptions = {
   setup: ({ dispatch, history }) => {
+
+    initBasicInfo()
+
     return history.listen(({ pathname, search }) => {
       const open = openRoutes.includes(pathname)
 

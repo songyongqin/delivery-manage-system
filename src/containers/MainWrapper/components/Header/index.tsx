@@ -1,13 +1,15 @@
 import * as React from 'react'
 import classnames from 'classnames'
 const styles = require("./styles.less")
-import { Icon, Menu, Dropdown } from 'antd'
+import { Icon, Menu, Dropdown, Tooltip } from 'antd'
 import ExtraIcon from 'components/Icon'
 import { LIGHT_THEME, DARK_THEME } from 'constants/theme'
 import { USER_ACCOUNT_DATA_INDEX } from 'constants/user'
 import RecordOfCreateVM from 'modules/Manager_Virtual/components/RecordOfCreateVM'
 import { getAppConfig } from 'domain/app'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
+import { getIP } from 'models/domainUser'
+import { get } from 'utils'
 
 interface Props {
   theme?: string,
@@ -119,6 +121,20 @@ export default class Header extends React.PureComponent<Props, any>{
               </a>
             </Dropdown>
           </div>
+        </If>
+        <If condition={get(getAppConfig(), ["ipInfo", "honeypotNode"], false) && getIP()}>
+          <span style={{ float: "right", marginRight: "5px" }}>
+            <Tooltip title="此为该蜜罐节点主机的IP，用于区分不同的蜜罐节点">
+              蜜罐节点：<span style={{ color: "#108ee9" }}>{getIP()}</span>
+            </Tooltip>
+          </span>
+        </If>
+        <If condition={get(getAppConfig(), ["ipInfo", "idsNode"], false) && getIP()}>
+          <span style={{ float: "right", marginRight: "5px" }}>
+            <Tooltip title="此为该流量监测设备节点主机的IP，用于区分不同的流量监测设备节点">
+              流量监测设备节点：<span style={{ color: "#108ee9" }}>{getIP()}</span>
+            </Tooltip>
+          </span>
         </If>
         <h1 className={styles['title']}>
           {(getAppConfig() as any).title}

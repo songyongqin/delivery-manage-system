@@ -141,7 +141,9 @@ const HttpApiConfig = {
 
   SNORT: "/snort",
 
-  SYS_CONFIG_CLOUD_DETECTION: "/sys-config/cloud-detection"
+  SYS_CONFIG_CLOUD_DETECTION: "/sys-config/cloud-detection",
+
+  BASE_INFO: "/product-type",
 }
 
 

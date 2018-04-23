@@ -9,3 +9,5 @@ export const delSign = commonRequestCreator.delete(httpApi.USER_SIGN)
 export const getVerificationCode = commonRequestCreator.get(httpApi.VERIFICATION_CODE)
 
 export const modifyPassword = commonRequestCreator.put(httpApi.USER_PASSWORD)
+
+export const fetchBaseInfo = commonRequestCreator.get(httpApi.BASE_INFO)

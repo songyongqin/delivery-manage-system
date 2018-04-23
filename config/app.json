@@ -37,6 +37,10 @@
     "/snort"
   ],
   "recordOfCreatingVM": true,
+  "ipInfo": {
+    "idsNode": true,
+    "honeypotNode": true
+  },
   "overview": {
     "captureFlow": true,
     "threatEvent": true
