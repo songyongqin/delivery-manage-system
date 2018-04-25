@@ -49,7 +49,7 @@
   "overall": {
     "capture": true,
     "netBasic": true,
-    "limitNetBasic": true,
+    "limitNetBasic": false,
     "pcap": true,
     "system": true
   },
