@@ -14,10 +14,6 @@
 可以通过配置多个app.json来部署不同的产品形态
 
 
-### 用户登录信息的相关api
-
-/src/domain/user.ts
-
 ### 如何给通过配置文件修改表格的布局和过滤信息？
 
 [布局相关配置]('./config/layout')
@@ -57,14 +53,14 @@ export default class EventPanel extends React.Component<any, any> {
 }
 ```
 
+### 用户登录信息的相关api
 
+/src/domain/user.ts
 
 ## 文件结构说明
 
 ```
-/buildConfig  
-/config  
-
+  
 Attack-capture-system
 └───buildConfig   /* 输出构建信息到浏览器控制台的配置，构建时会自动将buildDate改为构建的时间点 */
 └───config  /* 产品模块加载配置 */
