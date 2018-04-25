@@ -1,6 +1,30 @@
 # Attack-capture-system
 
+以下内容基于读者对整个产品有了解，熟悉 Git 和 NPM 基本操作， 以及 React / Dva相关的 API
+
 ## 常见问题
+
+
+
+### 如何使用代码？
+环境: Git / Node
+克隆仓库代码
+```shell
+git clone https://git.antiy.org.cn/chenxinzhou/Attack-Capture-System.git
+```
+安装依赖 
+```shell
+npm install # 或者 cnpm install
+```
+运行本地开发环境
+```shell
+npm run dev 
+```
+构建输出静态文件
+```
+npm run build
+```
+
 
 ### 如何改变产品形态？
 
@@ -64,8 +88,16 @@ export default class EventPanel extends React.Component<any, any> {
 Attack-capture-system
 └───buildConfig   /* 输出构建信息到浏览器控制台的配置，构建时会自动将buildDate改为构建的时间点 */
 └───config  /* 产品模块加载配置 */
-    │   app.json /* 模块加载配置 */
-    │   README.md /* 说明文档 */
-    └───layout /*与 table 相关的配置*/
+│   │   app.json /* 模块加载配置 */
+│   │   README.md /* 说明文档 */
+│   └───layout /*与 table 相关的配置*/
+└───src
+|   | index.ejs /* 构建的HTML模板 */
+|   | index.tsx /* 整个应用的入口 */
+|   | router.tsx /* 整个应用的路由配置 */ 
+|   | ... 
+|   └───components /*公共组件*/
+|   └───domainComponents /*与业务直接相关的公共组件*/
+|   
 ```
 

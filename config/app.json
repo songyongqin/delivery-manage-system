@@ -38,8 +38,8 @@
   ],
   "recordOfCreatingVM": true,
   "ipInfo": {
-    "idsNode": true,
-    "honeypotNode": true
+    "idsNode": false,
+    "honeypotNode": false
   },
   "overview": {
     "captureFlow": true,
