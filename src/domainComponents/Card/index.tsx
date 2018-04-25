@@ -9,7 +9,7 @@ import { omit } from 'utils'
 const WrappedCard = (props: any) => {
   const { className = "", theme = DARK_THEME } = props
 
-  let finalProps = omit(["dispatch", 'theme', 'userData', 'login'], props)
+  let finalProps = omit(["dispatch", 'theme', 'userData', 'login', 'admin'], props)
 
   const finalClasses = classnames({
     [styles["card"]]: true,

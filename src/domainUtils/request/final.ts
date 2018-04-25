@@ -5,6 +5,8 @@ const httpApi = ApiConfig.http
 import { routerRedux } from 'dva/router'
 import { Modal } from 'antd'
 import { delUserData } from 'domain/user'
+import { saveLicenceStatus } from 'domain/licence'
+import { MANAGER_DEVICE_URL } from 'routes/config/path'
 
 Message.config({
   duration: 5,
@@ -28,7 +30,8 @@ const handleSignInOverdue = () => {
 }
 
 const handleLicenceOverdue = () => {
-
+  saveLicenceStatus(true)
+  routerRedux.push(MANAGER_DEVICE_URL)
 }
 
 export default (url: string, options: object, result: any): void => {

@@ -12,6 +12,7 @@ import onError, { initGlobalOnErrorListener } from 'domainUtils/error'
 import initVersionInfo from 'domain/versionInfo'
 import * as React from 'react'
 const router = require('./router').default
+import { setAppInstance } from 'domain/instance'
 
 //output versionInfo in Console panel
 initVersionInfo()
@@ -23,6 +24,7 @@ const app = dva({
   onError: onError
 })
 
+setAppInstance(app)
 // 2. Plugins
 app.use(createLoading({ effects: true }))
 app.use(createLastEffectTime())
