@@ -87,7 +87,7 @@ class Page extends React.Component<any, any> {
             <Summary></Summary>
           </div>,
           <div key="node">
-            <NodeMirror></NodeMirror>
+            <NodeMirror readonly={false}></NodeMirror>
           </div>
         ])}
       </div>
