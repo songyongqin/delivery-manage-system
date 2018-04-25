@@ -4,7 +4,7 @@ import delay from 'utils/delay'
 const decryptRes = res => {
 
   if (isSecret()) {
-    return res.text().then(text => JSON.parse(decrypt(text))).then(data => console.info(data))
+    return res.text().then(text => JSON.parse(decrypt(text)))
   }
   return Promise.resolve(res.json())
 }

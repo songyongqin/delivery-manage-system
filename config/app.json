@@ -1,6 +1,6 @@
 {
   "title": "安天捕风蜜罐系统",
-  "secret": false,
+  "secret": true,
   "routerRegister": {
     "/overview": true,
     "/analyse": true,

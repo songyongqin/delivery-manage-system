@@ -108,6 +108,7 @@ const effects = {
   getVerificationCode: [
     function* ({ payload }, { call, put }) {
       const res = yield call(services.getVerificationCode)
+      console.info(res)
       return res
     },
     {
