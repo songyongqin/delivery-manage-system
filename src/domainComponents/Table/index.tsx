@@ -9,6 +9,7 @@ import $ from 'jquery'
 import 'jquery.nicescroll'
 import InputDropdown from './InputDropdown'
 import { primaryColor } from 'themes/vars'
+import { get } from 'utils'
 
 const isFiltered = (filter) => {
   try {
@@ -37,7 +38,7 @@ const extraColumns = (columns, {
             onFilterDropdownVisibleChange(dataIndex, false)
             inputFilterOnChange(filter)
           }}
-          type={column.type || "any"}
+          type={get(column, ["inputRule", "type"]) || "any"}
           value={filters[dataIndex]}
           visible={visible}>
         </InputDropdown>,

@@ -3,8 +3,29 @@ const styles = require('./styles.less')
 
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, DatePicker } from 'antd';
 import * as tools from 'utils'
+import { ipReg, portReg } from 'utils/tools'
 
 const FormItem = Form.Item;
+
+const getRuleByType = type => {
+  if (type === "ip") {
+    return [
+      {
+        pattern: ipReg,
+        message: "请输入正确的IP"
+      }
+    ]
+  }
+  if (type === "port") {
+    return [
+      {
+        pattern: portReg,
+        message: "请输入正确的端口"
+      }
+    ]
+  }
+  return []
+}
 
 class QueryForm extends React.Component<any, any> {
   constructor(props) {
@@ -42,7 +63,8 @@ class QueryForm extends React.Component<any, any> {
       loading = false,
       dataIndex,
       value,
-      label
+      label,
+      type
     } = this.props
 
 
@@ -55,6 +77,7 @@ class QueryForm extends React.Component<any, any> {
             label={<span>{label || "请输入搜索内容"}</span>}>
             {getFieldDecorator(dataIndex, {
               initialValue: value,
+              rules: getRuleByType(type)
             })(
               <Input placeholder={""}
                 ref={input => this.input = input}
