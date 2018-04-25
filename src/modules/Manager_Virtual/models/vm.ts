@@ -38,6 +38,15 @@ export default {
 
       resolve && resolve()
     },
-    validate: commonEffectCreator(validate)
+    validate: function* ({ resolve, reject, payload }, { call }) {
+      const res = yield call(validate, payload)
+
+      if (isSuccess(res)) {
+        resolve && resolve(res)
+      }
+      else {
+        reject && reject(res.message)
+      }
+    }
   }
 }

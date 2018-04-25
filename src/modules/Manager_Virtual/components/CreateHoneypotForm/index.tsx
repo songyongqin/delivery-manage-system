@@ -156,7 +156,6 @@ class WrappedForm extends React.Component<any, any> {
     value.trim().length === 0 && callback();
     this.timer.honeypotName = setTimeout(() => {
       this.props.validatorHandle({ type: "honeypotName", value: value.trim() }).then(({ payload, message }) => {
-
         payload !== 1 ? callback(message) : callback()
       })
     }, 500)
