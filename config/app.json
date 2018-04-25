@@ -77,8 +77,8 @@
   },
   "mirrorImageManager": {
     "collection": true,
-    "honeypotNode": true,
-    "honeypot": true
+    "node": true,
+    "nodeReadOnly": false
   },
   "contactInfo": {
     "phoneNumber": "0755-26806561",
