@@ -1,0 +1,13 @@
+{
+  "columns": [
+    {
+      "dataIndex": "action",
+      "filters": [
+        {
+          "value": "unknown",
+          "text": "请在/static/config/system.json中配置"
+        }
+      ]
+    }
+  ]
+}

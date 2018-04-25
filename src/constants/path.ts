@@ -5,7 +5,10 @@ export const layoutConfig = {
   threatEventExploit: "/static/config/layout/threatEventExploit.json",
   threatEventThreatInfo: "/static/config/layout/threatEventThreatInfo.json",
   threatEventTool: "/static/config/layout/threatEventTool.json",
-  systemLogLogin: "/static/config/layout/systemLogLogin.json"
+  systemLogLogin: "/static/config/layout/systemLogLogin.json",
+  networkBasic: "/static/config/layout/networkBasic.json",
+  networkLimit: "/static/config/layout/networkLimit.json",
+  system: "/static/config/layout/system.json"
 }
 
 export default {

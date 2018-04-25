@@ -99,7 +99,7 @@ const renderer = {
   // },
 }
 
-export const getColumns = () =>
+export const getColumns = (option) =>
   columnsCreator({
     dataIndexes,
     titleConfig: textConfig,
