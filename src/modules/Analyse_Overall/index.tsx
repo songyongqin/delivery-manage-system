@@ -6,6 +6,7 @@ import Capture from './components/Capture'
 import Pcap from './components/Pcap'
 import NetBasic from './components/NetBasic'
 import DateRangePicker from 'domainComponents/DateRangePicker'
+import LimitNetBasic from './components/LimitNetBasic'
 import { last } from 'utils'
 import { getAppConfig } from 'domain/app'
 import { get } from 'utils'
@@ -52,7 +53,11 @@ class Page extends React.Component<any, any> {
       },
       {
         key: "limitNetBasic",
-        content: ""
+        content: (
+          <Tabs.TabPane tab="异常可疑网络数据" key="limit-net">
+            <LimitNetBasic initialFilters={initialFilters}></LimitNetBasic>
+          </Tabs.TabPane>
+        )
       },
       {
         key: "system",
