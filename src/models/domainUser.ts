@@ -56,6 +56,15 @@ const subscriptions = {
 
     initBasicInfo()
 
+    //管理员心跳
+    if (getInitStates().isAdmin) {
+      setInterval(() => {
+
+        services.postAdminHeartBeat({}).catch(e => console.info(e))
+
+      }, 30 * 1000)
+    }
+
     return history.listen(({ pathname, search }) => {
       const open = openRoutes.includes(pathname)
 

@@ -11,3 +11,5 @@ export const getVerificationCode = commonRequestCreator.get(httpApi.VERIFICATION
 export const modifyPassword = commonRequestCreator.put(httpApi.USER_PASSWORD)
 
 export const fetchBaseInfo = commonRequestCreator.get(httpApi.BASE_INFO)
+
+export const postAdminHeartBeat = commonRequestCreator.post(httpApi.USER_HEART_BEAT)
