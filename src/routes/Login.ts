@@ -9,7 +9,7 @@ export default (app: any, url: string): React.Component => {
     app,
     models: () => [
     ],
-    component: () => System.import(/* webpackChunkName: "Login" */'containers/Login')
+    component: () => System.import(/* webpackChunkName: "Login" */'modules/Login')
       .then(page => WithRouteInit(url)(page.default)),
   })
 }

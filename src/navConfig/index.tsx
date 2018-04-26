@@ -46,13 +46,7 @@ import {
   adminOnly,
   openRouteList
 } from 'routes/config/auth'
-import {
-  MASTER,
-  IDS_NODE,
-  IDS_STANDALONE,
-  HONEYPOT_STANDALONE,
-  HONEYPOT_NODE
-} from 'constants/production'
+
 import { getAppConfig } from 'domain/app'
 
 export const _navConfig = [
