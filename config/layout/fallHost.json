@@ -1,0 +1,21 @@
+{
+  "columns": [
+    {
+      "dataIndex": "ip",
+      "conditionType": "input",
+      "inputRule": {
+        "type": "ip"
+      }
+    },
+    {
+      "dataIndex": "attackEventTypeList",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "请到/static/config/layout/fallHost.json设置选项配置",
+          "value": "0"
+        }
+      ]
+    }
+  ]
+}

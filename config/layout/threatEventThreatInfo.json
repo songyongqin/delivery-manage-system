@@ -6,7 +6,7 @@
       "conditionType": "selector",
       "filters": [
         {
-          "text": "请到/config/table/threatEventThreatInfo.json设置选项配置",
+          "text": "请到/static/config/layout/threatEventThreatInfo.json设置选项配置",
           "value": "C2"
         }
       ]

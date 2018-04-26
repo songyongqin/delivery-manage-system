@@ -5,7 +5,7 @@
       "filters": [
         {
           "value": "unknown",
-          "text": "请在/static/config/system.json中配置"
+          "text": "请在/static/config/layout/system.json中配置"
         }
       ]
     }

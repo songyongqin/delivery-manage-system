@@ -29,7 +29,7 @@
       "conditionType": "selector",
       "filters": [
         {
-          "text": "请到/config/table/analyseEvent.json设置选项配置",
+          "text": "请到/static/config/layout/analyseEvent.json设置选项配置",
           "value": "0"
         }
       ]

@@ -5,7 +5,9 @@ import * as tableConfig from './tableConfig'
 import WithAnimateRender from 'components/WithAnimateRender'
 import TableWithRemote from 'domainComponents/TableWithRemote'
 import DateRangePicker from 'domainComponents/DateRangePicker'
-
+import WithConfig from 'domainComponents/WithConfig'
+import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
+import path from 'constants/path'
 
 const initialFilters = {
   timestampRange: [],
@@ -13,6 +15,7 @@ const initialFilters = {
   page: 1,
 }
 
+@WithConfig(path.layoutConfig.fallHost)
 @WithAnimateRender
 export default class FallHost extends React.Component<any, any> {
   constructor(props) {
@@ -60,7 +63,9 @@ export default class FallHost extends React.Component<any, any> {
                   ...filters
                 }}
                 getExpandedRowRenderer={tableConfig.getExpandedRowRender}
-                getColumns={tableConfig.getColumns}
+                getColumns={options => {
+                  return combineColumnsConfig(tableConfig.getColumns(options), this.props.config.columns)
+                }}
                 remoteNamespace={ANALYSE_FALL_HOST_NAMESPACE}
               />
             </div>
