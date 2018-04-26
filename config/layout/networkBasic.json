@@ -1,53 +1,13 @@
 {
   "columns": [
     {
-      "dataIndex": "threatJudge",
-      "filters": [
-        {
-          "value": "unknown",
-          "text": "未知"
-        },
-        {
-          "value": "safe",
-          "text": "安全"
-        }
-      ]
+      "dataIndex": "toolName",
+      "title": "攻击武器",
+      "conditionType": "input"
     },
     {
-      "dataIndex": "sourceIP",
-      "title": "源IP",
-      "conditionType": "input",
-      "inputRule": {
-        "type": "ip"
-      }
-    },
-    {
-      "dataIndex": "sourcePort",
-      "title": "源端口",
-      "conditionType": "input",
-      "inputRule": {
-        "type": "port"
-      }
-    },
-    {
-      "dataIndex": "targetIP",
-      "title": "目标IP",
-      "conditionType": "input",
-      "inputRule": {
-        "type": "ip"
-      }
-    },
-    {
-      "dataIndex": "targetPort",
-      "title": "目标端口",
-      "conditionType": "input",
-      "inputRule": {
-        "type": "port"
-      }
-    },
-    {
-      "dataIndex": "url",
-      "title": "URL",
+      "dataIndex": "md5",
+      "title": "MD5",
       "conditionType": "input"
     }
   ]

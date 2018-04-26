@@ -88,6 +88,93 @@ module.exports = {
       "phoneNumber": "0755-26806561",
       "email": "antiy_shenzhen@antiy.cn"
     }
+  },
+  "honeypotStandalone": {
+    "title": "安天捕风蜜罐系统",
+    "secret": true,
+    "routerRegister": {
+      "/overview": true,
+      "/analyse": true,
+      "/analyse/event": true,
+      "/analyse/attack-chain": true,
+      "/analyse/fall-host": true,
+      "/analyse/ranking": true,
+      "/analyse/threat-distribution": true,
+      "/analyse/overall": true,
+      "/early-warning": true,
+      "/early-warning/email": true,
+      "/report": true,
+      "/sys-config": true,
+      "/sys-config/network": true,
+      "/sys-config/monitor": true,
+      "/sys-config/strategy": true,
+      "/user-manager": true,
+      "/manager": true,
+      "/manager/device": true,
+      "/manager/virtual-machine": true,
+      "/manager/mirror": true,
+      "/sys-log": true,
+      "/sys-log/login": true,
+      "/snort": true
+    },
+    "adminOnly": [
+      "/sys-config",
+      "/sys-config/network",
+      "/sys-config/monitor",
+      "/sys-config/strategy",
+      "/sys-log",
+      "/sys-log/login",
+      "/user-manager",
+      "/snort"
+    ],
+    "recordOfCreatingVM": true,
+    "ipInfo": {
+      "idsNode": false,
+      "honeypotNode": false
+    },
+    "overview": {
+      "captureFlow": true,
+      "threatEvent": true
+    },
+    "analyse": {},
+    "overall": {
+      "capture": true,
+      "netBasic": true,
+      "limitNetBasic": false,
+      "pcap": true,
+      "system": true
+    },
+    "networkConfig": {
+      "masterIPConfig": true,
+      "cloudDetection": false
+    },
+    "strategyConfig": {
+      "white": true
+    },
+    "monitor": {
+      "master": false,
+      "honeypotStandalone": true,
+      "honeypot": false,
+      "ids": false
+    },
+    "deviceManager": {
+      "master": false,
+      "honeypot": false,
+      "ids": false,
+      "honeypotNode": false,
+      "idsNode": false,
+      "honeypotStandalone": true,
+      "idsStandalone": false
+    },
+    "mirrorImageManager": {
+      "collection": true,
+      "node": false,
+      "nodeReadOnly": false
+    },
+    "contactInfo": {
+      "phoneNumber": "0755-26806561",
+      "email": "antiy_shenzhen@antiy.cn"
+    }
   }
 }
 
