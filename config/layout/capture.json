@@ -1,0 +1,16 @@
+{
+  "columns": [
+    {
+      "dataIndex": "filename",
+      "conditionType": "input"
+    },
+    {
+      "dataIndex": "md5",
+      "conditionType": "input"
+    },
+    {
+      "dataIndex": "family",
+      "conditionType": "input"
+    }
+  ]
+}

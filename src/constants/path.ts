@@ -8,7 +8,9 @@ export const layoutConfig = {
   systemLogLogin: "/static/config/layout/systemLogLogin.json",
   networkBasic: "/static/config/layout/networkBasic.json",
   networkLimit: "/static/config/layout/networkLimit.json",
-  system: "/static/config/layout/system.json"
+  system: "/static/config/layout/system.json",
+  capture: "/static/config/layout/capture.json",
+  pcap: "/static/config/layout/pcap.json",
 }
 
 export default {
