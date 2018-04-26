@@ -132,6 +132,7 @@ exit $ret
   
 Attack-capture-system
 └───buildConfig   /* 输出构建信息到浏览器控制台的配置，构建时会自动将buildDate改为构建的时间点 */
+└───bin /*命令相关配置 目前主要用于解决node内存限制问题*/
 └───config  /* 产品模块加载配置 */
 │   │   app.json /* 模块加载配置 */
 │   │   README.md /* 说明文档 */
@@ -143,6 +144,8 @@ Attack-capture-system
 |   | ... 
 |   └───components /*公共组件*/
 |   └───domainComponents /*与业务直接相关的公共组件*/
-|   
+|   └───domainUtils /*与业务相关的工具函数*/
+│        │ ...   
+│        └─── request /*业务数据相关的所有http请求管道*/
 ```
 
