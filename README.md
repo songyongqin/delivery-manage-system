@@ -30,12 +30,11 @@ npm run build
 
 重构后的acs前端版本内部移除了产品形态的概念，使用feature trigger的方式来控制模块的加载，配置方式请查看下方
 
-[配置文件]('./config/app.json')        
+[配置文件](./config/app.json)        
 
-[配置说明]('./config/README.md')
+[配置说明](./config/README.md)
 
-配置后构建完毕，会自动复制 app.json 内容到 dist 目录 ，
-可以通过配置多个app.json来部署不同的产品形态
+配置后构建完毕，会自动复制 app.json 内容到 dist 目录
 
 ### 想输出多个产品形态配置？
 
@@ -43,7 +42,7 @@ npm run build
 
 该系统提供了输出了多个产品形态的功能
 
-[配置文件]('./buildConfig/appConfigOutput/app.config.js')
+[配置文件](./buildConfig/appConfigOutput/app.config.js)
 
 大致格式如下 default 为默认的配置， master为自定义的配置
 
@@ -70,11 +69,11 @@ dist
 
 ### 如何给通过配置文件修改表格的布局和过滤信息？
 
-[布局相关配置]('./config/layout')
+[布局相关配置](./config/layout)
 
 在该文件夹下添加对应的json文件，格式规范参考目录下的README
 
-请参看[示例]('./src/modules/Analyse_Event/index.tsx')
+请参看[示例](./src/modules/Analyse_Event/index.tsx)
 
 ```javascript
 import WithConfig from 'domainComponents/WithConfig'
@@ -106,6 +105,10 @@ export default class EventPanel extends React.Component<any, any> {
   }
 }
 ```
+### TableWithRemote 组件使用方法
+
+[TableWithRemote README.md](./src/domainComponents/TableWithRemote/README.md)
+
 ### 内存溢出 JavaScript heap out of memory
 由于NodeJS本身默认内存限制为1G 在打包内容过多的情况下 会出现内存溢出问题
 解决方法如下：
@@ -122,10 +125,6 @@ fi
 exit $ret
 ```
 
-
-### 用户登录信息的相关api
-
-/src/domain/user.ts
 
 ## 文件结构说明
 
