@@ -9,7 +9,7 @@ export default {
   "entry": "./src/index.tsx",
   "html": { "template": "./src/index.ejs" },
   "publicPath": '/',
-  "outputPath": './dist',
+  "outputPath": './__dist',
   "proxy": {
     "/user": proxyServer,
     "/overview": proxyServer,

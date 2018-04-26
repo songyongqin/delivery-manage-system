@@ -7,11 +7,15 @@ const versionInfo = {
 }
 
 module.exports = () => {
-  fs.writeFile("./dist/static/versionInfo.json", JSON.stringify(versionInfo, null, 2), (err, data) => {
-    if (err) {
-      console.error(err)
-      return
-    }
-    console.log("create versionInfo success")
+  return new Promise((resolve, reject) => {
+    fs.writeFile("./__dist/static/versionInfo.json", JSON.stringify(versionInfo, null, 2), (err, data) => {
+      if (err) {
+        console.error(err)
+        reject(err)
+        return
+      }
+      resolve()
+      console.log("create versionInfo success")
+    })
   })
 }

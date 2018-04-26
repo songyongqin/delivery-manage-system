@@ -59,7 +59,7 @@ module.exports = (webpackConfig, env) => {
   webpackConfig.plugins.push(new CopyWebpackPlugin([
     {
       from: './config',
-      to: path.join(__dirname, './dist/static/config'),
+      to: path.join(__dirname, './__dist/static/config'),
     },
   ]))
   webpackConfig.plugins.push(new CSSSplitWebpackPlugin({

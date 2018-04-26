@@ -1,3 +1,4 @@
 const outputVersionInfo = require('./outputVersionInfo')
+const outputAppConfig = require('./appConfigOutput')
 
-outputVersionInfo()
+outputVersionInfo().then(_ => outputAppConfig())
