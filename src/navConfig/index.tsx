@@ -37,7 +37,9 @@ import {
 
   SYS_LOG_URL,
   SYS_LOG_LOGIN_URL,
-  ROOT_URL
+  ROOT_URL,
+  SNORT_URL,
+  FILE_RESTORE
 } from 'routes/config/path'
 import {
   shouldHoneypotNodeHide,
@@ -48,6 +50,7 @@ import {
 } from 'routes/config/auth'
 
 import { getAppConfig } from 'domain/app'
+import router from 'router';
 
 export const _navConfig = [
   {
@@ -155,6 +158,14 @@ export const _navConfig = [
         title: "登录日志"
       }
     ]
+  },
+  {
+    link: SNORT_URL,
+    title: "Snort"
+  },
+  {
+    link: FILE_RESTORE,
+    title: "文件还原"
   }
 ]
 
@@ -221,7 +232,7 @@ export const getNavLink = (navConfig, total = []) => {
   }, total)
 }
 
-const navLinkList = getNavLink(_navConfig)
+const navLinkList = [...getNavLink(_navConfig), SNORT_URL, FILE_RESTORE]
 
 //获取 linkList 中拥有嵌套关系的 nav link 包括自身
 const getNestLinkList = (linkList) => {
@@ -259,7 +270,7 @@ export const getNavConfig = ({ admin = false }) => {
 
     const shouldHideNav = getShouldHideNav({ admin })
 
-    return removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav }))
+    return removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav: [...shouldHideNav, SNORT_URL, FILE_RESTORE] }))
   } catch (e) {
     return _navConfig
   }

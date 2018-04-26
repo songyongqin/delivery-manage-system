@@ -4,14 +4,13 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import styles from './styles.css'
 import { Button, Modal, Upload, message as Message, Row, Col, Tooltip } from 'antd'
-import { WithBreadcrumb, WithAnimateRender } from 'components/HOSComponents/index'
 import exampleRule from './exampleRule'
-import { getCache, setCache } from 'utils/tools'
+import { getCache, setCache } from 'utils'
 import { NAMESPACE, POST_SNORT_RULE_ACTION, RULE_CONTENT_DATA_INDEX, FETCH_SNORT_RULE_ACTION } from './ConstConfig'
 import { connect } from 'dva'
-import { createMapDispatchWithPromise } from 'utils/dvaExtraDispatch'
-import Spin from 'components/JoSpin'
-import { hasSnort } from 'domain/production'
+import Spin from 'domainComponents/Spin'
+import extraConnect from 'domainUtils/extraConnect'
+import WithAnimateRender from 'components/WithAnimateRender'
 
 const SNORT_CACHE_NAMESPACE = "@@__SNORT__@@"
 
@@ -67,10 +66,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-@connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))
 @WithAnimateRender
-@WithBreadcrumb
-class Page extends React.Component {
+@extraConnect(mapStateToProps, (mapDispatchToProps))
+class Page extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
@@ -78,11 +76,8 @@ class Page extends React.Component {
     }
   }
   componentDidMount() {
-    if (hasSnort()) {
-      console.info("...")
-      this.fetchSnortRule()
-      this.checkDraft()
-    }
+    this.fetchSnortRule()
+    this.checkDraft()
   }
   checkDraft = () => {
     const draft = getDraft()
@@ -144,11 +139,9 @@ class Page extends React.Component {
         <Spin spinning={postSnortRuleLoading || fetchSnortRuleLoading}>
           {
             this.props.animateRender([
-              this.getBreadcrumb(),
               <CodeMirror
                 key="editor"
                 value={this.state.value}
-                autoFocus={true}
                 className={styles["editor"]}
                 options={{
                   mode: 'string',

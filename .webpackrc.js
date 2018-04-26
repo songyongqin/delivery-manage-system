@@ -21,7 +21,9 @@ export default {
     "/occupying": proxyServer,
     "/report": proxyServer,
     "/mirror": proxyServer,
-    "/product-type": proxyServer
+    "/product-type": proxyServer,
+    "/snort": proxyServer,
+    "/file-restore": proxyServer
   },
   "env": {
     "development": {

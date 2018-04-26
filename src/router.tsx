@@ -22,6 +22,7 @@ import getOverallPage from 'routes/Analyse_Overall'
 import getReportPage from 'routes/Report'
 import getSystemLogLoginPage from 'routes/SysLog_Login'
 import getManagerMirrorPage from 'routes/Manager_Mirror'
+import getSnortPage from 'routes/Snort'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -46,7 +47,8 @@ import {
   REPORT_URL,
   SYS_LOG_URL,
   SYS_LOG_LOGIN_URL,
-  MANAGER_MIRROR_URL
+  MANAGER_MIRROR_URL,
+  SNORT_URL,
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
 
@@ -179,6 +181,12 @@ export default ({ history, app }) => {
               exact
               component={getSystemLogLoginPage(app, SYS_LOG_LOGIN_URL)}
               path={SYS_LOG_LOGIN_URL} >
+            </Route>
+
+            <Route
+              exact
+              component={getSnortPage(app, SNORT_URL)}
+              path={SNORT_URL} >
             </Route>
           </Switch>
         </MainWrapper>

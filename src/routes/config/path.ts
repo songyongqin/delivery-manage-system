@@ -32,4 +32,6 @@ export const ROOT_URL = "/",
   SYS_LOG_URL = "/sys-log",
   SYS_LOG_LOGIN_URL = "/sys-log/login",
 
-  SNORT = "/snort"
+  SNORT_URL = "/snort",
+
+  FILE_RESTORE = "/file-restore"
