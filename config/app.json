@@ -24,7 +24,8 @@
     "/manager/mirror": true,
     "/sys-log": true,
     "/sys-log/login": true,
-    "/snort": true
+    "/snort": true,
+    "/file-restore": true
   },
   "adminOnly": [
     "/sys-config",

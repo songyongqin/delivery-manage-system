@@ -23,6 +23,8 @@ import getReportPage from 'routes/Report'
 import getSystemLogLoginPage from 'routes/SysLog_Login'
 import getManagerMirrorPage from 'routes/Manager_Mirror'
 import getSnortPage from 'routes/Snort'
+import getFileRestorePage from 'routes/FileRestore'
+
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -49,8 +51,10 @@ import {
   SYS_LOG_LOGIN_URL,
   MANAGER_MIRROR_URL,
   SNORT_URL,
+  FILE_RESTORE,
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
+import { FILE } from 'dns';
 
 
 export default ({ history, app }) => {
@@ -187,6 +191,12 @@ export default ({ history, app }) => {
               exact
               component={getSnortPage(app, SNORT_URL)}
               path={SNORT_URL} >
+            </Route>
+
+            <Route
+              exact
+              component={getFileRestorePage(app, FILE_RESTORE)}
+              path={FILE_RESTORE} >
             </Route>
           </Switch>
         </MainWrapper>

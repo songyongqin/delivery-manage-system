@@ -1,0 +1,5 @@
+.editor{
+}
+.editor :global(.CodeMirror) {
+  height:600px;
+}
