@@ -37,6 +37,7 @@
     "/user-manager",
     "/snort"
   ],
+  "routerTitleConfig": {},
   "recordOfCreatingVM": true,
   "ipInfo": {
     "idsNode": false,

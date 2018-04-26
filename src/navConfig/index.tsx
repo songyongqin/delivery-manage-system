@@ -202,6 +202,28 @@ const removeShouldHideNav: RemoveShouldHideNav = ({ navConfig = [], shouldHideNa
   }
 }
 
+//根据appConfig  routerTitleConfig 修改路由的名字
+const getNavCombineTitleConfig = (navConfig) => {
+  try {
+    const { routerTitleConfig = {} } = getAppConfig() as any
+
+    return navConfig
+      .map(i => (
+        i.link in routerTitleConfig
+          ?
+          {
+            ...i,
+            title: routerTitleConfig[i.link]
+          }
+          :
+          i
+      ))
+  } catch (e) {
+    console.error(e)
+    return navConfig
+  }
+}
+
 //将拥有items且数量为0的nav移除
 const removeItemsEmptyNav = (navConfig) => {
   try {
@@ -270,7 +292,9 @@ export const getNavConfig = ({ admin = false }) => {
 
     const shouldHideNav = getShouldHideNav({ admin })
 
-    return removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav: [...shouldHideNav, SNORT_URL, FILE_RESTORE] }))
+    const navConfig = removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav: [...shouldHideNav, SNORT_URL, FILE_RESTORE] }))
+
+    return getNavCombineTitleConfig(navConfig)
   } catch (e) {
     return _navConfig
   }
