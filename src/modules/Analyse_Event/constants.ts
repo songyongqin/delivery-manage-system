@@ -137,4 +137,3 @@ export const haveDetailsDataIndexes = [
 export const EVENT_ACTION_DATA_INDEX = "eventAction",
   EVENT_TYPE_DATA_INDEX = "eventType"
 // export { EVENT_ACTION_DATA_INDEX, EVENT_TYPE_DATA_INDEX } from '../../configs/ConstConfig';
-export { NAMESPACE as MAIN_NAMESPACE } from '../Main/ConstConfig'
