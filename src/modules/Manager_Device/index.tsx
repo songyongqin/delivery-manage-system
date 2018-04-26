@@ -23,43 +23,43 @@ export default class ManagerDevice extends React.Component<any, any>{
     return <div>
       {
         this.props.animateRender([
-          <If condition={deviceManagerConfig["master"]}>
+          <If condition={deviceManagerConfig["master"]} key="master">
             <Master
               key="master"
               style={{ marginBottom: "15px" }}>
             </Master>
           </If>,
-          <If condition={deviceManagerConfig["honeypot"]}>
+          <If condition={deviceManagerConfig["honeypot"]} key="honeypot">
             <Honeypot
               key="honeypot"
               style={{ marginBottom: "15px" }}>
             </Honeypot>
           </If>,
-          <If condition={deviceManagerConfig["ids"]}>
+          <If condition={deviceManagerConfig["ids"]} key="ids">
             <IDS
               key="ids"
               style={{ marginBottom: "15px" }}>
             </IDS>
           </If>,
-          <If condition={deviceManagerConfig["honeypotNode"]}>
+          <If condition={deviceManagerConfig["honeypotNode"]} key="honeypotNode">
             <HoneypotNode
               key="honeypot-node"
               style={{ marginBottom: "15px" }}>
             </HoneypotNode>
           </If>,
-          <If condition={deviceManagerConfig["idsNode"]}>
+          <If condition={deviceManagerConfig["idsNode"]} key="idsNode">
             <IDSNode
               key="ids-node"
               style={{ marginBottom: "15px" }}>
             </IDSNode>
           </If>,
-          <If condition={deviceManagerConfig["honeypotStandalone"]}>
+          <If condition={deviceManagerConfig["honeypotStandalone"]} key="honeypotStandalone">
             <HoneypotStandalone
               key="honeypot-standalone"
               style={{ marginBottom: "15px" }}>
             </HoneypotStandalone>
           </If>,
-          <If condition={deviceManagerConfig["idsStandalone"]}>
+          <If condition={deviceManagerConfig["idsStandalone"]} key="idsStandalone">
             <IDSStandalone
               key="ids-standalone"
               style={{ marginBottom: "15px" }}>
