@@ -169,7 +169,8 @@ const SysLogServerConfig: any = Form.create()(WrappedForm)
         type: `${SYS_CONFIG_SYS_LOG_NAMESPACE}/fetch`,
       }),
       put: payload => dispatch({
-        type: `${SYS_CONFIG_SYS_LOG_NAMESPACE}/put`
+        type: `${SYS_CONFIG_SYS_LOG_NAMESPACE}/put`,
+        payload
       })
     }
   }

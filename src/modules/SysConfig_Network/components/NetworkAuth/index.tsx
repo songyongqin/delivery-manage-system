@@ -180,7 +180,8 @@ const NetWorkAuth: any = Form.create()(WrappedForm)
         type: `${SYS_CONFIG_NETWORK_AUTH_NAMESPACE}/fetch`,
       }),
       put: payload => dispatch({
-        type: `${SYS_CONFIG_NETWORK_AUTH_NAMESPACE}/put`
+        type: `${SYS_CONFIG_NETWORK_AUTH_NAMESPACE}/put`,
+        payload
       })
     }
   }
