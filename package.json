@@ -8,6 +8,8 @@
     "build": "node ./buildConfig/index.js",
     "test": "mocha -r ./test/register -r tsconfig-paths/register src/**/*.test.ts",
     "prebuild": "cross-env ESLINT=none TSLINT=none ./bin/roadhog  build",
+    "buildlinux": "node ./buildConfig/index.js",
+    "prebuildlinux": "chmod +x ./bin/roadhog.sh && cross-env ESLINT=none TSLINT=none ./bin/roadhog.sh  build",
     "static": "http-server -P http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system dist/default"
   },
   "engines": {
