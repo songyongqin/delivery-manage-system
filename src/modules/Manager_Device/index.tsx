@@ -20,52 +20,75 @@ export default class ManagerDevice extends React.Component<any, any>{
 
     const deviceManagerConfig = get(getAppConfig(), ["deviceManager"], {})
 
+    const items = [
+      {
+        key: "master",
+        content: (
+          <Master
+            key="master"
+            style={{ marginBottom: "15px" }}>
+          </Master>
+        )
+      },
+      {
+        key: "honeypot",
+        content: (
+          <Honeypot
+            key="honeypot"
+            style={{ marginBottom: "15px" }}>
+          </Honeypot>
+        )
+      },
+      {
+        key: "ids",
+        content: (
+          <IDS
+            key="ids"
+            style={{ marginBottom: "15px" }}>
+          </IDS>
+        )
+      },
+      {
+        key: "honeypotNode",
+        content: (
+          <HoneypotNode
+            key="honeypot-node"
+            style={{ marginBottom: "15px" }}>
+          </HoneypotNode>
+        )
+      },
+      {
+        key: "idsNode",
+        content: (
+          <IDSNode
+            key="ids-node"
+            style={{ marginBottom: "15px" }}>
+          </IDSNode>
+        )
+      },
+      {
+        key: "honeypotStandalone",
+        content: (
+          <HoneypotStandalone
+            key="honeypot-standalone"
+            style={{ marginBottom: "15px" }}>
+          </HoneypotStandalone>
+        )
+      },
+      {
+        key: "idsStandalone",
+        content: (
+          <IDSStandalone
+            key="ids-standalone"
+            style={{ marginBottom: "15px" }}>
+          </IDSStandalone>
+        )
+      }
+    ].filter(item => deviceManagerConfig[item.key]).map(item => item.content)
+
     return <div>
       {
-        this.props.animateRender([
-          <If condition={deviceManagerConfig["master"]} key="master">
-            <Master
-              key="master"
-              style={{ marginBottom: "15px" }}>
-            </Master>
-          </If>,
-          <If condition={deviceManagerConfig["honeypot"]} key="honeypot">
-            <Honeypot
-              key="honeypot"
-              style={{ marginBottom: "15px" }}>
-            </Honeypot>
-          </If>,
-          <If condition={deviceManagerConfig["ids"]} key="ids">
-            <IDS
-              key="ids"
-              style={{ marginBottom: "15px" }}>
-            </IDS>
-          </If>,
-          <If condition={deviceManagerConfig["honeypotNode"]} key="honeypotNode">
-            <HoneypotNode
-              key="honeypot-node"
-              style={{ marginBottom: "15px" }}>
-            </HoneypotNode>
-          </If>,
-          <If condition={deviceManagerConfig["idsNode"]} key="idsNode">
-            <IDSNode
-              key="ids-node"
-              style={{ marginBottom: "15px" }}>
-            </IDSNode>
-          </If>,
-          <If condition={deviceManagerConfig["honeypotStandalone"]} key="honeypotStandalone">
-            <HoneypotStandalone
-              key="honeypot-standalone"
-              style={{ marginBottom: "15px" }}>
-            </HoneypotStandalone>
-          </If>,
-          <If condition={deviceManagerConfig["idsStandalone"]} key="idsStandalone">
-            <IDSStandalone
-              key="ids-standalone"
-              style={{ marginBottom: "15px" }}>
-            </IDSStandalone>
-          </If>
-        ])
+        this.props.animateRender(items)
       }
     </div>
   }
