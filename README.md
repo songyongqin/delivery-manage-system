@@ -145,7 +145,14 @@ Attack-capture-system
 |   └───components /*公共组件*/
 |   └───domainComponents /*与业务直接相关的公共组件*/
 |   └───domainUtils /*与业务相关的工具函数*/
-│        │ ...   
-│        └─── request /*业务数据相关的所有http请求管道*/
+│   │    │ ...   
+│   │    └─── request /*业务数据相关的所有http请求管道*/
+|   └───models /*公共的model位置*/
+|   └───modules /*所有业务功能模块 */
+|   └───public /*该文件夹内所有内容构建时 会被复制到输出的static文件夹中 */
+|   └───routes /*所有路由的模块 此处配置各个路由加载的内容（懒加载）*/
+|   └───themes /*与主题颜色相关的内容*/
+|   └───utils /*常用工具函数*/
+|   └───navConfig /*页面左侧导航栏的配置 如何修改和使用请查看里面注释*/
 ```
 

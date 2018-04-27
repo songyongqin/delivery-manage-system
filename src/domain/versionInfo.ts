@@ -3,7 +3,7 @@ import baseRequest from 'utils/request'
 import moment from 'moment'
 import { primaryColor } from 'themes/vars'
 
-
+//在控制台打印构建信息
 const printInfo = (info) => {
   try {
     console.log(
@@ -14,7 +14,7 @@ const printInfo = (info) => {
     console.error("Version info init error")
   }
 }
-
+//初始化构建信息
 const init = () => {
   return baseRequest(VERSION_INFO_URL + `?request-id=${new Date().getTime()}`,
     {

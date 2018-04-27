@@ -1,3 +1,7 @@
+/** 
+ * 改部分为大文件切割传输的函数
+ * 
+*/
 
 
 interface UploadFileParams {

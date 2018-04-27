@@ -1,5 +1,5 @@
 /*
- 该文件内容为所有普通的HTTP请求的内容
+ 该文件内容为所有业务相关的普通HTTP请求方法
 */
 import request from 'domainUtils/request'
 import domainQueryStringParse from 'domainUtils/queryStringParse'
@@ -7,7 +7,6 @@ import domainQueryStringParse from 'domainUtils/queryStringParse'
 const commonHeader = {
   "Content-Type": "application/json; charset=utf-8",
 }
-
 export default {
   get: (url: string) => (payload: object = {}): Promise<any> => request(url + domainQueryStringParse({
     "request-id": new Date().getTime()

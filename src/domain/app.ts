@@ -25,7 +25,10 @@ const initHTMLTitle = () => {
     console.error(e)
   }
 }
-
+/*
+通过 http 方式加载 app.json内容 
+改内容必须在整个应用开启前进行加载
+*/
 export const initAppConfig = () => {
   return request(APP_CONFIG + `?${new Date().getTime()}`, {
     method: "GET",
