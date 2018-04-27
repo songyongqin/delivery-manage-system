@@ -3,11 +3,11 @@
   "name": "attack-capture-system",
   "version": "v3.0.0-refactor",
   "scripts": {
-    "start": "cross-env PORT=8010 ESLINT=none TSLINT=none BROWSER=none ./bin/roadhog dev",
-    "dev": "cross-env PORT=8011 ESLINT=none TSLINT=none BROWSER=none ./bin/roadhog dev",
+    "start": "cross-env PORT=8010 ESLINT=none TSLINT=none BROWSER=none roadhog dev",
+    "dev": "cross-env PORT=8011 ESLINT=none TSLINT=none BROWSER=none roadhog dev",
     "build": "node ./buildConfig/index.js",
     "test": "mocha -r ./test/register -r tsconfig-paths/register src/**/*.test.ts",
-    "prebuild": "cross-env ESLINT=none TSLINT=none ./bin/roadhog  build",
+    "prebuild": "cross-env ESLINT=none TSLINT=none roadhog  build",
     "static": "http-server -P http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system dist/default"
   },
   "engines": {
