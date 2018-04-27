@@ -182,7 +182,8 @@ const CloudDetectionContent = ({ data, isDark, loading, onSubmit }) => {
         type: `${SYS_CONFIG_CLOUD_DETECTION_NAMESPACE}/fetch`,
       }),
       put: payload => dispatch({
-        type: `${SYS_CONFIG_CLOUD_DETECTION_NAMESPACE}/put`
+        type: `${SYS_CONFIG_CLOUD_DETECTION_NAMESPACE}/put`,
+        payload
       })
     }
   }
