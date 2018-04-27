@@ -9,6 +9,10 @@ import Spin from 'domainComponents/Spin'
 import WithConfig from 'domainComponents/WithConfig'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import path from 'constants/path'
+import { Button, Dropdown, Menu } from 'antd'
+import extraConnect from 'domainUtils/extraConnect'
+import momentToTimestampRange from 'domainUtils/momentToTimeStampRange'
+import { download } from 'utils'
 
 const initialFilters = {
   timestampRange: [],
@@ -16,6 +20,21 @@ const initialFilters = {
   page: 1,
 }
 
+@extraConnect(
+  state => {
+    return {
+      exportLoading: state.loading.effects[`${THREAT_EVENT_THREAT_INFO_NAMESPACE}/export`]
+    }
+  },
+  dispatch => {
+    return {
+      export: payload => dispatch({
+        type: `${THREAT_EVENT_THREAT_INFO_NAMESPACE}/export`,
+        payload
+      })
+    }
+  }
+)
 @WithConfig(path.layoutConfig.threatEventThreatInfo)
 export default class extends React.Component<any, any>{
   static defaultProps = {
@@ -45,28 +64,55 @@ export default class extends React.Component<any, any>{
       filters
     })
   }
+  onExport = (payload) => {
+    this.props.export({
+      ...this.state.filters,
+      timestampRange: momentToTimestampRange(this.state.filters.timestampRange),
+      ...payload
+    }).then(result => {
+      download(result)
+    })
+  }
   render() {
+
+    const menu = <Menu onClick={(e) => {
+      this.onExport({ format: "xml" })
+    }}>
+      <Menu.Item key="xml">导出为XML</Menu.Item>
+    </Menu>
 
     return (
       <div >
-        <div style={{ overflow: "hidden" }}>
-          <div style={{ float: "left" }}>
-            <LimitSelect
-              defaultValue={this.state.filters}
-              onChange={this.limitOnChange}>
-            </LimitSelect>
+        <Spin spinning={this.props.exportLoading}>
+          <div style={{ overflow: "hidden" }}>
+            <div style={{ float: "left" }}>
+              <LimitSelect
+                defaultValue={this.state.filters}
+                onChange={this.limitOnChange}>
+              </LimitSelect>
+            </div>
+            <div style={{ float: "right" }}>
+              <Dropdown.Button
+                type="primary"
+                onClick={() => {
+                  this.onExport({ format: "json" })
+                }}
+                overlay={menu}>
+                导出为JSON
+            </Dropdown.Button>
+            </div>
           </div>
-        </div>
-        <TableWithRemote
-          onChange={this.onChange}
-          getColumns={options => {
-            return combineColumnsConfig(getThreatInfoColumns(options), this.props.config.columns)
-          }}
-          remoteNamespace={THREAT_EVENT_THREAT_INFO_NAMESPACE}
-          theme={LIGHT_THEME}
-          initialFilters={{ ...this.state.filters, ...this.props.initialFilters }}
-          key={`table-con-${this.state.lastReqTime}`}>
-        </TableWithRemote>
+          <TableWithRemote
+            onChange={this.onChange}
+            getColumns={options => {
+              return combineColumnsConfig(getThreatInfoColumns(options), this.props.config.columns)
+            }}
+            remoteNamespace={THREAT_EVENT_THREAT_INFO_NAMESPACE}
+            theme={LIGHT_THEME}
+            initialFilters={{ ...this.state.filters, ...this.props.initialFilters }}
+            key={`table-con-${this.state.lastReqTime}`}>
+          </TableWithRemote>
+        </Spin>
       </div>
     )
   }
