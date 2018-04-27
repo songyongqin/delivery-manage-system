@@ -13,8 +13,11 @@ import { download } from 'utils'
 
 const initialFilters = {
   timestampRange: [],
+  userAccount: "",
+  loginStatus: "",
+  ip: "",
   page: 1,
-  limit: 10
+  limit: 50,
 }
 
 

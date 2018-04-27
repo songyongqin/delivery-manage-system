@@ -41,7 +41,10 @@ export default class Monitor extends React.Component<any, any>{
   onSubmit = config => {
     this.props.dispatch({
       type: `${this.props.remoteNamespace}/putConfig`,
-      payload: config
+      payload: {
+        ...this.props.initialFilters,
+        ...config
+      }
     })
       .then(_ => {
         this.setState({
