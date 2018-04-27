@@ -24,7 +24,11 @@ npm run dev
 ```
 npm run build
 ```
+⚠️⚠️⚠️ 在 linux 上执行 build 之前，需要为 roadhog.sh 添加执行权限
 
+```
+chomod +x ./bin/roadhog.sh
+```
 
 ### 如何改变产品形态？
 
