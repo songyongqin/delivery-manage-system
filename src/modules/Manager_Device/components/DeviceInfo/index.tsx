@@ -13,12 +13,26 @@ import MasterIP from './MasterIP'
 import Spin from 'domainComponents/Spin'
 import { If, When, Choose, Otherwise } from 'components/ControlStatements'
 import WithCommonProps from 'domainComponents/WithCommonProps'
-
+/*
+* 该组件参数如下
+*/
 interface Props {
-  readonly?: boolean,
-  multiple?: boolean,
+  //该模块是否为只读 只读将不可执行任何操作
+  readonly: boolean,
+  //是否支持多选操作
+  multiple: boolean,
+  //对应 model 的 namespace
   remoteNamespace: string,
-  getColumns: any
+  //获取表格列的函数
+  getColumns: any,
+  //是否显示分页
+  pagination: boolean,
+  //是否显示磁盘清理配置
+  disk: boolean,
+  //是否显示控制中心IP
+  masterIP: boolean,
+  //表格希望隐藏的列
+  shouldHideCols: string[]
 }
 
 const mapStateToProps = state => {
@@ -145,7 +159,7 @@ export default class DeviceInfo extends React.Component<any, any>{
       return res
     })
 
-
+  /*发送清理磁盘数据请求 */
   postClean = payload => this.props.dispatch({
     type: `${this.props.remoteNamespace}/postDisk`,
     payload
@@ -156,7 +170,7 @@ export default class DeviceInfo extends React.Component<any, any>{
       })
       return res
     })
-
+  /*获取loading的状态*/
   getLoadingStatusByKey = key => {
     const { effectsLoading, remoteNamespace } = this.props
     if (key === "licence") {
@@ -210,7 +224,7 @@ export default class DeviceInfo extends React.Component<any, any>{
       },
       onChange: this.onChange
     }
-
+    /*若为多选且不为只读  则表格显示可选择的checkbox  */
     if (multiple && !readonly) {
       props["rowSelection"] = {
         onChange: (selectedRowKeys, selectedRows) => {

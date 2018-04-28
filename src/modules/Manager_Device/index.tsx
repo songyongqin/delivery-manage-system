@@ -21,6 +21,7 @@ export default class ManagerDevice extends React.Component<any, any>{
     const deviceManagerConfig = get(getAppConfig(), ["deviceManager"], {})
 
     const items = [
+      //控制中心模块
       {
         key: "master",
         content: (
@@ -30,6 +31,7 @@ export default class ManagerDevice extends React.Component<any, any>{
           </Master>
         )
       },
+      //控制中心显示的蜜罐设备模块
       {
         key: "honeypot",
         content: (
@@ -39,6 +41,7 @@ export default class ManagerDevice extends React.Component<any, any>{
           </Honeypot>
         )
       },
+      //控制中心显示的IDS模块
       {
         key: "ids",
         content: (
@@ -48,6 +51,7 @@ export default class ManagerDevice extends React.Component<any, any>{
           </IDS>
         )
       },
+      //蜜罐节点模块
       {
         key: "honeypotNode",
         content: (
@@ -57,6 +61,7 @@ export default class ManagerDevice extends React.Component<any, any>{
           </HoneypotNode>
         )
       },
+      //IDS节点模块
       {
         key: "idsNode",
         content: (
@@ -66,6 +71,7 @@ export default class ManagerDevice extends React.Component<any, any>{
           </IDSNode>
         )
       },
+      //单机版蜜罐模块
       {
         key: "honeypotStandalone",
         content: (
@@ -75,6 +81,7 @@ export default class ManagerDevice extends React.Component<any, any>{
           </HoneypotStandalone>
         )
       },
+      //单机版IDS模块
       {
         key: "idsStandalone",
         content: (

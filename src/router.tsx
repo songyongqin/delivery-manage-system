@@ -82,31 +82,37 @@ export default ({ history, app }) => {
               exact
               path={ANALYSE_URL}
               render={() => (<Redirect to={getDefaultRoute(ANALYSE_URL)} />)} />
+            {/* 事件分析 */}
             <Route
               exact
               component={getAnalyseEventPage(app, ANALYSE_EVENT_URL)}
               path={ANALYSE_EVENT_URL} >
             </Route>
+            {/* 攻击链分析 */}
             <Route
               exact
               component={getAnalyseAttackChainPage(app, ANALYSE_ATTACK_CHAIN_URL)}
               path={ANALYSE_ATTACK_CHAIN_URL} >
             </Route>
+            {/* 失陷主机分析 */}
             <Route
               exact
               component={getAnalyseFallHostPage(app, ANALYSE_FALL_HOST_URL)}
               path={ANALYSE_FALL_HOST_URL} >
             </Route>
+            {/* 图表统计 */}
             <Route
               exact
               component={getAnalyseRankingPage(app, ANALYSE_RANKING_URL)}
               path={ANALYSE_RANKING_URL} >
             </Route>
+            {/* 威胁分布 */}
             <Route
               exact
               component={getAnalyseThreatDistributionPage(app, ANALYSE_THREAT_DIS_URL)}
               path={ANALYSE_THREAT_DIS_URL} >
             </Route>
+            {/* 全局分析 */}
             <Route
               exact
               component={getOverallPage(app, ANALYSE_OVERALL_URL)}
@@ -127,31 +133,36 @@ export default ({ history, app }) => {
               exact
               path={SYS_CONFIG_URL}
               render={() => (<Redirect to={getDefaultRoute(SYS_CONFIG_URL)} />)} />
+            {/* 网络配置 */}
             <Route
               exact
               component={getSysConfigNetworkPage(app, SYS_CONFIG_NETWORK_URL)}
               path={SYS_CONFIG_NETWORK_URL} >
             </Route>
+            {/* 自我监控 */}
             <Route
               exact
               component={getSysConfigMonitorPage(app, SYS_CONFIG_MONITOR_URL)}
               path={SYS_CONFIG_MONITOR_URL} >
             </Route>
+            {/* 策略配置 */}
             <Route
               exact
               component={getStrategyPage(app, SYS_CONFIG_STRATEGY_URL)}
               path={SYS_CONFIG_STRATEGY_URL} >
             </Route>
-            {/* 设备管理 */}
+            {/* 蜜罐管理 */}
             <Route
               exact
               path={MANAGER_URL}
               render={() => (<Redirect to={getDefaultRoute(MANAGER_URL)} />)} />
+            {/* 设备管理 */}
             <Route
               exact
               component={getDeviceManagerPage(app, MANAGER_DEVICE_URL)}
               path={MANAGER_DEVICE_URL} >
             </Route>
+            {/* 虚拟蜜罐管理 */}
             <Route
               exact
               component={getVMManagerPage(app, MANAGER_VM_URL)}
@@ -162,14 +173,13 @@ export default ({ history, app }) => {
               component={getManagerMirrorPage(app, MANAGER_MIRROR_URL)}
               path={MANAGER_MIRROR_URL} >
             </Route>
-            {/*  */}
-
+            {/*用户管理*/}
             <Route
               exact
               component={getUserManagerPage(app, USER_MANAGER_URL)}
               path={USER_MANAGER_URL} >
             </Route>
-
+            {/*威胁报告*/}
             <Route
               exact
               component={getReportPage(app, REPORT_URL)}
@@ -180,18 +190,19 @@ export default ({ history, app }) => {
               exact
               path={SYS_LOG_URL}
               render={() => (<Redirect to={getDefaultRoute(SYS_LOG_URL)} />)} />
+            {/* 登陆日志 */}
             <Route
               exact
               component={getSystemLogLoginPage(app, SYS_LOG_LOGIN_URL)}
               path={SYS_LOG_LOGIN_URL} >
             </Route>
-
+            {/* Snort */}
             <Route
               exact
               component={getSnortPage(app, SNORT_URL)}
               path={SNORT_URL} >
             </Route>
-
+            {/* 文件还原 */}
             <Route
               exact
               component={getFileRestorePage(app, FILE_RESTORE)}
