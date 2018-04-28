@@ -54,7 +54,6 @@ import {
   FILE_RESTORE,
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
-import { FILE } from 'dns';
 
 
 export default ({ history, app }) => {
