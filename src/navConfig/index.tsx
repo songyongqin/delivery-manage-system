@@ -161,11 +161,13 @@ export const _navConfig = [
   },
   {
     link: SNORT_URL,
-    title: "Snort"
+    title: "Snort",
+    hidden: true
   },
   {
     link: FILE_RESTORE,
-    title: "文件还原"
+    title: "文件还原",
+    hidden: true
   }
 ]
 
@@ -179,6 +181,7 @@ interface RemoveShouldHideNav {
   (option: RemoveShouldHideNavOption): any[]
 }
 
+const hiddenURLList = _navConfig.filter(item => item.hidden).map(item => item.link)
 
 //根据shouldHideNav 移除 navConfig 中匹配 的 nav项
 const removeShouldHideNav: RemoveShouldHideNav = ({ navConfig = [], shouldHideNav = [] }) => {
@@ -254,7 +257,7 @@ export const getNavLink = (navConfig, total = []) => {
   }, total)
 }
 
-const navLinkList = [...getNavLink(_navConfig), SNORT_URL, FILE_RESTORE]
+const navLinkList = [...getNavLink(_navConfig), ...hiddenURLList]
 
 //获取 linkList 中拥有嵌套关系的 nav link 包括自身
 const getNestLinkList = (linkList) => {
@@ -292,7 +295,7 @@ export const getNavConfig = ({ admin = false }) => {
 
     const shouldHideNav = getShouldHideNav({ admin })
 
-    const navConfig = removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav: [...shouldHideNav, SNORT_URL, FILE_RESTORE] }))
+    const navConfig = removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav: [...shouldHideNav, ...hiddenURLList] }))
 
     return getNavCombineTitleConfig(navConfig)
   } catch (e) {
