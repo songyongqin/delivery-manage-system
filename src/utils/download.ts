@@ -1,5 +1,7 @@
 
-
+/**
+ *该部分主要为利用a标签实现下载的功能 
+ */
 export const download = (
   url: string,
   fileName: string = url.substring(url.lastIndexOf("/") + 1)
