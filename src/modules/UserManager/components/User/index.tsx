@@ -15,7 +15,8 @@ import extraConnect from 'domainUtils/extraConnect'
 const mapStateToProps = state => {
   const effectsLoading = state.loading.effects
   return {
-    editLoading: effectsLoading[`${USER_MANAGER_NAMESPACE}/putUser`]
+    editLoading: effectsLoading[`${USER_MANAGER_NAMESPACE}/putUser`],
+    createLoading: effectsLoading[`${USER_MANAGER_NAMESPACE}/postUser`]
   }
 }
 
@@ -47,6 +48,11 @@ export default class UserManager extends React.Component<any, any>{
   state = {
     activeItem: {},
     lastReqTime: 0
+  }
+  refresh = () => {
+    this.setState({
+      lastReqTime: new Date().getTime()
+    })
   }
   onFreezeClick = payload => {
     Modal.confirm({
@@ -86,16 +92,31 @@ export default class UserManager extends React.Component<any, any>{
       .then(_ => {
         Message.success("修改成功")
         this.props.setModalVisible("edit", false)
+        this.refresh()
+      })
+  }
+  onPost = payload => {
+    this.props.postUser(payload)
+      .then(_ => {
+        Message.success("创建成功")
+        this.props.setModalVisible("create", false)
+        this.refresh()
       })
   }
   render() {
-    const { modalVisible, setModalVisible, effectsLoading, editLoading } = this.props
+    const { modalVisible, setModalVisible, effectsLoading, editLoading, postLoading } = this.props
     const { lastReqTime } = this.state
 
     return (
       <Card
         key="user"
         title={<div><Icon type="team"></Icon>&nbsp;用户管理</div>}>
+        <Button
+          icon="plus"
+          type="primary"
+          onClick={_ => this.props.setModalVisible("create", true)}>
+          创建用户
+        </Button>
         <TableWithRemote
           key={`${lastReqTime}-user`}
           remoteNamespace={USER_MANAGER_NAMESPACE}
@@ -112,6 +133,23 @@ export default class UserManager extends React.Component<any, any>{
           }}
           initialFilters={{ page: 1, limit: 10 }}>
         </TableWithRemote>
+
+
+        <Modal
+          onCancel={_ => {
+            setModalVisible("create", false)
+          }}
+          destroyOnClose={true}
+          title={<div><Icon type="plus"></Icon>&nbsp;创建用户</div>}
+          visible={modalVisible["create"]}
+          footer={null}>
+          <UserForm
+            loading={postLoading}
+            isCreate={true}
+            onSubmit={this.onPost}
+          >
+          </UserForm>
+        </Modal>
 
         <Modal
           onCancel={_ => {
