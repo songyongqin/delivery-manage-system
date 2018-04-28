@@ -151,20 +151,24 @@ export default class VMManager extends React.PureComponent<any, any>{
             login: this.onLoginClick,
             delete: this.onDelClick,
             reload: this.onReloadClick
-          }
+          },
+          readonly
         })
-      },
-      rowSelection: {
-        onChange: (selectedRowKeys, selectedRows) => {
-          this.setState({
-            activeItems: selectedRows
-          })
-        }
       },
       onChange: _ => {
         this.setState({
           activeItems: []
         })
+      }
+    }
+
+    if (!readonly) {
+      props["rowSelection"] = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          this.setState({
+            activeItems: selectedRows
+          })
+        }
       }
     }
 

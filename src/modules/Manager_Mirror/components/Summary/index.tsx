@@ -9,6 +9,7 @@ import { Button, Modal } from 'antd'
 import WithModal from 'components/WithModal'
 import UpdatePanel from '../UpdatePanel'
 import extraConnect from 'domainUtils/extraConnect'
+import { If } from 'components/ControlStatements'
 
 const getColumns = (option) => {
   return [
@@ -102,10 +103,12 @@ export default class Summary extends React.Component<any, any>{
       <div>
         <h3>镜像汇总</h3>
         <div style={{ overflow: "hidden" }}>
-          <Button
-            onClick={_ => this.props.setModalVisible("update", true)}
-            type="primary"
-            icon="" style={{ float: "right" }}>升级镜像汇总</Button>
+          <If condition={!this.props.readonly}>
+            <Button
+              onClick={_ => this.props.setModalVisible("update", true)}
+              type="primary"
+              icon="" style={{ float: "right" }}>升级镜像汇总</Button>
+          </If>
         </div>
         <TableWithRemote
           getExpandedRowRenderer={_ => expandedRowRender}

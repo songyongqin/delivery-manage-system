@@ -8,8 +8,9 @@ import NodeMirror from './components/NodeMirror'
 import { getAppConfig } from 'domain/app'
 import { get } from 'utils'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
+import WithCommonProps from 'domainComponents/WithCommonProps'
 
-
+@WithCommonProps
 @WithModal()
 // @extraConnect(mapStateToProps, (mapDispatchToProps))
 @WithAnimateRender
@@ -28,12 +29,12 @@ class Page extends React.Component<any, any> {
         {this.props.animateRender([
           <div key="summary" style={{ marginBottom: "15px" }}>
             <If condition={config["collection"]}>
-              <Summary></Summary>
+              <Summary readonly={!this.props.admin}></Summary>
             </If>
           </div>,
           <div key="node">
             <If condition={config["node"]}>
-              <NodeMirror readonly={config["nodeReadOnly"]}></NodeMirror>
+              <NodeMirror readonly={config["nodeReadOnly"] || !this.props.admin}></NodeMirror>
             </If>
           </div>
         ])}

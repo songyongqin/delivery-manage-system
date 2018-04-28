@@ -177,7 +177,7 @@ const honeypotStatusRenderer = value => {
 
 }
 
-const getOperationRenderer = (handle = {}) => (value, records) => {
+const getOperationRenderer = (handle = {}, readonly = false) => (value, records) => {
   let status = records[HONEYPOT_STATUS_DATAINDEX]
   const isLicenceOverdue = status.includes(STATUS_LICENCE_OVERDUE),
     isRunning = (status.includes(STATUS_RUNNING_VALUE)),
@@ -187,16 +187,16 @@ const getOperationRenderer = (handle = {}) => (value, records) => {
       <Menu onClick={({ key }) => {
         handle && handle[key] && handle[key](records)
       }}>
-        <Menu.Item key="login" >
+        <Menu.Item key="login" disabled={readonly}>
           <Icon type="login" />&nbsp;开机
         </Menu.Item>
-        <Menu.Item key="logout" >
+        <Menu.Item key="logout" disabled={readonly}>
           <Icon type="poweroff" />&nbsp;关机
         </Menu.Item>
-        <Menu.Item key="delete" >
+        <Menu.Item key="delete" disabled={readonly}>
           <Icon type="delete" />&nbsp; 删除蜜罐
         </Menu.Item>
-        <Menu.Item key="reload" >
+        <Menu.Item key="reload" disabled={readonly}>
           <Icon type="reload" />&nbsp; 还原初始蜜罐
         </Menu.Item>
       </Menu>
@@ -238,7 +238,8 @@ export const getColumns = ({
   handle,
   filterTextConfigs = {},
   filterOptions = {},
-  setActiveFilter
+  setActiveFilter,
+  readonly
 }) => {
 
   const renderer = {
@@ -246,7 +247,7 @@ export const getColumns = ({
     [SERVICES_DATAINDEX]: servicesRenderer,
     [PORTS_DATAINDEX]: portsRenderer,
     [HONEYPOT_STATUS_DATAINDEX]: honeypotStatusRenderer,
-    [OPERATION_ROW_KEY]: getOperationRenderer(handle),
+    [OPERATION_ROW_KEY]: getOperationRenderer(handle, readonly),
     [HOST_IP_DATAINDEX]: commonRenderer,
     [HONEYPOT_IP_DATAINDEX]: commonRenderer,
     [HONEYPOT_NAME_DATAINDEX]: commonRenderer,
