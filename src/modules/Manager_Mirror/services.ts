@@ -14,6 +14,7 @@ import {
   CHUNK_DATA_INDEX,
   CURRENT_CHUNK_DATA_INDEX
 } from './ConstConfig'
+import { getToken } from 'domain/user'
 
 export const updateRemote = commonRequestCreator.post(httpApi.MIRROR_UPDATE_REMOTE)
 
@@ -39,7 +40,7 @@ export const putFileChunk = payload => {
   return uploadFile({
     url: httpApi.MIRROR_UPDATE_LOCAL,
     headers: {
-      "access-token": (getTemp("userData") || {}).token
+      "access-token": getToken()
     },
     body: fd,
   }).then(res => {
