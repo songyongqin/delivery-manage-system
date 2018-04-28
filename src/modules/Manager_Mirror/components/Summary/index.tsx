@@ -116,6 +116,7 @@ export default class Summary extends React.Component<any, any>{
         <Modal
           closable={!this.props.mirrorUpdateLoading}
           width={800}
+          maskClosable={false}
           title={
             <div>升级镜像汇总</div>
           }

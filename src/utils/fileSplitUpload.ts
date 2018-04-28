@@ -1,3 +1,5 @@
+import { isSecret, encrypt } from 'domain/secret'
+
 export const uploadFile = ({ url, headers, body, onProgress = null }) => {
 
   const xhr = new XMLHttpRequest();
@@ -22,8 +24,9 @@ export const uploadFile = ({ url, headers, body, onProgress = null }) => {
           resolve(xhr.responseText)
         }
       }
+      const res = { status: -1, message: xhr.responseText }
       if (xhr.readyState === 4 && xhr.status !== 200) {
-        resolve({ status: -1, message: xhr.responseText })
+        resolve(isSecret ? encrypt(JSON.stringify(res)) : res)
       }
     }
 
