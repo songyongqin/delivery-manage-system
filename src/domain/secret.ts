@@ -36,14 +36,32 @@ const getOption = () => (
   }
 )
 //将输入的字符串内容进行加密
-export const encrypt = (message: any) => CryptoJS.AES.encrypt(
-  message,
-  getFinalKey(),
-  getOption()
-).toString()
+export const encrypt = (message: string) => {
+
+  if (typeof message !== 'string') {
+    console.error('encrypt argument should typeof string!!!')
+    return ''
+  }
+
+  return CryptoJS.AES.encrypt(
+    message,
+    getFinalKey(),
+    getOption()
+  ).toString()
+
+}
 //将输入的字符串进行解密
-export const decrypt = (message: any) => CryptoJS.AES.decrypt(
-  message,
-  getFinalKey(),
-  getOption()
-).toString(CryptoJS.enc.Utf8)
+export const decrypt = (message: string) => {
+
+  if (typeof message !== 'string') {
+    console.error('decrypt argument should typeof string!!!')
+    return ''
+  }
+
+
+  return CryptoJS.AES.decrypt(
+    message,
+    getFinalKey(),
+    getOption()
+  ).toString(CryptoJS.enc.Utf8)
+}
