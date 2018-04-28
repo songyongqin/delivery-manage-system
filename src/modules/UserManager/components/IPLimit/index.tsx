@@ -83,7 +83,7 @@ class Page extends React.Component<any, any> {
       })
     })
 
-  onSubmit = payload => this.props.put({
+  onSubmit = payload => this.props.post({
     ...payload,
     type: this.state.type
   })

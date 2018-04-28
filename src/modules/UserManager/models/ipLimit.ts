@@ -6,7 +6,6 @@ import {
   putIPLimitConfig
 } from '../services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
-import { post } from '../../SysConfig_Strategy_WhiteList/Service';
 
 export default {
   namespace: USER_MANAGER_IP_LIMIT_NAMESPACE,
