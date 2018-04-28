@@ -125,6 +125,11 @@ export default {
 
   [DNS]: checkerDecorator(({ props, setCheckStatus }) => {
     let urlValue = props.form.getFieldValue(URL);
+
+    if (!urlValue) {
+      return setCheckStatus(URL, "error", "不能为空")
+    }
+
     urlValue.trim().length === 0
       ?
       setCheckStatus(URL, "error", "不能为空")
