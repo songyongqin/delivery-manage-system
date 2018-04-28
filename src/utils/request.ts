@@ -34,11 +34,16 @@ interface CreateRequestHandle {
 interface Request {
   (url: string, options: object): Promise<Object>
 }
-
+/**
+ * 
+ * 将返回的 response 对象转换为 json
+ */
 function parseJSON(response) {
   return response.json()
 }
-
+/**
+ * 检查请求响应是否为错误
+ */
 function checkStatus(response) {
 
   if (response.status >= 200 && response.status < 300) {
@@ -82,7 +87,6 @@ export const createRequestHandle: CreateRequestHandle = ({ beforeRequest, afterR
       //
       .then(res => afterRequest ? afterRequest(url, finalOptions, res) : res.json())
       //
-      // .catch(err => ({ status: err.status || -99999, message: err.message }))
       .catch(error => onError ? onError(error) : defaultOnError(error))
       //
       .then(result => {
