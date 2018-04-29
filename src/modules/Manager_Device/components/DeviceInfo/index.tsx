@@ -90,7 +90,7 @@ export default class DeviceInfo extends React.Component<any, any>{
     }
   }
   showOverdueTipModal = () => {
-    //已经存在该modal 不再显示
+    //避免重复弹出弹出框 若存在弹出框未关闭该modal 不再显示
     if (tipModalRef) {
       return
     }
@@ -107,6 +107,7 @@ export default class DeviceInfo extends React.Component<any, any>{
       okText: modalType === "confirm" ? "执行授权操作" : "确定",
       cancelText: "取消",
       onOk: () => {
+        //关闭弹出框后 将弹出框的实例引用释放
         tipModalRef = null
         this.props.saveOverdueTipVisible(false)
         if (modalType === "confirm") {
@@ -114,6 +115,7 @@ export default class DeviceInfo extends React.Component<any, any>{
         }
       },
       onCancel: () => {
+        //关闭弹出框后 将弹出框的实例引用释放
         tipModalRef = null
         this.props.saveOverdueTipVisible(false)
       }

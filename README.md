@@ -33,6 +33,7 @@ chomod +x ./bin/roadhog.sh
 * [如何添加一个路由级别的新模块？](/docs/HOW_TO_ADD_ROUTE_MODULE.md)
 * [内存溢出 JavaScript heap out of memory](/docs/OUT_OF_MEMORY.md)
 * [TableWithRemote 组件使用方法](./src/domainComponents/TableWithRemote/README.md)
+* [关于授权过期在前端处理的思路](/docs/ABOUT_LICENCE_OVERDUE_HANDLE.md)
 
 ## 文件结构说明
 ```

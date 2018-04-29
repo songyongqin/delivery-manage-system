@@ -37,8 +37,11 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
       <Link to={link} className={classes} onClick={e => {
         //授权过期 跳转到device路由
         if (isLicenceOverdue()) {
+          //阻止默认跳转行为
           e.preventDefault()
+          //跳转到设备管理
           getAppInstance()._store.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+          //弹出消息框
           getAppInstance()._store.dispatch({
             type: "layout/saveOverdueTipVisible",
             payload: true
