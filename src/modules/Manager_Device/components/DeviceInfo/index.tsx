@@ -14,6 +14,7 @@ import Spin from 'domainComponents/Spin'
 import { If, When, Choose, Otherwise } from 'components/ControlStatements'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import { isLicenceOverdue } from 'domain/licence'
+import { debounce } from 'utils'
 
 /*
 * 该组件参数如下
@@ -77,17 +78,34 @@ export default class DeviceInfo extends React.Component<any, any>{
       licence: false,
       update: false
     },
-    refreshDataOnClose: false
+    refreshDataOnClose: false,
+    expanded: true
   }
   componentDidMount() {
     if (this.props.overdueTipVisible && this.props.mainDevice) {
       this.showOverdueTipModal()
     }
+    this.initExpandedListener()
+    this.adjustExpanded()
+  }
+  componentWillUnmount() {
+    this.removeExpandedListener()
   }
   componentDidUpdate() {
     if (this.props.overdueTipVisible && this.props.mainDevice) {
       this.showOverdueTipModal()
     }
+  }
+  adjustExpanded = debounce(() => {
+    this.setState({
+      expanded: document.body.clientWidth > 1400
+    })
+  }, 500)
+  initExpandedListener = () => {
+    window.addEventListener('resize', this.adjustExpanded)
+  }
+  removeExpandedListener = () => {
+    window.removeEventListener("resize", this.adjustExpanded)
   }
   showOverdueTipModal = () => {
     //避免重复弹出弹出框 若存在弹出框未关闭该modal 不再显示
@@ -272,6 +290,7 @@ export default class DeviceInfo extends React.Component<any, any>{
             clean: this.onCleanClick
           },
           readonly,
+          expanded: this.state.expanded,
           shouldHideCols: shouldHideCols
         })
       },

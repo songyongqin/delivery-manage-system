@@ -242,9 +242,10 @@ const renderer = {
 
 export const getColumns = ({
   handle = {},
-  versionColExpanded = true,
+  // versionColExpanded = true,
   readonly = false,
-  shouldHideCols
+  shouldHideCols,
+  expanded = true
 }) => {
 
 
@@ -261,8 +262,7 @@ export const getColumns = ({
 
 
 
-
-  const tableDataIndexes = versionColExpanded
+  const tableDataIndexes = expanded
     ?
     deviceRowDataIndexes
     :

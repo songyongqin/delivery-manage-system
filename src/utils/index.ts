@@ -42,6 +42,8 @@ export const throttle = lodash.throttle
 
 export const get = lodash.get
 
+export const debounce = lodash.debounce
+
 export const isFunction = func => {
   return Object.prototype.toString.call(func) === "[object Function]"
 }
