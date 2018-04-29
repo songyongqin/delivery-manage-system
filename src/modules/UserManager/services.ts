@@ -16,7 +16,7 @@ export const postUser = commonRequestCreator.post(httpApi.USER)
 
 export const putUser = commonRequestCreator.put(httpApi.USER)
 
-export const delUser = commonRequestCreator.delete(httpApi.USER)
+export const delUser = commonRequestCreator.deleteWithQueryString(httpApi.USER)
 
 export const patchUser = commonRequestCreator.patch(httpApi.USER)
 
@@ -59,7 +59,7 @@ export const fetchIPLimitConfig = _ => {
   })
 }
 
-export const deleteIPLimitConfig = commonRequestCreator.delete(httpApi.USER_IP_LIMIT)
+export const deleteIPLimitConfig = commonRequestCreator.deleteWithQueryString(httpApi.USER_IP_LIMIT)
 
 export const postIPLimitConfig = commonRequestCreator.post(httpApi.USER_IP_LIMIT)
 
