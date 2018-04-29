@@ -12,6 +12,7 @@ import { level, textConfig } from '../ConstConfig'
 import styles from './ReceiveEmailConfigForm.css'
 const FormItem = Form.Item
 const CheckboxGroup = Checkbox.Group
+import { omit } from 'utils'
 
 function isPositiveInteger(s) {//是否为正整数
   let re = /^[0-9]+$/;
@@ -58,8 +59,7 @@ class ReceiveForm extends React.Component<any, any> {
           level: values.level,
           emails: []
         };
-        delete values.open
-        delete values.level
+        values = omit(["open", "level", "keys"], values)
         payload.emails = Object.values(values)
         onSubmit && onSubmit(payload)
       }
