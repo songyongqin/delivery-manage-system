@@ -26,10 +26,12 @@ const extraColumns = (columns, {
   inputFilterOnChange
 }) => {
   return columns.map(column => {
-    if (column["conditionType"] === "input") {
-      const dataIndex = column.dataIndex
-      const visible = filterDropdownVisibleList.includes(dataIndex)
 
+    const dataIndex = column.dataIndex
+
+    if (column["conditionType"] === "input") {
+      const visible = filterDropdownVisibleList.includes(dataIndex)
+      const _onFilterDropdownVisibleChange = column.onFilterDropdownVisibleChange
       return {
         ...column,
         filterDropdown: <InputDropdown
@@ -37,6 +39,7 @@ const extraColumns = (columns, {
           onSubmit={filter => {
             onFilterDropdownVisibleChange(dataIndex, false)
             inputFilterOnChange(filter)
+            _onFilterDropdownVisibleChange && _onFilterDropdownVisibleChange(false)
           }}
           type={get(column, ["inputRule", "type"]) || "any"}
           value={filters[dataIndex]}
@@ -48,7 +51,16 @@ const extraColumns = (columns, {
           <Icon type="search" style={{ color: primaryColor }}></Icon>
           :
           <Icon type="search"></Icon>,
-        onFilterDropdownVisibleChange: value => onFilterDropdownVisibleChange(dataIndex, value)
+        onFilterDropdownVisibleChange: value => {
+          onFilterDropdownVisibleChange(dataIndex, value)
+          _onFilterDropdownVisibleChange && _onFilterDropdownVisibleChange(value)
+        }
+      }
+    }
+    if (dataIndex in filters) {
+      return {
+        filteredValue: filters[dataIndex],
+        ...column
       }
     }
     return column

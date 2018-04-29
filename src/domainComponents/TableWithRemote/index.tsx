@@ -40,7 +40,8 @@ class TableWithRemote extends React.Component<any, any>{
     initialTotal: 0,
     pagination: true,
     lastReqTime: 0,
-    tableProps: {}
+    tableProps: {},
+    stopFetchOnFiltersChange: false
   }
   constructor(props) {
     super(props)
@@ -95,6 +96,15 @@ class TableWithRemote extends React.Component<any, any>{
     })
   }
   tableOnChange = (_, filters) => {
+
+    const { stopFetchOnFiltersChange, tableOnChange } = this.props
+
+    tableOnChange && tableOnChange(filters)
+
+    if (stopFetchOnFiltersChange) {
+      return
+    }
+
     this.fetchData({
       ...this.state.filters,
       ...filters,

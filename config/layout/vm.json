@@ -1,0 +1,60 @@
+{
+  "columns": [
+    {
+      "dataIndex": "honeypotType",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "高交互",
+          "value": "high"
+        },
+        {
+          "text": "低交互",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "dataIndex": "services",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "请在/static/config/layout/vm.json中修改",
+          "value": "xxxx"
+        }
+      ]
+    },
+    {
+      "dataIndex": "ports",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "请在/static/config/layout/vm.json中修改",
+          "value": "xxxx"
+        }
+      ]
+    },
+    {
+      "dataIndex": "honeypotStatus",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "异常",
+          "value": "abnormal"
+        },
+        {
+          "text": "正在运行",
+          "value": "run"
+        },
+        {
+          "text": "已关闭",
+          "value": "off"
+        },
+        {
+          "text": "主机授权已过期",
+          "value": "overdue"
+        }
+      ]
+    }
+  ]
+}

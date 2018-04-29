@@ -11,7 +11,16 @@ import Spin from 'domainComponents/Spin'
 import CreateVM from './components/CreateVM'
 import WithModal from 'components/WithModal'
 import WithCommonProps from 'domainComponents/WithCommonProps'
+import WithConfig from 'domainComponents/WithConfig'
+import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
+import path from 'constants/path'
 
+const initialFilters = {
+  page: 1,
+  limit: 10
+}
+
+@WithConfig(path.layoutConfig.vm)
 @WithCommonProps
 @WithModal()
 @WithAnimateRender
@@ -55,13 +64,21 @@ import WithCommonProps from 'domainComponents/WithCommonProps'
         type: `${RECORD_OF_CREATE_VM_NAMESPACE}/changePanelVisible`,
         payload
       }),
+      fetchNodeIP: _ => dispatch({
+        type: `${MANAGER_VM_NAMESPACE}/fetchNodeIP`,
+      })
     }
   }
 )
 export default class VMManager extends React.PureComponent<any, any>{
   state = {
     activeItems: [],
-    count: 1
+    count: 1,
+    activeFilter: null,
+    initialFilters,
+    filtersConfig: {
+      hostIp: []
+    }
   }
   onLoginClick = payload => this.loginHandle({ honeypotList: [payload["honeypotId"]] })
 
@@ -136,29 +153,61 @@ export default class VMManager extends React.PureComponent<any, any>{
     Message.success('创建蜜罐操作成功，请耐心等待蜜罐创建成功')
   })
 
+  saveActiveFilter = dataIndex => {
+    this.setState({
+      activeFilter: dataIndex
+    })
+
+  }
+  componentDidMount() {
+    this.props.fetchNodeIP().then(result => {
+      this.setState({
+        filtersConfig: {
+          ...this.state.filtersConfig,
+          hostIp: result
+        }
+      })
+    })
+  }
   render() {
     const { admin } = this.props
     const readonly = !admin
     const props = {
       key: `${this.props.lastReqTime}-vm-table`,
       loading: false,
+      stopFetchOnFiltersChange: true,
       remoteNamespace: MANAGER_VM_NAMESPACE,
+      initialFilters: this.state.initialFilters,
       getColumns: options => {
-        return getColumns({
-          ...options,
-          handle: {
-            logout: this.onLogoutClick,
-            login: this.onLoginClick,
-            delete: this.onDelClick,
-            reload: this.onReloadClick
-          },
-          readonly
+        return combineColumnsConfig(
+          getColumns({
+            ...options,
+            handle: {
+              logout: this.onLogoutClick,
+              login: this.onLoginClick,
+              delete: this.onDelClick,
+              reload: this.onReloadClick
+            },
+            saveActiveFilter: this.saveActiveFilter,
+            readonly,
+            filtersConfig: this.state.filtersConfig
+          }),
+          this.props.config.columns
+        )
+      },
+      onChange: filters => {
+        this.setState({
+          activeItems: [],
         })
       },
-      onChange: _ => {
+      tableOnChange: filters => {
         this.setState({
-          activeItems: []
+          initialFilters: {
+            ...initialFilters,
+            [this.state.activeFilter]: filters[this.state.activeFilter]
+          }
         })
+        this.props.updateLastReqTime()
       }
     }
 

@@ -5,7 +5,8 @@ import {
   postVM,
   putVM,
   fetchVMOption,
-  validate
+  validate,
+  fetchNodeIPList,
 } from '../services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
 import isSuccess from 'domainUtils/isSuccess'
@@ -29,6 +30,7 @@ export default {
     postVM: commonEffectCreator(postVM, 500),
     deleteVM: commonEffectCreator(deleteVM, 500),
     fetchVMOption: commonEffectCreator(fetchVMOption),
+    fetchNodeIP: commonEffectCreator(fetchNodeIPList),
     updateLastReqTime: function* ({ resolve }, { put }) {
 
       yield put({

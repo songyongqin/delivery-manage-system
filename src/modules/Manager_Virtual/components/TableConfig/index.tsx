@@ -3,7 +3,7 @@
  */
 import * as React from 'react'
 import columnsCreator from 'domainUtils/columnsCreator'
-import styles from './styles.css'
+// import styles from './styles.css'
 import {
   tableRowDataIndexes,
   tableTextConfig,
@@ -238,8 +238,9 @@ export const getColumns = ({
   handle,
   filterTextConfigs = {},
   filterOptions = {},
-  setActiveFilter,
-  readonly
+  saveActiveFilter,
+  readonly,
+  filtersConfig = {}
 }) => {
 
   const renderer = {
@@ -256,11 +257,30 @@ export const getColumns = ({
   const columns = columnsCreator({
     dataIndexes: tableRowDataIndexes,
     renderer,
-    titleConfig: Object.entries(tableTextConfig.colTitles)
-      .reduce((target, [dataIndex, title]) => {
-        target[dataIndex] = <div style={{ textAlign: "center" }}>{title}</div>
-        return target
-      }, {}),
+    filtersConfig,
+    titleConfig: tableTextConfig.colTitles,
+    extraProps: {
+      ...tableRowDataIndexes.reduce((final, dataIndex) => {
+        if (dataIndex === 'hostIp') {
+          final[dataIndex] = {
+            align: "center",
+            onFilterDropdownVisibleChange: _ => {
+              saveActiveFilter && saveActiveFilter(dataIndex)
+            },
+            filterMultiple: false
+          }
+        } else {
+          final[dataIndex] = {
+            align: "center",
+            onFilterDropdownVisibleChange: _ => {
+              saveActiveFilter && saveActiveFilter(dataIndex)
+            }
+          }
+        }
+
+        return final
+      }, {})
+    }
     // filterOptions: { ...staticFilterOptions, ...filterOptions },
     // filterTextConfig: { ...filterTextConfig, ...filterTextConfigs },
     // filteredValue: queryFilters,

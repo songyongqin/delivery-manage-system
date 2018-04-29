@@ -46,10 +46,6 @@ export default ({
             value: f
           }
         ))
-
-        column.filteredValue = filteredValue[key]
-        column.filterIcon = <Icon type="filter" style={{ color: "#108ee9" }}></Icon>
-
       }
 
       if (key in extraProps) {

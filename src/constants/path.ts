@@ -11,7 +11,8 @@ export const layoutConfig = {
   system: "/static/config/layout/system.json",
   capture: "/static/config/layout/capture.json",
   pcap: "/static/config/layout/pcap.json",
-  fallHost: "/static/config/layout/fallHost.json"
+  fallHost: "/static/config/layout/fallHost.json",
+  vm: "/static/config/layout/vm.json"
 }
 
 export default {
