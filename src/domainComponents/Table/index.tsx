@@ -22,48 +22,55 @@ const isFiltered = (filter) => {
 const extraColumns = (columns, {
   onFilterDropdownVisibleChange,
   filterDropdownVisibleList,
-  filters,
+  filters = {},
   inputFilterOnChange
 }) => {
   return columns.map(column => {
+    try {
+      const dataIndex = column.dataIndex
 
-    const dataIndex = column.dataIndex
-
-    if (column["conditionType"] === "input") {
-      const visible = filterDropdownVisibleList.includes(dataIndex)
-      const _onFilterDropdownVisibleChange = column.onFilterDropdownVisibleChange
-      return {
-        ...column,
-        filterDropdown: <InputDropdown
-          dataIndex={dataIndex}
-          onSubmit={filter => {
-            onFilterDropdownVisibleChange(dataIndex, false)
-            inputFilterOnChange(filter)
-            _onFilterDropdownVisibleChange && _onFilterDropdownVisibleChange(false)
-          }}
-          type={get(column, ["inputRule", "type"]) || "any"}
-          value={filters[dataIndex]}
-          visible={visible}>
-        </InputDropdown>,
-        filterDropdownVisible: visible,
-        filterIcon: isFiltered(filters[dataIndex])
-          ?
-          <Icon type="search" style={{ color: primaryColor }}></Icon>
-          :
-          <Icon type="search"></Icon>,
-        onFilterDropdownVisibleChange: value => {
-          onFilterDropdownVisibleChange(dataIndex, value)
-          _onFilterDropdownVisibleChange && _onFilterDropdownVisibleChange(value)
+      if (column["conditionType"] === "input") {
+        const visible = filterDropdownVisibleList.includes(dataIndex)
+        const _onFilterDropdownVisibleChange = column.onFilterDropdownVisibleChange
+        return {
+          ...column,
+          filterDropdown: <InputDropdown
+            dataIndex={dataIndex}
+            onSubmit={filter => {
+              onFilterDropdownVisibleChange(dataIndex, false)
+              inputFilterOnChange(filter)
+              _onFilterDropdownVisibleChange && _onFilterDropdownVisibleChange(false)
+            }}
+            type={get(column, ["inputRule", "type"]) || "any"}
+            value={filters[dataIndex]}
+            visible={visible}>
+          </InputDropdown>,
+          filterDropdownVisible: visible,
+          filterIcon: isFiltered(filters[dataIndex])
+            ?
+            <Icon type="search" style={{ color: primaryColor }}></Icon>
+            :
+            <Icon type="search"></Icon>,
+          onFilterDropdownVisibleChange: value => {
+            onFilterDropdownVisibleChange(dataIndex, value)
+            _onFilterDropdownVisibleChange && _onFilterDropdownVisibleChange(value)
+          }
         }
       }
-    }
-    if (dataIndex in filters) {
-      return {
-        filteredValue: filters[dataIndex],
-        ...column
+
+      if (dataIndex in filters) {
+        return {
+          filteredValue: filters[dataIndex],
+          ...column
+        }
       }
+
+      return column
+    } catch (e) {
+      console.info("table:", e)
+      return column
     }
-    return column
+
   })
 }
 
