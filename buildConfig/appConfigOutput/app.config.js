@@ -68,6 +68,7 @@ module.exports = {
       "cloudDetection": true
     },
     "strategyConfig": {
+      "strategy": true,
       "white": true
     },
     "monitor": {
@@ -161,6 +162,7 @@ module.exports = {
       "cloudDetection": false
     },
     "strategyConfig": {
+      "strategy": true,
       "white": true
     },
     "monitor": {
