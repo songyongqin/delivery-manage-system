@@ -56,6 +56,10 @@
     "system": true
   },
   "networkConfig": {
+    "dns": true,
+    "network": true,
+    "systemLog": true,
+    "networkAuth": true,
     "masterIPConfig": true,
     "cloudDetection": true
   },

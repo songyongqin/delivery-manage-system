@@ -3,7 +3,7 @@ module.exports = {
   "default": require("../../config/app.json"),
   //控制中心的默认配置
   "master": {
-    "title": "安天捕风蜜罐系统Master",
+    "title": "安天捕风蜜罐系统",
     "secret": true,
     "routerRegister": {
       "/overview": true,
@@ -28,7 +28,8 @@ module.exports = {
       "/manager/mirror": true,
       "/sys-log": true,
       "/sys-log/login": true,
-      "/snort": true
+      "/snort": true,
+      "/file-restore": true
     },
     "adminOnly": [
       "/sys-config",
@@ -40,6 +41,7 @@ module.exports = {
       "/user-manager",
       "/snort"
     ],
+    "routerTitleConfig": {},
     "recordOfCreatingVM": true,
     "ipInfo": {
       "idsNode": false,
@@ -53,12 +55,16 @@ module.exports = {
     "overall": {
       "capture": true,
       "netBasic": true,
-      "limitNetBasic": false,
+      "limitNetBasic": true,
       "pcap": true,
       "system": true
     },
     "networkConfig": {
-      "masterIPConfig": true,
+      "dns": true,
+      "network": true,
+      "systemLog": true,
+      "networkAuth": true,
+      "masterIPConfig": false,
       "cloudDetection": true
     },
     "strategyConfig": {
@@ -66,18 +72,19 @@ module.exports = {
     },
     "monitor": {
       "master": true,
-      "honeypotStandalone": true,
+      "honeypotStandalone": false,
       "honeypot": true,
       "ids": true
     },
+    "mainDevice": "master",
     "deviceManager": {
       "master": true,
       "honeypot": true,
       "ids": true,
-      "honeypotNode": false,
-      "idsNode": false,
-      "honeypotStandalone": false,
-      "idsStandalone": false
+      "honeypotNode": true,
+      "idsNode": true,
+      "honeypotStandalone": true,
+      "idsStandalone": true
     },
     "mirrorImageManager": {
       "collection": true,
@@ -89,6 +96,7 @@ module.exports = {
       "email": "antiy_shenzhen@antiy.cn"
     }
   },
+  //蜜罐单机版
   "honeypotStandalone": {
     "title": "安天捕风蜜罐系统",
     "secret": true,
@@ -145,7 +153,11 @@ module.exports = {
       "system": true
     },
     "networkConfig": {
-      "masterIPConfig": true,
+      "dns": true,
+      "network": true,
+      "systemLog": true,
+      "networkAuth": true,
+      "masterIPConfig": false,
       "cloudDetection": false
     },
     "strategyConfig": {

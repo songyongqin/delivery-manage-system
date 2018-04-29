@@ -4,7 +4,7 @@ import * as React from 'react'
 const defaultOptions = {
   isAnimate: true,
   type: "right",
-  interval: 300,
+  interval: 0,
   duration: 800
 }
 
