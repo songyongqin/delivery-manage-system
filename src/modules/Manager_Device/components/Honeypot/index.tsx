@@ -9,6 +9,7 @@ export default class Master extends React.Component<any, any>{
     return (
       <Card title="蜜罐节点设备" style={this.props.style}>
         <DeviceInfo
+          {...this.props}
           remoteNamespace={MANAGER_DEVICE_HONEYPOT_NAMESPACE}
           multiple={true}
           type="honeypot"

@@ -19,7 +19,8 @@ const getInitState = () => {
     const layout = getCache(LAYOUT_CACHE_NAMESPACE) || defaultInitState
     return {
       ...layout,
-      initRoutes: []
+      initRoutes: [],
+      overdueTipVisible: false
     }
   } catch (e) {
     return defaultInitState
@@ -50,6 +51,12 @@ const reducers = {
       initRoutes: [...new Set([...preState.initRoutes, payload])]
     };
   },
+  saveOverdueTipVisible: (preState, { payload }) => {
+    return {
+      ...preState,
+      overdueTipVisible: payload
+    }
+  }
 }
 
 const effects = {

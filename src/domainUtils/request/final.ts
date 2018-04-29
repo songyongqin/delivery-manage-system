@@ -5,8 +5,9 @@ const httpApi = ApiConfig.http
 import { routerRedux } from 'dva/router'
 import { Modal } from 'antd'
 import { delUserData } from 'domain/user'
-import { saveLicenceStatus } from 'domain/licence'
+import { setOverdueStatus } from 'domain/licence'
 import { MANAGER_DEVICE_URL } from 'routes/config/path'
+import { getAppInstance } from 'domain/instance'
 
 Message.config({
   duration: 5,
@@ -31,8 +32,15 @@ const handleSignInOverdue = () => {
 }
 
 const handleLicenceOverdue = () => {
-  saveLicenceStatus(true)
-  routerRedux.push(MANAGER_DEVICE_URL)
+  //保存设备授权过期状态
+  setOverdueStatus(true)
+  //跳转到设备管理页面
+  getAppInstance()._store.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+  //改变layout model 中 overdueTipVisible的状态 
+  getAppInstance()._store.dispatch({
+    type: "layout/saveOverdueTipVisible",
+    payload: true
+  })
 }
 
 export default (url: string, options: object, result: any): void => {

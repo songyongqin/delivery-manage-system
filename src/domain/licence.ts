@@ -1,8 +1,6 @@
-
-
 class Licence {
   overdue = false
-  setLicenceStatus = value => {
+  setOverdueStatus = value => {
     this.overdue = !!value
   }
   getLicenceStatus = () => {
@@ -12,6 +10,6 @@ class Licence {
 
 const licence = new Licence()
 
-export const saveLicenceStatus = licence.setLicenceStatus
+export const setOverdueStatus = licence.setOverdueStatus
 
 export const isLicenceOverdue = licence.getLicenceStatus

@@ -17,12 +17,14 @@ import BuildingHolder from 'domainComponents/BuildingHolder'
 import SecretParse from 'domainComponents/SecretParse'
 import Setup from 'modules/Setup'
 import Footer from './components/Footer'
-import { LOGIN_URL, ROOT_URL } from 'routes/config/path'
+import { LOGIN_URL, ROOT_URL, MANAGER_DEVICE_URL } from 'routes/config/path'
 import { DOMAIN_USER_NAMESPACE, LAYOUT_NAMESPACE } from 'constants/model'
 import { ADMIN_ROLE, ROLE_DATA_INDEX } from 'constants/user'
 import { SET_UP_NAMESPACE } from 'constants/model'
 import { getAuthRoutes } from 'navConfig'
 import ContactInfo from 'domainComponents/ContactInfo'
+import { routerRedux } from 'dva/router'
+import { isLicenceOverdue } from 'domain/licence'
 
 const styles = require("./styles.less")
 
@@ -45,6 +47,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
+    dispatch,
     changeNavStatus: payload => dispatch({
       type: `${LAYOUT_NAMESPACE}/changeNavStatus`,
       payload
@@ -167,12 +170,21 @@ class IndexPage extends React.Component<any, any>{
         </div>
       )
     }
-
+    //若进入的路由不为授权的路由
     if (!authRoutes.includes(activeRoute)) {
       this.props.redirect()
       return <div></div>
     }
 
+    //若进入的路由不是/manager/device 且设备授权已过期
+    if (activeRoute !== MANAGER_DEVICE_URL && isLicenceOverdue()) {
+      this.props.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+      this.props.dispatch({
+        type: "layout/saveOverdueTipVisible",
+        payload: true
+      })
+      return <div></div>
+    }
 
     return (
       <div className={pageClasses}>

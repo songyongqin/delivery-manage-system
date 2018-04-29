@@ -13,6 +13,8 @@ import MasterIP from './MasterIP'
 import Spin from 'domainComponents/Spin'
 import { If, When, Choose, Otherwise } from 'components/ControlStatements'
 import WithCommonProps from 'domainComponents/WithCommonProps'
+import { isLicenceOverdue } from 'domain/licence'
+
 /*
 * 该组件参数如下
 */
@@ -37,15 +39,22 @@ interface Props {
 
 const mapStateToProps = state => {
   return {
-    effectsLoading: state.loading.effects
+    effectsLoading: state.loading.effects,
+    overdueTipVisible: state.layout.overdueTipVisible
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatch
+    dispatch,
+    saveOverdueTipVisible: payload => dispatch({
+      type: `layout/saveOverdueTipVisible`,
+      payload
+    })
   }
 }
+
+let tipModalRef = null
 
 @WithCommonProps
 @WithModal()
@@ -56,10 +65,12 @@ export default class DeviceInfo extends React.Component<any, any>{
     multiple: false,
     disk: true,
     masterIP: false,
-    shouldHideCols: []
+    shouldHideCols: [],
+    overdueTipType: false
   }
   state = {
     activeItems: [],
+    items: [],
     lastReqTime: 0,
     lastVisibleChange: 0,
     modalReload: {
@@ -67,6 +78,46 @@ export default class DeviceInfo extends React.Component<any, any>{
       update: false
     },
     refreshDataOnClose: false
+  }
+  componentDidMount() {
+    if (this.props.overdueTipVisible && this.props.mainDevice) {
+      this.showOverdueTipModal()
+    }
+  }
+  componentDidUpdate() {
+    if (this.props.overdueTipVisible && this.props.mainDevice) {
+      this.showOverdueTipModal()
+    }
+  }
+  showOverdueTipModal = () => {
+    //已经存在该modal 不再显示
+    if (tipModalRef) {
+      return
+    }
+
+    let modalType = (this.props.overdueTipType === "warning" || !this.props.admin)
+      ?
+      "warning"
+      :
+      "confirm"
+
+    tipModalRef = Modal[modalType]({
+      title: "授权已失效",
+      content: this.props.overdueTipContent[this.props.admin ? "admin" : "common"],
+      okText: modalType === "confirm" ? "执行授权操作" : "确定",
+      cancelText: "取消",
+      onOk: () => {
+        tipModalRef = null
+        this.props.saveOverdueTipVisible(false)
+        if (modalType === "confirm") {
+          this.onLicenceClick(this.state.items)
+        }
+      },
+      onCancel: () => {
+        tipModalRef = null
+        this.props.saveOverdueTipVisible(false)
+      }
+    })
   }
   onChange = _ => {
     this.setState({
@@ -222,7 +273,12 @@ export default class DeviceInfo extends React.Component<any, any>{
           shouldHideCols: shouldHideCols
         })
       },
-      onChange: this.onChange
+      onChange: this.onChange,
+      onDataChange: payload => {
+        this.setState({
+          items: payload.data
+        })
+      }
     }
     /*若为多选且不为只读  则表格显示可选择的checkbox  */
     if (multiple && !readonly) {

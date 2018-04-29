@@ -64,14 +64,19 @@ export default class Summary extends React.Component<any, any>{
   state = {
     result: [],
     lastReqTime: 0,
-    activeItems: []
+    activeItems: [],
+    reload: false
+  }
+  refresh = () => {
+    this.setState({
+      activeItems: [],
+      lastReqTime: new Date().getTime(),
+      reload: false
+    })
   }
   onConfirm = payload => {
     this.props.setModalVisible("update", false)
-    this.setState({
-      activeItems: [],
-      lastReqTime: new Date().getTime()
-    })
+    this.refresh()
   }
   onUpdateClick = (payload) => {
     this.update([payload])
@@ -91,17 +96,13 @@ export default class Summary extends React.Component<any, any>{
       })
       .then(result => {
         this.setState({
-          activeItems: [],
+          reload: true
         })
       })
   }
   updateMultiple = _ => {
     this.props.setModalVisible("update", true)
-    this.update(this.state.activeItems).then(_ => {
-      this.setState({
-        activeItems: []
-      })
-    })
+    this.update(this.state.activeItems)
   }
   render() {
 
@@ -150,9 +151,15 @@ export default class Summary extends React.Component<any, any>{
         <Modal
           destroyOnClose={true}
           footer={null}
+          maskClosable={false}
           closable={!this.props.loading}
           visible={this.props.modalVisible["update"]}
-          onCancel={_ => this.props.setModalVisible("update", false)}
+          onCancel={_ => {
+            this.props.setModalVisible("update", false)
+            if (this.state.reload) {
+              this.refresh()
+            }
+          }}
           title="升级蜜罐节点镜像">
           <Choose>
             <When condition={this.props.loading}>

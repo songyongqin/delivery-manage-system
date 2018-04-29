@@ -19,6 +19,7 @@ export default class ManagerDevice extends React.Component<any, any>{
   render() {
 
     const deviceManagerConfig = get(getAppConfig(), ["deviceManager"], {})
+    const mainDevice = get(getAppConfig(), "mainDevice", "master")
 
     const items = [
       //控制中心模块
@@ -27,6 +28,7 @@ export default class ManagerDevice extends React.Component<any, any>{
         content: (
           <Master
             key="master"
+            mainDevice={mainDevice === "master"}
             style={{ marginBottom: "15px" }}>
           </Master>
         )
@@ -37,6 +39,7 @@ export default class ManagerDevice extends React.Component<any, any>{
         content: (
           <Honeypot
             key="honeypot"
+            mainDevice={mainDevice === "honeypot"}
             style={{ marginBottom: "15px" }}>
           </Honeypot>
         )
@@ -47,6 +50,7 @@ export default class ManagerDevice extends React.Component<any, any>{
         content: (
           <IDS
             key="ids"
+            mainDevice={mainDevice === "ids"}
             style={{ marginBottom: "15px" }}>
           </IDS>
         )
@@ -57,6 +61,7 @@ export default class ManagerDevice extends React.Component<any, any>{
         content: (
           <HoneypotNode
             key="honeypot-node"
+            mainDevice={mainDevice === "honeypotNode"}
             style={{ marginBottom: "15px" }}>
           </HoneypotNode>
         )
@@ -67,6 +72,7 @@ export default class ManagerDevice extends React.Component<any, any>{
         content: (
           <IDSNode
             key="ids-node"
+            mainDevice={mainDevice === "idsNode"}
             style={{ marginBottom: "15px" }}>
           </IDSNode>
         )
@@ -76,6 +82,7 @@ export default class ManagerDevice extends React.Component<any, any>{
         key: "honeypotStandalone",
         content: (
           <HoneypotStandalone
+            mainDevice={mainDevice === "honeypotStandalone"}
             key="honeypot-standalone"
             style={{ marginBottom: "15px" }}>
           </HoneypotStandalone>
@@ -86,6 +93,7 @@ export default class ManagerDevice extends React.Component<any, any>{
         key: "idsStandalone",
         content: (
           <IDSStandalone
+            mainDevice={mainDevice === "idsStandalone"}
             key="ids-standalone"
             style={{ marginBottom: "15px" }}>
           </IDSStandalone>

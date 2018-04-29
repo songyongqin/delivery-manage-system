@@ -44,26 +44,29 @@
     "cloudDetection": true
   },
   "strategyConfig": {
-    "white": true
+    "white": true//是否显示白名单
   },
-  "monitor": {
+  "monitor": {//自我监控模块显示
     "master": true,
     "honeypotNode": true,
     "idsNode": true,
     "honeypot": true,
     "ids": true
   },
+  "mainDevice": "master",//设置主设备 决定授权过期时 授权行为的目标
   "deviceManager": {
     "master": true,
+    "honeypot": true,
+    "ids": true,
     "honeypotNode": true,
     "idsNode": true,
-    "honeypot": true,
-    "ids": true
+    "honeypotStandalone": true,
+    "idsStandalone": true
   },
   "mirrorImageManager": {
-    "collection": true,
-    "honeypotNode": true,
-    "honeypot": true
+    "collection": true,//是否显示蜜罐汇总
+    "node": true,//是否显示节点镜像
+    "nodeReadOnly": false//节点镜像是否为只读
   }
 }
 ``` 

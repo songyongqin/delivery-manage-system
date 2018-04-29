@@ -68,6 +68,7 @@
     "honeypot": true,
     "ids": true
   },
+  "mainDevice": "master",
   "deviceManager": {
     "master": true,
     "honeypot": true,

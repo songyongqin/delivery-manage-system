@@ -157,6 +157,7 @@ module.exports = {
       "honeypot": false,
       "ids": false
     },
+    "mainDevice": "honeypotStandalone",
     "deviceManager": {
       "master": false,
       "honeypot": false,

@@ -9,6 +9,10 @@ import { last } from 'utils'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
 import $ from 'jquery'
 import 'jquery.nicescroll'
+import { MANAGER_DEVICE_URL } from 'routes/config/path'
+import { getAppInstance } from 'domain/instance'
+import { isLicenceOverdue, showOverdueTipModal } from 'domain/licence'
+import { routerRedux } from 'dva/router'
 
 const getFinalLink = config => {
   try {
@@ -30,7 +34,17 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
     const link = getFinalLink(i)
 
     const title = (
-      <Link to={link} className={classes}>
+      <Link to={link} className={classes} onClick={e => {
+        //授权过期 跳转到device路由
+        if (isLicenceOverdue()) {
+          e.preventDefault()
+          getAppInstance()._store.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+          getAppInstance()._store.dispatch({
+            type: "layout/saveOverdueTipVisible",
+            payload: true
+          })
+        }
+      }}>
         <Choose>
           <When condition={i["icon"]} >
             {i.icon}
@@ -82,6 +96,10 @@ export default class extends React.Component {
     openKeys: []
   }
   onOpenChange = openKeys => {
+    //授权过期不进行展开操作
+    if (isLicenceOverdue()) {
+      return
+    }
     this.setState({
       openKeys: [last(openKeys)]
     })

@@ -9,6 +9,7 @@ export default class Master extends React.Component<any, any>{
     return (
       <Card title="流量监测设备" style={this.props.style}>
         <DeviceInfo
+          {...this.props}
           remoteNamespace={MANAGER_DEVICE_IDS_NAMESPACE}
           multiple={true}
           type="ids"
