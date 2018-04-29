@@ -93,7 +93,7 @@ class Page extends React.Component<any, any> {
         <h1 className={styles["title"]}>
           {(getAppConfig() as any).title}
         </h1>
-        <div style={{ width: "340px" }}>
+        <div style={{ width: "340px", margin: "0 auto" }}>
           {
             error
               ?
