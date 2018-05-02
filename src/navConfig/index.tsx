@@ -221,6 +221,16 @@ const getNavCombineTitleConfig = (navConfig) => {
           :
           i
       ))
+      .map(i => (
+        "items" in i
+          ?
+          {
+            ...i,
+            items: getNavCombineTitleConfig(i.items)
+          }
+          :
+          i
+      ))
   } catch (e) {
     console.error(e)
     return navConfig
