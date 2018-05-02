@@ -2,6 +2,7 @@ import commonRequestCreator from 'domainUtils/commonRequestCreator'
 import ApiConfig from 'services/apiConfig'
 import isSuccess from 'domainUtils/isSuccess'
 const httpApi = ApiConfig.http
+import momentToTimeStampRange from 'domainUtils/momentToTimeStampRange'
 
 //攻击统计接口
 export const getAttack = commonRequestCreator.getWithQueryString(httpApi.REPORT_STATISTICS)
@@ -30,4 +31,14 @@ export const getCHART_STATISTICAL = payload => {
   return commonRequestCreator.getWithQueryString(httpApi.ANALYSE_RANKING + "/" + payload.option)(payload)
 }
 //导出文件全部调用一个接口
-export const onExport = commonRequestCreator.post(httpApi.REPORT_EXPORT)
+const _onExport = commonRequestCreator.post(httpApi.REPORT_EXPORT)
+
+export const onExport = payload => {
+  if ("timestampRange" in payload) {
+    payload = {
+      ...payload,
+      timestampRange: momentToTimeStampRange(payload["timestampRange"])
+    }
+  }
+  return _onExport(payload)
+}
