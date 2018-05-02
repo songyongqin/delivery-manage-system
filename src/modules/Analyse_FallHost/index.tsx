@@ -14,7 +14,9 @@ const initialFilters = {
   limit: 20,
   page: 1,
   ip: "",
-  attackEventTypeList: []
+  attackEventTypeList: [],
+  attackCounts: "",
+  threatEventType: []
 }
 
 @WithConfig(path.layoutConfig.fallHost)
