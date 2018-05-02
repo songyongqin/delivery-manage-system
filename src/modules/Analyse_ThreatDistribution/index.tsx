@@ -44,7 +44,7 @@ export default class ThreatDistribution extends React.Component<any, any>{
     this.setState({
       filters
     })
-    this.props.fetch().then(res => {
+    this.props.fetch(filters).then(res => {
       this.setState({
         data: res
       })
