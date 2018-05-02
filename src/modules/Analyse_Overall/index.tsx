@@ -20,6 +20,14 @@ class Page extends React.Component<any, any> {
         timestampRange: [],
         page: 1,
         limit: 10,
+        threatJudge: [],
+        url: "",
+        sourceIP: "",
+        sourcePort: "",
+        requestDomain: "",
+        sender: "",
+        receiver: "",
+        value: ""
       },
       lastReqTime: 0,
       activeKey: "net-basic"
