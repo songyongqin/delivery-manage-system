@@ -45,7 +45,7 @@ export default class SysConfigNetwork extends React.Component<any, any>{
               </If>
             </div>,
             <div key="master-ip-config">
-              <If condition={networkConfig["masterIP"]}>
+              <If condition={networkConfig["masterIPConfig"]}>
                 <MasterIPConfig key="master-ip-config">
                 </MasterIPConfig>
               </If>
