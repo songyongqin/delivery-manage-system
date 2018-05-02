@@ -76,12 +76,12 @@
   "mainDevice": "master",
   "deviceManager": {
     "master": true,
-    "honeypot": true,
+    "honeypot": false,
     "ids": true,
-    "honeypotNode": true,
-    "idsNode": true,
-    "honeypotStandalone": true,
-    "idsStandalone": true
+    "honeypotNode": false,
+    "idsNode": false,
+    "honeypotStandalone": false,
+    "idsStandalone": false
   },
   "mirrorImageManager": {
     "collection": true,

@@ -87,22 +87,35 @@ const getLicenceRenderer = isDark => value => (
   </div>
 )
 
+const isLicenceDisabled = (readonly, connect, licence, canAheadLicence) => {
+  if (readonly) {
+    return true
+  }
+  if (!connect) {
+    return true
+  }
+  if (licence && canAheadLicence) {
+    return false
+  }
+  if (licence) {
+    return true
+  }
+  return false
+}
 
 const getOperationRenderer = ({ handle, readonly = false }) => {
   return (_, records) => {
     let licence = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_VALUE_DATAINDEX] === LICENCE_VALID_VALUE,
       connect = records[CONNECT_STATUS_DATAINDEX] === CONNECT,
-      // isNodeProductType = productType.type === NODE,
-      // isIdsProductType = productType.type === IDS,
       licenceExpiration = records[LICENCE_STATUS_DATAINDEX][LICENCE_STATUS_EXPIRATION_DATAINDEX],
-      canAheadLicence = (licenceExpiration - new Date().getTime() / 1000) <= ALLOW_AHEAD_LICENCE_DAY * 3600
+      canAheadLicence = (licenceExpiration - new Date().getTime() / 1000) <= (ALLOW_AHEAD_LICENCE_DAY * 3600 * 24)
 
     const menu = (
       <Menu onClick={({ key }) => {
         const payload = [records]
         handle[key] && handle[key](payload)
       }}>
-        <Menu.Item key="licence" disabled={readonly || !connect}>
+        <Menu.Item key="licence" disabled={isLicenceDisabled(readonly, connect, licence, canAheadLicence)}>
           <Icon type="unlock" />&nbsp;授权
           </Menu.Item>
         <Menu.Item key="update" disabled={readonly || (!licence) || (!connect)}>
