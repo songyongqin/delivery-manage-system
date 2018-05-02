@@ -5,10 +5,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const CSSSplitWebpackPlugin = require('css-split-webpack-plugin').default
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = (webpackConfig, env) => {
-  const production = env === 'production'
-
+  const production = process.env.NODE_ENV === 'production'
   webpackConfig.output.filename = 'static/[name].[hash].bundle.js';
   webpackConfig.output.chunkFilename = 'static/[name].[chunkhash].async.js';
 
@@ -29,6 +29,9 @@ module.exports = (webpackConfig, env) => {
         minimize: true,
         debug: false,
       })
+    )
+    webpackConfig.plugins.push(
+      new CleanWebpackPlugin(["dist"])
     )
   }
   // const lessRule = webpackConfig.module.rules[3];
