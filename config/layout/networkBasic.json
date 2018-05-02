@@ -49,6 +49,10 @@
       "dataIndex": "url",
       "title": "URL",
       "conditionType": "input"
+    },
+    {
+      "dataIndex": "requestDomain",
+      "conditionType": "input"
     }
   ]
 }
