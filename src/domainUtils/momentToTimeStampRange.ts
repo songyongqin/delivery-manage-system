@@ -11,6 +11,8 @@ export default (momentList: (MomentInterface | void)[] = []): number[] => {
   return [
     Moment(beforeTimestamp * 1000).hour(0).minute(0).second(0).unix(),
     Moment(afterTimestamp * 1000).hour(23).minute(59).second(59).unix()
-  ]
+  ].map(value => {
+    return value < 0 ? 0 : value
+  })
 
 }
