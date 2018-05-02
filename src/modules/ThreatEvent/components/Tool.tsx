@@ -18,6 +18,8 @@ const initialFilters = {
   timestampRange: [],
   limit: 20,
   page: 1,
+  toolName: "",
+  md5: ""
 }
 
 @extraConnect(

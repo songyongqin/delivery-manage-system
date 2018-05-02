@@ -18,6 +18,10 @@ const initialFilters = {
   timestampRange: [],
   limit: 20,
   page: 1,
+  threatType: [],
+  feature: "",
+  threatName: "",
+  accuracy: []
 }
 
 @extraConnect(
