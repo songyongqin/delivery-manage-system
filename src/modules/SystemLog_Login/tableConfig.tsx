@@ -8,7 +8,7 @@ export const getColumns = (option) => {
     dataIndex: 'time',
     key: 'time',
     render: value => {
-      return <TimesLabel value={value}></TimesLabel>
+      return <TimesLabel times={value}></TimesLabel>
     }
   },
   {

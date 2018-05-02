@@ -91,7 +91,7 @@ const dataIndexes = [
 
 
 const renderer = {
-  [TIME_DATA_INDEX]: value => <TimesLabel value={value}></TimesLabel>,
+  [TIME_DATA_INDEX]: value => <TimesLabel times={value}></TimesLabel>,
   [LEVEL_DATAINDEX]: value => tools.getKeyText(value, levelTextConfig),
 
   // [TIME_DATA_INDEX]: value => {

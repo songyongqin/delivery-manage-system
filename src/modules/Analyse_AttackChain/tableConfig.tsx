@@ -25,7 +25,7 @@ const stageRowRenderer = (value) => {
 };
 
 const attackTimesRenderer = value => {
-  return <TimeLabel value={value} />
+  return <TimeLabel times={value} />
 }
 
 export const getColumns = ({ queryFilters, getCheckboxOnChange }) => {

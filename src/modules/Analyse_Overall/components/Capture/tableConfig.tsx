@@ -58,7 +58,7 @@ export const getColumns = (option) =>
     dataIndexes,
     titleConfig: textConfig,
     renderer: {
-      [TIME_DATA_INDEX]: value => <TimesLabel value={value}></TimesLabel>,
+      [TIME_DATA_INDEX]: value => <TimesLabel time={value}></TimesLabel>,
       [DOWNLOAD_URL_DATA_INDEX]: (value, records) => <a href={value} download={records[FILE_NAME_DATA_INDEX]}>下载</a>
     },
     // extraProps: {

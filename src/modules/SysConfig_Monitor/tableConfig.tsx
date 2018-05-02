@@ -56,7 +56,7 @@ export const MONITOR_SETTING_TITLE = "自检周期与模块检测设置"
 
 const getRenderer = ({ moduleMonitorTextConfig }) => (
   {
-    [MONITOR_LOG_TIME_DATA_INDEX]: value => <TimesLabel value={[value]}></TimesLabel>,
+    [MONITOR_LOG_TIME_DATA_INDEX]: value => <TimesLabel times={value}></TimesLabel>,
     [REGULAR_MODULE_ROW_KEY]: (value, records) => {
       let moduleList = records[MONITOR_LOG_RESULT_DATA_INDEX];
       const data = Object.keys(moduleList).filter(i => moduleList[i] === REGULAR_VALUE);

@@ -28,7 +28,7 @@ import {
   sourceTextConfig,
 } from '../../constants'
 // import FilterInputNumber from '../FilterInputNumber'
-import TimeLabel from 'components/TimeLabel'
+import TimeLabel from 'domainComponents/TimeLabel'
 import CountUp from 'react-countup'
 
 export const INVADE_DATAINDEX = "intrusion",
@@ -162,16 +162,6 @@ const commonConstConfig = {
 
 
 
-
-
-
-
-
-import { getProduction as getProductType } from 'domain/production'
-// import { STAND_ALONE, IDS_STAND_ALONE } from 'configs/ConstConfig'
-import { IDS_STANDALONE, HONEYPOT_STANDALONE } from 'constants/production'
-
-
 import TagList from 'components/TagList'
 
 const rowsRenderer = {
@@ -199,7 +189,7 @@ const rowsRenderer = {
     }
   },
   attackTimes: value => {
-    return <TimeLabel value={value} />
+    return <TimeLabel times={value} />
   },
   counts: value => {
     return <CountUp start={0}
@@ -265,8 +255,11 @@ export const getColumns = ({ queryFilters, onSubmit, filters, filterTextConfig }
   //   }
 });
 
-const nth1TdStyle = { padding: "10px", width: "120px", textAlign: "center" },
-  nth2TdStyle = { padding: "10px" }
+
+const nth1TdStyle = { padding: "10px", width: "120px", textAlign: "center" }
+
+const nth2TdStyle = { padding: "10px" }
+
 export const getExpandedRowRender = ({ isDark }) => {
   const { expandedRow } = tableTextConfig;
   return (records) => {

@@ -212,7 +212,7 @@ export const getColumns = ({ filters }) => {
     dataIndexes: dataIndexesConfig[filters[PROTOCOL_TYPE_DATA_INDEX]],
     titleConfig: textConfig,
     renderer: {
-      [TIME_DATA_INDEX]: value => <TimesLabel value={value}></TimesLabel>,
+      [TIME_DATA_INDEX]: value => <TimesLabel times={value}></TimesLabel>,
       [URL_DATA_INDEX]: value => {
         try {
           return value.length > OVER_FLOW_LENGTH
