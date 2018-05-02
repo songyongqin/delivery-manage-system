@@ -13,6 +13,8 @@ const initialFilters = {
   timestampRange: [],
   limit: 20,
   page: 1,
+  ip: "",
+  attackEventTypeList: []
 }
 
 @WithConfig(path.layoutConfig.fallHost)
