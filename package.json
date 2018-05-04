@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "attack-capture-system",
-  "version": "v4.0.0",
+  "version": "v4.0.1",
   "scripts": {
     "start": "cross-env PORT=8010 ESLINT=none TSLINT=none BROWSER=none ./bin/roadhog dev",
     "dev": "cross-env PORT=8011 ESLINT=none TSLINT=none BROWSER=none ./bin/roadhog dev",
