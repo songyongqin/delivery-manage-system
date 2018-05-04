@@ -15,7 +15,7 @@ Message.config({
 })
 
 const isIgnoreApi = (url: string, options: object) => {
-  return [httpApi.CREATE_STATUS].includes(url)
+  return [httpApi.CREATE_STATUS, httpApi.USER_SIGN].includes(url)
 }
 
 const handleSignInOverdue = () => {
