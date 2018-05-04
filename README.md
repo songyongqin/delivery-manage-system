@@ -1,5 +1,7 @@
 # Attack-capture-system
 
+[更新日志](./CHANGELOG.md)
+
 以下内容基于读者对整个产品有了解，熟悉 Git 和 NPM 基本操作， 以及 React / Dva相关的 API
 
 ## 如何使用代码？
@@ -17,13 +19,13 @@ npm install # 或者 cnpm install
 npm run dev 
 ```
 构建输出静态文件
-```
+```shell
 npm run build
 ```
 ⚠️⚠️⚠️ 在 linux 上执行 build 之前，需要为 roadhog.sh 添加执行权限
 
-```
-chomod +x ./bin/roadhog.sh
+```shell
+chomod +x ./bin/roadhog.sh # 或执行 npm run buildlinux
 ```
 ## 常见问题
 
