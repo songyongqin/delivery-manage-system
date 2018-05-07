@@ -160,7 +160,8 @@ class Page extends React.Component<any, any> {
                 handle: {
                   put: this.onPutClick,
                   delete: this.onDeleteClick
-                }
+                },
+                con: this.con
               })
             }}
             tableProps={{

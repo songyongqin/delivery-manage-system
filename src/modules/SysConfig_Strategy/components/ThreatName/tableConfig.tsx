@@ -21,7 +21,7 @@ import {
 
 import { Button, Switch, Icon, Select, Tooltip } from 'antd'
 
-const getRenderer = ({ handle }) => ({
+const getRenderer = ({ handle, con }) => ({
 
   [THREAT_NAME_LEVEL_DATAINDEX]: (value, records, index) => (
     <Select defaultValue={value}
@@ -41,6 +41,10 @@ const getRenderer = ({ handle }) => ({
     &&
     <Popconfirm title="删除该类型，该类型对应的特征也应一并删除，请确认是否删除？"
       placement="topLeft"
+      getPopupContainer={_ => {
+        console.info(con)
+        return document.body
+      }}
       onConfirm={_ => handle && handle["delete"] && handle["delete"](records)}>
       <a style={{ color: "#d73435" }} >
         <Icon type="minus-circle" />
