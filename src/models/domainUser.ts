@@ -10,6 +10,7 @@ import isSuccess from 'domainUtils/isSuccess'
 import { getAuthRoutes, getDefaultRoute } from 'navConfig'
 import { getAppConfig } from 'domain/app'
 import { fetchBaseInfo } from 'services/user'
+import commonEffectCreator from 'domainUtils/commonEffectCreator'
 let basicInfo = {}
 
 export const getIP = () => {
@@ -169,7 +170,8 @@ const effects = {
       type: "throttle",
       ms: 1000
     }
-  ]
+  ],
+  modifyPassword: commonEffectCreator(services.modifyPassword)
 }
 
 const reducers = {

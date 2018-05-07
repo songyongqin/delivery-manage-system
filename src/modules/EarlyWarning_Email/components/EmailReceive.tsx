@@ -138,7 +138,7 @@ class ReceiveForm extends React.Component<any, any> {
           label={<span className={isDark ? "lbl-dark" : null}>威胁等级报警设置</span>}>
           {getFieldDecorator('level', {
             valuePropName: 'checked',
-            initialValue: defaultValue.level[0]
+            initialValue: defaultValue.level
           })(
             <CheckboxGroup
               disabled={readonly}

@@ -28,7 +28,7 @@ export const getEPORT_CALL_ON_DOMAIN = commonRequestCreator.getWithQueryString(h
 export const getRankingOption = commonRequestCreator.getWithQueryString(httpApi.ANALYSE_RANKING_OPTION)
 
 export const getCHART_STATISTICAL = payload => {
-  return commonRequestCreator.getWithQueryString(httpApi.ANALYSE_RANKING + "/" + payload.option)(payload)
+  return commonRequestCreator.getWithQueryString(httpApi.ANALYSE_RANKING + payload.option)(payload)
 }
 //导出文件全部调用一个接口
 const _onExport = commonRequestCreator.post(httpApi.REPORT_EXPORT)

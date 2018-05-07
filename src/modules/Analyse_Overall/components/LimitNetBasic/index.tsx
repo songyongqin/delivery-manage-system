@@ -1,6 +1,6 @@
 import CommonItem from '../CommonItem'
 import * as React from 'react'
-import { ANALYSE_OVERALL_NET_BASIC_NAMESPACE } from 'constants/model'
+import { ANALYSE_OVERALL_LIMIT_NET_BASIC_NAMESPACE } from 'constants/model'
 import { getColumns } from './tableConfig'
 import SelectForm from './SelectForm'
 import WithConfig from 'domainComponents/WithConfig'
@@ -34,7 +34,7 @@ export default class System extends React.Component<any, any>{
         </SelectForm>
       }
       initialFilters={{ ...this.props.initialFilters, ...this.state.filters }}
-      remoteNamespace={ANALYSE_OVERALL_NET_BASIC_NAMESPACE}
+      remoteNamespace={ANALYSE_OVERALL_LIMIT_NET_BASIC_NAMESPACE}
       getColumns={option => {
         return combineColumnsConfig(getColumns(option), this.props.config.columns)
       }}>
