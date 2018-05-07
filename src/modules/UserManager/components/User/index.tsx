@@ -82,7 +82,7 @@ export default class UserManager extends React.Component<any, any>{
   onResetClick = payload => {
     Modal.confirm({
       content: `用户 ${payload.userAccount} 密码将被重置`,
-      onOk: _ => this.props.delUser({ userAccountList: [payload.userAccount] })
+      onOk: _ => this.props.resetUser({ userAccountList: [payload.userAccount] })
         .then(_ => Message.success("重置密码成功"))
         .then(_ => this.setState({ lastReqTime: new Date().getTime() }))
     })
