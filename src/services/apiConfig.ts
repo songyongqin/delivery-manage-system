@@ -84,7 +84,7 @@ const HttpApiConfig = {
   ANALYSE_OVERALL_SAMPLE: "/analyse/overall/sample",
   ANALYSE_OVERALL_SYSTEM: "/analyse/overall/system",
   ANALYSE_OVERALL_NET: "/analyse/overall/net",
-  ANALYSE_OVERALL_ABNORMAL: "/analyse/overall/abnormal",
+  ANALYSE_OVERALL_ABNORMAL: "/analyse/overall/abnormal-net-basic",
   SYS_CONFIG_NETWORK: "/sys-config/network",
   SYS_CONFIG_STRATEGY: "/sys-config/strategy",
 
