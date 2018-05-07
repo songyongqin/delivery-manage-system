@@ -18,6 +18,7 @@ import Card from 'domainComponents/Card'
 import extraConnect from 'domainUtils/extraConnect'
 import WithModal from 'components/WithModal'
 import CreateForm from './CreateForm'
+import { debounce } from 'utils'
 
 @WithModal()
 @extraConnect(
@@ -58,6 +59,24 @@ class Page extends React.Component<any, any> {
     this.state = {
       createVisible: false,
       lastReqTime: 0,
+      height: 0
+    }
+  }
+  con = null
+  componentDidMount() {
+    this.initHeightListener()
+    this.updateHeight()
+  }
+  initHeightListener = () => {
+    window.addEventListener("resize", this.updateHeight)
+  }
+  updateHeight = () => {
+    try {
+      this.setState({
+        height: this.con.clientHeight
+      })
+    } catch (e) {
+      console.info("error", e)
     }
   }
   reload = () => {
@@ -83,22 +102,23 @@ class Page extends React.Component<any, any> {
     const { fetchLoading, putLoading, deleteLoading, postLoading } = this.props
 
     return (
-      <Card
-        style={{ height: "100%" }}
-        title={
-          <div>
-            <Icon type="setting"></Icon>&nbsp;威胁等级配置
+      <div style={{ height: "100%" }} ref={con => this.con = con}>
+        <Card
+          style={{ height: "100%" }}
+          title={
+            <div>
+              <Icon type="setting"></Icon>&nbsp;威胁等级配置
           </div>
-        }>
-        <div style={{ overflow: "hidden" }}>
-          <Button
-            disabled={fetchLoading || putLoading || deleteLoading}
-            type="primary"
-            onClick={_ => this.props.setModalVisible("create", true)}
-            icon="plus">
-            添加
+          }>
+          <div style={{ overflow: "hidden" }} >
+            <Button
+              disabled={fetchLoading || putLoading || deleteLoading}
+              type="primary"
+              onClick={_ => this.props.setModalVisible("create", true)}
+              icon="plus">
+              添加
             </Button>
-          {/* <Button
+            {/* <Button
             disabled={fetchLoading}
             type="primary"
             style={{
@@ -107,60 +127,64 @@ class Page extends React.Component<any, any> {
             icon="save">
             保存
             </Button> */}
-          <Button
-            disabled={fetchLoading || putLoading || deleteLoading}
-            style={{ float: "right", marginLeft: "10px" }}
-            icon="menu-unfold"
-            onClick={_ => this.props.onExpandChange(false)}
-            type="primary">
-          </Button>
-          <Tooltip title="重新加载" placement="bottomLeft">
             <Button
               disabled={fetchLoading || putLoading || deleteLoading}
-              style={{ float: "right" }}
-              onClick={this.reload}
+              style={{ float: "right", marginLeft: "10px" }}
+              icon="menu-unfold"
+              onClick={_ => this.props.onExpandChange(false)}
               type="primary">
-              {
-                fetchLoading
-                  ?
-                  <Icon type="loading"></Icon>
-                  :
-                  <Icon type="reload"></Icon>
-              }
             </Button>
-          </Tooltip>
-        </div>
-        <TableWithRemote
-          loading={fetchLoading || putLoading || deleteLoading}
-          key={`${this.state.lastReqTime}-table`}
-          onDataChange={payload => this.props.saveThreatNameList(payload.data)}
-          getColumns={option => {
-            return tableConfig.getColumns({
-              ...option,
-              handle: {
-                put: this.onPutClick,
-                delete: this.onDeleteClick
-              }
-            })
-          }}
-          remoteNamespace={SYS_CONFIG_STRATEGY_THREAT_NAME}
-          pagination={false} />
-        <Modal
-          destroyOnClose={true}
-          footer={null}
-          closable={!postLoading}
-          visible={this.props.modalVisible["create"]}
-          onCancel={_ => this.props.setModalVisible("create", false)}
-          title={
-            <div><Icon type="plus"></Icon>&nbsp;新增特征</div>
-          }>
-          <CreateForm
-            onSubmit={this.onSubmit}
-            loading={postLoading}
-            threatNameList={this.props.threatNameList.map(i => i["name"])}>
-          </CreateForm>
-        </Modal>
-      </Card>
+            <Tooltip title="重新加载" placement="bottomLeft">
+              <Button
+                disabled={fetchLoading || putLoading || deleteLoading}
+                style={{ float: "right" }}
+                onClick={this.reload}
+                type="primary">
+                {
+                  fetchLoading
+                    ?
+                    <Icon type="loading"></Icon>
+                    :
+                    <Icon type="reload"></Icon>
+                }
+              </Button>
+            </Tooltip>
+          </div>
+          <TableWithRemote
+            loading={fetchLoading || putLoading || deleteLoading}
+            key={`${this.state.lastReqTime}-table`}
+            onDataChange={payload => this.props.saveThreatNameList(payload.data)}
+            getColumns={option => {
+              return tableConfig.getColumns({
+                ...option,
+                handle: {
+                  put: this.onPutClick,
+                  delete: this.onDeleteClick
+                }
+              })
+            }}
+            tableProps={{
+              scroll: { y: this.state.height - 180 }
+            }}
+            remoteNamespace={SYS_CONFIG_STRATEGY_THREAT_NAME}
+            pagination={false} />
+          <Modal
+            destroyOnClose={true}
+            footer={null}
+            closable={!postLoading}
+            visible={this.props.modalVisible["create"]}
+            onCancel={_ => this.props.setModalVisible("create", false)}
+            title={
+              <div><Icon type="plus"></Icon>&nbsp;新增特征</div>
+            }>
+            <CreateForm
+              onSubmit={this.onSubmit}
+              loading={postLoading}
+              threatNameList={this.props.threatNameList.map(i => i["name"])}>
+            </CreateForm>
+          </Modal>
+        </Card>
+      </div>
     )
   }
 }
