@@ -29,7 +29,7 @@ const tailFormItemLayout = {
   },
 }
 
-@Form.create()
+@(Form.create() as any)
 class WrappedForm extends React.Component<any, any> {
   state = {
     confirmDirty: false,
