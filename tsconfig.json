@@ -20,42 +20,6 @@
     "paths": {
       "routes": [
         "routes"
-      ],
-      "domain": [
-        "domain"
-      ],
-      "utils": [
-        "utils"
-      ],
-      "domainUtils": [
-        "domainUtils"
-      ],
-      "components": [
-        "components"
-      ],
-      "domainComponents": [
-        "domainComponents"
-      ],
-      "constants": [
-        "constants"
-      ],
-      "themes": [
-        "themes"
-      ],
-      "services": [
-        "services"
-      ],
-      "models": [
-        "models"
-      ],
-      "navConfig": [
-        "navConfig"
-      ],
-      "modules": [
-        "modules"
-      ],
-      "interfaces": [
-        "interfaces"
       ]
     }
   },
