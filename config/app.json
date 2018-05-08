@@ -65,7 +65,7 @@
   },
   "strategyConfig": {
     "strategy": true,
-    "white": false
+    "white": true
   },
   "monitor": {
     "master": true,

@@ -65,14 +65,17 @@ export default class WhiteList extends React.Component<any, any>{
     })
   }
   onDel = payload => {
-    this.props.delete(payload).then(_ => Message.success("删除成功"))
+    this.props.delete(payload).then(_ => {
+      Message.success("删除成功")
+      this.reload()
+    })
   }
   onPut = payload => {
     this.props.put(payload).then(_ => Message.success("修改成功"))
   }
   onMulClick = value => {
     const payload = this.state.activeItems.reduce((target, item) => {
-      target[value["id"]] = value ? 1 : 0
+      target[item["id"]] = value ? 1 : 0
       return target
     }, {})
     this.props.put(payload).then(_ => {
