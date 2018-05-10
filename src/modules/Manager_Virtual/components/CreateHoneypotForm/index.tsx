@@ -34,6 +34,7 @@ import {
   SYSTEM_DATAINDEX,
   SERVICES_DATAINDEX,
   GATEWAY_DATAINDEX,
+  SUBNET_DATAINDEX,
   honeypotTextConfig,
   AUTH_DATAINDEX,
   AUTH_USER_DATA_INDEX,
@@ -392,6 +393,29 @@ class WrappedForm extends React.Component<any, any> {
                   },
                   {
                     validator: this.gatewayCheck
+                  }
+                ]
+              }
+            )
+              (
+              <Input disabled={loading} />
+              )
+          }
+        </FormItem>
+        <FormItem  {...commonProps}
+          label={<Label className={lblClasses}
+            keyName={SUBNET_DATAINDEX} />}>
+          {
+            getFieldDecorator(
+              SUBNET_DATAINDEX,
+              {
+                initialValue: defaultValue[SUBNET_DATAINDEX] || "",
+                rules: [
+                  {
+                    required: true, message: '子网掩码不能为空',
+                  },
+                  {
+                    validator: this.honeypotIpCheck
                   }
                 ]
               }

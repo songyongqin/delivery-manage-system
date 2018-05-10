@@ -66,6 +66,7 @@ export const honeypotStatusValues = Object.keys(honeypotStatusTextConfig);
 export const VCPUS_DATAINDEX = "vcpus",
   RAM_DATAINDEX = "ram",
   GATEWAY_DATAINDEX = "gateway",
+  SUBNET_DATAINDEX = "subNet",
   AUTH_DATAINDEX = "auth",
   AUTH_USER_DATA_INDEX = "authUserName",
   AUTH_PASSWORD_DATA_INDEX = "authPassword"
@@ -76,6 +77,7 @@ export const honeypotTextConfig = {
   [VCPUS_DATAINDEX]: "蜜罐虚拟CPU数",
   [RAM_DATAINDEX]: "蜜罐运行内存",
   [GATEWAY_DATAINDEX]: "蜜罐网关",
+  [SUBNET_DATAINDEX]: "子网掩码",
   [INTERCATION_DATAINDEX]: "蜜罐类型",
   [SYSTEM_DATAINDEX]: "操作系统",
   [SERVICES_DATAINDEX]: "服务支持",
