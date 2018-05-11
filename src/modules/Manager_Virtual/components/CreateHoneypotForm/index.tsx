@@ -151,6 +151,7 @@ class WrappedForm extends React.Component<any, any> {
     honeypotName: null,
     honeypotIp: null,
     gateway: null,
+    subNet: null
   }
   honeypotNameCheck = (rule, value, callback) => {
     clearTimeout(this.timer.honeypotName)
@@ -169,6 +170,19 @@ class WrappedForm extends React.Component<any, any> {
     }
     this.timer.honeypotIp = setTimeout(() => {
       this.props.validatorHandle({ type: "honeypotIp", value: value.trim() }).then(({ payload, message }) => {
+        payload !== 1 ? callback(message) : callback()
+      })
+    }, 500)
+
+  }
+  subNetIpCheck = (rule, value, callback) => {
+    clearTimeout(this.timer.subNet);
+    value.trim().length === 0 && callback();
+    if (!ipReg.test(value.trim())) {
+      callback("请输入正确的子网掩码")
+    }
+    this.timer.subNet = setTimeout(() => {
+      this.props.validatorHandle({ type: "subNet", value: value.trim() }).then(({ payload, message }) => {
         payload !== 1 ? callback(message) : callback()
       })
     }, 500)
@@ -415,7 +429,7 @@ class WrappedForm extends React.Component<any, any> {
                     required: true, message: '子网掩码不能为空',
                   },
                   {
-                    validator: this.honeypotIpCheck
+                    validator: this.subNetIpCheck
                   }
                 ]
               }
