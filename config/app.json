@@ -84,7 +84,7 @@
     "idsNode": false,
     "honeypotStandalone": false,
     "idsStandalone": true,
-    "serverUrl": "update.ithreat.cn/ids"
+    "serverUrl": "https://update.ithreat.cn/ids"
   },
   "mirrorImageManager": {
     "collection": true,
