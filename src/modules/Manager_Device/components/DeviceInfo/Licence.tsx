@@ -42,6 +42,14 @@ import { canLicenceDevice, getCanNotLicenceReason } from '../../domainUtils'
 
 const INPUT_CODE = "inputCode", SHOW_LICENCE_RES = "showLicenceRes", SHOW_LICENCE_ERROR_ERS = "showLicenceErrorRes"
 
+const checkDeviceId = (rule, value, callback) => {
+
+  if (value.length <= 400) {
+    callback();
+  } else {
+    callback('授权码最大长度不超过400');
+  }
+}
 
 const InputCodeStepInfo = ({ getFieldDecorator, info, loading, disabledList }) => {
   return (
@@ -55,7 +63,11 @@ const InputCodeStepInfo = ({ getFieldDecorator, info, loading, disabledList }) =
         initialValue: "",
         rules: [
           {
-            required: true, message: "授权码不能为空"
+            required: true, message: "授权码不能为空",
+
+          },
+          {
+            validator: checkDeviceId,
           }
         ]
       })(
