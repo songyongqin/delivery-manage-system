@@ -38,9 +38,11 @@ const FormItem = Form.Item
 const Dragger = Upload.Dragger
 import Tag from 'components/Tag'
 import Card from 'domainComponents/Card'
+import { getAppConfig } from 'domain/app'
+import { get } from 'utils'
 const LICENCE_SUCCESS = 1
 const styles = require('./styles.less')
-
+const deviceManagerConfig = get(getAppConfig(), ["deviceManager"], {})
 const CommonCell = ({ value }) => (
   <div style={{ textAlign: "center" }}>{value}</div>
 )
@@ -604,11 +606,11 @@ class UpdateForm extends React.Component<any, any> {
                         hasFeedback={true}
                       >
                         {getFieldDecorator("serverUrl", {
-                          initialValue: "",
+                          initialValue: deviceManagerConfig.serverUrl,
                           rules: [
-                            {
-                              required: true, message: "服务器地址不能为空"
-                            }
+                            // {
+                            //   required: false, message: "服务器地址不能为空"
+                            // }
                           ]
                         })(
                           <Input onChange={this.setServerUrl} placeholder="请填写升级服务器地址" disabled={loading}>

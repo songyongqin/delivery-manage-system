@@ -85,7 +85,8 @@ module.exports = {
       "honeypotNode": true,
       "idsNode": true,
       "honeypotStandalone": true,
-      "idsStandalone": true
+      "idsStandalone": true,
+      "serverUrl": "qqqqqq"
     },
     "mirrorImageManager": {
       "collection": true,
@@ -179,7 +180,8 @@ module.exports = {
       "honeypotNode": false,
       "idsNode": false,
       "honeypotStandalone": true,
-      "idsStandalone": false
+      "idsStandalone": false,
+      "serverUrl": "update.ithreat.cn/acs"
     },
     "mirrorImageManager": {
       "collection": true,
@@ -277,7 +279,8 @@ module.exports = {
       "honeypotNode": false,
       "idsNode": false,
       "honeypotStandalone": false,
-      "idsStandalone": true
+      "idsStandalone": true,
+      "serverUrl": "update.ithreat.cn/ids"
     },
     "mirrorImageManager": {
       "collection": true,
