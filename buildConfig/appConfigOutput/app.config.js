@@ -186,7 +186,8 @@ module.exports = {
     "mirrorImageManager": {
       "collection": true,
       "node": false,
-      "nodeReadOnly": false
+      "nodeReadOnly": false,
+      "updateUrl": "https://update.ithreat.cn/acs/imgs"
     },
     "contactInfo": {
       "phoneNumber": "0755-26806561",

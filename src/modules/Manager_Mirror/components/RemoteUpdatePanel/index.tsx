@@ -2,6 +2,8 @@ import { connect } from 'dva';
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, DatePicker } from 'antd';
 import React from 'react';
 import classnames from 'classnames'
+import { getAppConfig } from 'domain/app'
+import { get } from 'utils'
 const FormItem = Form.Item;
 import {
   OPERATION_NAMESPACE,
@@ -9,7 +11,7 @@ import {
 import JoSpin from 'domainComponents/Spin'
 import UpdateResultPanel from '../UpdateResultPanel'
 import extraConnect from 'domainUtils/extraConnect'
-
+const mirrorImageManagerConfig = get(getAppConfig(), ["mirrorImageManager"], {})
 class RemoteUpdate extends React.Component<any, any> {
   constructor(props) {
     super(props);
@@ -39,7 +41,7 @@ class RemoteUpdate extends React.Component<any, any> {
 
     const { getFieldDecorator } = this.props.form;
     const { defaultValue = {}, isDark, loading = false, textConfig = {}, style = {}, keyConfig = "value" } = this.props;
-    const { value = "" } = defaultValue;
+    const { value = mirrorImageManagerConfig.updateUrl } = defaultValue;
     const { res } = this.state;
     const lblClasses = classnames({
       "lbl-dark": isDark
