@@ -100,8 +100,7 @@ export default class extends React.Component<any, any>{
   // }
   getFormConfig = (item) => {
     try {
-      const { adapterName, virtual, adapterMac } = item
-
+      const { adapterName, virtual, adapterMac, adapterType } = item
       const realKeyMap: any = {}
 
       const finalDefaultValue = Object.entries(item).reduce((target, [key, value]) => {
@@ -129,7 +128,7 @@ export default class extends React.Component<any, any>{
         rulesConfig: finalRulesConfig,
         labelTextConfig: finalLabelTextConfig,
         loading: this.props.loading,
-        disabled: virtual === 1,
+        disabled: virtual === 1 || adapterType == 1,
         btnDisabledTip: "该网卡是被br0桥接网卡，所有信息均为只读",
         onSubmit: payload => {
           const finalPayload: any = {
@@ -162,7 +161,6 @@ export default class extends React.Component<any, any>{
 
     const { loading } = this.props
     const { data, initial } = this.state
-
     return (
       <Card
         title={
