@@ -128,7 +128,7 @@ class UpdateForm extends React.Component<any, any> {
     file: null,
     updateResult: [],
     hideNotValidItem: false,
-    serverUrl: "",
+    serverUrl: deviceManagerConfig.serverUrl,
     shouldReload: false
   }
   static defaultProps = {

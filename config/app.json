@@ -1,11 +1,11 @@
 {
-  "title": "安天捕风流量监测系统",
+  "title": "安天捕风蜜罐系统",
   "secret": true,
   "routerRegister": {
     "/overview": true,
     "/analyse": true,
     "/analyse/event": true,
-    "/analyse/attack-chain": false,
+    "/analyse/attack-chain": true,
     "/analyse/fall-host": true,
     "/analyse/ranking": true,
     "/analyse/threat-distribution": true,
@@ -20,12 +20,11 @@
     "/user-manager": true,
     "/manager": true,
     "/manager/device": true,
-    "/manager/virtual-machine": false,
-    "/manager/mirror": false,
+    "/manager/virtual-machine": true,
+    "/manager/mirror": true,
     "/sys-log": true,
     "/sys-log/login": true,
-    "/snort": true,
-    "/file-restore": true
+    "/snort": true
   },
   "adminOnly": [
     "/sys-config",
@@ -37,10 +36,7 @@
     "/user-manager",
     "/snort"
   ],
-  "routerTitleConfig": {
-    "/manager": "流量监测管理"
-  },
-  "recordOfCreatingVM": false,
+  "recordOfCreatingVM": true,
   "ipInfo": {
     "idsNode": false,
     "honeypotNode": false
@@ -51,44 +47,44 @@
   },
   "analyse": {},
   "overall": {
-    "capture": false,
+    "capture": true,
     "netBasic": true,
-    "limitNetBasic": true,
-    "pcap": false,
-    "system": false
+    "limitNetBasic": false,
+    "pcap": true,
+    "system": true
   },
   "networkConfig": {
     "dns": true,
     "network": true,
     "systemLog": true,
     "networkAuth": true,
-    "masterIPConfig": true,
-    "cloudDetection": true
+    "masterIPConfig": false,
+    "cloudDetection": false
   },
   "strategyConfig": {
     "strategy": true,
-    "white": false
+    "white": true
   },
   "monitor": {
     "master": false,
-    "honeypotStandalone": false,
+    "honeypotStandalone": true,
     "honeypot": false,
-    "ids": true
+    "ids": false
   },
-  "mainDevice": "master",
+  "mainDevice": "honeypotStandalone",
   "deviceManager": {
     "master": false,
     "honeypot": false,
     "ids": false,
     "honeypotNode": false,
     "idsNode": false,
-    "honeypotStandalone": false,
-    "idsStandalone": true,
-    "serverUrl": "https://update.ithreat.cn/ids"
+    "honeypotStandalone": true,
+    "idsStandalone": false,
+    "serverUrl": "https://update.ithreat.cn/acs"
   },
   "mirrorImageManager": {
     "collection": true,
-    "node": true,
+    "node": false,
     "nodeReadOnly": false
   },
   "contactInfo": {
