@@ -93,7 +93,11 @@ class WrappedForm extends React.Component<any, any> {
           _values[RULE_DATAINDEX] = rule
           _values[RULE_DESCRIPTION] = _values[RULE_DESCRIPTION] || ""
           _values.protocolType = this.props.protocolType;
-          onSubmit && onSubmit(_values)
+          const values_ = {
+            ..._values,
+            id: this.props.id[0]
+          }
+          onSubmit && onSubmit(values_)
         });
       })
     })

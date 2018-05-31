@@ -40,7 +40,8 @@ export default class Rule extends React.Component<any, any>{
       activeRule: {},
       initialFilters: {
         page: 1, limit: 10, protocolType: props.records["protocolType"], value: ""
-      }
+      },
+      data: []
     }
   }
   onEditClick = (records) => {
@@ -103,6 +104,7 @@ export default class Rule extends React.Component<any, any>{
         <TableWithRemote
           key={`${this.state.lastReqTime}-table`}
           initialFilters={this.state.initialFilters}
+          onDataChange={payload => this.setState({ data: payload.data })}
           onChange={_ => this.setState({ loading: true })}
           onFinal={_ => this.setState({ loading: false })}
           loading={this.state.loading}
@@ -140,6 +142,7 @@ export default class Rule extends React.Component<any, any>{
             loading={this.state.putLoading}
             defaultValue={this.state.activeRule}
             protocolType={this.props.records["protocolType"]}
+            id={[...new Set(this.state.data.map(i => i["id"]))]}
             isCreate={false}>
           </RuleForm>
         </Modal>
