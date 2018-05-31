@@ -92,12 +92,19 @@ class WrappedForm extends React.Component<any, any> {
 
           _values[RULE_DATAINDEX] = rule
           _values[RULE_DESCRIPTION] = _values[RULE_DESCRIPTION] || ""
-          _values.protocolType = this.props.protocolType;
-          const values_ = {
-            ..._values,
-            id: this.props.id[0]
+
+          if (this.props.isCreate == false) {
+            let values_ = {
+              ..._values,
+              protocolType: this.props.protocolType,
+              id: this.props.id[0]
+            }
+            onSubmit && onSubmit(values_)
+
           }
-          onSubmit && onSubmit(values_)
+          else {
+            onSubmit && onSubmit(_values)
+          }
         });
       })
     })
@@ -106,7 +113,7 @@ class WrappedForm extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    this.setRuleItems(this.props[RULE_PROTOCOLTYPE_DATAINDEX] || this.props.protocolType[0])
+    this.setRuleItems(this.props[RULE_PROTOCOLTYPE_DATAINDEX] || this.props.protocolTypes[0])
   }
 
   componentWillReceiveProps(newProps) {
@@ -168,7 +175,7 @@ class WrappedForm extends React.Component<any, any> {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = {}, isCreate = true } = this.props;
-    const protocolType = this.props.protocolType || [];
+    const protocolTypes = this.props.protocolTypes || [];
     const threatTypes = this.props.threatTypes || [];
     const { ruleItems, checkerStatus } = this.state;
     const lblClasses = classnames({
@@ -187,14 +194,14 @@ class WrappedForm extends React.Component<any, any> {
         },
         filed: {
           name: RULE_PROTOCOLTYPE_DATAINDEX,
-          initialValue: protocolType[0] || ""
+          initialValue: protocolTypes[0] || ""
         },
         component: (
           <Select
             disabled={loading}
             onChange={this.onChange}
             style={{ width: "140px" }}>
-            {protocolType.map((i, index) => (
+            {protocolTypes.map((i, index) => (
               <Select.Option value={i}
                 key={`${index}-item`}>
                 {i}
