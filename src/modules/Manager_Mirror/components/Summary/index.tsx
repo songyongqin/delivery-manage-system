@@ -90,7 +90,7 @@ const expandedRowRender = record => {
         effectsLoading[`${OPERATION_NAMESPACE}/initUploadTask`] ||
         effectsLoading[`${OPERATION_NAMESPACE}/mergeUploadTask`] ||
         effectsLoading[`${OPERATION_NAMESPACE}/updateRemote`] ||
-        state[OPERATION_NAMESPACE].updateLoading,
+        state[OPERATION_NAMESPACE].updateLoading
     }
   }
 )

@@ -59,9 +59,19 @@ const baseModel = {
     shouldReload: false,
     activePanel: REMOTE_METHOD,
     panelVisible: true,
-    updateLoading: false
+    updateLoading: false,
+    errorstatus: 0,
+    message: ""
   },
   reducers: {
+    save: (preState, { payload }) => {
+
+      return {
+        ...preState,
+        errorstatus: payload.errorstatus,
+        message: payload.message
+      }
+    },
     changeUpdateLoadingStatus: (preState, { payload }) => {
       return {
         ...preState,
@@ -332,16 +342,76 @@ const baseModel = {
      */
     *updateRemote({ resolve, payload }, { call, put }) {
       const res = yield call(service.updateRemote, payload)
-
+      yield put({
+        type: "save",
+        payload: { errorstatus: 0, message: "" },
+      });
       // if (res.status === 1) {
       yield put({
         type: "changeReloadStatus",
+        payload: true,
+      })
+      yield put({
+        type: "changePanelVisible",
         payload: true,
       })
       resolve && resolve(res)
       // }
 
     },
+
+    /**
+     * 发起获取在线升级请求
+     */
+    *getupdateRemote({ resolve, payload, reject }, { call, put }) {
+      const res = yield call(service.getupdateRemote, payload)
+      yield put({
+        type: "changeReloadStatus",
+        payload: true,
+      })
+      if (res.status === 1) {
+        resolve && resolve(res)
+      }
+      else {
+
+        yield put({
+          type: "save",
+          payload: { errorstatus: res.status, message: res.message },
+        });
+      }
+
+    },
+    /**
+     * 发起获取在线升级进度请求
+     */
+    *updateRemoteProgress({ resolve, payload, reject }, { call, put }) {
+      const res = yield call(service.updateRemoteProgress, payload)
+      // yield put({
+      //   type: "changeReloadStatus",
+      //   payload: true,
+      // })
+      yield put({
+        type: "changePanelVisible",
+        payload: false,
+      })
+      yield put({
+        type: "changeUpdateLoadingStatus",
+        payload: true,
+      })
+
+      if (res.status === 1) {
+        resolve && resolve(res)
+      }
+      else {
+        yield put({
+          type: "save",
+          payload: { errorstatus: res.status, message: res.message },
+        });
+      }
+
+    },
+
+
     /**
      *发起节点镜像更新请求 
      */

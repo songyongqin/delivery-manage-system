@@ -4,7 +4,7 @@ import { Badge } from 'antd'
 import ContactTip from 'domainComponents/ContactTip'
 import * as React from 'react'
 
-export default ({ data, onCancel, res }) => {
+export default ({ onCancel, res }) => {
   const { status, payload = {}, message } = (res || {}) as any
   const { add = [], remove = [] } = payload;
 
