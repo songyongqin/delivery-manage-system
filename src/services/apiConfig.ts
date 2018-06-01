@@ -132,6 +132,8 @@ const HttpApiConfig = {
 
   MIRROR_UPDATE_REMOTE: "/mirror/update/online",
 
+  MIRROR_UPDATE_PROGRESS: "/mirror/update/online/progress",
+
   MIRROR_UPDATE_NODE: "/mirror/node/update",
 
   VM_OPTION: "/virtual-machine/option",

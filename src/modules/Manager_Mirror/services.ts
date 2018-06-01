@@ -18,6 +18,10 @@ import { getToken } from 'domain/user'
 
 export const updateRemote = commonRequestCreator.post(httpApi.MIRROR_UPDATE_REMOTE)
 
+export const getupdateRemote = commonRequestCreator.getWithQueryString(httpApi.MIRROR_UPDATE_REMOTE)
+
+export const updateRemoteProgress = commonRequestCreator.get(httpApi.MIRROR_UPDATE_PROGRESS)
+
 export const createUploadTask = commonRequestCreator.post(httpApi.MIRROR_UPDATE_LOCAL)
 
 export const getUploadTask = commonRequestCreator.get(httpApi.MIRROR_UPDATE_LOCAL)

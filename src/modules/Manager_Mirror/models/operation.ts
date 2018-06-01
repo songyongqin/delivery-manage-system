@@ -59,9 +59,43 @@ const baseModel = {
     shouldReload: false,
     activePanel: REMOTE_METHOD,
     panelVisible: true,
-    updateLoading: false
+    updateLoading: false,
+    errorstatus: 1,
+    message: "",
+    postState: 0,
+    serverUrl: "",
+    percent: 0,
+    progressState: 0,
+    getresData: [],
+    ProgessData: {}
   },
   reducers: {
+    save: (preState, { payload }) => {
+
+      return {
+        ...preState,
+        errorstatus: payload.errorstatus,
+        message: payload.message
+      }
+    },
+    postSave: (preState, { payload }) => {
+      return {
+        ...preState,
+        postState: payload
+      }
+    },
+    tosave: (preState, { payload }) => {
+      return {
+        ...preState,
+        ...payload
+      }
+    },
+    tosaveUrl: (preState, { payload }) => {
+      return {
+        ...preState,
+        serverUrl: payload.serverUrl
+      }
+    },
     changeUpdateLoadingStatus: (preState, { payload }) => {
       return {
         ...preState,
@@ -331,17 +365,88 @@ const baseModel = {
      *发起在线更新请求 
      */
     *updateRemote({ resolve, payload }, { call, put }) {
+      yield put({
+        type: "tosaveUrl",
+        payload: { serverUrl: payload.value },
+      })
       const res = yield call(service.updateRemote, payload)
+      yield put({
+        type: "postSave",
+        payload: 1,
+      });
+      yield put({
+        type: "save",
+        payload: { errorstatus: 1, message: "" },
+      });
+      if (res.status === 1) {
+        yield put({
+          type: "changeReloadStatus",
+          payload: true,
+        })
+        resolve && resolve(res)
+      } else {
+        yield put({
+          type: "save",
+          payload: { errorstatus: res.status, message: res.message },
+        });
+      }
 
-      // if (res.status === 1) {
+    },
+
+    /**
+     * 发起获取在线升级请求
+     */
+    *getupdateRemote({ resolve, payload, reject }, { call, put }) {
+      const res = yield call(service.getupdateRemote, payload)
       yield put({
         type: "changeReloadStatus",
         payload: true,
       })
-      resolve && resolve(res)
-      // }
+      if (res.status == 1) {
+        yield put({
+          type: "tosave",
+          payload: {
+            getresData: res
+          }
+        });
+      } else {
+
+        yield put({
+          type: "save",
+          payload: { errorstatus: res.status, message: res.message },
+        });
+      }
 
     },
+    /**
+     * 发起获取在线升级进度请求
+     */
+    *updateRemoteProgress({ resolve, payload, reject }, { call, put }) {
+      const res = yield call(service.updateRemoteProgress, payload)
+      yield put({
+        type: "changeUpdateLoadingStatus",
+        payload: true,
+      })
+
+      if (res.status === 1) {
+        yield put({
+          type: "tosave",
+          payload: {
+            ProgessData: res.payload
+          }
+        });
+        resolve && resolve(res)
+      }
+      else {
+        yield put({
+          type: "save",
+          payload: { errorstatus: res.status, message: res.message },
+        });
+      }
+
+    },
+
+
     /**
      *发起节点镜像更新请求 
      */
