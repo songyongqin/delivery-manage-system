@@ -9,6 +9,7 @@ import {
   OPERATION_NAMESPACE,
 } from '../../ConstConfig'
 import JoSpin from 'domainComponents/Spin'
+import RoUpdateResultPanel from '../roUpdateResultPanel'
 import UpdateResultPanel from '../UpdateResultPanel'
 import extraConnect from 'domainUtils/extraConnect'
 import EnhanciveTable from 'domainComponents/Table'
@@ -18,30 +19,34 @@ const mirrorImageManagerConfig = get(getAppConfig(), ["mirrorImageManager"], {})
 const UploadPanel = ({
   updateLoading,
   serverUrl,
-  datalist,
+  percent,
+  progressState,
   res,
-  uploadHandle,
   onCancel,
   getres,
   errorstatus,
-  message
+  message,
+  getresData
 }) => {
-  if (getres) {
-
-    return <UpdateResultPanel onCancel={onCancel} res={getres}></UpdateResultPanel>
-
-  }
   const errorres = {
     status: errorstatus,
     message: message
   }
-  if (errorstatus) {
-    return <UpdateResultPanel onCancel={onCancel} res={errorres}></UpdateResultPanel>
+
+  if (getresData.status) {
+    //get 成功时
+    return <RoUpdateResultPanel onCancel={onCancel} res={getresData}></RoUpdateResultPanel>
   }
+  if (errorstatus != 1) {
+    //post/get 不成功时
+    return <RoUpdateResultPanel onCancel={onCancel} res={errorres}></RoUpdateResultPanel>
+  }
+
+
   const data = {
     url: serverUrl,
-    percent: datalist.percent,
-    progressState: datalist.progressState
+    percent: percent,
+    progressState: progressState
   }
   const tableProps = {
     dataSource: [
@@ -58,34 +63,34 @@ const UploadPanel = ({
       {
         dataIndex: "percent",
         title: "更新状态",
-        render: value => {
+        render: percent => {
           return (
             <div style={{ padding: "5px" }}>
               <Progress
-                percent={value} >
+                percent={percent} >
               </Progress>
             </div>
           )
         }
       },
-      {
-        key: "operation",
-        title: "更新状态",
-        render: records => {
-          return (
-            <div>
-              <Button
-                loading={updateLoading}
-                style={{ marginRight: "15px" }}
-                onClick={uploadHandle}
-                type="primary"
-                icon="upload">
-                {updateLoading ? "升级中..." : "点击升级"}
-              </Button>
-            </div>
-          )
-        }
-      }
+      // {
+      //   key: "operation",
+      //   title: "更新状态",
+      //   render: records => {
+      //     return (
+      //       <div>
+      //         <Button
+      //           loading={updateLoading}
+      //           style={{ marginRight: "15px" }}
+      //           onClick={uploadHandle}
+      //           type="primary"
+      //           icon="upload">
+      //           {updateLoading ? "升级中..." : "点击升级"}
+      //         </Button>
+      //       </div>
+      //     )
+      //   }
+      // }
     ]
   }
 
@@ -109,47 +114,32 @@ class RemoteUpdate extends React.Component<any, any> {
     super(props);
     this.state = {
       res: null,
-      serverUrl: "",
-      datalist: {
-        url: "",
-        percent: 0,
-        progressState: 0
-      },
+      percent: 0,
+      progressState: 0,
       getres: null,
     }
   }
+
+  // componentDidMount() {
+  //   if (this.props.progressState != 0) {
+  //     this.props.prosave(0);
+  //   }
+  //   else {
+  //     this.props.prosave(1);
+  //   }
+  // }
+
   fetchtime = () => {
-    const { serverUrl } = this.state;
+
     const interval = setInterval(
       () => {
-        this.props.updateRemoteProgress()
-          .then(
-            res => {
-              this.setState({
-                datalist: {
-                  url: this.state.serverUrl,
-                  percent: res.payload.percent,
-                  progressState: res.payload.progressState
-                }
-              })
-              if (res.payload.progressState == 1) {
-                const { serverUrl } = this.state;
-                this.setState({
-                  datalist: {
-                    url: serverUrl,
-                    percent: res.payload.percent,
-                    progressState: res.payload.progressState
-                  }
-                })
-                clearInterval(interval);
-                this.props.getupdateRemote({ serverUrl })
-                  .then(
-                    getres => this.setState({ getres })
-                  )
-              }
-            }
-          );
-        if (this.props.errorstatus) {
+        this.props.updateRemoteProgress();
+        if (this.props.ProgessData.progressState == 1) {
+          const { serverUrl } = this.props;
+          this.props.getupdateRemote({ serverUrl })
+          clearInterval(interval);
+        }
+        if (this.props.errorstatus != 1) {
           clearInterval(interval);
         }
 
@@ -170,21 +160,22 @@ class RemoteUpdate extends React.Component<any, any> {
 
       this.props.onSubmit && this.props.onSubmit(values)
         .then(
-          res => this.setState({
-            res,
-            serverUrl: values.value
-          })
+          res => {
+            this.setState({
+              res,
+            })
+            if (res.status == 1) { this.fetchtime() }
+
+          }
         )
-      // .then(this.fetchtime())
     });
   };
 
   render() {
-
     const { getFieldDecorator } = this.props.form;
-    const { updateLoading, defaultValue = {}, isDark, loading = false, textConfig = {}, style = {}, keyConfig = "value", onCancel, errorstatus, message } = this.props;
+    const { serverUrl, ProgessData, getresData, updateLoading, defaultValue = {}, isDark, loading = false, textConfig = {}, style = {}, keyConfig = "value", onCancel, errorstatus, message, percent, progressState, postSave } = this.props;
     const { value = mirrorImageManagerConfig.updateUrl } = defaultValue;
-    const { res, datalist, serverUrl, getres, } = this.state;
+    const { res, getres } = this.state;
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -192,9 +183,9 @@ class RemoteUpdate extends React.Component<any, any> {
     return (
       <Form>
         {
-          res
+          this.props.postState == 1
             ?
-            <UploadPanel updateLoading={updateLoading} serverUrl={serverUrl} datalist={datalist} res={res} uploadHandle={this.fetchtime} onCancel={onCancel} getres={getres} errorstatus={errorstatus} message={message}>
+            <UploadPanel updateLoading={updateLoading} serverUrl={serverUrl} percent={ProgessData.percent} progressState={ProgessData.progressState} res={res} onCancel={onCancel} getres={getres} errorstatus={errorstatus} message={message} getresData={getresData}>
             </UploadPanel>
             // <UpdateResultPanel
             //   onCancel={this.props.onCancel}
@@ -246,12 +237,25 @@ const mapStateToProps = state => {
     updateLoading: state[OPERATION_NAMESPACE].updateLoading,
     errorstatus: state[OPERATION_NAMESPACE].errorstatus,
     message: state[OPERATION_NAMESPACE].message,
+    postState: state[OPERATION_NAMESPACE].postState,
+    percent: state[OPERATION_NAMESPACE].percent,
+    serverUrl: state[OPERATION_NAMESPACE].serverUrl,
+    progressState: state[OPERATION_NAMESPACE].progressState,
+    getresData: state[OPERATION_NAMESPACE].getresData,
+    ProgessData: state[OPERATION_NAMESPACE].ProgessData
   }
 }
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    postSave: payload => {
+      // ownProps.hideOptionPanel()
+      return dispatch({
+        type: `${OPERATION_NAMESPACE}/postSave`,
+        payload
+      })
+    },
     onSubmit: payload => {
       ownProps.hideOptionPanel()
       return dispatch({

@@ -96,7 +96,6 @@ const expandedRowRender = record => {
 )
 @WithModal()
 export default class Summary extends React.Component<any, any>{
-
   render() {
 
     return (

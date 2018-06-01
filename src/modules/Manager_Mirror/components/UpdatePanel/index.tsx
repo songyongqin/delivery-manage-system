@@ -28,6 +28,13 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
+    postSave: payload => {
+      // ownProps.hideOptionPanel()
+      return dispatch({
+        type: `${OPERATION_NAMESPACE}/postSave`,
+        payload
+      })
+    },
     initLocalUploadInfo: payload => dispatch({
       type: `${OPERATION_NAMESPACE}/initLocalUploadInfo`,
       payload
@@ -110,8 +117,8 @@ class UpdatePanel extends React.Component<any, any> {
             onCancel={_ => {
               this.props.onCancel()
               this.props.changePanelVisible(true)
-              this.props.initLocalUploadInfo()
-
+              this.props.initLocalUploadInfo(),
+              this.props.postSave(0)
             }}
             hideOptionPanel={this.hideOptionPanel}>
           </RemoteUpdatePanel>
