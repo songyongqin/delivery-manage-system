@@ -129,7 +129,7 @@ export default class extends React.Component<any, any>{
         labelTextConfig: finalLabelTextConfig,
         loading: this.props.loading,
         disabled: virtual === 1 || adapterType == 1,
-        btnDisabledTip: "该网卡是被br0桥接网卡，所有信息均为只读",
+        btnDisabledTip: "此网卡为管理口网卡，不可修改。",
         onSubmit: payload => {
           const finalPayload: any = {
             adapterName,
