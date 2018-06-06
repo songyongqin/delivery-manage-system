@@ -386,8 +386,12 @@ const baseModel = {
         resolve && resolve(res)
       } else {
         yield put({
-          type: "save",
-          payload: { errorstatus: res.status, message: res.message },
+          type: "changePanelVisible",
+          payload: true,
+        });
+        yield put({
+          type: "postSave",
+          payload: 0,
         });
       }
 

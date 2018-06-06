@@ -26,19 +26,18 @@ const UploadPanel = ({
   getres,
   errorstatus,
   message,
-  getresData
+  getresData,
 }) => {
   const errorres = {
     status: errorstatus,
     message: message
   }
-
   if (getresData.status) {
     //get 成功时
     return <RoUpdateResultPanel onCancel={onCancel} res={getresData}></RoUpdateResultPanel>
   }
   if (errorstatus != 1) {
-    //post/get 不成功时
+    //get 不成功时
     return <RoUpdateResultPanel onCancel={onCancel} res={errorres}></RoUpdateResultPanel>
   }
 
@@ -242,7 +241,7 @@ const mapStateToProps = state => {
     serverUrl: state[OPERATION_NAMESPACE].serverUrl,
     progressState: state[OPERATION_NAMESPACE].progressState,
     getresData: state[OPERATION_NAMESPACE].getresData,
-    ProgessData: state[OPERATION_NAMESPACE].ProgessData
+    ProgessData: state[OPERATION_NAMESPACE].ProgessData,
   }
 }
 
