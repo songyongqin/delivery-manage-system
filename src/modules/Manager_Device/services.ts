@@ -112,6 +112,8 @@ export const fetchVersionInfoByRemote = commonRequestCreator.post(httpApi.DEVICE
 
 export const updateByRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE)
 
+export const updateRemoteProgress = commonRequestCreator.get(httpApi.MIRROR_UPDATE_PROGRESS)
+
 
 /**
  *Honeypot Node

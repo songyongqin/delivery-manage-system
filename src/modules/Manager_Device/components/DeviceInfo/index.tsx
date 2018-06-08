@@ -15,6 +15,7 @@ import { If, When, Choose, Otherwise } from 'components/ControlStatements'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import { isLicenceOverdue } from 'domain/licence'
 import { debounce } from 'utils'
+import { MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE } from 'constants/model'
 
 /*
 * 该组件参数如下
@@ -39,7 +40,9 @@ interface Props {
 }
 
 const mapStateToProps = state => {
+  const { progressState } = state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE]
   return {
+    progressState,
     effectsLoading: state.loading.effects,
     overdueTipVisible: state.layout.overdueTipVisible
   }
@@ -195,7 +198,15 @@ export default class DeviceInfo extends React.Component<any, any>{
     if (key === "licence") {
       return !effectsLoading[`${remoteNamespace}/postLicence`]
     }
-    return true
+    if (key === "update") {
+
+      if (this.props.progressState == 0) {
+        return false
+      }
+      else {
+        return true
+      }
+    }
   }
   /*通过本地文件的方式获取可更新的信息*/
   fetchUpdateInfoByLocal = payload => {
@@ -270,6 +281,13 @@ export default class DeviceInfo extends React.Component<any, any>{
       }
 
     }
+  }
+
+  updateRemoteProgress = payload => {
+    return this.props.dispatch({
+      type: `${this.props.remoteNamespace}/updateRemoteProgress`,
+      payload
+    })
   }
   render() {
     const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading, masterIP, shouldHideCols } = this.props
@@ -399,7 +417,7 @@ export default class DeviceInfo extends React.Component<any, any>{
         {/* 更新的Modal*/}
         <Modal
           width={1200}
-          destroyOnClose={true}
+          destroyOnClose={this.props.progressState == 0 ? false : true}
           maskClosable={false}
           closable={this.getClosableValueByKey("update")}
           footer={null}
@@ -412,6 +430,7 @@ export default class DeviceInfo extends React.Component<any, any>{
               handle={{
                 getUpdateInfoLocal: this.fetchUpdateInfoByLocal,
                 getUpdateInfoRemote: this.fetchUpdateInfoByRemote,
+                updateRemoteProgress: this.updateRemoteProgress,
                 updateLocal: this.updateByLocal,
                 updateRemote: this.updateByRemote,
               }}

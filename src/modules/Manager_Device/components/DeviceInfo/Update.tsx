@@ -15,8 +15,10 @@ import {
   Slider,
   Radio,
   Switch,
+  Progress,
   message as Message
 } from 'antd'
+import { connect } from 'dva'
 import classnames from 'classnames'
 import {
   CODE_DATAINDEX,
@@ -33,6 +35,7 @@ import {
   CONNECT,
   LIBRARY_VERSION_DATAINDEX
 } from '../../constants'
+import { MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE } from 'constants/model'
 import Table from 'domainComponents/Table'
 const FormItem = Form.Item
 const Dragger = Upload.Dragger
@@ -129,7 +132,8 @@ class UpdateForm extends React.Component<any, any> {
     updateResult: [],
     hideNotValidItem: false,
     serverUrl: deviceManagerConfig.serverUrl,
-    shouldReload: false
+    shouldReload: false,
+    progressVisible: false
   }
   static defaultProps = {
     defaultValue: { data: [] }
@@ -154,9 +158,50 @@ class UpdateForm extends React.Component<any, any> {
   switchFilePanel = value => this.setState({
     fileVisible: value
   })
+  fetchtime = (e) => {
+    e.preventDefault();
+    const { updateRemoteProgress } = this.props.handle;
+    this.setState({
+      progressVisible: true
+    })
+    const interval = setInterval(
+      () => {
+        updateRemoteProgress()
+        if (this.props.progressState == 1) {
+          this.modifyHandleUpdate();
+          clearInterval(interval);
+        }
+        // if (this.props.errorstatus != 1) {
+        //   clearInterval(interval);
+        // }
+
+      }
+      , 1000)
+  }
 
   handleUpdate = (e) => {
     e.preventDefault();
+    const { onSubmit, form, handle, defaultValue, } = this.props;
+    const { method, file } = this.state;
+    const { updateLocal, updateRemote } = handle;
+
+    let { serverUrl } = this.state;
+
+    const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
+
+    const res = method === REMOTE_METHOD
+      ?
+      updateRemote({ idList, serverUrl })
+      :
+      updateLocal({ idList, file })
+
+    res.then(result => this.setState({
+      updateResult: result,
+      shouldReload: result.some(i => i.status === 1)
+    }))
+
+  }
+  modifyHandleUpdate = () => {
     const { onSubmit, form, handle, defaultValue, } = this.props;
     const { method, file } = this.state;
     const { updateLocal, updateRemote } = handle;
@@ -237,7 +282,7 @@ class UpdateForm extends React.Component<any, any> {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { isDark, loading, defaultValue = { data: [] }, style } = this.props;
+    const { isDark, loading, defaultValue = { data: [] }, style, percent } = this.props;
     const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem } = this.state
     const lblClasses = classnames({
       "lbl-dark": isDark
@@ -401,8 +446,27 @@ class UpdateForm extends React.Component<any, any> {
             }))}></CommonListRenderer>
 
         }
-      }
+      },
+      this.state.progressVisible
+        ?
+        {
+          dataIndex: "progress",
+          title: <p style={{ textAlign: "center" }}>升级进度</p>,
+          render: () => {
+            return <Progress type="circle" percent={percent} width={60} />
+          }
+        }
+        :
+        {
+          dataIndex: "progress",
+          title: "",
+          render: () => {
+            return null
+          }
+        }
+
     ]
+
 
     const resultColumns = [
       {
@@ -541,11 +605,13 @@ class UpdateForm extends React.Component<any, any> {
                 </p>
             }
             <Button
+              loading={this.state.progressVisible}
               disabled={!haveValidResult}
               type="primary"
-              onClick={this.handleUpdate}>
-              确定
+              onClick={this.fetchtime}>
+              {this.state.progressVisible ? "升级中..." : "确定"}
             </Button>
+
           </div>
         }
         {
@@ -632,7 +698,12 @@ class UpdateForm extends React.Component<any, any> {
     )
   }
 }
-
+const mapStateToProps = state => {
+  const { percent, progressState } = state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE]
+  return {
+    percent, progressState
+  }
+}
 const WrappedForm: any = Form.create()(UpdateForm)
 
-export default WrappedForm
+export default connect(mapStateToProps)(WrappedForm)
