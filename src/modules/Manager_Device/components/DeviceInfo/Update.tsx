@@ -166,11 +166,21 @@ class UpdateForm extends React.Component<any, any> {
     })
     const interval = setInterval(
       () => {
-        updateRemoteProgress()
-        if (this.props.progressState == 1) {
-          this.modifyHandleUpdate();
+        updateRemoteProgress().then(
+          _ => {
+            if (this.props.progressState == 1) {
+              this.modifyHandleUpdate();
+              clearInterval(interval);
+            }
+          }
+        ).catch(error => {
           clearInterval(interval);
-        }
+          this.setState({
+            progressVisible: false,
+            result: [],
+            updateResult: [],
+          })
+        })
         // if (this.props.errorstatus != 1) {
         //   clearInterval(interval);
         // }
@@ -220,6 +230,15 @@ class UpdateForm extends React.Component<any, any> {
       updateResult: result,
       shouldReload: result.some(i => i.status === 1)
     }))
+      .catch(error => {
+        this.setState({
+          progressVisible: false,
+          result: [],
+          updateResult: [],
+        })
+      }
+
+      )
 
   }
   handleGetVersion = (e) => {
@@ -283,7 +302,7 @@ class UpdateForm extends React.Component<any, any> {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = { data: [] }, style, percent } = this.props;
-    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem } = this.state
+    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem } = this.state;
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -291,7 +310,6 @@ class UpdateForm extends React.Component<any, any> {
     const { data = [] } = defaultValue;
     const haveResult = result.length !== 0,
       haveUpdateResult = updateResult.length !== 0;
-
     const versionColumns = [
       {
         dataIndex: APPLIACTION_VERSION_DATAINDEX,
@@ -609,7 +627,7 @@ class UpdateForm extends React.Component<any, any> {
               disabled={!haveValidResult}
               type="primary"
               onClick={this.fetchtime}>
-              {this.state.progressVisible ? "升级中..." : "确定"}
+              {this.state.progressVisible ? "升级中..." : "确定更新"}
             </Button>
 
           </div>
