@@ -42,6 +42,7 @@ const Dragger = Upload.Dragger
 import Tag from 'components/Tag'
 import Card from 'domainComponents/Card'
 import { getAppConfig } from 'domain/app'
+import { createMapDispatchWithPromise } from 'domainUtils/dvaExtraDispatch'
 import { get } from 'utils'
 const LICENCE_SUCCESS = 1
 const styles = require('./styles.less')
@@ -162,32 +163,37 @@ class UpdateForm extends React.Component<any, any> {
     e.preventDefault();
     const { updateRemoteProgress } = this.props.handle;
     const { serverUrl } = this.state;
-    this.setState({
-      progressVisible: true
-    })
-    const interval = setInterval(
-      () => {
-        updateRemoteProgress({ serverUrl }).then(
-          _ => {
-            if (this.props.progressState == 1) {
-              this.modifyHandleUpdate();
-              clearInterval(interval);
-            }
-          }
-        ).catch(error => {
-          clearInterval(interval);
-          this.setState({
-            progressVisible: false,
-            result: [],
-            updateResult: [],
-          })
-        })
-        // if (this.props.errorstatus != 1) {
-        //   clearInterval(interval);
-        // }
 
-      }
-      , 1000)
+    const { getupdateByRemote } = this.props;
+
+    getupdateByRemote({ serverUrl }).then(res => {
+      this.setState({
+        progressVisible: true
+      })
+      const interval = setInterval(
+        () => {
+          updateRemoteProgress().then(
+            _ => {
+              if (this.props.progressState == 1) {
+                this.modifyHandleUpdate();
+                clearInterval(interval);
+              }
+            }
+          ).catch(error => {
+            clearInterval(interval);
+            this.setState({
+              progressVisible: false,
+              result: [],
+              updateResult: [],
+            })
+          })
+          // if (this.props.errorstatus != 1) {
+          //   clearInterval(interval);
+          // }
+
+        }
+        , 1000)
+    })
   }
 
   handleUpdate = (e) => {
@@ -723,6 +729,14 @@ const mapStateToProps = state => {
     percent, progressState
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    getupdateByRemote: payload => dispatch({
+      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/getupdateByRemote`,
+      payload
+    })
+  }
+}
 const WrappedForm: any = Form.create()(UpdateForm)
 
-export default connect(mapStateToProps)(WrappedForm)
+export default connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))(WrappedForm)

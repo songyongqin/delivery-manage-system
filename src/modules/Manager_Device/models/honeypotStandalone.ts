@@ -8,6 +8,7 @@ import {
   updateByLocal,
   fetchVersionInfoByLocal,
   updateByRemote,
+  getupdateByRemote,
   fetchVersionInfoByRemote,
   updateRemoteProgress
 } from '../services'
@@ -32,6 +33,7 @@ export default {
     updateByLocal: commonEffectCreator(updateByLocal),
     fetchVersionInfoByRemote: commonEffectCreator(fetchVersionInfoByRemote),
     updateByRemote: commonEffectCreator(updateByRemote),
+    getupdateByRemote: commonEffectCreator(getupdateByRemote),
     updateRemoteProgress: function* ({ resolve, reject, payload }, { call, put }) {
       const res = yield call(updateRemoteProgress, payload)
 
