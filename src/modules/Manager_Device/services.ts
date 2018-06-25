@@ -112,7 +112,7 @@ export const fetchVersionInfoByRemote = commonRequestCreator.post(httpApi.DEVICE
 
 export const updateByRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE)
 
-export const updateRemoteProgress = commonRequestCreator.get(httpApi.DEVICE_UPDATE_PROGRESS)
+export const updateRemoteProgress = commonRequestCreator.getWithQueryString(httpApi.DEVICE_UPDATE_PROGRESS)
 
 
 /**

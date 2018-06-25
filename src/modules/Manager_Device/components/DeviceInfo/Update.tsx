@@ -161,12 +161,13 @@ class UpdateForm extends React.Component<any, any> {
   fetchtime = (e) => {
     e.preventDefault();
     const { updateRemoteProgress } = this.props.handle;
+    const { serverUrl } = this.state;
     this.setState({
       progressVisible: true
     })
     const interval = setInterval(
       () => {
-        updateRemoteProgress().then(
+        updateRemoteProgress({ serverUrl }).then(
           _ => {
             if (this.props.progressState == 1) {
               this.modifyHandleUpdate();
