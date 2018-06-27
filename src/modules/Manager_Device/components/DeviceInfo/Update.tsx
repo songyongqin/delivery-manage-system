@@ -162,32 +162,38 @@ class UpdateForm extends React.Component<any, any> {
   fetchtime = (e) => {
     e.preventDefault();
     const { updateRemoteProgress } = this.props.handle;
-    this.setState({
-      progressVisible: true
-    })
-    const interval = setInterval(
-      () => {
-        updateRemoteProgress().then(
-          _ => {
-            if (this.props.progressState == 1) {
-              this.modifyHandleUpdate();
-              clearInterval(interval);
-            }
-          }
-        ).catch(error => {
-          clearInterval(interval);
-          this.setState({
-            progressVisible: false,
-            result: [],
-            updateResult: [],
-          })
-        })
-        // if (this.props.errorstatus != 1) {
-        //   clearInterval(interval);
-        // }
+    const { serverUrl } = this.state;
 
-      }
-      , 1000)
+    const { getupdateByRemote } = this.props;
+
+    getupdateByRemote({ serverUrl }).then(res => {
+      this.setState({
+        progressVisible: true
+      })
+      const interval = setInterval(
+        () => {
+          updateRemoteProgress().then(
+            _ => {
+              if (this.props.progressState == 1) {
+                this.modifyHandleUpdate();
+                clearInterval(interval);
+              }
+            }
+          ).catch(error => {
+            clearInterval(interval);
+            this.setState({
+              progressVisible: false,
+              result: [],
+              updateResult: [],
+            })
+          })
+          // if (this.props.errorstatus != 1) {
+          //   clearInterval(interval);
+          // }
+
+        }
+        , 1000)
+    })
   }
 
   handleUpdate = (e) => {
@@ -747,6 +753,14 @@ const mapStateToProps = state => {
   return {
     percent, progressState,
     localUploadInfo: state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE].localUploadInfo,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    getupdateByRemote: payload => dispatch({
+      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/getupdateByRemote`,
+      payload
+    })
   }
 }
 const WrappedForm: any = Form.create()(UpdateForm)

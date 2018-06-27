@@ -121,6 +121,7 @@ export const updateByLocal = payload => {
 export const fetchVersionInfoByRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_INFO_ONLINE)
 
 export const updateByRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE)
+export const getupdateByRemote = commonRequestCreator.getWithQueryString(httpApi.DEVICE_UPDATE_ONLINE)
 
 //后续
 export const updateRemoteProgress = commonRequestCreator.get(httpApi.MIRROR_UPDATE_PROGRESS)
