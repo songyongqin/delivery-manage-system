@@ -745,7 +745,11 @@ const mapDispatchToProps = dispatch => {
         type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/putFileChunk`,
         payload
       })
-    }
+    },
+    getupdateByRemote: payload => dispatch({
+      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/getupdateByRemote`,
+      payload
+    })
   }
 }
 const mapStateToProps = state => {
@@ -753,14 +757,6 @@ const mapStateToProps = state => {
   return {
     percent, progressState,
     localUploadInfo: state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE].localUploadInfo,
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    getupdateByRemote: payload => dispatch({
-      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/getupdateByRemote`,
-      payload
-    })
   }
 }
 const WrappedForm: any = Form.create()(UpdateForm)
