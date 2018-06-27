@@ -1,9 +1,18 @@
 import commonRequestCreator from 'domainUtils/commonRequestCreator'
 import ApiConfig from 'services/apiConfig'
 import isSuccess from 'domainUtils/isSuccess'
+import { getTemp } from 'utils'
+import { uploadFile } from 'utils/fileSplitUpload'
+import { getToken } from 'domain/user'
+import { isSecret, decrypt } from 'domain/secret'
 const httpApi = ApiConfig.http
 import { fetchDiskResPipeCreator, getUpdateOptionsByPayload, fetchDeviceInfoResPipe } from './domainUtils'
-import { CONNECT_STATUS_DATAINDEX, CONNECT } from './constants'
+import {
+  CONNECT_STATUS_DATAINDEX, CONNECT,
+  MD5_DATA_INDEX,
+  CHUNK_DATA_INDEX,
+  CURRENT_CHUNK_DATA_INDEX
+} from './constants'
 import isDev from 'utils/isDev'
 import request from 'domainUtils/request'
 /**
@@ -105,6 +114,7 @@ export const fetchVersionInfoByLocal = payload => {
 }
 
 export const updateByLocal = payload => {
+  console.info("intxxxxxxxxxxxxx")
   return request(httpApi.DEVICE_UPDATE_LOCAL, getUpdateOptionsByPayload(payload))
 }
 
@@ -112,7 +122,46 @@ export const fetchVersionInfoByRemote = commonRequestCreator.post(httpApi.DEVICE
 
 export const updateByRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ONLINE)
 
-export const updateRemoteProgress = commonRequestCreator.getWithQueryString(httpApi.DEVICE_UPDATE_PROGRESS)
+//后续
+export const updateRemoteProgress = commonRequestCreator.get(httpApi.MIRROR_UPDATE_PROGRESS)
+
+export const getUploadTask = commonRequestCreator.get(httpApi.DEVICE_UPDATE_LOCAL)
+
+export const createUploadTask = commonRequestCreator.post(httpApi.DEVICE_UPDATE_LOCAL)
+
+export const mergeUploadTask = commonRequestCreator.post(httpApi.DEVICE_UPDATE_LOCAL_MERGE)
+
+export const putFileChunk = payload => {
+  const fd = new FormData();
+  const md5 = payload[MD5_DATA_INDEX],
+    currentChunk = payload[CURRENT_CHUNK_DATA_INDEX],
+    chunk = payload[CHUNK_DATA_INDEX]
+
+  fd.append("chunk", chunk)
+  fd.append("currentChunk", currentChunk)
+  fd.append("md5", md5)
+
+
+  return uploadFile({
+    url: httpApi.DEVICE_UPDATE_LOCAL,
+    headers: {
+      "access-token": getToken()
+    },
+    body: fd,
+  }).then(res => {
+
+    try {
+      if (!isSecret()) {
+        return res
+      }
+
+      return JSON.parse(decrypt(res))
+    } catch (e) {
+      return { status: -1, message: e.message }
+    }
+  })
+
+}
 
 
 /**

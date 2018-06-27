@@ -42,6 +42,7 @@ const Dragger = Upload.Dragger
 import Tag from 'components/Tag'
 import Card from 'domainComponents/Card'
 import { getAppConfig } from 'domain/app'
+import { createMapDispatchWithPromise } from 'domainUtils/dvaExtraDispatch'
 import { get } from 'utils'
 const LICENCE_SUCCESS = 1
 const styles = require('./styles.less')
@@ -50,7 +51,7 @@ const CommonCell = ({ value }) => (
   <div style={{ textAlign: "center" }}>{value}</div>
 )
 const LicenceBackPlaceholder = ({ isDark = false, shouldReload = false, onCancel }) => (
-  <div >
+  <div>
     <h4 style={{
       color: "#108ee9",
       textAlign: "center",
@@ -161,13 +162,12 @@ class UpdateForm extends React.Component<any, any> {
   fetchtime = (e) => {
     e.preventDefault();
     const { updateRemoteProgress } = this.props.handle;
-    const { serverUrl } = this.state;
     this.setState({
       progressVisible: true
     })
     const interval = setInterval(
       () => {
-        updateRemoteProgress({ serverUrl }).then(
+        updateRemoteProgress().then(
           _ => {
             if (this.props.progressState == 1) {
               this.modifyHandleUpdate();
@@ -192,10 +192,12 @@ class UpdateForm extends React.Component<any, any> {
 
   handleUpdate = (e) => {
     e.preventDefault();
-    const { onSubmit, form, handle, defaultValue, } = this.props;
+    const { onSubmit, form, handle, defaultValue, putFileChunk, mergeUpdateByLocal } = this.props;
     const { method, file } = this.state;
     const { updateLocal, updateRemote } = handle;
-
+    this.setState({
+      progressVisible: true
+    })
     let { serverUrl } = this.state;
 
     const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
@@ -204,12 +206,13 @@ class UpdateForm extends React.Component<any, any> {
       ?
       updateRemote({ idList, serverUrl })
       :
-      updateLocal({ idList, file })
+      putFileChunk({ idList, serverUrl })
 
     res.then(result => this.setState({
       updateResult: result,
       shouldReload: result.some(i => i.status === 1)
-    }))
+    })
+    )
 
   }
   modifyHandleUpdate = () => {
@@ -302,8 +305,10 @@ class UpdateForm extends React.Component<any, any> {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { isDark, loading, defaultValue = { data: [] }, style, percent } = this.props;
-    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem } = this.state;
+    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo } = this.props;
+
+    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method } = this.state;
+
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -311,6 +316,8 @@ class UpdateForm extends React.Component<any, any> {
     const { data = [] } = defaultValue;
     const haveResult = result.length !== 0,
       haveUpdateResult = updateResult.length !== 0;
+    const value = localUploadInfo.progress;
+    const localpercent = Math.ceil(value * 100)
     const versionColumns = [
       {
         dataIndex: APPLIACTION_VERSION_DATAINDEX,
@@ -472,7 +479,7 @@ class UpdateForm extends React.Component<any, any> {
           dataIndex: "progress",
           title: <p style={{ textAlign: "center" }}>升级进度</p>,
           render: () => {
-            return <Progress type="circle" percent={percent} width={60} />
+            return <Progress type="circle" percent={method == REMOTE_METHOD ? percent : localpercent} width={60} />
           }
         }
         :
@@ -562,11 +569,14 @@ class UpdateForm extends React.Component<any, any> {
 
     const haveValidResult = this.haveValidResult()
 
+    const fileOnChange = file => this.props.initUploadTask({ file })
+
     const fileProps = {
       name: "file",
       multiple: false,
       showUploadList: false,
       beforeUpload: (file, fileList) => {
+        fileOnChange(file)
         this.setState({
           file,
         })
@@ -627,7 +637,7 @@ class UpdateForm extends React.Component<any, any> {
               loading={this.state.progressVisible}
               disabled={!haveValidResult}
               type="primary"
-              onClick={this.fetchtime}>
+              onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.fetchtime}>
               {this.state.progressVisible ? "升级中..." : "确定更新"}
             </Button>
 
@@ -717,12 +727,28 @@ class UpdateForm extends React.Component<any, any> {
     )
   }
 }
-const mapStateToProps = state => {
-  const { percent, progressState } = state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE]
+const mapDispatchToProps = dispatch => {
   return {
-    percent, progressState
+    initUploadTask: payload => dispatch({
+      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/initUploadTask`,
+      payload
+    }),
+    putFileChunk: payload => {
+      // ownProps.hideOptionPanel()
+      return dispatch({
+        type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/putFileChunk`,
+        payload
+      })
+    }
+  }
+}
+const mapStateToProps = state => {
+  const { percent, progressState, } = state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE]
+  return {
+    percent, progressState,
+    localUploadInfo: state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE].localUploadInfo,
   }
 }
 const WrappedForm: any = Form.create()(UpdateForm)
 
-export default connect(mapStateToProps)(WrappedForm)
+export default connect(mapStateToProps, createMapDispatchWithPromise(mapDispatchToProps))(WrappedForm)

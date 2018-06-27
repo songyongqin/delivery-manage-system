@@ -108,3 +108,16 @@ export const VERSION_DATAINDEX = "version",
 export const CODE_DATAINDEX = "code"
 
 export const ALLOW_AHEAD_LICENCE_DAY = 15
+
+export const INIT_STATUS = "INIT",
+  COMMON_STATUS = "common",
+  UPLOAD_STATUS = "upload",
+  MERGE_STATUS = "merge"
+
+export const CHUNK_DATA_INDEX = "chunk",
+  CURRENT_CHUNK_DATA_INDEX = "currentChunk",
+  FILE_NAME_DATA_INDEX = "fileName",
+  FILE_SIZE_DATA_INDEX = "fileSize",
+  CHUNK_COUNT_DATA_INDEX = "chunkCount",
+  CHUNK_SIZE_DATA_INDEX = "chunkSize",
+  MD5_DATA_INDEX = "md5"
