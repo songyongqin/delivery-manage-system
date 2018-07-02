@@ -97,6 +97,7 @@ export default {
       /**
        *请求返回结果异常 直接退出初始化任务函数 
        */
+
       if (res.status !== 1) {
         return yield put({
           type: "saveLocalUploadInfo",
@@ -253,8 +254,11 @@ export default {
             status: MERGE_STATUS
           }
         })
-
-        const res_ = yield call(mergeUploadTask, payload)
+        const payload_ = {
+          ...payload,
+          md5
+        }
+        const res_ = yield call(mergeUploadTask, payload_)
         if (res_.status === 1) {
           /**
            * 获取合并结果信息 保存到state中 

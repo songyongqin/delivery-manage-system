@@ -213,7 +213,7 @@ class UpdateForm extends React.Component<any, any> {
       ?
       updateRemote({ idList, serverUrl })
       :
-      putFileChunk({ idList, serverUrl })
+      putFileChunk({ idList })
 
     res.then(result => this.setState({
       updateResult: result,
@@ -272,7 +272,6 @@ class UpdateForm extends React.Component<any, any> {
 
     if (method === REMOTE_METHOD) {
       getUpdateInfoRemote({ idList, serverUrl }).then(result => {
-        console.info(result)
         this.setState({
           result
         })
@@ -333,14 +332,16 @@ class UpdateForm extends React.Component<any, any> {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo } = this.props;
+    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, putFileChunk } = this.props;
 
     const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method } = this.state;
 
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
+    let { serverUrl } = this.state;
 
+    const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
     const { data = [] } = defaultValue;
     const haveResult = result.length !== 0,
       haveUpdateResult = updateResult.length !== 0;
@@ -351,9 +352,12 @@ class UpdateForm extends React.Component<any, any> {
         ?
         {
           dataIndex: "progress",
-          title: <p style={{ textAlign: "center" }}>升级进度</p>,
+          title: <p style={{ textAlign: "center" }}>上传进度</p>,
           render: () => {
-            return <Progress type={method == REMOTE_METHOD ? "circle" : "line"} percent={method == REMOTE_METHOD ? percent : localpercent} width={60} />
+            return <div>
+              <div style={{ float: "left" }}><Progress type="line" percent={localpercent} width={60} /></div>
+              <Button type="primary" loading={localpercent !== 100} onClick={() => this.handleUpdate}>继续上传</Button>
+            </div>
           }
         }
         :
