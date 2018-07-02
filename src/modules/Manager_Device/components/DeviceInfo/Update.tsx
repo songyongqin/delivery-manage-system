@@ -134,7 +134,8 @@ class UpdateForm extends React.Component<any, any> {
     hideNotValidItem: false,
     serverUrl: deviceManagerConfig.serverUrl,
     shouldReload: false,
-    progressVisible: false
+    progressVisible: false,
+    localProgress: false
   }
   static defaultProps = {
     defaultValue: { data: [] }
@@ -269,16 +270,37 @@ class UpdateForm extends React.Component<any, any> {
 
     const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
 
-
-    const res = method === REMOTE_METHOD
-      ?
-      getUpdateInfoRemote({ idList, serverUrl })
-      :
-      getUpdateInfoLocal({ idList, file })
-
-    res.then(result => this.setState({
-      result
-    }))
+    if (method === REMOTE_METHOD) {
+      getUpdateInfoRemote({ idList, serverUrl }).then(result => {
+        console.info(result)
+        this.setState({
+          result
+        })
+      }
+      )
+    }
+    else {
+      this.setState({
+        progressVisible: true,
+        localProgress: true
+      })
+      this.props.putFileChunk({ idList, serverUrl }).then(result => this.setState({
+        updateResult: result,
+        shouldReload: result.some(i => i.status === 1)
+      })
+      )
+    }
+    // const res = method === REMOTE_METHOD
+    //   ?
+    //   getUpdateInfoRemote({ idList, serverUrl })
+    //   :
+    //   getUpdateInfoLocal({ idList, file })
+    // res.then(result => {
+    //   console.info(result)
+    //   this.setState({
+    //     result
+    //   })
+    // })
 
   }
   clearError = () => {
@@ -324,6 +346,26 @@ class UpdateForm extends React.Component<any, any> {
       haveUpdateResult = updateResult.length !== 0;
     const value = localUploadInfo.progress;
     const localpercent = Math.ceil(value * 100)
+    const localColumns = [
+      this.state.progressVisible
+        ?
+        {
+          dataIndex: "progress",
+          title: <p style={{ textAlign: "center" }}>升级进度</p>,
+          render: () => {
+            return <Progress type={method == REMOTE_METHOD ? "circle" : "line"} percent={method == REMOTE_METHOD ? percent : localpercent} width={60} />
+          }
+        }
+        :
+        {
+          dataIndex: "progressasdf",
+          title: "",
+          render: () => {
+            return null
+          }
+        }
+
+    ]
     const versionColumns = [
       {
         dataIndex: APPLIACTION_VERSION_DATAINDEX,
@@ -558,7 +600,7 @@ class UpdateForm extends React.Component<any, any> {
           width: "140px",
           render: value => <CommonCell value={value}></CommonCell>
         },
-        ...(haveUpdateResult ? resultColumns : versionColumns)
+        ...(haveUpdateResult ? resultColumns : this.state.localProgress ? localColumns : versionColumns)
       ]
     }
 
@@ -618,6 +660,19 @@ class UpdateForm extends React.Component<any, any> {
           &&
           haveUpdateResult
           &&
+          // this.state.localProgress
+          // &&
+          <LicenceBackPlaceholder
+            isDark={isDark}
+            shouldReload={shouldReload}
+            onCancel={this.props.onCancel}>
+          </LicenceBackPlaceholder>
+        }
+        {
+          haveUpdateResult
+          &&
+          this.state.localProgress
+          &&
           <LicenceBackPlaceholder
             isDark={isDark}
             shouldReload={shouldReload}
@@ -655,6 +710,8 @@ class UpdateForm extends React.Component<any, any> {
           !haveResult
           &&
           !haveUpdateResult
+          &&
+          !this.state.localProgress
           &&
           <Row>
             <Col >
@@ -724,7 +781,7 @@ class UpdateForm extends React.Component<any, any> {
             </Col>
             <Col>
               <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <Button type="primary" onClick={this.handleGetVersion}>获取升级版本信息</Button>
+                <Button type="primary" onClick={this.handleGetVersion}>{this.state.method === "local" ? "确定上传" : "获取升级版本信息"}</Button>
               </div>
             </Col>
           </Row>

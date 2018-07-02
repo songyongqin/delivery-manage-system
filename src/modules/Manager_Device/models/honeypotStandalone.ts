@@ -97,7 +97,6 @@ export default {
       /**
        *请求返回结果异常 直接退出初始化任务函数 
        */
-
       if (res.status !== 1) {
         return yield put({
           type: "saveLocalUploadInfo",
