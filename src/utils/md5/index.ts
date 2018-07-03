@@ -31,7 +31,6 @@ export const getFileMD5 = (file: File) => new Promise((resolve, reject) => {
   function loadNext() {
     var start = currentChunk * chunkSize,
       end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
-
     fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
   }
 

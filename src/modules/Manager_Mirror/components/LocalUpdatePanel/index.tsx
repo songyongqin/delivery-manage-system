@@ -143,7 +143,7 @@ const UploadPanel = ({
             </p>
           }
           const percent = Math.ceil(value * 100)
-          console.info(value)
+
           let progressStatus = percent === 100 ? "success" : null
 
           progressStatus = status === UPLOAD_STATUS ? "active" : progressStatus

@@ -160,6 +160,7 @@ export default {
         chunkSize: CHUNK_SIZE,
         chunkCount
       })
+
       /**
        * 创建上传任务成功 保存初始化任务信息
        */

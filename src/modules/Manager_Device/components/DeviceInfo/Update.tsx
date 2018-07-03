@@ -33,7 +33,9 @@ import {
   DEVICE_ID_DATAINDEX,
   CONNECT_STATUS_DATAINDEX,
   CONNECT,
-  LIBRARY_VERSION_DATAINDEX
+  LIBRARY_VERSION_DATAINDEX,
+  UPLOAD_STATUS,
+  MERGE_STATUS
 } from '../../constants'
 import { MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE } from 'constants/model'
 import Table from 'domainComponents/Table'
@@ -332,7 +334,7 @@ class UpdateForm extends React.Component<any, any> {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, putFileChunk } = this.props;
+    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, putFileChunk, initLoading } = this.props;
 
     const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method } = this.state;
 
@@ -346,7 +348,10 @@ class UpdateForm extends React.Component<any, any> {
     const haveResult = result.length !== 0,
       haveUpdateResult = updateResult.length !== 0;
     const value = localUploadInfo.progress;
-    const localpercent = Math.ceil(value * 100)
+    const { status } = localUploadInfo;
+
+    const disabled = status === UPLOAD_STATUS || status === MERGE_STATUS || initLoading
+    const localpercent = Math.ceil(value * 100);
     const localColumns = [
       this.state.progressVisible
         ?
@@ -356,7 +361,8 @@ class UpdateForm extends React.Component<any, any> {
           render: () => {
             return <div>
               <div style={{ float: "left" }}><Progress type="line" percent={localpercent} width={60} /></div>
-              <Button type="primary" loading={localpercent !== 100} onClick={() => this.handleUpdate}>继续上传</Button>
+              <Button loading={status === UPLOAD_STATUS}
+                type="primary" onClick={() => this.handleUpdate}>继续上传</Button>
             </div>
           }
         }
@@ -785,7 +791,7 @@ class UpdateForm extends React.Component<any, any> {
             </Col>
             <Col>
               <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <Button type="primary" onClick={this.handleGetVersion}>{this.state.method === "local" ? "确定上传" : "获取升级版本信息"}</Button>
+                <Button type="primary" loading={initLoading} onClick={this.handleGetVersion}>{this.state.method === "local" ? "确定上传" : "获取升级版本信息"}</Button>
               </div>
             </Col>
           </Row>
@@ -818,6 +824,7 @@ const mapStateToProps = state => {
   return {
     percent, progressState,
     localUploadInfo: state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE].localUploadInfo,
+    initLoading: state.loading.effects[`${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/initUploadTask`]
   }
 }
 const WrappedForm: any = Form.create()(UpdateForm)
