@@ -12,8 +12,76 @@
       "conditionType": "selector",
       "filters": [
         {
-          "text": "请到/static/config/layout/fallHost.json设置选项配置",
-          "value": "0"
+          "text": "未知事件",
+          "value": "UNKNOW"
+        },
+        {
+          "text": "未知网络事件",
+          "value": "UNKNOW_NET"
+        },
+        {
+          "text": "网络连接",
+          "value": "ACCESS"
+        },
+        {
+          "text": "端口扫描",
+          "value": "PORT_SCAN"
+        },
+        {
+          "text": "漏洞利用",
+          "value": "EXPLOIT"
+        },
+        {
+          "text": "暴力攻击",
+          "value": "BURTE_FROCE"
+        },
+        {
+          "text": "远程登录",
+          "value": "REMOTE_LOGIN"
+        },
+        {
+          "text": "远程调用",
+          "value": "REMOTE_EXECUTE"
+        },
+        {
+          "text": "远程控制",
+          "value": "REMOTE_CONTROL"
+        },
+        {
+          "text": "下载&安装",
+          "value": "DOWNLOAD_INSTALL"
+        },
+        {
+          "text": "持久化攻击",
+          "value": "ATTACK_PERSISTEMCE"
+        },
+        {
+          "text": "隐藏攻击行为",
+          "value": "AVOID_DETECTION"
+        },
+        {
+          "text": "分布式拒绝服务攻击",
+          "value": "DDOS"
+        },
+        {
+          "text": "蠕虫病毒",
+          "value": "VIRUS"
+        },
+        {
+          "text": "远控",
+          "value": "RAT"
+        },
+        {
+          "text": "勒索软件",
+          "value": "RANSOMWARE"
+        },
+        {
+          "text": "后门程序",
+          "value": "BACKDOOR"
+        },
+        {
+          "text": "下载者",
+          "value": "DOWNLOADER"
         }
       ]
     }

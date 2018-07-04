@@ -19,8 +19,96 @@
       "conditionType": "selector",
       "filters": [
         {
-          "text": "请在/static/config/layout/vm.json中修改",
-          "value": "xxxx"
+          "text": "远程登录服务",
+          "value": "telnet"
+        },
+        {
+          "text": "ssh安全通信协议",
+          "value": "ssh"
+        },
+        {
+          "text": "文件&打印机共享服务",
+          "value": "smb"
+        },
+        {
+          "text": "远程桌面服务",
+          "value": "msts"
+        },
+        {
+          "text": "ModBus仿真服务",
+          "value": "modbus"
+        },
+        {
+          "text": "西门子S7Comm仿真服务",
+          "value": "s7comm"
+        },
+        {
+          "text": "SNMP协议仿真",
+          "value": "snmp"
+        },
+        {
+          "text": "BACnet协议仿真",
+          "value": "bacnet"
+        },
+        {
+          "text": "IPMI标准仿真",
+          "value": "ipmi"
+        },
+        {
+          "text": "无线摄像头(P2)WIFICAM",
+          "value": "p2_wificam"
+        },
+        {
+          "text": "RAW打印协议模拟服务",
+          "value": "printer9100"
+        },
+        {
+          "text": "JBoss Web 服务",
+          "value": "jboss"
+        },
+        {
+          "text": "Tuxedo 中间件服务",
+          "value": "tuxedo"
+        },
+        {
+          "text": "ActiveMQ 消息队列服务",
+          "value": "activemq"
+        },
+        {
+          "text": "Mysql 关系型数据库",
+          "value": "mysql"
+        },
+        {
+          "text": "ActiveMQ 消息队列服务",
+          "value": "activemq"
+        },
+        {
+          "text": "PostgreSQL 数据库",
+          "value": "postgresql"
+        },
+        {
+          "text": "IBM 数据库",
+          "value": "db2"
+        },
+        {
+          "text": "Oracle数据库",
+          "value": "oracle"
+        },
+        {
+          "text": "MQ消息队列服务",
+          "value": "ibmmq"
+        },
+        {
+          "text": "Memcached内存数据库",
+          "value": "memcached"
+        },
+        {
+          "text": "物联网SSH服务",
+          "value": "iot_ssh"
+        },
+        {
+          "text": "物联网Telnet服务",
+          "value": "iot_telnet"
         }
       ]
     },
@@ -29,8 +117,83 @@
       "conditionType": "selector",
       "filters": [
         {
-          "text": "请在/static/config/layout/vm.json中修改",
-          "value": "xxxx"
+          "text": "23",
+          "value": "23"
+        },
+        {
+          "text": "22",
+          "value": "22"
+        },
+        {
+          "text": "445",
+          "value": "445"
+        },
+        {
+          "text": "3389",
+          "value": "3389"
+        },
+        {
+          "text": "502",
+          "value": "502"
+        },
+        {
+          "text": "102",
+          "value": "102"
+        },
+        {
+          "text": "161",
+          "value": "161"
+        },{
+          "text": "47808",
+          "value": "47808"
+        },
+        {
+          "text": "623",
+          "value": "623"
+        },
+        {
+          "text": "80",
+          "value": "80"
+        },
+        {
+          "text": "9100",
+          "value": "9100"
+        },
+        {
+          "text": "8080",
+          "value": "8080"
+        },
+        {
+          "text": "8888",
+          "value": "8888"
+        },
+        {
+          "text": "61616",
+          "value": "61616"
+        },
+        {
+          "text": "3306",
+          "value": "3306"
+        },
+        {
+          "text": "5432",
+          "value": "5432"
+        },
+        {
+          "text": "50000",
+          "value": "50000"
+        },
+        {
+          "text": "1521",
+          "value": "1521"
+        },
+        {
+          "text": "1414",
+          "value": "1414"
+        },
+        {
+          "text": "11211",
+          "value": "11211"
         }
       ]
     },
