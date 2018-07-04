@@ -359,11 +359,7 @@ class UpdateForm extends React.Component<any, any> {
           dataIndex: "progress",
           title: <p style={{ textAlign: "center" }}>上传进度</p>,
           render: () => {
-            return <div>
-              <div style={{ float: "left" }}><Progress type="line" percent={localpercent} width={60} /></div>
-              <Button loading={status === UPLOAD_STATUS}
-                type="primary" onClick={() => this.handleUpdate}>继续上传</Button>
-            </div>
+            return <Progress percent={localpercent} width={60} />
           }
         }
         :
