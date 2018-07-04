@@ -39,18 +39,56 @@ import {
   SYS_LOG_LOGIN_URL,
   ROOT_URL,
   SNORT_URL,
-  FILE_RESTORE
+  FILE_RESTORE,
+
+  // ANALYSE_EVENT_URL,
+
+  ANALYSE_ATTACKED_ASSETS_URL,
+
+  ANALYSE_ATTACK_URL,
+
+  ANALYSE_THREAT_URL,
+
+  AUDIT_URL,
+
+  AUDIT_EVENT_URL,
+
+  AUDIT_ASSETS_URL,
+
+  AUDIT_PCAP_URL,
+
+  STRATEGY_URL,
+
+  CONFIG_URL,
+
+  CONFIG_USER_MANAGER_URL,
+
+  CONFIG_DEVICE_MANAGER_URL,
+
+  CONFIG_SYS_LOG_URL,
+
+  CONFIG_SYS_LOG_LOGIN_URL,
+
+  CONFIG_SYS_CONFIG_URL,
+  
+  CONFIG_SYS_CONFIG_NETWORK_URL,
+
+  CONFIG_SYS_CONFIG_MONITOR_URL,
+
+  CONFIG_SYS_CONFIG_WARN_URL
+
+
 } from 'routes/config/path'
-import {
-  shouldHoneypotNodeHide,
-  shouldIdsNodeHide,
-  shouldIdsStandAloneHide,
-  adminOnly,
-  openRouteList
-} from 'routes/config/auth'
+// import {
+//   shouldHoneypotNodeHide,
+//   shouldIdsNodeHide,
+//   shouldIdsStandAloneHide,
+//   adminOnly,
+//   openRouteList
+// } from 'routes/config/auth'
 
 import { getAppConfig } from 'domain/app'
-import router from 'router';
+// import router from 'router';
 
 export const _navConfig = [
   {
@@ -64,28 +102,20 @@ export const _navConfig = [
     icon: <Icon type="fork" />,
     items: [
       {
-        title: "事件分析",
+        title: "事件视图",
         link: ANALYSE_EVENT_URL,
       },
       {
-        link: ANALYSE_ATTACK_CHAIN_URL,
-        title: "攻击链分析",
+        link: ANALYSE_ATTACKED_ASSETS_URL,
+        title: "受攻击资产视图",
       },
       {
-        link: ANALYSE_FALL_HOST_URL,
-        title: "失陷主机分析"
+        link: ANALYSE_ATTACK_URL,
+        title: "攻击者视图",
       },
       {
-        link: ANALYSE_RANKING_URL,
-        title: "图表分析",
-      },
-      {
-        link: ANALYSE_THREAT_DIS_URL,
-        title: "威胁分布",
-      },
-      {
-        link: ANALYSE_OVERALL_URL,
-        title: "全局分析"
+        link: ANALYSE_THREAT_URL,
+        title: "威胁视图",
       }
     ]
   },
@@ -93,10 +123,30 @@ export const _navConfig = [
     link: EARLY_WARNING_URL,
     title: "威胁预警",
     icon: <Icon type="bell" />,
+    hidden: true,
     items: [
       {
         link: EARLY_WARNING_EMAIL_URL,
         title: "邮箱通知"
+      }
+    ]
+  },
+  {
+    link: AUDIT_URL,
+    title: "审计记录",
+    icon: <Icon type="setting" />,
+    items: [
+      {
+        link: AUDIT_EVENT_URL,
+        title: "基本事件审计"
+      },
+      {
+        link: AUDIT_ASSETS_URL,
+        title: "资产审计",
+      },
+      {
+        link: AUDIT_PCAP_URL,
+        title: "抓包记录"
       }
     ]
   },
@@ -106,9 +156,15 @@ export const _navConfig = [
     icon: <Icon type="file-text"></Icon>
   },
   {
+    link: STRATEGY_URL,
+    title: "策略配置",
+    icon: <Icon type="file-text"></Icon>
+  },
+  {
     link: SYS_CONFIG_URL,
     title: "系统配置",
     icon: <Icon type="setting" />,
+    hidden: true,
     items: [
       {
         link: SYS_CONFIG_NETWORK_URL,
@@ -127,12 +183,14 @@ export const _navConfig = [
   {
     link: USER_MANAGER_URL,
     title: "用户管理",
-    icon: <Icon type="team" />
+    icon: <Icon type="team" />,
+    hidden: true
   },
   {
     link: MANAGER_URL,
     icon: <Icon type="database" />,
     title: "蜜罐管理",
+    hidden: true,
     items: [
       {
         link: MANAGER_DEVICE_URL,
@@ -152,6 +210,7 @@ export const _navConfig = [
     link: SYS_LOG_URL,
     icon: <Icon type="file-text"></Icon>,
     title: "系统日志",
+    hidden: true,
     items: [
       {
         link: SYS_LOG_LOGIN_URL,
@@ -168,7 +227,53 @@ export const _navConfig = [
     link: FILE_RESTORE,
     title: "文件还原",
     hidden: true
-  }
+  },
+  {
+    link: CONFIG_URL,
+    title: "配置管理",
+    icon: <Icon type="database" />,
+    items: [
+      {
+        link: CONFIG_USER_MANAGER_URL,
+        title: "用户管理",
+        icon: <Icon type="team" />,
+      },
+      {
+        link: CONFIG_DEVICE_MANAGER_URL,
+        icon: <Icon type="database" />,
+        title: "设备管理",
+      },
+      {
+        link: CONFIG_SYS_LOG_URL,
+        icon: <Icon type="file-text"></Icon>,
+        title: "系统日志",
+        items: [
+          {
+            link: CONFIG_SYS_LOG_LOGIN_URL,
+            title: "登录日志"
+          }
+        ]
+      },{
+        link: CONFIG_SYS_CONFIG_URL,
+        title: "系统配置",
+        icon: <Icon type="setting" />,
+        items: [
+          {
+            link: CONFIG_SYS_CONFIG_NETWORK_URL,
+            title: "网卡配置"
+          },
+          {
+            link: CONFIG_SYS_CONFIG_WARN_URL,
+            title: "告警配置"
+          },
+          {
+            link: CONFIG_SYS_CONFIG_MONITOR_URL,
+            title: "自我监控",
+          }
+        ]
+      },
+    ]
+  },
 ]
 
 interface RemoveShouldHideNavOption {
@@ -284,7 +389,6 @@ export const getShouldHideNav = ({ admin = false }) => {
     ]
     //获取嵌套关系的子路由应该隐藏的项
     const extraHideNav = getNestLinkList(shouldHideNav)
-
     return [
       ...new Set([
         ...shouldHideNav,

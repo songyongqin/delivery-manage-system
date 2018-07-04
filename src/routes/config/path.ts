@@ -4,8 +4,8 @@ export const ROOT_URL = "/",
 
   OVERVIEW_URL = "/overview",
 
-  ANALYSE_URL = "/analyse",
-  ANALYSE_EVENT_URL = "/analyse/event",
+  // ANALYSE_URL = "/analyse",
+  // ANALYSE_EVENT_URL = "/analyse/event",
   ANALYSE_ATTACK_CHAIN_URL = "/analyse/attack-chain",
   ANALYSE_FALL_HOST_URL = "/analyse/fall-host",
   ANALYSE_RANKING_URL = "/analyse/ranking",
@@ -34,4 +34,48 @@ export const ROOT_URL = "/",
 
   SNORT_URL = "/snort",
 
-  FILE_RESTORE = "/file-restore"
+  FILE_RESTORE = "/file-restore",
+
+
+
+  // ids 
+
+  ANALYSE_URL = "/analyse",
+
+  ANALYSE_EVENT_URL = "/analyse/event",
+
+  ANALYSE_ATTACKED_ASSETS_URL = '/analyse/attacked-assets',
+
+  ANALYSE_ATTACK_URL = '/analyse/attack',
+
+  ANALYSE_THREAT_URL = '/analyse/threat',
+
+  AUDIT_URL = '/audit',
+
+  AUDIT_EVENT_URL = '/audit/event',
+
+  AUDIT_ASSETS_URL = '/audit/assets',
+
+  AUDIT_PCAP_URL = '/audit/pcap',
+
+  STRATEGY_URL = '/strategy',
+
+  CONFIG_URL = '/config',
+
+  CONFIG_USER_MANAGER_URL = '/config/user-manager',
+
+  CONFIG_DEVICE_MANAGER_URL = '/config/device-manager',
+
+  CONFIG_SYS_LOG_URL = '/config/sys-log',
+
+  CONFIG_SYS_LOG_LOGIN_URL = '/config/sys-log/login',
+
+  CONFIG_SYS_CONFIG_URL = '/config/sys-config',
+  
+  CONFIG_SYS_CONFIG_NETWORK_URL = '/config/sys-config/network',
+
+  CONFIG_SYS_CONFIG_MONITOR_URL = '/config/sys-config/monitor',
+
+  CONFIG_SYS_CONFIG_WARN_URL = '/config/sys-config/warn'
+
+

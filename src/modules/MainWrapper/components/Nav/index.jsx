@@ -104,7 +104,9 @@ export default class extends React.Component {
       return
     }
     this.setState({
-      openKeys: [last(openKeys)]
+      // 此方法不适用与多层导航栏嵌套
+      // openKeys: [last(openKeys)]
+      openKeys // 为了多层嵌套做的修改
     })
     setTimeout(() => {
       this.resizeNiceScroll()
@@ -173,7 +175,6 @@ export default class extends React.Component {
         target = [...target, `${target[target.length - 1]}/${item}`]
 
     }, [])
-
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu

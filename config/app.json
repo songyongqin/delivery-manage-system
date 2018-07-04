@@ -1,5 +1,5 @@
 {
-  "title": "安天捕风蜜罐系统",
+  "title": "安天捕风流量监测系统",
   "secret": true,
   "routerRegister": {
     "/overview": true,
@@ -24,7 +24,8 @@
     "/manager/mirror": true,
     "/sys-log": true,
     "/sys-log/login": true,
-    "/snort": true
+    "/snort": true,
+    "manager-config": true
   },
   "adminOnly": [
     "/sys-config",

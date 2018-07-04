@@ -1,7 +1,9 @@
 const alias = require('./alias.configs')
 const theme = require('./theme')
 
-const proxyServer = "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system"
+// const proxyServer = "http://172.31.50.41:7300/mock/5a20f1b18f430a61b2505640/attack-capture-system"
+
+const proxyServer = "  http://172.31.50.41:7300/mock/5b3ae25f3a04b867a240d558/ids"
 
 export default {
   "alias": alias,
