@@ -137,7 +137,9 @@ class UpdateForm extends React.Component<any, any> {
     serverUrl: deviceManagerConfig.serverUrl,
     shouldReload: false,
     progressVisible: false,
-    localProgress: false
+    localProgress: false,
+    localupdateResult: [],
+    localshouldReload: false,
   }
   static defaultProps = {
     defaultValue: { data: [] }
@@ -217,10 +219,18 @@ class UpdateForm extends React.Component<any, any> {
       :
       putFileChunk({ idList })
 
-    res.then(result => this.setState({
-      updateResult: result,
-      shouldReload: result.some(i => i.status === 1)
-    })
+    res.then(result => method === REMOTE_METHOD
+      ?
+      this.setState({
+        updateResult: result,
+        shouldReload: result.some(i => i.status === 1)
+      })
+      :
+      this.setState({
+        localProgress: true,
+        localupdateResult: result,
+        localshouldReload: result.some(i => i.status === 1)
+      })
     )
 
   }
@@ -272,36 +282,36 @@ class UpdateForm extends React.Component<any, any> {
 
     const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
 
-    if (method === REMOTE_METHOD) {
-      getUpdateInfoRemote({ idList, serverUrl }).then(result => {
-        this.setState({
-          result
-        })
-      }
-      )
-    }
-    else {
-      this.setState({
-        progressVisible: true,
-        localProgress: true
-      })
-      this.props.putFileChunk({ idList, serverUrl }).then(result => this.setState({
-        updateResult: result,
-        shouldReload: result.some(i => i.status === 1)
-      })
-      )
-    }
-    // const res = method === REMOTE_METHOD
-    //   ?
-    //   getUpdateInfoRemote({ idList, serverUrl })
-    //   :
-    //   getUpdateInfoLocal({ idList, file })
-    // res.then(result => {
-    //   console.info(result)
+    // if (method === REMOTE_METHOD) {
+    //   getUpdateInfoRemote({ idList, serverUrl }).then(result => {
+    //     this.setState({
+    //       result
+    //     })
+    //   }
+    //   )
+    // }
+    // else {
     //   this.setState({
-    //     result
+    //     progressVisible: true,
+    //     localProgress: true
     //   })
-    // })
+    //   this.props.putFileChunk({ idList, serverUrl }).then(result => this.setState({
+    //     updateResult: result,
+    //     shouldReload: result.some(i => i.status === 1)
+    //   })
+    //   )
+    // }
+    const res = method === REMOTE_METHOD
+      ?
+      getUpdateInfoRemote({ idList, serverUrl })
+      :
+      getUpdateInfoLocal({ idList, file })
+    res.then(result => {
+      this.setState({
+        progressVisible: false,
+        result
+      })
+    })
 
   }
   clearError = () => {
@@ -352,26 +362,26 @@ class UpdateForm extends React.Component<any, any> {
 
     const disabled = status === UPLOAD_STATUS || status === MERGE_STATUS || initLoading
     const localpercent = Math.ceil(value * 100);
-    const localColumns = [
-      this.state.progressVisible
-        ?
-        {
-          dataIndex: "progress",
-          title: <p style={{ textAlign: "center" }}>上传进度</p>,
-          render: () => {
-            return <Progress percent={localpercent} width={60} />
-          }
-        }
-        :
-        {
-          dataIndex: "progressasdf",
-          title: "",
-          render: () => {
-            return null
-          }
-        }
+    // const localColumns = [
+    //   this.state.progressVisible
+    //     ?
+    //     {
+    //       dataIndex: "progress",
+    //       title: <p style={{ textAlign: "center" }}>上传进度</p>,
+    //       render: () => {
+    //         return <Progress percent={localpercent} width={60} />
+    //       }
+    //     }
+    //     :
+    //     {
+    //       dataIndex: "progressasdf",
+    //       title: "",
+    //       render: () => {
+    //         return null
+    //       }
+    //     }
 
-    ]
+    // ]
     const versionColumns = [
       {
         dataIndex: APPLIACTION_VERSION_DATAINDEX,
@@ -531,7 +541,7 @@ class UpdateForm extends React.Component<any, any> {
         ?
         {
           dataIndex: "progress",
-          title: <p style={{ textAlign: "center" }}>升级进度</p>,
+          title: <p style={{ textAlign: "center" }}>{method == REMOTE_METHOD ? "升级进度" : "上传进度"}</p>,
           render: () => {
             return <Progress type="circle" percent={method == REMOTE_METHOD ? percent : localpercent} width={60} />
           }
@@ -606,7 +616,7 @@ class UpdateForm extends React.Component<any, any> {
           width: "140px",
           render: value => <CommonCell value={value}></CommonCell>
         },
-        ...(haveUpdateResult ? resultColumns : this.state.localProgress ? localColumns : versionColumns)
+        ...(haveUpdateResult ? resultColumns : versionColumns)
       ]
     }
 
@@ -666,15 +676,13 @@ class UpdateForm extends React.Component<any, any> {
           &&
           haveUpdateResult
           &&
-          // this.state.localProgress
-          // &&
           <LicenceBackPlaceholder
             isDark={isDark}
             shouldReload={shouldReload}
             onCancel={this.props.onCancel}>
           </LicenceBackPlaceholder>
         }
-        {
+        {/* {
           haveUpdateResult
           &&
           this.state.localProgress
@@ -684,7 +692,7 @@ class UpdateForm extends React.Component<any, any> {
             shouldReload={shouldReload}
             onCancel={this.props.onCancel}>
           </LicenceBackPlaceholder>
-        }
+        } */}
         {
           haveResult
           &&
@@ -700,15 +708,37 @@ class UpdateForm extends React.Component<any, any> {
                   已是最新版本 无需更新
                 </p>
             }
-            <Button
-              loading={this.state.progressVisible}
-              disabled={!haveValidResult}
-              type="primary"
-              onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.fetchtime}>
-              {this.state.progressVisible ? "升级中..." : "确定更新"}
-            </Button>
+            {
+              this.state.method == LOCAL_METHOD
+                ?
+                <Button
+                  type="primary"
+                  onClick={() => this.setState({
+                    updateResult: this.state.localupdateResult,
+                    shouldReload: this.state.localupdateResult.some(i => i.status === 1)
+                  })}>
+                  查看更新结果
+             </Button>
+                :
+                <Button
+                  loading={this.state.progressVisible}
+                  disabled={!haveValidResult}
+                  type="primary"
+                  onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.fetchtime}>
+                  {this.state.progressVisible ? "升级中..." : "确定更新"}
+                </Button>
+            }
 
           </div>
+        }
+        {
+          this.state.method == LOCAL_METHOD && this.state.progressVisible
+            ?
+            <div style={{ textAlign: "center", marginTop: "20px" }}>
+              <Button type="primary" loading={!this.state.localProgress} onClick={this.handleGetVersion}>获取升级版本信息</Button>
+            </div>
+            :
+            null
         }
         {
           validItems.length !== 0
@@ -717,7 +747,7 @@ class UpdateForm extends React.Component<any, any> {
           &&
           !haveUpdateResult
           &&
-          !this.state.localProgress
+          !this.state.progressVisible
           &&
           <Row>
             <Col >
@@ -787,7 +817,7 @@ class UpdateForm extends React.Component<any, any> {
             </Col>
             <Col>
               <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <Button type="primary" loading={initLoading} onClick={this.handleGetVersion}>{this.state.method === "local" ? "确定上传" : "获取升级版本信息"}</Button>
+                <Button type="primary" loading={initLoading} onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.handleGetVersion}>{this.state.method === "local" && !this.state.progressVisible ? "确定上传" : "获取升级版本信息"}</Button>
               </div>
             </Col>
           </Row>
