@@ -361,7 +361,7 @@ class UpdateForm extends React.Component<any, any> {
     const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, putFileChunk, initLoading } = this.props;
 
     const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method } = this.state;
-
+    const resultStatus = localUploadInfo.mergeResult.status == 1;
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -746,7 +746,7 @@ class UpdateForm extends React.Component<any, any> {
           this.state.method == LOCAL_METHOD && this.state.progressVisible
             ?
             <div style={{ textAlign: "center", marginTop: "20px" }}>
-              <Button type="primary" loading={!this.state.localProgress} onClick={this.handleGetVersion}>获取升级版本信息</Button>
+              <Button type="primary" loading={!resultStatus} onClick={this.handleGetVersion}>获取升级版本信息</Button>
             </div>
             :
             null
