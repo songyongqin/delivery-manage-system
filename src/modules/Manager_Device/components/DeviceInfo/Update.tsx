@@ -231,18 +231,20 @@ class UpdateForm extends React.Component<any, any> {
       :
       putFileChunk({ idList })
 
-    res.then(result => method === REMOTE_METHOD
-      ?
-      this.setState({
-        updateResult: result,
-        shouldReload: result.some(i => i.status === 1)
-      })
-      :
-      this.setState({
-        localProgress: true,
-        // localupdateResult: result,
-        // localshouldReload: result.some(i => i.status === 1)
-      })
+    res.then(result => {
+      method === REMOTE_METHOD
+        ?
+        this.setState({
+          updateResult: result,
+          shouldReload: result.some(i => i.status === 1)
+        })
+        :
+        this.setState({
+          localProgress: true,
+          // localupdateResult: result,
+          // localshouldReload: result.some(i => i.status === 1)
+        })
+    }
     )
 
   }

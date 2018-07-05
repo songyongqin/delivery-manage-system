@@ -282,7 +282,7 @@ export default {
             type: "changeUpdateLoadingStatus",
             payload: false
           })
-          resolve && resolve(res_.payload)
+          resolve && resolve(res_.status)
         }
       }
 
