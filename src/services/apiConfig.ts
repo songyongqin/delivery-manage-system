@@ -51,6 +51,7 @@ const HttpApiConfig = {
   DEVICE_UPDATE_INFO_ONLINE: "/device/update-info/online",
   DEVICE_UPDATE_INFO_LOCAL: "/device/update-info/local",
   DEVICE_UPDATE_LOCAL_MERGE: "/device/update/local/merge",
+  DEVICE_UPDATE_LOCAL_RESULT: "/device/update/local/result",
 
 
   DEVICE_UPDATE_ONLINE_IDS: "/device/update/online/ids",

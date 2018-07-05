@@ -132,6 +132,8 @@ export const createUploadTask = commonRequestCreator.post(httpApi.DEVICE_UPDATE_
 
 export const mergeUploadTask = commonRequestCreator.post(httpApi.DEVICE_UPDATE_LOCAL_MERGE)
 
+export const getUploadResult = commonRequestCreator.post(httpApi.DEVICE_UPDATE_LOCAL_RESULT)
+
 export const putFileChunk = payload => {
   const fd = new FormData();
   const md5 = payload[MD5_DATA_INDEX],

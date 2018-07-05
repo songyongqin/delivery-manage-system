@@ -200,7 +200,19 @@ class UpdateForm extends React.Component<any, any> {
         , 1000)
     })
   }
-
+  localhandleUpdate = (e) => {
+    e.preventDefault();
+    const { getUploadResult, localUploadInfo } = this.props;
+    const { md5 } = localUploadInfo;
+    const { method, file } = this.state;
+    const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
+    getUploadResult({ idList, md5 }).then(result =>
+      this.setState({
+        updateResult: result,
+        shouldReload: result.some(i => i.status === 1)
+      })
+    )
+  }
   handleUpdate = (e) => {
     e.preventDefault();
     const { onSubmit, form, handle, defaultValue, putFileChunk, mergeUpdateByLocal } = this.props;
@@ -228,8 +240,8 @@ class UpdateForm extends React.Component<any, any> {
       :
       this.setState({
         localProgress: true,
-        localupdateResult: result,
-        localshouldReload: result.some(i => i.status === 1)
+        // localupdateResult: result,
+        // localshouldReload: result.some(i => i.status === 1)
       })
     )
 
@@ -713,18 +725,15 @@ class UpdateForm extends React.Component<any, any> {
                 ?
                 <Button
                   type="primary"
-                  onClick={() => this.setState({
-                    updateResult: this.state.localupdateResult,
-                    shouldReload: this.state.localupdateResult.some(i => i.status === 1)
-                  })}>
-                  查看更新结果
+                  onClick={this.localhandleUpdate}>
+                  确定更新
              </Button>
                 :
                 <Button
                   loading={this.state.progressVisible}
                   disabled={!haveValidResult}
                   type="primary"
-                  onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.fetchtime}>
+                  onClick={this.fetchtime}>
                   {this.state.progressVisible ? "升级中..." : "确定更新"}
                 </Button>
             }
@@ -841,6 +850,10 @@ const mapDispatchToProps = dispatch => {
     },
     getupdateByRemote: payload => dispatch({
       type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/getupdateByRemote`,
+      payload
+    }),
+    getUploadResult: payload => dispatch({
+      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/getUploadResult`,
       payload
     })
   }
