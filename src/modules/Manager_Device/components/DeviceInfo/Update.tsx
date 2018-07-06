@@ -206,11 +206,10 @@ class UpdateForm extends React.Component<any, any> {
     const { md5 } = localUploadInfo;
     const { method, file } = this.state;
     const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
-    getUploadResult({ idList, md5 }).then(result =>
-      this.setState({
-        updateResult: result,
-        shouldReload: result.some(i => i.status === 1)
-      })
+    getUploadResult({ idList, md5 }).then(result => this.setState({
+      updateResult: result,
+      shouldReload: result.some(i => i.status === 1)
+    })
     )
   }
   handleUpdate = (e) => {
@@ -319,11 +318,17 @@ class UpdateForm extends React.Component<any, any> {
       ?
       getUpdateInfoRemote({ idList, serverUrl })
       :
-      getUpdateInfoLocal({ idList, file })
+      getUpdateInfoLocal({})
     res.then(result => {
       this.setState({
         progressVisible: false,
         result
+      })
+    }).catch(error => {
+      this.setState({
+        progressVisible: false,
+        result: [],
+        updateResult: [],
       })
     })
 
