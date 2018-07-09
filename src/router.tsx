@@ -24,6 +24,7 @@ import getSystemLogLoginPage from 'routes/SysLog_Login'
 import getManagerMirrorPage from 'routes/Manager_Mirror'
 import getSnortPage from 'routes/Snort'
 import getFileRestorePage from 'routes/FileRestore'
+import getAuditEventPage from 'routes/Audit_Event'
 
 import {
   OVERVIEW_URL,
@@ -85,7 +86,7 @@ import {
   CONFIG_SYS_LOG_LOGIN_URL,
 
   CONFIG_SYS_CONFIG_URL,
-  
+
   CONFIG_SYS_CONFIG_NETWORK_URL,
 
   CONFIG_SYS_CONFIG_MONITOR_URL,
@@ -180,7 +181,7 @@ export default ({ history, app }) => {
               exact
               path={EARLY_WARNING_URL}
               render={() => (<Redirect to={getDefaultRoute(EARLY_WARNING_URL)} />)} /> */}
-              {/* 告警设置 */}
+            {/* 告警设置 */}
             <Route
               exact
               component={getEarlyWarningEmailPage(app, CONFIG_SYS_CONFIG_WARN_URL)}
@@ -266,6 +267,11 @@ export default ({ history, app }) => {
               component={getFileRestorePage(app, FILE_RESTORE)}
               path={FILE_RESTORE} >
             </Route> */}
+            <Route
+              exact
+              component={getAuditEventPage(app, AUDIT_EVENT_URL)}
+              path={AUDIT_EVENT_URL} >
+            </Route>
           </Switch>
         </MainWrapper>
       </LocaleProvider>

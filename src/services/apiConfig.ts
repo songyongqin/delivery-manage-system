@@ -2,6 +2,8 @@ const baseUrl = ""
 
 const HttpApiConfig = {
 
+  AUDIT_EVENT: "/audit/basic-event",
+
   ENUM_CONFIG: "/enum-config",
 
   USER_SIGN: "/user/sign",
@@ -149,6 +151,7 @@ const HttpApiConfig = {
   BASE_INFO: "/product-type",
 
   FILE_RESTORE: "/file-restore"
+
 }
 
 

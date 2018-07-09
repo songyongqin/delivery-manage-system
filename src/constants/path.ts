@@ -12,7 +12,8 @@ export const layoutConfig = {
   capture: "/static/config/layout/capture.json",
   pcap: "/static/config/layout/pcap.json",
   fallHost: "/static/config/layout/fallHost.json",
-  vm: "/static/config/layout/vm.json"
+  vm: "/static/config/layout/vm.json",
+  auditEvent: "/static/config/layout/auditEvent.json"
 }
 
 export default {
