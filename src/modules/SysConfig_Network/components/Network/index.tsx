@@ -5,6 +5,7 @@ import classnames from 'classnames'
 const FormItem = Form.Item
 import extraConnect from 'domainUtils/extraConnect'
 import Card from 'domainComponents/Card'
+import Tag from 'components/Tag'
 import { SYS_CONFIG_NETWORK_NAMESPACE } from 'constants/model'
 import { When, Otherwise, Choose } from 'components/ControlStatements'
 import {
@@ -99,8 +100,9 @@ export default class extends React.Component<any, any>{
   //     .then(this.fetchData)
   // }
   getFormConfig = (item) => {
+
     try {
-      const { adapterName, virtual, adapterMac, adapterType } = item
+      const { adapterName, virtual, adapterMac, adapterType, defaultRoute } = item
       const realKeyMap: any = {}
 
       const finalDefaultValue = Object.entries(item).reduce((target, [key, value]) => {
@@ -123,6 +125,7 @@ export default class extends React.Component<any, any>{
       }, {})
 
       return {
+        defaultRoute: defaultRoute,
         dataIndexes: Object.keys(finalDefaultValue),
         defaultValue: finalDefaultValue,
         rulesConfig: finalRulesConfig,
@@ -133,12 +136,16 @@ export default class extends React.Component<any, any>{
         onSubmit: payload => {
           const finalPayload: any = {
             adapterName,
-            adapterMac
+            adapterMac,
           }
           Object.entries(payload).map(([key, value]) => {
-            finalPayload[realKeyMap[key]] = value
+            if (key == "defaultRoute") {
+              finalPayload[key] = value
+            }
+            else {
+              finalPayload[realKeyMap[key]] = value
+            }
           })
-
           return this.props.put(finalPayload)
             .then(_ => Message.success("保存成功"))
             .then(this.fetchData)
@@ -174,7 +181,7 @@ export default class extends React.Component<any, any>{
               {
                 data["adapterList"].map((i, index) => {
 
-                  const { adapterStatus, adapterName } = i
+                  const { adapterStatus, adapterName, defaultRoute } = i
 
                   return (
                     <div key={`${adapterName}-item`} style={{ marginBottom: "10px" }}>
@@ -182,6 +189,7 @@ export default class extends React.Component<any, any>{
                       </Badge>
                       {adapterName}
                       {`(${adapterStatus === 1 ? "已连接" : "未连接"})`}
+                      {defaultRoute === 1 ? <Tag color="blue">默认路由</Tag> : null}
                       <CommonForm
                         {...this.getFormConfig(i)}
                         key={`${index}-common-form`}>
