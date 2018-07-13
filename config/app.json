@@ -1,11 +1,12 @@
 {
   "title": "安天捕风流量监测系统",
   "secret": true,
+  "heartBeat": false,
   "routerRegister": {
     "/overview": true,
     "/analyse": true,
     "/analyse/event": true,
-    "/analyse/attack-chain": true,
+    "/analyse/attack-chain": false,
     "/analyse/fall-host": true,
     "/analyse/ranking": true,
     "/analyse/threat-distribution": true,
@@ -20,12 +21,12 @@
     "/user-manager": true,
     "/manager": true,
     "/manager/device": true,
-    "/manager/virtual-machine": true,
-    "/manager/mirror": true,
+    "/manager/virtual-machine": false,
+    "/manager/mirror": false,
     "/sys-log": true,
     "/sys-log/login": true,
     "/snort": true,
-    "manager-config": true
+    "/file-restore": true
   },
   "adminOnly": [
     "/sys-config",
@@ -37,7 +38,10 @@
     "/user-manager",
     "/snort"
   ],
-  "recordOfCreatingVM": true,
+  "routerTitleConfig": {
+    "/manager": "流量监测管理"
+  },
+  "recordOfCreatingVM": false,
   "ipInfo": {
     "idsNode": false,
     "honeypotNode": false
@@ -48,46 +52,45 @@
   },
   "analyse": {},
   "overall": {
-    "capture": true,
+    "capture": false,
     "netBasic": true,
-    "limitNetBasic": false,
-    "pcap": true,
-    "system": true
+    "limitNetBasic": true,
+    "pcap": false,
+    "system": false
   },
   "networkConfig": {
     "dns": true,
     "network": true,
     "systemLog": true,
     "networkAuth": true,
-    "masterIPConfig": false,
-    "cloudDetection": false
+    "masterIPConfig": true,
+    "cloudDetection": true
   },
   "strategyConfig": {
     "strategy": true,
-    "white": true
+    "white": false
   },
   "monitor": {
     "master": false,
-    "honeypotStandalone": true,
+    "honeypotStandalone": false,
     "honeypot": false,
-    "ids": false
+    "ids": true
   },
-  "mainDevice": "honeypotStandalone",
+  "mainDevice": "master",
   "deviceManager": {
     "master": false,
     "honeypot": false,
     "ids": false,
     "honeypotNode": false,
     "idsNode": false,
-    "honeypotStandalone": true,
-    "idsStandalone": false,
-    "serverUrl": "https://update.ithreat.cn/acs"
+    "honeypotStandalone": false,
+    "idsStandalone": true,
+    "serverUrl": "https://update.ithreat.cn/ids"
   },
   "mirrorImageManager": {
     "collection": true,
-    "node": false,
-    "nodeReadOnly": false,
-    "updateUrl": "https://update.ithreat.cn/acs/imgs"
+    "node": true,
+    "nodeReadOnly": false
   },
   "contactInfo": {
     "phoneNumber": "0755-26806561",

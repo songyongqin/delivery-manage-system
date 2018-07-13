@@ -5,6 +5,7 @@ module.exports = {
   "master": {
     "title": "安天捕风蜜罐系统",
     "secret": true,
+    "heartBeat": false,
     "routerRegister": {
       "/overview": true,
       "/analyse": true,
@@ -102,6 +103,7 @@ module.exports = {
   "honeypotStandalone": {
     "title": "安天捕风蜜罐系统",
     "secret": true,
+    "heartBeat": false,
     "routerRegister": {
       "/overview": true,
       "/analyse": true,
@@ -198,6 +200,7 @@ module.exports = {
   "idsStandalone": {
     "title": "安天捕风流量监测系统",
     "secret": true,
+    "heartBeat": false,
     "routerRegister": {
       "/overview": true,
       "/analyse": true,
