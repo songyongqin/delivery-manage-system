@@ -10,6 +10,14 @@
         {
           "value": "safe",
           "text": "安全"
+        },
+        {
+          "value": "suspicion",
+          "text": "可疑"
+        },
+        {
+          "value": "exception",
+          "text": "异常"
         }
       ]
     },
