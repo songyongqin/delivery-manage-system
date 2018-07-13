@@ -193,7 +193,7 @@ class EnhancedTable extends React.Component<any, any>{
     })
     const paginationClasses = classnames({
       [styles["pagination"]]: true,
-      [styles["pagination_item"]]: paginationProps.total > "100000" ? true : false,
+      [styles["pagination_item"]]: paginationProps.total > "100000" && paginationProps.current != paginationProps.total - 1 ? true : false,
       [styles[theme]]: true
     })
 
