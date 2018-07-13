@@ -159,6 +159,16 @@
         color:white;
       }
     }
+  }
+}
+.pagination_item{
+  :global{
+    .ant-pagination-item-active{
+      background: @primary-color;
+      a{
+        color:white;
+      }
+    }
     .ant-pagination-item:nth-last-child(2){
      display: none;
       a{
@@ -167,7 +177,6 @@
     }
   }
 }
-
 .input-dropdown{
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
   min-width: 240px;
