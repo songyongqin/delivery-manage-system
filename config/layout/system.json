@@ -4,8 +4,216 @@
       "dataIndex": "action",
       "filters": [
         {
-          "value": "unknown",
-          "text": "请在/static/config/layout/system.json中配置"
+          "text": "MySql远程代码执行", 
+          "value": "mysql remote code execute"
+        },
+        {
+          "text": "使用物联网设备常用默认账号登录Telnet服务",
+          "value": "Open shell by Telnet using the default password of IOT"
+        },
+        {
+          "text": "利用Telnet输入控制命令", 
+          "value": "Input commands by Telnet"
+        },
+        {
+          "text": "暴力破解远程桌面服务", 
+          "value": "burte force 3389"
+        },
+        {
+          "text": "端口扫描",
+           "value": "port scan"
+        },
+        {
+          "text": "执行可疑命令", 
+          "value": "Execute suspicious command"
+        },
+        {
+          "text": "未知",
+           "value": "Unknow"
+        },
+        {
+          "text": "设置注册表自启动", 
+          "value": "set autorun by registry"
+        },
+        {
+          "text": "永恒之蓝远程代码调用",
+           "value": "EternalBlue remote code execute"
+        },
+        {
+          "text": "不受信任的URL访问",
+           "value": "untrust url visit"
+        },
+        {
+          "text": "勒索软件", 
+          "value": "ransomware"
+        },
+        {
+          "text": "连接9100打印机服务",
+          "value": "connect 9100"
+        },
+        {
+          "text": "暴力破解Telnet服务", 
+          "value": "burte force 23"
+        },
+        {
+          "text": "远程执行SQL语句", 
+          "value": "remote sql execute"
+        },
+        {
+          "text": "向计算机中写入后门程序", 
+          "value": "write backdoor process to control"
+        },
+        {
+          "text": "程序执行命令", 
+          "value": "application execute command"
+        },
+        {
+          "text": "利用SSH输入控制命令",
+           "value": "Input commands by SSH"
+        },
+        {
+          "text": "连接工控服务", 
+          "value": "connect industrial"
+        },
+        {
+          "text": "登录Mysql服务",
+          "value": "login 3306"
+        },
+        {
+          "text": "无", 
+          "value": "N/A"
+        },
+        {
+          "text": "程序自删除", 
+          "value": "delete self"
+        },
+        {
+          "text": "运行可执行文件", 
+          "value": "run executable file"
+        },
+        {
+          "text": "暴力破解MySql服务", 
+          "value": "burte force 3306"
+        },
+        {
+          "text": "删除破坏计算机数据 影响计算机正常运行", 
+          "value": "delete computer data"
+        },
+        {
+          "text": "漏洞入侵行为", 
+          "value": "Vulnerability invasion"
+        },
+        {
+          "text": "使用物联网设备常用默认账号登录SSH服务", 
+          "value": "Open shell by SSH using the default password of IOT"
+        },
+        {
+          "text": "上线行为", 
+          "value": "Online behavior"
+        },
+        {
+          "text": "登录Telnet服务", 
+          "value": "login 23"
+        },
+        {
+          "text": "登录SSH服务", 
+          "value": "login 22"
+        },
+        {
+          "text": "C2通信行为", 
+          "value": "C2 communication behavior"
+        },
+        {
+          "text": "非法连接网络摄像头", 
+          "value": "connect ip camera illegally"
+        },
+        {
+          "text": "连接SMB服务",
+           "value": "connect 445"
+        },
+        {
+          "text": "删除破坏计算机数据,影响计算机正常运行",
+          "value": "affect computer run"
+        },
+        {
+          "text": "利用网络摄像头执行命令",
+           "value": "execute command in ip camera"
+        },
+        {
+          "text": "连接Mysql", 
+          "value": "connect 3306"
+        },
+        {
+          "text": "恶意程序访问远程地址", 
+          "value": "malware connect remote address"
+        },
+        {
+          "text": "远程控制 窃取计算机用户信息",
+           "value": "remote control"
+        },
+        {
+          "text": "缓冲区溢出攻击", 
+          "value": "buffer overflow attacks"
+        },
+        {
+          "text": "分布式拒绝服务攻击 影响网络连接",
+           "value": "distributed denial of service"
+        },
+        {
+          "text": "不受信任的网络连接", 
+          "value": "untrust net connect"
+        },
+        {
+          "text": "登录远程桌面", 
+          "value": "login 3389"
+        },
+        {
+          "text": "永恒之蓝漏洞利用", 
+          "value": "EternalBlue Exploit"
+        },
+        {
+          "text": "下载木马行为", 
+          "value": "download Trojans"
+        },
+        {
+          "text": "Mysql代码注入", 
+          "value": "mysql shellcode injection"
+        },
+        {
+          "text": "释放文件至系统路径",
+           "value": "put executable file to system path"
+        },
+        {
+          "text": "连接SSH服务",
+           "value": "connect 22"
+        },
+        {
+          "text": "连接Telnet服务", 
+          "value": "connect 23"
+        },
+        {
+          "text": "连接C2服务器", 
+          "value": "connect to c2 server"
+        },
+        {
+          "text": "下载文件", 
+          "value": "download file"
+        },
+        {
+          "text": "加密计算机文档信息 敲诈勒索",
+          "value": "encrypt user data"
+        },
+        {
+          "text": "运行后下载恶意数据至计算机",
+          "value": "download malware data to computer"
+        },
+        {
+          "text": "工控服务接收未知数据", 
+          "value": "industrial recv abnormal data"
+        },
+        {
+          "text": "连接远程桌面", 
+          "value": "connect:3389"
         }
       ]
     }
