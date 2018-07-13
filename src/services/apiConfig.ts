@@ -14,7 +14,7 @@ const HttpApiConfig = {
   VERIFICATION_CODE: "/user/verification-code",
 
   OVERVIEW_EVENT: "/overview/event",
-  OVERVIEW_FLOW: "/overview/flow",
+  // OVERVIEW_FLOW: '//overview/flow',
   OVERVIEW_LAST_EVENT: "/overview/last-event",
 
 
@@ -148,7 +148,11 @@ const HttpApiConfig = {
 
   BASE_INFO: "/product-type",
 
-  FILE_RESTORE: "/file-restore"
+  FILE_RESTORE: "/file-restore",
+
+  OVERVIEW_COUNT: '/overview/count',
+
+  OVERVIEW_FLOW: '/overview/flow',
 }
 
 

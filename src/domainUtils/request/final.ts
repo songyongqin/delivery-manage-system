@@ -44,7 +44,7 @@ const handleLicenceOverdue = () => {
 }
 
 export default (url: string, options: object, result: any): void => {
-
+  
   try {
     url = url.split("?")[0]
     //判断最终请求的结果是否成功 成功则直接不处理其他内容

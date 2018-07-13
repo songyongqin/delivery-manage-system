@@ -1,9 +1,12 @@
 import { asyncComponent } from 'react-async-component'
 import Spin from 'domainComponents/Spin'
 import * as React from 'react'
+
+
+
 export default asyncComponent({
-  name: 'asyncPieCharts',
-  resolve: () => System.import(/* webpackChunkName: "asyncComponents/PieCharts" */"./index").then(x => x.default),
+  name: 'asyncLineCharts',
+  resolve: () => System.import(/* webpackChunkName: "asyncComponents/LineCharts" */"./LineCharts"),
   LoadingComponent: () => (
     <Spin spinning={true}>
       <div>
