@@ -37,20 +37,20 @@ let getOption = ({ data ,theme, titles }) =>  ({
     data: data.map(i => i.name),
     textStyle: config[theme]
   },
-  color: [
-    // "#516b91",
-    // "#59c4e6",
-    // "#edafda",
-    "#93b7e3",
-    "#a5e7f0",
-    "#cbb0e3",
-    "#3fb1e3",
-    "#6be6c1",
-    "#626c91",
-    "#a0a7e6",
-    "#c4ebad",
-    "#96dee8"
-  ],
+  // color: [
+  //   // "#516b91",
+  //   // "#59c4e6",
+  //   // "#edafda",
+  //   // "#93b7e3",
+  //   // "#a5e7f0",
+  //   // "#cbb0e3",
+  //   // "#3fb1e3",
+  //   // "#6be6c1",
+  //   // "#626c91",
+  //   // "#a0a7e6",
+  //   // "#c4ebad",
+  //   // "#96dee8"
+  // ],
   series: [
     {
       type: 'pie',

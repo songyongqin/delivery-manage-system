@@ -9,7 +9,6 @@ import Spin from 'domainComponents/Spin'
 import { Pagination ,Tag, Input } from 'antd'
 import { ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import WithPagination from 'components/WithPagination'
-import tranformTime from 'utils/tranformTime'
 import {
   assetStateFilter,
   levelFilter
@@ -19,7 +18,7 @@ import {
 const mapStateToprops = state => {
   return {
     state,
-    tableLoading: state.loading.effects[`${ANALYSE_ATTACKED_VIEW}/fetchSearch`]
+    tableLoading: state.loading.effects[`${ANALYSE_ATTACKED_VIEW}/fetchView`]
   }
 }
 
@@ -49,7 +48,6 @@ const initArg = {
 }
 
 
-
 @WithAnimateRender
 @extraConnect(mapStateToprops, mapDispatchToprops)
 class Page extends React.Component<any, any> {
@@ -65,7 +63,6 @@ class Page extends React.Component<any, any> {
       tableKey: '0attacked',
       countKey: 'oattackedcount',
       total:0,
-      timestampRange:[]
     }
   }
 
@@ -74,7 +71,7 @@ class Page extends React.Component<any, any> {
     let time = this.getNowTime()
     // let reqArg = {...this.state.reqArg, timestampRange, page:1 }
     // console.log()
-    this.setState({  countKey: time + 'attackedcount', timestampRange })
+    this.setState({  countKey: time + 'attackedcount' })
     this.fetchTable({ timestampRange, page:1 })
     // this.setState({
     //   filters,
@@ -148,20 +145,14 @@ class Page extends React.Component<any, any> {
 
   render() {
 
-    const {  timestampRange, filters, tableData } = this.state
-    let tranformColor = text => {
-      if(text==='低危') return '#fccb00'
-      if(text==='中危') return '#db3e00'
-      else return '#b80000'
-    }
+    const { visible, activeKey, lastChangeTime, filters, tableData } = this.state
+
     let columns = [
       { title:'首次受攻击时间', 
-        dataIndex:'attackedFirstTime',
-        render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
+        dataIndex:'attackedFirstTime'
         },
       { title:'最近受攻击时间', 
-        dataIndex:'attackedLatelyTime',
-        render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
+        dataIndex:'attackedLatelyTime'
       },
       { title:'受攻击资产IP', 
         dataIndex:'attatcedAssetIp', 
@@ -177,8 +168,7 @@ class Page extends React.Component<any, any> {
       },
       { title:'威胁等级', 
         dataIndex:'level', 
-        types:['filters'],
-        render: text => <Tag color={ tranformColor(text) } >{text}</Tag>
+        types:['filters']
       },
       { title:'操作', 
         dataIndex:'actions', 
@@ -197,7 +187,7 @@ class Page extends React.Component<any, any> {
         assetStates: assetStateFilter
       }
     }
-    console.log(timestampRange)
+
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
@@ -216,7 +206,7 @@ class Page extends React.Component<any, any> {
           this.props.animateRender([
             <div key='event-count' >
             {/* 统计数据 */}
-              <Count  key={ this.state.countKey } timestampRange={ timestampRange }  />
+              <Count  key={ this.state.countKey } />
             </div>,
             <div key="event-attacked-table">
             <button onClick={ this.reset } >重置筛选</button>

@@ -2,22 +2,24 @@
 
 import React from 'react'
 import WithTable from 'components/WithTable'
+import { Tag } from 'antd'
+import tranformTime from 'utils/tranformTime'
 
-const transportFilter = [
-  { text: 'TCP', value:'TCP' },
-  { text: 'IP', value:'IP' },
-]
+// const transportFilter = [
+//   { text: 'TCP', value:'TCP' },
+//   { text: 'IP', value:'IP' },
+// ]
 
-const applicationFilter = [
-  { text: 'HTTP', value:'HTTP' },
-]
+// const applicationFilter = [
+//   { text: 'HTTP', value:'HTTP' },
+// ]
 
-let constants = {
-  filter:{
-    transportLayerProtocol: transportFilter,
-    applicationLayerProtocol: applicationFilter
-  }
-}
+// let constants = {
+//   filter:{
+//     transportLayerProtocol: transportFilter,
+//     applicationLayerProtocol: applicationFilter
+//   }
+// }
 
 let columns = [
   { title:'序号', 
@@ -25,10 +27,12 @@ let columns = [
     render: (text, record,index ) => <div>{index}</div>
   },
   { title:'首次发生时间', 
-    dataIndex:'firstTime'
+    dataIndex:'firstTime',
+    render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
   },
   { title:'最近发生时间', 
-    dataIndex:'latelyTime'
+    dataIndex:'latelyTime',
+    render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
   },
   { title:'C&C服务器IP', 
     dataIndex:'C2SeverIp'
@@ -38,18 +42,16 @@ let columns = [
   },
   { title:'传输层协议', 
     dataIndex:'transportLayerProtocol',
-    types:['filters']
   },
   { title:'应用层协议', 
     dataIndex:'applicationLayerProtocol',
-    types:['filters']
   }
 ]
 
 const CCTable = ({ data, tableChange }) => {
   return (
     <div>
-      <WithTable tableData={ data } config={ columns } constants={ constants }
+      <WithTable tableData={ data } config={ columns } 
                   tableBeforeFetch={ tableChange } />
     </div>
   )

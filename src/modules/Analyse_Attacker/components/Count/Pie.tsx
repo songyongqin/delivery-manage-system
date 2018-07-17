@@ -12,10 +12,7 @@ const Wrap = props =>{
 
 const getConfig = data => {
   let obj = {}
-  if(data[0]){
-    data[0]['selected'] = true
-  }
-  // obj['']
+  data[0]['selected'] = true
   obj['series'] = [
     {
       // name:'访问来源',
@@ -23,12 +20,9 @@ const getConfig = data => {
       selectedMode: 'single',
       radius: [0, '60%'],
       center: ['35%', '50%'],
-      // avoidLabelOverlap: true,
       label: {
           normal: {
-              show: false,
-              // position: 'inner',
-              // formatter: '{c}\n {d}%'
+              position: 'inner'
           }
       },
       labelLine: {

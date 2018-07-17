@@ -167,6 +167,7 @@ const HttpApiConfig = {
 
   ANALYSE_ATTACKED_DETAILS_CC: '/analyse/attacked-details-c2',
 
+  ANALYSE_ATTACKER_COUNT: '/analyse/attacker-count',
 
 }
 

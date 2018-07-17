@@ -8,6 +8,7 @@ import { ANALYSE_ATTACKED_COUNT } from 'constants/model'
 // import PieCharts from 'domainComponents/PieCharts/async'
 import Pie from './Pie'
 import CountIcon from './CountIcon'
+import {Icon} from 'antd'
 
 const mapStateToProps = state => {
   return {
@@ -26,11 +27,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const Wrap = props => {
-  return(
-    <div style={{ width:400 }} >{ props.children }</div>
-  )
-}
 
 @extraConnect(mapStateToProps, mapDispatchToProps)
 class Count extends Component<any, any>{
@@ -38,9 +34,10 @@ class Count extends Component<any, any>{
     super(props)
     this.state={
       initState: props.init || {},
-      attackedAssetsCount: 0,
-      attackedCountArr:[{}],
-      attackedAssetsArr:[{}],
+      attackerCount: 0,
+      attackGroupCount: 0,
+      attackerGroupArr:[{}],
+      attackerWhereArr:[{}],
     }
   }
 
@@ -49,13 +46,13 @@ class Count extends Component<any, any>{
   }
 
   getCount = () => {
-    console.log(this.props.timestampRange)
-    this.props.fetchCount({timestampRange: this.props.timestampRange})
+    this.props.fetchCount()
     .then(res => {
       this.setState({
-        attackedAssetsCount: res.attackedAssetsCount,
-        attackedCountArr: res.attackedCountArr,
-        attackedAssetsArr: res.attackedAssetsArr
+        attackerCount: res.attackerCount,
+        attackGroupCount: res.attackGroupCount,
+        attackerGroupArr: res.attackerGroupArr,
+        attackerWhereArr: res.attackerWhereArr
       })
     } )
     .catch(err => console.error(err) )
@@ -63,13 +60,18 @@ class Count extends Component<any, any>{
 
   render(){
     const { loading } = this.props
-    const { attackedCountArr, attackedAssetsArr, attackedAssetsCount } = this.state
+    const { attackerCount, attackGroupCount, attackerGroupArr, attackerWhereArr } = this.state
     return(
       <div>
         <Spin spinning={ loading } >
-          <CountIcon title={ '受攻击资产' } count={ attackedAssetsCount } />
-          <Pie data={ attackedCountArr } title={ '受攻击次数排行统计'} />
-          <Pie data={ attackedAssetsArr } title={ '资产状态统计'} />
+          <CountIcon title={ '攻击者数量' } count={ attackerCount } style={ { backgroundColor:'#3072E0', color:'white' } } >
+            <Icon type="user" />
+          </CountIcon>
+          <CountIcon title={ '攻击者组织' } count={ attackerCount } style={ { backgroundColor:'#30E03F', color:'white' } } >
+            <Icon type="team" />
+          </CountIcon>
+          <Pie data={ attackerWhereArr } title={ '攻击者所在地统计'} />
+          <Pie data={ attackerGroupArr } title={ '攻击者组织统计'} />
         </Spin>
       </div>
     )

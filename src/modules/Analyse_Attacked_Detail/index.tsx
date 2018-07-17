@@ -50,8 +50,8 @@ const initCCtArg = {
   page:1,
   limit:limit,
   attatcedAssetIp:'',
-  transportLayerProtocol :'',
-  applicationLayerProtocol : ''
+  // transportLayerProtocol :'',
+  // applicationLayerProtocol : ''
 }
 
 const getAttackedIp = str =>{
