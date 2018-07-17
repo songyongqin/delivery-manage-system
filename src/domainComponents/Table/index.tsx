@@ -191,9 +191,9 @@ class EnhancedTable extends React.Component<any, any>{
       [tableProps.className]: tableProps.className || false,
       [styles["expandable-table"]]: expanded
     })
-
     const paginationClasses = classnames({
       [styles["pagination"]]: true,
+      [styles["pagination_item"]]: paginationProps.current == Math.ceil(paginationProps.total / paginationProps.pageSize) - 1 || paginationProps.current == Math.ceil(paginationProps.total / paginationProps.pageSize) ? false : true,
       [styles[theme]]: true
     })
 

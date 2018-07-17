@@ -28,12 +28,12 @@ class WrappedForm extends React.Component<any, any> {
     defaultValue: {},
     rulesConfig: {},
     dataIndexes: [],
-    labelTextConfig: {}
+    labelTextConfig: {},
   }
   state = {
     loading: false
   }
-  handleSubmit = (e) => {
+  handleSubmit_ = (e) => {
     e.preventDefault();
     const { onSubmit, form, dataIndexes } = this.props;
     form.validateFieldsAndScroll((err, values) => {
@@ -43,12 +43,37 @@ class WrappedForm extends React.Component<any, any> {
       }
 
       dataIndexes.forEach(i => values[i] = values[i].trim())
-
+      const values_ = {
+        ...values,
+        defaultRoute: 1
+      }
       this.setState({
         loading: true
       })
 
-      onSubmit && onSubmit(values).then(_ => { }).then(_ => this.setState({ loading: false }))
+      onSubmit && onSubmit(values_).then(_ => { }).then(_ => this.setState({ loading: false }))
+
+    })
+  }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { onSubmit, form, dataIndexes, defaultRoute } = this.props;
+    form.validateFieldsAndScroll((err, values) => {
+
+      if (err) {
+        return
+      }
+
+      dataIndexes.forEach(i => values[i] = values[i].trim())
+      const values_ = {
+        ...values,
+        defaultRoute: defaultRoute
+      }
+      this.setState({
+        loading: true
+      })
+
+      onSubmit && onSubmit(values_).then(_ => { }).then(_ => this.setState({ loading: false }))
 
     })
   }
@@ -57,6 +82,7 @@ class WrappedForm extends React.Component<any, any> {
   render() {
     const { getFieldDecorator } = this.props.form
     const {
+      defaultRoute,
       isDark,
       defaultValue,
       rulesConfig,
@@ -65,7 +91,6 @@ class WrappedForm extends React.Component<any, any> {
       disabled = false,
       btnDisabledTip
     } = this.props
-
     const { loading } = this.state
 
     const lblClasses = classnames({
@@ -79,7 +104,6 @@ class WrappedForm extends React.Component<any, any> {
       <Form layout="inline" >
         {
           dataIndexes.map(dataIndex => {
-
             return (
               <FormItem
                 required={false}
@@ -120,6 +144,19 @@ class WrappedForm extends React.Component<any, any> {
                 disabled={disabled}
                 icon="save"
                 onClick={this.handleSubmit}>保存</Button>
+          }
+        </FormItem>
+        <FormItem>
+          {
+            defaultRoute === 1
+              ?
+              null
+              :
+              <Button type="primary"
+                loading={loading}
+                disabled={disabled}
+                icon="save"
+                onClick={this.handleSubmit_}>设为默认路由</Button>
           }
         </FormItem>
       </Form>

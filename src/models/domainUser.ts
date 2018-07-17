@@ -27,9 +27,9 @@ const initBasicInfo = () => {
 
 
 const LAST_TARGET_URL = "@@__last_target_url__@@"
+
 const openRoutes = openRouteList,
   adminOnlyRoute = adminOnly
-
 const getInitStates = () => {
   try {
     const cacheUserData = getUserData(),
@@ -58,10 +58,16 @@ const subscriptions = {
     initBasicInfo()
 
     //管理员心跳
-    if (getInitStates().isAdmin) {
-      setInterval(() => {
+    const heartBeat = (getAppConfig() as any).heartBeat
 
-        services.postAdminHeartBeat({}).catch(e => console.info(e))
+    if (getInitStates().isAdmin) {
+
+      const interval = setInterval(() => {
+        (getAppConfig() as any).heartBeat
+          ?
+          services.postAdminHeartBeat({}).catch(e => console.info(e))
+          :
+          clearInterval(interval)
 
       }, 30 * 1000)
     }

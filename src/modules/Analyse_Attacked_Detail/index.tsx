@@ -89,7 +89,7 @@ class AnalyseDetail extends React.Component<any, any> {
       
     }
     this.fetchEvent(1)
-    this.fetchCC()
+    this.fetchCC({})
   }
 
   fetchEvent = (page=1) => {

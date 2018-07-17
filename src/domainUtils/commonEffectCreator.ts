@@ -13,7 +13,6 @@ export default (service, delayTime = 0) =>
 export const baseCommonEffectCreator = (service, delayTime = 0) => {
   return function* ({ resolve, reject, payload }, { call }) {
     const res = yield call(service, payload)
-
     yield delay(delayTime)
 
     if (isSuccess(res)) {

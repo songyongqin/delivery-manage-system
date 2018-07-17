@@ -76,5 +76,6 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ANALYSE_ATTACKED_VIEW = 'analyseAttackedView',
 
-  ANALYSE_ATTACKED_DETAIL = 'analyseAttackedDetail'
+  ANALYSE_ATTACKED_DETAIL = 'analyseAttackedDetail',
+  AUDIT_EVENT_NAMESPACE = "auditEvent"
 

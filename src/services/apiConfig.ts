@@ -2,6 +2,8 @@ const baseUrl = ""
 
 const HttpApiConfig = {
 
+  AUDIT_EVENT: "/audit/basic-event",
+
   ENUM_CONFIG: "/enum-config",
 
   USER_SIGN: "/user/sign",
@@ -164,6 +166,8 @@ const HttpApiConfig = {
   ANALYSE_ATTACKED_DETAILS: '/analyse/attacked-details',
 
   ANALYSE_ATTACKED_DETAILS_CC: '/analyse/attacked-details-c2',
+
+
 }
 
 
