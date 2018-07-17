@@ -69,5 +69,12 @@ export const LAYOUT_NAMESPACE = "layout",
 
   MANAGER_MIRROR_OPERATION_NAMESPACE = "managerMirrorOperation",
 
-  OVERVIEW_STATISTICS_COUNT = 'overviewStatisticsCount'
+  OVERVIEW_STATISTICS_COUNT = 'overviewStatisticsCount',
+
+
+  ANALYSE_ATTACKED_COUNT = 'analyseAttackedCount',
+
+  ANALYSE_ATTACKED_VIEW = 'analyseAttackedView',
+
+  ANALYSE_ATTACKED_DETAIL = 'analyseAttackedDetail'
 

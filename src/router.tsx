@@ -25,6 +25,9 @@ import getManagerMirrorPage from 'routes/Manager_Mirror'
 import getSnortPage from 'routes/Snort'
 import getFileRestorePage from 'routes/FileRestore'
 
+import getAnalyseAttackedPage from 'routes/Analyse_Attacked'
+import getAnalyseAttackedDetailPage from 'routes/Analyse_Attacked_Detail'
+
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -59,6 +62,8 @@ import {
   // ANALYSE_EVENT_URL,
 
   ANALYSE_ATTACKED_ASSETS_URL,
+
+  ANALYSE_ATTACKED_ASSETS_DETAL_URL,
 
   ANALYSE_ATTACK_URL,
 
@@ -130,8 +135,14 @@ export default ({ history, app }) => {
             {/* 受攻击资产视图 */}
             <Route
               exact
-              component={getAnalyseEventPage(app, ANALYSE_ATTACKED_ASSETS_URL)}
+              component={getAnalyseAttackedPage(app, ANALYSE_ATTACKED_ASSETS_URL)}
               path={ANALYSE_ATTACKED_ASSETS_URL} >
+            </Route>
+            {/* 受攻击资产视图详情 */}
+            <Route
+              exact
+              component={getAnalyseAttackedDetailPage(app, ANALYSE_ATTACKED_ASSETS_DETAL_URL)}
+              path={ANALYSE_ATTACKED_ASSETS_DETAL_URL} >
             </Route>
             {/* 攻击者视图 */}
             <Route

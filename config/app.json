@@ -72,7 +72,7 @@
     "honeypot": false,
     "ids": false
   },
-  "mainDevice": "honeypotStandalone",
+  "mainDevice": "idsStandalone",
   "deviceManager": {
     "master": false,
     "honeypot": false,

@@ -45,6 +45,8 @@ import {
 
   ANALYSE_ATTACKED_ASSETS_URL,
 
+  ANALYSE_ATTACKED_ASSETS_DETAL_URL,
+
   ANALYSE_ATTACK_URL,
 
   ANALYSE_THREAT_URL,
@@ -116,6 +118,25 @@ export const _navConfig = [
       {
         link: ANALYSE_THREAT_URL,
         title: "威胁视图",
+      }
+    ]
+  },
+  {
+    // 受害资产详细情况
+    link: ANALYSE_URL+'x',
+    title: "威胁分析",
+    hidden: true,
+    icon: <Icon type="fork" />,
+    items: [
+      {
+        link: ANALYSE_ATTACKED_ASSETS_URL,
+        title: "受攻击资产视图",
+        hidden: true,
+        items:[{
+          link: ANALYSE_ATTACKED_ASSETS_DETAL_URL,
+          title:'受害资产详细情况',
+          hidden: true
+        }]
       }
     ]
   },

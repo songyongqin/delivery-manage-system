@@ -154,6 +154,16 @@ const HttpApiConfig = {
   OVERVIEW_COUNT: '/overview/count',
 
   OVERVIEW_FLOW: '/overview/flow',
+
+  ANALYSE_ATTACKED_VIEW: '/analyse/attacked-view',
+
+  ANALYSE_ATTACKED_SEARCH: '/analyse/attacked-search',
+
+  ANALYSE_ATTACKED_COUNT: '/analyse/attacked-count',
+
+  ANALYSE_ATTACKED_DETAILS: '/analyse/attacked-details',
+
+  ANALYSE_ATTACKED_DETAILS_CC: '/analyse/attacked-details-c2',
 }
 
 

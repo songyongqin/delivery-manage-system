@@ -88,7 +88,8 @@ const mapDispatchToProps = dispatch => {
 }
 
 @extraConnect(mapStateToProps, mapDispatchToProps)
-class EventStatistics extends React.Component<any, any>{
+class 
+EventStatistics extends React.Component<any, any>{
   static defaultProps = {
     initialFilters: {}
   }
