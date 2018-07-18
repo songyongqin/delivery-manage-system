@@ -75,7 +75,16 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ASSETS_LOOPHOLE_NAMESPACE = "AuditLoophole",
 
-  ASSETS_PORT_NAMESPACE = "AuditPort"
+  ASSETS_PORT_NAMESPACE = "AuditPort",
 
+
+  OVERVIEW_STATISTICS_COUNT = 'overviewStatisticsCount',
+
+
+  ANALYSE_ATTACKED_COUNT = 'analyseAttackedCount',
+
+  ANALYSE_ATTACKED_VIEW = 'analyseAttackedView',
+
+  ANALYSE_ATTACKED_DETAIL = 'analyseAttackedDetail'
 
 

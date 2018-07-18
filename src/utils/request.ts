@@ -80,7 +80,7 @@ export const createRequestHandle: CreateRequestHandle = ({ beforeRequest, afterR
   return (url: string, options?: object) => {
     //请求前options处理 ，beforeRequest 内可附带token信息或加密等操作
     const finalOptions = beforeRequest ? beforeRequest(url, options) : options
-
+    
     return fetch(url, finalOptions)
       //检测返回的状态
       .then(checkStatus)

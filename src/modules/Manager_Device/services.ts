@@ -108,13 +108,12 @@ export const postLicence = commonRequestCreator.post(httpApi.DEVICE_LICENCE)
 export const postDisk = commonRequestCreator.post(httpApi.DEVICE_DISK)
 
 export const fetchMasterIP = commonRequestCreator.get(httpApi.SYS_CONFIG_NETWORK_MASTER)
-
-export const fetchVersionInfoByLocal = payload => {
-  return request(httpApi.DEVICE_UPDATE_INFO_LOCAL, getUpdateOptionsByPayload(payload))
-}
+export const fetchVersionInfoByLocal = commonRequestCreator.get(httpApi.DEVICE_UPDATE_INFO_LOCAL)
+// export const fetchVersionInfoByLocal = payload => {
+//   return request(httpApi.DEVICE_UPDATE_INFO_LOCAL, getUpdateOptionsByPayload(payload))
+// }
 
 export const updateByLocal = payload => {
-  console.info("intxxxxxxxxxxxxx")
   return request(httpApi.DEVICE_UPDATE_LOCAL, getUpdateOptionsByPayload(payload))
 }
 
@@ -131,6 +130,8 @@ export const getUploadTask = commonRequestCreator.get(httpApi.DEVICE_UPDATE_LOCA
 export const createUploadTask = commonRequestCreator.post(httpApi.DEVICE_UPDATE_LOCAL)
 
 export const mergeUploadTask = commonRequestCreator.post(httpApi.DEVICE_UPDATE_LOCAL_MERGE)
+
+export const getUploadResult = commonRequestCreator.post(httpApi.DEVICE_UPDATE_LOCAL_RESULT)
 
 export const putFileChunk = payload => {
   const fd = new FormData();

@@ -15,7 +15,8 @@ import {
   getUploadTask,
   createUploadTask,
   putFileChunk,
-  mergeUploadTask
+  mergeUploadTask,
+  getUploadResult
 } from '../services'
 import isSuccess from 'domainUtils/isSuccess'
 import { delay } from 'utils'
@@ -52,6 +53,7 @@ export default {
     postDisk: commonEffectCreator(postDisk, 500),
     fetchVersionInfoByLocal: commonEffectCreator(fetchVersionInfoByLocal),
     updateByLocal: commonEffectCreator(updateByLocal),
+    getUploadResult: commonEffectCreator(getUploadResult),
     fetchVersionInfoByRemote: commonEffectCreator(fetchVersionInfoByRemote),
     updateByRemote: commonEffectCreator(updateByRemote),
     getupdateByRemote: commonEffectCreator(getupdateByRemote),
@@ -280,7 +282,7 @@ export default {
             type: "changeUpdateLoadingStatus",
             payload: false
           })
-          resolve && resolve(res_.payload)
+          resolve && resolve(res_.status)
         }
       }
 

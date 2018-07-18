@@ -22,7 +22,7 @@ const HttpApiConfig = {
   VERIFICATION_CODE: "/user/verification-code",
 
   OVERVIEW_EVENT: "/overview/event",
-  OVERVIEW_FLOW: "/overview/flow",
+  // OVERVIEW_FLOW: '//overview/flow',
   OVERVIEW_LAST_EVENT: "/overview/last-event",
 
 
@@ -59,6 +59,7 @@ const HttpApiConfig = {
   DEVICE_UPDATE_INFO_ONLINE: "/device/update-info/online",
   DEVICE_UPDATE_INFO_LOCAL: "/device/update-info/local",
   DEVICE_UPDATE_LOCAL_MERGE: "/device/update/local/merge",
+  DEVICE_UPDATE_LOCAL_RESULT: "/device/update/local/result",
 
 
   DEVICE_UPDATE_ONLINE_IDS: "/device/update/online/ids",
@@ -156,7 +157,23 @@ const HttpApiConfig = {
 
   BASE_INFO: "/product-type",
 
-  FILE_RESTORE: "/file-restore"
+  FILE_RESTORE: "/file-restore",
+
+  OVERVIEW_COUNT: '/overview/count',
+
+  OVERVIEW_FLOW: '/overview/flow',
+
+  ANALYSE_ATTACKED_VIEW: '/analyse/attacked-view',
+
+  ANALYSE_ATTACKED_SEARCH: '/analyse/attacked-search',
+
+  ANALYSE_ATTACKED_COUNT: '/analyse/attacked-count',
+
+  ANALYSE_ATTACKED_DETAILS: '/analyse/attacked-details',
+
+  ANALYSE_ATTACKED_DETAILS_CC: '/analyse/attacked-details-c2',
+
+  ANALYSE_ATTACKER_COUNT: '/analyse/attacker-count',
 
 
 }
