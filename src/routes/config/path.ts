@@ -56,6 +56,7 @@ export const ROOT_URL = "/",
 
   AUDIT_ASSETS_URL = '/audit/assets',
 
+
   AUDIT_PCAP_URL = '/audit/pcap',
 
   STRATEGY_URL = '/strategy',
@@ -71,7 +72,7 @@ export const ROOT_URL = "/",
   CONFIG_SYS_LOG_LOGIN_URL = '/config/sys-log/login',
 
   CONFIG_SYS_CONFIG_URL = '/config/sys-config',
-  
+
   CONFIG_SYS_CONFIG_NETWORK_URL = '/config/sys-config/network',
 
   CONFIG_SYS_CONFIG_MONITOR_URL = '/config/sys-config/monitor',

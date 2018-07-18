@@ -25,6 +25,7 @@ import getManagerMirrorPage from 'routes/Manager_Mirror'
 import getSnortPage from 'routes/Snort'
 import getFileRestorePage from 'routes/FileRestore'
 import getAuditEventPage from 'routes/Audit_Event'
+import getAuditAssetsPage from 'routes/Audit_Assets'
 
 import {
   OVERVIEW_URL,
@@ -70,6 +71,7 @@ import {
   AUDIT_EVENT_URL,
 
   AUDIT_ASSETS_URL,
+
 
   AUDIT_PCAP_URL,
 
@@ -266,12 +268,19 @@ export default ({ history, app }) => {
               exact
               component={getFileRestorePage(app, FILE_RESTORE)}
               path={FILE_RESTORE} >
-            </Route> */}
+            </Route> */}audit-assets
+
             <Route
               exact
               component={getAuditEventPage(app, AUDIT_EVENT_URL)}
               path={AUDIT_EVENT_URL} >
             </Route>
+            <Route
+              exact
+              component={getAuditAssetsPage(app, AUDIT_ASSETS_URL)}
+              path={AUDIT_ASSETS_URL} >
+            </Route>
+
           </Switch>
         </MainWrapper>
       </LocaleProvider>

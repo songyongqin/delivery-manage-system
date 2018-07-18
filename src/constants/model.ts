@@ -69,5 +69,13 @@ export const LAYOUT_NAMESPACE = "layout",
 
   MANAGER_MIRROR_OPERATION_NAMESPACE = "managerMirrorOperation",
 
-  AUDIT_EVENT_NAMESPACE = "auditEvent"
+  AUDIT_EVENT_NAMESPACE = "auditEvent",
+
+  AUDIT_ASSETS_NAMESPACE = "AuditAssets",
+
+  ASSETS_LOOPHOLE_NAMESPACE = "AuditLoophole",
+
+  ASSETS_PORT_NAMESPACE = "AuditPort"
+
+
 
