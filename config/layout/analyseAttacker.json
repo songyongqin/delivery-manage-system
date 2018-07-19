@@ -1,0 +1,38 @@
+{
+  "columns": [
+    {
+      "dataIndex": "attackerWhere",
+      "filters": [
+        {
+          "value": "USA",
+          "text": "美国"
+        },
+        {
+          "value": "Japan",
+          "text": "日本"
+        },
+        {
+          "value": "Germany",
+          "text": "德国"
+        },
+        {
+          "value": "France",
+          "text": "法国"
+        }
+      ]
+    },
+    {
+      "dataIndex": "attackGroup",
+      "filters": [
+        {
+          "value": "白莲花组织",
+          "text": "白莲花组织"
+        },
+        {
+          "value": "海莲花组织",
+          "text": "海莲花组织"
+        }
+      ]
+    }
+  ]
+}

@@ -12,7 +12,8 @@ import WithPagination from 'components/WithPagination'
 import tranformTime from 'utils/tranformTime'
 import {
   assetStateFilter,
-  levelFilter
+  levelFilter,
+  limit
 } from './constants'
 
 
@@ -39,7 +40,7 @@ const mapDispatchToprops = dispatch => {
 //初始参数
 const initArg = {
   page:1,
-  limit:10,
+  limit:limit,
   searchValue:'',
   attatcedAssetIp:'',
   attackedCount:'',
@@ -65,7 +66,7 @@ class Page extends React.Component<any, any> {
       tableKey: '0attacked',
       countKey: 'oattackedcount',
       total:0,
-      timestampRange:[]
+      timestampRange:[],
     }
   }
 
@@ -89,7 +90,7 @@ class Page extends React.Component<any, any> {
   getNowTime = () => new Date().getTime()
 
   tableBeforeFetch = obj => {
-
+    console.log('obj',obj)
     this.fetchTable(obj)
   }
 
@@ -143,7 +144,11 @@ class Page extends React.Component<any, any> {
 
   searchEnter = () => {
     // let { reqArg } = this.state
-    this.fetchTable({})
+    this.fetchTable({ page:1 })
+  }
+
+  componentWillUnmount(){
+    console.log('xxx')
   }
 
   render() {
@@ -155,6 +160,10 @@ class Page extends React.Component<any, any> {
       else return '#b80000'
     }
     let columns = [
+      { title:'序号', 
+        dataIndex:'index',
+        render:  (text, record, index) => <div>{index}</div>
+        },
       { title:'首次受攻击时间', 
         dataIndex:'attackedFirstTime',
         render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
@@ -197,7 +206,7 @@ class Page extends React.Component<any, any> {
         assetStates: assetStateFilter
       }
     }
-    console.log(timestampRange)
+    
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
@@ -214,7 +223,7 @@ class Page extends React.Component<any, any> {
         </div>
         {
           this.props.animateRender([
-            <div key='event-count' >
+            <div key='event-attacked-count' >
             {/* 统计数据 */}
               <Count  key={ this.state.countKey } timestampRange={ timestampRange }  />
             </div>,

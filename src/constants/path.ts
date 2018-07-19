@@ -13,7 +13,8 @@ export const layoutConfig = {
   pcap: "/static/config/layout/pcap.json",
   fallHost: "/static/config/layout/fallHost.json",
   vm: "/static/config/layout/vm.json",
-  auditEvent: "/static/config/layout/auditEvent.json"
+  auditEvent: "/static/config/layout/auditEvent.json",
+  analyseAttacker: '/static/config/layout/analyseAttacker.json'
 }
 
 export default {

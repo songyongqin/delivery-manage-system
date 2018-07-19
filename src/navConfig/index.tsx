@@ -49,6 +49,8 @@ import {
 
   ANALYSE_ATTACK_URL,
 
+  ANALYSE_ATTACK_DETAL_URL,
+
   ANALYSE_THREAT_URL,
 
   AUDIT_URL,
@@ -92,6 +94,10 @@ import {
 import { getAppConfig } from 'domain/app'
 // import router from 'router';
 
+
+const Indent = ({ space=0 }) => 
+<div style={{ display:'inline-block', width:`${(space+1)*14+20}px`, height:20 }}  ></div>
+
 export const _navConfig = [
   {
     link: OVERVIEW_URL,
@@ -106,18 +112,22 @@ export const _navConfig = [
       {
         title: "事件视图",
         link: ANALYSE_EVENT_URL,
+        icon: <Indent  />,
       },
       {
         link: ANALYSE_ATTACKED_ASSETS_URL,
         title: "受攻击资产视图",
+        icon: <Indent  />,
       },
       {
         link: ANALYSE_ATTACK_URL,
         title: "攻击者视图",
+        icon: <Indent  />,
       },
       {
         link: ANALYSE_THREAT_URL,
         title: "威胁视图",
+        icon: <Indent  />,
       }
     ]
   },
@@ -135,6 +145,25 @@ export const _navConfig = [
         items:[{
           link: ANALYSE_ATTACKED_ASSETS_DETAL_URL,
           title:'受害资产详细情况',
+          hidden: true
+        }]
+      }
+    ]
+  },
+  {
+    // 攻击者详细情况
+    link: ANALYSE_URL+'x',
+    title: "威胁分析",
+    hidden: true,
+    icon: <Icon type="fork" />,
+    items: [
+      {
+        link: ANALYSE_ATTACK_URL,
+        title: "攻击者视图",
+        hidden: true,
+        items:[{
+          link: ANALYSE_ATTACK_DETAL_URL,
+          title:'攻击者视图详细情况',
           hidden: true
         }]
       }
@@ -159,15 +188,18 @@ export const _navConfig = [
     items: [
       {
         link: AUDIT_EVENT_URL,
-        title: "基本事件审计"
+        title: "基本事件审计",
+        icon: <Indent  />,
       },
       {
         link: AUDIT_ASSETS_URL,
         title: "资产审计",
+        icon: <Indent  />,
       },
       {
         link: AUDIT_PCAP_URL,
-        title: "抓包记录"
+        title: "抓包记录",
+        icon: <Indent  />,
       }
     ]
   },
@@ -227,18 +259,19 @@ export const _navConfig = [
       }
     ]
   },
-  {
-    link: SYS_LOG_URL,
-    icon: <Icon type="file-text"></Icon>,
-    title: "系统日志",
-    hidden: true,
-    items: [
-      {
-        link: SYS_LOG_LOGIN_URL,
-        title: "登录日志"
-      }
-    ]
-  },
+  // {
+  //   link: SYS_LOG_URL,
+  //   icon: <Icon type="file-text"></Icon>,
+  //   title: "系统日志",
+  //   hidden: true,
+  //   items: [
+  //     {
+  //       link: SYS_LOG_LOGIN_URL,
+  //       title: "登录日志",
+  //       icon: <Indent  />,
+  //     }
+  //   ]
+  // },
   {
     link: SNORT_URL,
     title: "Snort",
@@ -257,39 +290,43 @@ export const _navConfig = [
       {
         link: CONFIG_USER_MANAGER_URL,
         title: "用户管理",
-        icon: <Icon type="team" />,
+        icon: <Indent  />,
       },
       {
         link: CONFIG_DEVICE_MANAGER_URL,
-        icon: <Icon type="database" />,
+        icon: <Indent  />,
         title: "设备管理",
       },
       {
         link: CONFIG_SYS_LOG_URL,
-        icon: <Icon type="file-text"></Icon>,
+        icon: <Indent  />,
         title: "系统日志",
         items: [
           {
             link: CONFIG_SYS_LOG_LOGIN_URL,
-            title: "登录日志"
+            title: "登录日志",
+            icon: <Indent space={1} />,
           }
         ]
       },{
         link: CONFIG_SYS_CONFIG_URL,
         title: "系统配置",
-        icon: <Icon type="setting" />,
+        icon: <Indent  />,
         items: [
           {
             link: CONFIG_SYS_CONFIG_NETWORK_URL,
-            title: "网卡配置"
+            title: "网卡配置",
+            icon: <Indent space={1} />,
           },
           {
             link: CONFIG_SYS_CONFIG_WARN_URL,
-            title: "告警配置"
+            title: "告警配置",
+            icon: <Indent space={1} />,
           },
           {
             link: CONFIG_SYS_CONFIG_MONITOR_URL,
             title: "自我监控",
+            icon: <Indent space={1} />,
           }
         ]
       },

@@ -55,9 +55,9 @@ class WithTable extends Component<props, any>{
     // tableChangeData = { ...tableChangeData, ...objs }
     
     //添加上多条搜索的值
-    let tableChangeData = this.state.searchValue
-
-    this.props.tableBeforeFetch&&this.props.tableBeforeFetch(tableChangeData)
+    let objs = this.state.searchValue
+    objs.page = 1
+    this.props.tableBeforeFetch&&this.props.tableBeforeFetch(objs)
     this.hiddenSearch()
   }
 

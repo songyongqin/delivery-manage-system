@@ -31,7 +31,6 @@ interface props {
 
 const CountIcon = props => {
   const { title, count=0, style } = props
-  console.log(props)
   return (
     <div className={ styles.container } >
     <div className={ styles.content } style={ ...style } >

@@ -106,7 +106,7 @@ const Pie = ({ data}) => {
   return (
     <div  >
       <Wrap>
-        <PieCharts data={ data.eventBehaviorCount } titles={{ text:'威胁事件统计', link: '/#/analyse/event' }} config={getThreatEventConfig( data.eventBehaviorCount, data.threatLevelCount )} />
+        <PieCharts data={ data.eventBehaviorCount } titles={{ text:'威胁事件统计', link: '/#/analyse/event' }} config={getThreatEventConfig( data.eventBehaviorCount, data.threatLevelCount )}  />
       </Wrap>
       <Wrap>
         <PieCharts data={ data.attackTypeCount } titles={{ text:'攻击类型统计', link: '/#/analyse/attack' }}   />

@@ -12,12 +12,15 @@ const Wrap = props =>{
 
 const getConfig = data => {
   let obj = {}
-  data[0]['selected'] = true
+  // let arr = data.slice(0)
+  // if(arr&&arr.length){
+  //   arr[0]['selected'] = true
+  // }
   obj['series'] = [
     {
       // name:'访问来源',
       type:'pie',
-      selectedMode: 'single',
+      // selectedMode: 'single',
       radius: [0, '60%'],
       center: ['35%', '50%'],
       label: {
@@ -37,7 +40,6 @@ const getConfig = data => {
 }
 
 const Pie = ({ data, title }) => {
-  
   return (
     <Wrap>
       <PieChart data={ data } titles={ { text:title } }  config={ getConfig(data) } />

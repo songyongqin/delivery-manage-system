@@ -14,6 +14,8 @@ export const assetStateFilter = [
   { text: '失陷', value:'失陷'},
 ]
 
+export const limit = 15
+
 //威胁等级
 // export const levelFilter = [
 //   { text: '低危', value:"L" },

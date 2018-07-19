@@ -79,7 +79,8 @@ class AnalyseDetail extends React.Component<any, any> {
       eventReq: { ...initEventArg, 
         attatcedAssetIp: getAttackedIp(props.location.search) },
       ccReq:{ ...initCCtArg, 
-        attatcedAssetIp: getAttackedIp(props.location.search) }
+        attatcedAssetIp: getAttackedIp(props.location.search) },
+      isFetchCC: false
     }
   }
 
@@ -89,7 +90,7 @@ class AnalyseDetail extends React.Component<any, any> {
       
     }
     this.fetchEvent(1)
-    this.fetchCC({})
+    // this.fetchCC({})
   }
 
   fetchEvent = (page=1) => {
@@ -97,7 +98,7 @@ class AnalyseDetail extends React.Component<any, any> {
     this.props.fetch(eventReq)
     .then(res => {
       const { attackedInfo, threatEventInfo, total } = res
-      this.setState({ attackedInfo, threatEventInfo, eventTotal: total,  eventReq })
+      this.setState({ attackedInfo, threatEventInfo, eventTotal: total,  eventReq,  })
     })
     .catch(err => console.error(err) )
   }
@@ -107,13 +108,17 @@ class AnalyseDetail extends React.Component<any, any> {
     this.props.fetchCc(ccReq)
     .then(res => {
       const { c2Record, total } = res
-      this.setState({ c2Record, CCTotal: total, ccReq  })
+      this.setState({ c2Record, CCTotal: total, ccReq, isFetchCC:true  })
     })
     .catch(err => console.error(err) )
   }
 
 
   getValue = str => {
+
+    if(!this.state.isFetchCC&&str==='C&C服务器会话记录'){
+      this.fetchCC({})
+    }
     this.setState({ selectShow: str })
   }
  
