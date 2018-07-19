@@ -14,7 +14,9 @@ export const layoutConfig = {
   fallHost: "/static/config/layout/fallHost.json",
   vm: "/static/config/layout/vm.json",
   auditEvent: "/static/config/layout/auditEvent.json",
-  analyseAttacker: '/static/config/layout/analyseAttacker.json'
+  analyseAttacker: '/static/config/layout/analyseAttacker.json',
+  analyseThreatFamily: '/static/config/layout/analyseThreatFamily.json',
+  analyseThreatLoophole: '/static/config/layout/analyseThreatLoophole.json'
 }
 
 export default {

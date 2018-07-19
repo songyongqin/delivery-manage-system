@@ -31,6 +31,7 @@ import getAnalyseAttackedPage from 'routes/Analyse_Attacked'
 import getAnalyseAttackedDetailPage from 'routes/Analyse_Attacked_Detail'
 import getAnalyseAttackerPage from 'routes/Analyse_Attacker'
 import getAnalyseAttackerDetailPage from 'routes/Analyse_Attacker_Detail'
+import getAnalyseThreatPage from 'routes/Analyse_Threat'
 
 import {
   OVERVIEW_URL,
@@ -166,7 +167,7 @@ export default ({ history, app }) => {
             {/* 威胁视图 */}
             <Route
               exact
-              component={getAnalyseEventPage(app, ANALYSE_THREAT_URL)}
+              component={getAnalyseThreatPage(app, ANALYSE_THREAT_URL)}
               path={ANALYSE_THREAT_URL} >
             </Route>
             {/* 攻击链分析 */}

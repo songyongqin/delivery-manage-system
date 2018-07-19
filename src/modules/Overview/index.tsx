@@ -11,6 +11,7 @@ import Pie from './components/Pie'
 
 import { OVERVIEW_STATISTICS_COUNT } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
+import { Input } from 'antd'
 
 
 const MapStateToProps = state => {
@@ -77,6 +78,11 @@ class Page extends React.Component<any, any> {
       console.log(res)
     } )
     .catch( err => console.error(err)  )
+  }
+
+  getValue = e => {
+    let value = e.target.value ? e.target.value : ''
+    console.log(value.toString())
   }
 
   render() {

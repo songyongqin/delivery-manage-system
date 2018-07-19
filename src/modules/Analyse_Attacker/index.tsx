@@ -14,6 +14,7 @@ import WithConfig from 'domainComponents/WithConfig'
 import WithTableConfig from 'domainComponents/WithTableConfig'
 import path from 'constants/path'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
+import ArrayTag from './components/ArrayTag'
 import {
   assetStateFilter,
   levelFilter
@@ -88,6 +89,8 @@ class Page extends React.Component<any, any> {
   componentDidMount(){
     this.fetchTable({})
   }
+
+
 
 
   getNowTime = () => new Date().getTime()
@@ -173,7 +176,8 @@ class Page extends React.Component<any, any> {
       },
       { title:'攻击者域名', 
         dataIndex:'attackerDomainName', 
-        types:['search']
+        types:['search'],
+        render: text => <ArrayTag data={ text } />
       },
       { title:'攻击者所在地',   
         dataIndex:'attackerWhere', 

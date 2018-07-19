@@ -147,9 +147,6 @@ class Page extends React.Component<any, any> {
     this.fetchTable({ page:1 })
   }
 
-  componentWillUnmount(){
-    console.log('xxx')
-  }
 
   render() {
 

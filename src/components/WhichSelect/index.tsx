@@ -8,7 +8,7 @@ interface props {
   getValue: (any) => any
 }
 
-class WhichSelect extends React.Component<any, any>{
+class WhichSelect extends React.Component<props, any>{
   constructor(props){
     super(props)
     this.state={

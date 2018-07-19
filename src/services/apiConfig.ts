@@ -183,6 +183,12 @@ const HttpApiConfig = {
 
   ANALYSEATTACKER_DETAIL_THREATEN: '/analyse/attacker-details-threaten', 
 
+  ANALYSE_THREAT_FAMILY: '/analyse/threat-family',
+
+  ANALYSE_THREAT_COUNT: '/analyse/threat-count',
+
+  ANALYSE_THREAT_Loophole: '/analyse/threat-attack-loophole',
+
 }
 
 
