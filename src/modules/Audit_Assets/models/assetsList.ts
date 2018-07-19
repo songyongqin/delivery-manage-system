@@ -1,5 +1,5 @@
 import { AUDIT_ASSETS_NAMESPACE } from 'constants/model'
-import { fetchAuditAssets, fetchAuditAssetsList, fetchAuditConfig, fetchAuditEdit } from '../services'
+import { fetchAuditAssets, fetchAuditAssetsList, fetchAuditConfig, fetchAuditEdit, getfetchAuditConfig } from '../services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
 
 export default {
@@ -8,6 +8,7 @@ export default {
     fetchAuditAssets: commonEffectCreator(fetchAuditAssets),
     fetch: commonEffectCreator(fetchAuditAssetsList),
     fetchAuditConfig: commonEffectCreator(fetchAuditConfig),
-    fetchAuditEdit: commonEffectCreator(fetchAuditEdit)
+    fetchAuditEdit: commonEffectCreator(fetchAuditEdit),
+    getfetchAuditConfig: commonEffectCreator(getfetchAuditConfig),
   }
 }

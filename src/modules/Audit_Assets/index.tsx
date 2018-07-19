@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Menu, Button, Breadcrumb, Tabs } from 'antd'
 import extraConnect from 'domainUtils/extraConnect'
 import AssetsList from './components/AssetsList'
+import ScanRecord from './components/ScanRecord/'
 import DateRangePicker from 'domainComponents/DateRangePicker'
 import { last } from 'utils'
 import { getAppConfig } from 'domain/app'
@@ -26,6 +27,7 @@ class Page extends React.Component<any, any> {
             <AssetsList></AssetsList>
           </Tabs.TabPane>
           <Tabs.TabPane tab="资产扫描记录" key="assetsScanRecord">
+            <ScanRecord></ScanRecord>
           </Tabs.TabPane>
         </Tabs>
 

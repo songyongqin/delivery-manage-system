@@ -77,6 +77,11 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ASSETS_PORT_NAMESPACE = "AuditPort",
 
+  ASSETS_CONFIG_NAMESPACE = "AuditConfig",
+
+  ASSETS_RECORD_NAMESPACE = "AuditRecord",
+
+  ASSETS_NEWRECORD_NAMESPACE = "AuditnewRecord",
 
   OVERVIEW_STATISTICS_COUNT = 'overviewStatisticsCount',
 

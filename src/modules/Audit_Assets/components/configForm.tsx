@@ -16,7 +16,8 @@ const TextArea = Input.TextArea
 )
 class configForm extends React.Component<any, any> {
   state = {
-    select: null
+    select: null,
+    change:false
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ class configForm extends React.Component<any, any> {
       const values = {
         'isScanning': fieldsValue['isScanning'] ? 1 : 0,
         'scanCycle':fieldsValue['scanCycle']=="define"?fieldsValue['define']:fieldsValue['scanCycle'],
-        'startTimer': fieldsValue['startTimer'].unix(),
+        'startTime': fieldsValue['startTime'].unix(),
         'scanIpRange': fieldsValue['scanIpRange'].split(/[\n]/),
         'checkPort':fieldsValue['checkPort']?fieldsValue['checkPort'].split(','):[]
       };
@@ -37,7 +38,7 @@ class configForm extends React.Component<any, any> {
   }
 
   selectChange = (select) => {
-    this.setState({ select })
+    this.setState({ select,change:true })
   }
   range = (start, end) => {
     const result = [];
@@ -48,6 +49,8 @@ class configForm extends React.Component<any, any> {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
+    const {defaultConfig}=this.props;
+
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -64,7 +67,8 @@ class configForm extends React.Component<any, any> {
           {...formItemLayout}
           label="开启资产扫描"
         >
-          {getFieldDecorator('isScanning')(
+          {getFieldDecorator('isScanning',{valuePropName: 'checked',
+            initialValue: defaultConfig.isScanning == 1})(
             <Switch checkedChildren="开" unCheckedChildren="关" />
           )}
         </FormItem>
@@ -72,7 +76,7 @@ class configForm extends React.Component<any, any> {
           {...formItemLayout}
           label="扫描周期"
         >
-          {getFieldDecorator('scanCycle', { initialValue: "0" })(
+          {getFieldDecorator('scanCycle', { initialValue: defaultConfig.scanCycle==0||defaultConfig.scanCycle==1||defaultConfig.scanCycle==7||defaultConfig.scanCycle==14?defaultConfig.scanCycle.toString():"define" })(
             <Select style={{ width: "120px" }} onChange={this.selectChange}>
               {
                 SCANCYCLE.map(i => <Option key={i.value} value={i.value}>{i.text}</Option>)
@@ -81,17 +85,14 @@ class configForm extends React.Component<any, any> {
           )}
         </FormItem>
         {
-          this.state.select == "define"
+          this.state.select == "define"||(!this.state.change&&defaultConfig.scanCycle!=0&&defaultConfig.scanCycle!=1&&defaultConfig.scanCycle!=7&&defaultConfig.scanCycle!=14)
             ?
             <FormItem
               {...formItemLayout}
               label="自定义"
             >
-              {getFieldDecorator('define', {
+              {getFieldDecorator('define', { initialValue:  this.state.select == "define"?null:defaultConfig.scanCycle},{
                 rules: [
-                  //   {
-                  //   type: 'number', message: '无效的天数',
-                  // }
                   {
                     required: true, message: '自定义天数不能为空',
                   }],
@@ -108,7 +109,7 @@ class configForm extends React.Component<any, any> {
           {...formItemLayout}
           label="扫描开始时间"
         >
-          {getFieldDecorator('startTimer', { initialValue: moment(moment(), 'YYYY-MM-DD HH') })(
+          {getFieldDecorator('startTime', { initialValue:moment(moment(defaultConfig.startTime * 1000), 'YYYY-MM-DD HH')  })(
             <DatePicker showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss'), disabledMinutes: () => this.range(0, 60), disabledSeconds: () => this.range(0, 60), }} format="YYYY-MM-DD HH" />
           )}
         </FormItem>
@@ -116,13 +117,14 @@ class configForm extends React.Component<any, any> {
           {...formItemLayout}
           label="扫描IP范围"
         >
-          {getFieldDecorator('scanIpRange', {
+          {getFieldDecorator('scanIpRange',{initialValue:defaultConfig.scanIpRange}, {
             rules: [
               {
                 required: true, message: '扫描IP范围不能为空',
               }]
           })(
-            <TextArea placeholder="多个IP段请换行隔开，如：
+            <TextArea
+            placeholder="多个IP段请换行隔开，如：
             172.31.50.1-172.31.50.255
             172.31.51.1-172.31.51.255" autosize={{ minRows: 2, maxRows: 6 }} />
           )}
@@ -131,7 +133,7 @@ class configForm extends React.Component<any, any> {
           {...formItemLayout}
           label="检测端口"
         >
-          {getFieldDecorator('checkPort', {})(
+          {getFieldDecorator('checkPort', {initialValue:defaultConfig.checkPort})(
             <TextArea placeholder="不填则默认检测全部端口
             填写多个端口请用逗号隔开，如：
             1,2,3,4,5" autosize={{ minRows: 2, maxRows: 6 }} />
