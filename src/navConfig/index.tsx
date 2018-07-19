@@ -74,12 +74,12 @@ import {
   CONFIG_SYS_LOG_LOGIN_URL,
 
   CONFIG_SYS_CONFIG_URL,
-  
+
   CONFIG_SYS_CONFIG_NETWORK_URL,
 
   CONFIG_SYS_CONFIG_MONITOR_URL,
 
-  CONFIG_SYS_CONFIG_WARN_URL
+  CONFIG_SYS_CONFIG_WARN_URL,
 
 
 } from 'routes/config/path'
@@ -308,7 +308,7 @@ export const _navConfig = [
             icon: <Indent space={1} />,
           }
         ]
-      },{
+      }, {
         link: CONFIG_SYS_CONFIG_URL,
         title: "系统配置",
         icon: <Indent  />,

@@ -8,9 +8,9 @@ export default (app: any, url: string): React.Component => {
   return dynamic({
     app,
     models: () => [
-      System.import(/* webpackChunkName: "AnalyseFallHostModel" */'modules/Audit_Event/model'),
+      System.import(/* webpackChunkName: "AuditEventModel" */'modules/Audit_Event/model'),
     ].map(asyncModulePipe),
-    component: () => System.import(/* webpackChunkName: "AnalyseFallHostPage" */'modules/Audit_Event')
+    component: () => System.import(/* webpackChunkName: "AuditEventPage" */'modules/Audit_Event')
       .then(page => WithRouteInit(url)(page.default)),
   })
 

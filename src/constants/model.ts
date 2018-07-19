@@ -69,6 +69,15 @@ export const LAYOUT_NAMESPACE = "layout",
 
   MANAGER_MIRROR_OPERATION_NAMESPACE = "managerMirrorOperation",
 
+  AUDIT_EVENT_NAMESPACE = "auditEvent",
+
+  AUDIT_ASSETS_NAMESPACE = "AuditAssets",
+
+  ASSETS_LOOPHOLE_NAMESPACE = "AuditLoophole",
+
+  ASSETS_PORT_NAMESPACE = "AuditPort",
+
+
   OVERVIEW_STATISTICS_COUNT = 'overviewStatisticsCount',
 
 
@@ -82,7 +91,8 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ANALYSE_ATTACKED_DETAIL = 'analyseAttackedDetail',
 
-  ANALYSE_ATTACKER_DETAIL = 'analyseAttackerDetail',
+  ANALYSE_ATTACKER_DETAIL = 'analyseAttackerDetail'
 
-  AUDIT_EVENT_NAMESPACE = "auditEvent"
+
+
 

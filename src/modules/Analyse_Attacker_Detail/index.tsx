@@ -10,7 +10,6 @@ import WhichSelect from 'components/WhichSelect'
 import Whois from './components/Whois'
 import LevelTag from 'components/LevelTag'
 import TimeTag from 'components/TimeTag'
-import { ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 const style = require('./index.less')
 import {
   selectArr,

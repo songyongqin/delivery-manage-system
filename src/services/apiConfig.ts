@@ -3,6 +3,12 @@ const baseUrl = ""
 const HttpApiConfig = {
 
   AUDIT_EVENT: "/audit/basic-event",
+  AUDIT_ASSETS: "/audit/assets-statistics",
+  AUDIT_ASSETS_LIST: "/audit/assets-list",
+  AUDIT_ASSETS_DETAIL_LOOPHLE: "/audit/assets-detail/loophole",
+  AUDIT_ASSETS_DETAIL_PORT: "/audit/assets-detail/port",
+  AUDIT_ASSETS_CONFIG_PORT: "/audit/assets-scan/config",
+  AUDIT_ASSETS_EDIT_PORT: "/audit/assets-edit",
 
   ENUM_CONFIG: "/enum-config",
 
