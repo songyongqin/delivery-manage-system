@@ -70,6 +70,7 @@ class TableWithRemote extends React.Component<any, any>{
       payload: filters
     })
       .then(res => {
+
         onDataChange && onDataChange(res)
         this.setState({
           data: res.data,

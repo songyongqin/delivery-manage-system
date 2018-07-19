@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Button } from 'antd'
 import columnsCreator from 'domainUtils/columnsCreator'
 import Tag from 'components/Tag'
+import TimeLabel from 'components/TimeLabel'
 export const ASSETSIP = "assetsIp",
   ASSETSTATES = "assetStates",
   HOSTNAME = "hostName",
@@ -43,6 +44,7 @@ export const getColumns = ({ filters, showDetailModal, showEditModal }) => {
     dataIndexes: dataIndexes,
     titleConfig: textConfig,
     renderer: {
+      [SCANTIME]: (value) => <TimeLabel value={value}></TimeLabel>
       [OPERATE]: (value, record) => <div><Button type="primary" size="small" onClick={showDetailModal}>详情</Button>&nbsp;<Button type="primary" size="small" onClick={_ => showEditModal(record.assetsIp)}>编辑</Button></div>
     }
   })

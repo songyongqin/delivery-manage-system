@@ -70,6 +70,12 @@ const dataItems = [
           type: `${AUDIT_ASSETS_NAMESPACE}/fetchAuditEdit`,
           payload
         }
+      ),
+      getfetchAuditConfig: payload => dispatch(
+        {
+          type: `${AUDIT_ASSETS_NAMESPACE}/getfetchAuditConfig`,
+          payload
+        }
       )
     }
   }
@@ -88,7 +94,8 @@ export default class CommonItem extends React.Component<any, any>{
       detailVisible: false,
       configVisible: false,
       editVisible: false,
-      assetsIp: ""
+      assetsIp: "",
+      defaultConfig: {}
     }
   }
   componentDidMount() {
@@ -98,6 +105,9 @@ export default class CommonItem extends React.Component<any, any>{
         data: payload
       })
     )
+    this.props.getfetchAuditConfig().then(res => this.setState({
+      defaultConfig: res
+    }))
   }
   showDetailModal = () => {
     this.setState({
@@ -105,7 +115,7 @@ export default class CommonItem extends React.Component<any, any>{
     });
   }
   showEditModal = (assetsIp) => {
-    console.info(assetsIp)
+
     this.setState({
       editVisible: true,
       assetsIp
@@ -174,13 +184,14 @@ export default class CommonItem extends React.Component<any, any>{
             remoteNamespace={AUDIT_ASSETS_NAMESPACE}>
             ></TableWithRemote>
           <Modal
+            // destroyOnClose={true}
             title="资产扫描配置"
             visible={this.state.configVisible}
             onCancel={this.handleCancel}
             onOk={this.handleOk}
             footer={null}
           >
-            <ConfigForm onOk={this.handleOk}></ConfigForm>
+            <ConfigForm onOk={this.handleOk} defaultConfig={this.state.defaultConfig}></ConfigForm>
           </Modal>
           <Modal
             width="80%"

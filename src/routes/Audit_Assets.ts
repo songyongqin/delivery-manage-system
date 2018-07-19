@@ -10,6 +10,8 @@ export default (app: any, url: string): React.Component => {
       System.import(/* webpackChunkName: "AssetsListModel" */'modules/Audit_Assets/models/assetsList'),
       System.import(/* webpackChunkName: "AssetsloopholeModel" */'modules/Audit_Assets/models/loophole'),
       System.import(/* webpackChunkName: "AssetsPortModel" */'modules/Audit_Assets/models/port'),
+      System.import(/* webpackChunkName: "AssetsRecordModel" */'modules/Audit_Assets/models/auditRecord'),
+      System.import(/* webpackChunkName: "AssetsnowRecordModel" */'modules/Audit_Assets/models/auditnowRecord')
 
     ].map(asyncModulePipe),
     component: () => System.import(/* webpackChunkName: "AuditAssetsPage" */'modules/Audit_Assets')
