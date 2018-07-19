@@ -12,15 +12,16 @@ const Wrap = props =>{
 
 const getConfig = data => {
   let obj = {}
-  if(data[0]){
-    data[0]['selected'] = true
-  }
+  // let arr = JSON.parse(JSON.stringify(data))
+  // if(arr&&arr.length){
+  //   arr[0]['selected'] = true
+  // }
   // obj['']
   obj['series'] = [
     {
       // name:'访问来源',
       type:'pie',
-      selectedMode: 'single',
+      // selectedMode: 'single',
       radius: [0, '60%'],
       center: ['35%', '50%'],
       // avoidLabelOverlap: true,
@@ -42,7 +43,7 @@ const getConfig = data => {
   return obj
 }
 
-const Pie = ({ data, title }) => {
+const Pie = ({ data, title,  }) => {
   
   return (
     <Wrap>

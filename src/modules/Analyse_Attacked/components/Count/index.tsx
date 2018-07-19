@@ -41,25 +41,31 @@ class Count extends Component<any, any>{
       attackedAssetsCount: 0,
       attackedCountArr:[{}],
       attackedAssetsArr:[{}],
+      key:0
     }
   }
 
   componentDidMount(){
     this.getCount()
+    // this.setState({ key: +new Date() })
   }
 
+
   getCount = () => {
-    console.log(this.props.timestampRange)
+    // console.log(this.props.timestampRange)
     this.props.fetchCount({timestampRange: this.props.timestampRange})
     .then(res => {
       this.setState({
         attackedAssetsCount: res.attackedAssetsCount,
         attackedCountArr: res.attackedCountArr,
-        attackedAssetsArr: res.attackedAssetsArr
+        attackedAssetsArr: res.attackedAssetsArr, 
+        key: +new Date()
       })
     } )
     .catch(err => console.error(err) )
   }
+
+
 
   render(){
     const { loading } = this.props
@@ -69,7 +75,7 @@ class Count extends Component<any, any>{
         <Spin spinning={ loading } >
           <CountIcon title={ '受攻击资产' } count={ attackedAssetsCount } />
           <Pie data={ attackedCountArr } title={ '受攻击次数排行统计'} />
-          <Pie data={ attackedAssetsArr } title={ '资产状态统计'} />
+          <Pie data={ attackedAssetsArr } title={ '资产状态统计'}  />
         </Spin>
       </div>
     )

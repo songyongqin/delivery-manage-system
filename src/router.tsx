@@ -30,6 +30,7 @@ import getAuditAssetsPage from 'routes/Audit_Assets'
 import getAnalyseAttackedPage from 'routes/Analyse_Attacked'
 import getAnalyseAttackedDetailPage from 'routes/Analyse_Attacked_Detail'
 import getAnalyseAttackerPage from 'routes/Analyse_Attacker'
+import getAnalyseAttackerDetailPage from 'routes/Analyse_Attacker_Detail'
 
 import {
   OVERVIEW_URL,
@@ -69,6 +70,8 @@ import {
   ANALYSE_ATTACKED_ASSETS_DETAL_URL,
 
   ANALYSE_ATTACK_URL,
+
+  ANALYSE_ATTACK_DETAL_URL,
 
   ANALYSE_THREAT_URL,
 
@@ -133,7 +136,7 @@ export default ({ history, app }) => {
             {/* 事件视图 */}
             <Route
               exact
-              component={getAnalyseEventPage(app, ANALYSE_EVENT_URL)}
+              component={getAnalyseAttackedPage(app, ANALYSE_EVENT_URL)}
               path={ANALYSE_EVENT_URL} >
             </Route>
             {/* 受攻击资产视图 */}
@@ -153,6 +156,12 @@ export default ({ history, app }) => {
               exact
               component={getAnalyseAttackerPage(app, ANALYSE_ATTACK_URL)}
               path={ANALYSE_ATTACK_URL} >
+            </Route>
+            {/* 攻击者视图 */}
+            <Route
+              exact
+              component={getAnalyseAttackerDetailPage(app, ANALYSE_ATTACK_DETAL_URL)}
+              path={ANALYSE_ATTACK_DETAL_URL} >
             </Route>
             {/* 威胁视图 */}
             <Route

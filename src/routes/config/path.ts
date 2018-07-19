@@ -50,6 +50,8 @@ export const ROOT_URL = "/",
 
   ANALYSE_ATTACK_URL = '/analyse/attacker',
 
+  ANALYSE_ATTACK_DETAL_URL = '/analyse/attacker/detail',
+
   ANALYSE_ATTACK_DETAIL_URL = '/analyse/attacker/detail',
 
   ANALYSE_THREAT_URL = '/analyse/threat',

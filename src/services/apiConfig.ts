@@ -177,6 +177,13 @@ const HttpApiConfig = {
 
   ANALYSE_ATTACKER_COUNT: '/analyse/attacker-count',
 
+  ANALYSE_ATTACKER_SEARCH: '/analyse/attacker-search',
+
+  ANALYSE_ATTACKER_CONSTANTS: '/analyse/attacker-constants', //弃用
+
+  ANALYSEATTACKER_DETAIL_IP: '/analyse/attacker-details-ip',
+
+  ANALYSEATTACKER_DETAIL_THREATEN: '/analyse/attacker-details-threaten', 
 
 }
 

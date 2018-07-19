@@ -1,11 +1,11 @@
-import { ANALYSE_ATTACKED_COUNT } from 'constants/model'
-import { fetchAnalyseAttackedCount } from './services'
+import { ANALYSE_ATTACKER_COUNT } from 'constants/model'
+import { fetchAnalyseAttackerCount } from './services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
 
 export default {
-  namespace: ANALYSE_ATTACKED_COUNT,
+  namespace: ANALYSE_ATTACKER_COUNT,
   effects: {
-    fetchCount: commonEffectCreator(fetchAnalyseAttackedCount),
+    fetchCount: commonEffectCreator(fetchAnalyseAttackerCount),
   }
 }
 

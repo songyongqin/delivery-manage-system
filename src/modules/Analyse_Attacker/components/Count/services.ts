@@ -3,6 +3,6 @@ import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
 
 
-export const fetchAnalyseAttackedCount= commonRequestCreator.getWithQueryString(httpApi.ANALYSE_ATTACKER_COUNT)
+export const fetchAnalyseAttackerCount= commonRequestCreator.getWithQueryString(httpApi.ANALYSE_ATTACKER_COUNT)
 
 

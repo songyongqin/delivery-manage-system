@@ -4,7 +4,7 @@ import React from 'react'
 import WithTable from 'components/WithTable'
 import { ANALYSE_ATTACK_DETAIL_URL } from 'routes/config/path'
 import { Tag } from 'antd'
-import TimeTag from 'components/TimeTag'
+import tranformTime from 'utils/tranformTime'
 
 
 let tranformColor = text => {
@@ -20,11 +20,11 @@ let columns = [
   },
   { title:'首次发生时间', 
     dataIndex:'firstTime',
-    render: text =>  <TimeTag num={ text } />
+    render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
   },
   { title:'最近发生时间', 
     dataIndex:'latelyTime',
-    render: text =>  <TimeTag num={ text } />
+    render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
   },
   { title:'威胁行为', 
     dataIndex:'threatenBehavior'

@@ -3,12 +3,17 @@ import WithAnimateRender from 'components/WithAnimateRender'
 import DateRangePicker from 'domainComponents/DateRangePicker'
 import WithTable from 'components/WithTable'
 import Count from './components/Count'
-import { ANALYSE_ATTACKED_VIEW } from 'constants/model'
+import { ANALYSE_ATTACKER_VIEW } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
 import { Pagination ,Tag, Input } from 'antd'
-import { ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
+import { ANALYSE_ATTACK_DETAL_URL } from 'routes/config/path'
 import WithPagination from 'components/WithPagination'
+import tranformTime from 'utils/tranformTime'
+import WithConfig from 'domainComponents/WithConfig'
+import WithTableConfig from 'domainComponents/WithTableConfig'
+import path from 'constants/path'
+import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import {
   assetStateFilter,
   levelFilter
@@ -18,19 +23,19 @@ import {
 const mapStateToprops = state => {
   return {
     state,
-    tableLoading: state.loading.effects[`${ANALYSE_ATTACKED_VIEW}/fetchView`]
+    tableLoading: state.loading.effects[`${ANALYSE_ATTACKER_VIEW}/fetchSearch`]
   }
 }
 
 const mapDispatchToprops = dispatch => {
   return {
     dispatch,
-    fetch: payload => dispatch({
-      type: `${ANALYSE_ATTACKED_VIEW}/fetchView`,
+    search: payload => dispatch({
+      type: `${ANALYSE_ATTACKER_VIEW}/fetchSearch`,
       payload
     }),
-    search: payload => dispatch({
-      type: `${ANALYSE_ATTACKED_VIEW}/fetchSearch`,
+    fetchConstants: payload => dispatch({
+      type: `${ANALYSE_ATTACKER_VIEW}/fetchConstants`,
       payload
     })
   }
@@ -47,7 +52,8 @@ const initArg = {
   timestampRange:[]
 }
 
-
+@WithTableConfig(path.layoutConfig.analyseAttacker)
+// @WithConfig(path.layoutConfig.analyseAttacker)
 @WithAnimateRender
 @extraConnect(mapStateToprops, mapDispatchToprops)
 class Page extends React.Component<any, any> {
@@ -61,7 +67,7 @@ class Page extends React.Component<any, any> {
       tableData:[],
       reqArg: {...initArg},
       tableKey: '0attacked',
-      countKey: 'oattackedcount',
+      countKey: 'oattackercount',
       total:0,
     }
   }
@@ -82,6 +88,7 @@ class Page extends React.Component<any, any> {
   componentDidMount(){
     this.fetchTable({})
   }
+
 
   getNowTime = () => new Date().getTime()
 
@@ -140,54 +147,59 @@ class Page extends React.Component<any, any> {
 
   searchEnter = () => {
     // let { reqArg } = this.state
-    this.fetchTable({})
+    this.fetchTable({page:1})
   }
 
   render() {
 
-    const { visible, activeKey, lastChangeTime, filters, tableData } = this.state
+    const { filters, tableData } = this.state
 
     let columns = [
-      { title:'首次受攻击时间', 
-        dataIndex:'attackedFirstTime'
+      { title:'序号', 
+        dataIndex:'index',
+        render: ( text, record, index ) => <div>{ index }</div>
         },
-      { title:'最近受攻击时间', 
-        dataIndex:'attackedLatelyTime'
+      { title:'首次攻击时间', 
+        dataIndex:'attackFirstTime',
+        render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
+        },
+      { title:'最近攻击时间', 
+        dataIndex:'attackLatelyTime',
+        render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
       },
-      { title:'受攻击资产IP', 
-        dataIndex:'attatcedAssetIp', 
+      { title:'攻击者IP', 
+        dataIndex:'attackerIP', 
         types:['search']
       },
-      { title:'受攻击次数', 
-        dataIndex:'attackedCount', 
-        types:['sorter']
+      { title:'攻击者域名', 
+        dataIndex:'attackerDomainName', 
+        types:['search']
       },
-      { title:'资产状态',   
-        dataIndex:'assetStates', 
+      { title:'攻击者所在地',   
+        dataIndex:'attackerWhere', 
         types:['filters']
       },
-      { title:'威胁等级', 
-        dataIndex:'level', 
+      { title:'攻击者组织', 
+        dataIndex:'attackGroup', 
         types:['filters']
       },
-      { title:'操作', 
+      { title:'攻击者家族', 
+        dataIndex:'family', 
+        types:['search']
+      },
+      { title:'详细信息', 
         dataIndex:'actions', 
         render: (text,record,index) =>
           <div style={{ textAlign:'center' }}  >
           {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
-            <a  href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${record.attatcedAssetIp}` }
+            <a  href={ `/#${ANALYSE_ATTACK_DETAL_URL}?attackerIP=${record.attackerIP}` }
                   style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} >查看</a>
           </div>
       },
     ]
 
-    let constants = {
-      filter: {
-        level: levelFilter,
-        assetStates: assetStateFilter
-      }
-    }
-
+    let constants = this.props.config.constants || { }
+  
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
@@ -204,17 +216,17 @@ class Page extends React.Component<any, any> {
         </div>
         {
           this.props.animateRender([
-            <div key='event-count' >
+            <div key='analyse-attacker-count' >
             {/* 统计数据 */}
               <Count  key={ this.state.countKey } />
             </div>,
-            <div key="event-attacked-table">
+            <div key="analyse-attacker-table">
             <button onClick={ this.reset } >重置筛选</button>
             <Spin spinning={ this.props.tableLoading  } >
               <WithTable  tableData={ tableData }
                         key = { this.state.tableKey }
                         constants={ constants }
-                        config={ columns }
+                        config={ combineColumnsConfig(columns,this.props.config.columns) }
                         tableBeforeFetch={ this.tableBeforeFetch } />
               <WithPagination total={this.state.total}
                               onChange={ this.paginationOnchange }

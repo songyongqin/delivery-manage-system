@@ -96,7 +96,8 @@ export default class extends React.Component {
     super(props)
   }
   state = {
-    openKeys: []
+    openKeys: [],
+    selectedKeys:[]
   }
   onOpenChange = openKeys => {
     //授权过期不进行展开操作
@@ -175,13 +176,15 @@ export default class extends React.Component {
         target = [...target, `${target[target.length - 1]}/${item}`]
 
     }, [])
+    
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu
           openKeys={this.state.openKeys}
           onOpenChange={this.onOpenChange}
           mode={mini ? "vertical" : "inline"}
-          selectedKeys={selectedKeys}>
+          inlineIndent={ 10 }
+          selectedKeys={[last(selectedKeys)]}>
           {getMenuContent({ navConfig, mini, selectedKeys })}
         </Menu>
       </nav>

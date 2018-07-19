@@ -34,7 +34,7 @@ let getOption = ({ data ,theme, titles }) =>  ({
     orient: 'vertical',
     right: 'right',
     bottom: '10',
-    data: data.map(i => i.name),
+    data: Array.isArray(data) ? data.map(i => i.name) : [],
     textStyle: config[theme]
   },
   // color: [
@@ -77,16 +77,50 @@ let getOption = ({ data ,theme, titles }) =>  ({
 })
 
 
-const PieCharts = ({ data=[], theme=LIGHT_THEME, titles={}, config={} }) => {
+const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={} }) => {
   let option = { ...getOption({data, theme, titles}), ...config }
 
-  return <div style={{ width: "100%", height: "400px" }}>
+  if(Array.isArray(data) ){
+    return <div style={{ width: "100%", height: "400px" }}>
     <ReactEcharts
       style={{ height: "100%" }}
       option={ option }>
     </ReactEcharts>
   </div>
+  }
+  return <div style={{ width: "100%", height: "400px" }}>
+    {/* <ReactEcharts
+      style={{ height: "100%" }}
+      option={ option }>
+    </ReactEcharts> */}
+  </div>
 
 }
+
+// class PieCharts extends React.Component<any,any>{
+//   constructor(props){
+//     super(props)
+//     this.state = {
+//     }
+//   }
+  
+//   render(){
+//     const { data, theme, titles, config } = this.props
+//     let option = { ...getOption({data, theme, titles}), ...config }
+//     console.log('option', option, this.props)
+//     return (
+//     <div style={{ width: "100%", height: "400px" }}   >
+//       {
+//         option ? 
+//         <ReactEcharts
+//         style={{ height: "100%" }}
+//         option={ option }>
+//       </ReactEcharts>
+//       : <div></div>
+//       }
+//     </div>
+//     )
+//   }
+// } 
 
 export default WithCommonProps(PieCharts)
