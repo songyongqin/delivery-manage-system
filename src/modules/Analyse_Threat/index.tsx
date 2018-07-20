@@ -12,6 +12,8 @@ import ExtraIcon from 'components/Icon'
 import FamilyTable from './components/FamilyTable'
 import LoopholeTable from './components/LoopholeTable'
 import { SelectArr } from './constants'
+import tranformParmToObj from 'utils/tranformParmToObj' 
+
 
 
 
@@ -62,6 +64,16 @@ const initReqFamily = {
   // searchValue:''
 }
 
+const getInitSelect =str => {
+  if(!str) return SelectArr[0]
+  else {
+    let obj = tranformParmToObj(str)
+    if(obj&&obj['type']==='loophole'){
+      return SelectArr[1]
+    }
+    else return SelectArr[0]
+  }
+}
 
 @WithAnimateRender
 @extraConnect(mapStateToprops, mapDispatchToprops)
@@ -89,8 +101,10 @@ class Page extends React.Component<any, any> {
       familyData:[],
       loopholeTotal:0,
       loopholeData:[],
-      selected: SelectArr[0],
-      isFetchLoophole: false 
+      selected: getInitSelect(props.location.search),
+      isFetchLoophole: false ,
+      isFetchFamily: false,
+      type: props.location
     }
   }
 
@@ -112,8 +126,14 @@ class Page extends React.Component<any, any> {
   componentDidMount(){
     // this.fetchTable({})
     this.getThreatCount({})
-    this.fetchFamilyTable({})
+    if(this.state.selected===SelectArr[0]){
+      this.fetchFamilyTable({})
+    }
+    else{
+      this.fetchLoopholeTable({})
+    }
   }
+
   
   getThreatCount = obj => {
     let timestampRange = obj.timestampRange ? obj.timestampRange : []
@@ -134,7 +154,7 @@ class Page extends React.Component<any, any> {
     this.props.fetchFamily(reqFamily)
     .then( res => {
       let { total, data } = res
-      this.setState({ familyTotal: total, familyData: data, reqFamily })
+      this.setState({ familyTotal: total, familyData: data, reqFamily, isFetchFamily: true })
     })
     .catch( err => console.error(err)  )
   }
@@ -163,6 +183,9 @@ class Page extends React.Component<any, any> {
     this.setState({ selected: value  })
     if(!this.state.isFetchLoophole){
       this.fetchLoopholeTable({})
+    }
+    if(!this.state.isFetchFamily){
+      this.fetchFamilyTable({})
     }
   }
 
@@ -241,7 +264,7 @@ class Page extends React.Component<any, any> {
               </div>
             </div>,
             <div key="analyse-threat-table">
-            <WhichSelect data={ SelectArr } getValue={ this.getSelectValue } />
+            <WhichSelect data={ SelectArr } getValue={ this.getSelectValue } init={selected} />
             <button onClick={ this.reset } >重置筛选</button>
             {
               selected===SelectArr[0] ? 

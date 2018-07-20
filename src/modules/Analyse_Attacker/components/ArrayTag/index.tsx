@@ -19,7 +19,7 @@ const getArr = arr => {
 }
 
 const Content = ({ data }) => {
-  console.log(data)
+  // console.log(data)
   return (
     <div>
       {

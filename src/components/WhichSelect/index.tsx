@@ -5,14 +5,26 @@ const style = require('./index.less')
 
 interface props {
   data: Array<string>,
+  init?: string
   getValue: (any) => any
+}
+
+const tranform = (str:string, data:Array<string>):string => {
+  let num = 0
+  for(let i=0; i<data.length; i++){
+    if(data[i]===str) {
+      num = i 
+      break
+    }
+  }
+  return num +''
 }
 
 class WhichSelect extends React.Component<props, any>{
   constructor(props){
     super(props)
     this.state={
-      select: '0'
+      select: tranform(props.init, props.data)
     }
   }
 
@@ -26,6 +38,7 @@ class WhichSelect extends React.Component<props, any>{
   render(){
     let  data = this.props.data
     const { select } = this.state
+    // console.log(select)
     if(!Array.isArray(data)) {
       data = []
     }

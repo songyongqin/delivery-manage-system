@@ -98,7 +98,9 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ANALYSE_ATTACKER_DETAIL = 'analyseAttackerDetail',
 
-  ANALYSE_THREAT_VIEW = 'analyseThreatView'
+  ANALYSE_THREAT_VIEW = 'analyseThreatView',
+
+  ANALYSE_THREAT_DETAIL= 'analyseThreatDetail'
 
 
 
