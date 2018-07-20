@@ -27,6 +27,7 @@ import getFileRestorePage from 'routes/FileRestore'
 import getAuditEventPage from 'routes/Audit_Event'
 import getAuditAssetsPage from 'routes/Audit_Assets'
 
+import getAnalyseEventViewPage from 'routes/Analyse_Event_View'
 import getAnalyseAttackedPage from 'routes/Analyse_Attacked'
 import getAnalyseAttackedDetailPage from 'routes/Analyse_Attacked_Detail'
 import getAnalyseAttackerPage from 'routes/Analyse_Attacker'
@@ -142,7 +143,7 @@ export default ({ history, app }) => {
             {/* 事件视图 */}
             <Route
               exact
-              component={getAnalyseAttackedPage(app, ANALYSE_EVENT_URL)}
+              component={getAnalyseEventViewPage(app, ANALYSE_EVENT_URL)}
               path={ANALYSE_EVENT_URL} >
             </Route>
             {/* 受攻击资产视图 */}
