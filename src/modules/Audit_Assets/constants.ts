@@ -7,11 +7,6 @@ export const LASTUPDATETIME = "lastUpdateTime",
 
 export const SCANCYCLE = [
   {
-    value: "0",
-    text: "只扫描一次"
-
-  },
-  {
     value: "1",
     text: "每天"
   },

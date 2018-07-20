@@ -76,7 +76,7 @@ class configForm extends React.Component<any, any> {
           {...formItemLayout}
           label="扫描周期"
         >
-          {getFieldDecorator('scanCycle', { initialValue: defaultConfig.scanCycle==0||defaultConfig.scanCycle==1||defaultConfig.scanCycle==7||defaultConfig.scanCycle==14?defaultConfig.scanCycle.toString():"define" })(
+          {getFieldDecorator('scanCycle', { initialValue: defaultConfig.scanCycle==1||defaultConfig.scanCycle==7||defaultConfig.scanCycle==14?defaultConfig.scanCycle.toString():"define" })(
             <Select style={{ width: "120px" }} onChange={this.selectChange}>
               {
                 SCANCYCLE.map(i => <Option key={i.value} value={i.value}>{i.text}</Option>)
@@ -85,7 +85,7 @@ class configForm extends React.Component<any, any> {
           )}
         </FormItem>
         {
-          this.state.select == "define"||(!this.state.change&&defaultConfig.scanCycle!=0&&defaultConfig.scanCycle!=1&&defaultConfig.scanCycle!=7&&defaultConfig.scanCycle!=14)
+          this.state.select == "define"||(!this.state.change&&defaultConfig.scanCycle!=1&&defaultConfig.scanCycle!=7&&defaultConfig.scanCycle!=14)
             ?
             <FormItem
               {...formItemLayout}
