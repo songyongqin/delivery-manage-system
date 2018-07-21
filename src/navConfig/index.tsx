@@ -53,6 +53,10 @@ import {
 
   ANALYSE_THREAT_URL,
 
+  ANALYSE_THREAT_FAMILY_DETAIL_URL,
+  
+  ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
+
   AUDIT_URL,
 
   AUDIT_EVENT_URL,
@@ -133,7 +137,7 @@ export const _navConfig = [
   },
   {
     // 受害资产详细情况
-    link: ANALYSE_URL+'x',
+    link: ANALYSE_URL+'?',
     title: "威胁分析",
     hidden: true,
     icon: <Icon type="fork" />,
@@ -152,7 +156,7 @@ export const _navConfig = [
   },
   {
     // 攻击者详细情况
-    link: ANALYSE_URL+'x',
+    link: ANALYSE_URL+'?',
     title: "威胁分析",
     hidden: true,
     icon: <Icon type="fork" />,
@@ -165,6 +169,54 @@ export const _navConfig = [
           link: ANALYSE_ATTACK_DETAL_URL,
           title:'攻击者视图详细情况',
           hidden: true
+        }]
+      }
+    ]
+  },
+  {
+    // 威胁视图  威胁家族详细情况
+    link: ANALYSE_URL+'?',
+    title: "威胁分析",
+    hidden: true,
+    icon: <Icon type="fork" />,
+    items: [
+      {
+        link: ANALYSE_THREAT_URL,
+        title: "威胁视图",
+        hidden: true,
+        items:[{
+          link: ANALYSE_THREAT_URL+ '?type=family',
+          title:'威胁家族',
+          hidden: true,
+          items:[{
+            link: ANALYSE_THREAT_FAMILY_DETAIL_URL,
+            title:'详细信息',
+            hidden: true
+          }]
+        }]
+      }
+    ]
+  },
+  {
+    // 威胁视图  攻击利用漏洞详细情况
+    link: ANALYSE_URL+'?',
+    title: "威胁分析",
+    hidden: true,
+    icon: <Icon type="fork" />,
+    items: [
+      {
+        link: ANALYSE_THREAT_URL,
+        title: "威胁视图",
+        hidden: true,
+        items:[{
+          link: ANALYSE_THREAT_URL+ '?type=loophole',
+          title:'攻击利用漏洞',
+          hidden: true,
+          items:[{
+            link: ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
+            title:'详细信息',
+            hidden: true
+          }]
         }]
       }
     ]

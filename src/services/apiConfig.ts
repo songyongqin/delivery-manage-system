@@ -192,6 +192,20 @@ const HttpApiConfig = {
 
   ANALYSE_THREAT_Loophole: '/analyse/threat-attack-loophole',
 
+  ANALYSE_THREAT_FAMILY_DETAIL_EVENT: '/analyse/threat-family/detail-event',
+
+  ANALYSE_THREAT_FAMILY_DETAIL_ASSETS: '/analyse/threat-family/detail-assets',
+
+  ANALYSE_THREAT_FAMILY_DETAIL_CC: '/analyse/threat-family/detail-c2',
+
+  ANALYSE_THREAT_LOOPHOLE_DETAIL_EVENT:'/analyse/threat-attack-loophole/detail-event',
+
+  ANALYSE_THREAT_LOOPHOLE_DETAIL_ASSETS: '/analyse/threat-attack-loophole/detail-assets',
+
+  ANALYSE_THREAT_LOOPHOLE_DETAIL_CC: '/analyse/threat-attack-loophole/detail-c2',
+
+  ANALYSE_EVENT_VIEW_COUNT: '/analyse/event-count'
+
 }
 
 

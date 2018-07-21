@@ -6,6 +6,8 @@ import path from 'constants/path'
 import WithTable from 'components/WithTable'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import TimeTag from 'components/TimeTag'
+import { ANALYSE_THREAT_FAMILY_DETAIL_URL } from 'routes/config/path'
+
 
 interface props{
   tableData: Array<object>
@@ -53,7 +55,7 @@ class FamilyTable extends React.Component<props, any>{
         render: (text,record,index) =>
           <div style={{ textAlign:'center' }}  >
           {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
-            <a  href={ `/#${'ANALYSE_ATTACK_DETAL_URL'}?attackerIP=${record.attackerIP}` }
+            <a  href={ `/#${ANALYSE_THREAT_FAMILY_DETAIL_URL}?threatFamily=${record.threatFamily}` }
                   style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} >查看</a>
           </div>
       },

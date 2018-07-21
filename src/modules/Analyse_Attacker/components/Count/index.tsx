@@ -48,7 +48,7 @@ class Count extends Component<any, any>{
   }
 
   getCount = () => {
-    this.props.fetchCount()
+    this.props.fetchCount({timestampRange: this.props.timestampRange})
     .then(res => {
       
       this.setState({

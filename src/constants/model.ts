@@ -94,11 +94,19 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ANALYSE_ATTACKER_COUNT = 'analyseAttackerCount',
 
+  // ANALYSE_ATTACKED_COUNT = 'analyseAttackedCount',
+
   ANALYSE_ATTACKED_DETAIL = 'analyseAttackedDetail',
 
   ANALYSE_ATTACKER_DETAIL = 'analyseAttackerDetail',
 
-  ANALYSE_THREAT_VIEW = 'analyseThreatView'
+  ANALYSE_THREAT_VIEW = 'analyseThreatView',
+
+  ANALYSE_THREAT_DETAIL= 'analyseThreatDetail',
+
+  ANALYSE_EVENT_VIEW= 'analyseEventView',
+
+  ANALYSE_EVENT_VIEW_COUNT = 'analyseEventViewCount'
 
 
 

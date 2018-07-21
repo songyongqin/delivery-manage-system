@@ -222,7 +222,7 @@ class Page extends React.Component<any, any> {
           this.props.animateRender([
             <div key='analyse-attacker-count' >
             {/* 统计数据 */}
-              <Count  key={ this.state.countKey } />
+              <Count  key={ this.state.countKey } timestampRange={ this.state.timestampRange } />
             </div>,
             <div key="analyse-attacker-table">
             <button onClick={ this.reset } >重置筛选</button>

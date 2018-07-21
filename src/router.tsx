@@ -27,11 +27,13 @@ import getFileRestorePage from 'routes/FileRestore'
 import getAuditEventPage from 'routes/Audit_Event'
 import getAuditAssetsPage from 'routes/Audit_Assets'
 
+import getAnalyseEventViewPage from 'routes/Analyse_Event_View'
 import getAnalyseAttackedPage from 'routes/Analyse_Attacked'
 import getAnalyseAttackedDetailPage from 'routes/Analyse_Attacked_Detail'
 import getAnalyseAttackerPage from 'routes/Analyse_Attacker'
 import getAnalyseAttackerDetailPage from 'routes/Analyse_Attacker_Detail'
 import getAnalyseThreatPage from 'routes/Analyse_Threat'
+import getAnalyseThreatDetalPage from 'routes/Analyse_Threat_detail'
 
 import {
   OVERVIEW_URL,
@@ -75,6 +77,10 @@ import {
   ANALYSE_ATTACK_DETAL_URL,
 
   ANALYSE_THREAT_URL,
+
+  ANALYSE_THREAT_FAMILY_DETAIL_URL,
+
+  ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
 
   AUDIT_URL,
 
@@ -137,7 +143,7 @@ export default ({ history, app }) => {
             {/* 事件视图 */}
             <Route
               exact
-              component={getAnalyseAttackedPage(app, ANALYSE_EVENT_URL)}
+              component={getAnalyseEventViewPage(app, ANALYSE_EVENT_URL)}
               path={ANALYSE_EVENT_URL} >
             </Route>
             {/* 受攻击资产视图 */}
@@ -158,7 +164,7 @@ export default ({ history, app }) => {
               component={getAnalyseAttackerPage(app, ANALYSE_ATTACK_URL)}
               path={ANALYSE_ATTACK_URL} >
             </Route>
-            {/* 攻击者视图 */}
+            {/* 攻击者视图详情 */}
             <Route
               exact
               component={getAnalyseAttackerDetailPage(app, ANALYSE_ATTACK_DETAL_URL)}
@@ -169,6 +175,18 @@ export default ({ history, app }) => {
               exact
               component={getAnalyseThreatPage(app, ANALYSE_THREAT_URL)}
               path={ANALYSE_THREAT_URL} >
+            </Route>
+            {/* 威胁视图详情-威胁家族 */}
+            <Route
+              exact
+              component={getAnalyseThreatDetalPage(app, ANALYSE_THREAT_FAMILY_DETAIL_URL)}
+              path={ANALYSE_THREAT_FAMILY_DETAIL_URL} >
+            </Route>
+            {/* 威胁视图详情-攻击利用漏洞 */}
+            <Route
+              exact
+              component={getAnalyseThreatDetalPage(app, ANALYSE_THREAT_LOOPHOLE_DETAIL_URL)}
+              path={ANALYSE_THREAT_LOOPHOLE_DETAIL_URL} >
             </Route>
             {/* 攻击链分析 */}
             {/* <Route
