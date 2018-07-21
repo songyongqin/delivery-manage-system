@@ -5,6 +5,7 @@ import TableWithRemote from 'domainComponents/TableWithRemote'
 import { ASSETS_CONFIG_NAMESPACE, ASSETS_RECORD_NAMESPACE, ASSETS_NEWRECORD_NAMESPACE } from 'constants/model'
 import Card from 'domainComponents/Card'
 import RecordDetail from '../RecordDetail/'
+
 export default class LastEvent extends React.PureComponent<any, any>{
   constructor(props) {
     super(props)

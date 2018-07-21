@@ -11,6 +11,7 @@ const HttpApiConfig = {
   AUDIT_ASSETS_EDIT_PORT: "/audit/assets-edit",
   AUDIT_ASSETS_RECORD: "/audit/assets-scan/record",
   AUDIT_ASSETS_NEWRECORD: "/audit/assets-scan/now-record",
+  AUDIT_ASSETS_RECORD_DETAIL: "/audit/assets-scan/detail",
 
   ENUM_CONFIG: "/enum-config",
 
@@ -183,7 +184,7 @@ const HttpApiConfig = {
 
   ANALYSEATTACKER_DETAIL_IP: '/analyse/attacker-details-ip',
 
-  ANALYSEATTACKER_DETAIL_THREATEN: '/analyse/attacker-details-threaten', 
+  ANALYSEATTACKER_DETAIL_THREATEN: '/analyse/attacker-details-threaten',
 
   ANALYSE_THREAT_FAMILY: '/analyse/threat-family',
 
