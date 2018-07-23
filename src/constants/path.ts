@@ -15,6 +15,7 @@ export const layoutConfig = {
   vm: "/static/config/layout/vm.json",
   auditEvent: "/static/config/layout/auditEvent.json",
   analyseAttacker: '/static/config/layout/analyseAttacker.json',
+  analyseAttackedAssets: '/static/config/layout/analyseAttackedAssets.json',
   analyseThreatFamily: '/static/config/layout/analyseThreatFamily.json',
   analyseThreatLoophole: '/static/config/layout/analyseThreatLoophole.json',
   analyseEventVIew: '/static/config/layout/analyseEventVIew.json'

@@ -71,7 +71,7 @@ class AnalyseDetail extends React.Component<any, any> {
       threatInfo:[],
       threatTotal:0,
       threatReq:{
-        limit:10,
+        limit:limit,
         page:1,
         attackerIP: getAttackedIp(props.location.search)
       }
@@ -283,7 +283,8 @@ class AnalyseDetail extends React.Component<any, any> {
                     <WithTable  tableData={ threatInfo } config={ CCRecordColumns }  />
                     <WithPagination total={ threatTotal } 
                                     current={ threatReq.page }
-                                    onChange={ this.paginationCcChange } />
+                                    onChange={ this.paginationCcChange }
+                                    limit={ limit } />
                   </Spin>
               }
               

@@ -25,6 +25,7 @@ const getConfig = data => {
       radius: [0, '60%'],
       center: ['35%', '50%'],
       // avoidLabelOverlap: true,
+      minAngle:5,
       label: {
           normal: {
               show: false,

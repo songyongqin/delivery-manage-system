@@ -10,9 +10,11 @@ import { Pagination ,Tag, Input } from 'antd'
 import { ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import WithPagination from 'components/WithPagination'
 import tranformTime from 'utils/tranformTime'
+import path from 'constants/path'
+import WithTableConfig from 'domainComponents/WithTableConfig'
 import {
-  assetStateFilter,
-  levelFilter,
+  // assetStateFilter,
+  // levelFilter,
   limit
 } from './constants'
 
@@ -50,7 +52,7 @@ const initArg = {
 }
 
 
-
+@WithTableConfig(path.layoutConfig.analyseAttackedAssets)
 @WithAnimateRender
 @extraConnect(mapStateToprops, mapDispatchToprops)
 class Page extends React.Component<any, any> {
@@ -198,12 +200,7 @@ class Page extends React.Component<any, any> {
       },
     ]
 
-    let constants = {
-      filter: {
-        level: levelFilter,
-        assetStates: assetStateFilter
-      }
-    }
+    let constants = this.props.config.constants
     
     return (
       <div style={{ position: "relative" }}>
@@ -234,6 +231,7 @@ class Page extends React.Component<any, any> {
                         config={ columns }
                         tableBeforeFetch={ this.tableBeforeFetch } />
               <WithPagination total={this.state.total}
+                              limit={ limit }
                               onChange={ this.paginationOnchange }
                               current={this.state.reqArg.page}  />
             </Spin>

@@ -43,7 +43,7 @@ const ArrayTag = ({data}) => {
       <Content data={ arr[0] } />
       {
         arr[1].length ? 
-        <div>
+        <div style={ { textAlign:'center' } } >
           <Popover content={ <Content data={ arr[1] } /> }  placement="right" >
             <Tag color={ '#1890ff' } style={ { width:100, textAlign:'center' } } >...</Tag>
           </Popover>

@@ -5,5 +5,5 @@ export const selectArr = [
   '威胁事件信息'
 ]
 
-export const limit = 10
+export const limit = 15
 

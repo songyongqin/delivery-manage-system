@@ -1,7 +1,7 @@
 
 
 
-export const limit =10
+export const limit =15
 
 
 export const canMultipleDetail = false

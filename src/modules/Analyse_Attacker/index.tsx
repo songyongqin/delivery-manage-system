@@ -16,9 +16,9 @@ import path from 'constants/path'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import ArrayTag from './components/ArrayTag'
 import {
-  assetStateFilter,
-  levelFilter
+  limit
 } from './constants'
+
 
 
 const mapStateToprops = state => {
@@ -44,7 +44,7 @@ const mapDispatchToprops = dispatch => {
 //初始参数
 const initArg = {
   // page:1,
-  limit:10,
+  limit:limit,
   // searchValue:'',
   attatcedAssetIp:'',
   attackedCount:'',
@@ -182,11 +182,11 @@ class Page extends React.Component<any, any> {
       },
       { title:'攻击者所在地',   
         dataIndex:'attackerWhere', 
-        types:['filters']
+        types:['search']
       },
       { title:'攻击者组织', 
         dataIndex:'attackGroup', 
-        types:['filters']
+        types:['search']
       },
       { title:'攻击者家族', 
         dataIndex:'family', 
@@ -235,6 +235,7 @@ class Page extends React.Component<any, any> {
                         tableBeforeFetch={ this.tableBeforeFetch } />
               <WithPagination total={this.state.total}
                               onChange={ this.paginationOnchange }
+                              limit={ limit }
                               current={this.state.reqArg.page}  />
             </Spin>
             </div>

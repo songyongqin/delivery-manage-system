@@ -23,6 +23,7 @@ const getConfig = data => {
       // selectedMode: 'single',
       radius: [0, '60%'],
       center: ['35%', '50%'],
+      minAngle:5,
       label: {
           normal: {
               position: 'inner'
