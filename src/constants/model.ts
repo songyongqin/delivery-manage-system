@@ -83,6 +83,10 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ASSETS_NEWRECORD_NAMESPACE = "AuditnewRecord",
 
+  AUDIT_CAUGHTRECORD_NAMESPACE = "AuditCaughtRecord",
+
+  AUDIT_CAUGHTTASK_NAMESPACE = "AuditCaughtTask",
+
   OVERVIEW_STATISTICS_COUNT = 'overviewStatisticsCount',
 
 
@@ -102,9 +106,9 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ANALYSE_THREAT_VIEW = 'analyseThreatView',
 
-  ANALYSE_THREAT_DETAIL= 'analyseThreatDetail',
+  ANALYSE_THREAT_DETAIL = 'analyseThreatDetail',
 
-  ANALYSE_EVENT_VIEW= 'analyseEventView',
+  ANALYSE_EVENT_VIEW = 'analyseEventView',
 
   ANALYSE_EVENT_VIEW_COUNT = 'analyseEventViewCount'
 

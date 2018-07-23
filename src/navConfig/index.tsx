@@ -54,7 +54,7 @@ import {
   ANALYSE_THREAT_URL,
 
   ANALYSE_THREAT_FAMILY_DETAIL_URL,
-  
+
   ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
 
   AUDIT_URL,
@@ -63,7 +63,7 @@ import {
 
   AUDIT_ASSETS_URL,
 
-  AUDIT_PCAP_URL,
+  AUDIT_CAUGHT_URL,
 
   STRATEGY_URL,
 
@@ -99,8 +99,8 @@ import { getAppConfig } from 'domain/app'
 // import router from 'router';
 
 
-const Indent = ({ space=0 }) => 
-<div style={{ display:'inline-block', width:`${(space+1)*14+20}px`, height:20 }}  ></div>
+const Indent = ({ space = 0 }) =>
+  <div style={{ display: 'inline-block', width: `${(space + 1) * 14 + 20}px`, height: 20 }}  ></div>
 
 export const _navConfig = [
   {
@@ -116,28 +116,28 @@ export const _navConfig = [
       {
         title: "事件视图",
         link: ANALYSE_EVENT_URL,
-        icon: <Indent  />,
+        icon: <Indent />,
       },
       {
         link: ANALYSE_ATTACKED_ASSETS_URL,
         title: "受攻击资产视图",
-        icon: <Indent  />,
+        icon: <Indent />,
       },
       {
         link: ANALYSE_ATTACK_URL,
         title: "攻击者视图",
-        icon: <Indent  />,
+        icon: <Indent />,
       },
       {
         link: ANALYSE_THREAT_URL,
         title: "威胁视图",
-        icon: <Indent  />,
+        icon: <Indent />,
       }
     ]
   },
   {
     // 受害资产详细情况
-    link: ANALYSE_URL+'?',
+    link: ANALYSE_URL + '?',
     title: "威胁分析",
     hidden: true,
     icon: <Icon type="fork" />,
@@ -146,9 +146,9 @@ export const _navConfig = [
         link: ANALYSE_ATTACKED_ASSETS_URL,
         title: "受攻击资产视图",
         hidden: true,
-        items:[{
+        items: [{
           link: ANALYSE_ATTACKED_ASSETS_DETAL_URL,
-          title:'受害资产详细情况',
+          title: '受害资产详细情况',
           hidden: true
         }]
       }
@@ -156,7 +156,7 @@ export const _navConfig = [
   },
   {
     // 攻击者详细情况
-    link: ANALYSE_URL+'?',
+    link: ANALYSE_URL + '?',
     title: "威胁分析",
     hidden: true,
     icon: <Icon type="fork" />,
@@ -165,9 +165,9 @@ export const _navConfig = [
         link: ANALYSE_ATTACK_URL,
         title: "攻击者视图",
         hidden: true,
-        items:[{
+        items: [{
           link: ANALYSE_ATTACK_DETAL_URL,
-          title:'攻击者视图详细情况',
+          title: '攻击者视图详细情况',
           hidden: true
         }]
       }
@@ -175,7 +175,7 @@ export const _navConfig = [
   },
   {
     // 威胁视图  威胁家族详细情况
-    link: ANALYSE_URL+'?',
+    link: ANALYSE_URL + '?',
     title: "威胁分析",
     hidden: true,
     icon: <Icon type="fork" />,
@@ -184,13 +184,13 @@ export const _navConfig = [
         link: ANALYSE_THREAT_URL,
         title: "威胁视图",
         hidden: true,
-        items:[{
-          link: ANALYSE_THREAT_URL+ '?type=family',
-          title:'威胁家族',
+        items: [{
+          link: ANALYSE_THREAT_URL + '?type=family',
+          title: '威胁家族',
           hidden: true,
-          items:[{
+          items: [{
             link: ANALYSE_THREAT_FAMILY_DETAIL_URL,
-            title:'详细信息',
+            title: '详细信息',
             hidden: true
           }]
         }]
@@ -199,7 +199,7 @@ export const _navConfig = [
   },
   {
     // 威胁视图  攻击利用漏洞详细情况
-    link: ANALYSE_URL+'?',
+    link: ANALYSE_URL + '?',
     title: "威胁分析",
     hidden: true,
     icon: <Icon type="fork" />,
@@ -208,13 +208,13 @@ export const _navConfig = [
         link: ANALYSE_THREAT_URL,
         title: "威胁视图",
         hidden: true,
-        items:[{
-          link: ANALYSE_THREAT_URL+ '?type=loophole',
-          title:'攻击利用漏洞',
+        items: [{
+          link: ANALYSE_THREAT_URL + '?type=loophole',
+          title: '攻击利用漏洞',
           hidden: true,
-          items:[{
+          items: [{
             link: ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
-            title:'详细信息',
+            title: '详细信息',
             hidden: true
           }]
         }]
@@ -241,17 +241,17 @@ export const _navConfig = [
       {
         link: AUDIT_EVENT_URL,
         title: "基本事件审计",
-        icon: <Indent  />,
+        icon: <Indent />,
       },
       {
         link: AUDIT_ASSETS_URL,
         title: "资产审计",
-        icon: <Indent  />,
+        icon: <Indent />,
       },
       {
-        link: AUDIT_PCAP_URL,
+        link: AUDIT_CAUGHT_URL,
         title: "抓包记录",
-        icon: <Indent  />,
+        icon: <Indent />,
       }
     ]
   },
@@ -342,16 +342,16 @@ export const _navConfig = [
       {
         link: CONFIG_USER_MANAGER_URL,
         title: "用户管理",
-        icon: <Indent  />,
+        icon: <Indent />,
       },
       {
         link: CONFIG_DEVICE_MANAGER_URL,
-        icon: <Indent  />,
+        icon: <Indent />,
         title: "设备管理",
       },
       {
         link: CONFIG_SYS_LOG_URL,
-        icon: <Indent  />,
+        icon: <Indent />,
         title: "系统日志",
         items: [
           {
@@ -363,7 +363,7 @@ export const _navConfig = [
       }, {
         link: CONFIG_SYS_CONFIG_URL,
         title: "系统配置",
-        icon: <Indent  />,
+        icon: <Indent />,
         items: [
           {
             link: CONFIG_SYS_CONFIG_NETWORK_URL,

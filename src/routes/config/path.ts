@@ -67,7 +67,7 @@ export const ROOT_URL = "/",
   AUDIT_ASSETS_URL = '/audit/assets',
 
 
-  AUDIT_PCAP_URL = '/audit/pcap',
+  AUDIT_CAUGHT_URL = '/audit/caught',
 
   STRATEGY_URL = '/strategy',
 
