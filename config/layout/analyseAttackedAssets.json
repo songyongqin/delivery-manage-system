@@ -1,0 +1,44 @@
+{
+  "columns": [
+    {
+      "dataIndex": "assetStates",
+      "filters": [
+        { 
+          "text": "未失陷", 
+          "value":"未失陷" 
+        },
+        { 
+          "text": "未知", 
+          "value":"未知" 
+        },
+        { 
+          "text": "疑似失陷", 
+          "value":"疑似失陷" 
+        },
+        { 
+          "text": "失陷", 
+          "value":"失陷"
+        }
+      ]
+    },
+    {
+      "dataIndex": "level",
+      "filters": [
+        {
+          "value": "低危",
+          "text": "低危"
+        },
+        {
+          "value": "中危",
+          "text": "中危"
+        },
+        {
+          "value":"高危",
+          "text":"高危"
+        }
+      ]
+    }
+    ]
+    }
+  ]
+}

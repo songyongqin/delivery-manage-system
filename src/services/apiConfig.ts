@@ -206,7 +206,9 @@ const HttpApiConfig = {
 
   ANALYSE_THREAT_LOOPHOLE_DETAIL_CC: '/analyse/threat-attack-loophole/detail-c2',
 
-  ANALYSE_EVENT_VIEW_COUNT: '/analyse/event-count'
+  ANALYSE_EVENT_VIEW_COUNT: '/analyse/event-count',
+
+  ANALYSE_EVENT_VIEW: '/analyse/event-search'
 
 }
 

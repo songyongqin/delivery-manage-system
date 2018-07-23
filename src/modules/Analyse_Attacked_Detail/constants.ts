@@ -5,5 +5,5 @@ export const selectArr = [
   'C&C服务器会话记录'
 ]
 
-export const limit = 10
+export const limit = 15
 

@@ -10,9 +10,11 @@ import { Pagination ,Tag, Input } from 'antd'
 import { ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import WithPagination from 'components/WithPagination'
 import tranformTime from 'utils/tranformTime'
+import path from 'constants/path'
+import WithTableConfig from 'domainComponents/WithTableConfig'
 import {
-  assetStateFilter,
-  levelFilter,
+  // assetStateFilter,
+  // levelFilter,
   limit
 } from './constants'
 
@@ -39,9 +41,9 @@ const mapDispatchToprops = dispatch => {
 }
 //初始参数
 const initArg = {
-  page:1,
+  // page:1,
   limit:limit,
-  searchValue:'',
+  // searchValue:'',
   attatcedAssetIp:'',
   attackedCount:'',
   assetStates:'',
@@ -50,7 +52,7 @@ const initArg = {
 }
 
 
-
+@WithTableConfig(path.layoutConfig.analyseAttackedAssets)
 @WithAnimateRender
 @extraConnect(mapStateToprops, mapDispatchToprops)
 class Page extends React.Component<any, any> {
@@ -62,7 +64,7 @@ class Page extends React.Component<any, any> {
         timestampRange: []
       },
       tableData:[],
-      reqArg: {...initArg},
+      reqArg: {...initArg, page:1, searchValue:""},
       tableKey: '0attacked',
       countKey: 'oattackedcount',
       total:0,
@@ -129,7 +131,8 @@ class Page extends React.Component<any, any> {
 
   reset = () => {
     let time = this.getNowTime()
-    this.setState({ tableKey: time +'attacked-table', reqArg: { ...initArg } })
+    this.setState({ tableKey: time +'attacked-table',
+    reqArg:  { ...this.state.reqArg, ...initArg } })
   }
 
   paginationOnchange = (page)=> {
@@ -197,12 +200,7 @@ class Page extends React.Component<any, any> {
       },
     ]
 
-    let constants = {
-      filter: {
-        level: levelFilter,
-        assetStates: assetStateFilter
-      }
-    }
+    let constants = this.props.config.constants
     
     return (
       <div style={{ position: "relative" }}>
@@ -233,6 +231,7 @@ class Page extends React.Component<any, any> {
                         config={ columns }
                         tableBeforeFetch={ this.tableBeforeFetch } />
               <WithPagination total={this.state.total}
+                              limit={ limit }
                               onChange={ this.paginationOnchange }
                               current={this.state.reqArg.page}  />
             </Spin>

@@ -13,6 +13,7 @@ import FamilyTable from './components/FamilyTable'
 import LoopholeTable from './components/LoopholeTable'
 import { SelectArr } from './constants'
 import tranformParmToObj from 'utils/tranformParmToObj' 
+import { limit } from './constants'
 
 
 
@@ -47,8 +48,8 @@ const mapDispatchToprops = dispatch => {
 }
 //初始参数
 const initReqloophole = {
-  limit:15,
-  page:1,
+  limit:limit,
+  // page:1,
   // timestampRange:[],
   loophole:'',
   loopholeTypes:'',
@@ -56,8 +57,8 @@ const initReqloophole = {
 }
 
 const initReqFamily = {
-  limit:15,
-  page:1,
+  limit:limit,
+  // page:1,
   // timestampRange:[],
   threatFamily:'',
   sampleMD5:'',
@@ -93,9 +94,9 @@ class Page extends React.Component<any, any> {
       familyCount:0,
       loopholeCount:0,
       connectC2Count:0,
-      reqFamily:{ ...initReqFamily, searchValue:'' },
+      reqFamily:{ ...initReqFamily, searchValue:'',page:1, },
       familyTableKey:0,
-      reqloophole:{ ...initReqloophole, searchValue:'' },
+      reqloophole:{ ...initReqloophole, searchValue:'', page:1, },
       loopholeTableKey:0,
       familyTotal:0,
       familyData:[],
@@ -212,6 +213,12 @@ class Page extends React.Component<any, any> {
     else {
       this.setState({ reqloophole:{ ...this.state.reqloophole,...initReqloophole },loopholeTableKey: time })
     }
+    // if(selected===SelectArr[0]){
+    //   this.setState({ familyTableKey: time })
+    // }
+    // else {
+    //   this.setState({ loopholeTableKey: time })
+    // }
   }
 
 
@@ -273,6 +280,7 @@ class Page extends React.Component<any, any> {
                                 key={ this.state.familyTableKey } 
                                 tableBeforeFetch={ this.fetchFamilyTable } />
                   <WithPagination total={familyTotal}
+                                  limit={ limit }
                                   onChange={ this.familyPaginationOnchange }
                                   current={this.state.reqFamily.page}  />
               </Spin> :
@@ -282,6 +290,7 @@ class Page extends React.Component<any, any> {
                               key={ this.state.loopholeTableKey } />
                 <WithPagination total={loopholeTotal}
                                 onChange={ this.loopholePaginationOnchange }
+                                limit={ limit }
                                 current={this.state.reqloophole.page}  />
               </Spin>
             }

@@ -1,0 +1,123 @@
+{
+  "columns": [
+    {
+      "dataIndex": "threatenBehavior",
+      "filters": [
+        {
+          "value": "访问C&C域名",
+          "text": "访问C&C域名"
+        },
+        {
+          "value": "下载恶意代码",
+          "text": "下载恶意代码"
+        },
+        {
+          "value": "所有",
+          "text": "所有"
+        }
+      ]
+    },
+    {
+      "dataIndex": "eventType",
+      "filters": [
+        {
+          "value": "远控木马",
+          "text": "远控木马"
+        },
+        {
+          "value": "DDOS木马",
+          "text": "DDOS木马"
+        },
+        {
+          "value":"未知",
+          "text":"未知"
+        }
+      ]
+    },
+    {
+      "dataIndex": "attackerIP",
+      "filters": [
+        {
+          "value": "172.31.12.50",
+          "text": "172.31.12.50"
+        },
+        {
+          "value": "172.31.12.51",
+          "text": "172.31.12.51"
+        },
+        {
+          "value":"172.31.12.52",
+          "text":"172.31.12.52"
+        }
+      ]
+    },
+    {
+      "dataIndex": "attatcedAssetIp",
+      "filters": [
+        {
+          "value": "172.31.12.53",
+          "text": "172.31.12.53"
+        },
+        {
+          "value": "172.31.12.54",
+          "text": "172.31.12.54"
+        },
+        {
+          "value":"172.31.12.55",
+          "text":"172.31.12.55"
+        }
+      ]
+    },
+    {
+      "dataIndex": "assetStates",
+      "filters": [
+        {
+          "value": "全选",
+          "text": "全选"
+        },
+        {
+          "value": "疑似失陷",
+          "text": "疑似失陷"
+        },
+        {
+          "value":"失陷",
+          "text":"失陷"
+        }
+      ]
+    },
+    {
+      "dataIndex": "attackStage",
+      "filters": [
+        {
+          "value": "准备",
+          "text": "准备"
+        },
+        {
+          "value": "入侵",
+          "text": "入侵"
+        },
+        {
+          "value":"控制",
+          "text":"控制"
+        }
+      ]
+    },
+    {
+      "dataIndex": "level",
+      "filters": [
+        {
+          "value": "高危",
+          "text": "高危"
+        },
+        {
+          "value": "中危",
+          "text": "中危"
+        },
+        {
+          "value":"低危",
+          "text":"低危"
+        }
+      ]
+    }
+  ]
+}

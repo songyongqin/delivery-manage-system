@@ -179,13 +179,15 @@ class AnalyseDetail extends React.Component<any, any> {
                     <EventTable data={threatEventInfo  } />
                     <WithPagination total={ eventTotal } 
                                     current={ eventReq.page }
-                                    onChange={ this.paginationEventChange } />
+                                    onChange={ this.paginationEventChange }
+                                    limit={ limit } />
                   </Spin> :
                   <Spin spinning={ ccLoading } >
                     <CCTable data={c2Record  } tableChange={ this.ccTableChange } />
                     <WithPagination total={ CCTotal } 
                                     current={ ccReq.page }
-                                    onChange={ this.paginationCcChange } />
+                                    onChange={ this.paginationCcChange }
+                                    limit={ limit } />
                   </Spin>
               }
               

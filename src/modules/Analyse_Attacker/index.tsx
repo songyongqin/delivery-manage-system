@@ -16,9 +16,9 @@ import path from 'constants/path'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import ArrayTag from './components/ArrayTag'
 import {
-  assetStateFilter,
-  levelFilter
+  limit
 } from './constants'
+
 
 
 const mapStateToprops = state => {
@@ -43,9 +43,9 @@ const mapDispatchToprops = dispatch => {
 }
 //初始参数
 const initArg = {
-  page:1,
-  limit:10,
-  searchValue:'',
+  // page:1,
+  limit:limit,
+  // searchValue:'',
   attatcedAssetIp:'',
   attackedCount:'',
   assetStates:'',
@@ -66,7 +66,7 @@ class Page extends React.Component<any, any> {
         timestampRange: []
       },
       tableData:[],
-      reqArg: {...initArg},
+      reqArg: {...initArg, page:1, searchValue:'', },
       tableKey: '0attacked',
       countKey: 'oattackercount',
       total:0,
@@ -135,7 +135,8 @@ class Page extends React.Component<any, any> {
 
   reset = () => {
     let time = this.getNowTime()
-    this.setState({ tableKey: time +'attacked-table', reqArg: { ...initArg } })
+    this.setState({ tableKey: time +'attacked-table',
+    reqArg:{ ...this.state.reqArg, ...initArg } })
   }
 
   paginationOnchange = (page)=> {
@@ -181,11 +182,11 @@ class Page extends React.Component<any, any> {
       },
       { title:'攻击者所在地',   
         dataIndex:'attackerWhere', 
-        types:['filters']
+        types:['search']
       },
       { title:'攻击者组织', 
         dataIndex:'attackGroup', 
-        types:['filters']
+        types:['search']
       },
       { title:'攻击者家族', 
         dataIndex:'family', 
@@ -234,6 +235,7 @@ class Page extends React.Component<any, any> {
                         tableBeforeFetch={ this.tableBeforeFetch } />
               <WithPagination total={this.state.total}
                               onChange={ this.paginationOnchange }
+                              limit={ limit }
                               current={this.state.reqArg.page}  />
             </Spin>
             </div>
