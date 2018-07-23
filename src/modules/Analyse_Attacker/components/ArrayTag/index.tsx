@@ -24,7 +24,12 @@ const Content = ({ data }) => {
     <div>
       {
         data.map((item, index) => 
-          <div key={ index+'tip' } style={ { marginTop:5, marginBottom:5, textAlign:'center' } } ><Tag color={ '#1890ff' } >{ item }</Tag></div>
+          <div key={ index+'tip' } style={ { marginTop:5, marginBottom:5, textAlign:'center' } } >
+            {
+              item ?<Tag color={ '#1890ff' } >{ item }</Tag>:
+                    item
+            }
+          </div>
         )
       }
     </div>

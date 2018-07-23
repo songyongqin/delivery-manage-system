@@ -43,9 +43,9 @@ const mapDispatchToprops = dispatch => {
 }
 //初始参数
 const initArg = {
-  page:1,
+  // page:1,
   limit:10,
-  searchValue:'',
+  // searchValue:'',
   attatcedAssetIp:'',
   attackedCount:'',
   assetStates:'',
@@ -66,7 +66,7 @@ class Page extends React.Component<any, any> {
         timestampRange: []
       },
       tableData:[],
-      reqArg: {...initArg},
+      reqArg: {...initArg, page:1, searchValue:'', },
       tableKey: '0attacked',
       countKey: 'oattackercount',
       total:0,
@@ -135,7 +135,8 @@ class Page extends React.Component<any, any> {
 
   reset = () => {
     let time = this.getNowTime()
-    this.setState({ tableKey: time +'attacked-table', reqArg: { ...initArg } })
+    this.setState({ tableKey: time +'attacked-table',
+    reqArg:{ ...this.state.reqArg, ...initArg } })
   }
 
   paginationOnchange = (page)=> {

@@ -6,11 +6,16 @@ import { getColumns } from './config'
 
 
 interface props{
-  constants?: object,
+  constants?: constants,
   config: Array<object>,
   tableData: Array<object>,
   Detail?: any,
   tableBeforeFetch?: (any) => any
+}
+
+interface constants{
+  filter: object
+  selectDetail: Array<string>
 }
 
 class WithTable extends Component<props, any>{
@@ -118,7 +123,7 @@ class WithTable extends Component<props, any>{
             <Table  dataSource={ tableData } columns={ columns }
                 onChange={ this.tableOnChange }
                 pagination={ false }
-                expandedRowKeys={ this.props.constants['selectDetail'] }
+                expandedRowKeys={ this.props.constants['selectDetail']||[''] }
                 expandIconAsCell={ false }
                 expandIconColumnIndex={ -1 }
                 expandedRowRender={
