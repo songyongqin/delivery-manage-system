@@ -5,7 +5,6 @@ import { LIGHT_THEME, DARK_THEME } from 'constants/theme'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import 'echarts/lib/chart/tree'
 
-
 const config = {
   [DARK_THEME]: {
     color: "#A3B2C1"
@@ -15,7 +14,7 @@ const config = {
   }
 }
 
-const BarCharts = ({ data, title = "", theme = DARK_THEME }) => {
+const BarChartsRL = ({ data, title = "", theme = DARK_THEME }) => {
 
   return <div style={{ width: "100%", height: "250px" }}>
     <ReactEcharts
@@ -31,33 +30,29 @@ const BarCharts = ({ data, title = "", theme = DARK_THEME }) => {
         series: [
           {
             type: 'tree',
+
             data: data,
+            layout: 'orthogonal',
             top: '1%',
-            left: '12%',
+            left: '15%',
             bottom: '1%',
-            right: 100,
-            width: "40%",
+            right: '7%',
+
             symbolSize: 7,
 
+            orient: 'RL',
+
             label: {
-              normal: {
-                position: 'left',
-                verticalAlign: 'bottom',
-                align: 'right',
-                fontSize: 16,
-                color: config[theme].color,
-              }
+              position: 'right',
+              verticalAlign: 'middle',
+              align: 'left'
             },
 
             leaves: {
               label: {
-                normal: {
-                  position: 'right',
-                  verticalAlign: 'middle',
-                  align: 'left',
-                  fontSize: 16,
-                  color: config[theme].color
-                }
+                position: 'left',
+                verticalAlign: 'middle',
+                align: 'right'
               }
             },
 
@@ -72,4 +67,4 @@ const BarCharts = ({ data, title = "", theme = DARK_THEME }) => {
 
 }
 
-export default WithCommonProps(BarCharts)
+export default WithCommonProps(BarChartsRL)
