@@ -95,7 +95,8 @@ export default class CommonItem extends React.Component<any, any>{
       configVisible: false,
       editVisible: false,
       assetsIp: "",
-      defaultConfig: {}
+      defaultConfig: {},
+      activeIp: ""
     }
   }
   componentDidMount() {
@@ -109,9 +110,10 @@ export default class CommonItem extends React.Component<any, any>{
       defaultConfig: res
     }))
   }
-  showDetailModal = () => {
+  showDetailModal = (ip) => {
     this.setState({
       detailVisible: true,
+      activeIp: ip
     });
   }
   showEditModal = (assetsIp) => {
@@ -200,7 +202,7 @@ export default class CommonItem extends React.Component<any, any>{
             onCancel={this.handleCancel}
             footer={null}
           >
-            <AssetsDetail></AssetsDetail>
+            <AssetsDetail activeIp={this.state.activeIp}></AssetsDetail>
           </Modal>
           <Modal
             title="编辑资产信息"

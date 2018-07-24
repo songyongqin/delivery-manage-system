@@ -15,6 +15,7 @@ export default class LastEvent extends React.PureComponent<any, any>{
     }
   }
   render() {
+    const ip = this.props.activeIp;
     return (
       <div style={{ width: "90%", marginLeft: "5%" }}>
         <h3>漏洞列表</h3>
@@ -23,6 +24,7 @@ export default class LastEvent extends React.PureComponent<any, any>{
           remoteNamespace={ASSETS_LOOPHOLE_NAMESPACE}
           initialFilters={{
             ...this.state.initialFilters,
+            assetsIp: ip
           }}>
         </TableWithRemote>
 
@@ -31,6 +33,7 @@ export default class LastEvent extends React.PureComponent<any, any>{
           getColumns={getColumns_port}
           remoteNamespace={ASSETS_PORT_NAMESPACE}
           initialFilters={{
+            assetsIp: ip,
             ...this.state.initialFilters,
           }}>
         </TableWithRemote>
