@@ -34,6 +34,7 @@ import getAnalyseAttackerPage from 'routes/Analyse_Attacker'
 import getAnalyseAttackerDetailPage from 'routes/Analyse_Attacker_Detail'
 import getAnalyseThreatPage from 'routes/Analyse_Threat'
 import getAnalyseThreatDetalPage from 'routes/Analyse_Threat_detail'
+import getAuditCaughtPage from 'routes/Audit_Caught'
 
 import {
   OVERVIEW_URL,
@@ -89,7 +90,7 @@ import {
   AUDIT_ASSETS_URL,
 
 
-  AUDIT_PCAP_URL,
+  AUDIT_CAUGHT_URL,
 
   STRATEGY_URL,
 
@@ -320,7 +321,11 @@ export default ({ history, app }) => {
               component={getAuditAssetsPage(app, AUDIT_ASSETS_URL)}
               path={AUDIT_ASSETS_URL} >
             </Route>
-
+            <Route
+              exact
+              component={getAuditCaughtPage(app, AUDIT_CAUGHT_URL)}
+              path={AUDIT_CAUGHT_URL} >
+            </Route>
           </Switch>
         </MainWrapper>
       </LocaleProvider>

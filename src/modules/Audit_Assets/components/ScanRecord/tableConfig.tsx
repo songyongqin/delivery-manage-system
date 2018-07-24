@@ -23,7 +23,8 @@ const dataIndexes = [
   STARTTIME,
   SCANCYCLE,
   SCANIPRANGE,
-  CHECKPORT
+  CHECKPORT,
+  STATE
 ]
 
 const locale = {
@@ -31,6 +32,7 @@ const locale = {
   [SCANCYCLE]: "扫描周期",
   [SCANIPRANGE]: "扫描IP范围",
   [CHECKPORT]: "检测端口",
+  [STATE]: "扫描状态"
 }
 
 const dataIndexes_record = [
@@ -83,7 +85,7 @@ export const getColumns_record = ({ showDetailModal }) => {
         )
       },
       [SCANIPRANGE]: value => <TagList data={value} maxCount={4}></TagList>,
-      [OPERATE]: (record, value) => <Button type="primary" size="small" onClick={showDetailModal}>详情</Button>
+      [OPERATE]: (value, record) => <Button type="primary" size="small" onClick={() => showDetailModal(record[SCANTIME])}>详情</Button>
     }
   })
 }

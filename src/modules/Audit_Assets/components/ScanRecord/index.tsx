@@ -11,15 +11,17 @@ export default class LastEvent extends React.PureComponent<any, any>{
     super(props)
     this.state = {
       detailVisible: false,
+      scanTime: null,
       initialFilters: {
         page: 1,
         limit: 20,
       }
     }
   }
-  showDetailModal = () => {
+  showDetailModal = (scanTime) => {
     this.setState({
       detailVisible: true,
+      scanTime
     });
   }
   handleCancel = (e) => {
@@ -58,7 +60,7 @@ export default class LastEvent extends React.PureComponent<any, any>{
           onCancel={this.handleCancel}
           footer={null}
         >
-          <RecordDetail></RecordDetail>
+          <RecordDetail scanTime={this.state.scanTime}></RecordDetail>
         </Modal>
       </div>
     )

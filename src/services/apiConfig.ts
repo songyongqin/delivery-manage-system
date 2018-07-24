@@ -12,6 +12,8 @@ const HttpApiConfig = {
   AUDIT_ASSETS_RECORD: "/audit/assets-scan/record",
   AUDIT_ASSETS_NEWRECORD: "/audit/assets-scan/now-record",
   AUDIT_ASSETS_RECORD_DETAIL: "/audit/assets-scan/detail",
+  AUDIT_CAUGHT_RECORD_DETAIL: "/audit/caughtrecord",
+  AUDIT_CAUGHT_TASK_DETAIL: "/audit/caughttask",
 
   ENUM_CONFIG: "/enum-config",
 
@@ -200,7 +202,7 @@ const HttpApiConfig = {
 
   ANALYSE_THREAT_FAMILY_DETAIL_CC: '/analyse/threat-family/detail-c2',
 
-  ANALYSE_THREAT_LOOPHOLE_DETAIL_EVENT:'/analyse/threat-attack-loophole/detail-event',
+  ANALYSE_THREAT_LOOPHOLE_DETAIL_EVENT: '/analyse/threat-attack-loophole/detail-event',
 
   ANALYSE_THREAT_LOOPHOLE_DETAIL_ASSETS: '/analyse/threat-attack-loophole/detail-assets',
 

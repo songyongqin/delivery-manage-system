@@ -37,7 +37,8 @@ export default class LastEvent extends React.PureComponent<any, any>{
     }
   }
   componentDidMount() {
-    this.props.fetchRecordDetail().then(res => this.setState({ newAssets: res.newAssets, newPort: res.newPort, }))
+
+    this.props.fetchRecordDetail({ scanTime: this.props.scanTime }).then(res => this.setState({ newAssets: res.newAssets, newPort: res.newPort, }))
   }
 
 
@@ -149,7 +150,7 @@ export default class LastEvent extends React.PureComponent<any, any>{
             <Step title="所属IP" status="process" />
           </Steps>
 
-          {newPortData.map((i, index) => <TreeCharts key={index} data={[i]}></TreeCharts>)}
+          {newPortData.map((i, index) => <TreeChartsRL key={index} data={[i]}></TreeChartsRL>)}
         </div>
 
       </div>

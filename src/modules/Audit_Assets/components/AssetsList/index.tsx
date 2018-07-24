@@ -95,7 +95,8 @@ export default class CommonItem extends React.Component<any, any>{
       configVisible: false,
       editVisible: false,
       assetsIp: "",
-      defaultConfig: {}
+      defaultConfig: {},
+      activeIp: ""
     }
   }
   componentDidMount() {
@@ -109,9 +110,10 @@ export default class CommonItem extends React.Component<any, any>{
       defaultConfig: res
     }))
   }
-  showDetailModal = () => {
+  showDetailModal = (ip) => {
     this.setState({
       detailVisible: true,
+      activeIp: ip
     });
   }
   showEditModal = (assetsIp) => {
@@ -157,7 +159,7 @@ export default class CommonItem extends React.Component<any, any>{
 
     return (
       <div>
-        最后更新时间:&nbsp;&nbsp;<TimeLabel times={data[LASTUPDATETIME]}></TimeLabel>
+        最后更新时间:&nbsp;&nbsp;{data[LASTUPDATETIME] != -1 ? <TimeLabel times={data[LASTUPDATETIME]}></TimeLabel> : "暂无更新"}
         <Button type="primary" style={{ float: "right" }} onClick={this.showConfigModal}>资产扫描配置</Button>
         <div style={{ clear: "both", marginTop: "20px" }}>
           <Row gutter={20}>
@@ -200,7 +202,7 @@ export default class CommonItem extends React.Component<any, any>{
             onCancel={this.handleCancel}
             footer={null}
           >
-            <AssetsDetail></AssetsDetail>
+            <AssetsDetail activeIp={this.state.activeIp}></AssetsDetail>
           </Modal>
           <Modal
             title="编辑资产信息"
