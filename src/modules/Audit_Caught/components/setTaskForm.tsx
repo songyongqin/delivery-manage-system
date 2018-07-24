@@ -3,6 +3,7 @@ import { Form, DatePicker, TimePicker, Button, Select, message, Input, Switch, R
 import { SCANCYCLE } from '../constants'
 import { AUDIT_CAUGHTTASK_NAMESPACE } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
+import SetConfig from './setConfig'
 import moment from 'moment'
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -35,9 +36,11 @@ class configForm extends React.Component<any, any> {
         return;
       }
       const values = {
-        // 'isScanning': fieldsValue['isScanning'] ? 1 : 0,
-        ...fieldsValue,
+        'taskName': fieldsValue['taskName'],
+        'ip': fieldsValue['ip'],
         'startTime': fieldsValue['startTime'].unix(),
+        'setType': fieldsValue['setType'],
+        'setConfig': fieldsValue['set'].units == "mm" ? fieldsValue['set'].number * 60 : fieldsValue['set'].units == "G" ? fieldsValue['set'].number * 1024 : fieldsValue['set'].number,
       };
       this.props.onOk(values)
     })
@@ -64,9 +67,20 @@ class configForm extends React.Component<any, any> {
     }
     return result;
   }
+
+  checkSet = (rule, value, callback) => {
+    if (value.number > 0 && value.number <= 10) {
+      callback();
+      return;
+    }
+    callback('设置范围为1-10');
+  }
+
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { defaultConfig } = this.props;
+    const { RadioValue } = this.state
     const sTime = getArray(24);
     const marks = {
       1: '1秒',
@@ -118,12 +132,12 @@ class configForm extends React.Component<any, any> {
           {...formItemLayout}
           label="开始时间"
         >
-          {getFieldDecorator('startTime', { initialValue: moment(moment(), 'YYYY-MM-DD HH:mm:ss') })(
+          {getFieldDecorator('startTime', { initialValue: moment(moment(), 'YYYY-MM-DD HH:mm') })(
             <DatePicker showTime={{
-              defaultValue: moment('00:00:00', 'HH:mm:ss'),
+              defaultValue: moment('00:00', 'HH:mm'),
               // disabledMinutes: () => this.range(0, 60), 
-              // disabledSeconds: () => this.range(0, 60),
-            }} format="YYYY-MM-DD HH:mm:ss" />)}
+              disabledSeconds: () => this.range(0, 60),
+            }} format="YYYY-MM-DD HH:mm" />)}
         </FormItem>
 
 
@@ -131,7 +145,7 @@ class configForm extends React.Component<any, any> {
           {...formItemLayout}
           label="设置"
         >
-          {getFieldDecorator('config', { initialValue: "time" })(
+          {getFieldDecorator('setType', { initialValue: "time" })(
 
             <RadioGroup onChange={this.onChange} value={this.state.RadioValue}>
               <Radio value={"time"}>时长</Radio>
@@ -142,6 +156,15 @@ class configForm extends React.Component<any, any> {
         </FormItem>
         <FormItem
           {...formItemLayout}
+          label={RadioValue == "time" ? "时长" : "大小"}
+        >
+          {getFieldDecorator('set', {
+            initialValue: { number: 1, units: RadioValue == 'time' ? 'ss' : 'M' },
+            rules: [{ validator: this.checkSet }],
+          })(<SetConfig setValue={RadioValue} />)}
+        </FormItem>
+        {/* <FormItem
+          {...formItemLayout}
           label={this.state.RadioValue == "time" ? "时长" : "大小"}
         >
           {getFieldDecorator('define')(
@@ -149,7 +172,7 @@ class configForm extends React.Component<any, any> {
             <Slider marks={marks} min={1} max={10} tipFormatter={this.formatter} onChange={this.handleChange} value={this.state.value} />
 
           )}
-        </FormItem>
+        </FormItem> */}
         <Form.Item>
           <Button loading={this.props.loading} style={{ float: "right" }} type="primary" htmlType="submit" onClick={this.handleSubmit}>提交</Button>
         </Form.Item>
