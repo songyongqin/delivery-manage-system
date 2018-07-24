@@ -168,6 +168,8 @@ const HttpApiConfig = {
 
   OVERVIEW_FLOW: '/overview/flow',
 
+  OVERVIEW_EVENT_VIEW: '/overview/event',
+
   ANALYSE_ATTACKED_VIEW: '/analyse/attacked-view',
 
   ANALYSE_ATTACKED_SEARCH: '/analyse/attacked-search',
