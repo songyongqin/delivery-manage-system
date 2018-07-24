@@ -1,22 +1,26 @@
 import React from 'react'
-// import classnames from 'classnames'
-// import { Menu, Button, Breadcrumb, Table, Icon, Row, Col, Card, Badge, Modal } from 'antd'
+
 import WithAnimateRender from 'components/WithAnimateRender'
-// import { connect } from 'dva'
-// import LastEvent from 'modules/LastEvent'
-// import EventStatistics from 'modules/EventStatistics'
+
 import DateRangePicker from 'domainComponents/DateRangePicker'
 import Pie from './components/Pie'
-// import OverviewStatistics from 'modules/Overview_Statistics'
-
+import Spin from 'domainComponents/Spin'
 import { OVERVIEW_STATISTICS_COUNT } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
 import { Input } from 'antd'
+import Line from './components/Line/AsyncLineCharts'
+import TimeTag from 'components/TimeTag'
+import LevelTag from 'components/LevelTag'
+import WithTable from 'components/WithTable'
+import Tree from './components/Tree'
+
 
 
 const MapStateToProps = state => {
   return{
-    loading: state.loading.effects[`${OVERVIEW_STATISTICS_COUNT}/fetchCount`]
+    countLoading: state.loading.effects[`${OVERVIEW_STATISTICS_COUNT}/fetchCount`],
+    flowLoading: state.loading.effects[`${OVERVIEW_STATISTICS_COUNT}/fetchFlow`],
+    eventLoading: state.loading.effects[`${OVERVIEW_STATISTICS_COUNT}/fetchEvent`]
   }
 }
 
@@ -29,9 +33,47 @@ const MapDispatchToProps = dispatch => {
     fetchFlow: payload => dispatch({ 
       type: `${OVERVIEW_STATISTICS_COUNT}/fetchFlow`,
       payload
+     }),
+    fetchEvent: payload => dispatch({ 
+      type: `${OVERVIEW_STATISTICS_COUNT}/fetchEvent`,
+      payload
      })
   }
 }
+
+const cloumns = [
+  {
+    dataIndex:'latelyTime',
+    title:'威胁最近发生时间',
+    render: text => <TimeTag num={ text } />
+  },
+  {
+    dataIndex:'behaviorDescription',
+    title:'行为描述',
+    render: text => <TimeTag num={ text } />
+  },
+  {
+    dataIndex:'eventType',
+    title:'威胁类型'
+  },
+  {
+    dataIndex:'attatcedAssetIp',
+    title:'受害IP'
+  },
+  {
+    dataIndex:'assetStates',
+    title:'资产状态'
+  },
+  {
+    dataIndex:'attackerIP',
+    title:'攻击IP'
+  },
+  {
+    dataIndex:'level',
+    title:'威胁等级',
+    render: text => <LevelTag text={ text } />
+  }
+]
 
 @WithAnimateRender
 @extraConnect(MapStateToProps, MapDispatchToProps )
@@ -45,37 +87,62 @@ class Page extends React.Component<any, any> {
       },
       filters: {
         timestampRange: []
+      },
+      networkFlow:{
+        series:[],
+        xAxis:[],
+        unit:''
+      },
+      applicationFlow:{
+        series:[],
+        xAxis:[],
+        unit:''
+      },
+      table:{
+        total:0,
+        data:[]
       }
     }
   }
 
   timestampRangeOnChange = filters => {
+    const { timestampRange } = filters
     this.setState({
       filters,
       lastChangeTime: new Date().getTime()
     })
+    this.getCount({timestampRange});
+    this.getFlow({timestampRange}) 
   }
   componentDidMount(){
 
-    this.getCount();
-    this.getFlow() 
+    this.getCount({});
+    this.getFlow({});
+    this.getEvent() 
 
   }
 
-  getCount = () => {
-    this.props.fetchCount()
+  getCount = ({timestampRange}) => {
+    this.props.fetchCount({timestampRange})
     .then(res => {
       this.setState({ count: res })
     } )
     .catch( err => console.error(err)  )
   }
 
-  getFlow = () => {
+  getFlow = ({timestampRange}) => {
 
-    this.props.fetchFlow()
+    this.props.fetchFlow({timestampRange})
     .then(res => {
-      this.setState({ flow: res })
-      console.log(res)
+      this.setState(res)
+    } )
+    .catch( err => console.error(err)  )
+  }
+
+  getEvent = () => {
+    this.props.fetchEvent()
+    .then(res => {
+      this.setState({ table: res })
     } )
     .catch( err => console.error(err)  )
   }
@@ -86,7 +153,9 @@ class Page extends React.Component<any, any> {
   }
 
   render() {
-    const { visible, activeKey, lastChangeTime, filters } = this.state
+    const { applicationFlow, filters, networkFlow, table } = this.state
+    const { countLoading, flowLoading, eventLoading } = this.props
+    
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
@@ -97,27 +166,27 @@ class Page extends React.Component<any, any> {
         </div>
         {
           this.props.animateRender([
-            // <div key="event-statistics">
-            //   <h3>威胁事件类型</h3>
-            //   <EventStatistics
-            //     key={`event-statistics-${lastChangeTime}`}
-            //     initialFilters={filters}
-            //     isDark={false}>
-            //   </EventStatistics>
-            // </div>,
-            // <div key="last-event">
-            //   <h3>最近紧急事件</h3>
-            //   <LastEvent
-            //     initialFilters={filters}
-            //     key={`last-event-${lastChangeTime}`}>
-            //   </LastEvent>
-            // </div>,
-            // <div key="overview-statistics" style={{ marginTop: "15px" }}>
-            //   <OverviewStatistics ></OverviewStatistics>
-            // </div>
-            <div key='pie-charts' >
+            <Spin key='pie-charts' spinning={ countLoading } >
               <Pie data={ this.state.count } />
+            </Spin>,
+            <Spin key='pie-charts-line' spinning={ flowLoading } >
+              <span style={{ width:600, display:'inline-block' }} >
+                <Line title={'网络流量'} xAxis={ networkFlow.xAxis } series={ networkFlow.series }  unit={ networkFlow.unit }  />
+              </span>
+              <span style={{ width:600, display:'inline-block' }} >
+                <Line title={'应用流量'} xAxis={ applicationFlow.xAxis } series={ applicationFlow.series }  unit={ applicationFlow.unit }  />
+              </span>
+              {/* <Tree /> */}
+          </Spin>,
+          <div key='overview-table' style={{ marginTop:20 }} >
+            <div>
+              <h2 style={{ display:'inline-block' }} >最新紧急事件</h2>
+              <a href='/#/analyse/threat' style={{ textDecoration:'none', float:'right', marginRight:140, marginTop:10}} >查看全部威胁事件</a>
             </div>
+            <Spin spinning={ eventLoading } >
+              <WithTable tableData={ table.data } config={ cloumns } />
+            </Spin>
+          </div>
           ])
         }
       </div>
