@@ -54,6 +54,7 @@ export default class LastEvent extends React.PureComponent<any, any>{
           }}>
         </TableWithRemote>
         <Modal
+          destroyOnClose={true}
           width="80%"
           title="资产详情"
           visible={this.state.detailVisible}
