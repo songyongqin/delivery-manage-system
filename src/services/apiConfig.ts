@@ -134,7 +134,7 @@ const HttpApiConfig = {
   REPORT_CALL_ON_IP: "/report/call-on-ip",
   REPORT_CALL_ON_DOMAIN: "/report/call-on-domain",
 
-  REPORT_EXPORT: "/report/export",
+  // REPORT_EXPORT: "/report/export",
 
 
   SYS_LOG_CONFIG: "/sys-config/sys-log",
@@ -210,7 +210,25 @@ const HttpApiConfig = {
 
   ANALYSE_EVENT_VIEW_COUNT: '/analyse/event-count',
 
-  ANALYSE_EVENT_VIEW: '/analyse/event-search'
+  ANALYSE_EVENT_VIEW: '/analyse/event-search',
+
+  REPORT_COUNT: '/report/count',
+
+  REPORT_DETAIL: '/report/detail',
+
+  REPORT_RANK: '/report/rank',
+
+  REPORT_DETAIL_THREAT_THREATEVENT: '/report/detail/threatEvent',
+
+  REPORT_DETAIL_THREAT_THREATGROUP: '/report/detail/threatGroup',
+
+  REPORT_DETAIL_THREAT_ATTACKEDASSETS: '/report/detail/AttackedAssets',
+
+  REPORT_DETAIL_THREAT_THREATFAMILY: '/report/detail/threatFamily',
+
+  REPORT_DETAIL_THREAT_INTELLIGENCE: '/report/detail/threatIntelligence',
+
+  REPORT_EXPORT: '/report/export'
 
 }
 

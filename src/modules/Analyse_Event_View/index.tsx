@@ -113,7 +113,7 @@ class Page extends React.Component<any, any> {
       filters,
       lastChangeTime: new Date().getTime()
     })
-    this.fetch({ page:1 })
+    this.fetch({ page:1, timestampRange: filters.timestampRange })
   }
 
   getCilck = index => {

@@ -29,6 +29,7 @@ export default class DateRangePicker extends React.Component<any, any> {
         placeholder={["全部", "全部"]}
         ranges={{
           "今天": [moment().subtract(0, "days"), moment().subtract(0, 'days')],
+          "本周": [moment().startOf("week"), moment().subtract(0, 'days')],
           "本月": [moment().startOf('month'), moment().subtract(0, 'days')],
           "本季度": [moment().startOf('quarter'), moment().subtract(0, 'days')],
           "本年度": [moment().startOf("year"), moment().subtract(0, 'days')],
