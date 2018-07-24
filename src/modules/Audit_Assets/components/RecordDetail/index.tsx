@@ -150,7 +150,7 @@ export default class LastEvent extends React.PureComponent<any, any>{
             <Step title="所属IP" status="process" />
           </Steps>
 
-          {newPortData.map((i, index) => <TreeChartsRL key={index} data={[i]}></TreeChartsRL>)}
+          {newPortData.map((i, index) => <TreeCharts key={index} data={[i]}></TreeCharts>)}
         </div>
 
       </div>

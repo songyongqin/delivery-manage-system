@@ -81,7 +81,7 @@ class Page extends React.Component<any, any> {
           </Tabs.TabPane>
         </Tabs>
         <Modal
-          // destroyOnClose={true}
+          destroyOnClose={true}
           title={<span><Icon type="edit" />&nbsp;新建抓包任务</span>}
           visible={this.state.visible}
           onCancel={this.handleCancel}

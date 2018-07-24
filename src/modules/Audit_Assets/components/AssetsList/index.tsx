@@ -196,6 +196,7 @@ export default class CommonItem extends React.Component<any, any>{
             <ConfigForm onOk={this.handleOk} defaultConfig={this.state.defaultConfig}></ConfigForm>
           </Modal>
           <Modal
+            destroyOnClose={true}
             width="80%"
             title="资产详情"
             visible={this.state.detailVisible}
