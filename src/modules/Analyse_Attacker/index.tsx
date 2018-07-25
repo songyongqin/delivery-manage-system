@@ -70,6 +70,7 @@ class Page extends React.Component<any, any> {
       tableKey: '0attacked',
       countKey: 'oattackercount',
       total:0,
+      timestampRange:[]
     }
   }
 
@@ -78,7 +79,7 @@ class Page extends React.Component<any, any> {
     let time = this.getNowTime()
     // let reqArg = {...this.state.reqArg, timestampRange, page:1 }
     // console.log()
-    this.setState({  countKey: time + 'attackedcount' })
+    this.setState({  countKey: time + 'attackedcount', timestampRange })
     this.fetchTable({ timestampRange, page:1 })
     // this.setState({
     //   filters,
@@ -156,7 +157,7 @@ class Page extends React.Component<any, any> {
 
   render() {
 
-    const { filters, tableData } = this.state
+    const { filters, tableData, timestampRange } = this.state
 
     let columns = [
       { title:'序号', 
@@ -215,7 +216,7 @@ class Page extends React.Component<any, any> {
                         onChange = { this.getSearchValue } 
                         style={{ width:240, marginRight:20 }}  />
           <DateRangePicker
-            value={filters.timestampRange}
+            value={timestampRange}
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
         </div>
@@ -223,7 +224,7 @@ class Page extends React.Component<any, any> {
           this.props.animateRender([
             <div key='analyse-attacker-count' >
             {/* 统计数据 */}
-              <Count  key={ this.state.countKey } timestampRange={ this.state.timestampRange } />
+              <Count  key={ this.state.countKey } timestampRange={ timestampRange } />
             </div>,
             <div key="analyse-attacker-table">
             <button onClick={ this.reset } >重置筛选</button>

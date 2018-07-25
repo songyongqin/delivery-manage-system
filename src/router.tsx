@@ -35,6 +35,7 @@ import getAnalyseAttackerDetailPage from 'routes/Analyse_Attacker_Detail'
 import getAnalyseThreatPage from 'routes/Analyse_Threat'
 import getAnalyseThreatDetalPage from 'routes/Analyse_Threat_detail'
 import getAuditCaughtPage from 'routes/Audit_Caught'
+import getThreatReportPage from 'routes/Threat_Report'
 
 import {
   OVERVIEW_URL,
@@ -284,7 +285,7 @@ export default ({ history, app }) => {
             {/*威胁报告*/}
             <Route
               exact
-              component={getReportPage(app, REPORT_URL)}
+              component={getThreatReportPage(app, REPORT_URL)}
               path={REPORT_URL} >
             </Route>
             {/* 系统日志 */}

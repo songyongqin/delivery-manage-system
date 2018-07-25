@@ -212,7 +212,7 @@ class Page extends React.Component<any, any> {
                         onChange = { this.getSearchValue } 
                         style={{ width:240, marginRight:20 }}  />
           <DateRangePicker
-            value={filters.timestampRange}
+            value={timestampRange}
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
         </div>
