@@ -5,7 +5,6 @@ import { ASSETS_RECORD_NAMESPACE } from 'constants/model'
 import Card from 'domainComponents/Card'
 import TreeCharts from 'domainComponents/TreeCharts/async'
 import extraConnect from 'domainUtils/extraConnect'
-import TreeChartsRL from 'domainComponents/TreeChartsRL/async'
 const Step = Steps.Step;
 
 @extraConnect(

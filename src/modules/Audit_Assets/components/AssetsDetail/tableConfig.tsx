@@ -3,8 +3,9 @@ import columnsCreator from 'domainUtils/columnsCreator'
 import TimeLabel from 'domainComponents/TimeLabel'
 import Tag from 'components/Tag'
 import { primaryColor } from 'themes/vars'
-import { Badge } from 'antd'
+import { Badge, Popover } from 'antd'
 import { Choose, When, Otherwise } from 'components/ControlStatements'
+import OverflowTextWrapper from 'components/OverflowTextWrapper'
 
 const LOOPHOLENAME = "loopholeName",
   RELATIONPORT = "relationPort",
@@ -56,35 +57,36 @@ const locale_port = {
 }
 
 const renderer = {
-
-  // [ACTION_STATUS_DATA_INDEX]: value => {
-  //   return (
-  //     <Choose>
-  //       <When condition={value === 1}>
-  //         <span><Badge status="success"></Badge>成功</span>
-  //       </When>
-  //       <When condition={value === 0}>
-  //         <span><Badge status="error"></Badge>失败</span>
-  //       </When>
-  //       <Otherwise>
-  //         <span><Badge status="warning"></Badge>未知</span>
-  //       </Otherwise>
-  //     </Choose>
-  //   )
-  // }
+  [BANNER]: (value) => {
+    const n = Math.ceil(value.length / 500);
+    const leg = Math.ceil(value.length / (value.length <= 500 ? 3 : 3 * n));
+    const arr = length => Array.from({ length }).map((v, k) => k);
+    const content = (
+      <div>
+        {
+          arr(3 * n).map((i) => <span key={i}>{value.substring(leg * i, leg * (i + 1))}</span>)
+        }
+      </div>
+    );
+    return value.length <= 100 ? value : <OverflowTextWrapper content={content}>{value}</OverflowTextWrapper>
+  }
 }
-
+const extraProps = {
+  [BANNER]: { width: "350px" }
+}
 export const getColumns = () => {
   return columnsCreator({
     dataIndexes,
     titleConfig: locale,
-    renderer
+
   })
 }
 
 export const getColumns_port = () => {
   return columnsCreator({
     dataIndexes: dataIndexes_port,
-    titleConfig: locale_port
+    titleConfig: locale_port,
+    renderer,
+    extraProps
   })
 }

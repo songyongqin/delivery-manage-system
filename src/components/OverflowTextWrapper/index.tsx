@@ -31,12 +31,14 @@ export default class extends React.Component<Props, any>{
           ref={target => this.target = target}
           className={styles["overflow-text"]}
           style={{
-            margin: "0",
-            position: "absolute",
-            lineHeight: "40px",
-            padding: "0 10px",
-            top: 0, bottom: 0, left: 0, right: 0,
-            ...style,
+            // width: "350px",
+            // height: "200px",
+            // margin: "0",
+            // position: "absolute",
+            // lineHeight: "20px",
+            // padding: "0 10px",
+            // top: 0, bottom: 0, left: 0, right: 0,
+            // ...style,
           }}>
           {children}
         </p>
