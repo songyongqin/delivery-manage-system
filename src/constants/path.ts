@@ -18,7 +18,8 @@ export const layoutConfig = {
   analyseAttackedAssets: '/static/config/layout/analyseAttackedAssets.json',
   analyseThreatFamily: '/static/config/layout/analyseThreatFamily.json',
   analyseThreatLoophole: '/static/config/layout/analyseThreatLoophole.json',
-  analyseEventVIew: '/static/config/layout/analyseEventVIew.json'
+  analyseEventVIew: '/static/config/layout/analyseEventVIew.json',
+  auditAssetsList: '/static/config/layout/auditAssetsList.json'
 }
 
 export default {

@@ -1,0 +1,50 @@
+{
+  "columns": [
+    {
+      "dataIndex": "assetsIp",
+      "title": "资产IP",
+      "conditionType": "input",
+      "inputRule": {
+        "type": "ip"
+      }
+    },
+    {
+      "dataIndex": "assetStates",
+      "title": "状态",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "入侵",
+          "value": "intrusion"
+        },
+        {
+          "text": "安装",
+          "value": "install"
+        },
+        {
+          "text": "控制",
+          "value": "control"
+        },
+        {
+          "text": "意图",
+          "value": "intention"
+        }
+      ]
+    },
+    {
+      "dataIndex": "portCount",
+      "title": "端口数量",
+      "conditionType": "sorter"
+    },
+    {
+      "dataIndex": "loopholeCount",
+      "title": "漏洞数量",
+      "conditionType": "sorter"
+    },
+    {
+      "dataIndex": "assetsName",
+      "title": "资产名称",
+      "conditionType": "input"
+    }
+  ]
+}

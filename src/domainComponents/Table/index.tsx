@@ -28,8 +28,8 @@ const extraColumns = (columns, {
   return columns.map(column => {
     try {
       const dataIndex = column.dataIndex
-
       if (column["conditionType"] === "input") {
+
         const visible = filterDropdownVisibleList.includes(dataIndex)
         const _onFilterDropdownVisibleChange = column.onFilterDropdownVisibleChange
         return {
@@ -57,14 +57,22 @@ const extraColumns = (columns, {
           }
         }
       }
+      if (column["conditionType"] === "sorter") {
+        const visible = filterDropdownVisibleList.includes(dataIndex)
+        const _onFilterDropdownVisibleChange = column.onFilterDropdownVisibleChange
+        return {
+          ...column,
+          sorter: true,
+        }
+      }
 
       if (dataIndex in filters) {
+
         return {
           filteredValue: filters[dataIndex],
           ...column
         }
       }
-
       return column
     } catch (e) {
       console.info("table:", e)
