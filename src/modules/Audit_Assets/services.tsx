@@ -22,6 +22,8 @@ export const getfetchAuditnewRecord = commonRequestCreator.get(httpApi.AUDIT_ASS
 
 export const getfetchRecordDetail = commonRequestCreator.getWithQueryString(httpApi.AUDIT_ASSETS_RECORD_DETAIL)
 
+export const getfetchRecordDetailPort = commonRequestCreator.getWithQueryString(httpApi.AUDIT_ASSETS_RECORD_PORT_DETAIL)
+
 
 
 

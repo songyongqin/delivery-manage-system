@@ -11,7 +11,8 @@ const HttpApiConfig = {
   AUDIT_ASSETS_EDIT_PORT: "/audit/assets-edit",
   AUDIT_ASSETS_RECORD: "/audit/assets-scan/record",
   AUDIT_ASSETS_NEWRECORD: "/audit/assets-scan/now-record",
-  AUDIT_ASSETS_RECORD_DETAIL: "/audit/assets-scan/detail",
+  AUDIT_ASSETS_RECORD_DETAIL: "/audit/assets-scan/detail-assets",
+  AUDIT_ASSETS_RECORD_PORT_DETAIL: "/audit/assets-scan/detail-port",
   AUDIT_CAUGHT_RECORD_DETAIL: "/audit/caughtrecord",
   AUDIT_CAUGHT_TASK_DETAIL: "/audit/caughttask",
 
