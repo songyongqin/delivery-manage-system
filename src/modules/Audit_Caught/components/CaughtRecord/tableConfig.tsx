@@ -46,7 +46,6 @@ export const getColumns = ({ }) => {
     renderer: {
       [STARTTIME]: (value) => <TimeLabel value={value}></TimeLabel>,
       [ENDTIME]: (value) => <TimeLabel value={value}></TimeLabel>,
-      [TIME]: (value) => <TimeLabel value={value}></TimeLabel>,
       [DOWNLOAD]: (value, record) => <div><a download href={value}>下载</a></div>
     }
   })
