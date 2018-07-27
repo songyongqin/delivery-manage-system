@@ -69,6 +69,7 @@ class configForm extends React.Component<any, any> {
   }
 
   checkSet = (rule, value, callback) => {
+
     if (value.number > 0 && value.number <= 10) {
       callback();
       return;
@@ -76,7 +77,10 @@ class configForm extends React.Component<any, any> {
     callback('设置范围为1-10');
   }
 
-
+  disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current < moment().startOf('day');
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { defaultConfig } = this.props;
@@ -133,11 +137,13 @@ class configForm extends React.Component<any, any> {
           label="开始时间"
         >
           {getFieldDecorator('startTime', { initialValue: moment(moment(), 'YYYY-MM-DD HH:mm') })(
-            <DatePicker showTime={{
-              defaultValue: moment('00:00', 'HH:mm'),
-              // disabledMinutes: () => this.range(0, 60), 
-              disabledSeconds: () => this.range(0, 60),
-            }} format="YYYY-MM-DD HH:mm" />)}
+            <DatePicker
+              disabledDate={this.disabledDate}
+              showTime={{
+                defaultValue: moment('00:00', 'HH:mm'),
+                // disabledMinutes: () => this.range(0, 60), 
+                disabledSeconds: () => this.range(0, 60),
+              }} format="YYYY-MM-DD HH:mm" />)}
         </FormItem>
 
 
