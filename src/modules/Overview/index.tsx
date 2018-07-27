@@ -50,7 +50,6 @@ const cloumns = [
   {
     dataIndex:'behaviorDescription',
     title:'行为描述',
-    render: text => <TimeTag num={ text } />
   },
   {
     dataIndex:'eventType',

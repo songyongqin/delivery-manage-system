@@ -117,7 +117,11 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ANALYSE_EVENT_VIEW_COUNT = 'analyseEventViewCount',
 
-  THREAT_REPORT = 'threatReport'
+  THREAT_REPORT = 'threatReport',
+
+  THREAT_REPORT_COUNT_NAMESPACE = 'threatReportCount',
+  
+  THREAT_REPORT_DETAIL_NAMESPACE = 'threatReportDetail'
 
 
 

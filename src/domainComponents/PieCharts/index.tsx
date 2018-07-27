@@ -77,23 +77,33 @@ let getOption = ({ data ,theme, titles }) =>  ({
 })
 
 
-const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={} }) => {
+const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) => {
   let option = { ...getOption({data, theme, titles}), ...config }
-
+  console.log('option', option)
   if(Array.isArray(data) ){
-    return <div style={{ width: "100%", height: "400px" }}>
-    <ReactEcharts
-      style={{ height: "100%" }}
-      option={ option }>
-    </ReactEcharts>
-  </div>
+    if(onEvents){
+      return (
+        <div style={{ width: "100%", height: "400px" }}>
+          <ReactEcharts
+            style={{ height: "100%" }}
+            option={ option }
+            onEvents={onEvents}>
+          </ReactEcharts>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div style={{ width: "100%", height: "400px" }}>
+          <ReactEcharts
+            style={{ height: "100%" }}
+            option={ option }>
+          </ReactEcharts>
+        </div>
+      )
+    }
   }
-  return <div style={{ width: "100%", height: "400px" }}>
-    {/* <ReactEcharts
-      style={{ height: "100%" }}
-      option={ option }>
-    </ReactEcharts> */}
-  </div>
+  return <div style={{ width: "100%", height: "400px" }}></div>
 
 }
 

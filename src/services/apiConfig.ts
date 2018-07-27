@@ -229,7 +229,11 @@ const HttpApiConfig = {
 
   REPORT_DETAIL_THREAT_INTELLIGENCE: '/report/detail/threatIntelligence',
 
-  REPORT_EXPORT: '/report/export'
+  REPORT_EXPORT: '/report/export',
+
+  REPORT_COUNT_THREAT: '/report/count', 
+
+  REPORT_DETAIL_THREAT: '/report/detail', 
 
 }
 
