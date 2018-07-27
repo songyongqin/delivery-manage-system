@@ -5,7 +5,6 @@ import moment from 'moment'
 const transformTime = (num: number):string =>{
   if (isNaN(num)|| typeof num !=='number' ){
     // console.error('type error, it want to be number, but recived:  '+ typeof num)
-    return  trans(0)
   }
   return trans(num)
 }

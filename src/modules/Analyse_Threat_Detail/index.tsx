@@ -196,7 +196,7 @@ class Page extends React.Component<any, state> {
       if(type===typeArr[0]&&!isFetch.familyEvent){
         this.fetchFamilyEvent(1)
       }
-      else if(!isFetch.loopholeEvent) {
+      else if(type===typeArr[1]&&!isFetch.loopholeEvent) {
         this.fetchLoopholeEvent(1)
       }
     }
@@ -204,7 +204,7 @@ class Page extends React.Component<any, state> {
       if(type===typeArr[0]&&!isFetch.familyAssets){
         this.fetchFamilyAssets(1)
       }
-      else if(!isFetch.loopholeAssets) {
+      else if(type===typeArr[1]&&!isFetch.loopholeAssets) {
         this.fetchLoopholeAssets(1)
       }
     }
@@ -212,7 +212,7 @@ class Page extends React.Component<any, state> {
       if(type===typeArr[0]&&!isFetch.familyCc){
         this.fetchFamilyCc(1)
       }
-      else if(!isFetch.loopholeCc) {
+      else if(type===typeArr[1]&&!isFetch.loopholeCc) {
         this.fetchLoopholeCc(1)
       }
     }

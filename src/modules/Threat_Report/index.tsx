@@ -22,7 +22,6 @@ class ThreatReport extends Component<any,any>{
 
   render(){
     const { timestampRange } = this.state
-    console.log(this.state)
     return(
       <div style={{ position: "relative" }} >
         <div style={{ float: "right", position:'absolute', right:10 }}>
@@ -32,7 +31,7 @@ class ThreatReport extends Component<any,any>{
           </DateRangePicker>
           <Button type={ 'primary' } style={{ marginLeft: 20 }}  >导出</Button>
         </div>
-        <Pages timeRange={ '2018-7-21 到 2018-7-24' } />
+        <Pages timestampRange={ timestampRange } />
       </div>
     )
   }

@@ -73,7 +73,6 @@ class WithTable extends Component<props, any>{
   tableOnChange = (pagination, filters, sorter) => {
      //点击表头的筛选，搜索，排序会触发这个函数
      let obj = { ...pagination, ...filters, ...sorter }
-    
      if(obj['columnKey']){
        obj[obj['columnKey']] = obj['order']!=="descend"  //降序
        delete obj['columnKey']
