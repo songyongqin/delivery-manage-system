@@ -83,6 +83,11 @@ export const LAYOUT_NAMESPACE = "layout",
 
   ASSETS_NEWRECORD_NAMESPACE = "AuditnewRecord",
 
+  ASSETS_DETAIL_NAMESPACE = "AuditAssetsDetail",
+
+  ASSETS_PORTDETAIL_NAMESPACE = "AuditAssetsDetailPort",
+
+
   AUDIT_CAUGHTRECORD_NAMESPACE = "AuditCaughtRecord",
 
   AUDIT_CAUGHTTASK_NAMESPACE = "AuditCaughtTask",

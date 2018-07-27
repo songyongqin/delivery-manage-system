@@ -56,7 +56,7 @@ export default class LastEvent extends React.PureComponent<any, any>{
         <Modal
           destroyOnClose={true}
           width="80%"
-          title="资产详情"
+          title={null}
           visible={this.state.detailVisible}
           onCancel={this.handleCancel}
           footer={null}

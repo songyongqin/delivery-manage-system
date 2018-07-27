@@ -7,6 +7,7 @@ import TimeLabel from 'domainComponents/TimeLabel'
 import AssetsDetail from '../AssetsDetail'
 import ConfigForm from '../configForm'
 import EditForm from '../editForm'
+import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 const styles = require('./style.less')
 import {
   LASTUPDATETIME,
@@ -17,6 +18,8 @@ import {
   LOOPHOLE
 } from '../../constants'
 import extraConnect from 'domainUtils/extraConnect'
+import WithConfig from 'domainComponents/WithConfig'
+import path from 'constants/path'
 
 const dataItems = [
   {
@@ -80,6 +83,7 @@ const dataItems = [
     }
   }
 )
+@WithConfig(path.layoutConfig.auditAssetsList)
 export default class CommonItem extends React.Component<any, any>{
   constructor(props) {
     super(props)
@@ -87,6 +91,11 @@ export default class CommonItem extends React.Component<any, any>{
       initialFilters: {
         page: 1,
         limit: 20,
+        assetsIp: "",
+        assetStates: "",
+        assetsName: "",
+        portCount: "",
+        loopholeCount: ""
       },
       lastReqTime: 0,
       data: [],
@@ -154,6 +163,7 @@ export default class CommonItem extends React.Component<any, any>{
       editVisible: false
     });
   }
+
   render() {
     const { data, initialFilters } = this.state;
 
@@ -178,11 +188,13 @@ export default class CommonItem extends React.Component<any, any>{
           <TableWithRemote
             key={`${this.state.lastReqTime}-table`}
             initialFilters={initialFilters}
-            getColumns={(option) => getColumns({
-              ...option,
-              showDetailModal: this.showDetailModal,
-              showEditModal: this.showEditModal
-            })}
+            getColumns={option => {
+              return combineColumnsConfig(getColumns({
+                ...option,
+                showDetailModal: this.showDetailModal,
+                showEditModal: this.showEditModal
+              }), this.props.config.columns)
+            }}
             remoteNamespace={AUDIT_ASSETS_NAMESPACE}>
             ></TableWithRemote>
           <Modal

@@ -29,7 +29,7 @@ export const textConfig = {
   // [KEY]: "序号",
   [TASKNAME]: "任务名称",
   [STARTTIME]: "抓包开始时间",
-  [IP]: "抓包结束时间",
+  [IP]: "抓包IP",
   [TIME]: "抓包时长设置",
   [SIZE]: "抓包大小设置",
   [STATUS]: "状态",
@@ -43,6 +43,7 @@ export const getColumns = ({ taskId, putTask, delTask }) => {
     dataIndexes: dataIndexes,
     titleConfig: textConfig,
     renderer: {
+      [STATUS]: (value) => value == "Waiting" ? "等待中" : value == "Catching" ? "抓包中" : value == "Cancel" ? "已取消" : null,
       [STARTTIME]: (value) => <TimeLabel value={value}></TimeLabel>,
       [OPERATE]: (value, record) => <Button type="primary" size="small" onClick={() => taskId == record.id ? delTask(record.id) : putTask(record.id)}>{taskId == record.id ? "删除任务" : "取消任务"}</Button>,
     }

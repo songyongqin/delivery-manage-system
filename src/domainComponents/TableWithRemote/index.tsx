@@ -93,19 +93,27 @@ class TableWithRemote extends React.Component<any, any>{
       page: current
     })
   }
-  tableOnChange = (_, filters) => {
-
+  tableOnChange = (_, filters, sorter) => {
+    const obj = { ...sorter }
+    if (obj['columnKey']) {
+      obj[obj['columnKey']] = obj['order'] !== "descend"  //降序
+      delete obj['columnKey']
+      delete obj['column']
+      delete obj['field']
+      delete obj['order']
+    }
     const { stopFetchOnFiltersChange, tableOnChange } = this.props
-
     tableOnChange && tableOnChange(filters)
 
     if (stopFetchOnFiltersChange) {
       return
     }
 
+
     this.fetchData({
       ...this.state.filters,
       ...filters,
+      ...obj,
       page: 1
     })
   }
