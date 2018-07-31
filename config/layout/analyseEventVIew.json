@@ -4,16 +4,156 @@
       "dataIndex": "threatenBehavior",
       "filters": [
         {
-          "value": "访问C&C域名",
-          "text": "访问C&C域名"
+          "value": "Adware",
+          "text": "广告流量"
         },
         {
-          "value": "下载恶意代码",
+          "value": "Spam",
+          "text": "垃圾邮件"
+        },
+        {
+          "value": "Downloader",
+          "text": "下载者"
+        },
+        {
+          "value": "StealInfor",
+          "text": "窃取信息"
+        },
+        {
+          "value": "Click",
+          "text": "点击广告"
+        },
+        {
+          "value": "StealPass",
+          "text": "盗号"
+        },
+        {
+          "value": "KeyLog",
+          "text": "键盘记录"
+        },
+        {
+          "value": "KillDisk",
+          "text": "磁盘擦除"
+        },
+        {
+          "value": "Scan",
+          "text": "扫描"
+        },
+        {
+          "value": "TrojanCommand",
+          "text": "下发木马控制指令"
+        },
+        {
+          "value": "SuspiciousFilenameDetect",
+          "text": "可疑文件名检测"
+        },
+        {
+          "value": "DefaultLoginAttempt",
+          "text": "默认的登录尝试"
+        },
+        {
+          "value": "WebApplicationActivity",
+          "text": "web应用通信"
+        },
+        {
+          "value": "WebApplicationAttack",
+          "text": "web应用攻击"
+        },
+        {
+          "value": "DownloadShellcode",
           "text": "下载恶意代码"
         },
         {
-          "value": "所有",
-          "text": "所有"
+          "value": "Miner",
+          "text": "挖矿"
+        },
+        {
+          "value": "APTCommunicationBehavior",
+          "text": "上线行为"
+        },
+        {
+          "value": "Unknown",
+          "text": "未知行为"
+        },
+        {
+          "value": "RequestC2Domain",
+          "text": "请求C&C域名解析"
+        },
+        {
+          "value": "CompleteRequestC2Domain",
+          "text": "请求C&C域名解析完成"
+        },
+        {
+          "value": "PortScan",
+          "text": "端口扫描"
+        },
+        {
+          "value": "BruteForce23",
+          "text": "暴力破解Telnet服务"
+        },
+        {
+          "value": "Logon3306",
+          "text": "登录Mysql服务"
+        },
+        {
+          "value": "Connect3306",
+          "text": "连接Mysql服务"
+        },
+        {
+          "value": "Logon23",
+          "text": "登录Telnet服务"
+        },
+        {
+          "value": "Connect23",
+          "text": "连接Telnet服务"
+        },
+        {
+          "value": "Logon22",
+          "text": "登录SSH服务"
+        },
+        {
+          "value": "Connect22",
+          "text": "A连接SSH服务"
+        },
+       {
+          "value": "SSHBashSetUp",
+          "text": "利用SSH输入控制命令"
+        },
+       {
+          "value": "UnusualUrlDomainConnect",
+          "text": "不受信任的URL访问"
+        },
+       {
+          "value": "MysqlRemoteCodeExecute",
+          "text": "MySql远程代码执行"
+        },
+       {
+          "value": "BufferOverFlow",
+          "text": "缓冲区溢出攻击"
+        },
+       {
+          "value": "EternalBlueRemoteCodeExecute",
+          "text": "永恒之蓝远程代码调用"
+        },
+       {
+          "value": "ExploitEternalBlue  ",
+          "text": "永恒之蓝漏洞利用"
+        },
+       {
+          "value": "BruteForce3389",
+          "text": "暴力破解远程桌面服务"
+        },
+       {
+          "value": "Logon3389",
+          "text": "登录远程桌面"
+        },
+       {
+          "value": "Connect3389",
+          "text": "连接远程桌面"
+        },
+       {
+          "value": "Connect445",
+          "text": "连接SMB服务"
         }
       ]
     },
@@ -21,67 +161,61 @@
       "dataIndex": "eventType",
       "filters": [
         {
-          "value": "远控木马",
-          "text": "远控木马"
+          "value": "拒绝服务攻击",
+          "text": "拒绝服务攻击"
         },
         {
-          "value": "DDOS木马",
-          "text": "DDOS木马"
+          "value": "远控",
+          "text": "远控"
         },
         {
-          "value":"未知",
-          "text":"未知"
+          "value":"勒索",
+          "text":"勒索"
+        },
+        {
+          "value":"高级持续性威胁",
+          "text":"高级持续性威胁"
+        },
+        {
+          "value":"漏洞利用",
+          "text":"漏洞利用"
+        },
+        {
+          "value":"威胁网络流量",
+          "text":"威胁网络流量"
+        },
+        {
+          "value":"蠕虫",
+          "text":"蠕虫"
+        },
+        {
+          "value":"后门",
+          "text":"后门"
         }
       ]
     },
     {
       "dataIndex": "attackerIP",
-      "filters": [
-        {
-          "value": "172.31.12.50",
-          "text": "172.31.12.50"
-        },
-        {
-          "value": "172.31.12.51",
-          "text": "172.31.12.51"
-        },
-        {
-          "value":"172.31.12.52",
-          "text":"172.31.12.52"
-        }
-      ]
+      "conditionType": "input"
     },
     {
       "dataIndex": "attatcedAssetIp",
-      "filters": [
-        {
-          "value": "172.31.12.53",
-          "text": "172.31.12.53"
-        },
-        {
-          "value": "172.31.12.54",
-          "text": "172.31.12.54"
-        },
-        {
-          "value":"172.31.12.55",
-          "text":"172.31.12.55"
-        }
-      ]
+       "conditionType": "input"
     },
     {
       "dataIndex": "assetStates",
       "filters": [
         {
-          "value": "全选",
-          "text": "全选"
-        },
-        {
-          "value": "疑似失陷",
+          "value": "SuspectedFall",
           "text": "疑似失陷"
         },
         {
-          "value":"失陷",
-          "text":"失陷"
+          "value": "Fall",
+          "text": "失陷"
+        },
+        {
+          "value":"Unknown",
+          "text":"未知"
         }
       ]
     },
@@ -89,16 +223,20 @@
       "dataIndex": "attackStage",
       "filters": [
         {
-          "value": "准备",
+          "value": "Prepare",
           "text": "准备"
         },
         {
-          "value": "入侵",
+          "value": "Invasion",
           "text": "入侵"
         },
         {
-          "value":"控制",
+          "value":"Control",
           "text":"控制"
+        },
+        {
+          "value":"Intention",
+          "text":"意图"
         }
       ]
     },
@@ -106,15 +244,15 @@
       "dataIndex": "level",
       "filters": [
         {
-          "value": "高危",
+          "value": "high",
           "text": "高危"
         },
         {
-          "value": "中危",
+          "value": "middle",
           "text": "中危"
         },
         {
-          "value":"低危",
+          "value":"low",
           "text":"低危"
         }
       ]
