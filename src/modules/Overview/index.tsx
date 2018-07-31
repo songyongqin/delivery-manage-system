@@ -13,6 +13,7 @@ import TimeTag from 'components/TimeTag'
 import LevelTag from 'components/LevelTag'
 import WithTable from 'components/WithTable'
 import Tree from './components/Tree'
+import { getWeekTime } from 'utils/getInitTime'
 
 
 
@@ -85,7 +86,7 @@ class Page extends React.Component<any, any> {
         familyCount: [],
       },
       filters: {
-        timestampRange: []
+        timestampRange:getWeekTime()|| []
       },
       networkFlow:{
         series:[],

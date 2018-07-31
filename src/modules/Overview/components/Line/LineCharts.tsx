@@ -62,7 +62,7 @@ class BarCharts extends React.Component<props, any>{
 // legend为 series的name
     const { title, xAxis,  series, theme, unit } = this.props
 
-    return <div style={{ width: "100%", height: "260px" }}>
+    return <div style={{ width: "100%", height: "300px" }}>
       <ReactEcharts
         style={{ height: "100%" }}
         option={{
@@ -77,7 +77,7 @@ class BarCharts extends React.Component<props, any>{
                       top: 'middle',
                       style: {
                           fill: '#333',
-                          text: unit?unit: '流量 /MB',
+                          text: unit?unit: '流量 /GB',
                           font: '14px Microsoft YaHei',
                       }
                   },
@@ -93,24 +93,29 @@ class BarCharts extends React.Component<props, any>{
             }
         },
         legend: {
+            top:'10%',
             data:getLegend(series)
         },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
+        // toolbox: {
+        //     feature: {
+        //         saveAsImage: {}
+        //     }
+        // },
         grid: {
             left: '4%',
             right: '4%',
             bottom: '3%',
+            top:'20%',
             containLabel: true
         },
         xAxis : [
             {
                 type : 'category',
                 boundaryGap : false,
-                data : xAxis
+                data : xAxis,
+                axisLabel:{
+                  rotate:45  
+                },
             }
         ],
         yAxis : [

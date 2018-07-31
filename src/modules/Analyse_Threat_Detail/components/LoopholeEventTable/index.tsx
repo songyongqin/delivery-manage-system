@@ -21,7 +21,7 @@ class LoopholeEventTable extends React.Component<props, any>{
     let columns = [
       { title:'序号', 
         dataIndex:'index',
-        render: ( text, record, index ) => <div>{ index }</div>
+        render: ( text, record, index ) => <div>{ index+1 }</div>
         },
       { title:'首次发生时间', 
         dataIndex:'firstTime',

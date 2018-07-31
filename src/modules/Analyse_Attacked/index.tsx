@@ -12,11 +12,13 @@ import WithPagination from 'components/WithPagination'
 import tranformTime from 'utils/tranformTime'
 import path from 'constants/path'
 import WithTableConfig from 'domainComponents/WithTableConfig'
+import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import {
   // assetStateFilter,
   // levelFilter,
   limit
 } from './constants'
+import { getWeekTime } from 'utils/getInitTime'
 
 
 const mapStateToprops = state => {
@@ -61,7 +63,7 @@ class Page extends React.Component<any, any> {
     this.state = {
       lastChangeTime: 0,
       filters: {
-        timestampRange: []
+        timestampRange:getWeekTime()|| []
       },
       tableData:[],
       reqArg: {...initArg, page:1, searchValue:""},
@@ -107,17 +109,7 @@ class Page extends React.Component<any, any> {
     //   this.fetch(arg)
     // }
   }
-  //放弃使用
-  // fetch = arg => {
-  //   console.log('fetch')
-  //   this.props.fetch(arg)
-  //   .then(res => {
-  //     let tableData = res.data 
-  //     let total = res.total 
-  //     this.setState( { reqArg: arg, tableData, total } )  
-  //   })
-  //   .catch(err => console.error(err))
-  // }
+
 // 搜索
   search = arg => {
     this.props.search(arg)
@@ -131,8 +123,10 @@ class Page extends React.Component<any, any> {
 
   reset = () => {
     let time = this.getNowTime()
+    let reqArg =  { ...this.state.reqArg, ...initArg, page:1 }
     this.setState({ tableKey: time +'attacked-table',
-    reqArg:  { ...this.state.reqArg, ...initArg } })
+    reqArg })
+    this.search(reqArg)
   }
 
   paginationOnchange = (page)=> {
@@ -162,7 +156,7 @@ class Page extends React.Component<any, any> {
     let columns = [
       { title:'序号', 
         dataIndex:'index',
-        render:  (text, record, index) => <div>{index}</div>
+        render:  (text, record, index) => <div>{index +1}</div>
         },
       { title:'首次受攻击时间', 
         dataIndex:'attackedFirstTime',
@@ -181,7 +175,7 @@ class Page extends React.Component<any, any> {
         types:['sorter']
       },
       { title:'资产状态',   
-        dataIndex:'assetStates', 
+        dataIndex:'assetStates',
         types:['filters']
       },
       { title:'威胁等级', 
@@ -214,7 +208,7 @@ class Page extends React.Component<any, any> {
           <DateRangePicker
             value={timestampRange}
             onChange={this.timestampRangeOnChange}>
-          </DateRangePicker>
+          </DateRangePicker>  
         </div>
         {
           this.props.animateRender([
@@ -228,7 +222,7 @@ class Page extends React.Component<any, any> {
               <WithTable  tableData={ tableData }
                         key = { this.state.tableKey }
                         constants={ constants }
-                        config={ columns }
+                        config={ combineColumnsConfig(columns,this.props.config.columns) }
                         tableBeforeFetch={ this.tableBeforeFetch } />
               <WithPagination total={this.state.total}
                               limit={ limit }

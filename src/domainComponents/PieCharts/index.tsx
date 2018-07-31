@@ -5,6 +5,7 @@ import * as React from 'react'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import 'echarts/lib/chart/pie'
 import 'echarts/lib/component/title'
+import wrapStr from 'utils/wrapStr'
 
 const DARK_THEME = 'dark'
 const LIGHT_THEME = 'light'
@@ -35,7 +36,13 @@ let getOption = ({ data ,theme, titles }) =>  ({
     right: 'right',
     bottom: '10',
     data: Array.isArray(data) ? data.map(i => i.name) : [],
-    textStyle: config[theme]
+    textStyle: config[theme],
+    formatter: function (name) {
+      return   wrapStr(name)
+    },
+    tooltip: {
+      show: true
+    }
   },
   // color: [
   //   // "#516b91",
