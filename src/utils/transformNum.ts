@@ -10,10 +10,13 @@ const getStr = num => {
           return num +''
         }
   else if(num>=1000&&num<1000*1000){
-    return parseInt(num/10, 10)/100 + 'K'
+    return Math.floor(num/10)/100 + ' K'
   }
-  else(num>=1000*1000){
-    return parseInt(num/10*1000, 10)/100 + 'M'
+  else if(num>=1000*1000&&num<1000*1000*1000){
+    return Math.floor(num/(10*1000))/100 + ' M'
+  }
+  else (num>1000*1000*1000){
+    return Math.floor(num/(10*1000*1000))/100 + ' B'
   }
 }
 

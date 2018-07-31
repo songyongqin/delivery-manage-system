@@ -61,7 +61,7 @@ class BarCharts extends React.Component<props, any>{
   render() {
 // legend为 series的name
     const { title, xAxis,  series, theme, unit } = this.props
-    console.log(getDeg(),unit  )
+
     return <div style={{ width: "100%", height: "260px" }}>
       <ReactEcharts
         style={{ height: "100%" }}

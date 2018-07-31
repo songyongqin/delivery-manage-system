@@ -8,7 +8,8 @@ export default (app: any, url: string): React.Component => {
   return dynamic({
     app,
     models: () => [
-
+      System.import('modules/Threat_Report/compoents/ModalContent/model'),
+      System.import('modules/Threat_Report/compoents/Rank/model'),
       System.import('modules/Threat_Report/compoents/Charts/model'),
       System.import('modules/Threat_Report/compoents/Count/model'),
       System.import('modules/Threat_Report/model'),

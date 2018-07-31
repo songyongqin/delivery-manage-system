@@ -70,7 +70,7 @@ class Page extends React.Component<any, any> {
       tableKey: '0attacked',
       countKey: 'oattackercount',
       total:0,
-      timestampRange:[]
+      timestampRange:[],
     }
   }
 
@@ -155,6 +155,7 @@ class Page extends React.Component<any, any> {
     this.fetchTable({page:1})
   }
 
+
   render() {
 
     const { filters, tableData, timestampRange } = this.state
@@ -224,7 +225,7 @@ class Page extends React.Component<any, any> {
           this.props.animateRender([
             <div key='analyse-attacker-count' >
             {/* 统计数据 */}
-              <Count  key={ this.state.countKey } timestampRange={ timestampRange } />
+              <Count  key={ this.state.countKey } timestampRange={ timestampRange }  />
             </div>,
             <div key="analyse-attacker-table">
             <button onClick={ this.reset } >重置筛选</button>

@@ -79,11 +79,12 @@ let getOption = ({ data ,theme, titles }) =>  ({
 
 const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) => {
   let option = { ...getOption({data, theme, titles}), ...config }
-  console.log('option', option)
+
   if(Array.isArray(data) ){
     if(onEvents){
       return (
-        <div style={{ width: "100%", height: "400px" }}>
+        // <div style={{ width: "100%", height: "400px" }}>
+        <div style={{ width: "100%", height:300 }}>
           <ReactEcharts
             style={{ height: "100%" }}
             option={ option }
@@ -94,7 +95,8 @@ const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) 
     }
     else {
       return (
-        <div style={{ width: "100%", height: "400px" }}>
+        // <div style={{ width: "100%", height: "400px" }}>
+        <div style={{ width: "100%", height:300 }}>
           <ReactEcharts
             style={{ height: "100%" }}
             option={ option }>
