@@ -14,6 +14,7 @@ import LoopholeTable from './components/LoopholeTable'
 import { SelectArr } from './constants'
 import tranformParmToObj from 'utils/tranformParmToObj' 
 import { limit } from './constants'
+import { getWeekTime } from 'utils/getInitTime'
 
 
 
@@ -83,7 +84,7 @@ class Page extends React.Component<any, any> {
     super(props);
     this.state = {
       filters: {
-        timestampRange: []
+        timestampRange:getWeekTime()|| []
       },
       // tableData:[],
       // // reqArg: {...initArg},
@@ -208,10 +209,16 @@ class Page extends React.Component<any, any> {
     let time = this.getNowTime()
     let selected = this.state.selected
     if(selected===SelectArr[0]){
-      this.setState({ reqFamily:{ ...this.state.reqFamily, ...initReqFamily },familyTableKey: time })
+      
+      let reqFamily = { ...this.state.reqFamily, ...initReqFamily, page:1  }
+      this.setState({ reqFamily,familyTableKey: time })
+      this.fetchFamilyTable(reqFamily)
     }
     else {
-      this.setState({ reqloophole:{ ...this.state.reqloophole,...initReqloophole },loopholeTableKey: time })
+      
+      let reqloophole = { ...this.state.reqloophole,...initReqloophole, page:1  }
+      this.setState({ reqloophole,loopholeTableKey: time })
+      this.fetchLoopholeTable(reqloophole)
     }
     // if(selected===SelectArr[0]){
     //   this.setState({ familyTableKey: time })
@@ -235,7 +242,7 @@ class Page extends React.Component<any, any> {
   render() {
 
     const { filters, familyData , familyTotal,  familyCount, loopholeCount, connectC2Count, selected, loopholeData, loopholeTotal } = this.state
-
+    
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>

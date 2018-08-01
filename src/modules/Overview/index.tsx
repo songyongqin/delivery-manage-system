@@ -13,6 +13,7 @@ import TimeTag from 'components/TimeTag'
 import LevelTag from 'components/LevelTag'
 import WithTable from 'components/WithTable'
 import Tree from './components/Tree'
+import { getWeekTime } from 'utils/getInitTime'
 
 
 
@@ -85,7 +86,7 @@ class Page extends React.Component<any, any> {
         familyCount: [],
       },
       filters: {
-        timestampRange: []
+        timestampRange:getWeekTime()|| []
       },
       networkFlow:{
         series:[],
@@ -180,7 +181,7 @@ class Page extends React.Component<any, any> {
           <div key='overview-table' style={{ marginTop:20 }} >
             <div>
               <h2 style={{ display:'inline-block' }} >最新紧急事件</h2>
-              <a href='/#/analyse/threat' style={{ textDecoration:'none', float:'right', marginRight:140, marginTop:10}} >查看全部威胁事件</a>
+              <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:140, marginTop:10}} >查看全部威胁事件</a>
             </div>
             <Spin spinning={ eventLoading } >
               <WithTable tableData={ table.data } config={ cloumns } />

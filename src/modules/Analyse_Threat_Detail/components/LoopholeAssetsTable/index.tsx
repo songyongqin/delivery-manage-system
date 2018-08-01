@@ -16,7 +16,7 @@ class LoopholeAssetsTable extends React.Component<props, any>{
     let columns = [
       { title:'序号', 
         dataIndex:'index',
-        render: ( text, record, index ) => <div>{ index }</div>
+        render: ( text, record, index ) => <div>{ index+1 }</div>
         },
       { title:'受害资产IP', 
         dataIndex:'attackedAssetsIP',

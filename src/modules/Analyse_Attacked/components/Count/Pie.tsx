@@ -2,7 +2,7 @@
 
 import React from 'react'
 import PieChart from 'domainComponents/PieCharts/async'
-
+import wrapStr from 'utils/wrapStr'
 
 const Wrap = props =>{
   return (
@@ -12,11 +12,20 @@ const Wrap = props =>{
 
 const getConfig = data => {
   let obj = {}
-  // let arr = JSON.parse(JSON.stringify(data))
-  // if(arr&&arr.length){
-  //   arr[0]['selected'] = true
-  // }
-  // obj['']
+  
+  obj['legend'] = {
+    orient: 'vertical',
+    right: 'right',
+    bottom: '10',
+    data: Array.isArray(data) ? data.map(i => i.name) : [],
+    formatter: function (name) {
+      return   wrapStr(name)
+    },
+    tooltip: {
+      show: true
+    }
+  }
+
   obj['series'] = [
     {
       // name:'访问来源',
@@ -27,18 +36,14 @@ const getConfig = data => {
       // avoidLabelOverlap: true,
       minAngle:5,
       label: {
-          normal: {
-              show: false,
-              // position: 'inner',
-              // formatter: '{c}\n {d}%'
-          }
+        normal: {
+          show: false,
+          position: "outside",
+          formatter: "{b} : {c} ({d}%)"
+        },
+
       },
-      labelLine: {
-          normal: {
-              show: false
-          }
-      },
-      data:data
+      data:Array.isArray(data) ? data.filter(i => i.value) : [],
   }
   ]
   return obj

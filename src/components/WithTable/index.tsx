@@ -74,7 +74,7 @@ class WithTable extends Component<props, any>{
   tableOnChange = (pagination, filters, sorter) => {
     //点击表头的筛选，搜索，排序会触发这个函数
     let obj = { ...pagination, ...filters, ...sorter }
-
+    console.log('filters',filters)
     if (obj['columnKey']) {
       obj[obj['columnKey']] = obj['order'] !== "descend"  //降序
       delete obj['columnKey']
@@ -83,10 +83,10 @@ class WithTable extends Component<props, any>{
       delete obj['order']
     }
     //去掉不需要的参数
-    for (let key in obj) {
-      if (obj[key].length === 0 || typeof obj[key] === 'string') delete obj[key]
+    // for (let key in obj) {
+    //   if (obj[key].length === 0 || typeof obj[key] === 'string') delete obj[key]
 
-    }
+    // }
     //添加search的值
     let searchValue = this.state.searchValue
     obj = { ...obj, ...searchValue, page: 1 }
@@ -94,7 +94,7 @@ class WithTable extends Component<props, any>{
     //  for(let keys in obj){
     //    obj[keys] = obj[keys].toString() 
     //  }
-
+    console.log('obj',obj)
     this.setState({ tableChangeData: obj })
     this.props.tableBeforeFetch && this.props.tableBeforeFetch(obj)
     this.hiddenSearch()

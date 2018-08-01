@@ -236,6 +236,8 @@ const HttpApiConfig = {
 
   REPORT_DETAIL_THREAT: '/report/detail',
 
+  REPORT_RANK_THREAT: '/report/rank'
+
 }
 
 

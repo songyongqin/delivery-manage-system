@@ -7,6 +7,7 @@ import WithTable from 'components/WithTable'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import TimeTag from 'components/TimeTag'
 import { ANALYSE_THREAT_FAMILY_DETAIL_URL } from 'routes/config/path'
+import WithTooltip from 'components/WithTooltip'
 
 
 interface props{
@@ -22,7 +23,7 @@ class FamilyTable extends React.Component<props, any>{
     let columns = [
       { title:'序号', 
         dataIndex:'index',
-        render: ( text, record, index ) => <div>{ index }</div>
+        render: ( text, record, index ) => <div>{ index+1 }</div>
         },
       { title:'首次发现时间', 
         dataIndex:'firstTime',
@@ -39,7 +40,8 @@ class FamilyTable extends React.Component<props, any>{
         dataIndex:'sampleMD5', 
       },
       { title:'威胁家族介绍', 
-        dataIndex:'threatFamilyIntroduce', 
+        dataIndex:'threatFamilyIntroduce',
+        render: text => <WithTooltip text={ text } style={{ width:300 }} />
       },
       { title:'威胁事件次数',   
         dataIndex:'threatEventCount', 
@@ -54,7 +56,7 @@ class FamilyTable extends React.Component<props, any>{
         dataIndex:'actions', 
         render: (text,record,index) =>
           <div style={{ textAlign:'center' }}  >
-          {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
+          
             <a  href={ `/#${ANALYSE_THREAT_FAMILY_DETAIL_URL}?threatFamily=${record.threatFamily}` }
                   style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} >查看</a>
           </div>

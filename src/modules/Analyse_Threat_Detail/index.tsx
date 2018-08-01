@@ -304,11 +304,14 @@ class Page extends React.Component<any, state> {
           {
             type===typeArr[0] ? 
               <Spin spinning={ familyEventLoading } >
+              <div style={{ height:500, overflow:'scroll' }} >
                 <FamilyEventTable tableData={ familyEventArr.data }  />
+                
                 <WithPagination total={ familyEventArr.total } 
                                 current={ familyEventPage }
                                 limit={ limit }
                                 onChange={ this.fetchFamilyEvent } />
+                                </div>
               </Spin>
               : 
               <Spin spinning={ loopholeEventLoading } >

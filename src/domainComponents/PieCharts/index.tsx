@@ -5,6 +5,7 @@ import * as React from 'react'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import 'echarts/lib/chart/pie'
 import 'echarts/lib/component/title'
+import wrapStr from 'utils/wrapStr'
 
 const DARK_THEME = 'dark'
 const LIGHT_THEME = 'light'
@@ -35,7 +36,13 @@ let getOption = ({ data ,theme, titles }) =>  ({
     right: 'right',
     bottom: '10',
     data: Array.isArray(data) ? data.map(i => i.name) : [],
-    textStyle: config[theme]
+    textStyle: config[theme],
+    formatter: function (name) {
+      return   wrapStr(name)
+    },
+    tooltip: {
+      show: true
+    }
   },
   // color: [
   //   // "#516b91",
@@ -79,11 +86,12 @@ let getOption = ({ data ,theme, titles }) =>  ({
 
 const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) => {
   let option = { ...getOption({data, theme, titles}), ...config }
-  console.log('option', option)
+
   if(Array.isArray(data) ){
     if(onEvents){
       return (
-        <div style={{ width: "100%", height: "400px" }}>
+        // <div style={{ width: "100%", height: "400px" }}>
+        <div style={{ width: "100%", height:300 }}>
           <ReactEcharts
             style={{ height: "100%" }}
             option={ option }
@@ -94,7 +102,8 @@ const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) 
     }
     else {
       return (
-        <div style={{ width: "100%", height: "400px" }}>
+        // <div style={{ width: "100%", height: "400px" }}>
+        <div style={{ width: "100%", height:300 }}>
           <ReactEcharts
             style={{ height: "100%" }}
             option={ option }>

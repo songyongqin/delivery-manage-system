@@ -16,6 +16,7 @@ import Spin from 'domainComponents/Spin'
 import {  ANALYSE_ATTACK_DETAIL_URL,
           ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import LevelTag from 'components/LevelTag'
+import { getWeekTime } from 'utils/getInitTime'
 
  
 import {
@@ -63,7 +64,7 @@ class Page extends React.Component<any, any> {
     this.state = {
       lastChangeTime: 0,
       filters: {
-        timestampRange: []
+        timestampRange:getWeekTime()|| []
       },
       reqArg:{
         ...initArg,
@@ -98,9 +99,9 @@ class Page extends React.Component<any, any> {
   }
 
   reset = () => {
-    this.setState({ tableKey: +new Date(), reqArg: {
-      ...this.state.reqArg, ...initArg
-    } })
+    let reqArg = { ...this.state.reqArg, ...initArg, page:1 }
+    this.setState({ tableKey: +new Date(), reqArg })
+    this.fetch(reqArg)
   }
 
   paginationChange = page => {
@@ -150,7 +151,7 @@ class Page extends React.Component<any, any> {
       {
         title:'序号',
         dataIndex: 'index',
-        render: ( text, record, index ) => <div>{ index }</div>
+        render: ( text, record, index ) => <div>{ index +1}</div>
       },
       {
         title:'首次发生时间',

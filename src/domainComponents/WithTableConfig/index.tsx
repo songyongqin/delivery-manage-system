@@ -80,6 +80,7 @@ export default (url: string) => (WrappedComponent: any) => {
         }
       })
         .then(data => {
+   
           let constants = this.getFilters(data['columns'])
           let columns = this.getColumns(data['columns'])
           this.setState({ config: { columns, constants }, initial: true })

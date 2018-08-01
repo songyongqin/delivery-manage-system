@@ -2,29 +2,11 @@
   "columns": [
     {
       "dataIndex": "threatFamily",
-      "filters": [
-        {
-          "value": "Trojan/Linux.Xor.a",
-          "text": "Trojan/Linux.Xor.a"
-        },
-        {
-          "value": "Trojan/Linux.MrBlack.b",
-          "text": "Trojan/Linux.MrBlack.b"
-        }
-      ]
+       "conditionType": "input"
     },
     {
       "dataIndex": "sampleMD5",
-      "filters": [
-        {
-          "value": "4122BD1BC0A9F581D7A40D93DB8F9205",
-          "text": "4122BD1BC0A9F581D7A40D93DB8F9205"
-        },
-        {
-          "value": "569223595019F249C526D7C318D9EDE0",
-          "text": "569223595019F249C526D7C318D9EDE0"
-        }
-      ]
+       "conditionType": "input"
     }
   ]
 }

@@ -18,6 +18,7 @@ import ArrayTag from './components/ArrayTag'
 import {
   limit
 } from './constants'
+import { getWeekTime } from 'utils/getInitTime'
 
 
 
@@ -45,11 +46,11 @@ const mapDispatchToprops = dispatch => {
 const initArg = {
   // page:1,
   limit:limit,
-  // searchValue:'',
-  attatcedAssetIp:'',
-  attackedCount:'',
-  assetStates:'',
-  level:'',
+  attackerWhere:'',
+  attackGroup:'',
+  attackerIP:'',
+  attackerDomainName:'',
+  family:'',
   timestampRange:[]
 }
 
@@ -63,14 +64,14 @@ class Page extends React.Component<any, any> {
     this.state = {
       lastChangeTime: 0,
       filters: {
-        timestampRange: []
+        timestampRange: getWeekTime()||[]
       },
       tableData:[],
       reqArg: {...initArg, page:1, searchValue:'', },
       tableKey: '0attacked',
       countKey: 'oattackercount',
       total:0,
-      timestampRange:[]
+      timestampRange:[],
     }
   }
 
@@ -105,24 +106,9 @@ class Page extends React.Component<any, any> {
     
     let arg = {  ...this.state.reqArg , ...obj }
     this.search(arg)
-    // if(arg['searchValue']){
-    //   this.search(arg)
-    // }
-    // else {
-    //   this.fetch(arg)
-    // }
+
   }
-  //放弃使用
-  // fetch = arg => {
-  //   console.log('fetch')
-  //   this.props.fetch(arg)
-  //   .then(res => {
-  //     let tableData = res.data 
-  //     let total = res.total 
-  //     this.setState( { reqArg: arg, tableData, total } )  
-  //   })
-  //   .catch(err => console.error(err))
-  // }
+
 // 搜索
   search = arg => {
     this.props.search(arg)
@@ -136,8 +122,10 @@ class Page extends React.Component<any, any> {
 
   reset = () => {
     let time = this.getNowTime()
+    let reqArg = { ...this.state.reqArg, ...initArg, page:1 }
     this.setState({ tableKey: time +'attacked-table',
-    reqArg:{ ...this.state.reqArg, ...initArg } })
+    reqArg })
+    this.search(reqArg)
   }
 
   paginationOnchange = (page)=> {
@@ -155,6 +143,7 @@ class Page extends React.Component<any, any> {
     this.fetchTable({page:1})
   }
 
+
   render() {
 
     const { filters, tableData, timestampRange } = this.state
@@ -162,7 +151,7 @@ class Page extends React.Component<any, any> {
     let columns = [
       { title:'序号', 
         dataIndex:'index',
-        render: ( text, record, index ) => <div>{ index }</div>
+        render: ( text, record, index ) => <div>{ index+1 }</div>
         },
       { title:'首次攻击时间', 
         dataIndex:'attackFirstTime',
@@ -224,7 +213,7 @@ class Page extends React.Component<any, any> {
           this.props.animateRender([
             <div key='analyse-attacker-count' >
             {/* 统计数据 */}
-              <Count  key={ this.state.countKey } timestampRange={ timestampRange } />
+              <Count  key={ this.state.countKey } timestampRange={ timestampRange }  />
             </div>,
             <div key="analyse-attacker-table">
             <button onClick={ this.reset } >重置筛选</button>

@@ -4,9 +4,10 @@ import React from 'react'
 import Spin from 'domainComponents/Spin'
 import { THREAT_REPORT_DETAIL_NAMESPACE } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
-import PieCharts from 'domainComponents/PieCharts/async'
-import { Icon } from 'antd'
-import transformNum from 'utils/transformNum'
+import Pie from '../Pie'
+import PieTwo from '../PieTwo'
+
+const css = require('./index.less')
 
 
 const mapStateToProps = state => {
@@ -29,6 +30,7 @@ const mapDispatchToProps = dispatch => {
 interface props{
   loading?:boolean
   fetchDetail?: (any:any)=>any
+  getClick: (any:any)=>any
   timestampRange: Array<any>
 }
 
@@ -48,51 +50,6 @@ interface state{
   }
 }
 
-const getNum = (name, data) => {
-  let arr = data.filter(i=> i.name===name ) || data
-  return arr[0].value+13154234523424
-}
-
-const getConfig = data => ({
-  title: { },
-  tooltip: {
-    trigger: 'item',
-    formatter: "{b} : {c} ({d}%)"
-  },
-  legend: {
-    orient: 'vertical',
-    right: 'right',
-    bottom: '10',
-    data: Array.isArray(data) ? data.map(i => i.name) : [],
-    formatter: function (name) {
-      return   name +'  ' + getNum(name, data);
-  }
-  },
-
-  series: [
-    {
-      type: 'pie',
-      radius: ['0','60%'],
-      center: ['40%', '40%'],
-      data: data,
-      label: {
-        normal: {
-          show: false,
-          position: "outside",
-          formatter: "{b} : {c} ({d}%)"
-        },
-
-      },
-      itemStyle: {
-        emphasis: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
-      }
-    }
-  ]
-})
 
 
 @extraConnect(mapStateToProps, mapDispatchToProps)
@@ -129,22 +86,61 @@ class Charts extends React.Component<props,state>{
     .catch(err => console.error(err) )
   }
 
-  onChartClick = parmas => {
-    console.log('xx', parmas)
+
+  clickTitle = title => {
+    console.log(title)
+    this.props.getClick(title)
   }
 
 
   render(){
     const { loading } = this.props
     const { data } = this.state
-    const onEvents = { 'click': this.onChartClick, }
-    console.log(transformNum(1423353323))
+    const arr = [
+      { 
+        data: data.group, 
+        title: '威胁组织', 
+        total: data.groupTotal, 
+        unit: '个' 
+      },
+      { 
+        data: data.attackedAssets, 
+        title: '受攻击资产', 
+        total: data.attackedAssetsTotal, 
+        unit: '台' 
+      },
+      { 
+        data: data.family, 
+        title: '威胁家族', 
+        total: data.familyTotal, 
+        unit: '个' 
+      },
+      { 
+        data: data.threatIntelligence, 
+        title: '威胁情报', 
+        total: data.threatIntelligenceTotal, 
+        unit: '条' 
+      }
+    ]
     return(
       <div>
         <Spin spinning={ loading } >
-          <div style={ { width:400 } } >
-          <div><Icon type="pie-chart" style={{ fontSize:22 }} />威胁事件: -{data.groupTotal}起</div>
-          <PieCharts data={ data.group }  onEvents={ onEvents } config={ getConfig(data.group) }  />
+          <PieTwo  data={ data.level } onClick={ this.clickTitle } 
+                title={ '威胁事件' }
+                data2={ data.threatEvent }
+                total={ data.threatEventTotal }
+                unit={ '起' } />
+          {
+            arr.map((item, index) => 
+            <Pie  data={ item.data } onClick={ this.clickTitle } 
+                title={ item.title }
+                total={ item.total }
+                unit={ item.unit }
+                key={ index } />
+          )
+          }
+          <div className={ css.place }>
+          <span style={{ display:'inline-block', verticalAlign:'top' }} ></span>
           </div>
         </Spin>
       </div>
