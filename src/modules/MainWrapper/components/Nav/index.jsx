@@ -107,7 +107,8 @@ export default class extends React.Component {
     this.setState({
       // 此方法不适用与多层导航栏嵌套
       // openKeys: [last(openKeys)]
-      openKeys // 为了多层嵌套做的修改
+      // openKeys // 为了多层嵌套做的修改
+      openKeys: this.checkKey(openKeys)
     })
     setTimeout(() => {
       this.resizeNiceScroll()
@@ -157,6 +158,26 @@ export default class extends React.Component {
 
     }
   }
+
+  checkKey = arr => {
+    if(!Array.isArray(arr)){
+      console.error('type error, need array but recived: '+ typeof arr)
+      return [] 
+    }
+    else {
+      if(!arr.length) return []
+      let array = [ ...arr]
+      let str = array[0].split('/')[1]
+      let arrays = array.filter(i => i.split('/')[1] ===str )
+      if( arrays.length===array.length ){
+        return array
+      }
+      else return [ last(array) ]
+    }
+  }
+
+
+
   render() {
     const { theme, mini = true, animate = true, active = "", isAdmin = false, appConfig } = this.props
     const wrapperClasses = classnames({
@@ -176,15 +197,17 @@ export default class extends React.Component {
         target = [...target, `${target[target.length - 1]}/${item}`]
 
     }, [])
-    
+    console.log(this.state.openKeys, selectedKeys, mini )
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu
-          openKeys={this.state.openKeys}
-          onOpenChange={this.onOpenChange}
+          // openKeys={this.state.openKeys}
+          openKeys={ mini ? this.state.openKeys : selectedKeys }
+          onOpenChange={ this.onOpenChange }
           mode={mini ? "vertical" : "inline"}
           inlineIndent={ 10 }
-          selectedKeys={[last(selectedKeys)]}>
+          selectedKeys={selectedKeys}
+          >
           {getMenuContent({ navConfig, mini, selectedKeys })}
         </Menu>
       </nav>

@@ -3,8 +3,8 @@
 import React, { Component } from 'react'
 import { Table } from 'antd'
 import { getColumns } from './config'
-const css = require('./index.less')
-
+import classnames from 'classnames'
+const style = require('./index.less')
 
 interface props {
   constants?: constants,
@@ -118,7 +118,13 @@ class WithTable extends Component<props, any>{
         setTableState: this.setTableState,
       }
     })
-
+    
+    let classes = classnames(style.default)
+    columns = columns.map(i => {
+      i['className'] =  classes
+      return i
+    } )
+    
     return (
       // <div style={{ minWidth:1300, overflow:'auto' }} >
       <div >
@@ -127,7 +133,6 @@ class WithTable extends Component<props, any>{
             <Table dataSource={tableData} columns={columns}
               onChange={this.tableOnChange}
               pagination={false}
-              // className={  }
               expandedRowKeys={this.props.constants['selectDetail'] || ['']}
               expandIconAsCell={false}
               expandIconColumnIndex={-1}
