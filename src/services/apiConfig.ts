@@ -15,6 +15,7 @@ const HttpApiConfig = {
   AUDIT_ASSETS_RECORD_PORT_DETAIL: "/audit/assets-scan/detail-port",
   AUDIT_CAUGHT_RECORD_DETAIL: "/audit/caughtrecord",
   AUDIT_CAUGHT_TASK_DETAIL: "/audit/caughttask",
+  AUDIT_CAUGHT_TASK_DETAIL_NEW: "/audit/cancel-caughttask",
 
   ENUM_CONFIG: "/enum-config",
 
@@ -231,9 +232,9 @@ const HttpApiConfig = {
 
   REPORT_EXPORT: '/report/export',
 
-  REPORT_COUNT_THREAT: '/report/count', 
+  REPORT_COUNT_THREAT: '/report/count',
 
-  REPORT_DETAIL_THREAT: '/report/detail', 
+  REPORT_DETAIL_THREAT: '/report/detail',
 
   REPORT_RANK_THREAT: '/report/rank'
 
