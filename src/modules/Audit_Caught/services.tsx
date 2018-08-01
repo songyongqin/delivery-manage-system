@@ -6,7 +6,7 @@ export const fetchcaughtRecord = commonRequestCreator.getWithQueryString(httpApi
 
 export const fetchcaughtTask = commonRequestCreator.getWithQueryString(httpApi.AUDIT_CAUGHT_TASK_DETAIL)
 
-export const putCaughtTask = commonRequestCreator.put(httpApi.AUDIT_CAUGHT_TASK_DETAIL)
+export const putCaughtTask = commonRequestCreator.post(httpApi.AUDIT_CAUGHT_TASK_DETAIL_NEW)
 
 export const delCaughtTask = commonRequestCreator.deleteWithQueryString(httpApi.AUDIT_CAUGHT_TASK_DETAIL)
 
