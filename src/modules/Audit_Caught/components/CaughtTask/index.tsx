@@ -44,26 +44,30 @@ export default class CommonItem extends React.Component<any, any>{
       total: 0
     }
   }
-  putTask = (_id) => {
+  putTask = (task_id) => {
 
-    this.props.putCaughtTask({ _id }).then(
+    this.props.putCaughtTask({ task_id }).then(
       res => {
-        this.setState({ taskId: _id })
+        this.setState({ taskId: task_id })
         message.success("已取消任务！")
       }
     )
   }
 
-  delTask = (_id) => {
+  delTask = (task_id) => {
 
-    this.props.delCaughtTask({ _id }).then(
+    this.props.delCaughtTask({ task_id }).then(
       res => {
         message.success("已删除任务！")
-        this.props.fetch(this.state.initialFilters).then(
-          res => this.setState({
-            taskId: ""
-          })
-        )
+        this.setState({
+          taskId: "",
+          lastReqTime: new Date().getTime(),
+        })
+        // this.props.fetch(this.state.initialFilters).then(
+        //   res => this.setState({
+        //     taskId: "",
+        //   })
+        // )
       }
     )
 
