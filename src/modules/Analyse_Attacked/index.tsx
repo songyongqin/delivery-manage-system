@@ -66,11 +66,11 @@ class Page extends React.Component<any, any> {
         timestampRange:getWeekTime()|| []
       },
       tableData:[],
-      reqArg: {...initArg, page:1, searchValue:""},
+      reqArg: {...initArg, page:1, searchValue:"", timestampRange:getWeekTime()|| []},
       tableKey: '0attacked',
       countKey: 'oattackedcount',
       total:0,
-      timestampRange:[],
+      timestampRange:getWeekTime()|| []
     }
   }
 

@@ -31,8 +31,9 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
     })
 
     // console.info(i["icon"], mini, i.link)
+    
     const link = getFinalLink(i)
-
+ 
     const title = (
       <Link to={link} className={classes} onClick={e => {
         //授权过期 跳转到device路由
@@ -70,6 +71,7 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
 
 
     if ("items" in i) {
+
       return (
         <Menu.SubMenu key={i.link}
           className={classnames({
@@ -101,6 +103,7 @@ export default class extends React.Component {
   }
   onOpenChange = openKeys => {
     //授权过期不进行展开操作
+    console.log(openKeys)
     if (isLicenceOverdue()) {
       return
     }
@@ -197,14 +200,14 @@ export default class extends React.Component {
         target = [...target, `${target[target.length - 1]}/${item}`]
 
     }, [])
-    console.log(this.state.openKeys, selectedKeys, mini )
+    
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu
-          // openKeys={this.state.openKeys}
+          // openKeys={ mini ? this.state.openKeys : selectedKeys }
           openKeys={ mini ? this.state.openKeys : selectedKeys }
           onOpenChange={ this.onOpenChange }
-          mode={mini ? "vertical" : "inline"}
+          mode={mini ? "vertical" : "inline"} 
           inlineIndent={ 10 }
           selectedKeys={selectedKeys}
           >

@@ -51,7 +51,7 @@ const initArg = {
   attackerIP:'',
   attackerDomainName:'',
   family:'',
-  timestampRange:[]
+  timestampRange:getWeekTime()||[]
 }
 
 @WithTableConfig(path.layoutConfig.analyseAttacker)
@@ -63,15 +63,15 @@ class Page extends React.Component<any, any> {
     super(props);
     this.state = {
       lastChangeTime: 0,
-      filters: {
-        timestampRange: getWeekTime()||[]
-      },
+      // filters: {
+      //   timestampRange: getWeekTime()||[]
+      // },
       tableData:[],
-      reqArg: {...initArg, page:1, searchValue:'', },
+      reqArg: {...initArg, page:1, searchValue:'', timestampRange:getWeekTime()||[] },
       tableKey: '0attacked',
       countKey: 'oattackercount',
       total:0,
-      timestampRange:[],
+      timestampRange:getWeekTime()||[],
     }
   }
 
@@ -146,7 +146,7 @@ class Page extends React.Component<any, any> {
 
   render() {
 
-    const { filters, tableData, timestampRange } = this.state
+    const {  tableData, timestampRange } = this.state
 
     let columns = [
       { title:'序号', 

@@ -15,7 +15,7 @@ const getStr = num => {
   else if(num>=1000*1000&&num<1000*1000*1000){
     return Math.floor(num/(10*1000))/100 + ' M'
   }
-  else (num>1000*1000*1000){
+  else if (num>1000*1000*1000){
     return Math.floor(num/(10*1000*1000))/100 + ' B'
   }
 }

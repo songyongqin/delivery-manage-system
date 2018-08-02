@@ -95,9 +95,9 @@ class Page extends React.Component<any, any> {
       familyCount:0,
       loopholeCount:0,
       connectC2Count:0,
-      reqFamily:{ ...initReqFamily, searchValue:'',page:1, },
+      reqFamily:{ ...initReqFamily, searchValue:'',page:1, timestampRange:getWeekTime()|| [] },
       familyTableKey:0,
-      reqloophole:{ ...initReqloophole, searchValue:'', page:1, },
+      reqloophole:{ ...initReqloophole, searchValue:'', page:1, timestampRange:getWeekTime()|| [] },
       loopholeTableKey:0,
       familyTotal:0,
       familyData:[],
@@ -127,7 +127,8 @@ class Page extends React.Component<any, any> {
 
   componentDidMount(){
     // this.fetchTable({})
-    this.getThreatCount({})
+    let timestampRange = this.state.filters.timestampRange
+    this.getThreatCount({timestampRange})
     if(this.state.selected===SelectArr[0]){
       this.fetchFamilyTable({})
     }

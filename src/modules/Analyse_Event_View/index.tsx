@@ -17,7 +17,8 @@ import {  ANALYSE_ATTACK_DETAIL_URL,
           ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import LevelTag from 'components/LevelTag'
 import { getWeekTime } from 'utils/getInitTime'
-
+import { momentToTimeStampRange } from 'utils/moment'
+import transformTimeStamp from 'utils/transformTimeStamp'
  
 import {
   limit,
@@ -36,8 +37,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    fetch: payload => dispatch({
-      type: `${ANALYSE_EVENT_VIEW}/fetch`,
+    // fetch: payload => dispatch({
+    //   type: `${ANALYSE_EVENT_VIEW}/fetch`,
+    //   payload
+    //  })
+    post: payload => dispatch({
+      type: `${ANALYSE_EVENT_VIEW}/post`,
       payload
      })
   }
@@ -70,7 +75,7 @@ class Page extends React.Component<any, any> {
         ...initArg,
         searchValue:'',
         page:1,
-        timestampRange:[]
+        timestampRange:getWeekTime()|| []
       },
       table:{
         total:0,
@@ -85,10 +90,21 @@ class Page extends React.Component<any, any> {
     this.fetch({page:1})
   }
 
-  fetch = obj => {
-    let reqArg = { ...this.state.reqArg, ...obj  }
+  // fetch = obj => {
+  //   let reqArg = { ...this.state.reqArg, ...obj  }
     
-    this.props.fetch(reqArg)
+  //   this.props.fetch(reqArg)
+  //   .then(res => {
+  //     this.setState({ table: res, reqArg })
+  //   })
+  //   .catch(err => console.error(err) )
+  // }
+
+  fetch = obj => {
+    //将get方法改为post
+    let reqArg = { ...this.state.reqArg, ...obj  }
+    reqArg.timestampRange = transformTimeStamp(reqArg.timestampRange)
+    this.props.post(reqArg)
     .then(res => {
       this.setState({ table: res, reqArg })
     })
@@ -145,7 +161,7 @@ class Page extends React.Component<any, any> {
   }
 
   render() {
-
+    console.log(transformTimeStamp(this.state.filters.timestampRange))
     const {  filters, lastChangeTime, table, reqArg, tableKey } = this.state
 
     const columns = [
@@ -179,12 +195,12 @@ class Page extends React.Component<any, any> {
       {
         title:'攻击者IP',
         dataIndex: 'attackerIP',
-        render: text =>  <a href={ `/#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` } style={{ textDecoration:"none" }} >{text}</a>
+        render: text =>  <a href={ `/#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` } style={{ textDecoration:"none" , color:'#1890ff'}} >{text}</a>
       },
       {
         title:'受攻击资产IP',
         dataIndex: 'attatcedAssetIp',
-        render: text =>  <a href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${text}` } style={{ textDecoration:"none" }} >{text}</a>
+        render: text =>  <a href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${text}` } style={{ textDecoration:"none", color:'#1890ff' }} >{text}</a>
       },
       {
         title:'资产状态',
