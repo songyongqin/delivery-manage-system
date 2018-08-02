@@ -14,6 +14,7 @@ const WithPagination = ({ current, total, onChange, limit=10}) => {
     [style['pagination_item']]: isHidden,
     [style['pagination_items']]:  !isHidden
   })
+
   return <Pagination current={ current } 
                     total={ total }
                     className={ classes }

@@ -46,6 +46,9 @@ let columns = [
   { title:'资产状态', 
     dataIndex:'assetStates'
   },
+  { title:'攻击阶段', 
+    dataIndex:'attackStage'
+  },
   { title:'威胁等级', 
     dataIndex:'level',
     render: text => <Tag color={ tranformColor(text) } >{text}</Tag>

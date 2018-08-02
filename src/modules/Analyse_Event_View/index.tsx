@@ -87,6 +87,7 @@ class Page extends React.Component<any, any> {
 
   fetch = obj => {
     let reqArg = { ...this.state.reqArg, ...obj  }
+    
     this.props.fetch(reqArg)
     .then(res => {
       this.setState({ table: res, reqArg })
