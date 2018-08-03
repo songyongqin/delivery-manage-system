@@ -348,13 +348,6 @@ export const _navConfig = [
         link: CONFIG_DEVICE_MANAGER_URL,
         icon: <Indent />,
         title: "设备管理",
-        // items: [
-        //   {
-        //     link: CONFIG_SYS_LOG_LOGIN_URL,
-        //     title: "test",
-        //     icon: <Indent space={1} />,
-        //   }
-        // ]
       },
       {
         link: CONFIG_SYS_LOG_URL, 

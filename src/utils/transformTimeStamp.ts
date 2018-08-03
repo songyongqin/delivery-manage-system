@@ -9,6 +9,9 @@ const transformTimeStamp = (arr:Array<any> ) => {
     console.error('type err, parmas not to be array' )
     return []
   }
+  else if( typeof arr[0]==='number'){
+    return arr
+  }
   else if(arr.length===0){
     return [ 0, moment().endOf('days').unix() ]
   }

@@ -71,36 +71,32 @@ class Count extends React.Component<any,state>{
       {
         title:'威胁事件',
         count:threatCount, 
-        styles: { backgroundColor:'#249DE5' },
-        Icon: <Icon type="warning" />
+        Icon: <Icon type="warning" style={{ fontSize:22 }} />
       },
       {
         title:'高危事件', 
         count:hightCount, 
-        styles: { backgroundColor:'red' },
-        Icon: <Icon type="close-circle-o" />
+        Icon: <Icon type="close-circle-o"  style={{ fontSize:22 }}/>
       },
       {
         title:'攻击者', 
         count:attackerCount, 
-        styles: { backgroundColor:'#C5A22F' },
-        Icon: <ExtraIcon type={'eyedropper'}  />
+        Icon: <ExtraIcon type={'eyedropper'} style={{ fontSize:22 }}  />
       },
       {
         title:'失陷资产', 
         count:attackedAssetsCount, 
-        styles: { backgroundColor:'#9A0E9C' },
-        Icon: <Icon type="file-excel" />
+        Icon: <Icon type="file-excel" style={{ fontSize:22 }} />
       },
     ]
     return (
       <div>
       <Spin spinning={this.props.loading}>
-        <div  style={{ width: 400, display:'inline-block' }} >
+        <div  style={{ width: 300, display:'inline-block' }} >
           {
             arr.map(item => 
               <div style={{ margin:10, display:'inline-block' }} key={ item.title } >
-                <CountItem title={ item.title} count={ item.count }  style={ item.styles } >
+                <CountItem title={ item.title} count={ item.count }  >
                   {
                     item.Icon
                   }

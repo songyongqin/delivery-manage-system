@@ -103,6 +103,7 @@ class Page extends React.Component<any, any> {
   fetch = obj => {
     //将get方法改为post
     let reqArg = { ...this.state.reqArg, ...obj  }
+    console.log(reqArg.timestampRange)
     reqArg.timestampRange = transformTimeStamp(reqArg.timestampRange)
     this.props.post(reqArg)
     .then(res => {
@@ -161,7 +162,7 @@ class Page extends React.Component<any, any> {
   }
 
   render() {
-    console.log(transformTimeStamp(this.state.filters.timestampRange))
+    
     const {  filters, lastChangeTime, table, reqArg, tableKey } = this.state
 
     const columns = [

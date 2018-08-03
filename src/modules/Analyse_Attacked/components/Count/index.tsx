@@ -5,9 +5,11 @@ import CountUp from 'react-countup'
 import Spin from 'domainComponents/Spin'
 import extraConnect from 'domainUtils/extraConnect'
 import { ANALYSE_ATTACKED_COUNT } from 'constants/model'
-// import PieCharts from 'domainComponents/PieCharts/async'
+
 import Pie from './Pie'
-import CountIcon from './CountIcon'
+// import CountItem from 'components/CountItem'
+// import { Icon } from 'antd'
+const css = require('./index.less')
 
 const mapStateToProps = state => {
   return {
@@ -73,7 +75,13 @@ class Count extends Component<any, any>{
     return(
       <div>
         <Spin spinning={ loading } >
-          <CountIcon title={ '受攻击资产' } count={ attackedAssetsCount } />
+          <div style={{ fontSize:18, marginTop:10, marginBottom:10, marginLeft:12 }} >
+          {/* <div className={ css.count } > */}
+          {/* <CountItem title={'受攻击资产'} count={ attackedAssetsCount } >
+            <Icon type={'file-excel'} style={{ fontSize:22 }} />
+          </CountItem> */}
+            受攻击资产总数<span style={{ color:'#1890ff', marginLeft:20, fontSize:22 }} ><CountUp start={0} end={ attackedAssetsCount } /></span>
+          </div>
           <Pie data={ attackedCountArr } title={ '受攻击次数排行统计'} />
           <Pie data={ attackedAssetsArr } title={ '资产状态统计'}  />
         </Spin>

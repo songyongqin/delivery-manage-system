@@ -6,6 +6,7 @@ import WithCommonProps from 'domainComponents/WithCommonProps'
 import 'echarts/lib/chart/pie'
 import 'echarts/lib/component/title'
 import wrapStr from 'utils/wrapStr'
+import addComma from 'utils/addComma'
 
 const DARK_THEME = 'dark'
 const LIGHT_THEME = 'light'
@@ -29,7 +30,12 @@ let getOption = ({ data ,theme, titles }) =>  ({
   },
   tooltip: {
     trigger: 'item',
-    formatter: "{b} : {c} ({d}%)"
+    // formatter: "{b} : {c} ({d}%)"
+    formatter: params => {
+      let num = addComma(params.value)
+      let str = `${params.name} :<br />${num} (${params.percent}%)`
+      return str
+    }
   },
   legend: {
     orient: 'vertical',
