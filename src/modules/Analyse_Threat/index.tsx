@@ -95,9 +95,9 @@ class Page extends React.Component<any, any> {
       familyCount:0,
       loopholeCount:0,
       connectC2Count:0,
-      reqFamily:{ ...initReqFamily, searchValue:'',page:1, },
+      reqFamily:{ ...initReqFamily, searchValue:'',page:1, timestampRange:getWeekTime()|| [] },
       familyTableKey:0,
-      reqloophole:{ ...initReqloophole, searchValue:'', page:1, },
+      reqloophole:{ ...initReqloophole, searchValue:'', page:1, timestampRange:getWeekTime()|| [] },
       loopholeTableKey:0,
       familyTotal:0,
       familyData:[],
@@ -127,7 +127,8 @@ class Page extends React.Component<any, any> {
 
   componentDidMount(){
     // this.fetchTable({})
-    this.getThreatCount({})
+    let timestampRange = this.state.filters.timestampRange
+    this.getThreatCount({timestampRange})
     if(this.state.selected===SelectArr[0]){
       this.fetchFamilyTable({})
     }
@@ -263,17 +264,17 @@ class Page extends React.Component<any, any> {
             {/* 统计数据 */} 
               <div style={{ display:'inline-block', margin:30 }} >
                 <CountItem title={'威胁家族'} count={ familyCount } >
-                  <ExtraIcon type={'eyedropper'} style={{ fontSize:30 }} />
+                  <ExtraIcon type={'eyedropper'} style={{ fontSize:22 }} />
                 </CountItem>
               </div>
               <div style={{ display:'inline-block', margin:30 }} >
                 <CountItem title={'攻击利用漏洞'} count={ loopholeCount } style={{ backgroundColor:'#4F7ED8' }} >
-                  <ExtraIcon type={'bug'} style={{ fontSize:30 }} />
+                  <ExtraIcon type={'bug'} style={{ fontSize:22 }} />
                 </CountItem>
               </div>
               <div style={{ display:'inline-block', margin:30 }} >
                 <CountItem title={'关联C&C数'} count={ connectC2Count } style={{ backgroundColor:'#92AB4C' }} >
-                  <Icon type="file-unknown"  style={{ fontSize:30 }} />
+                  <Icon type="file-unknown"  style={{ fontSize:22 }} />
                 </CountItem>
               </div>
             </div>,

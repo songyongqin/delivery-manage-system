@@ -44,7 +44,7 @@ export const getColumns = (props: props) => {
       item['filters'] = filters ? filters[item['dataIndex']] : []
     }
     else if(findStr(item['types'],'search')){
-      item['filterIcon'] = <Icon type='search'  />
+      item['filterIcon'] = <Icon type='search' style={{ color: handle['isSearchValue'].indexOf(item['dataIndex'])!==-1 ? '#1890ff' :'rgba(0, 0, 0, 0.85)' }} />
       item['onFilterDropdownVisibleChange']= (visible) => selectSearch(item['dataIndex'], visible) ,
       item['filterDropdownVisible'] =  handle['getTableState']()['whichSelect']=== item['dataIndex']
       item['filterDropdown']=(<Search tableSearch={handle['preTableSearch']} 

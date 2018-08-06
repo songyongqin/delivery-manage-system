@@ -199,7 +199,7 @@ module.exports = {
   //IDS单机版
   "idsStandalone": {
     "title": "安天捕风流量监测系统",
-    "secret": true,
+    "secret": false,
     "heartBeat": false,
     "routerRegister": {
       "/overview": true,

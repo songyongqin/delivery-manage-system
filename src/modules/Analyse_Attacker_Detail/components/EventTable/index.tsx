@@ -38,7 +38,7 @@ let columns = [
   { title:'攻击者IP', 
     dataIndex:'attackerIP',
     render: text => <a href={ `#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` }
-              style={{ textDecoration:'none' }} >{text}</a>
+              style={{ textDecoration:'none', color:'#1890ff' }} >{text}</a>
   },
   { title:'事件归并次数', 
     dataIndex:'eventMergeCount'

@@ -4,10 +4,6 @@
       "dataIndex": "assetStates",
       "filters": [
         { 
-          "text": "未失陷", 
-          "value":"未失陷" 
-        },
-        { 
           "text": "未知", 
           "value":"未知" 
         },

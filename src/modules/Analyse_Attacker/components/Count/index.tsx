@@ -7,9 +7,9 @@ import extraConnect from 'domainUtils/extraConnect'
 import { ANALYSE_ATTACKER_COUNT } from 'constants/model'
 // import PieCharts from 'domainComponents/PieCharts/async'
 import Pie from './Pie'
-import CountIcon from './CountIcon'
-const style = require('./index.less')
+const css = require('./index.less')
 import {Icon} from 'antd'
+import CountItem from 'components/CountItem'
 
 const mapStateToProps = state => {
   return {
@@ -69,12 +69,14 @@ class Count extends Component<any, any>{
     return(
       
       <Spin spinning={ loading } >
-        <CountIcon title={ '攻击者数量' } count={ attackerCount } style={ { backgroundColor:'#3072E0', color:'white' } } >
-          <Icon type="user" />
-        </CountIcon>
-        <CountIcon title={ '攻击者组织' } count={ attackGroupCount } style={ { backgroundColor:'#30E03F', color:'white' } } >
-          <Icon type="team" />
-        </CountIcon>
+        <div className={ css.count } >
+          <CountItem title={'攻击者数量'} count={ attackerCount } >
+              <Icon type={'user'} style={{ fontSize:22 }} />
+          </CountItem>
+          <CountItem title={'攻击者组织'} count={ attackGroupCount } >
+              <Icon type={'team'} style={{ fontSize:22 }} />
+          </CountItem>
+        </div>
         <Pie data={ attackerWhereArr } title={ '攻击者所在地统计'}  />
         <Pie data={ attackerGroupArr } title={ '攻击者组织统计'}  />
       </Spin>

@@ -71,6 +71,7 @@ const mapDispatchToprops = dispatch => {
 
 interface state{
   selected: string
+  selectValue: string
   type: string
   path: object
   familyEventArr: {
@@ -131,6 +132,7 @@ class Page extends React.Component<any, state> {
     super(props);
     this.state = {
       selected: SelectArr[0],
+      selectValue: SelectArr[0],
       type: getType(props.location.pathname),
       path: tranformParmToObj(props.location.search),
       familyEventArr: {
@@ -186,38 +188,38 @@ class Page extends React.Component<any, state> {
     }
   }
 
-  getSelect = e => {
-    const id = e.currentTarget.dataset.id 
-    let type = this.state.type
-    let isFetch = this.state.isFetch
-    console.log()
-    this.setState({ selected: id })
-    if(id===SelectArr[0]){
-      if(type===typeArr[0]&&!isFetch.familyEvent){
-        this.fetchFamilyEvent(1)
-      }
-      else if(type===typeArr[1]&&!isFetch.loopholeEvent) {
-        this.fetchLoopholeEvent(1)
-      }
-    }
-    if(id===SelectArr[1]){
-      if(type===typeArr[0]&&!isFetch.familyAssets){
-        this.fetchFamilyAssets(1)
-      }
-      else if(type===typeArr[1]&&!isFetch.loopholeAssets) {
-        this.fetchLoopholeAssets(1)
-      }
-    }
-    if(id===SelectArr[2]){
-      if(type===typeArr[0]&&!isFetch.familyCc){
-        this.fetchFamilyCc(1)
-      }
-      else if(type===typeArr[1]&&!isFetch.loopholeCc) {
-        this.fetchLoopholeCc(1)
-      }
-    }
+  // getSelect = e => {
+  //   const id = e.currentTarget.dataset.id 
+  //   let type = this.state.type
+  //   let isFetch = this.state.isFetch
+  //   console.log()
+  //   this.setState({ selected: id })
+  //   if(id===SelectArr[0]){
+  //     if(type===typeArr[0]&&!isFetch.familyEvent){
+  //       this.fetchFamilyEvent(1)
+  //     }
+  //     else if(type===typeArr[1]&&!isFetch.loopholeEvent) {
+  //       this.fetchLoopholeEvent(1)
+  //     }
+  //   }
+  //   if(id===SelectArr[1]){
+  //     if(type===typeArr[0]&&!isFetch.familyAssets){
+  //       this.fetchFamilyAssets(1)
+  //     }
+  //     else if(type===typeArr[1]&&!isFetch.loopholeAssets) {
+  //       this.fetchLoopholeAssets(1)
+  //     }
+  //   }
+  //   if(id===SelectArr[2]){
+  //     if(type===typeArr[0]&&!isFetch.familyCc){
+  //       this.fetchFamilyCc(1)
+  //     }
+  //     else if(type===typeArr[1]&&!isFetch.loopholeCc) {
+  //       this.fetchLoopholeCc(1)
+  //     }
+  //   }
 
-  }
+  // }
 
   fetchFamilyEvent = num => {
     let page = num ? num : 1
@@ -290,21 +292,52 @@ class Page extends React.Component<any, state> {
     .catch(err => console.error(err) )
   }
 
+  getSelectValue = selectValue => {
+    console.log('value', selectValue)
+    const { type, isFetch } = this.state
+    this.setState({ selectValue })
+    if(selectValue===SelectArr[0]){
+      if(type===typeArr[0]&&!isFetch.familyEvent){
+        this.fetchFamilyEvent(1)
+      }
+      else if(type===typeArr[1]&&!isFetch.loopholeEvent) {
+        this.fetchLoopholeEvent(1)
+      }
+    }
+    if(selectValue===SelectArr[1]){
+      if(type===typeArr[0]&&!isFetch.familyAssets){
+        this.fetchFamilyAssets(1)
+      }
+      else if(type===typeArr[1]&&!isFetch.loopholeAssets) {
+        this.fetchLoopholeAssets(1)
+      }
+    }
+    if(selectValue===SelectArr[2]){
+      if(type===typeArr[0]&&!isFetch.familyCc){
+        this.fetchFamilyCc(1)
+      }
+      else if(type===typeArr[1]&&!isFetch.loopholeCc) {
+        this.fetchLoopholeCc(1)
+      }
+    }
+  }
+
 
   render() {
-    const { selected, type, familyEventArr, familyEventPage,
+    const { selected, selectValue, type, familyEventArr, familyEventPage,
       familyAssetsArr, familyAssetsPage, familyCcArr, familyCcPage, loopholeEventArr, loopholeEventPage, loopholeAssetsArr, loopholeAssetsPage , loopholeCcArr, loopholeCcPage } = this.state
    
     const { familyEventLoading, familyAssetsLoading, familyCCLoading, loopholeEventLoading, loopholeAssetsLoading, loopholeCCLoading  } = this.props
     // console.log(type, this.state)
     return (
       <div >
-        <SwitchItem text={ SelectArr[0] } selected={ selected } onClick={ this.getSelect } >
-        <div style={{ display: selected===SelectArr[0] ?'block':'none' }} >
+        <WhichSelect data={ SelectArr } getValue={ this.getSelectValue } ></WhichSelect>
+        {/* <SwitchItem text={ SelectArr[0] } selected={ selected } onClick={ this.getSelect } > */}
+        <div style={{ display: selectValue===SelectArr[0] ?'block':'none' }} >
           {
             type===typeArr[0] ? 
               <Spin spinning={ familyEventLoading } >
-              <div style={{ height:500, overflow:'scroll' }} >
+              <div  >
                 <FamilyEventTable tableData={ familyEventArr.data }  />
                 
                 <WithPagination total={ familyEventArr.total } 
@@ -323,9 +356,9 @@ class Page extends React.Component<any, state> {
               </Spin>
           }
           </div>
-        </SwitchItem>
-        <SwitchItem text={ SelectArr[1] } selected={ selected } onClick={ this.getSelect } >
-          <div style={{ display: selected===SelectArr[1] ?'block':'none' }} >
+        {/* </SwitchItem> */}
+         {/* <SwitchItem text={ SelectArr[1] } selected={ selected } onClick={ this.getSelect } > */}
+          <div style={{ display: selectValue===SelectArr[1] ?'block':'none' }} >
           {
             type===typeArr[0] ? 
               <Spin spinning={ familyAssetsLoading } >
@@ -345,9 +378,9 @@ class Page extends React.Component<any, state> {
               </Spin>
           }
           </div>
-        </SwitchItem>
-        <SwitchItem text={ SelectArr[2] } selected={ selected } onClick={ this.getSelect } >
-          <div style={{ display: selected===SelectArr[2] ?'block':'none' }} >
+        {/* </SwitchItem> */}
+        {/* <SwitchItem text={ SelectArr[2] } selected={ selected } onClick={ this.getSelect } > */}
+          <div style={{ display: selectValue===SelectArr[2] ?'block':'none' }} >
           {
             type===typeArr[0] ? 
               <Spin spinning={ familyCCLoading } >
@@ -367,7 +400,7 @@ class Page extends React.Component<any, state> {
               </Spin>
           }
           </div>
-        </SwitchItem>
+        {/* </SwitchItem> */}
       </div>
     )
   }

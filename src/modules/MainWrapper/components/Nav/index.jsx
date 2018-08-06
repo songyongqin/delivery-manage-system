@@ -31,8 +31,9 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
     })
 
     // console.info(i["icon"], mini, i.link)
+    
     const link = getFinalLink(i)
-
+ 
     const title = (
       <Link to={link} className={classes} onClick={e => {
         //授权过期 跳转到device路由
@@ -70,6 +71,7 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
 
 
     if ("items" in i) {
+
       return (
         <Menu.SubMenu key={i.link}
           className={classnames({
@@ -101,13 +103,15 @@ export default class extends React.Component {
   }
   onOpenChange = openKeys => {
     //授权过期不进行展开操作
+    // console.log(openKeys)
     if (isLicenceOverdue()) {
       return
     }
     this.setState({
       // 此方法不适用与多层导航栏嵌套
       // openKeys: [last(openKeys)]
-      openKeys // 为了多层嵌套做的修改
+      // openKeys // 为了多层嵌套做的修改
+      openKeys: this.checkKey(openKeys)
     })
     setTimeout(() => {
       this.resizeNiceScroll()
@@ -157,6 +161,26 @@ export default class extends React.Component {
 
     }
   }
+
+  checkKey = arr => {
+    if(!Array.isArray(arr)){
+      console.error('type error, need array but recived: '+ typeof arr)
+      return [] 
+    }
+    else {
+      if(!arr.length) return []
+      let array = [ ...arr]
+      let str = array[0].split('/')[1]
+      let arrays = array.filter(i => i.split('/')[1] ===str )
+      if( arrays.length===array.length ){
+        return array
+      }
+      else return [ last(array) ]
+    }
+  }
+
+
+
   render() {
     const { theme, mini = true, animate = true, active = "", isAdmin = false, appConfig } = this.props
     const wrapperClasses = classnames({
@@ -180,11 +204,13 @@ export default class extends React.Component {
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu
-          openKeys={this.state.openKeys}
-          onOpenChange={this.onOpenChange}
-          mode={mini ? "vertical" : "inline"}
+          // openKeys={ mini ? this.state.openKeys : selectedKeys }
+          openKeys={ mini ? this.state.openKeys : selectedKeys }
+          onOpenChange={ this.onOpenChange }
+          mode={mini ? "vertical" : "inline"} 
           inlineIndent={ 10 }
-          selectedKeys={[last(selectedKeys)]}>
+          selectedKeys={selectedKeys}
+          >
           {getMenuContent({ navConfig, mini, selectedKeys })}
         </Menu>
       </nav>

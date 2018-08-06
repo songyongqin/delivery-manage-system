@@ -82,7 +82,10 @@ const getConfig = (data, data2) => ({
       //   console.log(arr)
       //   return arr
       // },
-      data: Array.isArray(data) ? data.filter(i => i.value) : [],
+      data: Array.isArray(data) ? data.filter(i => i.value).map((item => {
+        item.selected = false
+        return item
+      } )) : [],
       minAngle:5,
       label: {
         normal: {

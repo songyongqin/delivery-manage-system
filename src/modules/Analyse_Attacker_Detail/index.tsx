@@ -58,7 +58,7 @@ class AnalyseDetail extends React.Component<any, any> {
     super(props);
     this.state = {
       attackerIP: getAttackedIp(props.location.search),
-
+      isHave:0, //是否有详细信息0，没有，1有
       IPInfo:[],
       whoisInfo:[], 
       relationUrl:[], 
@@ -98,10 +98,11 @@ class AnalyseDetail extends React.Component<any, any> {
     let attackerIP = this.state.attackerIP
     this.props.fetchIp({ attackerIP })
     .then(res => {
-      const { IPInfo, whoisInfo, relationUrl, relationFile, relationIP, relationDomain  } = res
+      const { IPInfo, whoisInfo, relationUrl, relationFile, relationIP, relationDomain, isHave  } = res
       this.setState({ IPInfo,
                       whoisInfo, 
                       relationUrl, 
+                      isHave,
                       relationFile, 
                       relationIP,
                       relationDomain })
@@ -139,7 +140,7 @@ class AnalyseDetail extends React.Component<any, any> {
 
   render() {
     
-    const { IPInfo,  threatInfo, whoisInfo, relationUrl, relationFile, relationIP, relationDomain, threatTotal, threatReq } = this.state
+    const { IPInfo, isHave,  threatInfo, whoisInfo, relationUrl, relationFile, relationIP, relationDomain, threatTotal, threatReq } = this.state
     const { ipLoading, threatLoading  } = this.props
     let IPInfoColumns = [
       { title:'攻击者IP', 
@@ -238,7 +239,6 @@ class AnalyseDetail extends React.Component<any, any> {
     ]
     
 
-
     return (
       <div>
         {
@@ -249,7 +249,12 @@ class AnalyseDetail extends React.Component<any, any> {
               <WithTable  tableData={ IPInfo } config={ IPInfoColumns }  />
             </Spin>
             </div>,
-            <div key='attacked-assets-event' >
+            <div key='attacked-assets-tip' style={{ display: !isHave ? 'block' : 'none', textAlign:'center', margin:15  }}  >
+              <Spin spinning={ ipLoading   } >
+                <a href={'/#/config/sys-config/network'} style={{ textDecoration:'none' }} >若想查看更多攻击者的信息，请在配置管理>>系统配置>>网卡配置中打开“云检测功能”</a>
+              </Spin>
+            </div>,
+            <div key='attacked-assets-event' style={{ display: isHave ? 'block' : 'none'  }} >
               <WhichSelect data={ selectArr } getValue={ this.getValue } />
               {
                 this.state.selectShow ===selectArr[0] ? 

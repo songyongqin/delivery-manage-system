@@ -9,7 +9,7 @@ const getThreatEventConfig = (eventBehaviorCount, threatLevelCount) => {
   let obj = {}
   
   if(!threatLevelCount||!eventBehaviorCount) return obj
-  threatLevelCount[0]['selected'] = true
+  threatLevelCount[0]['selected'] = false
   obj['series'] = [
     {
         // name:'访问来源',

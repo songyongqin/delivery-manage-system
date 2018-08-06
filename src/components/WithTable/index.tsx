@@ -3,8 +3,8 @@
 import React, { Component } from 'react'
 import { Table } from 'antd'
 import { getColumns } from './config'
-const css = require('./index.less')
-
+import classnames from 'classnames'
+const style = require('./index.less')
 
 interface props {
   constants?: constants,
@@ -33,7 +33,8 @@ class WithTable extends Component<props, any>{
       filter: props.objConstants || {},
       whichSelect: '',
       tableChangeData: {},
-      searchValue: {}
+      searchValue: {},
+      isSearchValue:[],
     }
   }
 
@@ -60,12 +61,23 @@ class WithTable extends Component<props, any>{
     // let objs = {}
     // objs[obj['searchType']] =obj['searchValue'] 
     // tableChangeData = { ...tableChangeData, ...objs }
-
+    this.getSearchIcon(obj)
     //添加上多条搜索的值
     let objs = this.state.searchValue
     objs.page = 1
     this.props.tableBeforeFetch && this.props.tableBeforeFetch(objs)
     this.hiddenSearch()
+  }
+
+  getSearchIcon = obj => {
+    const {  searchType, searchValue } = obj
+    let isSearchValue = this.state.isSearchValue
+    let arr = [...new Set([...isSearchValue, searchType ])]
+    console.log(arr)
+    if(!searchValue){
+      arr = arr.filter(i => i!==searchType)
+    }
+    this.setState({ isSearchValue: arr })
   }
 
   hiddenSearch = () => {
@@ -95,7 +107,7 @@ class WithTable extends Component<props, any>{
     //  for(let keys in obj){
     //    obj[keys] = obj[keys].toString() 
     //  }
-    console.log('obj',obj)
+    // console.log('obj',obj)
     this.setState({ tableChangeData: obj })
     this.props.tableBeforeFetch && this.props.tableBeforeFetch(obj)
     this.hiddenSearch()
@@ -116,9 +128,18 @@ class WithTable extends Component<props, any>{
         getTableSearchValue: this.getSearchValue,
         getTableState: this.getTableState,
         setTableState: this.setTableState,
+        isSearchValue: this.state.isSearchValue
       }
     })
-
+    
+    let classes = classnames(style.default)
+    columns = columns.map(i => {
+      i['className'] =  classes
+      return i
+    } )
+    
+    // console.log('columns', columns)
+    // console.log(this.state.isSearchValue)
     return (
       // <div style={{ minWidth:1300, overflow:'auto' }} >
       <div >
@@ -127,7 +148,6 @@ class WithTable extends Component<props, any>{
             <Table dataSource={tableData} columns={columns}
               onChange={this.tableOnChange}
               pagination={false}
-              // className={  }
               expandedRowKeys={this.props.constants['selectDetail'] || ['']}
               expandIconAsCell={false}
               expandIconColumnIndex={-1}
