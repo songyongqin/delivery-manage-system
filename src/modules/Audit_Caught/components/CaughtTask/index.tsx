@@ -40,15 +40,15 @@ export default class CommonItem extends React.Component<any, any>{
         limit: 15,
       },
       lastReqTime: 0,
-      taskId: "",
-      total: 0
+      total: 0,
+      taskName: ""
     }
   }
-  putTask = (task_id) => {
+  putTask = (taskName) => {
 
-    this.props.putCaughtTask({ task_id }).then(
+    this.props.putCaughtTask({ taskName }).then(
       res => {
-        this.setState({ taskId: task_id })
+        this.setState({ taskName: taskName })
         message.success("已取消任务！")
       }
     )
@@ -60,7 +60,7 @@ export default class CommonItem extends React.Component<any, any>{
       res => {
         message.success("已删除任务！")
         this.setState({
-          taskId: "",
+          taskName: "",
           lastReqTime: new Date().getTime(),
         })
         // this.props.fetch(this.state.initialFilters).then(
@@ -84,7 +84,7 @@ export default class CommonItem extends React.Component<any, any>{
               ...option,
               putTask: this.putTask,
               delTask: this.delTask,
-              taskId: this.state.taskId
+              taskName: this.state.taskName
             })
           }
           remoteNamespace={AUDIT_CAUGHTTASK_NAMESPACE}>

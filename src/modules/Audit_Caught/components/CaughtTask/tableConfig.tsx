@@ -37,7 +37,7 @@ export const textConfig = {
 }
 
 
-export const getColumns = ({ taskId, putTask, delTask }) => {
+export const getColumns = ({ taskName, putTask, delTask }) => {
 
   return columnsCreator({
     dataIndexes: dataIndexes,
@@ -45,7 +45,7 @@ export const getColumns = ({ taskId, putTask, delTask }) => {
     renderer: {
       [STATUS]: (value) => value == "Waiting" ? "等待中" : value == "Catching" ? "抓包中" : value == "Cancel" ? "已取消" : null,
       [STARTTIME]: (value) => <TimeLabel value={value}></TimeLabel>,
-      [OPERATE]: (value, record) => <Button type="primary" size="small" onClick={() => taskId == record.task_id ? delTask(record.task_id) : putTask(record.task_id)}>{taskId == record.task_id ? "删除任务" : "取消任务"}</Button>,
+      [OPERATE]: (value, record) => <Button type="primary" size="small" onClick={() => taskName == record.taskName ? delTask(record.taskName) : putTask(record.taskName)}>{taskName == record.taskName ? "删除任务" : "取消任务"}</Button>,
     }
   })
 }
