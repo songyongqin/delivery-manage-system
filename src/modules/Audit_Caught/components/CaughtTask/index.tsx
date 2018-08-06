@@ -54,9 +54,9 @@ export default class CommonItem extends React.Component<any, any>{
     )
   }
 
-  delTask = (task_id) => {
+  delTask = (taskName) => {
 
-    this.props.delCaughtTask({ task_id }).then(
+    this.props.delCaughtTask({ taskName }).then(
       res => {
         message.success("已删除任务！")
         this.setState({
