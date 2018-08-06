@@ -1,0 +1,14 @@
+{
+  "columns": [
+    {
+      "dataIndex": "id",
+      "title": "特征ID",
+      "conditionType": "input"
+    },
+    {
+      "dataIndex": "updateTime",
+      "title": "最后更新时间",
+      "conditionType": "sorter"
+    }
+  ]
+}

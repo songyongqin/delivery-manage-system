@@ -67,8 +67,8 @@
     "cloudDetection": true
   },
   "strategyConfig": {
-    "strategy": true,
-    "white": false
+    "simpleFeature": true,
+    "snortFeature": true
   },
   "monitor": {
     "master": false,

@@ -5,43 +5,44 @@ import Card from 'domainComponents/Card'
 import columnsCreator from 'domainUtils/columnsCreator'
 import { Button, Switch, Icon } from 'antd'
 import Rule from './Rule'
-
+import { pick } from 'utils'
+import { ruleItemsConfig } from '../../constants'
+import Tag from 'components/Tag'
+import TimeLabel from 'domainComponents/TimeLabel'
 import {
   dataIndexes,
   textConfig,
-  TOTAL_DATAINDEX,
+  RULE,
   STRATEGY_OPERATION_KEY,
-  USEFUL_DATAINDEX,
   USERFUL_VALUE,
-  PROTOCOLTYPE_DATAINDEX
+  STATUS,
+  UPDATETIME
+
 } from '../../constants'
 
 
 
 function getRenderer({ handle, expandedRowKeys }) {
   return {
-    [TOTAL_DATAINDEX]: value => <CountUp start={value}
-      end={value}
-      separator={","}
-      useGrouping={true}
-      duration={1}
-      delay={0} />,
-
-    [USEFUL_DATAINDEX]: (value, records) => (
+    [UPDATETIME]: value => <TimeLabel value={value}></TimeLabel>,
+    [STATUS]: (value, records) => (
       <Switch checkedChildren={<Icon type="check" />}
-        onChange={value => handle && handle["switch"] && handle["switch"]({ [records["protocolType"]]: value ? 1 : 0 })}
+        onChange={value => handle && handle["switch"] && handle["switch"]({ idList: [records["id"]], status: value ? 1 : 0 })}
         unCheckedChildren={<Icon type="cross" />}
         defaultChecked={value === USERFUL_VALUE} />
     ),
+    [RULE]: (value, records) => {
+      const ruleKeys = ruleItemsConfig[records.protocolType] || []
+      return Object.values(pick(ruleKeys, value)).map(i => (
+        [
+          <Tag color="#108ee9" key={`${i}-tag`}>{i}</Tag>,
+          <br key={`${i}-br`} />
+        ]
+      ))
 
+    },
     [STRATEGY_OPERATION_KEY]: (value, records, index) => (
-      <Button
-        type="primary"
-        onClick={_ => handle && handle["show"] && handle["show"](records)}
-      >
-        {expandedRowKeys.includes(records["key"]) ? <Icon type="minus" /> : <Icon type="plus" />}
-        配置
-      </Button>
+      <span><a onClick={() => handle.edit(records)}><Icon type="edit" style={{ fontSize: 20, color: '#08c' }} /></a>&nbsp;&nbsp;<a onClick={() => handle.delete(records.id)}><Icon type="delete" style={{ fontSize: 16, color: 'red' }} /></a></span>
     )
   }
 }

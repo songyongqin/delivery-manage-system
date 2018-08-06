@@ -28,7 +28,8 @@ export default {
     "/product-type": proxyServer,
     "/snort": proxyServer,
     "/file-restore": proxyServer,
-    "/audit": proxyServer
+    "/audit": proxyServer,
+    "/strategy": proxyServer
   },
   "env": {
     "development": {

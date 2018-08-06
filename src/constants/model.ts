@@ -45,7 +45,7 @@ export const LAYOUT_NAMESPACE = "layout",
 
   SYS_CONFIG_STRATEGY_RULE = "sysConfigStrategyRule",
 
-  SYS_CONFIG_STRATEGY_WHITE_LIST = "sysConfigStrategyWhiteList",
+  SYS_CONFIG_STRATEGY_SNORT = "sysConfigStrategySnortFeature",
 
   SYS_CONFIG_STRATEGY_THREAT_NAME = "sysConfigStrategyThreatName",
 
@@ -120,7 +120,7 @@ export const LAYOUT_NAMESPACE = "layout",
   THREAT_REPORT = 'threatReport',
 
   THREAT_REPORT_COUNT_NAMESPACE = 'threatReportCount',
-  
+
   THREAT_REPORT_DETAIL_NAMESPACE = 'threatReportDetail',
 
   THREAT_REPORT_RANK_NAMESPACE = 'threatReportRange',

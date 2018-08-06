@@ -3,26 +3,38 @@
  */
 export const NAMESPACE = "strategyWrapper";
 
-export const PROTOCOLTYPE_DATAINDEX = "protocolType",
-  USEFUL_DATAINDEX = "useful",
-  TOTAL_DATAINDEX = "total";
-
+export const
+  ID = "id",
+  THREATTYPE = "threatType",
+  PROTOCOLTYPE = "protocolType",
+  RULE = "rule",
+  DESCRIPTION = "description",
+  THREATLEVEL = "threatLevel",
+  UPDATETIME = "updateTime",
+  STATUS = "status"
 export const STRATEGY_OPERATION_KEY = "operation";
 
 export const textConfig = {
-  [PROTOCOLTYPE_DATAINDEX]: "协议类型",
-  [TOTAL_DATAINDEX]: "总量",
-  [USEFUL_DATAINDEX]: "是否可用",
+  [ID]: "特征ID",
+  [THREATTYPE]: "威胁类型",
+  [PROTOCOLTYPE]: "协议类型",
+  [RULE]: "规则",
+  [DESCRIPTION]: "特征描述",
+  [THREATLEVEL]: "威胁等级",
+  [UPDATETIME]: "最后更新时间",
+  [STATUS]: "状态",
   [STRATEGY_OPERATION_KEY]: "操作"
 }
 
 export const dataIndexes = Object.keys(textConfig);
 
 
-
-
 export const USERFUL_VALUE = 1,
   UN_USEFUL_VALUE = 0;
+
+export const SIMPLEFEATURECOUNT = "simpleFeature",
+  SNORTFEATURECOUNT = "definedSnort",
+  SUPPORTPROTOCOLCOUNT = "protocolCount"
 
 
 export const RULE_ID_DATAINDEX = "id",

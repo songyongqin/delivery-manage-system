@@ -3,14 +3,18 @@ import TableWithRemote from 'domainComponents/TableWithRemote'
 import { SYS_CONFIG_STRATEGY_SETTING, SYS_CONFIG_STRATEGY_RULE, SYS_CONFIG_STRATEGY_THREAT_NAME } from 'constants/model'
 import { getColumns, getExpandedRowRenderer } from './tableConfig'
 import Card from 'domainComponents/Card'
-import { Button, Icon, message as Message, Modal } from 'antd'
+import { Button, Icon, message as Message, Modal, Select } from 'antd'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
 import WithModal from 'components/WithModal'
 import RuleForm from './RuleForm'
-import { PROTOCOLTYPE_DATAINDEX } from '../../constants'
-import ThreatName from '../ThreatName'
+import { PROTOCOLTYPE } from '../../constants'
+import WithConfig from 'domainComponents/WithConfig'
+import path from 'constants/path'
+import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 
+
+const Option = Select.Option;
 
 @WithModal()
 @extraConnect(
@@ -20,7 +24,7 @@ import ThreatName from '../ThreatName'
       putLoading: effectsLoading[`${SYS_CONFIG_STRATEGY_SETTING}/put`],
       applyLoading: effectsLoading[`${SYS_CONFIG_STRATEGY_SETTING}/apply`],
       postLoading: effectsLoading[`${SYS_CONFIG_STRATEGY_RULE}/post`],
-      threatNameList: state[SYS_CONFIG_STRATEGY_THREAT_NAME].threatNameList
+      threatNameList: state[SYS_CONFIG_STRATEGY_THREAT_NAME].threatNameList,
     }
   },
   dispatch => {
@@ -35,10 +39,19 @@ import ThreatName from '../ThreatName'
       post: payload => dispatch({
         type: `${SYS_CONFIG_STRATEGY_RULE}/post`,
         payload
+      }),
+      // put: payload => dispatch({
+      //   type: `${SYS_CONFIG_STRATEGY_RULE}/put`,
+      //   payload
+      // }),
+      delete: payload => dispatch({
+        type: `${SYS_CONFIG_STRATEGY_RULE}/delete`,
+        payload
       })
     }
   }
 )
+@WithConfig(path.layoutConfig.simpleFeature)
 export default class StrategySetting extends React.Component<any, any>{
   constructor(props) {
     super(props)
@@ -47,11 +60,26 @@ export default class StrategySetting extends React.Component<any, any>{
       lastReqTime: 0,
       expandedRowKeys: [],
       data: [],
-      expanded: false
+      expanded: false,
+      protocolType: "",
+      initialFilters: {
+        page: 1,
+        limit: 10,
+        id: "",
+        threatType: "",
+        protocolType: "",
+        threatLevel: "",
+        updateTime: "",
+        rule: ""
+      },
     }
   }
   onSwitchClick = (payload) => {
-    this.props.put(payload).then(_ => Message.success("修改成功"))
+    this.props.put(payload).then(_ => {
+      Message.success("修改成功"); this.setState({
+        lastReqTime: new Date().getTime()
+      })
+    })
   }
   onShowClick = (records) => {
     const { key } = records
@@ -67,22 +95,41 @@ export default class StrategySetting extends React.Component<any, any>{
   }
   onMulSwitchClick = value => {
     const { selectedRows } = this.state
+    const idList = selectedRows.map((i) => i.id)
+    value != "del"
+      ?
+      this.props.put({ idList, status: value })
+        .then(_ => {
+          Message.success("修改成功")
+          this.setState({
+            selectedRows: [],
+            lastReqTime: new Date().getTime()
+          })
+        })
+      :
+      this.onDeleteClick(idList)
 
-    this.props.put(selectedRows.reduce((target, item) => {
-      target[item["protocolType"]] = value ? 1 : 0
-      return target
-    }, {}))
+  }
+  onPut = payload => {
+
+    this.setState({
+      putLoading: true
+    })
+
+    this.props.post(payload)
       .then(_ => {
-        Message.success("修改成功")
+
+        Message.success("修改规则成功")
+
+        this.props.setModalVisible("edit", false)
+
         this.setState({
-          selectedRows: [],
           lastReqTime: new Date().getTime()
         })
       })
-
   }
   onSubmit = payload => {
-    return this.props.post(payload).then(_ => {
+    return this.props.post({ id: "", ...payload }).then(_ => {
       Message.success("添加成功")
       this.props.setModalVisible("create", false)
       this.setState({
@@ -96,55 +143,60 @@ export default class StrategySetting extends React.Component<any, any>{
       lastReqTime: new Date().getTime()
     })
   }
-  onApplyClick = () => {
-    this.props.apply().then(_ => Message.success("应用成功"))
+  onEditClick = (records) => {
+
+    this.props.setModalVisible("edit", true)
+    this.setState({
+      activeRule: records,
+      protocolType: records.protocolType
+
+    })
+  }
+  onDeleteClick = idList => {
+    const { onChange } = this.props
+    Modal.confirm({
+      title: "删除规则",
+      content: "确定后将无法恢复",
+      onOk: _ => this.props.delete({ idList })
+        .then(_ => {
+          this.setState({
+            lastReqTime: new Date().getTime()
+          })
+          Message.success("删除规则成功")
+        })
+    })
   }
   render() {
 
-    const { selectedRows } = this.state
+    const { selectedRows, data, protocolType, initialFilters } = this.state
+
     const { putLoading, applyLoading } = this.props
 
     const title = (
       <div style={{ overflow: "hidden" }}>
         <div style={{ float: "left" }}>
-          <Button.Group>
-            <Button type="primary"
-              onClick={_ => this.onMulSwitchClick(true)}
-              disabled={selectedRows.length === 0 || putLoading || applyLoading}>
-              <Icon type="check" />启用
-                </Button>
-            <Button type="danger"
-              onClick={_ => this.onMulSwitchClick(false)}
-              disabled={selectedRows.length === 0 || putLoading || applyLoading}
-              className="btn-danger">
-              关闭<Icon type="close" />
-            </Button>
-          </Button.Group>
           <Button type="primary"
             icon="plus"
             onClick={_ => this.props.setModalVisible("create", true)}
             disabled={putLoading || applyLoading}
             style={{ marginLeft: "15px" }}>
-            新增特征
+            添加简易特征
           </Button>
+          <Select defaultValue="1" key={`${this.state.lastReqTime}-table-with-remote`} style={{ width: 120 }} onSelect={this.onMulSwitchClick} disabled={selectedRows.length === 0 || putLoading || applyLoading}>
+            <Option value="1">启用特征</Option>
+            <Option value="0">停用特征</Option>
+            <Option value="del">批量删除</Option>
+          </Select>
         </div>
         <div style={{ float: "right" }}>
-          <Button
-            type="primary"
-            onClick={this.onApplyClick}
-            loading={applyLoading}
-            disabled={putLoading}
-            icon="save">
-            应用
-          </Button>
-          <Button
+          {/* <Button
             disabled={putLoading || applyLoading}
             type="primary"
             onClick={_ => this.setState({ expanded: !this.state.expanded })}
             style={{ marginLeft: "15px" }}
             icon="setting">
             威胁等级配置
-          </Button>
+          </Button> */}
         </div>
       </div>
     )
@@ -158,20 +210,8 @@ export default class StrategySetting extends React.Component<any, any>{
             transitionDuration: "0.3s",
           }}>
             <TableWithRemote
+              initialFilters={initialFilters}
               onDataChange={payload => this.setState({ data: payload.data })}
-              getExpandedRowRenderer={option => {
-                return getExpandedRowRenderer({
-                  ...option,
-                  expandedRowKeys: this.state.expandedRowKeys,
-                  onChange: this.onExpandRowChange
-                })
-              }}
-              getKey={(item, index) => `${item["protocolType"]}-item`}
-              tableProps={{
-                expandIconAsCell: false,
-                expandIconColumnIndex: -1,
-                expandedRowKeys: this.state.expandedRowKeys
-              }}
               key={`${this.state.lastReqTime}-table-with-remote`}
               rowSelection={{
                 onChange: (_, selectedRows) => {
@@ -180,21 +220,49 @@ export default class StrategySetting extends React.Component<any, any>{
                   })
                 }
               }}
-              pagination={false}
               getColumns={options => {
-                return getColumns({
+                return combineColumnsConfig(getColumns({
                   ...options,
-                  expandedRowKeys: this.state.expandedRowKeys,
                   handle: {
                     show: this.onShowClick,
-                    switch: this.onSwitchClick
+                    switch: this.onSwitchClick,
+                    edit: this.onEditClick,
+                    delete: this.onDeleteClick
                   }
-                })
+                }), this.props.config.columns)
               }}
               remoteNamespace={SYS_CONFIG_STRATEGY_SETTING}>
             </TableWithRemote>
           </Card>
         </Spin>
+
+        <Modal
+          title={
+            <div>
+              <Icon type="edit"></Icon>&nbsp;修改规则
+            </div>
+          }
+          destroyOnClose={true}
+          closable={!this.state.putLoading}
+          footer={null}
+          onCancel={_ => this.props.setModalVisible("edit", false)}
+          visible={this.props.modalVisible["edit"]}>
+          <RuleForm
+            onSubmit={this.onPut}
+            threatTypes={this.props.threatNameList.map(i => {
+              return {
+                text: i.type,
+                value: i.key
+              }
+            })}
+            loading={this.state.putLoading}
+            defaultValue={this.state.activeRule}
+            protocolType={protocolType}
+            id={[...new Set(this.state.data.map(i => i["id"]))]}
+            isCreate={false}>
+          </RuleForm>
+        </Modal>
+
         <Modal
           title={
             <div>
@@ -211,12 +279,13 @@ export default class StrategySetting extends React.Component<any, any>{
             onSubmit={this.onSubmit}
             create={true}
             threatTypes={this.props.threatNameList.map(i => {
+
               return {
-                text: i.name,
+                text: i.type,
                 value: i.key
               }
             })}
-            protocolTypes={[...new Set(this.state.data.map(i => i[PROTOCOLTYPE_DATAINDEX]))]}>
+            protocolTypes={[...new Set(this.state.data.map(i => i[PROTOCOLTYPE]))]}>
           </RuleForm>
         </Modal>
         <div style={{
@@ -230,7 +299,7 @@ export default class StrategySetting extends React.Component<any, any>{
           background: "white",
           width: "400px"
         }}>
-          <ThreatName onExpandChange={expanded => this.setState({ expanded })}></ThreatName>
+          {/* <ThreatName onExpandChange={expanded => this.setState({ expanded })}></ThreatName> */}
         </div>
       </div>
     )
