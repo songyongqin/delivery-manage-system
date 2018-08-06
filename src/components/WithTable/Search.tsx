@@ -8,6 +8,7 @@ import { ipReg, portReg } from 'utils/tools'
 interface props{
   tableSearch:(any) => any,
   getValue: (any) => any,
+  // getSearchObj: (any) => any,
   searchRule?: string,
   type: string
 }
@@ -33,13 +34,19 @@ class Search extends Component<props, any> {
     }
     let obj = {}
     obj[this.state.type] = value
-    this.props.getValue(obj)
+    if(!isWarn){
+      this.props.getValue(obj)
+    }
+    
     this.setState({ value, isWarn })
   }
 
   enterSearch = () => {
-    const { value, type } = this.state
-    this.props.tableSearch({ searchValue:value, searchType: type })
+    const { value, type, isWarn } = this.state
+    if(!isWarn){
+      this.props.tableSearch({ searchValue:value, searchType: type })
+    }
+    
   }
 
   render(){

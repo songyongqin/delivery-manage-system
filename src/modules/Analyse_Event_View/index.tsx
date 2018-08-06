@@ -30,7 +30,7 @@ import Detail from './components/Detail'
 const mapStateToProps = state => {
   return {
     state,
-    loading: state.loading.effects[`${ANALYSE_EVENT_VIEW}/fetch`]
+    loading: state.loading.effects[`${ANALYSE_EVENT_VIEW}/post`]
   }
 }
 
@@ -196,11 +196,13 @@ class Page extends React.Component<any, any> {
       {
         title:'攻击者IP',
         dataIndex: 'attackerIP',
+        searchRule: 'ip',
         render: text =>  <a href={ `/#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` } style={{ textDecoration:"none" , color:'#1890ff'}} >{text}</a>
       },
       {
         title:'受攻击资产IP',
         dataIndex: 'attatcedAssetIp',
+        searchRule: 'ip',
         render: text =>  <a href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${text}` } style={{ textDecoration:"none", color:'#1890ff' }} >{text}</a>
       },
       {

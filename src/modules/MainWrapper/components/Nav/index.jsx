@@ -103,7 +103,7 @@ export default class extends React.Component {
   }
   onOpenChange = openKeys => {
     //授权过期不进行展开操作
-    console.log(openKeys)
+    // console.log(openKeys)
     if (isLicenceOverdue()) {
       return
     }

@@ -167,7 +167,8 @@ class Page extends React.Component<any, any> {
         render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
       },
       { title:'受攻击资产IP', 
-        dataIndex:'attatcedAssetIp', 
+        dataIndex:'attatcedAssetIp',
+        searchRule: 'ip', 
         types:['search']
       },
       { title:'受攻击次数', 

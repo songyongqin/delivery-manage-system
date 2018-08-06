@@ -33,7 +33,8 @@ class WithTable extends Component<props, any>{
       filter: props.objConstants || {},
       whichSelect: '',
       tableChangeData: {},
-      searchValue: {}
+      searchValue: {},
+      isSearchValue:[],
     }
   }
 
@@ -60,12 +61,23 @@ class WithTable extends Component<props, any>{
     // let objs = {}
     // objs[obj['searchType']] =obj['searchValue'] 
     // tableChangeData = { ...tableChangeData, ...objs }
-
+    this.getSearchIcon(obj)
     //添加上多条搜索的值
     let objs = this.state.searchValue
     objs.page = 1
     this.props.tableBeforeFetch && this.props.tableBeforeFetch(objs)
     this.hiddenSearch()
+  }
+
+  getSearchIcon = obj => {
+    const {  searchType, searchValue } = obj
+    let isSearchValue = this.state.isSearchValue
+    let arr = [...new Set([...isSearchValue, searchType ])]
+    console.log(arr)
+    if(!searchValue){
+      arr = arr.filter(i => i!==searchType)
+    }
+    this.setState({ isSearchValue: arr })
   }
 
   hiddenSearch = () => {
@@ -95,7 +107,7 @@ class WithTable extends Component<props, any>{
     //  for(let keys in obj){
     //    obj[keys] = obj[keys].toString() 
     //  }
-    console.log('obj',obj)
+    // console.log('obj',obj)
     this.setState({ tableChangeData: obj })
     this.props.tableBeforeFetch && this.props.tableBeforeFetch(obj)
     this.hiddenSearch()
@@ -116,6 +128,7 @@ class WithTable extends Component<props, any>{
         getTableSearchValue: this.getSearchValue,
         getTableState: this.getTableState,
         setTableState: this.setTableState,
+        isSearchValue: this.state.isSearchValue
       }
     })
     
@@ -125,6 +138,8 @@ class WithTable extends Component<props, any>{
       return i
     } )
     
+    // console.log('columns', columns)
+    // console.log(this.state.isSearchValue)
     return (
       // <div style={{ minWidth:1300, overflow:'auto' }} >
       <div >
