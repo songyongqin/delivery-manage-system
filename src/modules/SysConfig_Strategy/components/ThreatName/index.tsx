@@ -88,7 +88,8 @@ class Page extends React.Component<any, any> {
     this.props.put([payload]).then(this.reload)
   }
   onDeleteClick = payload => {
-    this.props.delete({ key: payload["key"] }).then(this.reload)
+    console.info(payload)
+    this.props.delete({ id: payload["id"] }).then(this.reload)
   }
   onSubmit = payload => {
     this.props.post(payload).then(_ => {

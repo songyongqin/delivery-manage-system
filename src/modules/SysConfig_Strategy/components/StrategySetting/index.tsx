@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TableWithRemote from 'domainComponents/TableWithRemote'
-import { SYS_CONFIG_STRATEGY_SETTING, SYS_CONFIG_STRATEGY_RULE, SYS_CONFIG_STRATEGY_THREAT_NAME } from 'constants/model'
+import { SYS_CONFIG_STRATEGY_SETTING, SYS_CONFIG_STRATEGY_RULE, SYS_CONFIG_STRATEGY_THREAT_NAME, } from 'constants/model'
 import { getColumns, getExpandedRowRenderer } from './tableConfig'
 import Card from 'domainComponents/Card'
 import { Button, Icon, message as Message, Modal, Select } from 'antd'
@@ -8,7 +8,7 @@ import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
 import WithModal from 'components/WithModal'
 import RuleForm from './RuleForm'
-import { PROTOCOLTYPE } from '../../constants'
+import { PROTOCOLTYPE, protocolTypeList } from '../../constants'
 import WithConfig from 'domainComponents/WithConfig'
 import path from 'constants/path'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
@@ -252,7 +252,7 @@ export default class StrategySetting extends React.Component<any, any>{
             threatTypes={this.props.threatNameList.map(i => {
               return {
                 text: i.type,
-                value: i.key
+                value: i.id
               }
             })}
             loading={this.state.putLoading}
@@ -282,10 +282,11 @@ export default class StrategySetting extends React.Component<any, any>{
 
               return {
                 text: i.type,
-                value: i.key
+                value: i.id
               }
             })}
-            protocolTypes={[...new Set(this.state.data.map(i => i[PROTOCOLTYPE]))]}>
+            // protocolTypes={[...new Set(this.state.data.map(i => i[PROTOCOLTYPE]))]}>
+            protocolTypes={protocolTypeList}>
           </RuleForm>
         </Modal>
         <div style={{
