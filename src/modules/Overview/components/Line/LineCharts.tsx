@@ -113,9 +113,9 @@ class BarCharts extends React.Component<props, any>{
                 type : 'category',
                 boundaryGap : false,
                 data : xAxis,
-                axisLabel:{
-                  rotate:45  
-                },
+                // axisLabel:{
+                //   rotate:45  
+                // },
             }
         ],
         yAxis : [

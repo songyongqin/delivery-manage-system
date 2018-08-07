@@ -6,7 +6,7 @@ import wrapStr from 'utils/wrapStr'
 
 const Wrap = props =>{
   return (
-    <div style={ { width:400, display:'inline-block' } } >{ props.children }</div>
+    <div style={ { width:400, display:'inline-block', border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10  } } >{ props.children }</div>
   )
 }
 

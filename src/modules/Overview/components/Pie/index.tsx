@@ -48,7 +48,7 @@ const getThreatEventConfig = (eventBehaviorCount, threatLevelCount) => {
 
 const Wrap = props => {
   return (
-    <div style={{ display:'inline-block', width:500 }} >{ props.children }</div>
+    <div style={{ display:'inline-block', width:500, border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10 }} >{ props.children }</div>
   )
 }
 

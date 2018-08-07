@@ -170,10 +170,10 @@ class Page extends React.Component<any, any> {
               <Pie data={ this.state.count } />
             </Spin>,
             <Spin key='pie-charts-line' spinning={ flowLoading } >
-              <span style={{ width:600, display:'inline-block' }} >
+              <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10,  padding:10 }} >
                 <Line title={'网络流量'} xAxis={ networkFlow.xAxis } series={ networkFlow.series }  unit={ networkFlow.unit }  />
               </span>
-              <span style={{ width:600, display:'inline-block' }} >
+              <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10, padding:10 }} >
                 <Line title={'应用流量'} xAxis={ applicationFlow.xAxis } series={ applicationFlow.series }  unit={ applicationFlow.unit }  />
               </span>
               {/* <Tree /> */}
