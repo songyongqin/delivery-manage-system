@@ -103,12 +103,12 @@ const HttpApiConfig = {
   ANALYSE_OVERALL_NET: "/analyse/overall/net",
   ANALYSE_OVERALL_ABNORMAL: "/analyse/overall/abnormal-net-basic",
   SYS_CONFIG_NETWORK: "/sys-config/network",
-  SYS_CONFIG_STRATEGY: "/sys-config/strategy",
+  SYS_CONFIG_STRATEGY: "/strategy/simpleFeature",
+  SYS_CONFIG_DATA_STRATEGY: "/strategy/strategyData",
 
   SYS_CONFIG_STRATEGY_APPLY: "/sys-config/strategy/apply",
-  SYS_CONFIG_STRATEGY_THREAT_NAME: "/sys-config/strategy/threatname",
-  SYS_CONFIG_STRATEGY_RULE: "/sys-config/strategy/rule",
-  SYS_CONFIG_STRATEGY_WHITELIST: "/sys-config/strategy/white-list",
+  SYS_CONFIG_STRATEGY_THREAT_NAME: "/strategy/threatType",
+  SYS_CONFIG_STRATEGY_SNORT: "/strategy/snortFeature",
   SYS_CONFIG_WHITELIST_APPLY: "/sys-config/white-list/apply",
 
   SYS_CONFIG_NETWORK_MASTER: "/sys-config/network/control",
@@ -235,8 +235,11 @@ const HttpApiConfig = {
   REPORT_COUNT_THREAT: '/report/count',
 
   REPORT_DETAIL_THREAT: '/report/detail',
+<<<<<<< Updated upstream
 
   REPORT_RANK_THREAT: '/report/rank'
+=======
+>>>>>>> Stashed changes
 
 }
 

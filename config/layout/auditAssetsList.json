@@ -14,20 +14,16 @@
       "conditionType": "selector",
       "filters": [
         {
-          "text": "入侵",
-          "value": "intrusion"
+          "text": "失陷",
+          "value": "2"
         },
         {
-          "text": "安装",
-          "value": "install"
+          "text": "疑似失陷",
+          "value": "1"
         },
         {
-          "text": "控制",
-          "value": "control"
-        },
-        {
-          "text": "意图",
-          "value": "intention"
+          "text": "未知",
+          "value": "0"
         }
       ]
     },

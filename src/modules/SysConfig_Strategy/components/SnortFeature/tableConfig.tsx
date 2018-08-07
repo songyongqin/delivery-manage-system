@@ -2,18 +2,19 @@ import * as React from 'react'
 import columnsCreator from 'domainUtils/columnsCreator'
 
 import { Popconfirm } from 'antd'
-
-export const TYPE_DATAINDEX = "type",
-  FEATURE_DATAINDEX = "feature",
-  OPEN_DATAINDEX = "open",
+import TimeLabel from "domainComponents/TimeLabel"
+export const TIME_DATAINDEX = "updateTime",
+  RULE_DATAINDEX = "snortrule",
+  STATUS_DATAINDEX = "status",
   ID_DATAINDEX = "id";
 
 export const STRATEGY_OPERATION_KEY = "operation";
 
 export const textConfig = {
-  [TYPE_DATAINDEX]: "白名单类型",
-  [FEATURE_DATAINDEX]: "白名单特征",
-  [OPEN_DATAINDEX]: "是否可用",
+  [ID_DATAINDEX]: "特征ID",
+  [TIME_DATAINDEX]: "最后更新时间",
+  [RULE_DATAINDEX]: "自定义snort规则",
+  [STATUS_DATAINDEX]: "状态",
   [STRATEGY_OPERATION_KEY]: "操作"
 }
 
@@ -36,24 +37,15 @@ import { Button, Switch, Icon } from 'antd'
 
 function getRenderer({ handle }) {
   return {
-    [OPEN_DATAINDEX]: (value, records) => (
+    [TIME_DATAINDEX]: value => <TimeLabel value={value}></TimeLabel>,
+    [STATUS_DATAINDEX]: (value, records) => (
       <Switch checkedChildren={<Icon type="check" />}
-        onChange={value => handle && handle["put"] && handle["put"]({ [records[ID_DATAINDEX]]: value ? 1 : 0 })}
+        onChange={value => handle && handle["put"] && handle["put"]({ idList: [records[ID_DATAINDEX]], status: value ? 1 : 0 })}
         unCheckedChildren={<Icon type="cross" />}
         defaultChecked={value === OPEN_VALUE} />
     ),
     [STRATEGY_OPERATION_KEY]: (value, records, index) => (
-      <Popconfirm title="是否删除该白名单特征？"
-        onConfirm={_ => handle && handle["delete"] && handle["delete"](records)}>
-        <Button type="danger"
-          style={{
-            color: "white",
-            background: "#f04134",
-            borderColor: "#f04134"
-          }}>
-          删除
-        </Button>
-      </Popconfirm>
+      <span><a onClick={() => handle.edit(records)}><Icon type="edit" style={{ fontSize: 20, color: '#08c' }} /></a>&nbsp;&nbsp;<a onClick={() => handle.delete(records.id)}><Icon type="delete" style={{ fontSize: 16, color: 'red' }} /></a></span>
     )
   }
 

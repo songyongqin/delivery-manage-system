@@ -69,8 +69,8 @@ module.exports = {
       "cloudDetection": true
     },
     "strategyConfig": {
-      "strategy": true,
-      "white": true
+      "simpleFeature": true,
+      "snortFeature": true
     },
     "monitor": {
       "master": true,
@@ -165,8 +165,8 @@ module.exports = {
       "cloudDetection": false
     },
     "strategyConfig": {
-      "strategy": true,
-      "white": true
+      "simpleFeature": true,
+      "snortFeature": true
     },
     "monitor": {
       "master": false,
@@ -266,8 +266,8 @@ module.exports = {
       "cloudDetection": true
     },
     "strategyConfig": {
-      "strategy": true,
-      "white": false
+      "simpleFeature": true,
+      "snortFeature": true
     },
     "monitor": {
       "master": false,

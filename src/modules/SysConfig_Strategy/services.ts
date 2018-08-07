@@ -4,22 +4,7 @@ const httpApi = ApiConfig.http
 import isSuccess from 'domainUtils/isSuccess'
 
 
-const _fetchStrategySetting = commonRequestCreator.get(httpApi.SYS_CONFIG_STRATEGY)
-
-export const fetchStrategySetting = _ => {
-  return _fetchStrategySetting().then(res => {
-    if (isSuccess(res)) {
-      return {
-        ...res,
-        payload: {
-          total: 0,
-          data: res.payload
-        }
-      }
-    }
-    return res
-  })
-}
+export const _fetchStrategySetting = commonRequestCreator.getWithQueryString(httpApi.SYS_CONFIG_STRATEGY)
 
 export const putStrategySetting = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEGY)
 
@@ -27,16 +12,17 @@ export const applyStrategySetting = commonRequestCreator.post(httpApi.SYS_CONFIG
 
 export const getThreatName = commonRequestCreator.get(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)
 
+export const fetchDate = commonRequestCreator.get(httpApi.SYS_CONFIG_DATA_STRATEGY)
+
 /*
 Rule
 */
-export const fetchRule = commonRequestCreator.getWithQueryString(httpApi.SYS_CONFIG_STRATEGY_RULE)
 
-export const putRule = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEGY_RULE)
+export const putRule = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEGY)
 
-export const deleteRule = commonRequestCreator.deleteWithQueryString(httpApi.SYS_CONFIG_STRATEGY_RULE)
+export const deleteRule = commonRequestCreator.deleteWithQueryString(httpApi.SYS_CONFIG_STRATEGY)
 
-export const postRule = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY_RULE)
+export const postRule = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY)
 
 /*
   threatName
@@ -50,7 +36,7 @@ export const fetchThreatName = _ => {
         ...res,
         payload: {
           total: 0,
-          data: res.payload
+          data: res.payload.data
         }
       }
     }
@@ -69,27 +55,27 @@ export const deleteThreatName = commonRequestCreator.deleteWithQueryString(httpA
  * whiteList
  */
 
-const _fetchWhiteList = commonRequestCreator.get(httpApi.SYS_CONFIG_STRATEGY_WHITELIST)
+export const fetchSnort = commonRequestCreator.getWithQueryString(httpApi.SYS_CONFIG_STRATEGY_SNORT)
 
-export const fetchWhiteList = _ => {
-  return _fetchWhiteList().then(res => {
-    if (isSuccess(res)) {
-      return {
-        ...res,
-        payload: {
-          total: 0,
-          data: res.payload
-        }
-      }
-    }
-    return res
-  })
-}
+// export const fetchWhiteList = _ => {
+//   return _fetchWhiteList().then(res => {
+//     if (isSuccess(res)) {
+//       return {
+//         ...res,
+//         payload: {
+//           total: 0,
+//           data: res.payload
+//         }
+//       }
+//     }
+//     return res
+//   })
+// }
 
-export const putWhiteList = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEGY_WHITELIST)
+export const putSnort = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEGY_SNORT)
 
-export const postWhiteList = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY_WHITELIST)
+export const postSnort = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY_SNORT)
 
-export const deleteWhiteList = commonRequestCreator.deleteWithQueryString(httpApi.SYS_CONFIG_STRATEGY_WHITELIST)
+export const deleteSnort = commonRequestCreator.deleteWithQueryString(httpApi.SYS_CONFIG_STRATEGY_SNORT)
 
 export const applyWhiteList = commonRequestCreator.post(httpApi.SYS_CONFIG_WHITELIST_APPLY)

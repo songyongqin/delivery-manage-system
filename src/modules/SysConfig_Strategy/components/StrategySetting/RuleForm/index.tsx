@@ -67,7 +67,6 @@ class WrappedForm extends React.Component<any, any> {
     e.preventDefault();
     const { onSubmit, form } = this.props;
     const { ruleItems } = this.state;
-
     const ERROR = "error";
 
 
@@ -125,7 +124,6 @@ class WrappedForm extends React.Component<any, any> {
   }
 
   setRuleItems = (protocolType) => {
-
 
     this.setState({
       ruleItems: ruleItemsConfig[protocolType] || [],
@@ -237,32 +235,33 @@ class WrappedForm extends React.Component<any, any> {
           </Select>
         )
       },
-      ...ruleItems.map((r, index) => ({
-        props: {
-          ...commonProps,
-          required: index === 0,
-          validateStatus: (checkerStatus[r] || {}).status,
-          help: (checkerStatus[r] || {}).help,
-          label: index === 0 ? <span className={lblClasses}>{tools.getKeyText(RULE_DATAINDEX, textConfig)}</span> : " "
-        },
-        filed: {
-          name: r,
-          initialValue: (defaultValue[RULE_DATAINDEX] || {})[r],
-          // rules: [
-          //   {
-          //     required: true, message: "不能为空"
-          //   },
-          // ]
-        },
-        component: (
-          <Input
-            disabled={loading}
-            key={`${r}-${index}`}
-            onChange={this.getRuleCheckConfirm(r)}
-            placeholder={`${tools.getKeyText(r, ruleItemPlaceholder)}`}
-          />
-        )
-      })),
+      ...ruleItems.map((r, index) => (
+        {
+          props: {
+            ...commonProps,
+            required: index === 0,
+            validateStatus: (checkerStatus[r] || {}).status,
+            help: (checkerStatus[r] || {}).help,
+            label: index === 0 ? <span className={lblClasses}>{tools.getKeyText(RULE_DATAINDEX, textConfig)}</span> : " "
+          },
+          filed: {
+            name: r,
+            initialValue: (defaultValue[RULE_DATAINDEX] || {})[r],
+            // rules: [
+            //   {
+            //     required: true, message: "不能为空"
+            //   },
+            // ]
+          },
+          component: (
+            <Input
+              disabled={loading}
+              key={`${r}-${index}`}
+              onChange={this.getRuleCheckConfirm(r)}
+              placeholder={`${tools.getKeyText(r, ruleItemPlaceholder)}`}
+            />
+          )
+        })),
       {
         props: {
           ...commonProps,

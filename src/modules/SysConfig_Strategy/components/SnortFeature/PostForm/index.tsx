@@ -7,9 +7,9 @@ import classnames from 'classnames'
 
 import * as tools from 'utils'
 import { ipReg } from 'utils/tools'
-
+const { TextArea } = Input;
 export const TYPE_DATAINDEX = "type",
-  FEATURE_DATAINDEX = "feature",
+  SNORT_DATAINDEX = "snortrule",
   OPEN_DATAINDEX = "open",
   ID_DATAINDEX = "id"
 
@@ -17,7 +17,7 @@ export const STRATEGY_OPERATION_KEY = "operation";
 
 export const textConfig = {
   [TYPE_DATAINDEX]: "白名单类型",
-  [FEATURE_DATAINDEX]: "白名单特征",
+  [SNORT_DATAINDEX]: "snort特征",
   [OPEN_DATAINDEX]: "是否可用",
   [STRATEGY_OPERATION_KEY]: "操作"
 }
@@ -41,11 +41,11 @@ const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 6 },
+    sm: { span: 4 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 14 },
+    sm: { span: 20 },
   },
 };
 const tailFormItemLayout = {
@@ -56,7 +56,7 @@ const tailFormItemLayout = {
     },
     sm: {
       span: 14,
-      offset: 6,
+      offset: 4,
     },
   },
 };
@@ -74,17 +74,21 @@ class WrappedForm extends React.Component<any, any> {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { onSubmit, form } = this.props;
+    const { onSubmit, form, isCreate, defaultValue } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (err) {
         return
       }
-      onSubmit && onSubmit(values);
+      isCreate
+        ?
+        onSubmit && onSubmit({ id: "", ...values })
+        :
+        onSubmit && onSubmit({ id: defaultValue.id, ...values })
     })
   }
 
   onChange = () => {
-    this.props.form.resetFields([FEATURE_DATAINDEX])
+    this.props.form.resetFields([SNORT_DATAINDEX])
   }
 
   render() {
@@ -99,65 +103,16 @@ class WrappedForm extends React.Component<any, any> {
       {
         props: {
           ...commonProps,
-          hasFeedback: false,
-          label: <span className={lblClasses}>{tools.getKeyText(TYPE_DATAINDEX, textConfig)}</span>
+          label: <span className={lblClasses}>{tools.getKeyText(SNORT_DATAINDEX, textConfig)}</span>
         },
         filed: {
-          name: TYPE_DATAINDEX,
-          initialValue: defaultValue[TYPE_DATAINDEX] || types[0]
+          name: SNORT_DATAINDEX,
+          initialValue: isCreate ? null : defaultValue[SNORT_DATAINDEX]
         },
         component: (
-          <Select
-            disabled={loading}
-            onChange={this.onChange}
-            style={{ width: "140px" }}>
-            {types.map((i, index) => (
-              <Select.Option value={i}
-                key={`${index}-item`}>
-                {tools.getKeyText(i, typeTextConfig)}
-              </Select.Option>
-            ))}
-          </Select>
-        )
-      },
-      {
-        props: {
-          ...commonProps,
-          label: <span className={lblClasses}>{tools.getKeyText(FEATURE_DATAINDEX, textConfig)}</span>
-        },
-        filed: {
-          name: FEATURE_DATAINDEX,
-          initialValue: defaultValue[FEATURE_DATAINDEX],
-          rules: this.props.form.getFieldValue(TYPE_DATAINDEX) === IP_TYPE
-            ?
-            [
-              {
-                pattern: ipReg,
-                message: "请输入正确的IP地址"
-              },
-              {
-                required: true,
-                message: "不能为空"
-              },
-              {
-                whitespace: true,
-                message: "不能为空"
-              }
-            ]
-            :
-            [
-              {
-                required: true,
-                message: "不能为空"
-              },
-              {
-                whitespace: true,
-                message: "不能为空"
-              }
-            ]
-        },
-        component: (
-          <Input disabled={loading} />
+          <TextArea autosize={{ minRows: 8, maxRows: 12 }} disabled={loading}
+            placeholder="输入自定义snort特征内容："
+          />
         )
       }
     ]
@@ -179,18 +134,18 @@ class WrappedForm extends React.Component<any, any> {
               <Button type="primary"
                 loading={loading}
                 icon="plus"
-                onClick={this.handleSubmit}>添加</Button>
+                onClick={this.handleSubmit}>上传编辑内容</Button>
               :
               <Button type="primary"
                 loading={loading}
                 icon="save"
                 onClick={this.handleSubmit}>保存</Button>
           }
-          {/*<Button type="danger"*/}
-          {/*loading={loading}*/}
-          {/*style={{marginLeft:"15px"}}*/}
-          {/*icon="close"*/}
-          {/*onClick={this.props.onCancel}>取消</Button>*/}
+          <Button type="primary"
+            loading={loading}
+            style={{ marginLeft: "15px" }}
+            icon="close"
+            onClick={this.props.onCancel}>取消</Button>
         </FormItem>
       </Form>
     );

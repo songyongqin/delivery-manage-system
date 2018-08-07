@@ -1,30 +1,83 @@
 import * as React from 'react'
 import StrategySetting from './components/StrategySetting'
-import WhiteList from './components/WhiteList'
-import { Tabs } from 'antd'
+import SnortFeature from './components/SnortFeature'
+import { Tabs, Row, Col, Button } from 'antd'
 import { getAppConfig } from 'domain/app'
 import { get } from 'utils'
 import { If } from 'components/ControlStatements'
-
+import extraConnect from 'domainUtils/extraConnect'
+import { SIMPLEFEATURECOUNT, SNORTFEATURECOUNT, SUPPORTPROTOCOLCOUNT } from './constants'
+import { SYS_CONFIG_STRATEGY_SETTING } from 'constants/model'
+import ThreatName from './components/ThreatName'
+import WithAnimateRender from 'components/WithAnimateRender'
+const styles = require('./style.less')
+const dataItems = [
+  {
+    value: SIMPLEFEATURECOUNT,
+    text: "简易特征数量",
+    color: "#46C83D",
+  },
+  {
+    value: SNORTFEATURECOUNT,
+    text: "自定义snort特征数量",
+    color: "orange",
+  },
+  {
+    value: SUPPORTPROTOCOLCOUNT,
+    text: "支持协议数量",
+    color: "#1890ff",
+  },
+]
+@extraConnect(
+  state => {
+    const effectsLoading = state.loading.effects
+    return {
+      // putLoading: effectsLoading[`${SYS_CONFIG_STRATEGY_SETTING}/put`],
+    }
+  },
+  dispatch => {
+    return {
+      fetchDate: payload => dispatch({
+        type: `${SYS_CONFIG_STRATEGY_SETTING}/fetchDate`,
+        payload
+      }),
+    }
+  }
+)
+@WithAnimateRender
 export default class Strategy extends React.Component<any, any>{
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: {},
+      expanded: false,
+    }
+  }
+  componentDidMount() {
+    this.props.fetchDate({}).then(res => {
+      this.setState({
+        data: { ...res }
+      })
+    }
+    )
+  }
   render() {
-
+    const { data } = this.state;
     const strategyConfig = get(getAppConfig(), ['strategyConfig'], {})
-
     const tabs = [
       {
-        key: "strategy",
+        key: "simpleFeature",
         content: (
-          <Tabs.TabPane tab="策略配置" key="strategy-setting">
+          <Tabs.TabPane tab="简易特征" key="simpleFeature">
             <StrategySetting></StrategySetting>
           </Tabs.TabPane>
         )
       },
       {
-        key: "white",
+        key: "snortFeature",
         content: (
-          <Tabs.TabPane tab="白名单配置" key="white-strategy-setting">
-            <WhiteList></WhiteList>
+          <Tabs.TabPane tab="自定义snort特征" key="snortFeature">
+            <SnortFeature></SnortFeature>
           </Tabs.TabPane>
         )
       }
@@ -32,9 +85,52 @@ export default class Strategy extends React.Component<any, any>{
 
     return (
       <div>
-        <Tabs>
-          {tabs}
-        </Tabs>
+        {
+          this.props.animateRender([
+            <div key="divkey">
+              <Row style={{ marginTop: "10px" }}>
+                {
+                  dataItems.map(i => <Col key={i.value} span={5} offset={3}>
+                    <div className={styles["div-box"]} style={{ background: i.color }}>
+                      {i.text}<br />
+                      <span style={{ fontWeight: "bold" }}>{data[i.value]}</span>
+                    </div>
+                  </Col>
+                  )
+                }
+              </Row>
+              <div style={{ float: "right", marginTop: "10px" }}>
+                <Button
+                  // disabled={putLoading || applyLoading}
+                  type="primary"
+                  onClick={_ => this.setState({ expanded: !this.state.expanded })}
+                  style={{ marginLeft: "15px" }}
+                  icon="setting">
+                  威胁类型配置
+            </Button>
+              </div>
+            </div>,
+            <Tabs key="tabskey" style={{ clear: "both" }}>
+              {tabs}
+            </Tabs>,
+
+            <div key="div_key"
+              style={{
+                position: "fixed",
+                top: "60px",
+                right: this.state.expanded ? 0 : "-400px",
+                transitionProperty: "right",
+                transitionDuration: "0.3s",
+                bottom: 0,
+                zIndex: 50,
+                background: "white",
+                width: "400px"
+              }}>
+              <ThreatName onExpandChange={expanded => this.setState({ expanded })}></ThreatName>
+            </div>
+          ])
+        }
+
       </div>
     )
   }

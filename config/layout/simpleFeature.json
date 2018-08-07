@@ -1,0 +1,88 @@
+{
+  "columns": [
+    {
+      "dataIndex": "id",
+      "title": "特征ID",
+      "conditionType": "input"
+    },
+    {
+      "dataIndex": "threatType",
+      "title": "威胁类型",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "入侵",
+          "value": "intrusion"
+        },
+        {
+          "text": "安装",
+          "value": "install"
+        },
+        {
+          "text": "控制",
+          "value": "control"
+        },
+        {
+          "text": "意图",
+          "value": "intention"
+        }
+      ]
+    },
+    {
+      "dataIndex": "protocolType",
+      "title": "协议类型",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "入侵",
+          "value": "intrusion"
+        },
+        {
+          "text": "安装",
+          "value": "install"
+        },
+        {
+          "text": "控制",
+          "value": "control"
+        },
+        {
+          "text": "意图",
+          "value": "intention"
+        }
+      ]
+    },
+    {
+      "dataIndex": "rule",
+      "title": "规则",
+      "conditionType": "input"
+    },
+    {
+      "dataIndex": "threatLevel",
+      "title": "威胁等级",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "入侵",
+          "value": "intrusion"
+        },
+        {
+          "text": "安装",
+          "value": "install"
+        },
+        {
+          "text": "控制",
+          "value": "control"
+        },
+        {
+          "text": "意图",
+          "value": "intention"
+        }
+      ]
+    },
+    {
+      "dataIndex": "updateTime",
+      "title": "最后更新时间",
+      "conditionType": "sorter"
+    }
+  ]
+}
