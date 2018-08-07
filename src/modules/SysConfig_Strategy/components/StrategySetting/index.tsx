@@ -252,7 +252,7 @@ export default class StrategySetting extends React.Component<any, any>{
             threatTypes={this.props.threatNameList.map(i => {
               return {
                 text: i.type,
-                value: i.id
+                value: i.key
               }
             })}
             loading={this.state.putLoading}
