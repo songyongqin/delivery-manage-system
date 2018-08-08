@@ -72,19 +72,24 @@ export default class CommonItem extends React.Component<any, any>{
     )
 
   }
+  setinitialFilters = (payload) => {
+    const { initialFilters } = this.state;
+    this.setState({ initialFilters: { ...initialFilters, ...payload } })
+  }
   render() {
     return (
       <div>
         <TableWithRemote
           key={`${this.state.lastReqTime}-table`}
           initialFilters={this.state.initialFilters}
-          // onDataChange={(payload) => console.info({ total: payload.total })}
+          onChange={payload => this.setinitialFilters(payload)}
           getColumns={
             (option) => getColumns({
               ...option,
               putTask: this.putTask,
               delTask: this.delTask,
-              taskName: this.state.taskName
+              taskName: this.state.taskName,
+              initialFilters: this.state.initialFilters
             })
           }
           remoteNamespace={AUDIT_CAUGHTTASK_NAMESPACE}>

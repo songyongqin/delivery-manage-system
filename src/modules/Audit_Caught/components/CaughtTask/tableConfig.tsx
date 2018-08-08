@@ -16,7 +16,7 @@ export const
   OPERATE = "operate"
 
 export const dataIndexes = [
-  // KEY,
+  KEY,
   TASKNAME,
   STARTTIME,
   IP,
@@ -26,7 +26,7 @@ export const dataIndexes = [
   OPERATE
 ]
 export const textConfig = {
-  // [KEY]: "序号",
+  [KEY]: "序号",
   [TASKNAME]: "任务名称",
   [STARTTIME]: "抓包开始时间",
   [IP]: "抓包IP",
@@ -37,12 +37,16 @@ export const textConfig = {
 }
 
 
-export const getColumns = ({ taskName, putTask, delTask }) => {
+export const getColumns = ({ initialFilters, taskName, putTask, delTask }) => {
 
   return columnsCreator({
     dataIndexes: dataIndexes,
     titleConfig: textConfig,
     renderer: {
+      [KEY]: key => {
+        let key_ = parseInt(key.split("-")[0]);
+        return ++key_ + initialFilters.limit * (initialFilters.page - 1)
+      },
       [STATUS]: (value) => value == "Waiting" ? "等待中" : value == "Catching" ? "抓包中" : value == "Cancel" ? "已取消" : null,
       [STARTTIME]: (value) => <TimeLabel value={value}></TimeLabel>,
       [OPERATE]: (value, record) => <Button type="primary" size="small" onClick={() => taskName == record.taskName ? delTask(record.taskName) : putTask(record.taskName)}>{taskName == record.taskName ? "删除任务" : "取消任务"}</Button>,
