@@ -176,7 +176,7 @@ export default class WhiteList extends React.Component<any, any>{
               <Icon type="upload" />导入自定义snort特征
             </Button>
           </div>
-          <Select defaultValue="1" key={`${this.state.lastReqTime}-table-with-remote`} style={{ width: 120 }} onSelect={this.onMulClick} disabled={activeItems.length === 0 || putLoading || applyLoading}>
+          <Select defaultValue="1" key={`${this.state.lastReqTime}-oprtion-with-remote`} style={{ width: 120 }} onSelect={this.onMulClick} disabled={activeItems.length === 0 || putLoading || applyLoading}>
             <Option value="1">启用特征</Option>
             <Option value="0">停用特征</Option>
             <Option value="del">批量删除</Option>
