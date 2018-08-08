@@ -3,23 +3,23 @@ import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Butto
 // import styles from './styles.css'
 import classnames from 'classnames'
 import {
-  RULE_PROTOCOLTYPE_DATAINDEX,
-  RULE_THREAT_TYPE_DATAINDEX,
-  RULE_DATAINDEX,
-  RULE_DESCRIPTION,
+  PROTOCOLTYPE,
+  THREATTYPE,
+  RULE,
+  DESCRIPTION,
   ruleItemPlaceholder,
   ruleItemsConfig,
-  RULE_OPERATION_KEY
+  THREATLEVEL
 } from '../../../constants'
 import * as tools from 'utils'
 import ruleItemCheckConfig from './itemCheckerConfig'
 
 const textConfig = {
-  [RULE_THREAT_TYPE_DATAINDEX]: "威胁类型",
-  [RULE_DATAINDEX]: "规则",
-  [RULE_DESCRIPTION]: "特征描述",
-  [RULE_OPERATION_KEY]: "操作",
-  [RULE_PROTOCOLTYPE_DATAINDEX]: "协议类型"
+  [THREATTYPE]: "威胁类型",
+  [RULE]: "规则",
+  [DESCRIPTION]: "特征描述",
+  [PROTOCOLTYPE]: "协议类型",
+  [THREATLEVEL]: "威胁等级"
 }
 
 
@@ -89,14 +89,14 @@ class WrappedForm extends React.Component<any, any> {
             delete _values[i]
           })
 
-          _values[RULE_DATAINDEX] = rule
-          _values[RULE_DESCRIPTION] = _values[RULE_DESCRIPTION] || ""
+          _values[RULE] = rule
+          _values[RULE] = _values[RULE] || ""
 
           if (this.props.isCreate == false) {
             let values_ = {
               ..._values,
               protocolType: this.props.protocolType,
-              id: this.props.id[0]
+              id: this.props.defaultValue.id
             }
             onSubmit && onSubmit(values_)
 
@@ -112,14 +112,14 @@ class WrappedForm extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    this.setRuleItems(this.props[RULE_PROTOCOLTYPE_DATAINDEX] || this.props.protocolTypes[0])
+    this.setRuleItems(this.props[PROTOCOLTYPE] || this.props.protocolTypes[0])
   }
 
   componentWillReceiveProps(newProps) {
     const { isCreate = true, form } = this.props;
-    const isChangeProtocol = newProps.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX) !== form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX)
+    const isChangeProtocol = newProps.form.getFieldValue(PROTOCOLTYPE) !== form.getFieldValue(PROTOCOLTYPE)
     if (isCreate && isChangeProtocol) {
-      this.setRuleItems(newProps.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX))
+      this.setRuleItems(newProps.form.getFieldValue(PROTOCOLTYPE))
     }
   }
 
@@ -137,8 +137,8 @@ class WrappedForm extends React.Component<any, any> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         try {
-          const activeProtocolType = this.props.form.getFieldValue(RULE_PROTOCOLTYPE_DATAINDEX) ||
-            this.props[RULE_PROTOCOLTYPE_DATAINDEX];
+          const activeProtocolType = this.props.form.getFieldValue(PROTOCOLTYPE) ||
+            this.props[PROTOCOLTYPE];
           ruleItemCheckConfig && ruleItemCheckConfig[activeProtocolType]({
             dataIndex,
             setCheckStatus: this.setCheckerStatus,
@@ -170,6 +170,14 @@ class WrappedForm extends React.Component<any, any> {
       checkerStatus: _checkerStatus
     })
   }
+  handleSelectChange = (value) => {
+    const { threatTypes } = this.props;
+    const a = threatTypes.filter((i) => i.value == value);
+    this.props.form.setFieldsValue({
+      threatLevel: a[0].threatLevel,
+    });
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = {}, isCreate = true } = this.props;
@@ -187,11 +195,11 @@ class WrappedForm extends React.Component<any, any> {
           ...commonProps,
           hasFeedback: false,
           label: <span className={lblClasses}>
-            {tools.getKeyText(RULE_PROTOCOLTYPE_DATAINDEX, textConfig)}
+            {tools.getKeyText(PROTOCOLTYPE, textConfig)}
           </span>
         },
         filed: {
-          name: RULE_PROTOCOLTYPE_DATAINDEX,
+          name: PROTOCOLTYPE,
           initialValue: protocolTypes[0] || ""
         },
         component: (
@@ -216,14 +224,15 @@ class WrappedForm extends React.Component<any, any> {
         props: {
           ...commonProps,
           hasFeedback: false,
-          label: <span className={lblClasses}>{tools.getKeyText(RULE_THREAT_TYPE_DATAINDEX, textConfig)}</span>
+          label: <span className={lblClasses}>{tools.getKeyText(THREATTYPE, textConfig)}</span>
         },
         filed: {
-          name: RULE_THREAT_TYPE_DATAINDEX,
-          initialValue: defaultValue[RULE_THREAT_TYPE_DATAINDEX] || ((threatTypes[0] || {}).value)
+          name: THREATTYPE,
+          initialValue: defaultValue[THREATTYPE] || ((threatTypes[0] || {}).value)
         },
         component: (
           <Select
+            onChange={this.handleSelectChange}
             disabled={loading}
             style={{ width: "140px" }}>
             {threatTypes.map((i, index) => (
@@ -242,11 +251,11 @@ class WrappedForm extends React.Component<any, any> {
             required: index === 0,
             validateStatus: (checkerStatus[r] || {}).status,
             help: (checkerStatus[r] || {}).help,
-            label: index === 0 ? <span className={lblClasses}>{tools.getKeyText(RULE_DATAINDEX, textConfig)}</span> : " "
+            label: index === 0 ? <span className={lblClasses}>{tools.getKeyText(RULE, textConfig)}</span> : " "
           },
           filed: {
             name: r,
-            initialValue: (defaultValue[RULE_DATAINDEX] || {})[r],
+            initialValue: (defaultValue[RULE] || {})[r],
             // rules: [
             //   {
             //     required: true, message: "不能为空"
@@ -267,11 +276,11 @@ class WrappedForm extends React.Component<any, any> {
           ...commonProps,
           required: true,
           hasFeedBack: false,
-          label: <span className={lblClasses}>{tools.getKeyText(RULE_DESCRIPTION, textConfig)}</span>
+          label: <span className={lblClasses}>{tools.getKeyText(DESCRIPTION, textConfig)}</span>
         },
         filed: {
-          name: RULE_DESCRIPTION,
-          initialValue: defaultValue[RULE_DESCRIPTION],
+          name: DESCRIPTION,
+          initialValue: defaultValue[DESCRIPTION],
           rules: [
             {
               required: true, message: "不能为空"
@@ -280,6 +289,26 @@ class WrappedForm extends React.Component<any, any> {
         },
         component: (
           <Input disabled={loading} />
+        )
+      },
+      {
+        props: {
+          ...commonProps,
+          required: true,
+          hasFeedBack: false,
+          label: <span className={lblClasses}>{tools.getKeyText(THREATLEVEL, textConfig)}</span>
+        },
+        filed: {
+          name: THREATLEVEL,
+          initialValue: defaultValue[THREATLEVEL] || ((threatTypes[0] || {}).threatLevel),
+          rules: [
+            {
+              required: true, message: "不能为空"
+            }
+          ]
+        },
+        component: (
+          <Input disabled={true} />
         )
       }
     ]

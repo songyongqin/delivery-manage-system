@@ -42,7 +42,6 @@ const getRenderer = ({ handle, con }) => ({
     <Popconfirm title="删除该类型，该类型对应的特征也应一并删除，请确认是否删除？"
       placement="topLeft"
       getPopupContainer={_ => {
-        console.info(con)
         return document.body
       }}
       onConfirm={_ => handle && handle["delete"] && handle["delete"](records)}>

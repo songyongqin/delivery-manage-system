@@ -7,7 +7,7 @@ import { get } from 'utils'
 import { If } from 'components/ControlStatements'
 import extraConnect from 'domainUtils/extraConnect'
 import { SIMPLEFEATURECOUNT, SNORTFEATURECOUNT, SUPPORTPROTOCOLCOUNT } from './constants'
-import { SYS_CONFIG_STRATEGY_SETTING } from 'constants/model'
+import { SYS_CONFIG_STRATEGY_SETTING, SYS_CONFIG_STRATEGY_THREAT_NAME } from 'constants/model'
 import ThreatName from './components/ThreatName'
 import WithAnimateRender from 'components/WithAnimateRender'
 const styles = require('./style.less')
@@ -37,6 +37,14 @@ const dataItems = [
   },
   dispatch => {
     return {
+      saveThreatNameList: payload => dispatch({
+        type: `${SYS_CONFIG_STRATEGY_THREAT_NAME}/saveThreatNameList`,
+        payload
+      }),
+      fetchThreatType: payload => dispatch({
+        type: `${SYS_CONFIG_STRATEGY_THREAT_NAME}/fetch`,
+        payload
+      }),
       fetchDate: payload => dispatch({
         type: `${SYS_CONFIG_STRATEGY_SETTING}/fetchDate`,
         payload
@@ -59,6 +67,10 @@ export default class Strategy extends React.Component<any, any>{
       this.setState({
         data: { ...res }
       })
+    }
+    )
+    this.props.fetchThreatType({}).then(res => {
+      this.props.saveThreatNameList(res.data)
     }
     )
   }

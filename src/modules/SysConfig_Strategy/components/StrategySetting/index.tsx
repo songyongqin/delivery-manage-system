@@ -76,9 +76,10 @@ export default class StrategySetting extends React.Component<any, any>{
   }
   onSwitchClick = (payload) => {
     this.props.put(payload).then(_ => {
-      Message.success("修改成功"); this.setState({
-        lastReqTime: new Date().getTime()
-      })
+      Message.success("修改成功");
+    })
+    this.setState({
+      lastReqTime: new Date().getTime()
     })
   }
   onShowClick = (records) => {
@@ -243,7 +244,7 @@ export default class StrategySetting extends React.Component<any, any>{
             </div>
           }
           destroyOnClose={true}
-          closable={!this.state.putLoading}
+          closable={!this.props.postLoading}
           footer={null}
           onCancel={_ => this.props.setModalVisible("edit", false)}
           visible={this.props.modalVisible["edit"]}>
@@ -252,10 +253,11 @@ export default class StrategySetting extends React.Component<any, any>{
             threatTypes={this.props.threatNameList.map(i => {
               return {
                 text: i.type,
-                value: i.key
+                value: i.key,
+                threatLevel: i.threatLevel
               }
             })}
-            loading={this.state.putLoading}
+            loading={this.props.postLoading}
             defaultValue={this.state.activeRule}
             protocolType={protocolType}
             id={[...new Set(this.state.data.map(i => i["id"]))]}
@@ -266,7 +268,7 @@ export default class StrategySetting extends React.Component<any, any>{
         <Modal
           title={
             <div>
-              <Icon type="plus"></Icon>&nbsp;添加新的规则
+              <Icon type="plus"></Icon>&nbsp;新增特征
             </div>
           }
           destroyOnClose={true}
@@ -279,29 +281,16 @@ export default class StrategySetting extends React.Component<any, any>{
             onSubmit={this.onSubmit}
             create={true}
             threatTypes={this.props.threatNameList.map(i => {
-
               return {
                 text: i.type,
-                value: i.id
+                value: i.key,
+                threatLevel: i.threatLevel
               }
             })}
             // protocolTypes={[...new Set(this.state.data.map(i => i[PROTOCOLTYPE]))]}>
             protocolTypes={protocolTypeList}>
           </RuleForm>
         </Modal>
-        <div style={{
-          position: "fixed",
-          top: "60px",
-          right: this.state.expanded ? 0 : "-400px",
-          transitionProperty: "right",
-          transitionDuration: "0.3s",
-          bottom: 0,
-          zIndex: 50,
-          background: "white",
-          width: "400px"
-        }}>
-          {/* <ThreatName onExpandChange={expanded => this.setState({ expanded })}></ThreatName> */}
-        </div>
       </div>
     )
   }
