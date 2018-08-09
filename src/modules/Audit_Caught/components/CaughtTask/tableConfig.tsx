@@ -49,7 +49,7 @@ export const getColumns = ({ initialFilters, taskName, putTask, delTask }) => {
       },
       [STATUS]: (value) => value == "Waiting" ? "等待中" : value == "Catching" ? "抓包中" : value == "Cancel" ? "已取消" : null,
       [STARTTIME]: (value) => <TimeLabel value={value}></TimeLabel>,
-      [OPERATE]: (value, record) => <Button type="primary" size="small" onClick={() => taskName == record.taskName ? delTask(record.taskName) : putTask(record.taskName)}>{taskName == record.taskName ? "删除任务" : "取消任务"}</Button>,
+      [OPERATE]: (value, record) => <Button type="primary" size="small" onClick={() => record.status == "Cancel" || taskName == record.taskName ? delTask(record.taskName) : putTask(record.taskName)}>{record.status == "Cancel" || taskName == record.taskName ? "删除任务" : "取消任务"}</Button>,
     }
   })
 }
