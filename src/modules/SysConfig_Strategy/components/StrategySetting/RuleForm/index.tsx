@@ -13,7 +13,7 @@ import {
 } from '../../../constants'
 import * as tools from 'utils'
 import ruleItemCheckConfig from './itemCheckerConfig'
-
+const Option = Select.Option;
 const textConfig = {
   [THREATTYPE]: "威胁类型",
   [RULE]: "规则",
@@ -59,6 +59,8 @@ class WrappedForm extends React.Component<any, any> {
         //   status:"error"
         // }
       }
+      ,
+      attacker: "sourceIpPort"
     }
   }
 
@@ -73,6 +75,7 @@ class WrappedForm extends React.Component<any, any> {
     Promise.all(ruleItems.map(i => this.getRuleCheckConfirm(i)())).then(result => {
       setTimeout(() => {
         form.validateFieldsAndScroll((err, values) => {
+
           if (err) {
             return
           }
@@ -83,13 +86,12 @@ class WrappedForm extends React.Component<any, any> {
 
           let _values = { ...values },
             rule = {}
-
           ruleItems.forEach(i => {
             rule[i] = (values[i] || "")
             delete _values[i]
           })
-
-          _values[RULE] = rule
+          const _rule = { ...rule, attacker: ruleItems.length == 2 ? this.state.attacker : "" }
+          _values[RULE] = _rule
           _values[RULE] = _values[RULE] || ""
 
           if (this.props.isCreate == false) {
@@ -177,13 +179,29 @@ class WrappedForm extends React.Component<any, any> {
       threatLevel: a[0].threatLevel,
     });
   }
-
+  onChangeAttacker = (value) => {
+    this.setState({
+      attacker: value
+    })
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = {}, isCreate = true } = this.props;
     const protocolTypes = this.props.protocolTypes || [];
     const threatTypes = this.props.threatTypes || [];
-    const { ruleItems, checkerStatus } = this.state;
+    const { ruleItems, checkerStatus, attacker } = this.state;
+
+    const sourceAfter =
+      // getFieldDecorator('attacker', {
+      //   initialValue: 'sourceIpPort',
+      // })
+      (
+        <Select defaultValue="sourceIpPort" style={{ width: 100 }} onChange={this.onChangeAttacker}>
+          <Option value="sourceIpPort">攻击者</Option>
+          <Option value="targetIpPort">受攻击者</Option>
+        </Select>
+      );
+    const targetAfter = attacker == "sourceIpPort" ? "受攻击者" : "攻击者";
     const lblClasses = classnames({
       // [styles["lbl-dark"]]: isDark
     });
@@ -264,6 +282,7 @@ class WrappedForm extends React.Component<any, any> {
           },
           component: (
             <Input
+              addonAfter={ruleItems.length == 2 ? r == 'sourceIpPort' ? sourceAfter : targetAfter : null}
               disabled={loading}
               key={`${r}-${index}`}
               onChange={this.getRuleCheckConfirm(r)}
