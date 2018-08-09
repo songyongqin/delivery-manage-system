@@ -1,13 +1,13 @@
 import * as React from 'react'
 import StrategySetting from './components/StrategySetting'
 import SnortFeature from './components/SnortFeature'
-import { Tabs, Row, Col, Button } from 'antd'
+import { Tabs, Row, Col, Button, Drawer, Icon } from 'antd'
 import { getAppConfig } from 'domain/app'
 import { get } from 'utils'
 import { If } from 'components/ControlStatements'
 import extraConnect from 'domainUtils/extraConnect'
 import { SIMPLEFEATURECOUNT, SNORTFEATURECOUNT, SUPPORTPROTOCOLCOUNT } from './constants'
-import { SYS_CONFIG_STRATEGY_SETTING } from 'constants/model'
+import { SYS_CONFIG_STRATEGY_SETTING, SYS_CONFIG_STRATEGY_THREAT_NAME } from 'constants/model'
 import ThreatName from './components/ThreatName'
 import WithAnimateRender from 'components/WithAnimateRender'
 const styles = require('./style.less')
@@ -37,6 +37,14 @@ const dataItems = [
   },
   dispatch => {
     return {
+      saveThreatNameList: payload => dispatch({
+        type: `${SYS_CONFIG_STRATEGY_THREAT_NAME}/saveThreatNameList`,
+        payload
+      }),
+      fetchThreatType: payload => dispatch({
+        type: `${SYS_CONFIG_STRATEGY_THREAT_NAME}/fetch`,
+        payload
+      }),
       fetchDate: payload => dispatch({
         type: `${SYS_CONFIG_STRATEGY_SETTING}/fetchDate`,
         payload
@@ -51,6 +59,7 @@ export default class Strategy extends React.Component<any, any>{
     this.state = {
       data: {},
       expanded: false,
+      visible: false
     }
   }
   componentDidMount() {
@@ -60,7 +69,22 @@ export default class Strategy extends React.Component<any, any>{
       })
     }
     )
+    this.props.fetchThreatType({}).then(res => {
+      this.props.saveThreatNameList(res.data)
+    }
+    )
   }
+  showDrawer = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
   render() {
     const { data } = this.state;
     const strategyConfig = get(getAppConfig(), ['strategyConfig'], {})
@@ -103,7 +127,7 @@ export default class Strategy extends React.Component<any, any>{
                 <Button
                   // disabled={putLoading || applyLoading}
                   type="primary"
-                  onClick={_ => this.setState({ expanded: !this.state.expanded })}
+                  onClick={this.showDrawer}
                   style={{ marginLeft: "15px" }}
                   icon="setting">
                   威胁类型配置
@@ -114,19 +138,30 @@ export default class Strategy extends React.Component<any, any>{
               {tabs}
             </Tabs>,
 
-            <div key="div_key"
-              style={{
-                position: "fixed",
-                top: "60px",
-                right: this.state.expanded ? 0 : "-400px",
-                transitionProperty: "right",
-                transitionDuration: "0.3s",
-                bottom: 0,
-                zIndex: 50,
-                background: "white",
-                width: "400px"
-              }}>
-              <ThreatName onExpandChange={expanded => this.setState({ expanded })}></ThreatName>
+            // <div key="div_key"
+            //   style={{
+            //     position: "fixed",
+            //     top: "60px",
+            //     right: this.state.expanded ? 0 : "-400px",
+            //     transitionProperty: "right",
+            //     transitionDuration: "0.3s",
+            //     bottom: 0,
+            //     zIndex: 50,
+            //     background: "white",
+            //     width: "400px"
+            //   }}>
+            //   <ThreatName onExpandChange={expanded => this.setState({ expanded })}></ThreatName>
+            // </div>
+            <div key="div_Drawer_key">
+              <Drawer
+                width={500}
+                title={<span> <Icon type="setting"></Icon>&nbsp;威胁等级配置</span>}
+                placement="right"
+                onClose={this.onClose}
+                visible={this.state.visible}
+              >
+                <ThreatName></ThreatName>
+              </Drawer>
             </div>
           ])
         }

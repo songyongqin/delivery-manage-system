@@ -20,14 +20,21 @@ export default class CommonItem extends React.Component<any, any>{
       lastReqTime: 0,
     }
   }
-
+  setinitialFilters = (payload) => {
+    const { initialFilters } = this.state;
+    this.setState({ initialFilters: { ...initialFilters, ...payload } })
+  }
   render() {
     return (
       <div>
         <TableWithRemote
           key={`${this.state.lastReqTime}-table`}
+          onChange={payload => this.setinitialFilters(payload)}
           initialFilters={this.state.initialFilters}
-          getColumns={getColumns}
+          getColumns={options => getColumns({
+            ...options,
+            initialFilters: this.state.initialFilters
+          })}
           remoteNamespace={AUDIT_CAUGHTRECORD_NAMESPACE}>
           ></TableWithRemote>
 

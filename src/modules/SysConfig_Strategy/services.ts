@@ -27,22 +27,22 @@ export const postRule = commonRequestCreator.post(httpApi.SYS_CONFIG_STRATEGY)
 /*
   threatName
 */
-const _fetchThreatName = commonRequestCreator.get(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)
+export const fetchThreatName = commonRequestCreator.get(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)
 
-export const fetchThreatName = _ => {
-  return _fetchThreatName().then(res => {
-    if (isSuccess(res)) {
-      return {
-        ...res,
-        payload: {
-          total: 0,
-          data: res.payload.data
-        }
-      }
-    }
-    return res
-  })
-}
+// export const fetchThreatName = _ => {
+//   return _fetchThreatName().then(res => {
+//     if (isSuccess(res)) {
+//       return {
+//         ...res,
+//         payload: {
+//           total: 0,
+//           data: res.payload.data
+//         }
+//       }
+//     }
+//     return res
+//   })
+// }
 
 
 export const putThreatName = commonRequestCreator.put(httpApi.SYS_CONFIG_STRATEGY_THREAT_NAME)

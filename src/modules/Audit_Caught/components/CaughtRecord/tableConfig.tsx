@@ -16,7 +16,7 @@ export const
   DOWNLOAD = "download"
 
 export const dataIndexes = [
-  // KEY,
+  KEY,
   TASKNAME,
   STARTTIME,
   ENDTIME,
@@ -27,7 +27,7 @@ export const dataIndexes = [
   DOWNLOAD
 ]
 export const textConfig = {
-  // [KEY]: "序号",
+  [KEY]: "序号",
   [TASKNAME]: "任务名称",
   [STARTTIME]: "抓包开始时间",
   [ENDTIME]: "抓包结束时间",
@@ -39,11 +39,16 @@ export const textConfig = {
 }
 
 
-export const getColumns = ({ }) => {
+export const getColumns = ({ initialFilters }) => {
+
   return columnsCreator({
     dataIndexes: dataIndexes,
     titleConfig: textConfig,
     renderer: {
+      [KEY]: key => {
+        let key_ = parseInt(key.split("-")[0]);
+        return ++key_ + initialFilters.limit * (initialFilters.page - 1)
+      },
       [STARTTIME]: (value) => <TimeLabel value={value}></TimeLabel>,
       [ENDTIME]: (value) => <TimeLabel value={value}></TimeLabel>,
       [DOWNLOAD]: (value, record) => <div><a download href={value}>下载</a></div>

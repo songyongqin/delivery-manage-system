@@ -143,8 +143,8 @@ class TableWithRemote extends React.Component<any, any>{
       }) : [],
       dataSource: data.map((i, index) => {
         return {
-          ...i,
-          key: getKey ? getKey(i, index) : `${index}-${lastReqTime}-item`
+          key: getKey ? getKey(i, index) : `${index}-${lastReqTime}-item`,
+          ...i
         }
       }),
       rowSelection,

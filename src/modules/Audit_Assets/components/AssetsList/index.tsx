@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Row, Col, Modal, message } from 'antd'
+import { Button, Row, Col, Modal, message, Icon, Tooltip } from 'antd'
 import TableWithRemote from 'domainComponents/TableWithRemote'
 import { getColumns } from './tableConfig'
 import { AUDIT_ASSETS_NAMESPACE } from 'constants/model'
@@ -20,6 +20,7 @@ import {
 import extraConnect from 'domainUtils/extraConnect'
 import WithConfig from 'domainComponents/WithConfig'
 import path from 'constants/path'
+import { spawn } from 'child_process';
 
 const dataItems = [
   {
@@ -199,7 +200,12 @@ export default class CommonItem extends React.Component<any, any>{
             ></TableWithRemote>
           <Modal
             // destroyOnClose={true}
-            title="资产扫描配置"
+            title={<Tooltip placement="right"
+              title={<span>当该功能开启时<br />
+                1、改变IP范围会立刻执行该扫描任务<br />
+                2、每个扫描IP范围一天最多扫描一次</span>}>
+              <span>资产扫描配置 <Icon type="question-circle-o" /></span>
+            </Tooltip>}
             visible={this.state.configVisible}
             onCancel={this.handleCancel}
             onOk={this.handleOk}
