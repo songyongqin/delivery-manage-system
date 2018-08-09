@@ -70,6 +70,7 @@ let getOption = ({ data ,theme, titles }) =>  ({
       radius: ['40%','60%'],
       center: ['40%', '50%'],
       data: data,
+      minAngle:5,
       label: {
         normal: {
           show: false,

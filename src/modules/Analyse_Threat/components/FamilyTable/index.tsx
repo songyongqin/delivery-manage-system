@@ -7,8 +7,8 @@ import WithTable from 'components/WithTable'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import TimeTag from 'components/TimeTag'
 import { ANALYSE_THREAT_FAMILY_DETAIL_URL } from 'routes/config/path'
-import WithTooltip from 'components/WithTooltip'
-
+import WithPopover from 'components/WithPopover'
+import OverflowTextWrapper from 'components/OverflowTextWrapper'
 
 interface props{
   tableData: Array<object>
@@ -41,7 +41,8 @@ class FamilyTable extends React.Component<props, any>{
       },
       { title:'威胁家族介绍', 
         dataIndex:'threatFamilyIntroduce',
-        render: text => <WithTooltip text={ text } style={{ width:300 }} />
+        render: text => <WithPopover text={ text } style={{ width:300 }} />
+        // render: text => <OverflowTextWrapper content={ text } >{text}</OverflowTextWrapper>
       },
       { title:'威胁事件次数',   
         dataIndex:'threatEventCount', 
