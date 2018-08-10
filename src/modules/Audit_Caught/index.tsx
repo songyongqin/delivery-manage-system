@@ -50,7 +50,9 @@ class Page extends React.Component<any, any> {
       lastReqTime_caughtRecord: 0,
       lastReqTime_caughtTask: 0,
       visible: false,
-      key: "caughtRecord"
+      key: "caughtRecord",
+      defaultActiveKey: "caughtRecord",
+      divKey: 0
     }
   }
   showModal = () => {
@@ -62,6 +64,8 @@ class Page extends React.Component<any, any> {
       message.success('提交成功！')
       this.setState({
         visible: false,
+        defaultActiveKey: "caughtTask",
+        divKey: new Date().getTime()
       })
       this.callback(key)
     }
@@ -87,14 +91,14 @@ class Page extends React.Component<any, any> {
       })
   }
   render() {
-    const { initialFilters, lastReqTime } = this.state;
+    const { initialFilters, lastReqTime, defaultActiveKey, divKey } = this.state;
 
     return (
-      <div>
+      <div key={divKey}>
         <div style={{ position: "relative" }}>
           <Button type="primary" style={{ position: "absolute", right: "0", zIndex: "999" }} onClick={this.showModal}>新建任务</Button>
         </div>
-        <Tabs onChange={this.callback}>
+        <Tabs onChange={this.callback} defaultActiveKey={defaultActiveKey}>
           <Tabs.TabPane tab="抓包记录" key="caughtRecord">
             <CaughtRecord key={`${this.state.lastReqTime_caughtRecord}-caughtRecord`}></CaughtRecord>
           </Tabs.TabPane>

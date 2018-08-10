@@ -35,10 +35,12 @@ class SetInput extends React.Component {
   }
 
   handleUnitsChange = (units) => {
+
     if (!('value' in this.props)) {
       this.setState({ units });
     }
     this.triggerChange({ units });
+
   }
 
   triggerChange = (changedValue) => {
