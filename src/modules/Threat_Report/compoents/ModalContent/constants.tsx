@@ -100,6 +100,10 @@ export const threatIntelligenceConfig = [
     render: ( text, record, index ) => <div>{index+1}</div>
    },
    {  
+    title:'情报类型',
+    dataIndex: 'intelligenceType'
+   },
+   {  
     title:'威胁类型',
     dataIndex: 'threatType'
    },
