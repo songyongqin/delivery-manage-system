@@ -113,7 +113,11 @@ class WrappedForm extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    const { defaultValue } = this.props;
     this.setRuleItems(this.props[PROTOCOLTYPE] || this.props.protocolTypes[0])
+    this.setState({
+      attacker: defaultValue && defaultValue[RULE].attacker && defaultValue[RULE].attacker != "" ? defaultValue[RULE].attacker : this.state.attacker
+    })
   }
 
   componentWillReceiveProps(newProps) {
@@ -195,7 +199,7 @@ class WrappedForm extends React.Component<any, any> {
       //   initialValue: 'sourceIpPort',
       // })
       (
-        <Select defaultValue="sourceIpPort" style={{ width: 100 }} onChange={this.onChangeAttacker}>
+        <Select defaultValue={attacker} style={{ width: 100 }} onChange={this.onChangeAttacker}>
           <Option value="sourceIpPort">攻击者</Option>
           <Option value="targetIpPort">受攻击者</Option>
         </Select>
