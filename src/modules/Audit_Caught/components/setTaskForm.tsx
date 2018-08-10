@@ -5,6 +5,7 @@ import { AUDIT_CAUGHTTASK_NAMESPACE } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
 import SetConfig from './setConfig'
 import moment from 'moment'
+import { ipReg, portReg } from 'utils/tools'
 const FormItem = Form.Item;
 const Option = Select.Option;
 const TextArea = Input.TextArea
@@ -26,7 +27,7 @@ class configForm extends React.Component<any, any> {
     switch_: true,
     switchChange: false,
     RadioValue: "time",
-    value: 0
+    value: 0,
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -70,32 +71,32 @@ class configForm extends React.Component<any, any> {
 
   checkSet = (rule, value, callback) => {
 
-    if (value.number > 0 && value.number <= 10) {
+    if (value.number > 0 && (value.units == "ss" || value.units == "M")) {
       callback();
       return;
     }
-    callback('设置范围为1-10');
+    if ((value.units == "mm" || value.units == "G")) {
+
+      if (value.number >= 1 && value.number <= 10) {
+        callback();
+      }
+      callback('设置范围为1-10');
+    }
+    callback('设置范围大于0');
   }
 
   disabledDate = (current) => {
     // Can not select days before today and today
     return current && current < moment().startOf('day');
   }
+
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { defaultConfig } = this.props;
-    const { RadioValue } = this.state
-    const sTime = getArray(24);
-    const marks = {
-      1: '1秒',
-      10: {
-        style: {
-          color: '#f50',
-        },
-        label: <strong>10分钟</strong>,
-      },
-    };
+    const { RadioValue, units } = this.state
 
+    const sTime = getArray(24);
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -127,7 +128,12 @@ class configForm extends React.Component<any, any> {
           {getFieldDecorator('ip', {
             rules: [{
               required: true, message: '抓包IP不能为空'
-            }]
+            },
+            {
+              pattern: ipReg,
+              message: "请输入正确的抓包IP"
+            }
+            ]
           })(
             <Input></Input>
           )}
@@ -169,16 +175,6 @@ class configForm extends React.Component<any, any> {
             rules: [{ validator: this.checkSet }],
           })(<SetConfig setValue={RadioValue} />)}
         </FormItem>
-        {/* <FormItem
-          {...formItemLayout}
-          label={this.state.RadioValue == "time" ? "时长" : "大小"}
-        >
-          {getFieldDecorator('define')(
-
-            <Slider marks={marks} min={1} max={10} tipFormatter={this.formatter} onChange={this.handleChange} value={this.state.value} />
-
-          )}
-        </FormItem> */}
         <Form.Item>
           <Button loading={this.props.loading} style={{ float: "right" }} type="primary" htmlType="submit" onClick={this.handleSubmit}>提交</Button>
         </Form.Item>
