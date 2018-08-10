@@ -64,7 +64,6 @@ class WrappedForm extends React.Component<any, any> {
     }
   }
 
-
   handleSubmit = (e) => {
     e.preventDefault();
     const { onSubmit, form } = this.props;
