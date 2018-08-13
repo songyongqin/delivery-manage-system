@@ -115,9 +115,9 @@ class Page extends React.Component<any, any> {
     this.getFlow({timestampRange}) 
   }
   componentDidMount(){
-
-    this.getCount({});
-    this.getFlow({});
+    const { timestampRange } = this.state.filters
+    this.getCount({timestampRange});
+    this.getFlow({timestampRange});
     this.getEvent() 
 
   }
