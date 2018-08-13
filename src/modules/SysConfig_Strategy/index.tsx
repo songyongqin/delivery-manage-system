@@ -138,20 +138,6 @@ export default class Strategy extends React.Component<any, any>{
               {tabs}
             </Tabs>,
 
-            // <div key="div_key"
-            //   style={{
-            //     position: "fixed",
-            //     top: "60px",
-            //     right: this.state.expanded ? 0 : "-400px",
-            //     transitionProperty: "right",
-            //     transitionDuration: "0.3s",
-            //     bottom: 0,
-            //     zIndex: 50,
-            //     background: "white",
-            //     width: "400px"
-            //   }}>
-            //   <ThreatName onExpandChange={expanded => this.setState({ expanded })}></ThreatName>
-            // </div>
             <div key="div_Drawer_key">
               <Drawer
                 width={500}

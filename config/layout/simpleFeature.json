@@ -6,55 +6,43 @@
       "conditionType": "input"
     },
     {
-      "dataIndex": "threatType",
-      "title": "威胁类型",
-      "conditionType": "selector",
-      "filters": [
-        {
-          "text": "入侵",
-          "value": "intrusion"
-        },
-        {
-          "text": "安装",
-          "value": "install"
-        },
-        {
-          "text": "控制",
-          "value": "control"
-        },
-        {
-          "text": "意图",
-          "value": "intention"
-        }
-      ]
-    },
-    {
       "dataIndex": "protocolType",
       "title": "协议类型",
       "conditionType": "selector",
       "filters": [
         {
-          "text": "入侵",
-          "value": "intrusion"
+          "text": "HTTP",
+          "value": "HTTP"
         },
         {
-          "text": "安装",
-          "value": "install"
+          "text": "TCP",
+          "value": "TCP"
         },
         {
-          "text": "控制",
-          "value": "control"
+          "text": "IP",
+          "value": "IP"
         },
         {
-          "text": "意图",
-          "value": "intention"
+          "text": "DNS",
+          "value": "DNS"
+        },
+        {
+          "text": "SMTP",
+          "value": "SMTP"
+        },
+        {
+          "text": "FTP",
+          "value": "FTP"
+        },
+        {
+          "text": "SSH",
+          "value": "SSH"
+        },
+        {
+          "text": "SMB",
+          "value": "SMB"
         }
       ]
-    },
-    {
-      "dataIndex": "rule",
-      "title": "规则",
-      "conditionType": "input"
     },
     {
       "dataIndex": "threatLevel",
@@ -62,20 +50,16 @@
       "conditionType": "selector",
       "filters": [
         {
-          "text": "入侵",
-          "value": "intrusion"
+          "text": "高危",
+          "value": "high"
         },
         {
-          "text": "安装",
-          "value": "install"
+          "text": "中危",
+          "value": "middle"
         },
         {
-          "text": "控制",
-          "value": "control"
-        },
-        {
-          "text": "意图",
-          "value": "intention"
+          "text": "低危",
+          "value": "low"
         }
       ]
     },

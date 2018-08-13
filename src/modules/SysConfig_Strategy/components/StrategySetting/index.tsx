@@ -171,8 +171,18 @@ export default class StrategySetting extends React.Component<any, any>{
 
     const { selectedRows, data, protocolType, initialFilters } = this.state
 
-    const { putLoading, applyLoading } = this.props
-
+    const { putLoading, applyLoading, threatNameList } = this.props
+    const filters = Array();
+    const threat = threatNameList.forEach((i, index) => {
+      filters.push({ "text": i.type, "value": i.key })
+    })
+    const threatType_list = [{
+      "dataIndex": "threatType",
+      "title": "威胁类型",
+      "conditionType": "selector",
+      "filters": filters
+    }]
+    const columns = [...this.props.config.columns, ...threatType_list]
     const title = (
       <div style={{ overflow: "hidden" }}>
         <div style={{ float: "left" }}>
@@ -230,7 +240,7 @@ export default class StrategySetting extends React.Component<any, any>{
                     edit: this.onEditClick,
                     delete: this.onDeleteClick
                   }
-                }), this.props.config.columns)
+                }), columns)
               }}
               remoteNamespace={SYS_CONFIG_STRATEGY_SETTING}>
             </TableWithRemote>
