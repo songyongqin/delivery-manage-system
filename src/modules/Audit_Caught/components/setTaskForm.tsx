@@ -84,7 +84,16 @@ class configForm extends React.Component<any, any> {
     }
     callback('设置范围大于0');
   }
-
+  checkTaskName = (rule, value, callback) => {
+    let regex = new RegExp("^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9_]|[0-9]){1,10}$");
+    let res = regex.test(value);
+    if (res) {
+      callback();
+    }
+    else {
+      callback("只包含中英文、数字、下划线");
+    }
+  }
   disabledDate = (current) => {
     // Can not select days before today and today
     return current && current < moment().startOf('day');
@@ -116,7 +125,8 @@ class configForm extends React.Component<any, any> {
           {getFieldDecorator('taskName', {
             rules: [{
               required: true, message: '任务名称不能为空'
-            }]
+            },
+            { validator: this.checkTaskName }]
           })(
             <Input></Input>
           )}
