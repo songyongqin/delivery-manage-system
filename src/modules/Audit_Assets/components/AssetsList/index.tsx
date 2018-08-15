@@ -230,6 +230,7 @@ export default class CommonItem extends React.Component<any, any>{
             <AssetsDetail activeIp={this.state.activeIp}></AssetsDetail>
           </Modal>
           <Modal
+            destroyOnClose={true}
             title="编辑资产信息"
             visible={this.state.editVisible}
             onCancel={this.handleCancel}
