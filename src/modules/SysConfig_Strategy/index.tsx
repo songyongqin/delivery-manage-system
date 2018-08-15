@@ -119,7 +119,7 @@ export default class Strategy extends React.Component<any, any>{
                 {
                   dataItems.map(i =>
                     <div key={i.value} className={styles["div-box"]}>
-                      <Icon style={{ fontSize: 32, color: '#08c' }} type={i.type} /><br />
+                      <Icon style={{ fontSize: 32, color: '#1890ff' }} type={i.type} /><br />
                       <span style={{ fontWeight: "bold", fontSize: "1.5em" }}>{data[i.value]}</span><br />
                       <span>{i.text}</span>
                     </div>

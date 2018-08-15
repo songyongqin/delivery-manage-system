@@ -27,26 +27,31 @@ const dataItems = [
     value: ASSETSCOUNT,
     text: "资产总数",
     color: "#46C83D",
+    type: "database"
   },
   {
     value: NEWASSETS,
     text: "新增资产",
     color: "orange",
+    type: "file-add"
   },
   {
     value: ATTACKEDASSETS,
     text: "受害资产",
     color: "purple",
+    type: "exception"
   },
   {
     value: PORTCOUNT,
     text: "端口总数",
     color: "#1890ff",
+    type: "api"
   },
   {
     value: LOOPHOLE,
     text: "漏洞总数",
     color: "#CD0000",
+    type: "exclamation-circle"
   }
 ]
 @extraConnect(
@@ -173,17 +178,18 @@ export default class CommonItem extends React.Component<any, any>{
         最后更新时间:&nbsp;&nbsp;{data[LASTUPDATETIME] != -1 ? <TimeLabel times={data[LASTUPDATETIME]}></TimeLabel> : "暂无更新"}
         <Button type="primary" style={{ float: "right" }} onClick={this.showConfigModal}>资产扫描配置</Button>
         <div style={{ clear: "both", marginTop: "20px" }}>
-          <Row gutter={20}>
+          <div style={{ width: "1000px", height: "150px", marginLeft: "auto", marginRight: "auto" }}>
             {
-              dataItems.map(i => <Col key={i.value} span={4} push={2}>
-                <div className={styles["div-box"]} style={{ background: i.color }}>
-                  {i.text}<br />
-                  <span style={{ fontWeight: "bold" }}>{data[i.value]}</span>
+              dataItems.map(i =>
+                <div key={i.value} className={styles["div-box"]}>
+                  <Icon style={{ fontSize: 32, color: '#1890ff' }} type={i.type} /><br />
+                  <span style={{ fontWeight: "bold", fontSize: "1.5em" }}>{data[i.value]}</span><br />
+                  <span>{i.text}</span>
                 </div>
-              </Col>
+
               )
             }
-          </Row>
+          </div>
         </div>
         <div>
           <TableWithRemote
