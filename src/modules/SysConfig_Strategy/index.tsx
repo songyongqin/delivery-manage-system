@@ -16,16 +16,19 @@ const dataItems = [
     value: SIMPLEFEATURECOUNT,
     text: "简易特征数量",
     color: "#46C83D",
+    type: "area-chart"
   },
   {
     value: SNORTFEATURECOUNT,
     text: "自定义snort特征数量",
     color: "orange",
+    type: "bar-chart"
   },
   {
     value: SUPPORTPROTOCOLCOUNT,
     text: "支持协议数量",
     color: "#1890ff",
+    type: "dot-chart"
   },
 ]
 @extraConnect(
@@ -111,18 +114,19 @@ export default class Strategy extends React.Component<any, any>{
       <div>
         {
           this.props.animateRender([
-            <div key="divkey">
-              <Row style={{ marginTop: "10px" }}>
+            <div key="divkey" style={{ textAlign: "center" }}>
+              <div style={{ width: "780px", height: "150px", marginLeft: "auto", marginRight: "auto" }}>
                 {
-                  dataItems.map(i => <Col key={i.value} span={5} offset={3}>
-                    <div className={styles["div-box"]} style={{ background: i.color }}>
-                      {i.text}<br />
-                      <span style={{ fontWeight: "bold" }}>{data[i.value]}</span>
+                  dataItems.map(i =>
+                    <div key={i.value} className={styles["div-box"]}>
+                      <Icon style={{ fontSize: 32, color: '#08c' }} type={i.type} /><br />
+                      <span style={{ fontWeight: "bold", fontSize: "1.5em" }}>{data[i.value]}</span><br />
+                      <span>{i.text}</span>
                     </div>
-                  </Col>
+
                   )
                 }
-              </Row>
+              </div>
               <div style={{ float: "right", marginTop: "10px" }}>
                 <Button
                   // disabled={putLoading || applyLoading}

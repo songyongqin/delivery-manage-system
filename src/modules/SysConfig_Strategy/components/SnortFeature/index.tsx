@@ -215,6 +215,7 @@ export default class WhiteList extends React.Component<any, any>{
           </TableWithRemote>
         </Card>
         <Modal
+          width={700}
           title={
             <div><Icon type="plus"></Icon>&nbsp;修改自定义snort特征</div>
           }
@@ -223,9 +224,10 @@ export default class WhiteList extends React.Component<any, any>{
           visible={this.props.modalVisible["edit"]}
           footer={null}
           destroyOnClose={true}>
-          <PostForm isCreate={false} onSubmit={this.onSubmit} loading={postLoading} defaultValue={activeRule}></PostForm>
+          <PostForm isCreate={false} onSubmit={this.onSubmit} loading={postLoading} defaultValue={activeRule} onCancel={_ => this.props.setModalVisible("edit", false)}></PostForm>
         </Modal>
         <Modal
+          width={700}
           title={
             <div><Icon type="plus"></Icon>&nbsp;添加自定义snort特征</div>
           }

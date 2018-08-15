@@ -159,6 +159,7 @@ class configForm extends React.Component<any, any> {
                 defaultValue: moment('00:00', 'HH:mm'),
                 // disabledMinutes: () => this.range(0, 60), 
                 disabledSeconds: () => this.range(0, 60),
+                format: 'HH:mm'
               }} format="YYYY-MM-DD HH:mm" />)}
         </FormItem>
 
