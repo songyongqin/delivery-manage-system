@@ -17,6 +17,12 @@ class Page extends React.Component<any, any> {
       // activeKey: "net-basic"
     }
   }
+  change = () => {
+
+    this.setState({
+      lastReqTime: new Date().getTime()
+    })
+  }
   render() {
     const { initialFilters, lastReqTime } = this.state;
 
@@ -24,10 +30,10 @@ class Page extends React.Component<any, any> {
       <div>
         <Tabs>
           <Tabs.TabPane tab="资产列表" key="assetsList">
-            <AssetsList></AssetsList>
+            <AssetsList changeRecord={this.change}></AssetsList>
           </Tabs.TabPane>
           <Tabs.TabPane tab="资产扫描记录" key="assetsScanRecord">
-            <ScanRecord></ScanRecord>
+            <ScanRecord key={lastReqTime}></ScanRecord>
           </Tabs.TabPane>
         </Tabs>
 
