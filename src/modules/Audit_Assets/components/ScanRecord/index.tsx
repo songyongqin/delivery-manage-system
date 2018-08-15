@@ -44,6 +44,7 @@ export default class LastEvent extends React.PureComponent<any, any>{
 
         <h3 style={{ marginTop: "20px" }}>历史扫描记录</h3>
         <TableWithRemote
+          pagination={false}
           getColumns={(option) => getColumns_record({
             ...option,
             showDetailModal: this.showDetailModal,

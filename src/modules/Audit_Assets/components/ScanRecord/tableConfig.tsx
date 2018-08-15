@@ -20,11 +20,11 @@ const ISSCANNING = "isScanning",
   OPERATE = "operate"
 
 const dataIndexes = [
-  STARTTIME,
+  STATE,
   SCANCYCLE,
   SCANIPRANGE,
   CHECKPORT,
-  STATE
+  STARTTIME,
 ]
 
 const locale = {

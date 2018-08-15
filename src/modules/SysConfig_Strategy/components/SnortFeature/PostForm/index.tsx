@@ -110,7 +110,7 @@ class WrappedForm extends React.Component<any, any> {
           initialValue: isCreate ? null : defaultValue[SNORT_DATAINDEX]
         },
         component: (
-          <TextArea autosize={{ minRows: 8, maxRows: 12 }} disabled={loading}
+          <TextArea autosize={{ minRows: 12, maxRows: 24 }} disabled={loading}
             placeholder="输入自定义snort特征内容："
           />
         )
