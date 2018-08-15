@@ -228,7 +228,7 @@
         },
         {
           "value":"Intention",
-          "text":"目的"
+          "text":"意图"
         }
       ]
     },
@@ -236,15 +236,15 @@
       "dataIndex": "level",
       "filters": [
         {
-          "value": "high",
+          "value": "HighRisk",
           "text": "高危"
         },
         {
-          "value": "middle",
+          "value": "IntermediateRisk",
           "text": "中危"
         },
         {
-          "value":"low",
+          "value":"LowRisk",
           "text":"低危"
         }
       ]

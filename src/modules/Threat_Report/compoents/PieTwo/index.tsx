@@ -25,7 +25,7 @@ const PieTwo = ({ data, data2, title, onClick, total, unit  }) => {
 
 export default PieTwo
 
-
+const LONG = 15
 
 const getNum = (name, data) => {
   let arr = data.filter(i=> i.name===name ) || data
@@ -38,8 +38,8 @@ const wrapStr = str => {
     return str
   }
   else {
-    let isLong = str.length >5
-    let strs = isLong ? str.slice(0, 5) + '...' : str
+    let isLong = str.length >LONG
+    let strs = isLong ? str.slice(0, LONG) + '...' : str
     return strs
   }
 }

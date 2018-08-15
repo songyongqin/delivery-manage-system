@@ -141,7 +141,10 @@ class ModalContent extends React.Component<props, state>{
     let payload = { ...this.state.reqArg, ...obj }
     let type = this.state.init.fetch
     this.props.dispatch({ type, payload  })
-    .then(res => this.setState(res))
+    .then(res => {
+      let objs = { ...res , reqArg: payload }
+      this.setState(objs)
+    })
     .catch(err => console.error(err) )
   }
 
@@ -168,7 +171,6 @@ class ModalContent extends React.Component<props, state>{
   render(){
     const {  effects, type } = this.props
     const { init, data, total, reqArg } = this.state
-    
     return(
       <div>
         <div style={{ marginTop:25 }} >

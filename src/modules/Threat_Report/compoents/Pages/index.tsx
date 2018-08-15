@@ -1,10 +1,9 @@
 
 
 import React, { Component } from 'react'
-import Rank from '../Rank'
 import Count from '../Count'
 import moment from 'moment'
-import Charts from '../Charts'
+import NewChart from '../NewChart'
 import ModalContent from '../ModalContent'
 import { Modal } from 'antd'
 
@@ -72,9 +71,9 @@ class Pages extends Component<props,state>{
         <div className={ css.container } >
         <Count  timestampRange={ timestampRange } 
                 key={ timestampRange[0] + timestampRange[1]+'count' } />
-        <Charts timestampRange={ timestampRange } 
-                key={ timestampRange[0] + timestampRange[1]+'echarts'}
-                getClick={ this.getClick } />
+        <NewChart timestampRange={ timestampRange } 
+                  key={ timestampRange[0] + timestampRange[1]+'newchart'}
+                  getClick={ this.getClick }  />
         <Modal  visible={ modal.visible }
                 destroyOnClose
                 onCancel = { this.hideModal } 
@@ -83,8 +82,6 @@ class Pages extends Component<props,state>{
                 width={ 1200 } >
           <ModalContent timestampRange={ timestampRange } type={ modal.value } />
         </Modal>
-        <Rank   timestampRange={ timestampRange } 
-                key={ timestampRange[0] + timestampRange[1]+'rank'} />
         </div>
       </div>
     )

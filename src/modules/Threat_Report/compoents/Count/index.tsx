@@ -129,7 +129,7 @@ class Count extends React.Component<props, state>{
       <Spin  spinning={ this.props.loading }  >
         {
           arr.map((item, index)=> 
-          <div key={ index } style={{ margin:5, display:'inline-block' }} >
+          <div key={ index } style={{ marginLeft: 30, marginRight:30,  display:'inline-block' }} >
             <CountItem  title={ item.text } count={ item.count } key={index}
                         style={ item.style }  >
               { item.icon }
