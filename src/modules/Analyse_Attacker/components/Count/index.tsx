@@ -70,9 +70,11 @@ class Count extends Component<any, any>{
       
       <Spin spinning={ loading } >
         <div className={ css.count } >
+          <div style={{ marginBottom:25, marginTop:15 }} >
           <CountItem title={'攻击者数量'} count={ attackerCount } >
               <Icon type={'user'} style={{ fontSize:22 }} />
           </CountItem>
+          </div>
           <CountItem title={'攻击者组织'} count={ attackGroupCount } >
               <Icon type={'team'} style={{ fontSize:22 }} />
           </CountItem>

@@ -125,7 +125,9 @@ export const LAYOUT_NAMESPACE = "layout",
 
   THREAT_REPORT_RANK_NAMESPACE = 'threatReportRange',
 
-  THREAT_REPORT_MODAL_NAMESPACE = 'threatReportModal'
+  THREAT_REPORT_MODAL_NAMESPACE = 'threatReportModal',
+
+  THREAT_REPORT_NEW_CHART_NAMESPACE = 'threatReportNewChart'
 
 
 

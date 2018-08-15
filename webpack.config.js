@@ -8,6 +8,7 @@ const CSSSplitWebpackPlugin = require('css-split-webpack-plugin').default
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = (webpackConfig, env) => {
+  
   const production = process.env.NODE_ENV === 'production'
   webpackConfig.output.filename = 'static/[name].[hash].bundle.js';
   webpackConfig.output.chunkFilename = 'static/[name].[chunkhash].async.js';
@@ -95,6 +96,6 @@ module.exports = (webpackConfig, env) => {
   })
 
   webpackConfig.plugins = finalPlugins
-
+  
   return webpackConfig
 };

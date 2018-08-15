@@ -9,6 +9,8 @@ import ExtraIcon from 'components/Icon'
 import { Icon } from 'antd'
 import Pie from '../Pie'
 
+const css = require('./index.less')
+
 const mapStateToProps = state => {
   return{
     state,
@@ -90,12 +92,12 @@ class Count extends React.Component<any,state>{
       },
     ]
     return (
-      <div>
+      <div >
       <Spin spinning={this.props.loading}>
         <div  style={{ width: 300, display:'inline-block' }} >
           {
             arr.map(item => 
-              <div style={{ margin:10, display:'inline-block' }} key={ item.title } >
+              <div className={ css.item } key={ item.title } >
                 <CountItem title={ item.title} count={ item.count }  >
                   {
                     item.Icon
