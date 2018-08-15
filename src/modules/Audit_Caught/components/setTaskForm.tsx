@@ -70,19 +70,36 @@ class configForm extends React.Component<any, any> {
   }
 
   checkSet = (rule, value, callback) => {
+    if (value.units == "ss") {
 
-    if (value.number > 0 && (value.units == "ss" || value.units == "M")) {
-      callback();
+      value.number > 0 && value.number <= 10 * 60 ?
+        callback()
+        :
+        callback("设置范围为1-10分钟")
       return;
     }
-    if ((value.units == "mm" || value.units == "G")) {
+    if (value.units == "mm") {
 
-      if (value.number >= 1 && value.number <= 10) {
-        callback();
-      }
-      callback('设置范围为1-10');
+      value.number > 0 && value.number <= 10 ?
+        callback()
+        :
+        callback("设置范围为1-10分钟")
+      return;
     }
-    callback('设置范围大于0');
+    if (value.units == "M") {
+      value.number > 0 && value.number <= 10 * 1024 ?
+        callback()
+        :
+        callback("设置范围为1-10G")
+      return;
+    }
+    if (value.units == "G") {
+      value.number > 0 && value.number <= 10 ?
+        callback()
+        :
+        callback("设置范围为1-10G")
+      return;
+    }
   }
   checkTaskName = (rule, value, callback) => {
     let regex = new RegExp("^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9_]|[0-9]){1,10}$");
