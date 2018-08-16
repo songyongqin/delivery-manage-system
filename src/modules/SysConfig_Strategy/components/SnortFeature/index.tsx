@@ -105,9 +105,9 @@ export default class WhiteList extends React.Component<any, any>{
       Message.success("修改成功")
 
     })
-    this.setState({
+    setTimeout(this.setState({
       lastReqTime: new Date().getTime()
-    })
+    }), 1000)
   }
   onMulClick = value => {
     const { activeItems } = this.state

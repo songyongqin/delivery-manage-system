@@ -123,10 +123,9 @@ export default class StrategySetting extends React.Component<any, any>{
         Message.success("修改规则成功")
 
         this.props.setModalVisible("edit", false)
-
-        this.setState({
+        setTimeout(this.setState({
           lastReqTime: new Date().getTime()
-        })
+        }), 1000)
       })
   }
   onSubmit = payload => {

@@ -51,6 +51,9 @@ class configForm extends React.Component<any, any> {
     this.setState({
       RadioValue: e.target.value,
     });
+    this.props.form.setFieldsValue({
+      set: { number: 1, units: e.target.value == 'time' ? 'ss' : 'M' },
+    });
   }
 
   handleChange = (value) => {
@@ -102,7 +105,7 @@ class configForm extends React.Component<any, any> {
     }
   }
   checkTaskName = (rule, value, callback) => {
-    let regex = new RegExp("^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9_]|[0-9]){1,10}$");
+    let regex = new RegExp("^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9_]|[0-9]){1,1000000000}$");
     let res = regex.test(value);
     if (res) {
       callback();
