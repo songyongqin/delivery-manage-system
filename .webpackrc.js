@@ -31,19 +31,22 @@ export default {
     "/audit": proxyServer,
     "/strategy": proxyServer
   },
+  "extraBabelPlugins": [
+    ["import", { "libraryName": "antd", "style": true }]
+  ],
   "env": {
     "development": {
       "extraBabelPlugins": [
         "dva-hmr",
         "transform-decorators-legacy",
-        ["import", { "libraryName": "antd", "style": true }]
+        // ["import", { "libraryName": "antd", "style": true }]
       ]
     },
     "production": {
       enableSourcemaps: true,
       "extraBabelPlugins": [
         "transform-decorators-legacy",
-        ["import", { "libraryName": "antd", "style": true }]
+        // ["import", { "libraryName": "antd", "style": true }]
       ]
     }
   }

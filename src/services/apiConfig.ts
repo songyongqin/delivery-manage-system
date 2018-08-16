@@ -235,11 +235,8 @@ const HttpApiConfig = {
   REPORT_COUNT_THREAT: '/report/count',
 
   REPORT_DETAIL_THREAT: '/report/detail',
-<<<<<<< Updated upstream
 
   REPORT_RANK_THREAT: '/report/rank'
-=======
->>>>>>> Stashed changes
 
 }
 
