@@ -11,6 +11,8 @@ import html2canvas from 'html2canvas'
 import downloadjs from 'downloadjs'
 import moment from 'moment'
 
+import html2pdf from 'html2pdf.js'
+
 class ThreatReport extends Component<any,any>{
   constructor(props){
     super(props)
@@ -26,18 +28,47 @@ class ThreatReport extends Component<any,any>{
   }
 
   export = () => {
+    // this.setState({ isLoading: true })
+    // html2canvas(document.getElementById('threat-report'))
+    // .then(canvas => {
+    //   let time = this.getTimeStr()
+    //   // const name = `威胁报告(${time}).jpg`
+    //   let dataurl = canvas.toDataURL('image/jpeg')
+    //   // let dataurl = canvas.toBlob()
+    //   this.setState({ isLoading: false })
+    //   // downloadjs(dataurl, name, 'image/jpeg')
+
+      
+    // //   canvas.toBlob(function(blob) {
+    // //     downloadjs(blob, 'xx.pdf', 'application/pdf')
+    // // })
+
+
+    // } )
+    // .catch(err => console.error(err) )
+    let time = this.getTimeStr()
+    const name = `威胁报告(${time}).pdf`
+    let opt = {
+      margin:       20,
+      filename:     name,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' }
+    }
+    // html2pdf(document.getElementById('threat-report')).set(opt).save()
+    let dom = document.getElementById('threat-report')
     this.setState({ isLoading: true })
-    html2canvas(document.getElementById('threat-report'))
-    .then(canvas => {
-      let time = this.getTimeStr()
-      const name = `威胁报告(${time}).jpg`
-      let dataurl = canvas.toDataURL('image/jpeg')
+    html2pdf()
+    .from(dom)
+    .set(opt)
+    .save()
+    .then(res =>{
       this.setState({ isLoading: false })
-      downloadjs(dataurl, name, 'image/jpeg')
-
     } )
-    .catch(err => console.error(err) )
-
+    .catch(err => {
+      this.setState({ isLoading: false })
+      console.error('err',err)} 
+    )
   }
 
   getTimeStr =() => {
@@ -52,7 +83,6 @@ class ThreatReport extends Component<any,any>{
 
   render(){
     const { timestampRange,isLoading } = this.state
-    
     return(
       <div style={{ position: "relative" }} >
         <div style={{ float: "right", position:'absolute', right:10 }}>
@@ -62,7 +92,7 @@ class ThreatReport extends Component<any,any>{
           </DateRangePicker>
           <Button type={ 'primary' } style={{ marginLeft: 20 }} onClick={ this.export } loading={ isLoading } >导出</Button>
         </div>
-        <div id='threat-report' >
+        <div id='threat-report'  >
           <Pages timestampRange={ timestampRange }  />
         </div>
       </div>

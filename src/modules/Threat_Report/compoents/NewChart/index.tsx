@@ -76,10 +76,11 @@ interface arrItem{
   value: number
 }
 
-const Wrap = props => 
-  <span style={{ display:'inline-block', width:605, margin:5 }} >
-    <Spin spinning={ props.spinning } >{ props.children }</Spin>
-  </span>
+const Wrap =( { spinning,children, keys=0 }) => 
+  <div style={{ display:'inline-block', width:605, margin:5 }}  >
+    <span className={ keys%2===0 ?'not-break': 'html2pdf__page-break' } ></span>
+    <Spin spinning={ spinning } >{ children }</Spin>
+  </div>
 
 
 @extraConnect(mapStateToProps, mapDispatchToProps)
@@ -208,11 +209,12 @@ class NewChart extends React.Component<props,state>{
                 title={ '威胁事件' }
                 data2={ data.threatEvent }
                 total={ data.threatEventTotal }
-                unit={ '起' } />
+                unit={ '起' } 
+                keys={ 1 } />
         </Wrap>
           {
             arrPie.map((item, index) => 
-            <Wrap spinning={ detailLoading } key={ index } >
+            <Wrap spinning={ detailLoading } key={ index } keys={ index+1 } >
               <Pie  data={ item.data } onClick={ this.clickTitle } 
                   title={ item.title }
                   total={ item.total }
@@ -223,7 +225,7 @@ class NewChart extends React.Component<props,state>{
           }
           {
           arrRank.map((item, index) => 
-          <Wrap spinning={ loading } key={ index } >
+          <Wrap spinning={ loading } key={ index } keys={ index+1 } >
             <Bar data={ item.data } title={ item.title } key={ index } /> 
           </Wrap>
          )
