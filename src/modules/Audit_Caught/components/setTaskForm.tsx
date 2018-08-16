@@ -51,6 +51,9 @@ class configForm extends React.Component<any, any> {
     this.setState({
       RadioValue: e.target.value,
     });
+    this.props.form.setFieldsValue({
+      set: { number: 1, units: e.target.value == 'time' ? 'ss' : 'M' },
+    });
   }
 
   handleChange = (value) => {
