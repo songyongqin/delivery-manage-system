@@ -280,11 +280,12 @@ class Page extends React.Component<any, any> {
             </div>,
             <div key="analyse-threat-table">
             <WhichSelect data={ SelectArr } getValue={ this.getSelectValue } init={selected} />
-            <button onClick={ this.reset } >重置筛选</button>
+            {/* <button onClick={ this.reset } >重置筛选</button> */}
             {
               selected===SelectArr[0] ? 
               <Spin spinning={ this.props.familyLoading  } >
                   <FamilyTable  tableData={ familyData }
+                                reset={ this.reset }
                                 key={ this.state.familyTableKey } 
                                 tableBeforeFetch={ this.fetchFamilyTable } />
                   <WithPagination total={familyTotal}
@@ -295,6 +296,7 @@ class Page extends React.Component<any, any> {
               <Spin spinning={ this.props.loopholeLoading  } >
                 <LoopholeTable  tableData={ loopholeData } 
                               tableBeforeFetch={ this.fetchLoopholeTable }
+                              reset={ this.reset }
                               key={ this.state.loopholeTableKey } />
                 <WithPagination total={loopholeTotal}
                                 onChange={ this.loopholePaginationOnchange }

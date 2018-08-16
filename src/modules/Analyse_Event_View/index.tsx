@@ -19,7 +19,8 @@ import LevelTag from 'components/LevelTag'
 import { getWeekTime } from 'utils/getInitTime'
 import { momentToTimeStampRange } from 'utils/moment'
 import transformTimeStamp from 'utils/transformTimeStamp'
- 
+import ResetIcon from 'components/ResetIcon' 
+
 import {
   limit,
   canMultipleDetail
@@ -167,7 +168,7 @@ class Page extends React.Component<any, any> {
 
     const columns = [
       {
-        title:'序号',
+        title:<ResetIcon onClick={ this.reset } /> ,
         dataIndex: 'index',
         render: ( text, record, index ) => <div>{ index +1}</div>
       },
@@ -253,7 +254,7 @@ class Page extends React.Component<any, any> {
               <Count timestampRange={ filters.timestampRange } key={ lastChangeTime } />
             </div>,
             <div key='event-table' >
-              <button onClick={ this.reset } >重置筛选</button>
+              {/* <button onClick={ this.reset } >重置筛选</button> */}
               <Spin spinning={ this.props.loading } >
               <WithTable  tableData={ table.data } 
                           constants={ constants }
