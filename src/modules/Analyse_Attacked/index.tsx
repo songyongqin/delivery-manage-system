@@ -13,6 +13,8 @@ import tranformTime from 'utils/tranformTime'
 import path from 'constants/path'
 import WithTableConfig from 'domainComponents/WithTableConfig'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
+
+import ResetIcon from 'components/ResetIcon' 
 import {
   // assetStateFilter,
   // levelFilter,
@@ -154,7 +156,7 @@ class Page extends React.Component<any, any> {
       else return '#b80000'
     }
     let columns = [
-      { title:'序号', 
+      { title:<ResetIcon onClick={ this.reset } />, 
         dataIndex:'index',
         render:  (text, record, index) => <div>{index +1}</div>
         },
@@ -218,7 +220,7 @@ class Page extends React.Component<any, any> {
               <Count  key={ this.state.countKey } timestampRange={ timestampRange }  />
             </div>,
             <div key="event-attacked-table">
-            <button onClick={ this.reset } >重置筛选</button>
+            {/* <button onClick={ this.reset } >重置筛选</button> */}
             <Spin spinning={ this.props.tableLoading  } >
               <WithTable  tableData={ tableData }
                         key = { this.state.tableKey }

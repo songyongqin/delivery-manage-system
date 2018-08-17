@@ -15,6 +15,7 @@ import WithTableConfig from 'domainComponents/WithTableConfig'
 import path from 'constants/path'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import ArrayTag from './components/ArrayTag'
+import ResetIcon from 'components/ResetIcon'
 import {
   limit
 } from './constants'
@@ -149,7 +150,7 @@ class Page extends React.Component<any, any> {
     const {  tableData, timestampRange } = this.state
 
     let columns = [
-      { title:'序号', 
+      { title:<ResetIcon onClick={ this.reset } />, 
         dataIndex:'index',
         render: ( text, record, index ) => <div>{ index+1 }</div>
         },
@@ -216,7 +217,7 @@ class Page extends React.Component<any, any> {
               <Count  key={ this.state.countKey } timestampRange={ timestampRange }  />
             </div>,
             <div key="analyse-attacker-table">
-            <button onClick={ this.reset } >重置筛选</button>
+            {/* <button onClick={ this.reset } >重置筛选</button> */}
             <Spin spinning={ this.props.tableLoading  } >
               <WithTable  tableData={ tableData }
                         key = { this.state.tableKey }

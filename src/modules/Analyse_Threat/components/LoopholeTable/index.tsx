@@ -7,10 +7,12 @@ import WithTable from 'components/WithTable'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import TimeTag from 'components/TimeTag'
 import { ANALYSE_THREAT_LOOPHOLE_DETAIL_URL } from 'routes/config/path'
+import ResetIcon from 'components/ResetIcon'
 
 interface props{
   tableData: Array<object>
   tableBeforeFetch: (any) => any
+  reset: (any) => any
 }
 
 
@@ -19,7 +21,7 @@ class FamilyTable extends React.Component<props, any>{
   render(){
 
     let columns = [
-      { title:'序号', 
+      { title: <ResetIcon onClick={ this.props.reset } />, 
         dataIndex:'index',
         render: ( text, record, index ) => <div>{ index+1 }</div>
         },

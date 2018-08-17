@@ -1,5 +1,5 @@
 const baseUrl = ""
-
+// const baseUrl = ' http://172.31.50.41:7300/mock/5b3ae25f3a04b867a240d558/ids'
 const HttpApiConfig = {
 
   AUDIT_EVENT: "/audit/basic-event",
@@ -235,11 +235,8 @@ const HttpApiConfig = {
   REPORT_COUNT_THREAT: '/report/count',
 
   REPORT_DETAIL_THREAT: '/report/detail',
-<<<<<<< Updated upstream
 
   REPORT_RANK_THREAT: '/report/rank'
-=======
->>>>>>> Stashed changes
 
 }
 
