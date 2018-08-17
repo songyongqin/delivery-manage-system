@@ -78,9 +78,9 @@ export default class StrategySetting extends React.Component<any, any>{
     this.props.put(payload).then(_ => {
       Message.success("修改成功");
     })
-    this.setState({
+    setTimeout(() => this.setState({
       lastReqTime: new Date().getTime()
-    })
+    }), 200)
   }
   onShowClick = (records) => {
     const { key } = records
@@ -123,9 +123,9 @@ export default class StrategySetting extends React.Component<any, any>{
         Message.success("修改规则成功")
 
         this.props.setModalVisible("edit", false)
-        setTimeout(this.setState({
+        this.setState({
           lastReqTime: new Date().getTime()
-        }), 1000)
+        })
       })
   }
   onSubmit = payload => {
