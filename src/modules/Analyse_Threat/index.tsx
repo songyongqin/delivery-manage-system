@@ -5,9 +5,8 @@ import CountItem from 'components/CountItem'
 import { ANALYSE_THREAT_VIEW } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
-import { Icon ,Tag, Input } from 'antd'
+import { Icon ,Tabs, Input } from 'antd'
 import WithPagination from 'components/WithPagination'
-import WhichSelect from 'components/WhichSelect'
 import ExtraIcon from 'components/Icon'
 import FamilyTable from './components/FamilyTable'
 import LoopholeTable from './components/LoopholeTable'
@@ -279,10 +278,8 @@ class Page extends React.Component<any, any> {
               </div>
             </div>,
             <div key="analyse-threat-table">
-            <WhichSelect data={ SelectArr } getValue={ this.getSelectValue } init={selected} />
-            {/* <button onClick={ this.reset } >重置筛选</button> */}
-            {
-              selected===SelectArr[0] ? 
+            <Tabs onChange={ this.getSelectValue } >
+                <Tabs.TabPane tab={ SelectArr[0] } key={SelectArr[0]  }  >
               <Spin spinning={ this.props.familyLoading  } >
                   <FamilyTable  tableData={ familyData }
                                 reset={ this.reset }
@@ -292,7 +289,9 @@ class Page extends React.Component<any, any> {
                                   limit={ limit }
                                   onChange={ this.familyPaginationOnchange }
                                   current={this.state.reqFamily.page}  />
-              </Spin> :
+              </Spin> 
+              </Tabs.TabPane> 
+              <Tabs.TabPane tab={ SelectArr[1] } key={SelectArr[1]  }  >
               <Spin spinning={ this.props.loopholeLoading  } >
                 <LoopholeTable  tableData={ loopholeData } 
                               tableBeforeFetch={ this.fetchLoopholeTable }
@@ -303,7 +302,8 @@ class Page extends React.Component<any, any> {
                                 limit={ limit }
                                 current={this.state.reqloophole.page}  />
               </Spin>
-            }
+              </Tabs.TabPane>
+              </Tabs>
             
             
             </div>

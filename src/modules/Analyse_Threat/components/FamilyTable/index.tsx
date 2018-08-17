@@ -43,7 +43,7 @@ class FamilyTable extends React.Component<props, any>{
       },
       { title:'威胁家族介绍', 
         dataIndex:'threatFamilyIntroduce',
-        render: text => <WithPopover text={ text } style={{ width:300 }} />
+        render: text => <WithPopover text={ text } style={{ maxWidth:300 }} />
         // render: text => <OverflowTextWrapper content={ text } >{text}</OverflowTextWrapper>
       },
       { title:'威胁事件次数',   

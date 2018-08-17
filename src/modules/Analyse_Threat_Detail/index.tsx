@@ -3,12 +3,8 @@ import WithAnimateRender from 'components/WithAnimateRender'
 import { ANALYSE_THREAT_DETAIL } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
-import { Icon ,Tag, Input } from 'antd'
+import { Tabs } from 'antd'
 import WithPagination from 'components/WithPagination'
-import WhichSelect from 'components/WhichSelect'
-import ExtraIcon from 'components/Icon'
-// import FamilyTable from './components/FamilyTable'
-// import LoopholeTable from './components/LoopholeTable'
 import { SelectArr, typeArr, limit } from './constants'
 import tranformParmToObj from 'utils/tranformParmToObj'
 import FamilyEventTable from './components/FamilyEventTable'
@@ -188,38 +184,6 @@ class Page extends React.Component<any, state> {
     }
   }
 
-  // getSelect = e => {
-  //   const id = e.currentTarget.dataset.id 
-  //   let type = this.state.type
-  //   let isFetch = this.state.isFetch
-  //   console.log()
-  //   this.setState({ selected: id })
-  //   if(id===SelectArr[0]){
-  //     if(type===typeArr[0]&&!isFetch.familyEvent){
-  //       this.fetchFamilyEvent(1)
-  //     }
-  //     else if(type===typeArr[1]&&!isFetch.loopholeEvent) {
-  //       this.fetchLoopholeEvent(1)
-  //     }
-  //   }
-  //   if(id===SelectArr[1]){
-  //     if(type===typeArr[0]&&!isFetch.familyAssets){
-  //       this.fetchFamilyAssets(1)
-  //     }
-  //     else if(type===typeArr[1]&&!isFetch.loopholeAssets) {
-  //       this.fetchLoopholeAssets(1)
-  //     }
-  //   }
-  //   if(id===SelectArr[2]){
-  //     if(type===typeArr[0]&&!isFetch.familyCc){
-  //       this.fetchFamilyCc(1)
-  //     }
-  //     else if(type===typeArr[1]&&!isFetch.loopholeCc) {
-  //       this.fetchLoopholeCc(1)
-  //     }
-  //   }
-
-  // }
 
   fetchFamilyEvent = num => {
     let page = num ? num : 1
@@ -331,9 +295,8 @@ class Page extends React.Component<any, state> {
     // console.log(type, this.state)
     return (
       <div >
-        <WhichSelect data={ SelectArr } getValue={ this.getSelectValue } ></WhichSelect>
-        {/* <SwitchItem text={ SelectArr[0] } selected={ selected } onClick={ this.getSelect } > */}
-        <div style={{ display: selectValue===SelectArr[0] ?'block':'none' }} >
+        <Tabs onChange={  this.getSelectValue } >
+          <Tabs.TabPane key={ SelectArr[0] } tab={ SelectArr[0] } >
           {
             type===typeArr[0] ? 
               <Spin spinning={ familyEventLoading } >
@@ -355,10 +318,8 @@ class Page extends React.Component<any, state> {
                                 onChange={ this.fetchLoopholeEvent } />
               </Spin>
           }
-          </div>
-        {/* </SwitchItem> */}
-         {/* <SwitchItem text={ SelectArr[1] } selected={ selected } onClick={ this.getSelect } > */}
-          <div style={{ display: selectValue===SelectArr[1] ?'block':'none' }} >
+          </Tabs.TabPane>
+          <Tabs.TabPane key={ SelectArr[1] } tab={ SelectArr[1] } >
           {
             type===typeArr[0] ? 
               <Spin spinning={ familyAssetsLoading } >
@@ -377,10 +338,8 @@ class Page extends React.Component<any, state> {
                                 onChange={ this.fetchLoopholeAssets } />
               </Spin>
           }
-          </div>
-        {/* </SwitchItem> */}
-        {/* <SwitchItem text={ SelectArr[2] } selected={ selected } onClick={ this.getSelect } > */}
-          <div style={{ display: selectValue===SelectArr[2] ?'block':'none' }} >
+          </Tabs.TabPane>
+          <Tabs.TabPane key={ SelectArr[2] } tab={ SelectArr[2] } >
           {
             type===typeArr[0] ? 
               <Spin spinning={ familyCCLoading } >
@@ -399,8 +358,8 @@ class Page extends React.Component<any, state> {
                                 onChange={ this.fetchLoopholeCc } />
               </Spin>
           }
-          </div>
-        {/* </SwitchItem> */}
+          </Tabs.TabPane>
+        </Tabs>
       </div>
     )
   }
