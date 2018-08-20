@@ -128,7 +128,8 @@ class WithTable extends Component<props, any>{
         getTableSearchValue: this.getSearchValue,
         getTableState: this.getTableState,
         setTableState: this.setTableState,
-        isSearchValue: this.state.isSearchValue
+        // isSearchValue: this.state.isSearchValue
+        isSearchValue: this.state.searchValue  //修复table组件不能正确显示筛选参数
       }
     })
     
