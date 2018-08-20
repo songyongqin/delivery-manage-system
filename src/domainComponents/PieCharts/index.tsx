@@ -69,7 +69,7 @@ let getOption = ({ data ,theme, titles }) =>  ({
       type: 'pie',
       radius: ['40%','60%'],
       center: ['40%', '50%'],
-      data: data,
+      data: Array.isArray(data) ? data.filter(i => i.value) : [],
       minAngle:5,
       label: {
         normal: {
