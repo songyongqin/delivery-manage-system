@@ -53,6 +53,10 @@ import {
 
   ANALYSE_THREAT_URL,
 
+  ANALYSE_REPORT_URL,
+
+  ANALYSE_REPORT_DETAIL_URL,
+
   ANALYSE_THREAT_FAMILY_DETAIL_URL,
 
   ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
@@ -132,8 +136,19 @@ export const _navConfig = [
         link: ANALYSE_THREAT_URL,
         title: "威胁视图",
         icon: <Indent />,
+      },
+      {
+        link: ANALYSE_REPORT_URL,
+        title: "样板分析报告",
+        icon: <Indent />,
       }
     ]
+  },
+  {
+    link: ANALYSE_REPORT_DETAIL_URL,
+    title: "威胁报告xxxx",
+    hidden: true,
+    icon: <Icon type="file-text"></Icon>
   },
   {
     // 受害资产详细情况

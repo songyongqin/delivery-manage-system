@@ -5,7 +5,7 @@ const theme = require('./theme')
 
 const proxyServer = "  http://172.31.50.41:7300/mock/5b3ae25f3a04b867a240d558/ids"
 
-const test = 'http://172.31.50.175:5202'
+const test = 'http://172.31.50.169:5202'
 
 export default {
   "alias": alias,

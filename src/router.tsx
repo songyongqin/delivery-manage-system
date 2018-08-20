@@ -37,6 +37,9 @@ import getAnalyseThreatDetalPage from 'routes/Analyse_Threat_detail'
 import getAuditCaughtPage from 'routes/Audit_Caught'
 import getThreatReportPage from 'routes/Threat_Report'
 
+import getAnalyseReportPage from 'routes/Analyse_Report'
+import getAnalyseReportDetail from 'routes/Analyse_Report_Detail'
+
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -83,6 +86,10 @@ import {
   ANALYSE_THREAT_FAMILY_DETAIL_URL,
 
   ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
+
+  ANALYSE_REPORT_URL,
+
+  ANALYSE_REPORT_DETAIL_URL,
 
   AUDIT_URL,
 
@@ -189,6 +196,17 @@ export default ({ history, app }) => {
               exact
               component={getAnalyseThreatDetalPage(app, ANALYSE_THREAT_LOOPHOLE_DETAIL_URL)}
               path={ANALYSE_THREAT_LOOPHOLE_DETAIL_URL} >
+            </Route>
+            {/*  样板分析报告 */}
+            <Route
+              exact
+              component={getAnalyseReportPage(app, ANALYSE_REPORT_URL)}
+              path={ANALYSE_REPORT_URL} >
+            </Route>
+            <Route
+              exact
+              component={getAnalyseReportDetail(app, ANALYSE_REPORT_DETAIL_URL)}
+              path={ANALYSE_REPORT_DETAIL_URL} >
             </Route>
             {/* 攻击链分析 */}
             {/* <Route

@@ -1,0 +1,47 @@
+@import '~themes/vars';
+
+.basic-info-table{
+  width: 100%;
+  tbody{
+    width: 100%;
+  }
+  .title-cell{
+    width: 120px;
+    min-width: 120px;    
+    color:@primary-color;
+  }
+  td{
+    padding:5px 15px;
+    vertical-align: top;
+    
+  }
+}
+
+.common-table{
+  width: 100%;
+  .title-cell{
+    width: 90px;
+    min-width: 90px;
+    color:@primary-color;
+  }
+  td{
+    padding:5px 3px 3px 3px;
+    vertical-align: top;
+  }
+}
+
+
+.behavior-panel{
+  height:320px;
+  position: relative;
+  margin-bottom:15px;
+  width: 100%;  
+  :global{
+    .ant-card-body{
+      height:320px;
+      padding:10px;
+      overflow: hidden;
+      width: 100%;
+    }
+  }
+}

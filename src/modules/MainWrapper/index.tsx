@@ -185,6 +185,25 @@ class IndexPage extends React.Component<any, any>{
       })
       return <div></div>
     }
+    //态势导出报告
+    console.log(activeRoute)
+    if (activeRoute ==='/analyse/report/detail') {
+      return (
+        <div className={pageClasses}>
+          <div
+            className={classnames({
+              [styles["content-wrapper"]]: true,
+              [styles["animate"]]: true,
+              [styles["loading"]]: moduleLoading
+            })
+            }>
+            <Spin spinning={moduleLoading}>
+            </Spin>
+            {children}
+          </div>
+        </div>
+      )
+    }
 
     return (
       <div className={pageClasses}>

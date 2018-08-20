@@ -56,6 +56,10 @@ export const ROOT_URL = "/",
 
   ANALYSE_THREAT_URL = '/analyse/threat',
 
+  ANALYSE_REPORT_URL = '/analyse/report',
+
+  ANALYSE_REPORT_DETAIL_URL = '/analyse/report/detail',
+
   ANALYSE_THREAT_FAMILY_DETAIL_URL = '/analyse/threat/family/detail',
 
   ANALYSE_THREAT_LOOPHOLE_DETAIL_URL = '/analyse/threat/loophole/detail',
