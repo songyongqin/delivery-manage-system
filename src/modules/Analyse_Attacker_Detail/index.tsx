@@ -4,9 +4,8 @@ import WithTable from 'components/WithTable'
 import { ANALYSE_ATTACKER_DETAIL } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
-import { Tag } from 'antd'
+import { Tabs } from 'antd'
 import { ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
-import WhichSelect from 'components/WhichSelect'
 import Whois from './components/Whois'
 import LevelTag from 'components/LevelTag'
 import TimeTag from 'components/TimeTag'
@@ -17,6 +16,7 @@ import {
 } from './constants'
 import WithPagination from 'components/WithPagination'
 // import { routerRedux } from 'dva/router'
+
 
 
 const mapStateToprops = state => {
@@ -122,6 +122,7 @@ class AnalyseDetail extends React.Component<any, any> {
 
 
   getValue = str => {
+    
     if(!this.state.isFetchThreat&&str==='威胁事件信息'){
       this.fetchThreat({page:1})
     }
@@ -249,41 +250,23 @@ class AnalyseDetail extends React.Component<any, any> {
               <WithTable  tableData={ IPInfo } config={ IPInfoColumns }  />
             </Spin>
             </div>,
-            <div key='attacked-assets-tip' style={{ display: !isHave ? 'block' : 'none', textAlign:'center', margin:15  }}  >
-              <Spin spinning={ ipLoading   } >
-                <a href={'/#/config/sys-config/network'} style={{ textDecoration:'none' }} >若想查看更多攻击者的信息，请在配置管理>>系统配置>>网卡配置中打开“云检测功能”</a>
-              </Spin>
-            </div>,
-            <div key='attacked-assets-event' style={{ display: isHave ? 'block' : 'none'  }} >
-              <WhichSelect data={ selectArr } getValue={ this.getValue } />
-              {
-                this.state.selectShow ===selectArr[0] ? 
+            <div key='attacked-assets-event'  >
+              <Tabs onChange={ this.getValue } >
+                <Tabs.TabPane tab={ selectArr[0] } key={selectArr[0]  }  >
                   <Spin  spinning={ ipLoading }>
-                    <div style={{ marginTop:20, width:500  }} >
-                    <h4>攻击者域名whois信息</h4>
-                    <Whois data={ whoisInfo } />
-                    </div>
-
-                    <div style={{ marginTop:20, width:500  }} >
-                    <h4>关联URL信息</h4>
-                    <WithTable  tableData={ relationUrl } config={ relationUrlColumns }  />
-                    </div>
-
-                    <div style={{ marginTop:20, width:500  }} >
-                    <h4>关联文件信息</h4>
-                    <WithTable  tableData={ relationFile} config={ relationFileColumns }  />
-                    </div>
-
-                    <div style={{ marginTop:20, width:500  }} >
-                    <h4>关联IP信息</h4>
-                    <WithTable  tableData={ relationIP} config={ relationIPColumns }  />
-                    </div>
-
-                    <div style={{ marginTop:20, width:500 }} >
-                    <h4>关联域名信息</h4>
-                    <WithTable  tableData={ relationDomain } config={ relationDomainColumns }  />
-                    </div>
-                  </Spin> :
+                    { isHave ? <WHOIS whoisInfo={ whoisInfo }  relationUrl= {relationUrl}  
+                            relationUrlColumns={ relationUrlColumns } relationFile={ relationFile } 
+                            relationFileColumns={ relationFileColumns } relationIP={ relationIP }
+                            relationIPColumns={ relationIPColumns } relationDomain={ relationDomain }
+                            relationDomainColumns={ relationDomainColumns }/> :
+                            <div>
+                              若想查看更多攻击者的信息，请在配置管理>>系统配置>>网卡配置中打开
+                              <a href={'/#/config/sys-config/network'} style={{ textDecoration:'none' }} >“云检测功能”</a>
+                            </div>
+                             }
+                  </Spin>
+                </Tabs.TabPane> 
+                <Tabs.TabPane tab={ selectArr[1] } key={selectArr[1]  }  >
                   <Spin spinning={ threatLoading } >
                     <WithTable  tableData={ threatInfo } config={ CCRecordColumns }  />
                     <WithPagination total={ threatTotal } 
@@ -291,7 +274,8 @@ class AnalyseDetail extends React.Component<any, any> {
                                     onChange={ this.paginationCcChange }
                                     limit={ limit } />
                   </Spin>
-              }
+                </Tabs.TabPane>
+              </Tabs>
               
             </div>
           ])
@@ -300,5 +284,35 @@ class AnalyseDetail extends React.Component<any, any> {
     )
   }
 }
+
+const WHOIS = ({whoisInfo, relationUrl,  relationUrlColumns, relationFile, relationFileColumns, relationIP,
+                relationIPColumns, relationDomain, relationDomainColumns  }) => 
+  <div>
+    <div style={{ marginTop:20, width:500  }} >
+    <h4>攻击者域名whois信息</h4>
+    <Whois data={ whoisInfo } />
+    </div>
+
+    <div style={{ marginTop:20, width:500  }} >
+    <h4>关联URL信息</h4>
+    <WithTable  tableData={ relationUrl } config={ relationUrlColumns }  />
+    </div>
+
+    <div style={{ marginTop:20, width:500  }} >
+    <h4>关联文件信息</h4>
+    <WithTable  tableData={ relationFile} config={ relationFileColumns }  />
+    </div>
+
+    <div style={{ marginTop:20, width:500  }} >
+    <h4>关联IP信息</h4>
+    <WithTable  tableData={ relationIP} config={ relationIPColumns }  />
+    </div>
+
+    <div style={{ marginTop:20, width:500 }} >
+    <h4>关联域名信息</h4>
+    <WithTable  tableData={ relationDomain } config={ relationDomainColumns }  />
+    </div>
+  </div>
+
 
 export default AnalyseDetail

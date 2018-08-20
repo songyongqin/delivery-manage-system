@@ -6,7 +6,6 @@ import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
 import { Pagination ,Tag, Input } from 'antd'
 import { ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
-import WhichSelect from 'components/WhichSelect'
 import EventTable from './components/EventTable'
 import CCTable from './components/CCTable'
 const style = require('./index.less')
@@ -16,6 +15,10 @@ import {
 } from './constants'
 import WithPagination from 'components/WithPagination'
 // import { routerRedux } from 'dva/router'
+
+import { Tabs } from 'antd'
+
+const TabPane = Tabs.TabPane
 
 
 const mapStateToprops = state => {
@@ -172,16 +175,17 @@ class AnalyseDetail extends React.Component<any, any> {
             </Spin>
             </div>,
             <div key='attacked-assets-event' >
-              <WhichSelect data={ selectArr } getValue={ this.getValue } />
-              {
-                this.state.selectShow ===selectArr[0] ? 
+              <Tabs onChange={ this.getValue } >
+                <Tabs.TabPane tab={ selectArr[0] } key={selectArr[0]  }  >
                   <Spin  spinning={ eventLoading }>
                     <EventTable data={threatEventInfo  } />
                     <WithPagination total={ eventTotal } 
                                     current={ eventReq.page }
                                     onChange={ this.paginationEventChange }
                                     limit={ limit } />
-                  </Spin> :
+                  </Spin>
+                </Tabs.TabPane>  
+                <Tabs.TabPane tab={ selectArr[1] } key={selectArr[1]  }  >
                   <Spin spinning={ ccLoading } >
                     <CCTable data={c2Record  } tableChange={ this.ccTableChange } />
                     <WithPagination total={ CCTotal } 
@@ -189,8 +193,8 @@ class AnalyseDetail extends React.Component<any, any> {
                                     onChange={ this.paginationCcChange }
                                     limit={ limit } />
                   </Spin>
-              }
-              
+                </Tabs.TabPane>
+              </Tabs>
             </div>
           ])
         }

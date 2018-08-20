@@ -4,7 +4,7 @@ import { Popover } from 'antd'
 
 const WithPopover = ({ style={}, text }) => 
   <Popover title={ text } >
-    <div style={{ width:200, whiteSpace:'nowrap',
+    <div style={{  whiteSpace:'nowrap',
          overflow:'hidden', 
          textOverflow:'ellipsis', ...style }} >
          {text}
