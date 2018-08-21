@@ -65,15 +65,20 @@ class WithTable extends Component<props, any>{
     //添加上多条搜索的值
     let objs = this.state.searchValue
     objs.page = 1
+    console.log(objs)
     this.props.tableBeforeFetch && this.props.tableBeforeFetch(objs)
     this.hiddenSearch()
+  }
+
+  tableFetch = obj => {
+    this.props.tableBeforeFetch(obj)
   }
 
   getSearchIcon = obj => {
     const {  searchType, searchValue } = obj
     let isSearchValue = this.state.isSearchValue
     let arr = [...new Set([...isSearchValue, searchType ])]
-    console.log(arr)
+    console.log(this.state.searchValue)
     if(!searchValue){
       arr = arr.filter(i => i!==searchType)
     }
@@ -87,7 +92,6 @@ class WithTable extends Component<props, any>{
   tableOnChange = (pagination, filters, sorter) => {
     //点击表头的筛选，搜索，排序会触发这个函数
     let obj = { ...pagination, ...filters, ...sorter }
-    console.log('filters',filters)
     if (obj['columnKey']) {
       obj[obj['columnKey']] = obj['order'] !== "descend"  //降序
       delete obj['columnKey']
@@ -128,7 +132,8 @@ class WithTable extends Component<props, any>{
         getTableSearchValue: this.getSearchValue,
         getTableState: this.getTableState,
         setTableState: this.setTableState,
-        isSearchValue: this.state.isSearchValue
+        // isSearchValue: this.state.isSearchValue
+        isSearchValue: this.state.searchValue
       }
     })
     

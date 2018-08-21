@@ -139,7 +139,7 @@ export const _navConfig = [
       },
       {
         link: ANALYSE_REPORT_URL,
-        title: "样板分析报告",
+        title: "样本分析报告",
         icon: <Indent />,
       }
     ]

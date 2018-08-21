@@ -105,13 +105,13 @@ class Page extends React.Component<any, any> {
     return (
       <div style={{ minHeight: "600px", color: "#A3B2C1" }}>
 
-        <span>每页条数：</span>
+        {/* <span>每页条数：</span>
         <Select defaultValue="30" style={{ width: "100px", margin: "15px" }} onChange={this.handleChange}>
           {
             PAGE_SIZE_RANGE.map((i, index) =>
               <Option value={i} key={i}>{i}</Option>)
           }
-        </Select>
+        </Select> */}
         <EnhancedTable
           tableProps={tableProps}
           paginationProps={paginationProps}>

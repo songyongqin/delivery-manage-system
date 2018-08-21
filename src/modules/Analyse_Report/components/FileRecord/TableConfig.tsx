@@ -73,6 +73,7 @@ export const getColumns = ({
   }
 
   function FilterAction(text, changeFile, file, searchFile, filterDropdown, down) {
+
     return {
       filterDropdown: (
         <div className={styles["panel"]}>
@@ -92,7 +93,7 @@ export const getColumns = ({
           <Button icon="search" type="primary" onClick={searchFile} style={{ marginTop: "10px" }}>搜索</Button>
         </div>
       ),
-      filterIcon: <Icon type="filter" style={{ color: '#108ee9' }} />,
+      filterIcon: <Icon type="search" style={{ color:  file+'' ? '#108ee9': 'rgba(0,0,0,0.3)' }} />,
       filterDropdownVisible: filterDropdown,
       onFilterDropdownVisibleChange: down,
 
