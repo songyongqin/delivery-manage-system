@@ -182,9 +182,10 @@ export const fetchDeviceIDSNode = commonRequestCreator.getWithQueryString(httpAp
 /**
  *  IDS common
  */
-export const fetchVersionInfoByLocalIDS = payload => {
-  return request(httpApi.DEVICE_UPDATE_INFO_LOCAL_IDS, getUpdateOptionsByPayload(payload))
-}
+export const fetchVersionInfoByLocalIDS = commonRequestCreator.get(httpApi.DEVICE_UPDATE_INFO_LOCAL_IDS)
+// export const fetchVersionInfoByLocalIDS = payload => {
+//   return request(httpApi.DEVICE_UPDATE_INFO_LOCAL_IDS, getUpdateOptionsByPayload(payload))
+// }
 
 export const updateByLocalIDS = payload => {
   return request(httpApi.DEVICE_UPDATE_LOCAL_IDS, getUpdateOptionsByPayload(payload))
