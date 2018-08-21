@@ -37,7 +37,7 @@ import {
   UPLOAD_STATUS,
   MERGE_STATUS
 } from '../../constants'
-import { MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE } from 'constants/model'
+import { MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE, MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE } from 'constants/model'
 import Table from 'domainComponents/Table'
 const FormItem = Form.Item
 const Dragger = Upload.Dragger
@@ -180,6 +180,7 @@ class UpdateForm extends React.Component<any, any> {
           updateRemoteProgress().then(
             _ => {
               if (this.props.progressState == 1) {
+
                 this.modifyHandleUpdate();
                 clearInterval(interval);
               }
@@ -358,10 +359,11 @@ class UpdateForm extends React.Component<any, any> {
     ||
     i[ENGINE_VERSION_LIST_DATAINDEX].some(e => e["version"] !== null)
     ||
-    i[LIBRARY_VERSION_DATAINDEX].some(l => l["version"] !== null)
+    i[LIBRARY_VERSION_LIST_DATAINDEX].some(l => l["version"] !== null)
   )
 
   render() {
+    console.info(this.props.progressState)
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, putFileChunk, initLoading } = this.props;
 
@@ -856,7 +858,7 @@ const mapDispatchToProps = dispatch => {
       })
     },
     getupdateByRemote: payload => dispatch({
-      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/getupdateByRemote`,
+      type: `${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/getupdateByRemote`,
       payload
     }),
     getUploadResult: payload => dispatch({
@@ -866,7 +868,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 const mapStateToProps = state => {
-  const { percent, progressState, } = state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE]
+  const { percent, progressState, } = state[MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE]
   return {
     percent, progressState,
     localUploadInfo: state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE].localUploadInfo,

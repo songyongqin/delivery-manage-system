@@ -123,7 +123,7 @@ export const updateByRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ON
 export const getupdateByRemote = commonRequestCreator.getWithQueryString(httpApi.DEVICE_UPDATE_ONLINE)
 
 //后续
-export const updateRemoteProgress = commonRequestCreator.get(httpApi.MIRROR_UPDATE_PROGRESS)
+export const updateRemoteProgress = commonRequestCreator.get(httpApi.DEVICE_UPDATE_PROGRESS)
 
 export const getUploadTask = commonRequestCreator.get(httpApi.DEVICE_UPDATE_LOCAL)
 
