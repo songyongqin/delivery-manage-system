@@ -359,7 +359,7 @@ class UpdateForm extends React.Component<any, any> {
     ||
     i[ENGINE_VERSION_LIST_DATAINDEX].some(e => e["version"] !== null)
     ||
-    i[LIBRARY_VERSION_DATAINDEX].some(l => l["version"] !== null)
+    i[LIBRARY_VERSION_LIST_DATAINDEX].some(l => l["version"] !== null)
   )
 
   render() {
