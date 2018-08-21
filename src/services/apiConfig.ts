@@ -150,6 +150,7 @@ const HttpApiConfig = {
   MIRROR_UPDATE_REMOTE: "/mirror/update/online",
 
   MIRROR_UPDATE_PROGRESS: "/mirror/update/online/progress",
+  DEVICE_UPDATE_PROGRESS: "/device/update/online/progress",
 
   MIRROR_UPDATE_NODE: "/mirror/node/update",
 
