@@ -42,6 +42,7 @@ interface props{
 interface state{
   data: Array<object>
   total:number
+  isLoading: boolean
   init: {
     type: string
     fetch: string
@@ -122,6 +123,7 @@ class ModalContent extends React.Component<props, state>{
     this.state = {
       data: [],
       total:0,
+      isLoading: false,
       init: {
         ...getConfig(this.props.type)
       },
@@ -133,7 +135,7 @@ class ModalContent extends React.Component<props, state>{
   }
 
   componentDidMount(){
-    console.log('did')
+    // console.log('did')
     this.fetch({})
   }
 
@@ -151,9 +153,16 @@ class ModalContent extends React.Component<props, state>{
   export = obj => {
     let timestampRange = this.transTime(this.props.timestampRange)
     let type = this.state.init.post
+    this.setState({ isLoading: true })
     this.props.dispatch({ type, payload: { timestampRange } })
-    .then(res => download(res) )
-    .catch(err => console.error(err) )
+    .then(res => {
+      this.setState({isLoading: false})
+      download(res)
+    } )
+    .catch(err => {
+      this.setState({isLoading: false})
+      console.error(err)
+    } )
   }
 
   transTime = arr => {
@@ -177,7 +186,7 @@ class ModalContent extends React.Component<props, state>{
           <Icon type={ init.icon } style={{ fontSize:21 }} />
           <h2 style={{ display:'inline-block', marginLeft:5 }} >{ type==='威胁事件' ? '攻击事件' : type }</h2>
           <Button type='primary' style={{ float:'right' }} 
-              onClick={ this.export } >导出</Button>
+              onClick={ this.export } loading={ this.state.isLoading } >导出</Button>
         </div>
         <Spin spinning={ effects[this.state.init.fetch] } >
           <WithTable config={ init.config } tableData={ data } /> 
