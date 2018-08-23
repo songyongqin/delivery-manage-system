@@ -15,9 +15,7 @@ export default class DateRangePicker extends React.Component<any, any> {
     onChange && onChange({ timestampRange })
   }
   render() {
-
     const { loading, onChange, value } = this.props
-
     return (
       <DatePicker.RangePicker
         style={{ width: "300px" }}
