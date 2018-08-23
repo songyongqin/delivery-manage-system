@@ -161,6 +161,7 @@ class Page extends React.Component<any, any> {
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
           <DateRangePicker
             value={filters.timestampRange}
+            key={ +new Date() }
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
         </div>
