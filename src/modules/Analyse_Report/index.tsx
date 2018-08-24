@@ -10,6 +10,15 @@ import FileRecord from './components/FileRecord'
 import Spin from 'domainComponents/Spin'
 const styles = require("./styles.less")
 const TabPane = Tabs.TabPane
+
+
+const getMd5 = str => {
+  if(str&& typeof str==='string'&& str.indexOf('=')!==-1){
+    return str.split('=')[1]
+  }
+  else return ''
+}
+
 @WithAnimateRender
 @WithCommonProps
 class Page extends React.Component<any, any> {
@@ -20,6 +29,9 @@ class Page extends React.Component<any, any> {
     }
   }
   componentDidMount() {
+
+    let str = this.props.location.search
+
     const { fileLastChangeTime, mailLastChangeTime, urlLastChangeTime, timestampRange, page,
       limit,
       total,
@@ -45,7 +57,7 @@ class Page extends React.Component<any, any> {
     }),
       this.props.toSave({
         fileName: "",
-        md5: "",
+        md5: getMd5(str)||"",
         fileType: [],
         threatType: [],
         judge: [],

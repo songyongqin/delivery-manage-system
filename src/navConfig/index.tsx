@@ -350,8 +350,9 @@ export const _navConfig = [
     hidden: true
   },
   {
-    link: CONFIG_URL,
+    link: CONFIG_URL+'?',
     title: "配置管理",
+    hidden: true, //ids，在态势中隐藏
     icon: <Icon type="database" />,
     items: [
       {
@@ -393,6 +394,41 @@ export const _navConfig = [
           {
             link: CONFIG_SYS_CONFIG_MONITOR_URL,
             title: "自我监控",
+            icon: <Indent space={1} />,
+          }
+        ]
+      },
+    ]
+  },
+  {
+    link: CONFIG_URL,
+    title: "配置管理",
+    icon: <Icon type="database" />,
+    items: [
+      {
+        link: CONFIG_USER_MANAGER_URL,
+        title: "用户管理",
+        icon: <Indent />,
+      },
+      {
+        link: CONFIG_SYS_LOG_URL, 
+        icon: <Indent />,
+        title: "系统日志",
+        items: [
+          {
+            link: CONFIG_SYS_LOG_LOGIN_URL,
+            title: "登录日志",
+            icon: <Indent space={1} />,
+          }
+        ]
+      }, {
+        link:  CONFIG_SYS_CONFIG_URL,
+        title: "系统配置",
+        icon: <Indent />,
+        items: [
+          {
+            link: CONFIG_SYS_CONFIG_WARN_URL,
+            title: "告警配置",
             icon: <Indent space={1} />,
           }
         ]
