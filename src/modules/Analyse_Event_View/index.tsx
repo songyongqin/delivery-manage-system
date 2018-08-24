@@ -14,6 +14,7 @@ import tranformTime from 'utils/tranformTime'
 import { Tag, Icon, Input  } from 'antd'
 import Spin from 'domainComponents/Spin'
 import {  ANALYSE_ATTACK_DETAIL_URL,
+          ANALYSE_REPORT_URL,   
           ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import LevelTag from 'components/LevelTag'
 import { getWeekTime } from 'utils/getInitTime'
@@ -188,7 +189,8 @@ class Page extends React.Component<any, any> {
       },
       {
         title:'详细描述',
-        dataIndex: 'detailDescription'
+        dataIndex: 'detailDescription',
+        render: (text,record) => <div>{text}<a href={ `/#${ANALYSE_REPORT_URL}?md5=${text}` } style={{ textDecoration:"none" , color:'#1890ff',marginLeft:5 }} >{record.md5}</a></div>  
       },
       {
         title:'威胁类型',
