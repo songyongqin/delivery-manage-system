@@ -7,40 +7,51 @@ import { last } from 'utils'
 import { getAppConfig } from 'domain/app'
 import { get } from 'utils'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
+import { AUDIT_EVENT_NAMESPACE } from 'constants/model'
+@extraConnect(
+  state => {
+    return {
+      initialFilters: state[AUDIT_EVENT_NAMESPACE].initialFilters
+    }
+  },
+  dispatch => {
+    return {
 
+      save: payload => dispatch(
+        {
+          type: `${AUDIT_EVENT_NAMESPACE}/save`,
+          payload
+        }
+      ),
+    }
+  }
+)
 class Page extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
-      initialFilters: {
-        timestampRange: [],
-        page: 1,
-        limit: 10,
-        threatJudge: [],
-        url: "",
-        sourceIP: "",
-        sourcePort: "",
-        requestDomain: "",
-        sender: "",
-        receiver: "",
-        value: ""
-      },
+      initialFilters: this.props.initialFilters,
       lastReqTime: 0,
       // activeKey: "net-basic"
     }
   }
   timestampRangeOnChange = payload => {
+    const { initialFilters } = this.props;
+    this.props.save({ ...initialFilters, ...payload, page: 1 })
     this.setState({
-      initialFilters: {
-        ...this.state.initialFilters,
-        ...payload
-      },
+
+      // initialFilters: {
+      //   ...this.state.initialFilters,
+      //   ...payload
+      // },
       lastReqTime: new Date().getTime(),
     })
 
   }
   render() {
-    const { initialFilters, lastReqTime } = this.state;
+    const { lastReqTime } = this.state;
+    const { initialFilters } = this.props;
+
 
     return (
       <div style={{ position: "relative" }}>
