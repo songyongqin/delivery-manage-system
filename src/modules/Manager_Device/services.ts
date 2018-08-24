@@ -123,7 +123,7 @@ export const updateByRemote = commonRequestCreator.post(httpApi.DEVICE_UPDATE_ON
 export const getupdateByRemote = commonRequestCreator.getWithQueryString(httpApi.DEVICE_UPDATE_ONLINE)
 
 //后续
-export const updateRemoteProgress = commonRequestCreator.get(httpApi.MIRROR_UPDATE_PROGRESS)
+export const updateRemoteProgress = commonRequestCreator.get(httpApi.DEVICE_UPDATE_PROGRESS)
 
 export const getUploadTask = commonRequestCreator.get(httpApi.DEVICE_UPDATE_LOCAL)
 
@@ -182,9 +182,10 @@ export const fetchDeviceIDSNode = commonRequestCreator.getWithQueryString(httpAp
 /**
  *  IDS common
  */
-export const fetchVersionInfoByLocalIDS = payload => {
-  return request(httpApi.DEVICE_UPDATE_INFO_LOCAL_IDS, getUpdateOptionsByPayload(payload))
-}
+export const fetchVersionInfoByLocalIDS = commonRequestCreator.get(httpApi.DEVICE_UPDATE_INFO_LOCAL_IDS)
+// export const fetchVersionInfoByLocalIDS = payload => {
+//   return request(httpApi.DEVICE_UPDATE_INFO_LOCAL_IDS, getUpdateOptionsByPayload(payload))
+// }
 
 export const updateByLocalIDS = payload => {
   return request(httpApi.DEVICE_UPDATE_LOCAL_IDS, getUpdateOptionsByPayload(payload))

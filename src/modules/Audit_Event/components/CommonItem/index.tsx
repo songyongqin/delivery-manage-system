@@ -1,18 +1,39 @@
 import * as React from 'react'
 import TableWithRemote from 'domainComponents/TableWithRemote'
 import LimitForm from './LimitForm'
+import extraConnect from 'domainUtils/extraConnect'
+import { AUDIT_EVENT_NAMESPACE } from 'constants/model'
+@extraConnect(
+  state => {
+    return {
+      initialFilters: state[AUDIT_EVENT_NAMESPACE].initialFilters
+    }
+  },
+  dispatch => {
+    return {
 
+      save: payload => dispatch(
+        {
+          type: `${AUDIT_EVENT_NAMESPACE}/save`,
+          payload
+        }
+      ),
+    }
+  }
+)
 export default class CommonItem extends React.Component<any, any>{
   constructor(props) {
     super(props)
     this.state = {
-      filters: { limit: 10 },
+      // filters: { limit: 10 },
       lastReqTime: 0
     }
   }
   onSubmit = filters => {
+    const { initialFilters } = this.props;
+    this.props.save({ ...initialFilters, ...filters, page: 1 })
     this.setState({
-      filters,
+      // filters,
       lastReqTime: new Date().getTime(),
     })
   }
@@ -30,7 +51,7 @@ export default class CommonItem extends React.Component<any, any>{
         </div>
         <TableWithRemote
           key={`${this.state.lastReqTime}-table`}
-          initialFilters={{ ...this.props.initialFilters, ...this.state.filters }}
+          initialFilters={{ ...this.props.initialFilters }}
           getColumns={this.props.getColumns}
           remoteNamespace={this.props.remoteNamespace}>
         </TableWithRemote>

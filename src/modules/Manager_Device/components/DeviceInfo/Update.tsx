@@ -37,7 +37,7 @@ import {
   UPLOAD_STATUS,
   MERGE_STATUS
 } from '../../constants'
-import { MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE } from 'constants/model'
+import { MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE, MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE } from 'constants/model'
 import Table from 'domainComponents/Table'
 const FormItem = Form.Item
 const Dragger = Upload.Dragger
@@ -180,6 +180,7 @@ class UpdateForm extends React.Component<any, any> {
           updateRemoteProgress().then(
             _ => {
               if (this.props.progressState == 1) {
+
                 this.modifyHandleUpdate();
                 clearInterval(interval);
               }
@@ -353,19 +354,23 @@ class UpdateForm extends React.Component<any, any> {
       }));
   }
 
-  haveValidResult = () => this.state.result.some(i =>
-    i[APPLIACTION_VERSION_DATAINDEX] !== null
-    ||
-    i[ENGINE_VERSION_LIST_DATAINDEX].some(e => e["version"] !== null)
-    ||
-    i[LIBRARY_VERSION_DATAINDEX].some(l => l["version"] !== null)
-  )
+  haveValidResult = () => {
+
+    return this.state.result.some(i =>
+      i[APPLIACTION_VERSION_DATAINDEX] !== null
+      ||
+      i[ENGINE_VERSION_LIST_DATAINDEX].some(e => e["version"] !== null)
+      ||
+      i[LIBRARY_VERSION_LIST_DATAINDEX].some(l => l["version"] !== null)
+    )
+  }
 
   render() {
+
     const { getFieldDecorator } = this.props.form;
     const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, putFileChunk, initLoading } = this.props;
 
-    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method } = this.state;
+    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method, file } = this.state;
     const resultStatus = localUploadInfo.mergeResult.status == 1;
     const lblClasses = classnames({
       "lbl-dark": isDark
@@ -423,8 +428,9 @@ class UpdateForm extends React.Component<any, any> {
             {value}
           </Tag>
           if (haveResult) {
-            const target = result.find(i => i[ID_DATAINDEX] === deviceId),
-              version = target[APPLIACTION_VERSION_DATAINDEX];
+            const target = result.find(i => i[ID_DATAINDEX] === deviceId);
+            const version = target[APPLIACTION_VERSION_DATAINDEX];
+
             return (
               version
                 ?
@@ -833,7 +839,7 @@ class UpdateForm extends React.Component<any, any> {
             </Col>
             <Col>
               <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <Button type="primary" loading={initLoading} onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.handleGetVersion}>{this.state.method === "local" && !this.state.progressVisible ? "确定上传" : "获取升级版本信息"}</Button>
+                <Button type="primary" loading={initLoading} disabled={this.state.method == LOCAL_METHOD ? file == null : false} onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.handleGetVersion}>{this.state.method === "local" && !this.state.progressVisible ? "确定上传" : "获取升级版本信息"}</Button>
               </div>
             </Col>
           </Row>
@@ -845,32 +851,32 @@ class UpdateForm extends React.Component<any, any> {
 const mapDispatchToProps = dispatch => {
   return {
     initUploadTask: payload => dispatch({
-      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/initUploadTask`,
+      type: `${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/initUploadTask`,
       payload
     }),
     putFileChunk: payload => {
       // ownProps.hideOptionPanel()
       return dispatch({
-        type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/putFileChunk`,
+        type: `${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/putFileChunk`,
         payload
       })
     },
     getupdateByRemote: payload => dispatch({
-      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/getupdateByRemote`,
+      type: `${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/getupdateByRemote`,
       payload
     }),
     getUploadResult: payload => dispatch({
-      type: `${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/getUploadResult`,
+      type: `${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/getUploadResult`,
       payload
     })
   }
 }
 const mapStateToProps = state => {
-  const { percent, progressState, } = state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE]
+  const { percent, progressState, } = state[MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE]
   return {
     percent, progressState,
-    localUploadInfo: state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE].localUploadInfo,
-    initLoading: state.loading.effects[`${MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE}/initUploadTask`]
+    localUploadInfo: state[MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE].localUploadInfo,
+    initLoading: state.loading.effects[`${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/initUploadTask`]
   }
 }
 const WrappedForm: any = Form.create()(UpdateForm)

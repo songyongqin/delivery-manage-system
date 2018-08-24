@@ -15,7 +15,7 @@ import { If, When, Choose, Otherwise } from 'components/ControlStatements'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import { isLicenceOverdue } from 'domain/licence'
 import { debounce } from 'utils'
-import { MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE } from 'constants/model'
+import { MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE } from 'constants/model'
 
 /*
 * 该组件参数如下
@@ -40,7 +40,7 @@ interface Props {
 }
 
 const mapStateToProps = state => {
-  const { progressState } = state[MANAGER_DEVICE_HONEYPOT_STANDALONE_NAMESPACE]
+  const { progressState } = state[MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE]
   return {
     progressState,
     effectsLoading: state.loading.effects,

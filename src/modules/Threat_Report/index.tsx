@@ -88,6 +88,7 @@ class ThreatReport extends Component<any,any>{
         <div style={{ float: "right", position:'absolute', right:10 }}>
           <DateRangePicker
             value={timestampRange}
+            key={ +new Date() }
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
           <Button type={ 'primary' } style={{ marginLeft: 20 }} onClick={ this.export } loading={ isLoading } >导出</Button>

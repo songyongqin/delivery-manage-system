@@ -254,6 +254,7 @@ class Page extends React.Component<any, any> {
                         style={{ width:240, marginRight:20 }}  />
           <DateRangePicker
             value={filters.timestampRange}
+            key={ +new Date() }
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
         </div>

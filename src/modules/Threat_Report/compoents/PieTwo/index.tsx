@@ -108,6 +108,7 @@ const getConfig = (data, data2) => ({
       radius: ['40%','60%'],
       center: ['40%', '40%'],
       data: data2,
+      minAngle:5,
       label: {
         normal: {
           show: false,
