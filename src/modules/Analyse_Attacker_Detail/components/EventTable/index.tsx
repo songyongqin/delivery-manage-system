@@ -32,7 +32,7 @@ let columns = [
   { title:'详细描述', 
     dataIndex:'detailDescription'
   },
-  { title:'事件类型', 
+  { title:'威胁类型', 
     dataIndex:'eventType'
   },
   { title:'攻击者IP', 
