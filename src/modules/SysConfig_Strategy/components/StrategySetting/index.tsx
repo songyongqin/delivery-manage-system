@@ -218,6 +218,7 @@ export default class StrategySetting extends React.Component<any, any>{
             marginRight: this.state.expanded ? "400px" : "0px",
             transitionProperty: "margin",
             transitionDuration: "0.3s",
+            minHeight: "600px"
           }}>
             <TableWithRemote
               initialFilters={initialFilters}
