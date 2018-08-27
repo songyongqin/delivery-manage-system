@@ -45,6 +45,7 @@ import Tag from 'components/Tag'
 import Card from 'domainComponents/Card'
 import { getAppConfig } from 'domain/app'
 import { createMapDispatchWithPromise } from 'domainUtils/dvaExtraDispatch'
+import { INIT_STATUS, COMMON_STATUS } from '../../constants'
 import { get } from 'utils'
 const LICENCE_SUCCESS = 1
 const styles = require('./styles.less')
@@ -170,11 +171,10 @@ class UpdateForm extends React.Component<any, any> {
     const { serverUrl } = this.state;
 
     const { getupdateByRemote } = this.props;
-
+    this.setState({
+      progressVisible: true
+    })
     getupdateByRemote({ serverUrl }).then(res => {
-      this.setState({
-        progressVisible: true
-      })
       const interval = setInterval(
         () => {
           updateRemoteProgress().then(
@@ -842,7 +842,8 @@ class UpdateForm extends React.Component<any, any> {
             </Col>
             <Col>
               <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <Button type="primary" loading={initLoading} disabled={this.state.method == LOCAL_METHOD ? file == null : false} onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.handleGetVersion}>{this.state.method === "local" && !this.state.progressVisible ? "确定上传" : "获取升级版本信息"}</Button>
+                <p style={{ color: "red" }}>{localUploadInfo.formatError}</p>
+                <Button type="primary" loading={initLoading} disabled={this.state.method == LOCAL_METHOD ? (file == null || localUploadInfo.status == COMMON_STATUS) : false} onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.handleGetVersion}>{this.state.method === "local" && !this.state.progressVisible ? "确定上传" : "获取升级版本信息"}</Button>
               </div>
             </Col>
           </Row>
