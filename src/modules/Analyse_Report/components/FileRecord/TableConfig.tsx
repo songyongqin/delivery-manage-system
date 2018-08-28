@@ -64,7 +64,7 @@ export const getColumns = ({
     [FILE_NAME_DATA_INDEX]: (fileName) => <OverflowTextWrapper style={{ textAlign: "center" }}>{fileName}</OverflowTextWrapper>,
     [MD5_DATA_INDEX]: (md5) => { return <OverflowTextWrapper style={{ textAlign: "center" }}>{md5}</OverflowTextWrapper> },
     [FILE_TYPE_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
-    // [JUDGE_DATA_INDEX]: (value) => <Judge value={value}></Judge>,
+    [JUDGE_DATA_INDEX]: (value) => <Judge value={value}></Judge>,
     [THREAT_TYPE_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
     [TIME_DATA_INDEX]: (time) => <div style={{ textAlign: "center" }}><TimesLabel value={[time]}></TimesLabel></div>,
     [THREAT_LEVEL_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
@@ -110,18 +110,18 @@ export const getColumns = ({
       filtersTextConfig: {
         [FILE_TYPE_DATA_INDEX]: FILETYPE,
         [THREAT_TYPE_DATA_INDEX]: THREAT_TYPE,
-        // [JUDGE_DATA_INDEX]: JUDGE_TEXT_TYPE
+        [JUDGE_DATA_INDEX]: JUDGE_TEXT_TYPE
 
       },
       filtersConfig: {
         [FILE_TYPE_DATA_INDEX]: FILETYPE,
         [THREAT_TYPE_DATA_INDEX]: THREAT_TYPE,
-        // [JUDGE_DATA_INDEX]: JUDGE_TYPE
+        [JUDGE_DATA_INDEX]: JUDGE_TYPE
       },
       filteredValue: {
         [FILE_TYPE_DATA_INDEX]: fileType,
         [THREAT_TYPE_DATA_INDEX]: threatType,
-        // [JUDGE_DATA_INDEX]: judge
+        [JUDGE_DATA_INDEX]: judge
       },
       extraProps: {
         [FILE_NAME_DATA_INDEX]: FilterAction(FILE_NAME_SEARCH, changeFilename, fileName, searchFilename, filterDropdownName, downFile),
@@ -129,7 +129,7 @@ export const getColumns = ({
         [MD5_DATA_INDEX]: FilterAction(MD5_NAME_SEARCH, onInputChangeMD5, md5, onSearchMD5, filterDropdownMD5, downMD5),
         [KEY_INDEX]: { width: "50px" },
         [FILE_TYPE_DATA_INDEX]: { width: "120px" },
-        // [JUDGE_DATA_INDEX]: { width: "120px" },
+        [JUDGE_DATA_INDEX]: { width: "120px" },
         [THREAT_TYPE_DATA_INDEX]: { width: "120px" },
         [TIME_DATA_INDEX]: { width: "150px" },
         [THREAT_LEVEL_DATA_INDEX]: { width: "100px" },
