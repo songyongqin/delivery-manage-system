@@ -24,7 +24,7 @@ module.exports = (webpackConfig, env) => {
   ]
 
 
-  if (production) {
+  // if (production) {
     webpackConfig.plugins.push(
       new webpack.LoaderOptionsPlugin({
         minimize: true,
@@ -34,7 +34,7 @@ module.exports = (webpackConfig, env) => {
     webpackConfig.plugins.push(
       new CleanWebpackPlugin(["dist"])
     )
-  }
+  // }
   // const lessRule = webpackConfig.module.rules[3];
 
   // const sassRule = { ...lessRule },

@@ -25,6 +25,7 @@ import { getFileMD5 } from 'utils/md5'
 import { splitFileToChunk } from 'utils/fileSplitUpload'
 const CHUNK_SIZE = 1024 * 1024 * 2//切割文件块的大小
 const initLocalUploadInfo = {
+  formatError: null,
   status: COMMON_STATUS,//上传镜像文件任务的状态
   md5: null,//镜像文件的md5
   file: null,//镜像文件
@@ -108,6 +109,7 @@ export default {
           type: "saveLocalUploadInfo",
           payload: {
             status: COMMON_STATUS,
+            formatError: res.message
           }
         })
       }

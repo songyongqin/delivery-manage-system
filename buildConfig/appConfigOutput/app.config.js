@@ -262,7 +262,7 @@ module.exports = {
       "network": true,
       "systemLog": true,
       "networkAuth": true,
-      "masterIPConfig": true,
+      "masterIPConfig": false,
       "cloudDetection": true
     },
     "strategyConfig": {

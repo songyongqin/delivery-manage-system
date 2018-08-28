@@ -45,6 +45,7 @@ import Tag from 'components/Tag'
 import Card from 'domainComponents/Card'
 import { getAppConfig } from 'domain/app'
 import { createMapDispatchWithPromise } from 'domainUtils/dvaExtraDispatch'
+import { INIT_STATUS, COMMON_STATUS } from '../../constants'
 import { get } from 'utils'
 const LICENCE_SUCCESS = 1
 const styles = require('./styles.less')
@@ -170,11 +171,10 @@ class UpdateForm extends React.Component<any, any> {
     const { serverUrl } = this.state;
 
     const { getupdateByRemote } = this.props;
-
+    this.setState({
+      progressVisible: true
+    })
     getupdateByRemote({ serverUrl }).then(res => {
-      this.setState({
-        progressVisible: true
-      })
       const interval = setInterval(
         () => {
           updateRemoteProgress().then(
@@ -215,7 +215,7 @@ class UpdateForm extends React.Component<any, any> {
   }
   handleUpdate = (e) => {
     e.preventDefault();
-    const { onSubmit, form, handle, defaultValue, putFileChunk, mergeUpdateByLocal } = this.props;
+    const { onSubmit, form, handle, defaultValue, putFileChunk, localUploadInfo } = this.props;
     const { method, file } = this.state;
     const { updateLocal, updateRemote } = handle;
     this.setState({
@@ -229,23 +229,25 @@ class UpdateForm extends React.Component<any, any> {
       ?
       updateRemote({ idList, serverUrl })
       :
-      putFileChunk({ idList })
-
-    res.then(result => {
-      method === REMOTE_METHOD
-        ?
-        this.setState({
-          updateResult: result,
-          shouldReload: result.some(i => i.status === 1)
-        })
-        :
-        this.setState({
-          localProgress: true,
-          // localupdateResult: result,
-          // localshouldReload: result.some(i => i.status === 1)
-        })
-    }
-    )
+      localUploadInfo.currentChunk - 1 == localUploadInfo.chunkCount - 1 ? this.handleGetVersion : putFileChunk({ idList })
+    localUploadInfo.currentChunk - 1 == localUploadInfo.chunkCount - 1 ?
+      null
+      :
+      res.then(result => {
+        method === REMOTE_METHOD
+          ?
+          this.setState({
+            updateResult: result,
+            shouldReload: result.some(i => i.status === 1)
+          })
+          :
+          this.setState({
+            localProgress: true,
+            // localupdateResult: result,
+            // localshouldReload: result.some(i => i.status === 1)
+          })
+      }
+      )
 
   }
   modifyHandleUpdate = () => {
@@ -371,7 +373,7 @@ class UpdateForm extends React.Component<any, any> {
     const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, putFileChunk, initLoading } = this.props;
 
     const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method, file } = this.state;
-    const resultStatus = localUploadInfo.mergeResult.status == 1;
+    const resultStatus = localUploadInfo.mergeResult.status == 1 || localUploadInfo.currentChunk - 1 == localUploadInfo.chunkCount - 1;
     const lblClasses = classnames({
       "lbl-dark": isDark
     })
@@ -384,8 +386,9 @@ class UpdateForm extends React.Component<any, any> {
     const value = localUploadInfo.progress;
     const { status } = localUploadInfo;
 
+
     const disabled = status === UPLOAD_STATUS || status === MERGE_STATUS || initLoading
-    const localpercent = Math.ceil(value * 100);
+    const localpercent = localUploadInfo.currentChunk - 1 == localUploadInfo.chunkCount - 1 ? 100 : Math.ceil(value * 100);
     // const localColumns = [
     //   this.state.progressVisible
     //     ?
@@ -839,7 +842,8 @@ class UpdateForm extends React.Component<any, any> {
             </Col>
             <Col>
               <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <Button type="primary" loading={initLoading} disabled={this.state.method == LOCAL_METHOD ? file == null : false} onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.handleGetVersion}>{this.state.method === "local" && !this.state.progressVisible ? "确定上传" : "获取升级版本信息"}</Button>
+                <p style={{ color: "red" }}>{localUploadInfo.formatError}</p>
+                <Button type="primary" loading={initLoading} disabled={this.state.method == LOCAL_METHOD ? (file == null || localUploadInfo.status == COMMON_STATUS) : false} onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.handleGetVersion}>{this.state.method === "local" && !this.state.progressVisible ? "确定上传" : "获取升级版本信息"}</Button>
               </div>
             </Col>
           </Row>
