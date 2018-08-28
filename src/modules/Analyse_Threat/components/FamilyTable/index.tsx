@@ -10,16 +10,23 @@ import { ANALYSE_THREAT_FAMILY_DETAIL_URL } from 'routes/config/path'
 import WithPopover from 'components/WithPopover'
 import OverflowTextWrapper from 'components/OverflowTextWrapper'
 import ResetIcon from 'components/ResetIcon'
+import { setCache } from 'utils/cache'
 
 interface props{
   tableData: Array<object>
   tableBeforeFetch: (any) => any
   reset:(any) => any
+  timestampRange: Array<number>
 }
 
 
 @WithTableConfig(path.layoutConfig.analyseThreatFamily)
 class FamilyTable extends React.Component<props, any>{
+
+  // setStorage = timestampRange => {
+  //   setCache('timestampRange', timestampRange )
+  // }
+
   render(){
 
     let columns = [
@@ -61,7 +68,7 @@ class FamilyTable extends React.Component<props, any>{
           <div style={{ textAlign:'center' }}  >
           
             <a  href={ `/#${ANALYSE_THREAT_FAMILY_DETAIL_URL}?threatFamily=${record.threatFamily}` }
-                  style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} >查看</a>
+                  style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >查看</a>
           </div>
       },
     ]

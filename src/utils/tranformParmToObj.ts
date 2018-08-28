@@ -1,4 +1,14 @@
 
+const canParse = str => {
+  try{
+    JSON.parse(str)
+    return true
+  }
+  catch(err){
+    return false
+  }
+}
+
 
 const  tranformPathToObj = (str:string):object => {
   if(!check(str)){
@@ -11,7 +21,15 @@ const  tranformPathToObj = (str:string):object => {
   for(let i=0; i<arr.length; i++ ){
     if(arr[i]&&arr[i].indexOf('=')){
       let array = arr[i].split('=')
-      obj[array[0]] = array[1]
+
+      let value = canParse(array[1]) ? JSON.parse(array[1]) : array[1]
+
+      // if(array[0]==='timestampRange'){
+      //   let arr = value.split
+      //   value = [value.split(',')]
+      // }
+
+      obj[array[0]] = value
     }
   }
   return obj
