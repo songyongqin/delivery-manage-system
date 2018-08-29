@@ -111,7 +111,8 @@ export default class CommonItem extends React.Component<any, any>{
       editVisible: false,
       assetsIp: "",
       defaultConfig: {},
-      activeIp: ""
+      activeIp: "",
+      assetsName: "",
     }
   }
   componentDidMount() {
@@ -131,11 +132,12 @@ export default class CommonItem extends React.Component<any, any>{
       activeIp: ip
     });
   }
-  showEditModal = (assetsIp) => {
+  showEditModal = (assetsIp, assetsName) => {
 
     this.setState({
       editVisible: true,
-      assetsIp
+      assetsIp,
+      assetsName
     });
   }
   showConfigModal = () => {
@@ -231,13 +233,14 @@ export default class CommonItem extends React.Component<any, any>{
             <AssetsDetail activeIp={this.state.activeIp}></AssetsDetail>
           </Modal>
           <Modal
+            destroyOnClose={true}
             title="编辑资产信息"
             visible={this.state.editVisible}
             onCancel={this.handleCancel}
             onOk={this.edit_handleOk}
             footer={null}
           >
-            <EditForm onOk={this.edit_handleOk} assetsIp={this.state.assetsIp}></EditForm>
+            <EditForm onOk={this.edit_handleOk} assetsIp={this.state.assetsIp} assetsName={this.state.assetsName}></EditForm>
           </Modal>
 
         </div>
