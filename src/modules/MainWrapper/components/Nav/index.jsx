@@ -22,20 +22,57 @@ const getFinalLink = config => {
   }
 }
 
-const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem = false }) => {
+const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem = false, active }) => {
   return navConfig.map(i => {
 
-    const classes = classnames({
-      [styles["link-mini"]]: mini,
-      [styles["link"]]: !mini,
-    })
+
 
     // console.info(i["icon"], mini, i.link)
     
     const link = getFinalLink(i)
  
-    const title = (
-      <Link to={link} className={classes} onClick={e => {
+    // const title = (
+    //   <Link to={link} className={classes} onClick={e => {
+    //     //授权过期 跳转到device路由
+    //     if (isLicenceOverdue()) {
+    //       //阻止默认跳转行为
+    //       e.preventDefault()
+    //       //跳转到设备管理
+    //       getAppInstance()._store.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+    //       //弹出消息框
+    //       getAppInstance()._store.dispatch({
+    //         type: "layout/saveOverdueTipVisible",
+    //         payload: true
+    //       })
+    //     }
+    //   }}>
+    //     <Choose>
+    //       <When condition={i["icon"]} >
+    //         {i.icon}
+    //       </When>
+    //       <When condition={(!i["icon"]) && (!mini)}>
+    //         <span style={{ display: "inline-block", width: "26px" }}></span>
+    //       </When>
+    //     </Choose>
+    //     <If condition={!mini || innerItem}>
+    //       <p style={{
+    //         // textAlignLast: "justify",
+    //         display: "inline-block",
+    //         width: "80px"
+    //       }}>
+    //         {i.title}
+    //       </p>
+    //     </If>
+    //   </Link >
+    // )
+ 
+
+    const Title =({ selected=false }) => 
+      <Link to={link} className={ classnames({
+        [styles["link-mini"]]: mini,
+        [styles["link"]]: !mini,
+        [styles["bg"]]: selected
+      })} onClick={e => {
         //授权过期 跳转到device路由
         if (isLicenceOverdue()) {
           //阻止默认跳转行为
@@ -67,25 +104,25 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
           </p>
         </If>
       </Link >
-    )
-
-
+    
+    
     if ("items" in i) {
-
       return (
         <Menu.SubMenu key={i.link}
           className={classnames({
-            [styles["active"]]: selectedKeys.includes(i.link),
+            // [styles["active"]]: selectedKeys.includes(i.link),
+            [styles["active"]]: active.includes(i.link),
+            // [styles["active"]]: active===i.link,
             [styles["title-wrapper"]]: true
           })}
-          title={title}>
-          {getMenuContent({ navConfig: i.items, mini, selectedKeys, innerItem: true })}
+          title={<Title selected={ active.includes(i.link) } />}>
+          {getMenuContent({ navConfig: i.items, mini, selectedKeys, innerItem: true, active })}
         </Menu.SubMenu>
       )
     } else {
       return (
         <Menu.Item key={i.link}>
-          {title}
+          <Title />
         </Menu.Item>
       )
     }
@@ -200,7 +237,10 @@ export default class extends React.Component {
         target = [...target, `${target[target.length - 1]}/${item}`]
 
     }, [])
+
+    // const selectedKeys =[ active]
     
+    console.log(active, selectedKeys)
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu
@@ -209,9 +249,9 @@ export default class extends React.Component {
           onOpenChange={ this.onOpenChange }
           mode={mini ? "vertical" : "inline"} 
           inlineIndent={ 10 }
-          selectedKeys={selectedKeys}
+          selectedKeys={[active]}
           >
-          {getMenuContent({ navConfig, mini, selectedKeys })}
+          {getMenuContent({ navConfig, mini, selectedKeys, active })}
         </Menu>
       </nav>
     )
