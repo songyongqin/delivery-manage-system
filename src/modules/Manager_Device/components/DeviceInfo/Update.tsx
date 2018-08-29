@@ -141,6 +141,7 @@ class UpdateForm extends React.Component<any, any> {
     localProgress: false,
     localupdateResult: [],
     localshouldReload: false,
+    localUploadLoading: false
   }
   static defaultProps = {
     defaultValue: { data: [] }
@@ -206,6 +207,9 @@ class UpdateForm extends React.Component<any, any> {
     const { getUploadResult, localUploadInfo } = this.props;
     const { md5 } = localUploadInfo;
     const { method, file } = this.state;
+    this.setState({
+      localUploadLoading: true
+    })
     const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
     getUploadResult({ idList, md5 }).then(result => this.setState({
       updateResult: result,
@@ -370,9 +374,9 @@ class UpdateForm extends React.Component<any, any> {
   render() {
 
     const { getFieldDecorator } = this.props.form;
-    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, localUploadLoading, initLoading } = this.props;
+    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, initLoading } = this.props;
 
-    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method, file } = this.state;
+    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method, file, localUploadLoading } = this.state;
     const resultStatus = localUploadInfo.mergeResult.status == 1 || localUploadInfo.currentChunk - 1 == localUploadInfo.chunkCount - 1;
     const lblClasses = classnames({
       "lbl-dark": isDark
@@ -882,7 +886,6 @@ const mapStateToProps = state => {
   return {
     percent, progressState,
     localUploadInfo: state[MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE].localUploadInfo,
-    localUploadLoading: state.loading.effects[`${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/fetchVersionInfoByLocal`],
     initLoading: state.loading.effects[`${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/initUploadTask`]
   }
 }
