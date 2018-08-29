@@ -8,11 +8,13 @@ import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import TimeTag from 'components/TimeTag'
 import { ANALYSE_THREAT_LOOPHOLE_DETAIL_URL } from 'routes/config/path'
 import ResetIcon from 'components/ResetIcon'
+import { setCache } from 'utils/cache'
 
 interface props{
   tableData: Array<object>
   tableBeforeFetch: (any) => any
   reset: (any) => any
+  timestampRange: Array<number>
 }
 
 
@@ -57,7 +59,7 @@ class FamilyTable extends React.Component<props, any>{
           <div style={{ textAlign:'center' }}  >
           {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
             <a  href={ `/#${ANALYSE_THREAT_LOOPHOLE_DETAIL_URL}?loophole=${record.loophole}` }
-                  style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} >查看</a>
+                  style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >查看</a>
           </div>
       },
     ]

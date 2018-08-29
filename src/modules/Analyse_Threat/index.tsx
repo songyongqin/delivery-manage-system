@@ -284,6 +284,7 @@ class Page extends React.Component<any, any> {
               <Spin spinning={ this.props.familyLoading  } >
                   <FamilyTable  tableData={ familyData }
                                 reset={ this.reset }
+                                timestampRange={ filters.timestampRange }
                                 key={ this.state.familyTableKey } 
                                 tableBeforeFetch={ this.fetchFamilyTable } />
                   <WithPagination total={familyTotal}
@@ -296,6 +297,7 @@ class Page extends React.Component<any, any> {
               <Spin spinning={ this.props.loopholeLoading  } >
                 <LoopholeTable  tableData={ loopholeData } 
                               tableBeforeFetch={ this.fetchLoopholeTable }
+                              timestampRange={ filters.timestampRange }
                               reset={ this.reset }
                               key={ this.state.loopholeTableKey } />
                 <WithPagination total={loopholeTotal}

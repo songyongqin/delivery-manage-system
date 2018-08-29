@@ -13,6 +13,8 @@ import FamilyAssetsTable from './components/FamilyAssetsTable'
 import LoopholeEventTable from './components/LoopholeEventTable'
 import LoopholeCcTable from './components/LoopholeCcTable'
 import LoopholeAssetsTable from './components/LoopholeAssetsTable'
+import { getCache } from 'utils/cache'
+import moment from 'moment'
 
 import SwitchItem from './components/SwitchItem'
 import { selectArr } from '../Analyse_Attacked_Detail/constants';
@@ -119,7 +121,7 @@ const getType = str => {
   else return typeArr[1]
 }
 
-
+const transform = arr => [ moment(arr[0]), moment(arr[1]) ]
 
 @WithAnimateRender
 @extraConnect(mapStateToprops, mapDispatchToprops)
@@ -130,7 +132,7 @@ class Page extends React.Component<any, state> {
       selected: SelectArr[0],
       selectValue: SelectArr[0],
       type: getType(props.location.pathname),
-      path: tranformParmToObj(props.location.search),
+      path:{ ...tranformParmToObj(props.location.search), timestampRange: transform(getCache('timestampRange')) },
       familyEventArr: {
         total:0,
         data: []
@@ -176,6 +178,7 @@ class Page extends React.Component<any, state> {
   }
 
   componentDidMount(){
+    console.log()
     if(this.state.type===typeArr[0]){
       this.fetchFamilyEvent(1)
     }
@@ -257,7 +260,7 @@ class Page extends React.Component<any, state> {
   }
 
   getSelectValue = selectValue => {
-    console.log('value', selectValue)
+    // console.log('value', selectValue)
     const { type, isFetch } = this.state
     this.setState({ selectValue })
     if(selectValue===SelectArr[0]){
