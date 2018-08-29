@@ -57,7 +57,7 @@ class editForm extends React.Component<any, any> {
           {...formItemLayout}
           label="资产名称"
         >
-          {getFieldDecorator('assetsName', {})(
+          {getFieldDecorator('assetsName', { initialValue: this.props.assetsName })(
             <TextArea placeholder="请填写资产名称" autosize={{ minRows: 1, maxRows: 3 }} />
           )}
         </Form.Item>

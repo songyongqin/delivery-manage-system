@@ -370,7 +370,7 @@ class UpdateForm extends React.Component<any, any> {
   render() {
 
     const { getFieldDecorator } = this.props.form;
-    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, putFileChunk, initLoading } = this.props;
+    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, localUploadLoading, initLoading } = this.props;
 
     const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method, file } = this.state;
     const resultStatus = localUploadInfo.mergeResult.status == 1 || localUploadInfo.currentChunk - 1 == localUploadInfo.chunkCount - 1;
@@ -740,6 +740,8 @@ class UpdateForm extends React.Component<any, any> {
               this.state.method == LOCAL_METHOD
                 ?
                 <Button
+                  loading={localUploadLoading}
+                  disabled={!haveValidResult}
                   type="primary"
                   onClick={this.localhandleUpdate}>
                   确定更新
@@ -880,6 +882,7 @@ const mapStateToProps = state => {
   return {
     percent, progressState,
     localUploadInfo: state[MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE].localUploadInfo,
+    localUploadLoading: state.loading.effects[`${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/fetchVersionInfoByLocal`],
     initLoading: state.loading.effects[`${MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE}/initUploadTask`]
   }
 }
