@@ -6,7 +6,7 @@ import { routerRedux } from 'dva/router'
 import { Modal } from 'antd'
 import { delUserData } from 'domain/user'
 import { setOverdueStatus } from 'domain/licence'
-import { MANAGER_DEVICE_URL } from 'routes/config/path'
+import { CONFIG_DEVICE_MANAGER_URL } from 'routes/config/path'
 import { getAppInstance } from 'domain/instance'
 
 Message.config({
@@ -35,7 +35,7 @@ const handleLicenceOverdue = () => {
   //保存设备授权过期状态
   setOverdueStatus(true)
   //跳转到设备管理页面
-  getAppInstance()._store.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+  getAppInstance()._store.dispatch(routerRedux.push(CONFIG_DEVICE_MANAGER_URL))
   //改变layout model 中 overdueTipVisible的状态 
   getAppInstance()._store.dispatch({
     type: "layout/saveOverdueTipVisible",
@@ -44,7 +44,7 @@ const handleLicenceOverdue = () => {
 }
 
 export default (url: string, options: object, result: any): void => {
-  
+
   try {
     url = url.split("?")[0]
     //判断最终请求的结果是否成功 成功则直接不处理其他内容
