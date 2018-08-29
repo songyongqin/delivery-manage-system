@@ -80,7 +80,7 @@ export default {
         reject && reject(res.message)
       }
     },
-    initUploadTask: function* ({ resolve, payload }, { call, put }) {
+    initUploadTask: function* ({ resolve, payload, reject }, { call, put }) {
       const { file } = payload;
       /**
        * 保存文件基础信息到state当中  
@@ -109,7 +109,6 @@ export default {
           type: "saveLocalUploadInfo",
           payload: {
             status: COMMON_STATUS,
-            formatError: res.message
           }
         })
       }
@@ -180,6 +179,14 @@ export default {
         })
 
         resolve && resolve()
+      } else {
+        yield put({
+          type: "saveLocalUploadInfo",
+          payload: {
+            formatError: newTaskRes.message,
+          }
+        })
+        reject && reject(newTaskRes.message)
       }
 
 
