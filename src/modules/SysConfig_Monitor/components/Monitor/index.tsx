@@ -8,6 +8,8 @@ import { Icon } from 'antd'
 import { primaryColor } from 'themes/vars'
 import { Choose, When, Otherwise } from 'components/ControlStatements'
 import Spin from 'domainComponents/Spin'
+import path from 'constants/path'
+import WithConfig from 'domainComponents/WithConfig'
 
 const mapStateToProps = state => {
   return {
@@ -21,7 +23,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-
+@WithConfig(path.layoutConfig.SysConfigMonitor)
 @extraConnect(mapStateToProps, mapDispatchToProps)
 export default class Monitor extends React.Component<any, any>{
   constructor(props) {
@@ -77,7 +79,6 @@ export default class Monitor extends React.Component<any, any>{
   }
   render() {
     const { remoteNamespace, initialFilters, getColumns, effectsLoading } = this.props
-
     const { lastReqTime, config } = this.state
 
     const fetchLogLoading = effectsLoading[`${remoteNamespace}/fetch`]
@@ -111,7 +112,7 @@ export default class Monitor extends React.Component<any, any>{
                   items={modules}
                   defaultValue={defaultValue}
                   onSubmit={this.onSubmit}
-                  itemTextConfig={{}} />
+                  itemTextConfig={this.props.config.columns} />
               </Spin>
             </Otherwise>
           </Choose>
