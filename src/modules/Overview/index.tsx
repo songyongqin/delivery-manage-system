@@ -88,11 +88,11 @@ class Page extends React.Component<any, any> {
       filters: {
         timestampRange:getWeekTime()|| []
       },
-      networkFlow:{
-        series:[],
-        xAxis:[],
-        unit:''
-      },
+      // networkFlow:{
+      //   series:[],
+      //   xAxis:[],
+      //   unit:''
+      // },
       applicationFlow:{
         series:[],
         xAxis:[],
@@ -153,7 +153,8 @@ class Page extends React.Component<any, any> {
   }
 
   render() {
-    const { applicationFlow, filters, networkFlow, table } = this.state
+    // const { applicationFlow, filters, networkFlow, table } = this.state
+    const { applicationFlow, filters, table } = this.state
     const { countLoading, flowLoading, eventLoading } = this.props
     
     return (
@@ -171,9 +172,9 @@ class Page extends React.Component<any, any> {
               <Pie data={ this.state.count } />
             </Spin>,
             <Spin key='pie-charts-line' spinning={ flowLoading } >
-              <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10,  padding:10 }} >
+              {/* <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10,  padding:10 }} >
                 <Line title={'网络流量'} xAxis={ networkFlow.xAxis } series={ networkFlow.series }  unit={ networkFlow.unit }  />
-              </span>
+              </span> */}
               <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10, padding:10 }} >
                 <Line title={'应用流量'} xAxis={ applicationFlow.xAxis } series={ applicationFlow.series }  unit={ applicationFlow.unit }  />
               </span>

@@ -278,6 +278,7 @@ export const _navConfig = [
   {
     link: STRATEGY_URL,
     title: "策略配置",
+    hidden: true,
     icon: <Icon type="file-text"></Icon>
   },
   {

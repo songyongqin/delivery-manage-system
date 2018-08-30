@@ -141,6 +141,7 @@ class UpdateForm extends React.Component<any, any> {
     localProgress: false,
     localupdateResult: [],
     localshouldReload: false,
+    localUploadLoading: false
   }
   static defaultProps = {
     defaultValue: { data: [] }
@@ -206,6 +207,9 @@ class UpdateForm extends React.Component<any, any> {
     const { getUploadResult, localUploadInfo } = this.props;
     const { md5 } = localUploadInfo;
     const { method, file } = this.state;
+    this.setState({
+      localUploadLoading: true
+    })
     const idList = this.getValidItems().map(i => i[ID_DATAINDEX])
     getUploadResult({ idList, md5 }).then(result => this.setState({
       updateResult: result,
@@ -370,9 +374,9 @@ class UpdateForm extends React.Component<any, any> {
   render() {
 
     const { getFieldDecorator } = this.props.form;
-    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, putFileChunk, initLoading } = this.props;
+    const { isDark, loading, defaultValue = { data: [] }, style, percent, localUploadInfo, initLoading } = this.props;
 
-    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method, file } = this.state;
+    const { result, fileVisible, disabledList, shouldReload, updateResult, hideNotValidItem, method, file, localUploadLoading } = this.state;
     const resultStatus = localUploadInfo.mergeResult.status == 1 || localUploadInfo.currentChunk - 1 == localUploadInfo.chunkCount - 1;
     const lblClasses = classnames({
       "lbl-dark": isDark
@@ -740,6 +744,8 @@ class UpdateForm extends React.Component<any, any> {
               this.state.method == LOCAL_METHOD
                 ?
                 <Button
+                  loading={localUploadLoading}
+                  disabled={!haveValidResult}
                   type="primary"
                   onClick={this.localhandleUpdate}>
                   确定更新
@@ -843,7 +849,7 @@ class UpdateForm extends React.Component<any, any> {
             <Col>
               <div style={{ textAlign: "center", marginTop: "20px" }}>
                 <p style={{ color: "red" }}>{localUploadInfo.formatError}</p>
-                <Button type="primary" loading={initLoading} disabled={this.state.method == LOCAL_METHOD ? (file == null || localUploadInfo.status == COMMON_STATUS) : false} onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.handleGetVersion}>{this.state.method === "local" && !this.state.progressVisible ? "确定上传" : "获取升级版本信息"}</Button>
+                <Button type="primary" loading={initLoading} disabled={this.state.method == LOCAL_METHOD ? (file == null || localUploadInfo.status == COMMON_STATUS || localUploadInfo.formatError != null) : false} onClick={this.state.method == LOCAL_METHOD ? this.handleUpdate : this.handleGetVersion}>{this.state.method === "local" && !this.state.progressVisible ? "确定上传" : "获取升级版本信息"}</Button>
               </div>
             </Col>
           </Row>

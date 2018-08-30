@@ -171,6 +171,7 @@ export default class StrategySetting extends React.Component<any, any>{
     const { selectedRows, data, protocolType, initialFilters } = this.state
 
     const { putLoading, applyLoading, threatNameList } = this.props
+
     const filters = Array();
     const threat = threatNameList.forEach((i, index) => {
       filters.push({ "text": i.type, "value": i.key })
@@ -234,6 +235,14 @@ export default class StrategySetting extends React.Component<any, any>{
               getColumns={options => {
                 return combineColumnsConfig(getColumns({
                   ...options,
+                  threatTypes: this.props.threatNameList.map(i => {
+
+                    return {
+                      text: i.type,
+                      value: i.key,
+                      threatLevel: i.threatLevel
+                    }
+                  }),
                   handle: {
                     show: this.onShowClick,
                     switch: this.onSwitchClick,
