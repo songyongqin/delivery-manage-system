@@ -47,6 +47,7 @@ export default class Monitor extends React.Component<any, any>{
       }
     })
       .then(_ => {
+        this.fetchConfig();
         this.setState({
           lastReqTime: new Date().getTime()
         })
