@@ -16,14 +16,18 @@ import {
   STRATEGY_OPERATION_KEY,
   USERFUL_VALUE,
   STATUS,
-  UPDATETIME
+  UPDATETIME,
+  THREATTYPE,
+  THREATLEVEL
 
 } from '../../constants'
 
 
 
-function getRenderer({ handle, expandedRowKeys }) {
+function getRenderer({ handle, expandedRowKeys, threatTypes }) {
   return {
+    [THREATTYPE]: value => threatTypes.filter(i => i.value == value)[0].text,
+    [THREATLEVEL]: value => value == "low" ? "低危" : value == "high" ? "高危" : "中危",
     [UPDATETIME]: value => <TimeLabel value={value}></TimeLabel>,
     [STATUS]: (value, records) => (
       <Switch checkedChildren={<Icon type="check" />}
@@ -47,11 +51,11 @@ function getRenderer({ handle, expandedRowKeys }) {
   }
 }
 
-export const getColumns = ({ handle, expandedRowKeys }) =>
+export const getColumns = ({ handle, expandedRowKeys, threatTypes }) =>
   columnsCreator({
     dataIndexes,
     titleConfig: textConfig,
-    renderer: getRenderer({ handle, expandedRowKeys }),
+    renderer: getRenderer({ handle, expandedRowKeys, threatTypes }),
   })
 
 
