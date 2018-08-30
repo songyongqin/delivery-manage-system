@@ -60,12 +60,13 @@ const getRenderer = ({ moduleMonitorTextConfig }) => (
     [REGULAR_MODULE_ROW_KEY]: (value, records) => {
       let moduleList = records[MONITOR_LOG_RESULT_DATA_INDEX];
       const data = Object.keys(moduleList).filter(i => moduleList[i] === REGULAR_VALUE);
+
       return <div>
         {
           data.map((i, index) => (
             <Tag color={"green"}
               key={`${index}-tag`}>
-              {tools.getKeyText(i, moduleMonitorTextConfig)}
+              {moduleMonitorTextConfig[i]}
             </Tag>
           ))
         }
@@ -96,9 +97,11 @@ export const getCommonColumns = ({ moduleMonitorTextConfig = {} }) =>
   })
 
 
-export const getNodeColumns = ({ moduleMonitorTextConfig = {} }) =>
-  columnsCreator({
+export const getNodeColumns = ({ moduleMonitorTextConfig = {} }) => {
+
+  return columnsCreator({
     dataIndexes: nodeDataIndexes,
     titleConfig: monitorLogTextConfig,
     renderer: getRenderer({ moduleMonitorTextConfig }),
   })
+}

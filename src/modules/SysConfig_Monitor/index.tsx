@@ -10,6 +10,10 @@ import { getCommonColumns, getNodeColumns } from './tableConfig'
 import { getAppConfig } from 'domain/app'
 import { get } from 'utils'
 import { If } from 'components/ControlStatements'
+import path from 'constants/path'
+import WithConfig from 'domainComponents/WithConfig'
+@WithConfig(path.layoutConfig.SysConfigMonitor)
+
 export default class SysConfigMonitor extends React.Component<any, any>{
   constructor(props) {
     super(props)
@@ -59,7 +63,10 @@ export default class SysConfigMonitor extends React.Component<any, any>{
           <Tabs.TabPane tab="流量监测系统" key="ids">
             <Monitor
               initialFilters={{ limit: 10, page: 1, type: "ids" }}
-              getColumns={getNodeColumns}
+              getColumns={options => getNodeColumns({
+                ...options,
+                moduleMonitorTextConfig: this.props.config.columns
+              })}
               remoteNamespace={SYS_CONFIG_MONITOR_IDS_NODE_NAMESPACE}>
             </Monitor>
           </Tabs.TabPane>
