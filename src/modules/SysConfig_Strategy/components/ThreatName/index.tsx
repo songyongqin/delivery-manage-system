@@ -83,6 +83,7 @@ class Page extends React.Component<any, any> {
     this.setState({
       lastReqTime: new Date().getTime()
     })
+    this.props.changeStatus()
   }
   onPutClick = payload => {
     this.props.put([payload]).then(this.reload)
