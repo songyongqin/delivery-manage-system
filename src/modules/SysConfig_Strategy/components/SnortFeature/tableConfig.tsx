@@ -50,10 +50,13 @@ function getRenderer({ handle }) {
   }
 
 }
-
+const extraProps = {
+  [ID_DATAINDEX]: { width: 150 },
+}
 export const getColumns = ({ handle }) =>
   columnsCreator({
     dataIndexes: dataIndexes,
     titleConfig: textConfig,
     renderer: getRenderer({ handle }),
+    extraProps: extraProps
   })
