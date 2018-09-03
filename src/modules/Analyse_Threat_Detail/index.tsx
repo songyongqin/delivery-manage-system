@@ -121,7 +121,7 @@ const getType = str => {
   else return typeArr[1]
 }
 
-const transform = arr => [ moment(arr[0]), moment(arr[1]) ]
+const transform = arr =>arr.length ? [ moment(arr[0]), moment(arr[1]) ] :[]
 
 @WithAnimateRender
 @extraConnect(mapStateToprops, mapDispatchToprops)
@@ -178,7 +178,7 @@ class Page extends React.Component<any, state> {
   }
 
   componentDidMount(){
-    console.log()
+    console.log(getCache('timestampRange'))
     if(this.state.type===typeArr[0]){
       this.fetchFamilyEvent(1)
     }
