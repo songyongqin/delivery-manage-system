@@ -28,7 +28,7 @@ class FamilyTable extends React.Component<props, any>{
   // }
 
   render(){
-
+    // console.log(this.props.timestampRange)
     let columns = [
       { title:<ResetIcon onClick={ this.props.reset } /> , 
         dataIndex:'index',
