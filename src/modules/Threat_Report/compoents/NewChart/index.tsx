@@ -204,13 +204,13 @@ class NewChart extends React.Component<props,state>{
 
     return(
       <div>
-        <Wrap spinning={ detailLoading } >
+        <Wrap spinning={ detailLoading } keys={ 2 } >
           <PieTwo  data={ data.level } onClick={ this.clickTitle } 
                 title={ '威胁事件' }
                 data2={ data.threatEvent }
                 total={ data.threatEventTotal }
                 unit={ '起' } 
-                keys={ 1 } />
+                 />
         </Wrap>
           {
             arrPie.map((item, index) => 
