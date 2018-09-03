@@ -21,7 +21,8 @@ export const layoutConfig = {
   analyseEventVIew: '/static/config/layout/analyseEventVIew.json',
   auditAssetsList: '/static/config/layout/auditAssetsList.json',
   simpleFeature: '/static/config/layout/simpleFeature.json',
-  snortFeature: '/static/config/layout/snortFeature.json'
+  snortFeature: '/static/config/layout/snortFeature.json',
+  SysConfigMonitor: '/static/config/layout/SysConfigMonitor.json'
 }
 
 export default {

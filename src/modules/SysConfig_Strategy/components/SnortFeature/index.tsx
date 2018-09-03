@@ -65,7 +65,8 @@ export default class WhiteList extends React.Component<any, any>{
         updateTime: "",
       },
       visible: false,
-      snortrule: ""
+      snortrule: "",
+      fileSize: 0
     }
   }
   setVisible = (visible) => {
@@ -137,27 +138,31 @@ export default class WhiteList extends React.Component<any, any>{
         Message.success("上传成功")
         this.setVisible(false)
         this.setState({
-          lastReqTime: new Date().getTime()
+          lastReqTime: new Date().getTime(),
+          fileSize: 0
         })
       })
   }
   render() {
     const { postLoading, putLoading, applyLoading, deleteLoading, fetchLoading } = this.props
-    const { activeItems, initialFilters, activeRule } = this.state
+    const { activeItems, initialFilters, activeRule, fileSize } = this.state
     const { setSnortrule } = this
     const fileProps = {
       name: "file",
       multiple: false,
       beforeUpload: (file, fileList) => {
-
         let reader = new FileReader()
         reader.readAsText(file)
         reader.onload = function (e) { //读取完文件之后会回来这里
           var fileString = this.result; // 读取文件内容
           setSnortrule(fileString)
         }
+        this.setState({ fileSize: file.size })
         return false;
       },
+      onRemove: (file) => {
+        this.setState({ fileSize: 0 })
+      }
     }
 
     const title = (
@@ -246,7 +251,7 @@ export default class WhiteList extends React.Component<any, any>{
           visible={this.state.visible}
           footer={null}
           destroyOnClose={true}>
-          <Dragger {...fileProps} style={{ margin: "10px 0" }} disabled={postLoading}>
+          <Dragger {...fileProps} style={{ margin: "10px 0" }} disabled={fileSize != 0 || postLoading}>
             <p className="ant-upload-drag-icon" style={{ marginTop: "15px" }}>
               <Icon type="file-text" />
             </p>

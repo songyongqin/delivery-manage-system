@@ -298,7 +298,7 @@ export const _navConfig = [
     hidden: true,
     items: [
       {
-        link: MANAGER_DEVICE_URL,
+        link: CONFIG_DEVICE_MANAGER_URL,
         title: "设备管理"
       },
       {
@@ -350,7 +350,7 @@ export const _navConfig = [
         title: "设备管理",
       },
       {
-        link: CONFIG_SYS_LOG_URL, 
+        link: CONFIG_SYS_LOG_URL,
         icon: <Indent />,
         title: "系统日志",
         items: [
@@ -361,7 +361,7 @@ export const _navConfig = [
           }
         ]
       }, {
-        link:  CONFIG_SYS_CONFIG_URL,
+        link: CONFIG_SYS_CONFIG_URL,
         title: "系统配置",
         icon: <Indent />,
         items: [

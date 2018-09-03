@@ -9,7 +9,7 @@ import { last } from 'utils'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
 import $ from 'jquery'
 import 'jquery.nicescroll'
-import { MANAGER_DEVICE_URL } from 'routes/config/path'
+import { CONFIG_DEVICE_MANAGER_URL } from 'routes/config/path'
 import { getAppInstance } from 'domain/instance'
 import { isLicenceOverdue, showOverdueTipModal } from 'domain/licence'
 import { routerRedux } from 'dva/router'
@@ -28,9 +28,9 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
 
 
     // console.info(i["icon"], mini, i.link)
-    
+
     const link = getFinalLink(i)
- 
+
     // const title = (
     //   <Link to={link} className={classes} onClick={e => {
     //     //授权过期 跳转到device路由
@@ -65,10 +65,10 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
     //     </If>
     //   </Link >
     // )
- 
 
-    const Title =({ selected=false }) => 
-      <Link to={link} className={ classnames({
+
+    const Title = ({ selected = false }) =>
+      <Link to={link} className={classnames({
         [styles["link-mini"]]: mini,
         [styles["link"]]: !mini,
         [styles["bg"]]: selected
@@ -78,7 +78,7 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
           //阻止默认跳转行为
           e.preventDefault()
           //跳转到设备管理
-          getAppInstance()._store.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+          getAppInstance()._store.dispatch(routerRedux.push(CONFIG_DEVICE_MANAGER_URL))
           //弹出消息框
           getAppInstance()._store.dispatch({
             type: "layout/saveOverdueTipVisible",
@@ -104,8 +104,8 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
           </p>
         </If>
       </Link >
-    
-    
+
+
     if ("items" in i) {
       return (
         <Menu.SubMenu key={i.link}
@@ -115,7 +115,7 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
             // [styles["active"]]: active===i.link,
             [styles["title-wrapper"]]: true
           })}
-          title={<Title selected={ active.includes(i.link) } />}>
+          title={<Title selected={active.includes(i.link)} />}>
           {getMenuContent({ navConfig: i.items, mini, selectedKeys, innerItem: true, active })}
         </Menu.SubMenu>
       )
@@ -136,7 +136,7 @@ export default class extends React.Component {
   }
   state = {
     openKeys: [],
-    selectedKeys:[]
+    selectedKeys: []
   }
   onOpenChange = openKeys => {
     //授权过期不进行展开操作
@@ -200,19 +200,19 @@ export default class extends React.Component {
   }
 
   checkKey = arr => {
-    if(!Array.isArray(arr)){
-      console.error('type error, need array but recived: '+ typeof arr)
-      return [] 
+    if (!Array.isArray(arr)) {
+      console.error('type error, need array but recived: ' + typeof arr)
+      return []
     }
     else {
-      if(!arr.length) return []
-      let array = [ ...arr]
+      if (!arr.length) return []
+      let array = [...arr]
       let str = array[0].split('/')[1]
-      let arrays = array.filter(i => i.split('/')[1] ===str )
-      if( arrays.length===array.length ){
+      let arrays = array.filter(i => i.split('/')[1] === str)
+      if (arrays.length === array.length) {
         return array
       }
-      else return [ last(array) ]
+      else return [last(array)]
     }
   }
 
@@ -239,18 +239,18 @@ export default class extends React.Component {
     }, [])
 
     // const selectedKeys =[ active]
-    
+
     console.log(active, selectedKeys)
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu
           // openKeys={ mini ? this.state.openKeys : selectedKeys }
-          openKeys={ mini ? this.state.openKeys : selectedKeys }
-          onOpenChange={ this.onOpenChange }
-          mode={mini ? "vertical" : "inline"} 
-          inlineIndent={ 10 }
+          openKeys={mini ? this.state.openKeys : selectedKeys}
+          onOpenChange={this.onOpenChange}
+          mode={mini ? "vertical" : "inline"}
+          inlineIndent={10}
           selectedKeys={[active]}
-          >
+        >
           {getMenuContent({ navConfig, mini, selectedKeys, active })}
         </Menu>
       </nav>

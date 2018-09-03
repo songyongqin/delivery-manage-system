@@ -198,13 +198,14 @@ class WrappedForm extends React.Component<any, any> {
       // getFieldDecorator('attacker', {
       //   initialValue: 'sourceIpPort',
       // })
-      (
-        <Select defaultValue={attacker} style={{ width: 100 }} onChange={this.onChangeAttacker}>
+      (<div>
+        <Select defaultValue={attacker} onChange={this.onChangeAttacker}>
           <Option value="sourceIpPort">攻击者</Option>
           <Option value="targetIpPort">受攻击者</Option>
         </Select>
+      </div>
       );
-    const targetAfter = attacker == "sourceIpPort" ? "受攻击者" : "攻击者";
+    const targetAfter = (<div style={{ width: 80 }}>{attacker == "sourceIpPort" ? "受攻击者" : "攻击者"}</div>)
     const lblClasses = classnames({
       // [styles["lbl-dark"]]: isDark
     });

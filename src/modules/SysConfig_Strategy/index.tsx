@@ -62,7 +62,8 @@ export default class Strategy extends React.Component<any, any>{
     this.state = {
       data: {},
       expanded: false,
-      visible: false
+      visible: false,
+      simpleFeatureStatus: 0
     }
   }
   componentDidMount() {
@@ -88,15 +89,20 @@ export default class Strategy extends React.Component<any, any>{
       visible: false,
     });
   };
+  changeStatus = () => {
+    this.setState({
+      simpleFeatureStatus: new Date().getTime()
+    })
+  }
   render() {
-    const { data } = this.state;
+    const { data, simpleFeatureStatus } = this.state;
     const strategyConfig = get(getAppConfig(), ['strategyConfig'], {})
     const tabs = [
       {
         key: "simpleFeature",
         content: (
           <Tabs.TabPane tab="简易特征" key="simpleFeature">
-            <StrategySetting></StrategySetting>
+            <StrategySetting key={simpleFeatureStatus}></StrategySetting>
           </Tabs.TabPane>
         )
       },
@@ -150,7 +156,7 @@ export default class Strategy extends React.Component<any, any>{
                 onClose={this.onClose}
                 visible={this.state.visible}
               >
-                <ThreatName></ThreatName>
+                <ThreatName changeStatus={this.changeStatus}></ThreatName>
               </Drawer>
             </div>
           ])
