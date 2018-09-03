@@ -10,10 +10,15 @@ import { ANALYSE_REPORT_DETAIL_URL } from 'routes/config/path'
 // const REPORT_URL = "/report" 
 const TASK_ID_DATA_INDEX = "taskId"
 
+//将taskId修改为md5
+
 export default ({ data }) => {
-  
+  console.log(data['md5'])
+  // const payload = {
+  //   [TASK_ID_DATA_INDEX]: data[TASK_ID_DATA_INDEX]
+  // }
   const payload = {
-    [TASK_ID_DATA_INDEX]: data[TASK_ID_DATA_INDEX]
+    md5: data['md5']
   }
 
   return <a href={'/#'+ANALYSE_REPORT_DETAIL_URL + domainQueryStringParse(payload)} target="_blank">查看报告</a>
