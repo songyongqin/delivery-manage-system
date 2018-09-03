@@ -57,6 +57,7 @@ class ThreatReport extends Component<any,any>{
     }
     // html2pdf(document.getElementById('threat-report')).set(opt).save()
     let dom = document.getElementById('threat-report')
+    console.log(dom)
     this.setState({ isLoading: true })
     html2pdf()
     .from(dom)

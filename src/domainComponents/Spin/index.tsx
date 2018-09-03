@@ -38,9 +38,11 @@ class Spin extends React.Component<any, any>{
 
     return (
       <div className={classes}>
-        <div className={loadingClasses}>
+        {
+          spinning&&<div className={loadingClasses}>
           <LoadingEffect></LoadingEffect>
         </div>
+        }
         <div className={spinning ? styles["blur"] : styles["content-wrapper"]} style={style}>
           {children}
         </div>
