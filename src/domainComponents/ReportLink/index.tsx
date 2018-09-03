@@ -13,7 +13,7 @@ const TASK_ID_DATA_INDEX = "taskId"
 //将taskId修改为md5
 
 export default ({ data }) => {
-  console.log(data['md5'])
+  // console.log(data['md5'])
   // const payload = {
   //   [TASK_ID_DATA_INDEX]: data[TASK_ID_DATA_INDEX]
   // }

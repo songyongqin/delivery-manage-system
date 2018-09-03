@@ -12,9 +12,9 @@ const httpApi = ApiConfig.http
 const exportReport = commonRequestCreator.post(httpApi.ANALYSE_REPORT_EXPORT_URL)
 
 
-export default (taskId) => {
+export default (md5) => {
   return new Promise((resolve, reject) => {
-    exportReport({ taskId }).then(res => {
+    exportReport({ md5 }).then(res => {
       try {
         if (res.status === 1) {
           download(getAuthURL(res.payload))
