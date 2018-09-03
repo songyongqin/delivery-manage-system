@@ -25,7 +25,7 @@ export const ROOT_URL = "/",
   USER_MANAGER_URL = "/user-manager",
 
   MANAGER_URL = "/manager",
-  MANAGER_DEVICE_URL = "/manager/device",
+  // MANAGER_DEVICE_URL = "/manager/device",
   MANAGER_VM_URL = "/manager/virtual-machine",
   MANAGER_MIRROR_URL = "/manager/mirror",
 

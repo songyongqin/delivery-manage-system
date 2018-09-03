@@ -1,0 +1,15 @@
+{
+  "columns": {
+    "web": "web模块",
+    "mail": "邮件模块",
+    "syslog": "系统日志",
+    "mongodb": "Mongo数据库",
+    "pcapdump": "pcap解析模块",
+    "suricata": "流量监控模块",
+    "dbmonitor": "流量解析模块",
+    "scanengine": "扫描引擎模块",
+    "cloudserver": "云检测模块",
+    "information": "信息搜集模块",
+    "elasticsearch": "流量日志数据库"
+  }
+}

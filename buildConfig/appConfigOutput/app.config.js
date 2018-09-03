@@ -219,7 +219,7 @@ module.exports = {
       "/sys-config/strategy": true,
       "/user-manager": true,
       "/manager": true,
-      "/manager/device": true,
+      "/config/device-manager": true,
       "/manager/virtual-machine": false,
       "/manager/mirror": false,
       "/sys-log": true,

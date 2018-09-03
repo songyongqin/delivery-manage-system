@@ -17,7 +17,7 @@ import BuildingHolder from 'domainComponents/BuildingHolder'
 import SecretParse from 'domainComponents/SecretParse'
 import Setup from 'modules/Setup'
 import Footer from './components/Footer'
-import { LOGIN_URL, ROOT_URL, MANAGER_DEVICE_URL } from 'routes/config/path'
+import { LOGIN_URL, ROOT_URL, CONFIG_DEVICE_MANAGER_URL } from 'routes/config/path'
 import { DOMAIN_USER_NAMESPACE, LAYOUT_NAMESPACE } from 'constants/model'
 import { ADMIN_ROLE, ROLE_DATA_INDEX } from 'constants/user'
 import { SET_UP_NAMESPACE } from 'constants/model'
@@ -177,8 +177,8 @@ class IndexPage extends React.Component<any, any>{
     }
 
     //若进入的路由不是/manager/device 且设备授权已过期
-    if (activeRoute !== MANAGER_DEVICE_URL && isLicenceOverdue()) {
-      this.props.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+    if (activeRoute !== CONFIG_DEVICE_MANAGER_URL && isLicenceOverdue()) {
+      this.props.dispatch(routerRedux.push(CONFIG_DEVICE_MANAGER_URL))
       this.props.dispatch({
         type: "layout/saveOverdueTipVisible",
         payload: true

@@ -47,7 +47,7 @@
           //阻止默认跳转行为
           e.preventDefault()
           //跳转到设备管理
-          getAppInstance()._store.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+          getAppInstance()._store.dispatch(routerRedux.push(CONFIG_DEVICE_MANAGER_URL))
           //弹出消息框
           getAppInstance()._store.dispatch({
             type: "layout/saveOverdueTipVisible",
@@ -76,9 +76,9 @@
 
 
 ```javascript
-   //若进入的路由不是/manager/device 且设备授权已过期
-    if (activeRoute !== MANAGER_DEVICE_URL && isLicenceOverdue()) {
-      this.props.dispatch(routerRedux.push(MANAGER_DEVICE_URL))
+   //若进入的路由不是/config/device-manager 且设备授权已过期
+    if (activeRoute !== CONFIG_DEVICE_MANAGER_URL && isLicenceOverdue()) {
+      this.props.dispatch(routerRedux.push(CONFIG_DEVICE_MANAGER_URL))
       this.props.dispatch({
         type: "layout/saveOverdueTipVisible",
         payload: true
