@@ -304,7 +304,8 @@ class Page extends React.Component<any, any> {
     try {
       Message.success("正在生成静态报告文件...")
 
-      exportReportByTaskId(parseInt(queryString.parse(this.props.location.search).taskId))
+      // exportReportByTaskId(parseInt(queryString.parse(this.props.location.search).taskId))
+      exportReportByTaskId(queryString.parse(this.props.location.search)['md5'])
         .then(() => {
           Message.success("下载任务添加成功")
         })
