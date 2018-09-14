@@ -1,6 +1,6 @@
 
 
-const wrapStr = (str, num=15) => {
+const wrapStr = (str, num=12) => {
   if(typeof str !=='string'){
     console.error('输入的数据类型不是字符串，而是：'+ typeof str)
     return str

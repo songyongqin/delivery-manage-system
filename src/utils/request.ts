@@ -1,4 +1,6 @@
 import fetch from 'dva/fetch'
+import setUrl from './setUrl'
+
 
 interface CombineError extends Error {
   status?: number
@@ -77,20 +79,39 @@ export const createRequestHandle: CreateRequestHandle = ({ beforeRequest, afterR
     throw new Error("createRequestHandle: onError should instanceof Function")
   }
 
+  // return (url: string, options?: object) => {
+  //   //请求前options处理 ，beforeRequest 内可附带token信息或加密等操作
+  //   const finalOptions = beforeRequest ? beforeRequest(url, options) : options
+    
+  //   return fetch(url, finalOptions)
+  //     //检测返回的状态
+  //     .then(checkStatus)
+  //     //
+  //     .then(res => afterRequest ? afterRequest(url, finalOptions, res) : res.json())
+  //     //
+  //     .catch(error => onError ? onError(error) : defaultOnError(error))
+  //     //
+  //     .then(result => {
+  //       final && final(url, finalOptions, result)
+  //       return result
+  //     })
+  // }
+
   return (url: string, options?: object) => {
     //请求前options处理 ，beforeRequest 内可附带token信息或加密等操作
-    const finalOptions = beforeRequest ? beforeRequest(url, options) : options
+    let urls = setUrl(url)
+    const finalOptions = beforeRequest ? beforeRequest(urls, options) : options
     
-    return fetch(url, finalOptions)
+    return fetch(urls, finalOptions)
       //检测返回的状态
       .then(checkStatus)
       //
-      .then(res => afterRequest ? afterRequest(url, finalOptions, res) : res.json())
+      .then(res => afterRequest ? afterRequest(urls, finalOptions, res) : res.json())
       //
       .catch(error => onError ? onError(error) : defaultOnError(error))
       //
       .then(result => {
-        final && final(url, finalOptions, result)
+        final && final(urls, finalOptions, result)
         return result
       })
   }

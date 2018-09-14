@@ -5,7 +5,13 @@
   "title": "安天捕风蜜罐系统", //应用的标题
 
   "secret": true, //生产环境下是否启用加密
-  
+  "host":"http://172.31.50.41:7300/mock/5b3ae25f3a04b867a240d558/ids", //新加入  此字段可设置默认的api的域名，如存在权限问题，请开启跨域
+                                  //共存在2种方式修改hostname：其一， app.json host字段设置默认值;
+                                  // 其二，浏览器按f12,点击console，在控制台输入 
+                                  //localStorage.setItem('host','http://172.31.50.41:7300/mock/5b3ae25f3a04b867a240d558/ids')
+                                  //设置，如果想清空，输入 localStorage.removeItem('host')即可，此处优先级高于app.json设置
+                                  //如以上两种方式均未设置，则其表现形式与原来一样
+                                  //注意：如果设置了数据加密，则此设置无效
   "routerRegister": {//路由注册，决定加载哪些路由
     "/overview": true,
      //注：若路由为嵌套关系 父路由设置为false,全部子路由会覆盖为 false

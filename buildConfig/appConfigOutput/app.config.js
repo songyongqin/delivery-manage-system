@@ -201,6 +201,7 @@ module.exports = {
     "title": "安天捕风流量监测系统",
     "secret": false,
     "heartBeat": false,
+    "host":"http://172.31.50.41:7300/mock/5b3ae25f3a04b867a240d558/ids",
     "routerRegister": {
       "/overview": true,
       "/analyse": true,
