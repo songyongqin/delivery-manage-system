@@ -602,7 +602,6 @@ export const getDefaultRoute = (link = ROOT_URL) => {
     if (link === ROOT_URL) {
       return head(navConfig).link
     }
-
     return head(navConfig.find(item => item.link === link).items).link
 
   } catch (e) {

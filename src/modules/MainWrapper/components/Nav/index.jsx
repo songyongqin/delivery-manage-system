@@ -14,9 +14,19 @@ import { getAppInstance } from 'domain/instance'
 import { isLicenceOverdue, showOverdueTipModal } from 'domain/licence'
 import { routerRedux } from 'dva/router'
 
+const getItemLink = config => {
+  if( "items" in config ){
+    // let obj = config.items&&config.items.length ? config.items
+    return  getItemLink(config.items[0])
+  }
+  else return config.link
+} 
+
 const getFinalLink = config => {
+  console.log(getItemLink(config))
   try {
-    return "items" in config ? config.items[0].link : config.link
+    // return "items" in config ? config.items[0].link : config.link
+    return getItemLink(config)
   } catch (e) {
     return config.link
   }
@@ -240,7 +250,7 @@ export default class extends React.Component {
 
     // const selectedKeys =[ active]
 
-    console.log(active, selectedKeys)
+    // console.log(active, selectedKeys)
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu

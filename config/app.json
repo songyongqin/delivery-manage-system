@@ -37,7 +37,10 @@
     "/sys-log",
     "/sys-log/login",
     "/user-manager",
-    "/snort"
+    "/snort",
+    "/config/user-manager",
+    "/config/sys-log/login",
+    "/config/sys-log"
   ],
   "routerTitleConfig": {
     "/manager": "流量监测管理"
