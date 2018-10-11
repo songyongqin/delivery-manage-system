@@ -23,7 +23,6 @@ const getItemLink = config => {
 } 
 
 const getFinalLink = config => {
-  console.log(getItemLink(config))
   try {
     // return "items" in config ? config.items[0].link : config.link
     return getItemLink(config)

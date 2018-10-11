@@ -5,6 +5,7 @@
 import React from 'react'
 import { Icon } from 'antd'
 import { head } from 'utils'
+import { find, flattenDeep } from 'lodash'
 import {
   LOGIN_URL,
 
@@ -598,13 +599,31 @@ export const getAuthRoutes = ({ admin = false }) => {
 export const getDefaultRoute = (link = ROOT_URL) => {
   try {
     const navConfig = getNavConfig({ admin: false })
-
+    // getMultiRoute(link, navConfig)
     if (link === ROOT_URL) {
       return head(navConfig).link
     }
-    return head(navConfig.find(item => item.link === link).items).link
+    // return head(navConfig.find(item => item.link === link).items).link
+    const str = getMultiRoute(link, navConfig)
+    return str
 
   } catch (e) {
+    console.error('getDefaultRoute error /n',e)
     return ROOT_URL
   }
+}
+
+const getMultiRoute = (path, arr) => {
+  const getArr =(arr, link )=> {
+    return arr.map(i => {
+      if(i.link===link){
+        return i.items
+      }
+      else if(link.indexOf(i.link)!==-1){
+        return getArr(i.items, link)
+      }
+      else return false
+    }).filter(i =>i)
+  }
+  return head(flattenDeep(getArr(arr, path))).link
 }

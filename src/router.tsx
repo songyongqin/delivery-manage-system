@@ -328,8 +328,19 @@ export default ({ history, app }) => {
               exact
               component={getFileRestorePage(app, FILE_RESTORE)}
               path={FILE_RESTORE} >
-            </Route> */}audit-assets
+            </Route> */}
+            {/* audit-assets */}
+            {/* 配置管理 */}
+            <Route
+              exact
+              path={CONFIG_URL}
+              render={() => (<Redirect to={ getDefaultRoute(CONFIG_URL) } />)} />
 
+   
+            <Route
+              exact
+              path={AUDIT_URL}
+              render={() => (<Redirect to={getDefaultRoute(AUDIT_URL)} />)} />
             <Route
               exact
               component={getAuditEventPage(app, AUDIT_EVENT_URL)}

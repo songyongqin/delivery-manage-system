@@ -25,6 +25,7 @@ import { getAuthRoutes } from 'navConfig'
 import ContactInfo from 'domainComponents/ContactInfo'
 import { routerRedux } from 'dva/router'
 import { isLicenceOverdue } from 'domain/licence'
+import { getNavConfig, getDefaultRoute } from 'navConfig'
 
 const styles = require("./styles.less")
 
@@ -161,8 +162,7 @@ class IndexPage extends React.Component<any, any>{
       activeRouteBuilding = activeRouteConfig.building,
       isAdmin = userData[ROLE_DATA_INDEX] === ADMIN_ROLE
 
-    const authRoutes = getAuthRoutes({ admin: true })
-
+    const authRoutes = getAuthRoutes({ admin: isAdmin })
     if (authRoutes.length === 0) {
       return (
         <div style={{ fontSize: "24px", height: "500px", lineHeight: "500px", textAlign: "center" }}>

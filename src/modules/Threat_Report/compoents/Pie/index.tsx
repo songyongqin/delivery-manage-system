@@ -5,6 +5,7 @@ import PieCharts from 'domainComponents/PieCharts/async'
 import { Icon } from 'antd'
 import transformNum from 'utils/transformNum'
 import addComma from 'utils/addComma'
+import wrapStr from 'utils/wrapStr'
 const css = require('./index.less')
 
 const Pie = ({ data, title, onClick, total, unit  }) => {
@@ -23,24 +24,24 @@ const Pie = ({ data, title, onClick, total, unit  }) => {
 
 export default Pie
 
-const LONG = 15
+// const LONG = 15
 
 const getNum = (name, data) => {
   let arr = data.filter(i=> i.name===name ) || data
   return arr[0].value
 }
 
-const wrapStr = str => {
-  if(typeof str !=='string'){
-    console.error('输入的数据类型不是字符串，而是：'+ typeof str)
-    return str
-  }
-  else {
-    let isLong = str.length >LONG
-    let strs = isLong ? str.slice(0, LONG) + '...' : str
-    return strs
-  }
-}
+// const wrapStr = str => {
+//   if(typeof str !=='string'){
+//     console.error('输入的数据类型不是字符串，而是：'+ typeof str)
+//     return str
+//   }
+//   else {
+//     let isLong = str.length >LONG
+//     let strs = isLong ? str.slice(0, LONG) + '...' : str
+//     return strs
+//   }
+// }
 
 
 const getConfig = data => ({

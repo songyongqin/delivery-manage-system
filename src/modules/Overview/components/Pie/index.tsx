@@ -18,6 +18,7 @@ const getThreatEventConfig = (eventBehaviorCount, threatLevelCount) => {
         type:'pie',
         selectedMode: 'single',
         radius: [0, '30%'],
+        center: ['40%', '40%'],
         minAngle:5,
         label: {
           normal: {
@@ -33,6 +34,7 @@ const getThreatEventConfig = (eventBehaviorCount, threatLevelCount) => {
         // name:'威胁类型',
         type:'pie',
         radius: ['40%', '60%'],
+        center: ['40%', '40%'],
         minAngle:5,
         label: {
           normal: {
