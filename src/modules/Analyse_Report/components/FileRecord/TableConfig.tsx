@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Icon, Input, Tag } from 'antd'
 import columnsCreator from 'domainUtils/columnsCreator'
-import OverflowTextWrapper from 'components/OverflowTextWrapper'
+import OverflowTextWrapper from '../OverflowTextWrapper'
 import TimesLabel from 'components/TimeLabel'
 import ReportLink from 'domainComponents/ReportLink'
 import exportReportByTaskId from 'utils/exportReportByTaskId'
