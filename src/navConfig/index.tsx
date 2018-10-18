@@ -18,6 +18,7 @@ import {
   ANALYSE_RANKING_URL,
   ANALYSE_THREAT_DIS_URL,
   ANALYSE_OVERALL_URL,
+  CONFIG_NODE_MONITOR_URL,
 
   EARLY_WARNING_URL,
   EARLY_WARNING_EMAIL_URL,
@@ -140,7 +141,7 @@ export const _navConfig = [
       },
       {
         link: ANALYSE_REPORT_URL,
-        title: "样本分析报告",
+        title: "文件检测列表",
         icon: <Indent />,
       }
     ]
@@ -407,6 +408,11 @@ export const _navConfig = [
     title: "配置管理",
     icon: <Icon type="database" />,
     items: [
+      {
+        link: CONFIG_NODE_MONITOR_URL,
+        title: "节点监控",
+        icon: <Indent />,
+      },
       {
         link: CONFIG_USER_MANAGER_URL,
         title: "用户管理",

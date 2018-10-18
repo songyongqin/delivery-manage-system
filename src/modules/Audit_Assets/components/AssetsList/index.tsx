@@ -35,24 +35,24 @@ const dataItems = [
     color: "orange",
     type: "file-add"
   },
-  {
-    value: ATTACKEDASSETS,
-    text: "受害资产",
-    color: "purple",
-    type: "exception"
-  },
+  // {
+  //   value: ATTACKEDASSETS,
+  //   text: "受害资产",
+  //   color: "purple",
+  //   type: "exception"
+  // },
   {
     value: PORTCOUNT,
     text: "端口总数",
     color: "#1890ff",
     type: "api"
   },
-  {
-    value: LOOPHOLE,
-    text: "漏洞总数",
-    color: "#CD0000",
-    type: "exclamation-circle"
-  }
+  // {
+  //   value: LOOPHOLE,
+  //   text: "漏洞总数",
+  //   color: "#CD0000",
+  //   type: "exclamation-circle"
+  // }
 ]
 @extraConnect(
   state => {
@@ -179,7 +179,7 @@ export default class CommonItem extends React.Component<any, any>{
     return (
       <div>
         最后更新时间:&nbsp;&nbsp;{data[LASTUPDATETIME] != -1 ? <TimeLabel times={data[LASTUPDATETIME]}></TimeLabel> : "暂无更新"}
-        <Button type="primary" style={{ float: "right" }} onClick={this.showConfigModal}>资产扫描配置</Button>
+        {/* <Button type="primary" style={{ float: "right" }} onClick={this.showConfigModal}>资产扫描配置</Button> */}
         <div style={{ clear: "both", marginTop: "20px" }}>
           <div style={{ width: "1000px", height: "150px", marginLeft: "auto", marginRight: "auto" }}>
             {

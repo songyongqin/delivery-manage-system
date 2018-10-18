@@ -204,11 +204,13 @@ class Page extends React.Component<any, any> {
           <div className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange}></TimestampPicker></div>,
           <div style={{ width: "100%", overflow: "hidden" }} key="keyDiv">
             <Spin spinning={this.props.loading}>
-              <Tabs defaultActiveKey="file" onChange={this.callback}>
+              {/* <Tabs defaultActiveKey="file" onChange={this.callback}>
                 <TabPane tab="文件记录" key="file"><FileRecord /></TabPane>
-                {/* <TabPane tab="邮件记录" key="mail"><MailRecord /></TabPane>
-                <TabPane tab="URL记录" key="url"><UrlRecord /></TabPane> */}
-              </Tabs>
+                <TabPane tab="邮件记录" key="mail"><MailRecord /></TabPane>
+                <TabPane tab="URL记录" key="url"><UrlRecord /></TabPane>
+                
+              </Tabs> */}
+              <FileRecord />
             </Spin>
           </div>,
         ])}

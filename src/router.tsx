@@ -39,6 +39,7 @@ import getThreatReportPage from 'routes/Threat_Report'
 
 import getAnalyseReportPage from 'routes/Analyse_Report'
 import getAnalyseReportDetail from 'routes/Analyse_Report_Detail'
+import getNodeMonitorPage from 'routes/Node_Monitor'
 
 import {
   OVERVIEW_URL,
@@ -97,7 +98,7 @@ import {
 
   AUDIT_ASSETS_URL,
 
-
+  CONFIG_NODE_MONITOR_URL,
   AUDIT_CAUGHT_URL,
 
   STRATEGY_URL,
@@ -355,6 +356,11 @@ export default ({ history, app }) => {
               exact
               component={getAuditCaughtPage(app, AUDIT_CAUGHT_URL)}
               path={AUDIT_CAUGHT_URL} >
+            </Route>
+            <Route
+              exact
+              component={getNodeMonitorPage(app, CONFIG_NODE_MONITOR_URL)}
+              path={CONFIG_NODE_MONITOR_URL} >
             </Route>
           </Switch>
         </MainWrapper>

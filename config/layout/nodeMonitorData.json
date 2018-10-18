@@ -1,0 +1,24 @@
+{
+  "columns": [
+    {
+      "dataIndex": "time",
+      "title": "注册时间"
+    },
+    {
+      "dataIndex": "nodeIp",
+      "title": "节点IP"
+    },
+    {
+      "dataIndex": "nodeType",
+      "title": "节点类型"
+    },
+    {
+      "dataIndex": "nodeId",
+      "title": "节点ID"
+    },
+    {
+      "dataIndex": "status",
+      "title": "状态"
+    }
+  ]
+}

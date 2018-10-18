@@ -94,6 +94,9 @@ export const
   OPERATION_COL_KEY = "operation",
   SAMPLE_DOWNLOAD_INDEX = "SampleDownload",
 
+  SOURCE_INDEX = 'source',
+  SOURCE_ID_INDEX = 'sourceId',
+
   URL_DATA_INDEX = "url",
   URL_MD5_DATA_INDEX = "md5",
   JUDGE_DATA_INDEX = "judge",
@@ -116,6 +119,8 @@ export const dataIndexTextConfig = {
   [KEY_INDEX]: "序号",
   [FILE_NAME_DATA_INDEX]: "文件名称",
   [MD5_DATA_INDEX]: "MD5",
+  [SOURCE_INDEX]: "样本来源",
+  [SOURCE_ID_INDEX]: "来源设备ID",
   [FILE_TYPE_DATA_INDEX]: "文件类型",
   [JUDGE_DATA_INDEX]: "威胁判定",
   [THREAT_TYPE_DATA_INDEX]: "威胁类型",
@@ -138,6 +143,8 @@ export const dataAllIndexes = [
   KEY_INDEX,
   FILE_NAME_DATA_INDEX,
   MD5_DATA_INDEX,
+  SOURCE_INDEX,
+  SOURCE_ID_INDEX,
   FILE_TYPE_DATA_INDEX,
   JUDGE_DATA_INDEX,
   THREAT_TYPE_DATA_INDEX,

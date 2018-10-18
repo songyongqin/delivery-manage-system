@@ -22,7 +22,8 @@ export const layoutConfig = {
   auditAssetsList: '/static/config/layout/auditAssetsList.json',
   simpleFeature: '/static/config/layout/simpleFeature.json',
   snortFeature: '/static/config/layout/snortFeature.json',
-  SysConfigMonitor: '/static/config/layout/SysConfigMonitor.json'
+  SysConfigMonitor: '/static/config/layout/SysConfigMonitor.json',
+  NodeMonitor:"/static/config/layout/nodeMonitorData.json"
 }
 
 export default {
