@@ -12,6 +12,8 @@ import * as tableConfig from './tableConfig'
 import UserForm from './UserForm'
 import extraConnect from 'domainUtils/extraConnect'
 
+import { USER_NAME_DATAINDEX, USERACCOUNT_DATAINDEX } from '../../constants'
+
 const mapStateToProps = state => {
   const effectsLoading = state.loading.effects
   return {
@@ -106,7 +108,6 @@ export default class UserManager extends React.Component<any, any>{
   render() {
     const { modalVisible, setModalVisible, effectsLoading, editLoading, postLoading } = this.props
     const { lastReqTime } = this.state
-
     return (
       <Card
         key="user"
@@ -121,7 +122,7 @@ export default class UserManager extends React.Component<any, any>{
           key={`${lastReqTime}-user`}
           remoteNamespace={USER_MANAGER_NAMESPACE}
           getColumns={options => {
-            return tableConfig.getColumns({
+            let arr = tableConfig.getColumns({
               ...options,
               handle: {
                 freeze: this.onFreezeClick,
@@ -130,6 +131,14 @@ export default class UserManager extends React.Component<any, any>{
                 reset: this.onResetClick
               }
             })
+            arr =arr.map(i => {
+              console.log(i)
+              if(i.dataIndex===USERACCOUNT_DATAINDEX||i.dataIndex===USER_NAME_DATAINDEX){
+                i['conditionType'] = 'input'
+              }
+              return i
+            })
+            return arr
           }}
           initialFilters={{ page: 1, limit: 10 }}>
         </TableWithRemote>

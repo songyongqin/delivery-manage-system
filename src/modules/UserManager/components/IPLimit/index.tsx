@@ -127,12 +127,14 @@ class Page extends React.Component<any, any> {
         <Choose>
           <When condition={initial}>
             <Tooltip title={disabled ? "管理员无IP范围设置，无法开启该功能" : null}>
+              <span>
               <Switch checkedChildren={"开"}
                 unCheckedChildren={"关"}
                 disabled={disabled}
                 onChange={this.onOpenChange}
                 defaultChecked={this.state.open === 1}
               />
+              </span>
             </Tooltip>
           </When>
           <Otherwise>
