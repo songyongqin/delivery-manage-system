@@ -46,14 +46,28 @@ class ThreatReport extends Component<any,any>{
 
     // } )
     // .catch(err => console.error(err) )
+
+
+    // const isFirFox = !!(window['navigator']['userAgent'].toLowerCase().indexOf('firefox')!==-1)
+    let isFirFox = true
+    try {
+      isFirFox = !!(window['navigator']['userAgent'].toLowerCase().indexOf('firefox')!==-1)
+    }
+    catch(err){
+
+    }
+
     let time = this.getTimeStr()
     const name = `威胁报告(${time}).pdf`
     let opt = {
-      margin:       20,
+      // margin:       20,
       filename:     name,
       image:        { type: 'jpeg', quality: 0.98 },
       html2canvas:  { scale: 2 },
       jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' }
+    }
+    if(!isFirFox){
+      opt['margin'] = 20
     }
     // html2pdf(document.getElementById('threat-report')).set(opt).save()
     let dom = document.getElementById('threat-report')
