@@ -17,7 +17,8 @@ const initialFilters = {
   loginStatus: "",
   ip: "",
   page: 1,
-  limit: 50,
+  // limit: 50,
+  limit: 20,
 }
 
 
