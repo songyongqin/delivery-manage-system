@@ -4,7 +4,7 @@ import { Menu, Button, Icon, Row, Col, message as Message, Modal } from 'antd'
 import Spin from 'domainComponents/Spin'
 import Table from 'domainComponents/Table'
 import { USER_MANAGER_NAMESPACE } from 'constants/model'
-import TableWithRemote from 'domainComponents/TableWithRemote'
+import TableWithRemote from '../TableWithRemote'
 import WithAnimateRender from 'components/WithAnimateRender'
 import Card from 'domainComponents/Card'
 import WithModal from 'components/WithModal'
@@ -134,7 +134,8 @@ export default class UserManager extends React.Component<any, any>{
             arr =arr.map(i => {
               console.log(i)
               if(i.dataIndex===USERACCOUNT_DATAINDEX||i.dataIndex===USER_NAME_DATAINDEX){
-                i['conditionType'] = 'input'
+                // i['conditionType'] = 'input'
+                i['types'] = ['search']
               }
               return i
             })

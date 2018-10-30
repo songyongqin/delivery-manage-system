@@ -3,6 +3,8 @@ import Table from 'domainComponents/Table'
 import { connect } from 'dva'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
+import WithTable from "components/WithTable"
+import WithPagination from 'components/WithPagination'
 // interface OnChange {
 //   (filters: object): void
 // }
@@ -59,6 +61,8 @@ class TableWithRemote extends React.Component<any, any>{
   fetchData = filters => {
     const { onChange, onDataChange, onFinal } = this.props
 
+    filters['limit'] = this.state.filters.limit || 10
+
     onChange && onChange(filters)
 
     this.setState({
@@ -90,7 +94,7 @@ class TableWithRemote extends React.Component<any, any>{
   pageOnChange = current => {
     this.fetchData({
       ...this.state.filters,
-      page: current
+      page: current,
     })
   }
   tableOnChange = (_, filters, sorter) => {
@@ -119,7 +123,7 @@ class TableWithRemote extends React.Component<any, any>{
   }
   render() {
 
-    const { data, total, filters, lastReqTime } = this.state
+    const { data, total, filters, lastReqTime, initialFilters } = this.state
     const {
       theme,
       effectsLoading,
@@ -133,7 +137,11 @@ class TableWithRemote extends React.Component<any, any>{
     } = this.props
     const controlledLoading = "loading" in this.props
     const loading = controlledLoading ? this.props.loading : effectsLoading[`${remoteNamespace}/fetch`]
-
+    console.log(getColumns({
+      fetchData: this.fetchData,
+      filters,
+      data
+    }))
     const finalTableProps: any = {
       expandedRowRender: getExpandedRowRenderer && getExpandedRowRenderer({ filters, data, total }),
       columns: getColumns ? getColumns({
@@ -155,7 +163,7 @@ class TableWithRemote extends React.Component<any, any>{
 
     return (
       <Spin spinning={loading}>
-        <Table
+        {/* <Table
           theme={theme}
           pagination={pagination}
           paginationProps={{
@@ -165,7 +173,20 @@ class TableWithRemote extends React.Component<any, any>{
             current: filters.page,
           }}
           tableProps={finalTableProps}>
-        </Table>
+        </Table> */}
+        <WithTable config={ getColumns({
+                        // fetchData: this.fetchData,
+                        filters,
+                        data
+                      }) }
+                    tableData={ data.map((i, index) => {
+                      return {
+                        key: getKey ? getKey(i, index) : `${index}-${lastReqTime}-item`,
+                        ...i
+                      }
+                    }) }
+                    tableBeforeFetch={ this.fetchData } />
+          <WithPagination current={ filters.page } total={ total } onChange={ this.pageOnChange  } limit={ filters.limit } />
       </Spin>
     )
   }
