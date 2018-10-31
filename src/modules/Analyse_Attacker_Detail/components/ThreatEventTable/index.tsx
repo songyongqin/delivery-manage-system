@@ -5,7 +5,7 @@ import React from 'react'
 import WithTable from 'components/WithTable'
 import { Tag } from 'antd'
 import tranformTime from 'utils/tranformTime'
-
+import TableTime from 'components/TableTime'
 
 let tranformColor = text => {
   if(text==='低危') return '#fccb00'
@@ -20,11 +20,11 @@ const thratColumns = [
   },
   { title:'首次发生时间', 
     dataIndex:'firstTime',
-    render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
+    render: text => <TableTime num={ text } />
   },
   { title:'最近发生时间', 
     dataIndex:'latelyTime',
-    render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
+    render: text => <TableTime num={ text } />
   },
   { title:'威胁行为', 
     dataIndex:'threatenBehavior'

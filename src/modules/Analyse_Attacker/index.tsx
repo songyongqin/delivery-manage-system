@@ -20,6 +20,7 @@ import {
   limit
 } from './constants'
 import { getWeekTime } from 'utils/getInitTime'
+import TableTime from 'components/TableTime'
 
 
 
@@ -156,11 +157,11 @@ class Page extends React.Component<any, any> {
         },
       { title:'首次攻击时间', 
         dataIndex:'attackFirstTime',
-        render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
+        render: text => <TableTime num={ text } />
         },
       { title:'最近攻击时间', 
         dataIndex:'attackLatelyTime',
-        render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
+        render: text => <TableTime num={ text } />
       },
       { title:'攻击者IP', 
         dataIndex:'attackerIP', 

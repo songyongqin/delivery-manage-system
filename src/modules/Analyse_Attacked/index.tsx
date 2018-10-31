@@ -10,6 +10,7 @@ import { Pagination ,Tag, Input } from 'antd'
 import { ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import WithPagination from 'components/WithPagination'
 import tranformTime from 'utils/tranformTime'
+import TabelTime from 'components/TableTime'
 import path from 'constants/path'
 import WithTableConfig from 'domainComponents/WithTableConfig'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
@@ -162,11 +163,11 @@ class Page extends React.Component<any, any> {
         },
       { title:'首次受攻击时间', 
         dataIndex:'attackedFirstTime',
-        render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
+        render: text => <TabelTime num={ text } />
         },
       { title:'最近受攻击时间', 
         dataIndex:'attackedLatelyTime',
-        render: text => <Tag color={ '#1890ff' } >{tranformTime(text)}</Tag>
+        render: text => <TabelTime num={ text } />
       },
       { title:'受攻击资产IP', 
         dataIndex:'attatcedAssetIp',

@@ -5,7 +5,7 @@ import tranformTime from 'utils/tranformTime'
 import { Tag } from 'antd'
 
 
-const TimeTag = ({ num }) => <Tag color={ '#1890ff' } >{tranformTime(num)}</Tag>
+const TimeTag = ({ num }) => <div  >{tranformTime(num)}</div>
 
 
 export default TimeTag

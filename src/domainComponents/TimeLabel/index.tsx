@@ -15,14 +15,20 @@ const TimeLabel = ({ times, value }: any) => {
     }
 
     if (times.length === 1) {
-      return <Tag color={primaryColor}>{getTimeFormat(times[0])}</Tag>
+      // return <Tag color={primaryColor}>{getTimeFormat(times[0])}</Tag>
+      return <div >{getTimeFormat(times[0])}</div>
     }
     if (times.length >= 2) {
       return (
+        // <div style={{ display: "inline-block" }}>
+        //   <Tag color={primaryColor}>{getTimeFormat(times[0])}</Tag>
+        //   &nbsp;至&nbsp;&nbsp;
+        // <Tag color={primaryColor}>{getTimeFormat(times[1])}</Tag>
+        // </div>
         <div style={{ display: "inline-block" }}>
-          <Tag color={primaryColor}>{getTimeFormat(times[0])}</Tag>
+          <div >{getTimeFormat(times[0])}</div>
           &nbsp;至&nbsp;&nbsp;
-        <Tag color={primaryColor}>{getTimeFormat(times[1])}</Tag>
+        <div >{getTimeFormat(times[1])}</div>
         </div>
       )
     }
