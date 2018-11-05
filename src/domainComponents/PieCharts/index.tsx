@@ -5,8 +5,10 @@ import * as React from 'react'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import 'echarts/lib/chart/pie'
 import 'echarts/lib/component/title'
+import 'echarts/lib/component/legendScroll'
 import wrapStr from 'utils/wrapStr'
 import addComma from 'utils/addComma'
+import dataSetName from 'utils/dataSetName'
 
 const DARK_THEME = 'dark'
 const LIGHT_THEME = 'light'
@@ -41,6 +43,8 @@ let getOption = ({ data ,theme, titles }) =>  ({
     orient: 'vertical',
     right: 'right',
     bottom: '10',
+    height:'90%',
+    type:'scroll',
     data: Array.isArray(data) ? data.map(i => i.name) : [],
     textStyle: config[theme],
     formatter: function (name) {
@@ -92,7 +96,8 @@ let getOption = ({ data ,theme, titles }) =>  ({
 
 
 const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) => {
-  let option = { ...getOption({data, theme, titles}), ...config }
+  const datas = dataSetName(data)
+  let option = { ...getOption({data:datas, theme, titles}), ...config }
 
   if(Array.isArray(data) ){
     if(onEvents){

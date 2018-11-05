@@ -3,6 +3,7 @@
 import React from 'react'
 import PieChart from 'domainComponents/PieCharts/async'
 import wrapStr from 'utils/wrapStr'
+import dataSetName from 'utils/dataSetName'
 
 const Wrap = props =>{
   return (
@@ -17,6 +18,8 @@ const getConfig = data => {
     orient: 'vertical',
     right: 'right',
     bottom: '10',
+    height:'90%',
+    type:'scroll',
     data: Array.isArray(data) ? data.map(i => i.name) : [],
     formatter: function (name) {
       return   wrapStr(name)
@@ -50,10 +53,10 @@ const getConfig = data => {
 }
 
 const Pie = ({ data, title,  }) => {
-  
+  const datas = dataSetName(data)
   return (
     <Wrap>
-      <PieChart data={ data } titles={ { text:title } }  config={ getConfig(data) } />
+      <PieChart data={ datas } titles={ { text:title } }  config={ getConfig(datas) } />
     </Wrap>
   )
 }

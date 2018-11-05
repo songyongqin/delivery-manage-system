@@ -6,6 +6,7 @@ import { Icon } from 'antd'
 import transformNum from 'utils/transformNum'
 import addComma from 'utils/addComma'
 import wrapStr from 'utils/wrapStr'
+import dataSetName from 'utils/dataSetName'
 const css = require('./index.less')
 
 const PieTwo = ({ data, data2, title, onClick, total, unit  }) => {
@@ -19,7 +20,7 @@ const PieTwo = ({ data, data2, title, onClick, total, unit  }) => {
         { title}
         <span style={{ fontSize:15 }} >{' -' + total + ' ' + unit }</span>
       </div>
-      <PieCharts data={ data }  config={ getConfig(data, data2) }  />
+      <PieCharts data={ dataSetName(data) }  config={ getConfig(dataSetName(data), dataSetName(data2)) }  />
     </div>
   )
 }
@@ -60,6 +61,8 @@ const getConfig = (data, data2) => ({
     orient: 'vertical',
     right: 'right',
     bottom: '10',
+    height:'90%',
+    type:'scroll',
     data: Array.isArray(data2) ? data2.map(i => i.name) : [],
     formatter: function (name) {
       // return   name +'  ' + transformNum(getNum(name, data))
