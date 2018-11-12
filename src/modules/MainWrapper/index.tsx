@@ -17,7 +17,7 @@ import BuildingHolder from 'domainComponents/BuildingHolder'
 import SecretParse from 'domainComponents/SecretParse'
 import Setup from 'modules/Setup'
 import Footer from './components/Footer'
-import { LOGIN_URL, ROOT_URL, CONFIG_DEVICE_MANAGER_URL } from 'routes/config/path'
+import { LOGIN_URL, ROOT_URL, CONFIG_DEVICE_MANAGER_URL, AITUATION_URL } from 'routes/config/path'
 import { DOMAIN_USER_NAMESPACE, LAYOUT_NAMESPACE } from 'constants/model'
 import { ADMIN_ROLE, ROLE_DATA_INDEX } from 'constants/user'
 import { SET_UP_NAMESPACE } from 'constants/model'
@@ -149,6 +149,16 @@ class IndexPage extends React.Component<any, any>{
     }
 
     if (activeRoute === LOGIN_URL) {
+      return (
+        <div className={pageClasses}>
+          <Spin full={true} spinning={moduleLoading}></Spin>
+          {children}
+          <SecretParse></SecretParse>
+        </div>
+      )
+    }
+
+    if (activeRoute === AITUATION_URL) {
       return (
         <div className={pageClasses}>
           <Spin full={true} spinning={moduleLoading}></Spin>

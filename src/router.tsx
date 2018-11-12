@@ -40,7 +40,7 @@ import getThreatReportPage from 'routes/Threat_Report'
 import getAnalyseReportPage from 'routes/Analyse_Report'
 import getAnalyseReportDetail from 'routes/Analyse_Report_Detail'
 import getNodeMonitorPage from 'routes/Node_Monitor'
-
+import getSituation from 'routes/Situation'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -69,7 +69,7 @@ import {
   SNORT_URL,
   FILE_RESTORE,
 
-
+  AITUATION_URL,
   // ANALYSE_URL,
 
   // ANALYSE_EVENT_URL,
@@ -208,6 +208,12 @@ export default ({ history, app }) => {
               exact
               component={getAnalyseReportDetail(app, ANALYSE_REPORT_DETAIL_URL)}
               path={ANALYSE_REPORT_DETAIL_URL} >
+            </Route>
+            {/* 安全态势 */}
+            <Route
+              exact
+              component={getSituation(app, AITUATION_URL)}
+              path={AITUATION_URL} >
             </Route>
             {/* 攻击链分析 */}
             {/* <Route

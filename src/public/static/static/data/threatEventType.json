@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "data": [
+    {
+      "name": "低危",
+      "value": 210
+    },{
+      "name": "中危",
+      "value": 270
+    },{
+      "name": "高危",
+      "value": 300
+    }
+  ]
+}

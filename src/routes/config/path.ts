@@ -4,6 +4,8 @@ export const ROOT_URL = "/",
 
   OVERVIEW_URL = "/overview",
 
+  AITUATION_URL = '/situation',
+
   // ANALYSE_URL = "/analyse",
   // ANALYSE_EVENT_URL = "/analyse/event",
   ANALYSE_ATTACK_CHAIN_URL = "/analyse/attack-chain",

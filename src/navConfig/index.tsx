@@ -11,6 +11,8 @@ import {
 
   OVERVIEW_URL,
 
+  AITUATION_URL,
+
   ANALYSE_URL,
   ANALYSE_EVENT_URL,
   ANALYSE_ATTACK_CHAIN_URL,
@@ -145,6 +147,11 @@ export const _navConfig = [
         icon: <Indent />,
       }
     ]
+  },
+  {
+    link: AITUATION_URL,
+    title: "安全态势",
+    icon: <Icon type="customer-service" />
   },
   {
     link: ANALYSE_REPORT_DETAIL_URL,

@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "data": [
+    {
+      "name": "失陷",
+      "value": 500
+    },{
+      "name": "疑似失陷",
+      "value": 200
+    },{
+      "name": "未失陷",
+      "value": 400
+    },{
+      "name": "未知",
+      "value": 50
+    }
+  ]
+}
