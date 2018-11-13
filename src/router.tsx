@@ -36,6 +36,7 @@ import getAnalyseThreatPage from 'routes/Analyse_Threat'
 import getAnalyseThreatDetalPage from 'routes/Analyse_Threat_detail'
 import getAuditCaughtPage from 'routes/Audit_Caught'
 import getThreatReportPage from 'routes/Threat_Report'
+import getSySConfigPage from 'routes/SysConfig'
 
 import getAnalyseReportPage from 'routes/Analyse_Report'
 import getAnalyseReportDetail from 'routes/Analyse_Report_Detail'
@@ -251,16 +252,23 @@ export default ({ history, app }) => {
               path={EARLY_WARNING_URL}
               render={() => (<Redirect to={getDefaultRoute(EARLY_WARNING_URL)} />)} /> */}
             {/* 告警设置 */}
-            <Route
+            {/* <Route
               exact
               component={getEarlyWarningEmailPage(app, CONFIG_SYS_CONFIG_WARN_URL)}
               path={CONFIG_SYS_CONFIG_WARN_URL} >
-            </Route>
+            </Route> */}
+            
+            {/* 系统配置 */}
+            {/* <Route
+              exact
+              path={CONFIG_SYS_CONFIG_URL}
+              render={() => (<Redirect to={getDefaultRoute(CONFIG_SYS_CONFIG_URL)} />)} /> */}
             {/* 系统配置 */}
             <Route
               exact
-              path={CONFIG_SYS_CONFIG_URL}
-              render={() => (<Redirect to={getDefaultRoute(CONFIG_SYS_CONFIG_URL)} />)} />
+              component={getSySConfigPage(app, CONFIG_SYS_CONFIG_URL)}
+              path={CONFIG_SYS_CONFIG_URL} >
+            </Route>
             {/* 网卡配置 */}
             <Route
               exact

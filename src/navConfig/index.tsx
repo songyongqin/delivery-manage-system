@@ -440,13 +440,13 @@ export const _navConfig = [
         link:  CONFIG_SYS_CONFIG_URL,
         title: "系统配置",
         icon: <Indent />,
-        items: [
-          {
-            link: CONFIG_SYS_CONFIG_WARN_URL,
-            title: "告警配置",
-            icon: <Indent space={1} />,
-          }
-        ]
+        // items: [
+        //   {
+        //     link: CONFIG_SYS_CONFIG_WARN_URL,
+        //     title: "告警配置",
+        //     icon: <Indent space={1} />,
+        //   }
+        // ]
       },
     ]
   },

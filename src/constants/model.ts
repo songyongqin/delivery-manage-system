@@ -25,6 +25,7 @@ export const LAYOUT_NAMESPACE = "layout",
   SYS_CONFIG_CLOUD_DETECTION_NAMESPACE = "sysConfigCloudDetection",
   OVERVIEW_STATISTICS_EVENT_NAMESPACE = "overviewStatisticsEvent",
   OVERVIEW_STATISTICS_FLOW_NAMESPACE = "overviewStatisticsFlow",
+  CONFIG_SYS_CONFIG_EXPORT_NET_NAMESPACE = 'configSysConfigExportNet',
 
   MANAGER_DEVICE_MASTER_NAMESPACE = "managerDeviceMaster",
   MANAGER_DEVICE_HONEYPOT_NODE_NAMESPACE = "managerDeviceHoneypotNode",

@@ -28,6 +28,8 @@ const HttpApiConfig = {
   USER_HEART_BEAT: "/user/heart-beat",
   VERIFICATION_CODE: "/user/verification-code",
 
+  CONFIG_SYS_CONFIG_EXPORT_NET: '/config/sys-config/export-net',
+
   OVERVIEW_EVENT: "/overview/event",
   // OVERVIEW_FLOW: '//overview/flow',
   OVERVIEW_LAST_EVENT: "/overview/last-event",
