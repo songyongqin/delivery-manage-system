@@ -272,11 +272,11 @@ export const _navConfig = [
         title: "资产审计",
         icon: <Indent />,
       },
-      {
-        link: AUDIT_CAUGHT_URL,
-        title: "抓包记录",
-        icon: <Indent />,
-      }
+      // {
+      //   link: AUDIT_CAUGHT_URL,
+      //   title: "抓包记录",
+      //   icon: <Indent />,
+      // }
     ]
   },
   {

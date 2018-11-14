@@ -1,0 +1,38 @@
+
+
+{
+  "api":[
+    {
+      "safeEmergeMap": "",
+      "safeEventMap": "static/data/safeEventMap.json",
+      "safeInformationMap": "static/data/safeInformationMap.json",
+      "safeEmergeTotal": "static/data/safeEmergeTotal.json",
+      "threatEventType": "static/data/threatEventType.json",
+      "threatEventTrend": "static/data/threatEventTrend.json",
+      "aggressorCountry": "static/data/aggressorCountry.json",
+      "aggressorEvent": "static/data/aggressorEvent.json",
+      "underFireAssetState": "static/data/underFireAssetState.json",
+      "underFireAssetStep": "static/data/underFireAssetStep.json",
+      "underFireAssetTime": "static/data/underFireAssetTime.json",
+      "eventList": "static/data/listEvent.json",
+      "aggressorList": "static/data/listAggressor.json",
+      "underFireAssetList": "static/data/listUnderFireAsset.json"
+    },
+    {
+      "safeEmergeMap": "",
+      "safeEventMap": "situation/safeEventMap",
+      "safeInformationMap": "situation/safeInformationMap",
+      "safeEmergeTotal": "situation/safeEmergeTotal",
+      "threatEventType": "situation/threatEventType",
+      "threatEventTrend": "situation/threatEventTrend",
+      "aggressorCountry": "situation/aggressorCountry",
+      "aggressorEvent": "situation/aggressorEvent",
+      "underFireAssetState": "situation/underFireAssetState",
+      "underFireAssetStep": "situation/underFireAssetStep",
+      "underFireAssetTime": "situation/underFireAssetTime",
+      "eventList": "situation/listEvent",
+      "aggressorList": "situation/listAggressor",
+      "underFireAssetList": "situation/listUnderFireAsset"
+    }
+  ]
+}
