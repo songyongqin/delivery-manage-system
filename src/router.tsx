@@ -211,11 +211,11 @@ export default ({ history, app }) => {
               path={ANALYSE_REPORT_DETAIL_URL} >
             </Route>
             {/* 安全态势 */}
-            <Route
+            {/* <Route
               exact
               component={getSituation(app, AITUATION_URL)}
               path={AITUATION_URL} >
-            </Route>
+            </Route> */}
             {/* 攻击链分析 */}
             {/* <Route
               exact

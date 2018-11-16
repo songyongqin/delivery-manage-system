@@ -37,9 +37,9 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
 
 
     // console.info(i["icon"], mini, i.link)
-
-    const link = getFinalLink(i)
-
+    let host = location.host
+    let link = getFinalLink(i)
+    link = link==='/situation' ? `http://${host}/static${link}.html` :'/#' +link
     // const title = (
     //   <Link to={link} className={classes} onClick={e => {
     //     //授权过期 跳转到device路由
@@ -77,7 +77,7 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
 
 
     const Title = ({ selected = false }) =>
-      <Link to={link} className={classnames({
+      <a href={link} className={classnames({
         [styles["link-mini"]]: mini,
         [styles["link"]]: !mini,
         [styles["bg"]]: selected
@@ -112,7 +112,7 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
             {i.title}
           </p>
         </If>
-      </Link >
+      </a >
 
 
     if ("items" in i) {

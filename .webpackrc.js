@@ -12,7 +12,10 @@ const test = 'http://172.31.50.140:5208'
 export default {
   "alias": alias,
   "theme": theme,
-  "entry": "./src/index.tsx",
+  "entry": {
+    "index": "./src/index.tsx",
+    "situaion": "./src/public/static/situation.html"
+  },
   "html": { "template": "./src/index.ejs" },
   "publicPath": '/',
   "outputPath": './__dist',

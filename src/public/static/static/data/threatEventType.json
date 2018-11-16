@@ -3,13 +3,13 @@
   "data": [
     {
       "name": "低危",
-      "value": 210
+      "value": 531125
     },{
       "name": "中危",
-      "value": 270
+      "value": 13
     },{
       "name": "高危",
-      "value": 300
+      "value": 25
     }
   ]
 }

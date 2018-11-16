@@ -4,6 +4,38 @@
       "dataIndex": "threatenBehavior",
       "filters": [
         {
+          "text":"发起ddos攻击",
+          "value":"DDoSAttack"
+        },
+        {
+          "value": "VulnerabilityIntrusion",
+          "text": "漏洞入侵"
+        },
+        {
+          "value": "APTCommunicationBehavior",
+          "text": "APT通信行为"
+        },
+        {
+          "value": "RequestC2Domain",
+          "text": "请求C&C域名解析"
+        },
+        {
+          "value": "AccessC2",
+          "text": "访问C&C"
+        },
+        {
+          "value":"TrojanOnline",
+          "text":"木马上线"
+        },
+        {
+          "value":"DownloadMalware",
+          "text":"攻击者向受害机器传输恶意代码文件"
+        },
+        {
+          "value":"Spam",
+          "text":"攻击者向受害机器发送恶意邮件"
+        },
+        {
           "value": "BruteForce23",
           "text": "暴力破解Telnet服务"
         },
@@ -40,10 +72,6 @@
           "text": "登录Telnet服务"
         },
         {
-          "value": "VulnerabilityIntrusion",
-          "text": "漏洞入侵"
-        },
-        {
           "value": "OlineBehavior",
           "text": "上线行为"
         },
@@ -54,10 +82,6 @@
         {
           "value": "Connect3389",
           "text": "连接远程桌面"
-        },
-        {
-          "value": "RequestC2Domain",
-          "text": "请求C&C域名解析"
         },
         {
           "value": "BruteForce3389",
@@ -88,10 +112,6 @@
           "text": "不受信任的URL访问"
         },
         {
-          "value": "APTCommunicationBehavior",
-          "text": "APT通信行为"
-        },
-        {
           "value": "Logon3306",
           "text": "登录Mysql服务"
         },
@@ -110,10 +130,6 @@
         {
           "value": "EternalBlueRemoteCodeExecute",
           "text": "永恒之蓝远程代码调用"
-        },
-        {
-          "value": "AccessC2",
-          "text": "访问C&C"
         },
         {
           "value": "Unknown",
