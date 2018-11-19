@@ -113,6 +113,8 @@ const HttpApiConfig = {
   SYS_CONFIG_STRATEGY_SNORT: "/strategy/snortFeature",
   SYS_CONFIG_WHITELIST_APPLY: "/sys-config/white-list/apply",
 
+  STRATEGY_THREAT_ACTION: "/strategy/threat-action",
+
   SYS_CONFIG_NETWORK_MASTER: "/sys-config/network/control",
 
   MODULE_MONITOR: "/sys-config/module-monitor",

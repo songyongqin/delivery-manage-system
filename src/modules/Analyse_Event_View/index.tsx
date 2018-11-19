@@ -44,6 +44,14 @@ const mapDispatchToProps = dispatch => {
     //   type: `${ANALYSE_EVENT_VIEW}/fetch`,
     //   payload
     //  })
+    get: payload => dispatch({
+      type: `${ANALYSE_EVENT_VIEW}/get`,
+      payload
+     }),
+     getThreatAction: payload => dispatch({
+      type: `${ANALYSE_EVENT_VIEW}/getThreatAction`,
+      payload
+     }),
     post: payload => dispatch({
       type: `${ANALYSE_EVENT_VIEW}/post`,
       payload
@@ -70,6 +78,8 @@ class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
+      threatTypeArr:[] ,
+      threatActionArr: [],
       lastChangeTime: 0,
       filters: {
         timestampRange:getWeekTime()|| []
@@ -91,6 +101,30 @@ class Page extends React.Component<any, any> {
 
   componentDidMount(){
     this.fetch({page:1})
+    this.getThretType()
+    this.getThreatAction()
+  }
+
+  getThretType = () => {
+    this.props.get()
+    .then(res =>  {
+      let threatTypeArr = res.data&&res.data.length? res.data.map(i => {
+        let obj = {}
+        obj['text'] = i['type']
+        obj['value'] = i['type']
+        return obj
+      } ) : []
+      this.setState({ threatTypeArr })
+    })
+    .catch(err => console.error(err) )
+  }
+
+  getThreatAction =() => {
+    this.props.getThreatAction()
+    .then(res =>  {
+      this.setState({ threatActionArr: res.data ||[] })
+    })
+    .catch(err => console.error(err) )
   }
 
   // fetch = obj => {
@@ -166,7 +200,9 @@ class Page extends React.Component<any, any> {
 
   render() {
     
-    const {  filters, lastChangeTime, table, reqArg, tableKey } = this.state
+    const {  filters, lastChangeTime, table, reqArg, tableKey, threatTypeArr, threatActionArr } = this.state
+
+    const filterConfig = { ...this.props.config.constants.filter, eventType: threatTypeArr, threatenBehavior:threatActionArr }
 
     const columns = [
       {
@@ -233,7 +269,7 @@ class Page extends React.Component<any, any> {
     ]
 
     const constants = {
-      filter: this.props.config.constants.filter,
+      filter: filterConfig,
       selectDetail: this.state.clicked
     }
 
