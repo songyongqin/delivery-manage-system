@@ -132,7 +132,6 @@ export default class UserManager extends React.Component<any, any>{
               }
             })
             arr =arr.map(i => {
-              console.log(i)
               if(i.dataIndex===USERACCOUNT_DATAINDEX||i.dataIndex===USER_NAME_DATAINDEX){
                 // i['conditionType'] = 'input'
                 i['types'] = ['search']

@@ -29,6 +29,9 @@
     "/snort": true,
     "/file-restore": true
   },
+  "hiddenRouter":[
+    "/config/node/monitor"
+  ],
   "adminOnly": [
     "/sys-config",
     "/sys-config/network",

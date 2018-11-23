@@ -462,13 +462,20 @@ interface RemoveShouldHideNav {
   (option: RemoveShouldHideNavOption): any[]
 }
 
-const hiddenURLList = _navConfig.filter(item => item.hidden).map(item => item.link)
+const hiddenURLList = _navConfig.filter(item =>  item.hidden).map(item => item.link)
+
+export const getHiddenRouter = () => {
+  let { hiddenRouter } = getAppConfig() as any 
+  return hiddenRouter
+}
 
 //根据shouldHideNav 移除 navConfig 中匹配 的 nav项
 const removeShouldHideNav: RemoveShouldHideNav = ({ navConfig = [], shouldHideNav = [] }) => {
   try {
+    let array = getHiddenRouter()||[]
+    let arr = [...shouldHideNav,...array]
     return navConfig
-      .filter(i => !shouldHideNav.includes(i.link))
+      .filter(i => !arr.includes(i.link))
       // .filter(i => admin || (!adminOnly.includes(i.link)))
       .map(i => (
         "items" in i
@@ -585,7 +592,7 @@ export const getNavConfig = ({ admin = false }) => {
 
     const shouldHideNav = getShouldHideNav({ admin })
 
-    const navConfig = removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav: [...shouldHideNav, ...hiddenURLList] }))
+    const navConfig = removeItemsEmptyNav(removeShouldHideNav({ navConfig: _navConfig, shouldHideNav: [...shouldHideNav, ...hiddenURLList, ] }))
 
     return getNavCombineTitleConfig(navConfig)
   } catch (e) {
