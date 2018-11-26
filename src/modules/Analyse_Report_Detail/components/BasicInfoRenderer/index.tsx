@@ -59,7 +59,7 @@ const keyRendererConfig = {
 
 
 export default data => {
-  console.log(basicInfoDataIndexes, data)
+  // console.log(basicInfoDataIndexes, data)
   return (
     <Row>
       <Col {...basicInfoGirdLayout}>

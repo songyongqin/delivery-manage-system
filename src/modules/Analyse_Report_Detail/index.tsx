@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 const styles = require("./styles.less")
 import { Link, withRouter } from 'dva/router'
+import { isArray, isObject } from 'lodash'
 import { queryString } from 'utils'
 import * as services from './Services'
 import { COMMON_SUCCESS_STATUS, LAYOUT_NAMESPACE, LOGIN_NAMESPACE } from 'utils/analyse-report/ConstConfig'
@@ -78,7 +79,8 @@ const SLIDE_ANIMATE_DURATION = 300,
 @WithCommonProps
 class SideBar extends React.PureComponent<any, any> {
   state = {
-    activeKey: head(panelKeys)
+    // activeKey: head(panelKeys)
+    activeKey: ''
   }
   constructor(props) {
     super(props)
@@ -105,8 +107,14 @@ class SideBar extends React.PureComponent<any, any> {
   getActiveKey = (direction = "down") => {
     let activeKey = "";
 
-    [...panelKeys].forEach(key => {
-
+    // [...panelKeys].forEach(key => {
+    //   let inRange = ($(`#${key}`).offset().top - AMEND_VALUE - 5) <= getScrollTop()
+    //   if (inRange) {
+    //     activeKey = key
+    //   }
+    // })
+    this.props.arr.forEach(i => {
+      const { key } = i
       let inRange = ($(`#${key}`).offset().top - AMEND_VALUE - 5) <= getScrollTop()
       if (inRange) {
         activeKey = key
@@ -134,14 +142,14 @@ class SideBar extends React.PureComponent<any, any> {
       [styles["timeline"]]: true,
       [styles[theme]]: true
     })
-
+    let { arr } = this.props
     return (
       <Affix style={{ position: 'fixed', top: 80, right: 25 }}>
         <div className={styles["side-nav"]}>
           <Timeline className={timelineClassName}>
-            {
+            {/* {
               panelKeys.map(key => {
-
+                console.log(key)
                 const itemClassnames = classnames({
                   [styles["side-nav-item"]]: true,
                   [styles[theme]]: true,
@@ -154,6 +162,26 @@ class SideBar extends React.PureComponent<any, any> {
                       onClick={this.getNavClick(key)}
                       className={itemClassnames}>
                       {panelTitleConfigs[key]}
+                    </a>
+                  </Timeline.Item>
+                )
+              })
+            } */}
+            {
+              arr.map(i => {
+                const { key } = i
+                const itemClassnames = classnames({
+                  [styles["side-nav-item"]]: true,
+                  [styles[theme]]: true,
+                  [styles["active"]]: this.state.activeKey === key
+                })
+
+                return (
+                  <Timeline.Item key={key}>
+                    <a
+                      onClick={this.getNavClick(key)}
+                      className={itemClassnames}>
+                      {i.text}
                     </a>
                   </Timeline.Item>
                 )
@@ -398,8 +426,25 @@ class Page extends React.Component<any, any> {
         </div>
       )
     }
+    let arr = panelKeys.map((key, index) => {
+      const value = panelDataHandleConfigs[key] && panelDataHandleConfigs[key](content),
+        text = panelTitleConfigs[key]
+      return {
+        value, text, key
+      }
+    })
 
-
+    arr =arr.filter(i => {
+      let have = true
+      let {value} = i
+      let isNull = value===''||value ===null 
+      let isEmptyArr = isArray(value)&&value.length===0
+      let isEmptyObj = isObject(value)&&Object.keys(value).length===0
+      if(isNull||isEmptyArr||isEmptyObj){
+        have = false
+      }
+      return have
+    } )
     return (
       <div className={pageClasses} ref={target => this.con = target}>
         <Header
@@ -411,20 +456,35 @@ class Page extends React.Component<any, any> {
           themeOnChange={changeTheme}
           onChange={changeNavStatus}>
         </Header>
-        <SideBar></SideBar>
+        <SideBar arr={ arr } ></SideBar>
         <div className={styles["content"]}>
           <Spin spinning={loading}>
             <Collapse defaultActiveKey={panelKeys} onChange={this.collapseOnChange}>
-              {
+              {/* {
                 panelKeys.slice(0, this.state.canInitCount).map((key, index) => {
                   const data = panelDataHandleConfigs[key] && panelDataHandleConfigs[key](content),
                     renderer = rendererConfig[key]
-
                   return (
                     <Panel forceRender={true} header={<span id={key}>{panelTitleConfigs[key]}</span>} key={`${key}`}>
                       <PanelContent
                         renderer={renderer}
                         data={data}
+                        value={key}
+                        callback={this.callback}>
+                      </PanelContent>
+                    </Panel>
+                  )
+                })
+              } */}
+              {
+                arr.slice(0, this.state.canInitCount).map((i, index) => {
+                  let { value, key, text } = i,
+                  renderer = rendererConfig[key]
+                  return (
+                    <Panel forceRender={true} header={<span id={key}>{ text }</span>} key={`${key}`}>
+                      <PanelContent
+                        renderer={renderer}
+                        data={value}
                         value={key}
                         callback={this.callback}>
                       </PanelContent>

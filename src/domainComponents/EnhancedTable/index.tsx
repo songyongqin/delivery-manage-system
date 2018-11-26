@@ -124,7 +124,7 @@ class EnhancedTable extends React.Component<any, any>{
       [styles[theme]]: true
     })
 
-    console.log(tableProps)
+    // console.log(tableProps)
     return <div style={{ height: "100%", width: "100%" }} ref={target => this.target = target}>
       {
         expanded
