@@ -33,7 +33,7 @@ const getConfig = data => {
     {
       // name:'访问来源',
       type:'pie',
-      // selectedMode: 'single',
+      selectedMode: 'single',
       radius: [0, '60%'],
       center: ['35%', '50%'],
       minAngle:5,
@@ -51,11 +51,11 @@ const getConfig = data => {
   return obj
 }
 
-const Pie = ({ data, title }) => {
+const Pie = ({ data, title, onEvents={ } }) => {
   const datas = dataSetName(data)
   return (
     <Wrap>
-      <PieChart data={ datas } titles={ { text:title } }  config={ getConfig(datas) } />
+      <PieChart data={ datas } titles={ { text:title } }  config={ getConfig(datas) } onEvents={ onEvents } />
     </Wrap>
   )
 }

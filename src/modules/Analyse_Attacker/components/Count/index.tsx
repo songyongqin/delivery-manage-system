@@ -62,6 +62,14 @@ class Count extends Component<any, any>{
     .catch(err => console.error(err) )
   }
 
+  getWhereSelect = arg => {
+    this.props.pieSelect({ attackerWhere: arg.name })
+  }
+
+  getGroupSelect = arg => {
+    this.props.pieSelect({ attackGroup: arg.name })
+  }
+
   render(){
     const { loading } = this.props
     const { attackerCount, attackGroupCount, attackerGroupArr, attackerWhereArr ,time} = this.state
@@ -79,8 +87,8 @@ class Count extends Component<any, any>{
               <Icon type={'team'} style={{ fontSize:22 }} />
           </CountItem>
         </div>
-        <Pie data={ attackerWhereArr } title={ '攻击者所在地统计'}  />
-        <Pie data={ attackerGroupArr } title={ '攻击者组织统计'}  />
+        <Pie data={ attackerWhereArr } title={ '攻击者所在地统计'} onEvents={ { pieselectchanged: this.getWhereSelect} }  />
+        <Pie data={ attackerGroupArr } title={ '攻击者组织统计'}  onEvents={ { pieselectchanged: this.getGroupSelect} } />
       </Spin>
       
     )

@@ -65,10 +65,17 @@ class Count extends React.Component<any,state>{
     .catch(err => console.error(err) )
   }
 
+  typeSelect = arg => {
+    this.props.fetchTable({ eventType: arg.name })
+  } 
+
+  leveSelect = arg => {
+    this.props.fetchTable({ level: arg.name })
+  }
+
   render(){
 
     const {  threatCount, hightCount, attackerCount, attackedAssetsCount, threatEventStatistics, threatLevelStatistics } = this.state
-
     const arr = [
       {
         title:'威胁事件',
@@ -107,8 +114,8 @@ class Count extends React.Component<any,state>{
             )
           }
         </div>
-        <Pie data={ threatEventStatistics } title={ '威胁类型统计' } />
-        <Pie data={ threatLevelStatistics } title={ '威胁等级统计' } />
+        <Pie data={ threatEventStatistics } title={ '威胁类型统计' } onEvents={ { pieselectchanged: this.typeSelect} } />
+        <Pie data={ threatLevelStatistics } title={ '威胁等级统计' } onEvents={ { pieselectchanged: this.leveSelect} }  />
       </Spin>
       </div>
     )

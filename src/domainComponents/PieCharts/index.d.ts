@@ -6,7 +6,7 @@ declare var PieCharts : {
   theme?:string 
   titles?: object  
   config:object 
-  // onEvents
+  onEvents?: (any:any) => any
 }
 
 // export default PieCharts

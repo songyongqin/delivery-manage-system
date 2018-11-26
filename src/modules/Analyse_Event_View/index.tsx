@@ -21,6 +21,7 @@ import { getWeekTime } from 'utils/getInitTime'
 import { momentToTimeStampRange } from 'utils/moment'
 import transformTimeStamp from 'utils/transformTimeStamp'
 import ResetIcon from 'components/ResetIcon' 
+import fetch from 'dva/fetch'
 
 import {
   limit,
@@ -95,7 +96,8 @@ class Page extends React.Component<any, any> {
         data: []
       },
       tableKey: 0,
-      clicked:['']
+      clicked:[''],
+      tableLoading: false,
     }
   }
 
@@ -140,7 +142,6 @@ class Page extends React.Component<any, any> {
   fetch = obj => {
     //将get方法改为post
     let reqArg = { ...this.state.reqArg, ...obj  }
-    console.log(reqArg.timestampRange)
     reqArg.timestampRange = transformTimeStamp(reqArg.timestampRange)
     this.props.post(reqArg)
     .then(res => {
@@ -170,6 +171,25 @@ class Page extends React.Component<any, any> {
       lastChangeTime: new Date().getTime()
     })
     this.fetch({ page:1, timestampRange: filters.timestampRange })
+  }
+
+  pieSelect = obj => {
+    let objs = { ...initArg, ...obj, timestampRange: transformTimeStamp(this.state.reqArg.timestampRange), page:1}
+    this.selectPost(objs)
+  }
+
+  selectPost = data => {
+    this.setState({ tableLoading: true })
+    fetch('/analyse/event-search', { method: 'POST', headers: { "Content-Type": "application/json; charset=utf-8" }, body: JSON.stringify(data) })
+    .then(res => res.json() )
+    .then(res => {
+      let table = res.payload
+      this.setState({ table, tableKey: +new Date(), tableLoading: false })
+    } )
+    .catch(err => {
+      this.setState({ tableLoading: false })
+      console.error(err) 
+    })
   }
 
   getCilck = index => {
@@ -291,11 +311,11 @@ class Page extends React.Component<any, any> {
         {
           this.props.animateRender([
             <div key="event-count">
-              <Count timestampRange={ filters.timestampRange } key={ lastChangeTime } />
+              <Count timestampRange={ filters.timestampRange } key={ lastChangeTime } fetchTable={ this.pieSelect } />
             </div>,
             <div key='event-table' >
               {/* <button onClick={ this.reset } >重置筛选</button> */}
-              <Spin spinning={ this.props.loading } >
+              <Spin spinning={ this.props.loading|| this.state.tableLoading } >
               <WithTable  tableData={ table.data } 
                           constants={ constants }
                           config={ combineColumnsConfig(columns, this.props.config.columns) }

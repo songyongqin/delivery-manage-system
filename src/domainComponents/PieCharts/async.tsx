@@ -19,6 +19,7 @@ interface prop{
   theme?:string 
   titles?: object  
   config?:object 
+  onEvents?: object
 }
 
 const AsyncPage = asyncComponent<prop>({

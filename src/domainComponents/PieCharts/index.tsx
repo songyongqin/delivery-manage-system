@@ -98,7 +98,6 @@ let getOption = ({ data ,theme, titles }) =>  ({
 const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) => {
   const datas = dataSetName(data)
   let option = { ...getOption({data:datas, theme, titles}), ...config }
-
   if(Array.isArray(data) ){
     if(onEvents){
       return (

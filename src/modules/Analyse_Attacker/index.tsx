@@ -21,8 +21,9 @@ import {
 } from './constants'
 import { getWeekTime } from 'utils/getInitTime'
 import TableTime from 'components/TableTime'
-
-
+import transformTimeStamp from 'utils/transformTimeStamp'
+import fetch from 'dva/fetch'
+import domainQueryStringParse from 'domainUtils/queryStringParse'
 
 const mapStateToprops = state => {
   return {
@@ -74,6 +75,7 @@ class Page extends React.Component<any, any> {
       countKey: 'oattackercount',
       total:0,
       timestampRange:getWeekTime()||[],
+      tableLoading: false,
     }
   }
 
@@ -145,6 +147,25 @@ class Page extends React.Component<any, any> {
     this.fetchTable({page:1})
   }
 
+  pieSelect = obj => {
+    let objs = { ...initArg, ...obj, timestampRange: this.state.reqArg.timestampRange, page:1}
+    this.selectPost(objs)
+  }
+
+  selectPost = data => {
+    this.setState({ tableLoading: true })
+    fetch(`/analyse/attacker-search?${domainQueryStringParse(data)}`, { method: 'GET', headers: { "Content-Type": "application/json; charset=utf-8" },  })
+    .then(res => res.json() )
+    .then(res => {
+      let table = res.payload
+      this.setState({tableData:table.data||[], total: table.total||0, tableKey: +new Date(), tableLoading: false })
+    } )
+    .catch(err => {
+      this.setState({ tableLoading: false })
+      console.error(err) 
+    })
+  }
+
 
   render() {
 
@@ -165,7 +186,8 @@ class Page extends React.Component<any, any> {
       },
       { title:'攻击者IP', 
         dataIndex:'attackerIP', 
-        types:['search']
+        types:['search'],
+        searchRule: 'ip',
       },
       { title:'攻击者域名', 
         dataIndex:'attackerDomainName', 
@@ -216,11 +238,11 @@ class Page extends React.Component<any, any> {
           this.props.animateRender([
             <div key='analyse-attacker-count' >
             {/* 统计数据 */}
-              <Count  key={ this.state.countKey } timestampRange={ timestampRange }  />
+              <Count  key={ this.state.countKey } timestampRange={ timestampRange } pieSelect={ this.pieSelect }  />
             </div>,
             <div key="analyse-attacker-table">
             {/* <button onClick={ this.reset } >重置筛选</button> */}
-            <Spin spinning={ this.props.tableLoading  } >
+            <Spin spinning={ this.props.tableLoading || this.state.tableLoading } >
               <WithTable  tableData={ tableData }
                         key = { this.state.tableKey }
                         constants={ constants }

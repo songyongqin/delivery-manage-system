@@ -40,7 +40,9 @@
     "/snort": true,
     "/file-restore": true
   },
-
+"hiddenRouter":[
+    "/config/node/monitor"
+  ], //此配置可以隐藏路由
 
   "adminOnly": [//只允许管理员访问的路由
     "/sys-config",
