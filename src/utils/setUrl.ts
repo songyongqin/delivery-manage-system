@@ -9,7 +9,6 @@ const setUrl = (url:string) => {
   // let configHost = getAppConfig()['host']
   let host = localStorage.getItem('host') || getAppConfig()['host']||  ''
   let needAdd = !(/\/static/.test(url))
-  
   let str = !isSecret&&!!host&&needAdd ? host+url : url
   return str
 }

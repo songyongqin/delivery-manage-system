@@ -63,11 +63,11 @@ class Count extends Component<any, any>{
   }
 
   getWhereSelect = arg => {
-    this.props.pieSelect({ attackerWhere: arg.name })
+    this.props.pieSelect({ searchValue: arg.name })
   }
 
   getGroupSelect = arg => {
-    this.props.pieSelect({ attackGroup: arg.name })
+    this.props.pieSelect({ searchValue: arg.name })
   }
 
   render(){

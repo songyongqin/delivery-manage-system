@@ -66,11 +66,11 @@ class Count extends React.Component<any,state>{
   }
 
   typeSelect = arg => {
-    this.props.fetchTable({ eventType: arg.name })
+    this.props.fetchTable({ searchValue: arg.name })
   } 
 
   leveSelect = arg => {
-    this.props.fetchTable({ level: arg.name })
+    this.props.fetchTable({ searchValue: arg.name })
   }
 
   render(){

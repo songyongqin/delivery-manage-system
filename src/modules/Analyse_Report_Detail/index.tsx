@@ -30,6 +30,8 @@ import {
   panelTitleConfigs,
   rendererConfig,
   BASIC_INFO,
+  YARA_SCAN,
+  AVL_SCAN
 } from './components/PanelConfig'
 import $ from 'jquery'
 import { primaryColor } from 'themes/vars'
@@ -37,6 +39,8 @@ import { Timeline, Tooltip, message as Message } from 'antd'
 import { head, last, exportData  } from 'utils'
 import ClipboardButton from 'react-clipboard.js'
 import exportReportByTaskId from 'utils/exportReportByTaskId'
+import { getAppConfig } from 'domain/app'
+import { includes } from 'lodash'
 
 const getScrollTop = () => {
   let scrollTop = 0
@@ -113,7 +117,7 @@ class SideBar extends React.PureComponent<any, any> {
     //     activeKey = key
     //   }
     // })
-    this.props.arr.forEach(i => {
+    this.props.arr&&this.props.arr.forEach(i => {
       const { key } = i
       let inRange = ($(`#${key}`).offset().top - AMEND_VALUE - 5) <= getScrollTop()
       if (inRange) {
@@ -436,13 +440,20 @@ class Page extends React.Component<any, any> {
 
     arr =arr.filter(i => {
       let have = true
-      let {value} = i
-      let isNull = value===''||value ===null 
-      let isEmptyArr = isArray(value)&&value.length===0
-      let isEmptyObj = isObject(value)&&Object.keys(value).length===0
-      if(isNull||isEmptyArr||isEmptyObj){
-        have = false
+      let {value, text} = i
+      let textArr = [panelTitleConfigs[BASIC_INFO], panelTitleConfigs[AVL_SCAN], panelTitleConfigs[YARA_SCAN] ]
+
+      //是否隐藏动态数据
+      let analyseReportStatic = getAppConfig()['analyseReportStatic'] || false
+      if(analyseReportStatic){
+        have = includes(textArr, text) 
       }
+      // let isNull = value===''||value ===null 
+      // let isEmptyArr = isArray(value)&&value.length===0
+      // let isEmptyObj = isObject(value)&&Object.keys(value).length===0
+      // if(isNull||isEmptyArr||isEmptyObj){
+      //   have = false
+      // }
       return have
     } )
     return (
