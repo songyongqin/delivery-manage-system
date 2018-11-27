@@ -13,8 +13,7 @@ export default {
   "alias": alias,
   "theme": theme,
   "entry": {
-    "index": "./src/index.tsx",
-    "situaion": "./src/public/static/situation.html"
+    "index": "./src/index.tsx"
   },
   "html": { "template": "./src/index.ejs" },
   "publicPath": '/',

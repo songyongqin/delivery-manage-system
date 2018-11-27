@@ -24,6 +24,7 @@ import TableTime from 'components/TableTime'
 import transformTimeStamp from 'utils/transformTimeStamp'
 import fetch from 'dva/fetch'
 import domainQueryStringParse from 'domainUtils/queryStringParse'
+import { getToken } from 'domain/user'
 
 const mapStateToprops = state => {
   return {
@@ -154,7 +155,7 @@ class Page extends React.Component<any, any> {
 
   selectPost = data => {
     this.setState({ tableLoading: true })
-    fetch(`/analyse/attacker-search?${domainQueryStringParse(data)}`, { method: 'GET', headers: { "Content-Type": "application/json; charset=utf-8" },  })
+    fetch(`/analyse/attacker-search?${domainQueryStringParse(data)}`, { method: 'GET', headers: { "Content-Type": "application/json; charset=utf-8", "access-token":getToken() },  })
     .then(res => res.json() )
     .then(res => {
       let table = res.payload

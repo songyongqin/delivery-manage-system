@@ -29,6 +29,7 @@ import {
 } from './constants'
 import Detail from './components/Detail'
 import TimeTag from 'components/TimeTag'
+import { getToken } from 'domain/user'
 
 
 const mapStateToProps = state => {
@@ -180,7 +181,7 @@ class Page extends React.Component<any, any> {
 
   selectPost = data => {
     this.setState({ tableLoading: true })
-    fetch('/analyse/event-search', { method: 'POST', headers: { "Content-Type": "application/json; charset=utf-8" }, body: JSON.stringify(data) })
+    fetch('/analyse/event-search', { method: 'POST', headers: { "Content-Type": "application/json; charset=utf-8", "access-token":getToken() }, body: JSON.stringify(data) })
     .then(res => res.json() )
     .then(res => {
       let table = res.payload
