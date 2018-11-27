@@ -7,6 +7,7 @@ import extraConnect from 'domainUtils/extraConnect'
 import Pie from '../Pie'
 import PieTwo from '../PieTwo'
 import Bar from '../Bar'
+import { idArr } from '../../constants'
 
 
 
@@ -134,7 +135,6 @@ class NewChart extends React.Component<props,state>{
   }
 
 
-
   fetchDetail = () => {
     let timestampRange = this.props.timestampRange
     this.props.fetchDetail({ timestampRange })
@@ -155,25 +155,29 @@ class NewChart extends React.Component<props,state>{
     const arrPie = [
       { 
         data: data.group, 
-        title: '威胁组织', 
+        // title: '威胁组织',
+        title: idArr[2].text, 
         total: data.groupTotal, 
         unit: '个' 
       },
       { 
         data: data.attackedAssets, 
-        title: '受攻击资产', 
+        // title: '受攻击资产', 
+        title: idArr[5].text, 
         total: data.attackedAssetsTotal, 
         unit: '台' 
       },
       { 
         data: data.family, 
-        title: '威胁家族', 
+        // title: '威胁家族', 
+        title: idArr[3].text, 
         total: data.familyTotal, 
         unit: '个' 
       },
       { 
         data: data.threatIntelligence, 
-        title: '威胁情报', 
+        // title: '威胁情报', 
+        title: idArr[6].text, 
         total: data.threatIntelligenceTotal, 
         unit: '条' 
       }
@@ -210,6 +214,7 @@ class NewChart extends React.Component<props,state>{
                 data2={ data.threatEvent }
                 total={ data.threatEventTotal }
                 unit={ '起' } 
+                id={ idArr[0].value }
                  />
         </Wrap>
           {
@@ -219,6 +224,7 @@ class NewChart extends React.Component<props,state>{
                   title={ item.title }
                   total={ item.total }
                   unit={ item.unit }
+                  id={ idArr.filter(i => i.text===item.title )[0].value }
                    />
             </Wrap>
           )

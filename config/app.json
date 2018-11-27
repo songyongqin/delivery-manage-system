@@ -2,7 +2,7 @@
   "title": "捕风蜜网威胁感知平台",
   "secret": false,
   "heartBeat": false,
-  "host":"http://172.31.50.140:5208",
+  "host":"",
   "analyseReportStatic": true,
   "routerRegister": {
     "/overview": true,

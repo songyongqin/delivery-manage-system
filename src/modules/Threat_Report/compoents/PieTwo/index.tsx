@@ -9,12 +9,12 @@ import wrapStr from 'utils/wrapStr'
 import dataSetName from 'utils/dataSetName'
 const css = require('./index.less')
 
-const PieTwo = ({ data, data2, title, onClick, total, unit  }) => {
+const PieTwo = ({ data, data2, title, onClick, total, unit, id  }) => {
   if(data.length){
     data[0]['selected'] = true
   }
   return(
-    <div className={ css.card } >
+    <div className={ css.card } id={ id } >
       <div className={ css.title } onClick={() => onClick(title) } >
         <Icon type="pie-chart" style={{ fontSize:22, display:'inline-block', marginRight:5 }} />
         { title}
