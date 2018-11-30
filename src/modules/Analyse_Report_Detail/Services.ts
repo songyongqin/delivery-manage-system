@@ -1,4 +1,5 @@
-import commonRequestCreator from 'utils/commonRequestCreator'
+// import commonRequestCreator from 'utils/commonRequestCreator'
+import commonRequestCreator from 'domainUtils/commonRequestCreator'
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
 
