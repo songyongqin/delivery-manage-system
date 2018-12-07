@@ -39,7 +39,7 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
     // console.info(i["icon"], mini, i.link)
     let host = location.host
     let link = getFinalLink(i)
-    link = link==='/situation' ? `http://${host}/static${link}.html` :'/#' +link
+    link = (link==='/situation'||link==='/topo' )? `http://${host}/static${link}.html` :'/#' +link
     // const title = (
     //   <Link to={link} className={classes} onClick={e => {
     //     //授权过期 跳转到device路由

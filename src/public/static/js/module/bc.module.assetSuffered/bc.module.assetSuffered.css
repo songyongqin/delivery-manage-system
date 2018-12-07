@@ -1,0 +1,109 @@
+button {
+  border: 0;
+  outline: 0;
+  background: none;
+}
+
+.asset {
+  position: absolute;
+  right: 42px;
+  top: 145px;
+  width: 288px;
+  z-index: 1;
+}
+.asset-title {
+  position: relative;
+  display: inline-block;
+  padding-left: 16px;
+  padding-right: 16px;
+  border: 1px solid rgba(151, 173, 194, 0.55); 
+  background: rgba(53, 84, 113, 0.55);
+  color: #fff;
+  font-size: 20px;
+}
+.asset-center {
+  position: relative;
+  margin-top: 25px;
+  max-height: 520px;
+  overflow: hidden;
+}
+.asset-title::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  bottom: -13px;
+  height: 20px;
+  width: 288px;
+  background: url(../../../images/leftInfo/infoTop.png) no-repeat center bottom;
+}
+.asset-center::after {
+  content: '';
+  display: block;
+  height: 31px;
+  background: url(../../../images/leftInfo/infoBottom.png) no-repeat center bottom;
+}
+
+.asset-center-list-wapper {
+  max-height: 486px;
+  overflow: hidden;
+}
+.asset-center .row .col:nth-child(1) {
+  width: 140px;
+  text-indent: 12px;
+}
+.asset-center .row .col:nth-child(2) {
+  width: 0px;
+  text-indent: 3px;
+}
+.asset-center .row .col:nth-child(3) {
+  /* width: 90px; */
+  width: 133px;
+  text-indent: 13px;
+}
+.asset-center .row .col:nth-child(4) {
+  font-size: 12px!important;
+  width: 82px;
+  line-height: 20px!important;
+  padding-left: 4px;
+  color: #d4edff!important;
+}
+
+/* 列表页脚 */
+.asset-center-pagination {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  height: 20px;
+  line-height: 20px;
+  color: #a0c8e2;
+  font-size: 14px;
+}
+.asset-center-pagination > div {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.asset-center-pagination button {
+  position: relative;
+  width: 11px;
+  height: 100%;
+  cursor: pointer;
+}
+.asset-center-pagination .page-pre {
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform:scaleX(-1);
+  background: url(../../../images/next-btn.png) no-repeat center center;
+  opacity: 0.5;
+}
+.asset-center-pagination .page-next {
+  margin-left: 6px;
+  background: url(../../../images/next-btn.png) no-repeat center center;
+  opacity: 0.5;
+}
+/* 列表页脚 */
+
+

@@ -59,8 +59,8 @@ const model: DvaModel<any> = {
         fileName, md5, fileType, threatType, judge, timestampRange, limit, page
       };
       const result = yield call(Services.get, addPayload);
-      const data = result.payload.data;
-      const total = result.payload.total;
+      const data = result.payload&&result.payload.data||[];
+      const total = result.payload&&result.payload.total||0;
       if (result.status === 1) {
         yield put({
           type: 'save',

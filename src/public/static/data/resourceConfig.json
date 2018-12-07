@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "data": {
+    "host": 1000,
+    "server": 20,
+    "router": 5,
+    "interchanger": 10,
+    "wall": 20,
+    "IDS": 3
+  }
+}

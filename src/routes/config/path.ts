@@ -6,6 +6,8 @@ export const ROOT_URL = "/",
 
   AITUATION_URL = '/situation',
 
+  TOPO_URL = '/topo',
+
   // ANALYSE_URL = "/analyse",
   // ANALYSE_EVENT_URL = "/analyse/event",
   ANALYSE_ATTACK_CHAIN_URL = "/analyse/attack-chain",

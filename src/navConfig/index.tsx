@@ -67,6 +67,8 @@ import {
 
   AUDIT_URL,
 
+  TOPO_URL,
+
   AUDIT_EVENT_URL,
 
   AUDIT_ASSETS_URL,
@@ -152,6 +154,11 @@ export const _navConfig = [
     link: AITUATION_URL,
     title: "安全态势",
     icon: <Icon type="customer-service" />
+  },
+  {
+    link: TOPO_URL,
+    title: "拓扑图",
+    icon: <Icon type="share-alt" />
   },
   {
     link: ANALYSE_REPORT_DETAIL_URL,
