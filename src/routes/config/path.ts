@@ -40,6 +40,8 @@ export const ROOT_URL = "/",
 
   FILE_RESTORE = "/file-restore",
 
+  CONFIG_WHITE_LIST = '/config/white-list',
+
 
 
   // ids 

@@ -130,7 +130,9 @@ export const LAYOUT_NAMESPACE = "layout",
 
   THREAT_REPORT_NEW_CHART_NAMESPACE = 'threatReportNewChart',
 
-  NODE_MONITOR_NAMESPACE = 'nodeMonitor'
+  NODE_MONITOR_NAMESPACE = 'nodeMonitor',
+
+  WHITE_LIST = 'whiteList'
 
 
 

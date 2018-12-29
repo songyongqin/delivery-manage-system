@@ -41,6 +41,7 @@ import getSySConfigPage from 'routes/SysConfig'
 import getAnalyseReportPage from 'routes/Analyse_Report'
 import getAnalyseReportDetail from 'routes/Analyse_Report_Detail'
 import getNodeMonitorPage from 'routes/Node_Monitor'
+import getWhiteListPage from 'routes/WhiteList'
 import getSituation from 'routes/Situation'
 import {
   OVERVIEW_URL,
@@ -58,7 +59,7 @@ import {
   SYS_CONFIG_MONITOR_URL,
   SYS_CONFIG_NETWORK_URL,
   SYS_CONFIG_STRATEGY_URL,
-  MANAGER_DEVICE_URL,
+  // MANAGER_DEVICE_URL,
   USER_MANAGER_URL,
   MANAGER_VM_URL,
   ROOT_URL,
@@ -121,6 +122,8 @@ import {
   CONFIG_SYS_CONFIG_MONITOR_URL,
 
   CONFIG_SYS_CONFIG_WARN_URL,
+
+  CONFIG_WHITE_LIST, 
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
 
@@ -332,6 +335,11 @@ export default ({ history, app }) => {
               component={getSystemLogLoginPage(app, CONFIG_SYS_LOG_LOGIN_URL)}
               path={CONFIG_SYS_LOG_LOGIN_URL} >
             </Route>
+            {/* 白名单 */}
+            <Route exact component={ getWhiteListPage( app, CONFIG_WHITE_LIST ) }
+              path={ CONFIG_WHITE_LIST }>
+            </Route>
+            
             {/* Snort */}
             {/* <Route
               exact

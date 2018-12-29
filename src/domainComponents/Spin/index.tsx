@@ -14,8 +14,16 @@ const LoadingEffect = () => (
   </div>
 )
 
+interface props{
+  spinning: boolean
+  theme?:  string
+  full?: any 
+  style?: object
+}
+
+
 @WithCommonProps
-class Spin extends React.Component<any, any>{
+class Spin extends React.Component<props, any>{
   constructor(props) {
     super(props)
   }

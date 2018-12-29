@@ -74,11 +74,10 @@ const subscriptions = {
 
     return history.listen(({ pathname, search }) => {
       const open = openRoutes.includes(pathname)
-
+      
       const authRoutes = getAuthRoutes({ admin: true })
 
       const initStates = getInitStates()
-
       if (pathname === LOGIN_URL && initStates.isLogin) {
         return dispatch({
           type: "redirect"

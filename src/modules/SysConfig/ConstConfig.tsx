@@ -18,7 +18,8 @@ export const HIGH = "high",
   UN_KNOW = "unknow";
 
 export const WARN_LCONFIG = '告警设置',
-  NET_CONFIG = '网络设置'
+  NET_CONFIG = '网络设置',
+  WHITE_LIST = '白名单设置'
 
 
 export const levelTextConfig = {

@@ -250,7 +250,11 @@ const HttpApiConfig = {
 
   REPORT_RANK_THREAT: '/report/rank',
 
-  NODE_MONITOR:"/node/monitor"
+  NODE_MONITOR:"/node/monitor",
+
+  WHITE_LIST: '/whiteList',
+
+  WHITE_LIST_USE: '/whiteList/use'
 
 }
 

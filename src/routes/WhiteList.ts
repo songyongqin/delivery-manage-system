@@ -8,12 +8,9 @@ export default (app: any, url: string): React.Component => {
   return dynamic({
     app,
     models: () => [
-      System.import(/* webpackChunkName: "EarlyWarningEmailReceiveModel" */'modules/SysConfig/models/receive'),
-      System.import(/* webpackChunkName: "EarlyWarningEmailSendModel" */'modules/SysConfig/models/send'),
-      System.import(/* webpackChunkName: "ExportNet" */'modules/SysConfig/models/net'),
       System.import(/* webpackChunkName: "WhiteListUserModel" */'modules/WhiteList/model'),
     ].map(asyncModulePipe),
-    component: () => System.import(/* webpackChunkName: "EmailWarningEmailPage" */'modules/SysConfig')
+    component: () => System.import(/* webpackChunkName: "WhiteListPage */'modules/WhiteList')
       .then(page => WithRouteInit(url)(page.default)),
   })
 

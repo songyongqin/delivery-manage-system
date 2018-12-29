@@ -6,6 +6,7 @@ import {
   SEND_CONFIG_TITLE,
   WARN_LCONFIG, 
   NET_CONFIG,
+  WHITE_LIST,
 } from './ConstConfig';
 import WithAnimateRender from 'components/WithAnimateRender'
 import classnames from 'classnames'
@@ -13,6 +14,7 @@ import EmailReceive from './components/EmailReceive'
 import EmailSend from './components/EmailSend'
 import NetConfig from './components/NetConfig'
 import WithCommonProps from 'domainComponents/WithCommonProps'
+import WhitList from '../WhiteList'
 
 const TabPane = Tabs.TabPane
 
@@ -40,6 +42,9 @@ class Page extends React.Component<any, any>{
           </TabPane>
           <TabPane tab={ NET_CONFIG }  key={ NET_CONFIG } >
             <NetConfig  />
+          </TabPane>
+          <TabPane tab={ WHITE_LIST }  key={ WHITE_LIST } >
+            <WhitList  />
           </TabPane>
         </Tabs>
       ])

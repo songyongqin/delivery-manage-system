@@ -34,7 +34,8 @@ export default {
     "/file-restore": proxyServer,
     "/audit": proxyServer,
     "/strategy": proxyServer,
-    "/node":proxyServer
+    "/node":proxyServer,
+    "/whiteList": proxyServer
   },
   "extraBabelPlugins": [
     ["import", { "libraryName": "antd", "style": true }]

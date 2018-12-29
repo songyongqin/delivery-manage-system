@@ -94,6 +94,7 @@ import {
   CONFIG_SYS_CONFIG_MONITOR_URL,
 
   CONFIG_SYS_CONFIG_WARN_URL,
+  CONFIG_WHITE_LIST,
 
 
 } from 'routes/config/path'
@@ -417,6 +418,11 @@ export const _navConfig = [
       },
     ]
   },
+  // {
+  //   link: CONFIG_WHITE_LIST,
+  //   title:"白名单",
+  //   hidden: true
+  // },
   {
     link: CONFIG_URL,
     title: "配置管理",
