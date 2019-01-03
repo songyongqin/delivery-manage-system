@@ -44,7 +44,7 @@ const mapDispatchToprops = dispatch => {
 
 const initArg = {
   limit:10,
-  current:1 
+  page:1 
 }
 
 @extraConnect( mapStateToprops, mapDispatchToprops )
@@ -65,22 +65,22 @@ class WhiteList extends React.Component<any, any>{
 
   get = obj => {
     this.props.get(obj).then(res => {
-      const { current=1 } = obj
+      const { page=1 } = obj
       const { total=0, data=[] } = res
-      this.setState({ total, data, current })
+      this.setState({ total, data, page })
     } )
   }
 
   del = id => {
-    this.props.del({id}).then(() => message.success('删除成功') )
+    this.props.del({id}).then(() =>{ message.success('删除成功'); this.get({...initArg}) } )
   }
 
-  paginationChange = current => {
-    this.get({ limit: initArg.limit, current })
+  paginationChange = page => {
+    this.get({ limit: initArg.limit, page })
   }
 
   onSubmit = values => {
-    this.props.post(values).then(res => {console.log(res); message.success('新增白名单成功')})
+    this.props.post(values).then(res => {console.log(res); message.success('新增白名单成功');  this.get({...initArg})})
   }
   hiden = () => {
     this.setState({ showNewWhite: false })
@@ -102,7 +102,7 @@ class WhiteList extends React.Component<any, any>{
       return i
     })
 
-    const { current, total, showNewWhite, data } = this.state
+    const { page=1, total, showNewWhite, data } = this.state
 
     return(
       <div>
@@ -116,7 +116,7 @@ class WhiteList extends React.Component<any, any>{
         <Spin spinning={ this.props.loading } >
           <WithTable  tableData={ data } config={ renderColumns }   />
         </Spin>
-        <WithPagination current={ current } total={ total } onChange={ this.paginationChange } />
+        <WithPagination current={ page } total={ total } onChange={ this.paginationChange } />
       </div>
     )
   }
