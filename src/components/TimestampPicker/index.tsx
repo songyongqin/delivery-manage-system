@@ -13,6 +13,7 @@ export default ({ defaultValue = [], onChange, disabled = false }) => {
       size="large"
       ranges={{
         "今天": [moment().subtract(0, "days"), moment().subtract(0, 'days')],
+        "本周": [moment().startOf("week"), moment().subtract(0, 'days')],
         "本月": [moment().startOf('month'), moment().subtract(0, 'days')],
         "本季度": [moment().startOf('quarter'), moment().subtract(0, 'days')],
         "本年度": [moment().startOf("year"), moment().subtract(0, 'days')],
