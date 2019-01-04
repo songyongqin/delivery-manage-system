@@ -97,9 +97,11 @@ export const createRequestHandle: CreateRequestHandle = ({ beforeRequest, afterR
   //     })
   // }
 
+
   return (url: string, options?: object) => {
     //请求前options处理 ，beforeRequest 内可附带token信息或加密等操作
-    let urls = setUrl(url)
+    // let urls = setUrl(url)
+    let urls = encodeURI(setUrl(url)) 
     const finalOptions = beforeRequest ? beforeRequest(urls, options) : options
     
     return fetch(urls, finalOptions)
