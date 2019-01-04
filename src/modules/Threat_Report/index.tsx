@@ -92,7 +92,7 @@ class ThreatReport extends Component<any,any>{
       return '全部'
     }
     else {
-      return moment(timestampRange[0]).format('YYYY-MM-DD') + ' 到 ' + moment(timestampRange[0]).format('YYYY-MM-DD')
+      return moment(timestampRange[0]).format('YYYY-MM-DD') + ' 到 ' + moment(timestampRange[1]).format('YYYY-MM-DD')
     }
   }
 
