@@ -45,7 +45,7 @@ export default class CommonItem extends React.Component<any, any>{
             {this.props.expandPanel}
           </div>
           <div style={{ float: "left" }}>
-            <LimitForm onSubmit={this.onSubmit}></LimitForm>
+            <LimitForm onSubmit={this.onSubmit} defaultValue={ ...this.props.initialFilters  } ></LimitForm>
           </div>
 
         </div>
