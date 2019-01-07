@@ -156,11 +156,11 @@ export const _navConfig = [
     title: "安全态势",
     icon: <Icon type="customer-service" />
   },
-  // {
-  //   link: TOPO_URL,
-  //   title: "拓扑图",
-  //   icon: <Icon type="share-alt" />
-  // },
+  {
+    link: TOPO_URL,
+    title: "拓扑图",
+    icon: <Icon type="share-alt" />
+  },
   {
     link: ANALYSE_REPORT_DETAIL_URL,
     title: "威胁报告xxxx",
