@@ -117,7 +117,8 @@ const SAMPLE_DATA_INDEX = "sample",
   THREAT_INFO_DATA_INDEX = "threatInfo",
   BASIC_NET_DATA_INDEX = "basicNet",
   FLOW_LOG_DATA_INDEX = "flowLog",
-  HISTORY_REPORT_DATA_INDEX = "historyReport"
+  HISTORY_REPORT_DATA_INDEX = "historyReport",
+  RESTORE_FILE = "resoreFile"
 
 const optionTextConfig = {
   [SAMPLE_DATA_INDEX]: "样本",
@@ -127,7 +128,8 @@ const optionTextConfig = {
   [THREAT_INFO_DATA_INDEX]: "威胁数据",
   [BASIC_NET_DATA_INDEX]: "网络基础数据",
   [FLOW_LOG_DATA_INDEX]: "流量日志",
-  [HISTORY_REPORT_DATA_INDEX]: "历史报告"
+  [HISTORY_REPORT_DATA_INDEX]: "历史报告",
+  [RESTORE_FILE] : "样本文件"
 }
 
 
@@ -135,7 +137,8 @@ const optionTextConfig = {
 const idsOptionDataIndexes = [
   THREAT_INFO_DATA_INDEX,
   BASIC_NET_DATA_INDEX,
-  FLOW_LOG_DATA_INDEX,
+  // FLOW_LOG_DATA_INDEX,
+  RESTORE_FILE,
   HISTORY_REPORT_DATA_INDEX
 ]
 
