@@ -13,10 +13,8 @@ import { CONFIG_DEVICE_MANAGER_URL } from 'routes/config/path'
 import { getAppInstance } from 'domain/instance'
 import { isLicenceOverdue, showOverdueTipModal } from 'domain/licence'
 import { routerRedux } from 'dva/router'
-
 const getItemLink = config => {
   if( "items" in config ){
-    // let obj = config.items&&config.items.length ? config.items
     return  getItemLink(config.items[0])
   }
   else return config.link
@@ -246,10 +244,7 @@ export default class extends React.Component {
         target = [...target, `${target[target.length - 1]}/${item}`]
 
     }, [])
-
     // const selectedKeys =[ active]
-
-    // console.log(active, selectedKeys)
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <Menu

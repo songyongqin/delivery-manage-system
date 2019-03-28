@@ -5,6 +5,8 @@ declare module "*.css" {
   export default content
 }
 
+declare module "*.svg"
+
 declare module "*.less" {
   const content: {
     [propName: string]: any

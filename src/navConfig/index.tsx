@@ -4,6 +4,7 @@
 */
 import React from 'react'
 import { Icon } from 'antd'
+import ExtraIcon from 'components/Icon'
 import { head } from 'utils'
 import { find, flattenDeep } from 'lodash'
 import {
@@ -35,7 +36,7 @@ import {
   USER_MANAGER_URL,
 
   MANAGER_URL,
-  MANAGER_DEVICE_URL,
+  // MANAGER_DEVICE_URL,
   MANAGER_VM_URL,
   MANAGER_MIRROR_URL,
 
@@ -108,6 +109,7 @@ import {
 
 import { getAppConfig } from 'domain/app'
 // import router from 'router';
+import { Situation  } from 'components/IconSvg'
 
 
 const Indent = ({ space = 0 }) =>
@@ -154,7 +156,7 @@ export const _navConfig = [
   {
     link: AITUATION_URL,
     title: "安全态势",
-    icon: <Icon type="customer-service" />
+    icon: <Situation  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
   },
   {
     link: TOPO_URL,

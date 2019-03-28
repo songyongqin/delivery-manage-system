@@ -1,5 +1,11 @@
 @import '~themes/vars';
 @import '../../styles.less';
+
+@active-color: #FFFFFF;
+@active-bg: #465675;
+@bg: #1C222E;
+@color: #999999;
+
 .nav{
   width: @nav-bar-width;
   position: fixed;
@@ -19,17 +25,10 @@
   }
 
   &.light{
-    background: @light-bg-level-2;
-    color:@light-txt-color;
+    background-color: @bg;
+    color:@color;
     .title-wrapper.active{
       position: relative;
-      :global{
-        .ant-menu-submenu-title{
-          // background: #e6f7ff;
-          // background: red;
-          transition: none;
-        }
-      }
       &:after{
         content:"";
         position: absolute;
@@ -37,9 +36,11 @@
         right:0;
         bottom:0;
         width:3px;
-        background: @primary-color;
+        // background: @primary-color;
+        // background-color: #1C222E
       }
     }
+
     :global{
       .ant-menu-item{
         &:after{
@@ -47,7 +48,13 @@
         }
       }
       .ant-menu-submenu-title{
-        background:@light-bg-level-2;
+        background: @bg;
+        color:@color;
+      }
+
+      .ant-menu-item-selected {
+        color: @active-color;
+        background-color: @active-bg;
       }
     }
   }
@@ -96,10 +103,6 @@
 
   }
 
-  .title-wrapper.active{
-    color:@primary-color;
-  }
-
   :global{
     .ant-menu{
       background: transparent;
@@ -108,10 +111,15 @@
     .ant-menu-item{
       margin:0;
       user-select: none;
+      color: @color;
       &:after{
         right:1px;
       }
     }
+    .ant-menu-item>a:hover{
+      color:@active-color;
+    }
+
     .ant-menu-vertical > .ant-menu-item, .ant-menu-vertical-left > .ant-menu-item, .ant-menu-vertical-right > .ant-menu-item, .ant-menu-inline > .ant-menu-item, .ant-menu-vertical > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-vertical-left > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-vertical-right > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
       line-height: 50px;
       height: 50px;
@@ -128,7 +136,7 @@
            top:0;
            bottom:0; 
            width: 3px;
-           background: @primary-color;
+          //  background: @primary-color;
         }
       }
     }
@@ -176,7 +184,8 @@
 }
 
 .bg{
-  background: #e6f7ff;
-  // background: red;
+  // background: #e6f7ff;
+  background:@active-bg;  //选中后节点的背景色
+  color: @active-color;
   transition: none;
 }
