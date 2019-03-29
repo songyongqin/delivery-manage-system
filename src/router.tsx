@@ -42,6 +42,7 @@ import getAnalyseReportPage from 'routes/Analyse_Report'
 import getAnalyseReportDetail from 'routes/Analyse_Report_Detail'
 import getNodeMonitorPage from 'routes/Node_Monitor'
 import getWhiteListPage from 'routes/WhiteList'
+import getSysLogPage from 'routes/SysLog'
 import getSituation from 'routes/Situation'
 import {
   OVERVIEW_URL,
@@ -328,13 +329,15 @@ export default ({ history, app }) => {
             <Route
               exact
               path={CONFIG_SYS_LOG_URL}
-              render={() => (<Redirect to={getDefaultRoute(CONFIG_SYS_LOG_URL)} />)} />
+              component={ getSysLogPage(app, CONFIG_SYS_LOG_URL) }
+              // render={() => (<Redirect to={getDefaultRoute(CONFIG_SYS_LOG_URL)} />)}
+               />
             {/* 登陆日志 */}
-            <Route
+            {/* <Route
               exact
               component={getSystemLogLoginPage(app, CONFIG_SYS_LOG_LOGIN_URL)}
               path={CONFIG_SYS_LOG_LOGIN_URL} >
-            </Route>
+            </Route> */}
             {/* 白名单 */}
             <Route exact component={ getWhiteListPage( app, CONFIG_WHITE_LIST ) }
               path={ CONFIG_WHITE_LIST }>

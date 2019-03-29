@@ -449,13 +449,13 @@ export const _navConfig = [
         link: CONFIG_SYS_LOG_URL, 
         icon: <Indent />,
         title: "系统日志",
-        items: [
-          {
-            link: CONFIG_SYS_LOG_LOGIN_URL,
-            title: "登录日志",
-            icon: <Indent space={1} />,
-          }
-        ]
+        // items: [
+        //   {
+        //     link: CONFIG_SYS_LOG_LOGIN_URL,
+        //     title: "登录日志",
+        //     icon: <Indent space={1} />,
+        //   }
+        // ]
       }, {
         link:  CONFIG_SYS_CONFIG_URL,
         title: "系统配置",
