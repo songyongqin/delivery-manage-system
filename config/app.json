@@ -31,8 +31,7 @@
     "/file-restore": true
   },
   "hiddenRouter":[
-    "/topo",
-    "/config/device-manager"
+    "/topo"
   ],
   "adminOnly": [
     "/sys-config",

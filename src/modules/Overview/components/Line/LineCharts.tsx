@@ -43,8 +43,9 @@ const getSeries = arr => {
   if(Array.isArray(arr)&&arr.length){
     let array = arr.map(item =>{
        item['type'] = 'line'
-       item['stack'] = '总量'
-       item['areaStyle'] = {normal:{}}
+       item['smooth']= true;
+      //  item['stack'] = '总量'
+      //  item['areaStyle'] = {normal:{}}
        return item
       } )
     return array
@@ -54,6 +55,8 @@ const getSeries = arr => {
 
 const getDeg = () =>  Math.PI/2
 
+const color = ['#89A6FF','#7371E8', '#A27CFF', '#71AEE8', '#7DE1FF','#6BE8C5', '#FFDD68', '#F8CEB3']
+
 class BarCharts extends React.Component<props, any>{
   constructor(props) {
     super(props)
@@ -62,9 +65,9 @@ class BarCharts extends React.Component<props, any>{
 // legend为 series的name
     const { title, xAxis,  series, theme, unit } = this.props
 
-    return <div style={{ width: "100%", height: "300px" }}>
+    return <div style={{ width: "100%", height: "100%" }}>
       <ReactEcharts
-        style={{ height: "100%" }}
+        style={{  width: "100%", height: "100%" }}
         option={{
           title: {
             text: title,
@@ -123,7 +126,8 @@ class BarCharts extends React.Component<props, any>{
                 type : 'value'
             }
         ],
-        series : getSeries(series)
+        series : getSeries(series),
+        color
         }}>
       </ReactEcharts>
     </div>

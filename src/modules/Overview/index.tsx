@@ -7,14 +7,14 @@ import Pie from './components/Pie'
 import Spin from 'domainComponents/Spin'
 import { OVERVIEW_STATISTICS_COUNT } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
-import { Input } from 'antd'
+import { Input, Row, Col  } from 'antd'
 import Line from './components/Line/AsyncLineCharts'
 import TimeTag from 'components/TimeTag'
 import LevelTag from 'components/LevelTag'
 import WithTable from 'components/WithTable'
 import Tree from './components/Tree'
 import { getWeekTime } from 'utils/getInitTime'
-
+import debounce from 'lodash/debounce'
 
 
 const MapStateToProps = state => {
@@ -101,7 +101,8 @@ class Page extends React.Component<any, any> {
       table:{
         total:0,
         data:[]
-      }
+      },
+      pieHeight:200
     }
   }
 
@@ -119,7 +120,16 @@ class Page extends React.Component<any, any> {
     this.getCount({timestampRange});
     this.getFlow({timestampRange});
     this.getEvent() 
+    window.onresize = debounce(this.setWidth, 100)
+    this.setWidth();
+  }
 
+  setWidth = () => {
+    
+    let innerWidth = window.innerWidth ||1336;
+    let pieHeight = (innerWidth - 180-50-60)/280/4*200
+    console.log(innerWidth)
+    this.setState({ pieHeight })
   }
 
   getCount = ({timestampRange}) => {
@@ -154,9 +164,8 @@ class Page extends React.Component<any, any> {
 
   render() {
     // const { applicationFlow, filters, networkFlow, table } = this.state
-    const { applicationFlow, filters, table } = this.state
+    const { applicationFlow, filters, table, pieHeight } = this.state
     const { countLoading, flowLoading, eventLoading } = this.props
-    
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
@@ -168,27 +177,32 @@ class Page extends React.Component<any, any> {
         </div>
         {
           this.props.animateRender([
-            <Spin key='pie-charts' spinning={ countLoading } >
+            <Spin key='pie-charts' spinning={ countLoading } style={{ height:pieHeight }} >
               <Pie data={ this.state.count } />
             </Spin>,
-            <Spin key='pie-charts-line' spinning={ flowLoading } >
-              {/* <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10,  padding:10 }} >
-                <Line title={'网络流量'} xAxis={ networkFlow.xAxis } series={ networkFlow.series }  unit={ networkFlow.unit }  />
-              </span> */}
-              <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10, padding:10 }} >
-                <Line title={'应用流量'} xAxis={ applicationFlow.xAxis } series={ applicationFlow.series }  unit={ applicationFlow.unit }  />
-              </span>
-              {/* <Tree /> */}
-          </Spin>,
-          <div key='overview-table' style={{ marginTop:20 }} >
-            <div>
-              <h2 style={{ display:'inline-block' }} >最新紧急事件</h2>
-              <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:140, marginTop:10}} >查看全部威胁事件</a>
-            </div>
-            <Spin spinning={ eventLoading } >
-              <WithTable tableData={ table.data } config={ cloumns } />
-            </Spin>
-          </div>
+            <Row key='overview-row' justify={ 'space-between' } gutter={ 20 } style={{ marginTop: 30 ,height:'100%' }} >
+            <Col span={12}  style={{ height:pieHeight }} >
+              <Spin key='pie-charts-line' spinning={ flowLoading } style={{ height:'100%' }} >
+                {/* <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10,  padding:10 }} >
+                  <Line title={'网络流量'} xAxis={ networkFlow.xAxis } series={ networkFlow.series }  unit={ networkFlow.unit }  />
+                </span> */}
+                <Wrap >
+                  <Line title={'应用流量'} xAxis={ applicationFlow.xAxis } series={ applicationFlow.series }  unit={ applicationFlow.unit }  />
+                </Wrap>
+              </Spin>
+              </Col>
+              <Col span={12}>
+              <Wrap>
+                <div>
+                  <h2 style={{ display:'inline-block', fontWeight: 900, fontSize:"18px", fontFamily:"Arial" }} >最新高危事件</h2>
+                  <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:140, marginTop:10}} >查看全部威胁事件</a>
+                </div>
+                <Spin spinning={ eventLoading } >
+                  <WithTable tableData={ table.data } config={ cloumns } />
+                </Spin>
+              </Wrap>
+              </Col>
+            </Row>
           ])
         }
       </div>
@@ -197,3 +211,13 @@ class Page extends React.Component<any, any> {
 }
 
 export default Page
+
+const Wrap = props => {
+  return(
+    <div style={{ width:'100%', height:500, display:'inline-block',  border:'1px solid #E9EBEB', borderRadius:6, padding:10 , backgroundColor: 'rgb(255,255,255)'  }} >
+      {
+        props.children
+      }
+    </div>
+  )
+}

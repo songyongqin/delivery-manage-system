@@ -45,7 +45,7 @@ class Spin extends React.Component<props, any>{
     })
 
     return (
-      <div className={classes}>
+      <div className={classes} style={ { height: '100%' } } >
         {
           spinning&&<div className={loadingClasses}>
           <LoadingEffect></LoadingEffect>
