@@ -13,9 +13,8 @@ import TimeTag from 'components/TimeTag'
 import LevelTag from 'components/LevelTag'
 import WithTable from 'components/WithTable'
 import Tree from './components/Tree'
-import { getWeekTime } from 'utils/getInitTime'
+import { getTodayTime } from 'utils/getInitTime'
 import debounce from 'lodash/debounce'
-
 
 const MapStateToProps = state => {
   return{
@@ -87,7 +86,7 @@ class Page extends React.Component<any, any> {
         familyCount: [],
       },
       filters: {
-        timestampRange:getWeekTime()|| []
+        timestampRange:getTodayTime()|| []
       },
       // networkFlow:{
       //   series:[],
@@ -124,6 +123,10 @@ class Page extends React.Component<any, any> {
     this.getEvent() 
     window.onresize = debounce(this.setWidth, 100)
     this.setWidth();
+  }
+
+  componentWillUnmount(){
+    window.onresize = null
   }
 
   setWidth = () => {

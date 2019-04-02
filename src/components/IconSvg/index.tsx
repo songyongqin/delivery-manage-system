@@ -12,7 +12,7 @@ const SvgComponents = ( { width, height, children } ) => {
 }
 
 
-export const Situation =  ({ style={ width:"20", height:"20" }, type })  => {
+export const Situation =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -22,7 +22,7 @@ export const Situation =  ({ style={ width:"20", height:"20" }, type })  => {
   )
 }
 
-export const AttackAsset =  ({ style={ width:"20", height:"20" }, type })  => {
+export const AttackAsset =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -34,7 +34,7 @@ export const AttackAsset =  ({ style={ width:"20", height:"20" }, type })  => {
   )
 }
 
-export const Attacker =  ({ style={ width:"20", height:"20" }, type })  => {
+export const Attacker =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -47,7 +47,7 @@ export const Attacker =  ({ style={ width:"20", height:"20" }, type })  => {
   )
 }
 
-export const AttackGroup =  ({ style={ width:"20", height:"20" }, type })  => {
+export const AttackGroup =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -57,7 +57,7 @@ export const AttackGroup =  ({ style={ width:"20", height:"20" }, type })  => {
   )
 }
 
-export const AttackSource =  ({ style={ width:"20", height:"20" }, type })  => {
+export const AttackSource =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -67,9 +67,9 @@ export const AttackSource =  ({ style={ width:"20", height:"20" }, type })  => {
   )
 }
 
-export const Bug =  ({ style={ width:"20", height:"20" }, type })  => {
+export const Bug =  ({ style={ width:"20", height:"20" } })  => {
   return (
-    <div style={ { ...style, display:"inline-block" } } >
+    <div style={ {width:20, height:20 , ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
         <path d="M524.8 486.4c19.2 0 32-12.8 32-32V268.8c102.4 12.8 192 76.8 236.8 172.8 6.4 19.2 25.6 25.6 44.8 12.8 19.2-6.4 25.6-25.6 12.8-44.8l-19.2-38.4c44.8-38.4 76.8-76.8 102.4-128 6.4-12.8 0-32-12.8-44.8-12.8-6.4-32 0-44.8 12.8-25.6 44.8-51.2 83.2-83.2 108.8-25.6-25.6-51.2-51.2-76.8-64 0-6.4 6.4-6.4 6.4-12.8 0-12.8 6.4-25.6 6.4-38.4C729.6 96 640 6.4 531.2 6.4S320 102.4 320 211.2c0 12.8 0 25.6 6.4 38.4 0 6.4 0 6.4 6.4 6.4-32 19.2-57.6 38.4-83.2 64-32-25.6-57.6-64-76.8-102.4-12.8-19.2-32-25.6-44.8-12.8-19.2 6.4-25.6 25.6-12.8 38.4 25.6 51.2 57.6 96 102.4 128-32 44.8-51.2 96-57.6 147.2H44.8c-19.2 0-32 12.8-32 32s12.8 32 32 32h121.6c6.4 44.8 12.8 89.6 32 128-51.2 38.4-96 89.6-121.6 147.2-6.4 12.8 0 32 12.8 44.8 6.4 0 6.4 6.4 12.8 6.4 12.8 0 25.6-6.4 32-19.2 19.2-44.8 57.6-89.6 96-121.6 44.8 64 115.2 115.2 198.4 134.4h6.4c12.8 0 25.6-6.4 32-25.6 6.4-19.2-6.4-32-25.6-38.4-128-32-217.6-153.6-217.6-288 0-153.6 115.2-275.2 262.4-294.4v185.6c6.4 25.6 19.2 44.8 38.4 44.8zM384 211.2c0-76.8 64-134.4 140.8-134.4 76.8 0 134.4 57.6 134.4 134.4v19.2c-44.8-19.2-89.6-32-140.8-32-44.8 0-89.6 6.4-134.4 25.6 6.4-6.4 0-6.4 0-12.8z" fill="currentColor" p-id="5924"></path><path d="M1004.8 960l-89.6-89.6c70.4-96 64-224-19.2-313.6-96-96-243.2-96-339.2 0s-96 243.2 0 339.2c44.8 44.8 108.8 70.4 166.4 70.4 51.2 0 102.4-19.2 140.8-51.2l89.6 89.6c6.4 6.4 12.8 6.4 25.6 6.4s19.2 0 25.6-6.4c12.8-12.8 12.8-32 0-44.8z m-396.8-108.8c-70.4-70.4-70.4-179.2 0-249.6 32-32 76.8-51.2 121.6-51.2s89.6 19.2 121.6 51.2c70.4 70.4 70.4 179.2 0 249.6s-179.2 70.4-243.2 0z" fill="currentColor" p-id="5925"></path>
       </SvgComponents>
@@ -77,17 +77,18 @@ export const Bug =  ({ style={ width:"20", height:"20" }, type })  => {
   )
 }
 
-export const Calendar =  ({ style={ width:"20", height:"20" }, type })  => {
+export const Calendar =  ({ style={width:16, height:16 } })  => {
   return (
-    <div style={ { ...style, display:"inline-block" } } >
+    <div style={ {width:16, height:16 , ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
-      <path d="M524.8 486.4c19.2 0 32-12.8 32-32V268.8c102.4 12.8 192 76.8 236.8 172.8 6.4 19.2 25.6 25.6 44.8 12.8 19.2-6.4 25.6-25.6 12.8-44.8l-19.2-38.4c44.8-38.4 76.8-76.8 102.4-128 6.4-12.8 0-32-12.8-44.8-12.8-6.4-32 0-44.8 12.8-25.6 44.8-51.2 83.2-83.2 108.8-25.6-25.6-51.2-51.2-76.8-64 0-6.4 6.4-6.4 6.4-12.8 0-12.8 6.4-25.6 6.4-38.4C729.6 96 640 6.4 531.2 6.4S320 102.4 320 211.2c0 12.8 0 25.6 6.4 38.4 0 6.4 0 6.4 6.4 6.4-32 19.2-57.6 38.4-83.2 64-32-25.6-57.6-64-76.8-102.4-12.8-19.2-32-25.6-44.8-12.8-19.2 6.4-25.6 25.6-12.8 38.4 25.6 51.2 57.6 96 102.4 128-32 44.8-51.2 96-57.6 147.2H44.8c-19.2 0-32 12.8-32 32s12.8 32 32 32h121.6c6.4 44.8 12.8 89.6 32 128-51.2 38.4-96 89.6-121.6 147.2-6.4 12.8 0 32 12.8 44.8 6.4 0 6.4 6.4 12.8 6.4 12.8 0 25.6-6.4 32-19.2 19.2-44.8 57.6-89.6 96-121.6 44.8 64 115.2 115.2 198.4 134.4h6.4c12.8 0 25.6-6.4 32-25.6 6.4-19.2-6.4-32-25.6-38.4-128-32-217.6-153.6-217.6-288 0-153.6 115.2-275.2 262.4-294.4v185.6c6.4 25.6 19.2 44.8 38.4 44.8zM384 211.2c0-76.8 64-134.4 140.8-134.4 76.8 0 134.4 57.6 134.4 134.4v19.2c-44.8-19.2-89.6-32-140.8-32-44.8 0-89.6 6.4-134.4 25.6 6.4-6.4 0-6.4 0-12.8z" fill="currentColor" p-id="5924"></path><path d="M1004.8 960l-89.6-89.6c70.4-96 64-224-19.2-313.6-96-96-243.2-96-339.2 0s-96 243.2 0 339.2c44.8 44.8 108.8 70.4 166.4 70.4 51.2 0 102.4-19.2 140.8-51.2l89.6 89.6c6.4 6.4 12.8 6.4 25.6 6.4s19.2 0 25.6-6.4c12.8-12.8 12.8-32 0-44.8z m-396.8-108.8c-70.4-70.4-70.4-179.2 0-249.6 32-32 76.8-51.2 121.6-51.2s89.6 19.2 121.6 51.2c70.4 70.4 70.4 179.2 0 249.6s-179.2 70.4-243.2 0z" fill="currentColor" p-id="5925"></path>
+      <path d="M882.6 960h-740c-28.2 0.6-51.7-21.4-52.9-49.5V201.8c0-28.6 23.2-51.8 51.8-51.8h137.8V81.1c0-9.4 7.6-17.1 17.1-17.1h51.8c9.4-0.3 17.3 7.1 17.6 16.5V150h292.6V81.1c0-9.4 7.6-17.1 17.1-17.1h51.8c9.4-0.3 17.3 7.1 17.6 16.5V150h137.8c28.6 0 51.8 23.2 51.8 51.8v708.7c-1.3 27.7-24.2 49.5-51.9 49.5z m0-740c-0.3-9.3-7.8-16.8-17.1-17.1H744.8v51.8c0 9.4-7.6 17.1-17.1 17.1h-51.8c-9.4 0.3-17.3-7.1-17.6-16.5v-53.5H365.7v51.8c0 9.4-7.6 17.1-17.1 17.1h-51.8c-9.4 0.3-17.3-7.1-17.6-16.5v-52.4H158.5c-9.3 0.3-16.8 7.8-17.1 17.1v122.4h740V218.8l1.2 1.2z m0 170.8h-740v499.8c0 9.4 7.6 17.1 17.1 17.1h705.9c9.4 0 17.1-7.6 17.1-17.1l-0.1-499.8zM779 804.6h-68.9c-9.4 0-17.1-7.6-17.1-17.1v-68.9c0-9.4 7.6-17.1 17.1-17.1H779c9.4 0 17.1 7.6 17.1 17.1v68.9c0.3 9.4-7.1 17.3-16.5 17.6h-0.6v-0.5z m0-189.6h-68.9c-9.4 0-17.1-7.6-17.1-17.1V529c0-9.4 7.6-17.1 17.1-17.1H779c9.4 0 17.1 7.6 17.1 17.1v69c0.3 9.4-7.1 17.3-16.5 17.6h-0.6v-0.6zM555.3 804.6h-68.9c-9.7 0-17.6-7.9-17.6-17.6v-68.3c0.3-9.5 8.1-17.1 17.6-17.1h68.9c9.3 0.3 16.8 7.8 17.1 17.1v68.9c0 9.5-7.6 17.3-17.1 17.6v-0.6z m0-189.6h-68.9c-9.7 0-17.6-7.9-17.6-17.6v-68.3c0.3-9.5 8.1-17.1 17.6-17.1h68.9c9.3 0.3 16.8 7.8 17.1 17.1V598c0 9.5-7.6 17.3-17.1 17.6v-0.6zM331 805.2h-68.9c-9.4 0-17.1-7.6-17.1-17.1v-69.5c0-9.4 7.6-17.1 17.1-17.1H331c9.4 0 17.1 7.6 17.1 17.1v68.9c0.3 9.4-7.1 17.3-16.5 17.6-0.2 0.1-0.4 0.1-0.6 0.1z m0-189.6h-68.9c-9.4 0-17.1-7.6-17.1-17.1V529c0-9.4 7.6-17.1 17.1-17.1H331c9.4 0 17.1 7.6 17.1 17.1v69c0.3 9.4-7.1 17.3-16.5 17.6h-0.6z" fill="currentColor"  />
       </SvgComponents>
     </div>
   )
 }
 
-export const Cc =  ({ style={ width:"20", height:"20" }, type })  => {
+
+export const Cc =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -97,7 +98,7 @@ export const Cc =  ({ style={ width:"20", height:"20" }, type })  => {
   )
 }
 
-export const HightEvent =  ({ style={ width:"20", height:"20" }, type })  => {
+export const HightEvent =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -110,7 +111,7 @@ export const HightEvent =  ({ style={ width:"20", height:"20" }, type })  => {
 }
 
 
-export const LostAsset =  ({ style={ width:"20", height:"20" }, type })  => {
+export const LostAsset =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -120,7 +121,7 @@ export const LostAsset =  ({ style={ width:"20", height:"20" }, type })  => {
   )
 }
 
-// export const Situation =  ({ style={ width:"20", height:"20" }, type })  => {
+// export const Situation =  ({ style={ width:"20", height:"20" } })  => {
 //   return (
 //     <div style={ { ...style, display:"inline-block" } } >
 //       <SvgComponents width={ style.width } height={ style.height }>
@@ -131,7 +132,7 @@ export const LostAsset =  ({ style={ width:"20", height:"20" }, type })  => {
 // }
 
 
-export const ThreatEvent =  ({ style={ width:"20", height:"20" }, type })  => {
+export const ThreatEvent =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -142,7 +143,7 @@ export const ThreatEvent =  ({ style={ width:"20", height:"20" }, type })  => {
 }
 
 
-export const ThreatFamliy =  ({ style={ width:"20", height:"20" }, type })  => {
+export const ThreatFamliy =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>
@@ -153,7 +154,7 @@ export const ThreatFamliy =  ({ style={ width:"20", height:"20" }, type })  => {
 }
 
 
-export const ThreatIoc =  ({ style={ width:"20", height:"20" }, type })  => {
+export const ThreatIoc =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>

@@ -16,3 +16,14 @@ export default (momentList: (MomentInterface | void)[] = []): number[] => {
   })
 
 }
+
+// export default (momentList: (MomentInterface | void)[] = []): number[] => {
+//   const [beforeTimestamp, afterTimestamp] = momentToTimeStampRange(momentList)
+//   return [
+//     beforeTimestamp,
+//     afterTimestamp
+//   ].map(value => {
+//     return value < 0 ? 0 : value
+//   })
+
+// }
