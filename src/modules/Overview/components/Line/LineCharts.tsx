@@ -71,6 +71,9 @@ class BarCharts extends React.Component<props, any>{
         option={{
           title: {
             text: title,
+            padding: 15,
+            target:'self',
+            textStyle: {fontFamily: "Arial", fontSize: 14 }
         },
         graphic: [
           {

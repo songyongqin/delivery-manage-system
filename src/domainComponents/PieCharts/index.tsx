@@ -19,7 +19,7 @@ const config = {
     fontFamily: "Arial"
   },
   [LIGHT_THEME]: {
-    color: "rgba(0, 0, 0, 0.65)",
+    // color: "rgba(0, 0, 0, 0.65)",
     fontFamily: "Arial",
     rich: {
       a:{

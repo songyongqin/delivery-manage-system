@@ -8,6 +8,7 @@ const style = require('./index.less')
 
 interface props {
   constants?: constants,
+  minPadding?: boolean,
   config: Array<object>,
   tableData: Array<object>,
   Detail?: any,
@@ -119,7 +120,7 @@ class WithTable extends Component<props, any>{
 
   render() {
 
-    let { tableData, Detail } = this.props
+    let { tableData, Detail, minPadding= true } = this.props
     tableData = tableData && tableData.map((item, index) => {
       item['key'] = index + ''
       return item
@@ -137,9 +138,9 @@ class WithTable extends Component<props, any>{
       }
     })
     
-    let classes = classnames(style.default)
+    let classes = 
     columns = columns.map(i => {
-      i['className'] =  classes
+      i['className'] =  classnames(style.default)
       return i
     } )
     
@@ -147,7 +148,7 @@ class WithTable extends Component<props, any>{
     // console.log(this.state.isSearchValue)
     return (
       // <div style={{ minWidth:1300, overflow:'auto' }} >
-      <div >
+      <div  className={ minPadding ? style['min-situation-table'] : {} } >
         {
           this.props.Detail ?
             <Table dataSource={tableData} columns={columns}

@@ -1,10 +1,31 @@
 
 
 .default{
-  min-width: 100px;
-  
+  min-width: 80px;
+  // background-color: red;
 }
 
 .default:first-child{
-  min-width: 80px;
+  min-width: 60px;
+}
+
+
+.min-situation-table{
+  :global{
+    .ant-table-tbody>tr>td, .ant-table-thead>tr>th{
+      padding: 5px;
+      margin:5px;
+    }
+    .ant-table-thead>tr>th{
+      background-color: #ECEEF9
+    }
+
+    .ant-table-tbody>tr:nth-child(odd){
+      background-color: #FFFFFF;
+      }
+      .ant-table-tbody>tr:nth-child(even){
+        background-color: #F5F7FC;
+        }
+  }
+  padding: 5px;
 }

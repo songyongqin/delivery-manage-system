@@ -42,10 +42,10 @@ const MapDispatchToProps = dispatch => {
   }
 }
 
-const cloumns = [
+let cloumns = [
   {
     dataIndex:'latelyTime',
-    title:'威胁最近发生时间',
+    title:'时间',
     render: text => <TimeTag num={ text } />
   },
   {
@@ -68,12 +68,13 @@ const cloumns = [
     dataIndex:'attackerIP',
     title:'攻击IP'
   },
-  {
-    dataIndex:'level',
-    title:'威胁等级',
-    render: text => <LevelTag text={ text } />
-  }
+  // {
+  //   dataIndex:'level',
+  //   title:'威胁等级',
+  //   render: text => <LevelTag text={ text } />
+  // }
 ]
+
 
 @WithAnimateRender
 @extraConnect(MapStateToProps, MapDispatchToProps )
@@ -102,7 +103,8 @@ class Page extends React.Component<any, any> {
         total:0,
         data:[]
       },
-      pieHeight:200
+      pieHeight:200,
+      lineHeight: 324,
     }
   }
 
@@ -127,9 +129,10 @@ class Page extends React.Component<any, any> {
   setWidth = () => {
     
     let innerWidth = window.innerWidth ||1336;
-    let pieHeight = (innerWidth - 180-50-60)/280/4*200
+    let pieHeight = (innerWidth - 180-50-60)/280/4*200;
+    let lineHeight = (innerWidth - 180-50-60)/580/2*364
     console.log(innerWidth)
-    this.setState({ pieHeight })
+    this.setState({ pieHeight, lineHeight })
   }
 
   getCount = ({timestampRange}) => {
@@ -159,12 +162,10 @@ class Page extends React.Component<any, any> {
 
   getValue = e => {
     let value = e.target.value ? e.target.value : ''
-    console.log(value.toString())
   }
 
   render() {
-    // const { applicationFlow, filters, networkFlow, table } = this.state
-    const { applicationFlow, filters, table, pieHeight } = this.state
+    const { applicationFlow, filters, table, pieHeight, lineHeight } = this.state
     const { countLoading, flowLoading, eventLoading } = this.props
     return (
       <div style={{ position: "relative" }}>
@@ -186,18 +187,18 @@ class Page extends React.Component<any, any> {
                 {/* <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10,  padding:10 }} >
                   <Line title={'网络流量'} xAxis={ networkFlow.xAxis } series={ networkFlow.series }  unit={ networkFlow.unit }  />
                 </span> */}
-                <Wrap >
+                <Wrap  style={{  height: lineHeight }}>
                   <Line title={'应用流量'} xAxis={ applicationFlow.xAxis } series={ applicationFlow.series }  unit={ applicationFlow.unit }  />
                 </Wrap>
               </Spin>
               </Col>
               <Col span={12}>
-              <Wrap>
+              <Wrap style={{  height: lineHeight,  overflowY:'scroll', overflowX:'hidden' }} >
                 <div>
-                  <h2 style={{ display:'inline-block', fontWeight: 900, fontSize:"18px", fontFamily:"Arial" }} >最新高危事件</h2>
-                  <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:140, marginTop:10}} >查看全部威胁事件</a>
+                  <h2 style={{ display:'inline-block', fontWeight: 900,padding:15, fontSize:"14px", fontFamily:"Arial" }} >最新高危事件</h2>
+                  <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:40, marginTop:10}} >{ `查看全部威胁事件 >` }</a>
                 </div>
-                <Spin spinning={ eventLoading } >
+                <Spin spinning={ eventLoading }  >
                   <WithTable tableData={ table.data } config={ cloumns } />
                 </Spin>
               </Wrap>
@@ -214,7 +215,7 @@ export default Page
 
 const Wrap = props => {
   return(
-    <div style={{ width:'100%', height:500, display:'inline-block',  border:'1px solid #E9EBEB', borderRadius:6, padding:10 , backgroundColor: 'rgb(255,255,255)'  }} >
+    <div style={{ width:'100%', ...props.style, display:'inline-block',  border:'1px solid #E9EBEB', borderRadius:6, padding:10 , backgroundColor: 'rgb(255,255,255)' }} >
       {
         props.children
       }
