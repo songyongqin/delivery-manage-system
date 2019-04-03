@@ -49,14 +49,23 @@ const Breadcrumb = ({ theme = DARK_THEME, title, route }) => {
     [styles["breadcrumb-list"]]: true,
     [styles[theme]]: true
   })
-
+  let arr = getRoutePathList(route)
   return (
     <ul className={classes}>
       {
-        getRoutePathList(route).map((i, index) => {
+        arr.map((i, index) => {
+          console.log(arr, arr.length, index )
           return (
             <li className={styles["item"]} key={`${index}-item`}>
-              <Link to={i.path}>{i.title || ""}</Link>
+              
+              <Link to={i.path}>
+              <span>{i.title || ""}</span>
+              <span>{
+                index===0||index===arr.length-1 ? null : <Icon type="right" style={{ marginLeft: 15, color: 'rgba(0,0,0,0.35)' }} />
+              }</span>
+              </Link>
+              
+              
             </li>
           )
         })
