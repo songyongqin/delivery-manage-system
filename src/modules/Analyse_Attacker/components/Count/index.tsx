@@ -8,8 +8,11 @@ import { ANALYSE_ATTACKER_COUNT } from 'constants/model'
 // import PieCharts from 'domainComponents/PieCharts/async'
 import Pie from './Pie'
 const css = require('./index.less')
-import {Icon} from 'antd'
+import {Icon, Col, Row } from 'antd'
 import CountItem from 'components/CountItem'
+import debounce from 'lodash/debounce'
+import AnalysePie from 'components/AnalysePie'
+import { AttackGroup, Attacker } from 'components/IconSvg'
 
 const mapStateToProps = state => {
   return {
@@ -39,12 +42,20 @@ class Count extends Component<any, any>{
       attackGroupCount: 0,
       attackerGroupArr:[{}],
       attackerWhereArr:[{}],
-      time: 0
+      time: 0,
+      pieHeight:200
     }
   }
 
   componentDidMount(){
     this.getCount()
+    window.onresize = debounce( this.setHeight, 100 )
+  }
+
+  setHeight = () => {
+    let innerWidth = window.innerWidth ||1336;
+    let pieHeight = (innerWidth - 180-50-60)/280/4*200;
+    this.setState({ pieHeight })
   }
 
   getCount = () => {
@@ -72,23 +83,27 @@ class Count extends Component<any, any>{
 
   render(){
     const { loading } = this.props
-    const { attackerCount, attackGroupCount, attackerGroupArr, attackerWhereArr ,time} = this.state
-    
+    const { attackerCount, attackGroupCount, attackerGroupArr, attackerWhereArr ,time, pieHeight} = this.state
+    const countHeight = (pieHeight-20)/2
     return(
       
       <Spin spinning={ loading } >
-        <div className={ css.count } >
-          <div style={{ marginBottom:25, marginTop:15 }} >
-          <CountItem title={'攻击者数量'} count={ attackerCount } >
-              <Icon type={'user'} style={{ fontSize:22 }} />
-          </CountItem>
-          </div>
-          <CountItem title={'攻击者组织'} count={ attackGroupCount } >
-              <Icon type={'team'} style={{ fontSize:22 }} />
-          </CountItem>
-        </div>
-        <Pie data={ attackerWhereArr } title={ '攻击者所在地统计'} onEvents={ { pieselectchanged: this.getWhereSelect} }  />
-        <Pie data={ attackerGroupArr } title={ '攻击者组织统计'}  onEvents={ { pieselectchanged: this.getGroupSelect} } />
+        <Row>
+            <Col span={ 6 } style={{ height: countHeight }} >
+              <CountItem title={ '攻击者数量' } count={ attackerCount } style={{ marginBottom:20 }} >
+                <Attacker  />
+              </CountItem>
+              <CountItem title={ '攻击者组织' } count={ attackGroupCount } >
+                <AttackGroup  />
+              </CountItem>
+            </Col>
+            <Col span={ 6 }  push={ 3 }  style={{ height: pieHeight }} >
+              <AnalysePie data={ attackerWhereArr } text={ '攻击者所在地统计'} /> 
+            </Col>
+            <Col span={ 6 }  push={ 6 }  style={{ height: pieHeight }} >
+              <AnalysePie data={ attackerGroupArr } text={ '攻击者组织统计'} /> 
+            </Col>
+          </Row>
       </Spin>
       
     )

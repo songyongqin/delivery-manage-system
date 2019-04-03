@@ -8,7 +8,7 @@ import { ANALYSE_ATTACKED_COUNT } from 'constants/model'
 import { Col, Row } from 'antd';
 
 import Pie from './Pie'
-import CountIcon from 'components/CountItem';
+import CountItem from 'components/CountItem';
 import { AttackAsset, FallAsset } from 'components/IconSvg'
 import debounce from 'lodash/debounce'
 import AnalysePie from 'components/AnalysePie'
@@ -94,12 +94,12 @@ class Count extends Component<any, any>{
         <Spin spinning={ loading } >
           <Row>
             <Col span={ 6 } style={{ height: countHeight }} >
-              <CountIcon title={ '受攻击资产' } count={ attackedAssetsCount } style={{ marginBottom:20 }} >
+              <CountItem title={ '受攻击资产' } count={ attackedAssetsCount } style={{ marginBottom:20 }} >
                 <AttackAsset />
-              </CountIcon>
-              <CountIcon title={ '失陷资产' } count={ fallAssetCount } >
+              </CountItem>
+              <CountItem title={ '失陷资产' } count={ fallAssetCount } >
                 <FallAsset />
-              </CountIcon>
+              </CountItem>
             </Col>
             <Col span={ 6 }  push={ 3 }  style={{ height: pieHeight }} >
               {/* <Pie data={ attackedCountArr } title={ '受攻击次数排行统计'} /> */}

@@ -3,15 +3,8 @@
 import React from 'react'
 import WithTable from 'components/WithTable'
 import { ANALYSE_ATTACK_DETAIL_URL } from 'routes/config/path'
-import { Tag } from 'antd'
 import TimeTag from 'components/TimeTag'
-
-
-let tranformColor = text => {
-  if(text==='低危') return '#fccb00'
-  if(text==='中危') return '#db3e00'
-  else return '#b80000'
-}
+import LevelTag from 'components/LevelTag'
 
 let columns = [
   { title:'序号', 
@@ -51,7 +44,7 @@ let columns = [
   },
   { title:'威胁等级', 
     dataIndex:'level',
-    render: text => <Tag color={ tranformColor(text) } >{text}</Tag>
+    render: text => <LevelTag text={text} />
   }
 ]
 

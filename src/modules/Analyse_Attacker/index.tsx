@@ -25,6 +25,9 @@ import transformTimeStamp from 'utils/transformTimeStamp'
 import fetch from 'dva/fetch'
 import domainQueryStringParse from 'domainUtils/queryStringParse'
 import { getToken } from 'domain/user'
+import InputSearch from 'components/InputSearch'
+const styles = require('./index.less')
+
 
 const mapStateToprops = state => {
   return {
@@ -77,6 +80,7 @@ class Page extends React.Component<any, any> {
       total:0,
       timestampRange:getWeekTime()||[],
       tableLoading: false,
+      pieHeight:200
     }
   }
 
@@ -223,12 +227,7 @@ class Page extends React.Component<any, any> {
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
-          <Input.Search placeholder="输入待搜索的值"
-                        enterButton
-                        onSearch = { this.searchEnter }
-                        value = { this.state.reqArg.searchValue }
-                        onChange = { this.getSearchValue } 
-                        style={{ width:240, marginRight:20 }}  />
+          <InputSearch searchEnter={ this.searchEnter } onChange={ this.getSearchValue } value={ this.state.reqArg.searchValue }   />
           <DateRangePicker
             value={timestampRange}
             key={ +new Date() }
@@ -244,6 +243,7 @@ class Page extends React.Component<any, any> {
             <div key="analyse-attacker-table">
             {/* <button onClick={ this.reset } >重置筛选</button> */}
             <Spin spinning={ this.props.tableLoading || this.state.tableLoading } >
+              <div className={ styles.container } >
               <WithTable  tableData={ tableData }
                         key = { this.state.tableKey }
                         constants={ constants }
@@ -253,6 +253,7 @@ class Page extends React.Component<any, any> {
                               onChange={ this.paginationOnchange }
                               limit={ limit }
                               current={this.state.reqArg.page}  />
+              </div>
             </Spin>
             </div>
           ])

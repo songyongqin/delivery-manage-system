@@ -22,6 +22,7 @@ import {
   limit
 } from './constants'
 import { getWeekTime } from 'utils/getInitTime'
+import InputSearch from 'components/InputSearch'
 const styles = require('./index.less')
 
 const mapStateToprops = state => {
@@ -198,12 +199,7 @@ class Page extends React.Component<any, any> {
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
-          <Input.Search placeholder="输入待搜索的值"
-                        enterButton
-                        onSearch = { this.searchEnter }
-                        value = { this.state.reqArg.searchValue }
-                        onChange = { this.getSearchValue } 
-                        style={{ width:240, marginRight:20 }}  />
+          <InputSearch searchEnter={ this.searchEnter } onChange={ this.getSearchValue } value={ this.state.reqArg.searchValue }   />
           <DateRangePicker
             value={timestampRange}
             key={ +new Date() }
