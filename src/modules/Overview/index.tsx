@@ -133,7 +133,7 @@ class Page extends React.Component<any, any> {
     
     let innerWidth = window.innerWidth ||1336;
     let pieHeight = (innerWidth - 180-50-60)/280/4*200;
-    let lineHeight = (innerWidth - 180-50-60)/580/2*364
+    let lineHeight = (innerWidth - 180-50-60)/580/2*324
     console.log(innerWidth)
     this.setState({ pieHeight, lineHeight })
   }
