@@ -4,10 +4,13 @@ import React from 'react'
 import PieChart from 'domainComponents/PieCharts/async'
 import wrapStr from 'utils/wrapStr'
 import dataSetName from 'utils/dataSetName'
+const styles = require('./index.less')
 
 const Wrap = props =>{
   return (
-    <div style={ { width:400, display:'inline-block', border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10 } } >{ props.children }</div>
+    <div className={ styles.container }  style={ { width:'100%', height:'100%',  display:'inline-block'} } >
+      { props.children }
+    </div>
   )
 }
 
@@ -21,11 +24,11 @@ const getConfig = data => {
     orient: 'vertical',
     right: 'right',
     bottom: '10',
-    height:'90%',
+    height:'80%',
     type:'scroll',
     data: Array.isArray(data) ? data.map(i => i.name) : [],
     formatter: function (name) {
-      return   wrapStr(name)
+      return   wrapStr(name, 10)
     },
     tooltip: {
       show: true
@@ -36,8 +39,10 @@ const getConfig = data => {
       // name:'访问来源',
       type:'pie',
       selectedMode: 'single',
-      radius: [0, '60%'],
-      center: ['35%', '50%'],
+      // radius: [0, '60%'],
+      // center: ['35%', '50%'],
+      radius: ['0','45%'],
+      center: ['25%', '60%'],
       minAngle:5,
       label: {
         normal: {

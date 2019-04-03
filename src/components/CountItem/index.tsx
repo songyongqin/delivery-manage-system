@@ -35,20 +35,36 @@ interface props {
 //   )
 // }
 
+// const CountIcon = (props: props) => {
+//   const { title, count, style, children } = props
+//   let counts = count ? count : 0
+//   return (
+//     <div className={ styles.container } >
+//     <div className={ styles.content }  >
+//       <div>
+//         { children }
+//       </div>
+//       <div className={ styles.count } >
+//         <CountUp start={0} end={ counts } />
+//       </div>
+//       <div className={ styles.title } >{ title }</div>
+//     </div>
+//     </div>
+//   )
+// }
+
 const CountIcon = (props: props) => {
   const { title, count, style, children } = props
   let counts = count ? count : 0
   return (
     <div className={ styles.container } >
-    <div className={ styles.content }  >
       <div>
         { children }
       </div>
+      <div className={ styles.title } >{ title }</div>
       <div className={ styles.count } >
         <CountUp start={0} end={ counts } />
       </div>
-      <div className={ styles.title } >{ title }</div>
-    </div>
     </div>
   )
 }

@@ -11,7 +11,7 @@ import combineColumnsConfig from 'domainUtils/combineColumnsConfig';
 import path from 'constants/path'
 import extraConnect from 'domainUtils/extraConnect'
 import tranformTime from 'utils/tranformTime'
-import { Tag, Icon, Input  } from 'antd'
+import {  Icon } from 'antd'
 import Spin from 'domainComponents/Spin'
 import {  ANALYSE_ATTACK_DETAIL_URL,
           ANALYSE_REPORT_URL,   
@@ -22,6 +22,7 @@ import { momentToTimeStampRange } from 'utils/moment'
 import transformTimeStamp from 'utils/transformTimeStamp'
 import ResetIcon from 'components/ResetIcon' 
 import fetch from 'dva/fetch'
+import  debounce  from 'lodash/debounce'
 
 import {
   limit,
@@ -30,6 +31,8 @@ import {
 import Detail from './components/Detail'
 import TimeTag from 'components/TimeTag'
 import { getToken } from 'domain/user'
+// import { SearchIcon } from 'components/IconSvg'
+import InputSearch from 'components/InputSearch'
 
 
 const mapStateToProps = state => {
@@ -99,6 +102,7 @@ class Page extends React.Component<any, any> {
       tableKey: 0,
       clicked:[''],
       tableLoading: false,
+      pieHeight: 200
     }
   }
 
@@ -106,6 +110,17 @@ class Page extends React.Component<any, any> {
     this.fetch({page:1})
     this.getThretType()
     this.getThreatAction()
+    window.onresize = debounce(this.resetHeight, 100)
+  }
+
+  resetHeight = () => {
+    let innerWidth = window.innerWidth ||1336;
+    let pieHeight = (innerWidth - 180-50-60)/280/4*200;
+    this.setState({ pieHeight })
+  }
+
+  componentWillMount(){
+    window.onresize = null
   }
 
   getThretType = () => {
@@ -221,7 +236,7 @@ class Page extends React.Component<any, any> {
 
   render() {
     
-    const {  filters, lastChangeTime, table, reqArg, tableKey, threatTypeArr, threatActionArr } = this.state
+    const {  filters, lastChangeTime, table, reqArg, tableKey, threatTypeArr, threatActionArr, pieHeight } = this.state
 
     const filterConfig = { ...this.props.config.constants.filter, eventType: threatTypeArr, threatenBehavior:threatActionArr }
 
@@ -297,12 +312,7 @@ class Page extends React.Component<any, any> {
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
-        <Input.Search placeholder="输入待搜索的值"
-                        enterButton
-                        onSearch = { this.searchEnter }
-                        value = { this.state.reqArg.searchValue }
-                        onChange = { this.getSearchValue } 
-                        style={{ width:240, marginRight:20 }}  />
+          <InputSearch searchEnter={ this.searchEnter } onChange={ this.getSearchValue } value={ this.state.reqArg.searchValue }   />
           <DateRangePicker
             value={filters.timestampRange}
             key={ +new Date() }
@@ -312,7 +322,7 @@ class Page extends React.Component<any, any> {
         {
           this.props.animateRender([
             <div key="event-count">
-              <Count timestampRange={ filters.timestampRange } key={ lastChangeTime } fetchTable={ this.pieSelect } />
+              <Count timestampRange={ filters.timestampRange } key={ lastChangeTime } fetchTable={ this.pieSelect } pieHeight={ pieHeight } />
             </div>,
             <div key='event-table' >
               {/* <button onClick={ this.reset } >重置筛选</button> */}

@@ -62,7 +62,7 @@ let getOption = ({ data ,theme, titles }) =>  ({
     data: Array.isArray(data) ? data.map(i => i.name) : [],
     textStyle: config[theme],
     formatter: function (name) {
-      return   `{a|${wrapStr(name+name+name+name, 10)}}`
+      return   `{a|${wrapStr(name, 10)}}`
     },
   //   formatter: [
   //     '{a|这段文本采用样式a}',

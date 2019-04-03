@@ -1,6 +1,9 @@
 
 
 import React from 'react';
+const search = require('./search.png');
+const question = require('./question.png');
+const excalmatory = require('./excalmatory.png')
 
 const SvgComponents = ( { width, height, children } ) => {
   return (
@@ -76,6 +79,8 @@ export const Bug =  ({ style={ width:"20", height:"20" } })  => {
     </div>
   )
 }
+
+export const SearchIcon = ({ style = {  }, onClick }) => <img src= { search } style={{ width:16, height:16, ...style, cursor:"pointer" }} onClick={ onClick&&onClick } />
 
 export const Calendar =  ({ style={width:16, height:16 } })  => {
   return (

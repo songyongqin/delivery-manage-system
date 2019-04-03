@@ -1,6 +1,6 @@
 module.exports = {
-  "primary-color": "#1890ff",
-  "font-size-base": "14px",
+  "primary-color": "#4F5DCA",
+  "font-size-base": "12px",
   "border-radius-base": "0px",
   "icon-url": '"/static/antd/iconfont"'
 }
