@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import { Pagination , Tag} from 'antd'
+import { Pagination } from 'antd'
 import classnames from 'classnames'
 const style = require('./index.less')
 
@@ -20,7 +20,7 @@ const WithPagination = ({ current, total, onChange, limit=10}) => {
                     className={ classes }
                     onChange={ onChange }
                     defaultPageSize={ limit }
-                    showTotal={ total => <div>共找到 &nbsp;<Tag color={ '#1890ff' } >{total}</Tag>个结果</div> } />
+                    showTotal={ total => <div>共找到<span className={ style.total } >{total}</span>个结果</div> } />
 }
 
 export default WithPagination

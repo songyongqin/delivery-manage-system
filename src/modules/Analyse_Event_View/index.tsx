@@ -33,6 +33,7 @@ import TimeTag from 'components/TimeTag'
 import { getToken } from 'domain/user'
 // import { SearchIcon } from 'components/IconSvg'
 import InputSearch from 'components/InputSearch'
+const styles = require('./index.less')
 
 
 const mapStateToProps = state => {
@@ -327,16 +328,18 @@ class Page extends React.Component<any, any> {
             <div key='event-table' >
               {/* <button onClick={ this.reset } >重置筛选</button> */}
               <Spin spinning={ this.props.loading|| this.state.tableLoading } >
-              <WithTable  tableData={ table.data } 
-                          constants={ constants }
-                          config={ combineColumnsConfig(columns, this.props.config.columns) }
-                          key={ tableKey+'table' }
-                          Detail={ Detail  }
-                          tableBeforeFetch={ this.tableBeforeFetch } />
-              <WithPagination total={ table.total }
-                              current={ reqArg.page }
-                              limit={ limit }
-                              onChange={ this.paginationChange } />
+              <div className={ styles.container } >
+                <WithTable  tableData={ table.data } 
+                            constants={ constants }
+                            config={ combineColumnsConfig(columns, this.props.config.columns) }
+                            key={ tableKey+'table' }
+                            Detail={ Detail  }
+                            tableBeforeFetch={ this.tableBeforeFetch } />
+                <WithPagination total={ table.total }
+                                current={ reqArg.page }
+                                limit={ limit }
+                                onChange={ this.paginationChange } />
+              </div>
               </Spin>
             </div>
           ])
