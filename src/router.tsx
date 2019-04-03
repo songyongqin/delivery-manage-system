@@ -127,7 +127,6 @@ import {
   CONFIG_WHITE_LIST, 
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
-import './cover.less'
 
 
 export default ({ history, app }) => {

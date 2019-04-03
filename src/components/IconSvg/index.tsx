@@ -116,7 +116,7 @@ export const HightEvent =  ({ style={ width:"20", height:"20" } })  => {
 }
 
 
-export const LostAsset =  ({ style={ width:"20", height:"20" } })  => {
+export const FallAsset =  ({ style={ width:"20", height:"20" } })  => {
   return (
     <div style={ { ...style, display:"inline-block" } } >
       <SvgComponents width={ style.width } height={ style.height }>

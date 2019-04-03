@@ -4,10 +4,11 @@ import React from 'react'
 import PieChart from 'domainComponents/PieCharts/async'
 import wrapStr from 'utils/wrapStr'
 import dataSetName from 'utils/dataSetName'
+const styles = require('./index.less')
 
 const Wrap = props =>{
   return (
-    <div style={ { width:400, display:'inline-block', border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10   } } >{ props.children }</div>
+    <div style={ { width:'100%'  } } className={ styles.container } >{ props.children }</div>
   )
 }
 

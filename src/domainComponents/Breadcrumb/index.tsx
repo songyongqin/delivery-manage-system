@@ -54,7 +54,6 @@ const Breadcrumb = ({ theme = DARK_THEME, title, route }) => {
     <ul className={classes}>
       {
         arr.map((i, index) => {
-          console.log(arr, arr.length, index )
           return (
             <li className={styles["item"]} key={`${index}-item`}>
               

@@ -5,10 +5,12 @@ import CountUp from 'react-countup'
 import Spin from 'domainComponents/Spin'
 import extraConnect from 'domainUtils/extraConnect'
 import { ANALYSE_ATTACKED_COUNT } from 'constants/model'
+import { Col, Row } from 'antd';
 
 import Pie from './Pie'
-// import CountItem from 'components/CountItem'
-// import { Icon } from 'antd'
+import CountIcon from 'components/CountItem';
+import { AttackAsset, FallAsset } from 'components/IconSvg'
+
 const css = require('./index.less')
 
 const mapStateToProps = state => {
@@ -41,6 +43,7 @@ class Count extends Component<any, any>{
     this.state={
       initState: props.init || {},
       attackedAssetsCount: 0,
+      fallAssetCount: 0,
       attackedCountArr:[{}],
       attackedAssetsArr:[{}],
       key:0
@@ -61,6 +64,7 @@ class Count extends Component<any, any>{
         attackedAssetsCount: res.attackedAssetsCount,
         attackedCountArr: res.attackedCountArr,
         attackedAssetsArr: res.attackedAssetsArr, 
+        fallAssetCount: res.fallAssetCount||0,
         key: +new Date()
       })
     } )
@@ -71,19 +75,26 @@ class Count extends Component<any, any>{
 
   render(){
     const { loading } = this.props
-    const { attackedCountArr, attackedAssetsArr, attackedAssetsCount } = this.state
+    const { attackedCountArr, attackedAssetsArr, attackedAssetsCount, fallAssetCount } = this.state
     return(
       <div>
         <Spin spinning={ loading } >
-          <div style={{ fontSize:18, marginTop:10, marginBottom:10, marginLeft:12 }} >
-          {/* <div className={ css.count } > */}
-          {/* <CountItem title={'受攻击资产'} count={ attackedAssetsCount } >
-            <Icon type={'file-excel'} style={{ fontSize:22 }} />
-          </CountItem> */}
-            受攻击资产总数<span style={{ color:'#1890ff', marginLeft:20, fontSize:22 }} ><CountUp start={0} end={ attackedAssetsCount } /></span>
-          </div>
-          <Pie data={ attackedCountArr } title={ '受攻击次数排行统计'} />
-          <Pie data={ attackedAssetsArr } title={ '资产状态统计'}  />
+          <Row>
+            <Col span={ 6 } >
+              <CountIcon title={ '受攻击资产' } count={ attackedAssetsCount } >
+                <AttackAsset />
+              </CountIcon>
+              <CountIcon title={ '失陷资产' } count={ fallAssetCount } >
+                <FallAsset />
+              </CountIcon>
+            </Col>
+            <Col span={ 6 }  push={ 3 } >
+              <Pie data={ attackedCountArr } title={ '受攻击次数排行统计'} />
+            </Col>
+            <Col span={ 6 }  push={ 6 } >
+              <Pie data={ attackedAssetsArr } title={ '资产状态统计'}  />
+            </Col>
+          </Row>
         </Spin>
       </div>
     )
