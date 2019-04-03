@@ -10,6 +10,8 @@ import { Col, Row } from 'antd';
 import Pie from './Pie'
 import CountIcon from 'components/CountItem';
 import { AttackAsset, FallAsset } from 'components/IconSvg'
+import debounce from 'lodash/debounce'
+import AnalysePie from 'components/AnalysePie'
 
 const css = require('./index.less')
 
@@ -46,15 +48,25 @@ class Count extends Component<any, any>{
       fallAssetCount: 0,
       attackedCountArr:[{}],
       attackedAssetsArr:[{}],
-      key:0
+      key:0,
+      pieHeight: 200,
     }
   }
 
   componentDidMount(){
     this.getCount()
-    // this.setState({ key: +new Date() })
+    window.onresize = debounce( this.setHeight, 100 )
   }
 
+  setHeight= () => {
+    let innerWidth = window.innerWidth ||1336;
+    let pieHeight = (innerWidth - 180-50-60)/280/4*200;
+    this.setState({ pieHeight })
+  }
+
+  componentWillUnmount(){
+    window.onresize = null
+  }
 
   getCount = () => {
     // console.log(this.props.timestampRange)
@@ -75,24 +87,27 @@ class Count extends Component<any, any>{
 
   render(){
     const { loading } = this.props
-    const { attackedCountArr, attackedAssetsArr, attackedAssetsCount, fallAssetCount } = this.state
+    const { attackedCountArr, attackedAssetsArr, attackedAssetsCount, fallAssetCount, pieHeight } = this.state
+    const countHeight = (pieHeight-20)/2
     return(
       <div>
         <Spin spinning={ loading } >
           <Row>
-            <Col span={ 6 } >
-              <CountIcon title={ '受攻击资产' } count={ attackedAssetsCount } >
+            <Col span={ 6 } style={{ height: countHeight }} >
+              <CountIcon title={ '受攻击资产' } count={ attackedAssetsCount } style={{ marginBottom:20 }} >
                 <AttackAsset />
               </CountIcon>
               <CountIcon title={ '失陷资产' } count={ fallAssetCount } >
                 <FallAsset />
               </CountIcon>
             </Col>
-            <Col span={ 6 }  push={ 3 } >
-              <Pie data={ attackedCountArr } title={ '受攻击次数排行统计'} />
+            <Col span={ 6 }  push={ 3 }  style={{ height: pieHeight }} >
+              {/* <Pie data={ attackedCountArr } title={ '受攻击次数排行统计'} /> */}
+              <AnalysePie data={ attackedCountArr } text={ '受攻击次数排行统计'} /> 
             </Col>
-            <Col span={ 6 }  push={ 6 } >
-              <Pie data={ attackedAssetsArr } title={ '资产状态统计'}  />
+            <Col span={ 6 }  push={ 6 }  style={{ height: pieHeight }} >
+              {/* <Pie data={ attackedAssetsArr } title={ '资产状态统计'}  /> */}
+              <AnalysePie data={ attackedAssetsArr } text={ '资产状态统计'} /> 
             </Col>
           </Row>
         </Spin>

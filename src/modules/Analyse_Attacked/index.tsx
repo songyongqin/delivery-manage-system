@@ -14,7 +14,7 @@ import TabelTime from 'components/TableTime'
 import path from 'constants/path'
 import WithTableConfig from 'domainComponents/WithTableConfig'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
-
+import LevelTag from 'components/LevelTag'
 import ResetIcon from 'components/ResetIcon' 
 import {
   // assetStateFilter,
@@ -22,7 +22,7 @@ import {
   limit
 } from './constants'
 import { getWeekTime } from 'utils/getInitTime'
-
+const styles = require('./index.less')
 
 const mapStateToprops = state => {
   return {
@@ -151,11 +151,6 @@ class Page extends React.Component<any, any> {
   render() {
 
     const {  timestampRange, filters, tableData } = this.state
-    let tranformColor = text => {
-      if(text==='低危') return '#fccb00'
-      if(text==='中危') return '#db3e00'
-      else return '#b80000'
-    }
     let columns = [
       { title:<ResetIcon onClick={ this.reset } />, 
         dataIndex:'index',
@@ -185,7 +180,7 @@ class Page extends React.Component<any, any> {
       { title:'威胁等级', 
         dataIndex:'level', 
         types:['filters'],
-        render: text => <Tag color={ tranformColor(text) } >{text}</Tag>
+        render: text => <LevelTag text={text} />
       },
       { title:'操作', 
         dataIndex:'actions', 
@@ -223,16 +218,18 @@ class Page extends React.Component<any, any> {
             </div>,
             <div key="event-attacked-table">
             {/* <button onClick={ this.reset } >重置筛选</button> */}
-            <Spin spinning={ this.props.tableLoading  } >
-              <WithTable  tableData={ tableData }
-                        key = { this.state.tableKey }
-                        constants={ constants }
-                        config={ combineColumnsConfig(columns,this.props.config.columns) }
-                        tableBeforeFetch={ this.tableBeforeFetch } />
-              <WithPagination total={this.state.total}
-                              limit={ limit }
-                              onChange={ this.paginationOnchange }
-                              current={this.state.reqArg.page}  />
+            <Spin spinning={ this.props.tableLoading  }  >
+              <div className={ styles.container } >
+                <WithTable  tableData={ tableData }
+                          key = { this.state.tableKey }
+                          constants={ constants }
+                          config={ combineColumnsConfig(columns,this.props.config.columns) }
+                          tableBeforeFetch={ this.tableBeforeFetch } />
+                <WithPagination total={this.state.total}
+                                limit={ limit }
+                                onChange={ this.paginationOnchange }
+                                current={this.state.reqArg.page}  />
+              </div>
             </Spin>
             </div>
           ])
