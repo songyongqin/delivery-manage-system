@@ -9,7 +9,7 @@ import { ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import Whois from './components/Whois'
 import LevelTag from 'components/LevelTag'
 import TimeTag from 'components/TimeTag'
-const style = require('./index.less')
+const styles = require('./index.less')
 import {
   selectArr,
   limit
@@ -250,10 +250,11 @@ class AnalyseDetail extends React.Component<any, any> {
               <WithTable  tableData={ IPInfo } config={ IPInfoColumns }  />
             </Spin>
             </div>,
-            <div key='attacked-assets-event'  >
-              <Tabs onChange={ this.getValue } >
+            <div key='attacked-assets-event' className={ styles.attacktab }  >
+              <Tabs onChange={ this.getValue }  >
                 <Tabs.TabPane tab={ selectArr[0] } key={selectArr[0]  }  >
                   <Spin  spinning={ ipLoading }>
+                    <div className={ styles.attackContent } >
                     { isHave ? <WHOIS whoisInfo={ whoisInfo }  relationUrl= {relationUrl}  
                             relationUrlColumns={ relationUrlColumns } relationFile={ relationFile } 
                             relationFileColumns={ relationFileColumns } relationIP={ relationIP }
@@ -264,15 +265,18 @@ class AnalyseDetail extends React.Component<any, any> {
                               <a href={'/#/config/sys-config/network'} style={{ textDecoration:'none' }} >“云检测功能”</a>
                             </div>
                              }
+                    </div>
                   </Spin>
                 </Tabs.TabPane> 
                 <Tabs.TabPane tab={ selectArr[1] } key={selectArr[1]  }  >
                   <Spin spinning={ threatLoading } >
-                    <WithTable  tableData={ threatInfo } config={ CCRecordColumns }  />
-                    <WithPagination total={ threatTotal } 
-                                    current={ threatReq.page }
-                                    onChange={ this.paginationCcChange }
-                                    limit={ limit } />
+                    <div className={ styles.attackContent } >
+                      <WithTable  tableData={ threatInfo } config={ CCRecordColumns }  />
+                      <WithPagination total={ threatTotal } 
+                                      current={ threatReq.page }
+                                      onChange={ this.paginationCcChange }
+                                      limit={ limit } />
+                    </div>
                   </Spin>
                 </Tabs.TabPane>
               </Tabs>
@@ -287,8 +291,8 @@ class AnalyseDetail extends React.Component<any, any> {
 
 const WHOIS = ({whoisInfo, relationUrl,  relationUrlColumns, relationFile, relationFileColumns, relationIP,
                 relationIPColumns, relationDomain, relationDomainColumns  }) => 
-  <div>
-    <div style={{ marginTop:20, width:500  }} >
+  <div >
+    <div style={{ width:500 }}  className={ styles.whois } >
     <h4>攻击者域名whois信息</h4>
     <Whois data={ whoisInfo } />
     </div>
