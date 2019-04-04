@@ -282,10 +282,10 @@ class Page extends React.Component<any, any> {
         searchRule: 'ip',
         render: text =>  <a href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${text}` } style={{ textDecoration:"none", color:'#1890ff' }} >{text}</a>
       },
-      {
-        title:'资产状态',
-        dataIndex: 'assetStates'
-      },
+      // {
+      //   title:'资产状态',
+      //   dataIndex: 'assetStates'
+      // },
       {
         title:'攻击阶段',
         dataIndex: 'attackStage'
