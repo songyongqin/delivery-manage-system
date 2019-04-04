@@ -31,7 +31,8 @@ export default class LastEvent extends React.PureComponent<any, any>{
   }
   render() {
     return (
-      <div style={{ width: "90%", marginLeft: "5%" }}>
+      // <div style={{ width: "90%", marginLeft: "5%" }}>
+      <div>
         <h3>当前扫描任务</h3>
         <TableWithRemote
           pagination={false}

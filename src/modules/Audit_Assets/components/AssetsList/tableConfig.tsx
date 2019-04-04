@@ -45,7 +45,9 @@ export const getColumns = ({ filters, showDetailModal, showEditModal }) => {
     titleConfig: textConfig,
     renderer: {
       [SCANTIME]: (value) => <TimeLabel value={value}></TimeLabel>,
-      [OPERATE]: (value, record) => <div><Button type="primary" size="small" onClick={() => showDetailModal(record[ASSETSIP])}>详情</Button>&nbsp;<Button type="primary" size="small" onClick={_ => showEditModal(record.assetsIp, record.assetsName)}>编辑</Button></div>
+      [OPERATE]: (value, record) => <div><Action type="primary" size="small" onClick={() => showDetailModal(record[ASSETSIP])}>详情</Action>&nbsp;<Action type="primary" size="small" onClick={_ => showEditModal(record.assetsIp, record.assetsName)}>编辑</Action></div>
     }
   })
 }
+
+const Action = props => <span style={{ color: '#4f5dca', cursor: 'pointer', margin:3 }} onClick={ props.onClick } >{ props.children }</span>

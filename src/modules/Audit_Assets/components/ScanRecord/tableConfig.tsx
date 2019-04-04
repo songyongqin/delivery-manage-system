@@ -85,7 +85,7 @@ export const getColumns_record = ({ showDetailModal }) => {
         )
       },
       [SCANIPRANGE]: value => <TagList data={value} maxCount={4}></TagList>,
-      [OPERATE]: (value, record) => <Button type="primary" size="small" onClick={() => showDetailModal(record[SCANTIME])}>详情</Button>
+      [OPERATE]: (value, record) => <div style={{ color: '#4F5DCA' }} onClick={() => showDetailModal(record[SCANTIME])}>详情</div>
     }
   })
 }

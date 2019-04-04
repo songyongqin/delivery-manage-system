@@ -21,38 +21,36 @@ import extraConnect from 'domainUtils/extraConnect'
 import WithConfig from 'domainComponents/WithConfig'
 import path from 'constants/path'
 import { spawn } from 'child_process';
+import { AttackAsset, Bug } from 'components/IconSvg'
+
+
 
 const dataItems = [
   {
     value: ASSETSCOUNT,
     text: "资产总数",
-    color: "#46C83D",
-    type: "database"
+    icon: <Icon  type={'database'} />
   },
   {
     value: NEWASSETS,
     text: "新增资产",
-    color: "orange",
-    type: "file-add"
+    icon: <Icon  type={'file-add'} />
   },
-  // {
-  //   value: ATTACKEDASSETS,
-  //   text: "受害资产",
-  //   color: "purple",
-  //   type: "exception"
-  // },
+  {
+    value: ATTACKEDASSETS,
+    text: "受攻击资产",
+    icon: <AttackAsset style={ { width:'14', height:'14' } } />
+  },
   {
     value: PORTCOUNT,
     text: "端口总数",
-    color: "#1890ff",
-    type: "api"
+    icon: <Icon  type={'api'} />
   },
-  // {
-  //   value: LOOPHOLE,
-  //   text: "漏洞总数",
-  //   color: "#CD0000",
-  //   type: "exclamation-circle"
-  // }
+  {
+    value: LOOPHOLE,
+    text: "漏洞总数",
+    icon: <Bug style={ { width:'14', height:'14' } } />
+  }
 ]
 @extraConnect(
   state => {
@@ -181,18 +179,13 @@ export default class CommonItem extends React.Component<any, any>{
         最后更新时间:&nbsp;&nbsp;{data[LASTUPDATETIME] != -1 ? <TimeLabel times={data[LASTUPDATETIME]}></TimeLabel> : "暂无更新"}
         {/* <Button type="primary" style={{ float: "right" }} onClick={this.showConfigModal}>资产扫描配置</Button> */}
         <div style={{ clear: "both", marginTop: "20px" }}>
-          <div style={{ width: "1000px", height: "150px", marginLeft: "auto", marginRight: "auto" }}>
-            {
+            <Row type='flex' justify='space-between' align='middle' >
+              {
               dataItems.map(i =>
-                <div key={i.value} className={styles["div-box"]}>
-                  <Icon style={{ fontSize: 32, color: '#1890ff' }} type={i.type} /><br />
-                  <span style={{ fontWeight: "bold", fontSize: "1.5em" }}>{data[i.value]}</span><br />
-                  <span>{i.text}</span>
-                </div>
-
+                  <Item text={ i.text } value={ data[i.value] } icon={ i.icon } key={i.value}  />
               )
-            }
-          </div>
+              }
+            </Row>
         </div>
         <div>
           <TableWithRemote
@@ -247,4 +240,17 @@ export default class CommonItem extends React.Component<any, any>{
       </div>
     )
   }
+}
+
+
+const Item = ({ icon, text, value }) => {
+  return (
+    <Col span={ 4 } className={ styles.item }  >
+      <div>
+        <span style={{ fontSize:14, marginRight:15 }} >{ icon }</span>
+        <span>{ text}</span>
+      </div>
+      <div style={{ fontSize:28 }} >{ value }</div>
+    </Col>
+  )
 }

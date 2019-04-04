@@ -8,6 +8,7 @@ import { last } from 'utils'
 import { getAppConfig } from 'domain/app'
 import { get } from 'utils'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
+const styles = require('./styles.less')
 
 class Page extends React.Component<any, any> {
   constructor(props) {
@@ -27,13 +28,17 @@ class Page extends React.Component<any, any> {
     const { initialFilters, lastReqTime } = this.state;
 
     return (
-      <div>
+      <div className={ styles.tabs } >
         <Tabs>
           <Tabs.TabPane tab="资产列表" key="assetsList">
-            <AssetsList changeRecord={this.change}></AssetsList>
+            <Wrap >
+              <AssetsList changeRecord={this.change}></AssetsList>
+            </Wrap>
           </Tabs.TabPane>
           <Tabs.TabPane tab="资产扫描记录" key="assetsScanRecord">
-            <ScanRecord key={lastReqTime}></ScanRecord>
+            <Wrap>
+              <ScanRecord key={lastReqTime}></ScanRecord>
+            </Wrap>
           </Tabs.TabPane>
         </Tabs>
 
@@ -43,3 +48,5 @@ class Page extends React.Component<any, any> {
 }
 
 export default Page; 
+
+const Wrap = props => <div style={{ padding:25, backgroundColor:'#ffffff', borderTop: '1px solid rgba(0,0,0,0.35)' }} >{ props.children }</div>
