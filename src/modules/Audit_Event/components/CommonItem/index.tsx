@@ -49,12 +49,14 @@ export default class CommonItem extends React.Component<any, any>{
           </div>
 
         </div>
-        <TableWithRemote
-          key={`${this.state.lastReqTime}-table`}
-          initialFilters={{ ...this.props.initialFilters }}
-          getColumns={this.props.getColumns}
-          remoteNamespace={this.props.remoteNamespace}>
-        </TableWithRemote>
+        <div style={{ padding:25, background: '#ffffff' }} >
+          <TableWithRemote
+            key={`${this.state.lastReqTime}-table`}
+            initialFilters={{ ...this.props.initialFilters }}
+            getColumns={this.props.getColumns}
+            remoteNamespace={this.props.remoteNamespace}>
+          </TableWithRemote>
+        </div>
       </div>
     )
   }

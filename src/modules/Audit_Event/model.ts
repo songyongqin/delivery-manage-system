@@ -1,12 +1,13 @@
 import { AUDIT_EVENT_NAMESPACE } from 'constants/model'
 import { fetchAuditEvent } from './services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
+import { getWeekTime, getTodayTime } from 'utils/getInitTime'
 
 export default {
   namespace: AUDIT_EVENT_NAMESPACE,
   state: {
     initialFilters: {
-      timestampRange: [],
+      timestampRange: getTodayTime()||[],
       page: 1,
       threatJudge: [],
       url: "",
@@ -20,7 +21,7 @@ export default {
       limit: 10
     },
     initial: {
-      timestampRange: [],
+      timestampRange: getTodayTime()||[],
       page: 1,
       threatJudge: [],
       url: "",

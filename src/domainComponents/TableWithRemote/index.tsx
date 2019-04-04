@@ -3,6 +3,7 @@ import Table from 'domainComponents/Table'
 import { connect } from 'dva'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
+const styles = require('./index.less')
 // interface OnChange {
 //   (filters: object): void
 // }
@@ -155,6 +156,7 @@ class TableWithRemote extends React.Component<any, any>{
 
     return (
       <Spin spinning={loading}>
+        <div className={ styles.table } >
         <Table
           theme={theme}
           pagination={pagination}
@@ -166,6 +168,7 @@ class TableWithRemote extends React.Component<any, any>{
           }}
           tableProps={finalTableProps}>
         </Table>
+        </div>
       </Spin>
     )
   }

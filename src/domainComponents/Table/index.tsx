@@ -230,13 +230,14 @@ class EnhancedTable extends React.Component<any, any>{
             <Pagination style={{ marginTop: "15px" }}
               className={paginationClasses}
               showTotal={(total, range) => (
-                <div className={paginationClasses}>
-                  共找到&nbsp;
-                <Tag color={"#108ee9"} >
-                    {paginationProps.total}
-                  </Tag>
-                  个结果
-              </div>
+              //   <div className={paginationClasses}>
+              //     共找到&nbsp;
+              //   <Tag color={"#108ee9"} >
+              //       {paginationProps.total}
+              //     </Tag>
+              //     个结果
+              // </div>
+              <div>共找到<span className={ styles.total } >{total}</span>个结果</div>
               )}
               {...paginationProps} />
             : null
