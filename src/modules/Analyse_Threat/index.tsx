@@ -13,7 +13,7 @@ import LoopholeTable from './components/LoopholeTable'
 import { SelectArr } from './constants'
 import tranformParmToObj from 'utils/tranformParmToObj' 
 import { limit } from './constants'
-import { getWeekTime } from 'utils/getInitTime'
+import { getWeekTime, getTodayTime } from 'utils/getInitTime'
 import InputSearch from 'components/InputSearch'
 import { ThreatFamliy, Bug, Cc  } from 'components/IconSvg'
 const styles = require('./index.less')
@@ -84,7 +84,7 @@ class Page extends React.Component<any, any> {
     super(props);
     this.state = {
       filters: {
-        timestampRange:getWeekTime()|| []
+        timestampRange:getTodayTime()|| []
       },
       // tableData:[],
       // // reqArg: {...initArg},
@@ -95,9 +95,9 @@ class Page extends React.Component<any, any> {
       familyCount:0,
       loopholeCount:0,
       connectC2Count:0,
-      reqFamily:{ ...initReqFamily, searchValue:'',page:1, timestampRange:getWeekTime()|| [] },
+      reqFamily:{ ...initReqFamily, searchValue:'',page:1, timestampRange:getTodayTime()|| [] },
       familyTableKey:0,
-      reqloophole:{ ...initReqloophole, searchValue:'', page:1, timestampRange:getWeekTime()|| [] },
+      reqloophole:{ ...initReqloophole, searchValue:'', page:1, timestampRange:getTodayTime()|| [] },
       loopholeTableKey:0,
       familyTotal:0,
       familyData:[],

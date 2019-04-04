@@ -17,7 +17,7 @@ import {  ANALYSE_ATTACK_DETAIL_URL,
           ANALYSE_REPORT_URL,   
           ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import LevelTag from 'components/LevelTag'
-import { getWeekTime } from 'utils/getInitTime'
+import { getTodayTime } from 'utils/getInitTime'
 import { momentToTimeStampRange } from 'utils/moment'
 import transformTimeStamp from 'utils/transformTimeStamp'
 import ResetIcon from 'components/ResetIcon' 
@@ -88,13 +88,13 @@ class Page extends React.Component<any, any> {
       threatActionArr: [],
       lastChangeTime: 0,
       filters: {
-        timestampRange:getWeekTime()|| []
+        timestampRange:getTodayTime()|| []
       },
       reqArg:{
         ...initArg,
         searchValue:'',
         page:1,
-        timestampRange:getWeekTime()|| []
+        timestampRange:getTodayTime()|| []
       },
       table:{
         total:0,

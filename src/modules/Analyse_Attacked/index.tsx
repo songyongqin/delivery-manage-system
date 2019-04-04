@@ -21,7 +21,7 @@ import {
   // levelFilter,
   limit
 } from './constants'
-import { getWeekTime } from 'utils/getInitTime'
+import { getWeekTime, getTodayTime } from 'utils/getInitTime'
 import InputSearch from 'components/InputSearch'
 const styles = require('./index.less')
 
@@ -67,14 +67,14 @@ class Page extends React.Component<any, any> {
     this.state = {
       lastChangeTime: 0,
       filters: {
-        timestampRange:getWeekTime()|| []
+        timestampRange:getTodayTime()|| []
       },
       tableData:[],
-      reqArg: {...initArg, page:1, searchValue:"", timestampRange:getWeekTime()|| []},
+      reqArg: {...initArg, page:1, searchValue:"", timestampRange:getTodayTime()|| []},
       tableKey: '0attacked',
       countKey: 'oattackedcount',
       total:0,
-      timestampRange:getWeekTime()|| []
+      timestampRange:getTodayTime()|| []
     }
   }
 

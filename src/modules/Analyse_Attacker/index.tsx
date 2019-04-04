@@ -19,7 +19,7 @@ import ResetIcon from 'components/ResetIcon'
 import {
   limit
 } from './constants'
-import { getWeekTime } from 'utils/getInitTime'
+import { getWeekTime, getTodayTime } from 'utils/getInitTime'
 import TableTime from 'components/TableTime'
 import transformTimeStamp from 'utils/transformTimeStamp'
 import fetch from 'dva/fetch'
@@ -58,7 +58,7 @@ const initArg = {
   attackerIP:'',
   attackerDomainName:'',
   family:'',
-  timestampRange:getWeekTime()||[]
+  timestampRange:getTodayTime()||[]
 }
 
 @WithTableConfig(path.layoutConfig.analyseAttacker)
@@ -70,15 +70,12 @@ class Page extends React.Component<any, any> {
     super(props);
     this.state = {
       lastChangeTime: 0,
-      // filters: {
-      //   timestampRange: getWeekTime()||[]
-      // },
       tableData:[],
-      reqArg: {...initArg, page:1, searchValue:'', timestampRange:getWeekTime()||[] },
+      reqArg: {...initArg, page:1, searchValue:'', timestampRange:getTodayTime()||[] },
       tableKey: '0attacked',
       countKey: 'oattackercount',
       total:0,
-      timestampRange:getWeekTime()||[],
+      timestampRange:getTodayTime()||[],
       tableLoading: false,
       pieHeight:200
     }
