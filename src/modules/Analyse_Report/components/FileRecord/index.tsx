@@ -103,7 +103,7 @@ class Page extends React.Component<any, any> {
       pageSize: this.props.limit,
     };
     return (
-      <div style={{ minHeight: "600px", color: "#A3B2C1" }}>
+      <div style={{ minHeight: "600px", color: "#A3B2C1" }} className={ styles.file } >
 
         {/* <span>每页条数：</span>
         <Select defaultValue="30" style={{ width: "100px", margin: "15px" }} onChange={this.handleChange}>

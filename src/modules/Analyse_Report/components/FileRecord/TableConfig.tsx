@@ -31,6 +31,8 @@ import {
 import Judge from '../../judge'
 const styles = require("./styles.less")
 
+const Tags = props => <span style={{ color: '4F5DCA' }} >{ props.children }</span>
+
 export const getColumns = ({
 
   searchName,
@@ -68,10 +70,11 @@ export const getColumns = ({
     [THREAT_TYPE_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
     [TIME_DATA_INDEX]: (time) => <div style={{ textAlign: "center" }}><TimesLabel value={[time]}></TimesLabel></div>,
     [THREAT_LEVEL_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
-    [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tag  style={{ marginRight: "0px" }}><ReportLink data={record}></ReportLink></Tag>|<Tag ><a onClick={() => exportReportByTaskId(record.md5)}>下载</a></Tag></div>,
-    [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tag ><a href={getAuthURL(record.sampleUrl)} download>下载</a></Tag></div>
-    // [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tag color='#108ee9' style={{ marginRight: "0px" }}><ReportLink data={record}></ReportLink></Tag>|<Tag color='#108ee9'><a onClick={() => exportReportByTaskId(record.md5)}>下载</a></Tag></div>,
-    // [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tag color='#108ee9'><a href={getAuthURL(record.sampleUrl)} download>下载</a></Tag></div>
+    // [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tag  style={{ marginRight: "0px"}}><ReportLink data={record}></ReportLink></Tag>|<Tag ><a onClick={() => exportReportByTaskId(record.md5)}>下载</a></Tag></div>,
+    // [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tag ><a href={getAuthURL(record.sampleUrl)} download>下载</a></Tag></div>
+    [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tags  style={{ marginRight: "0px"}}><ReportLink data={record}></ReportLink></Tags>|<Tags ><a onClick={() => exportReportByTaskId(record.md5)}>下载</a></Tags></div>,
+    [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tags ><a href={getAuthURL(record.sampleUrl)} download>下载</a></Tags></div>
+  
   }
 
   function FilterAction(text, changeFile, file, searchFile, filterDropdown, down) {

@@ -10,7 +10,7 @@ import FileRecord from './components/FileRecord'
 import Spin from 'domainComponents/Spin'
 const styles = require("./styles.less")
 const TabPane = Tabs.TabPane
-
+import { getTodayTime } from 'utils/getInitTime'
 
 const getMd5 = str => {
   if(str&& typeof str==='string'&& str.indexOf('=')!==-1){
@@ -25,7 +25,8 @@ class Page extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      keyValue: "file"
+      keyValue: "file",
+      timestampRange: getTodayTime()|| []
     }
   }
   componentDidMount() {
@@ -197,12 +198,15 @@ class Page extends React.Component<any, any> {
     const pageClasses = classnames({
       [styles["page-dark"]]: theme == "dark"
     })
+
+    const { timestampRange } = this.state
     
     return (
       <div className={pageClasses}>
         {this.props.animateRender([
-          <div className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange}></TimestampPicker></div>,
-          <div style={{ width: "100%", overflow: "hidden" }} key="keyDiv">
+          <div className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>,
+          <div style={{ clear: 'both' }} ></div>,
+          <div style={{ width: "100%", overflow: "hidden", marginTop:10}} key="keyDiv">
             <Spin spinning={this.props.loading}>
               {/* <Tabs defaultActiveKey="file" onChange={this.callback}>
                 <TabPane tab="文件记录" key="file"><FileRecord /></TabPane>

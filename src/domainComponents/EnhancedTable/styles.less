@@ -1,5 +1,11 @@
 @import '~themes/vars';
 
+// .min-situation-table{
+//   :global{
+
+//   }
+// }
+
 
 .table{
   :global{
@@ -15,13 +21,20 @@
       background: transparent;
       border:none;  
     }
+
+    // .ant-table-tbody>tr>td, .ant-table-thead>tr>th{
+    //   padding: 10px 5px;
+    //   margin:5px;
+    //   font-size: 12px;
+    // }
+
     // table{
     //   border-collapse:separate;   
     //   border-spacing: 0 10px;
 
     // }
     .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body{
-      background: transparent;
+      // background: transparent;
       margin-top:20px;
     }
     .ant-table-fixed-header .ant-table-scroll .ant-table-header{
@@ -47,7 +60,7 @@
     }
     .ant-table-thead>tr>th,
     .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th{
-      background: transparent;
+      // background: transparent;
       border-bottom:none;
     }
     tr{
@@ -68,12 +81,12 @@
   @td-border-width:1.4px;
   :global{
     .ant-table-placeholder{
-      background: @bg-level-3;
+      // background: @bg-level-3;
     }
     .ant-table-row{
       td{
         color:@txt-color;
-        background: @bg-level-3;
+        // background: @bg-level-3;
         // border-top:@td-border-width solid @border-color;
         // border-bottom:@td-border-width solid @border-color;
         transition: none 0s;
@@ -106,7 +119,26 @@
     .ant-table-placeholder{
       color: @txt-color;
     }
+
+    
+    .ant-table-tbody>tr:nth-child(odd){
+      background-color: #FFFFFF;
+    }
+    .ant-table-tbody>tr:nth-child(even){
+      background-color: #F5F7FC;
+    }
+
+    .ant-table-thead{
+      background-color: #ECEEF9
+    }
+
   }
+}
+
+.total{
+  color: @primary-color;
+  font-size: 14px;
+  margin: 0 14px;
 }
 
 
@@ -119,11 +151,11 @@
   }
   :global{
 
-    .ant-pagination-item-active{
-      background: @primary-color;
-      a{
-        color:white;
-      }
-    }
+    // .ant-pagination-item-active{
+    //   background: @primary-color;
+    //   a{
+    //     color:white;
+    //   }
+    // }
   }
 }
