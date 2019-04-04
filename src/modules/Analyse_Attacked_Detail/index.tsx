@@ -14,7 +14,7 @@ import {
   limit
 } from './constants'
 import WithPagination from 'components/WithPagination'
-// import { routerRedux } from 'dva/router'
+const styles = require('./index.less')
 
 import { Tabs } from 'antd'
 
@@ -174,24 +174,28 @@ class AnalyseDetail extends React.Component<any, any> {
               <WithTable  tableData={ attackedInfo } config={ columns }  />
             </Spin>
             </div>,
-            <div key='attacked-assets-event' >
+            <div key='attacked-assets-event'  className={ styles.tabs } >
               <Tabs onChange={ this.getValue } >
                 <Tabs.TabPane tab={ selectArr[0] } key={selectArr[0]  }  >
                   <Spin  spinning={ eventLoading }>
-                    <EventTable data={threatEventInfo  } />
-                    <WithPagination total={ eventTotal } 
-                                    current={ eventReq.page }
-                                    onChange={ this.paginationEventChange }
-                                    limit={ limit } />
+                    <div className={ styles.table } >
+                      <EventTable data={threatEventInfo  } />
+                      <WithPagination total={ eventTotal } 
+                                      current={ eventReq.page }
+                                      onChange={ this.paginationEventChange }
+                                      limit={ limit } />
+                    </div>
                   </Spin>
                 </Tabs.TabPane>  
                 <Tabs.TabPane tab={ selectArr[1] } key={selectArr[1]  }  >
                   <Spin spinning={ ccLoading } >
-                    <CCTable data={c2Record  } tableChange={ this.ccTableChange } />
-                    <WithPagination total={ CCTotal } 
-                                    current={ ccReq.page }
-                                    onChange={ this.paginationCcChange }
-                                    limit={ limit } />
+                    <div className={ styles.table } >
+                      <CCTable data={c2Record  } tableChange={ this.ccTableChange } />
+                      <WithPagination total={ CCTotal } 
+                                      current={ ccReq.page }
+                                      onChange={ this.paginationCcChange }
+                                      limit={ limit } />
+                    </div>
                   </Spin>
                 </Tabs.TabPane>
               </Tabs>

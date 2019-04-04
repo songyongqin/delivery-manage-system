@@ -5,7 +5,7 @@ import CountItem from 'components/CountItem'
 import { ANALYSE_THREAT_VIEW } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
-import { Icon ,Tabs, Input } from 'antd'
+import { Icon ,Tabs, Input, Row, Col } from 'antd'
 import WithPagination from 'components/WithPagination'
 import ExtraIcon from 'components/Icon'
 import FamilyTable from './components/FamilyTable'
@@ -14,8 +14,9 @@ import { SelectArr } from './constants'
 import tranformParmToObj from 'utils/tranformParmToObj' 
 import { limit } from './constants'
 import { getWeekTime } from 'utils/getInitTime'
-
-
+import InputSearch from 'components/InputSearch'
+import { ThreatFamliy, Bug, Cc  } from 'components/IconSvg'
+const styles = require('./index.less')
 
 
 const mapStateToprops = state => {
@@ -246,12 +247,7 @@ class Page extends React.Component<any, any> {
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
-          <Input.Search placeholder="输入待搜索的值"
-                        enterButton
-                        onSearch = { this.searchEnter }
-                        value = { selected===SelectArr[0] ? this.state.reqFamily.searchValue: this.state.reqloophole.searchValue }
-                        onChange = { this.getSearchValue } 
-                        style={{ width:240, marginRight:20 }}  />
+          <InputSearch searchEnter={ this.searchEnter } onChange={ this.getSearchValue } value={ selected===SelectArr[0] ? this.state.reqFamily.searchValue: this.state.reqloophole.searchValue }   />
           <DateRangePicker
             value={filters.timestampRange}
             key={ +new Date() }
@@ -260,52 +256,56 @@ class Page extends React.Component<any, any> {
         </div>
         {
           this.props.animateRender([
-            <div key='analyse-threat-count' >
+            <Row key='analyse-threat-count' >
             {/* 统计数据 */} 
-              <div style={{ display:'inline-block', margin:30 }} >
+              <Col span={ 6 }  style={{ height:125 }} >
                 <CountItem title={'威胁家族'} count={ familyCount } >
-                  <ExtraIcon type={'eyedropper'} style={{ fontSize:22 }} />
+                  <ThreatFamliy />
                 </CountItem>
-              </div>
-              <div style={{ display:'inline-block', margin:30 }} >
-                <CountItem title={'攻击利用漏洞'} count={ loopholeCount } style={{ backgroundColor:'#4F7ED8' }} >
-                  <ExtraIcon type={'bug'} style={{ fontSize:22 }} />
+              </Col>
+              <Col span={ 6 } push={ 3 }  style={{ height:125 }} >
+                <CountItem title={'攻击利用漏洞'} count={ loopholeCount } style={{ }} >
+                  <Bug />
                 </CountItem>
-              </div>
-              <div style={{ display:'inline-block', margin:30 }} >
-                <CountItem title={'关联C&C数'} count={ connectC2Count } style={{ backgroundColor:'#92AB4C' }} >
-                  <Icon type="file-unknown"  style={{ fontSize:22 }} />
+              </Col>
+              <Col span={ 6 } push={6}  style={{ height:125 }} >
+                <CountItem title={'关联C&C数'} count={ connectC2Count } style={{}} >
+                  <Cc />
                 </CountItem>
-              </div>
-            </div>,
-            <div key="analyse-threat-table">
+              </Col>
+            </Row>,
+            <div key="analyse-threat-table" className={ styles.tabs } >
             <Tabs onChange={ this.getSelectValue } >
                 <Tabs.TabPane tab={ SelectArr[0] } key={SelectArr[0]  }  >
-              <Spin spinning={ this.props.familyLoading  } >
-                  <FamilyTable  tableData={ familyData }
-                                reset={ this.reset }
-                                timestampRange={ filters.timestampRange }
-                                key={ this.state.familyTableKey } 
-                                tableBeforeFetch={ this.fetchFamilyTable } />
-                  <WithPagination total={familyTotal}
-                                  limit={ limit }
-                                  onChange={ this.familyPaginationOnchange }
-                                  current={this.state.reqFamily.page}  />
-              </Spin> 
-              </Tabs.TabPane> 
-              <Tabs.TabPane tab={ SelectArr[1] } key={SelectArr[1]  }  >
-              <Spin spinning={ this.props.loopholeLoading  } >
-                <LoopholeTable  tableData={ loopholeData } 
-                              tableBeforeFetch={ this.fetchLoopholeTable }
-                              timestampRange={ filters.timestampRange }
-                              reset={ this.reset }
-                              key={ this.state.loopholeTableKey } />
-                <WithPagination total={loopholeTotal}
-                                onChange={ this.loopholePaginationOnchange }
-                                limit={ limit }
-                                current={this.state.reqloophole.page}  />
-              </Spin>
-              </Tabs.TabPane>
+                  <Spin spinning={ this.props.familyLoading  }  >
+                    <div className={ styles.table } >
+                      <FamilyTable  tableData={ familyData }
+                                    reset={ this.reset }
+                                    timestampRange={ filters.timestampRange }
+                                    key={ this.state.familyTableKey } 
+                                    tableBeforeFetch={ this.fetchFamilyTable } />
+                      <WithPagination total={familyTotal}
+                                      limit={ limit }
+                                      onChange={ this.familyPaginationOnchange }
+                                      current={this.state.reqFamily.page}  />
+                    </div>
+                  </Spin> 
+                </Tabs.TabPane> 
+                <Tabs.TabPane tab={ SelectArr[1] } key={SelectArr[1]  }  >
+                  <Spin spinning={ this.props.loopholeLoading  } >
+                    <div className={ styles.table } >
+                      <LoopholeTable  tableData={ loopholeData } 
+                                    tableBeforeFetch={ this.fetchLoopholeTable }
+                                    timestampRange={ filters.timestampRange }
+                                    reset={ this.reset }
+                                    key={ this.state.loopholeTableKey } />
+                      <WithPagination total={loopholeTotal}
+                                      onChange={ this.loopholePaginationOnchange }
+                                      limit={ limit }
+                                      current={this.state.reqloophole.page}  />
+                    </div>
+                  </Spin>
+                </Tabs.TabPane>
               </Tabs>
             
             

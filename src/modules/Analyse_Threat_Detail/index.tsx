@@ -18,6 +18,8 @@ import moment from 'moment'
 
 import SwitchItem from './components/SwitchItem'
 import { selectArr } from '../Analyse_Attacked_Detail/constants';
+const styles = require('./index.less')
+
 
 const mapStateToprops = state => {
   return {
@@ -297,70 +299,76 @@ class Page extends React.Component<any, state> {
     const { familyEventLoading, familyAssetsLoading, familyCCLoading, loopholeEventLoading, loopholeAssetsLoading, loopholeCCLoading  } = this.props
     // console.log(type, this.state)
     return (
-      <div >
+      <div className={ styles.tabs }  >
         <Tabs onChange={  this.getSelectValue } >
           <Tabs.TabPane key={ SelectArr[0] } tab={ SelectArr[0] } >
-          {
-            type===typeArr[0] ? 
-              <Spin spinning={ familyEventLoading } >
-              <div  >
-                <FamilyEventTable tableData={ familyEventArr.data }  />
-                
-                <WithPagination total={ familyEventArr.total } 
-                                current={ familyEventPage }
-                                limit={ limit }
-                                onChange={ this.fetchFamilyEvent } />
-                                </div>
-              </Spin>
-              : 
-              <Spin spinning={ loopholeEventLoading } >
-                <LoopholeEventTable tableData={ loopholeEventArr.data }  />
-                <WithPagination total={ loopholeEventArr.total } 
-                                current={ loopholeEventPage }
-                                limit={ limit }
-                                onChange={ this.fetchLoopholeEvent } />
-              </Spin>
-          }
+            <div className={ styles.table } >
+            {
+              type===typeArr[0] ? 
+                <Spin spinning={ familyEventLoading } >
+                <div  >
+                  <FamilyEventTable tableData={ familyEventArr.data }  />
+                  
+                  <WithPagination total={ familyEventArr.total } 
+                                  current={ familyEventPage }
+                                  limit={ limit }
+                                  onChange={ this.fetchFamilyEvent } />
+                                  </div>
+                </Spin>
+                : 
+                <Spin spinning={ loopholeEventLoading } >
+                  <LoopholeEventTable tableData={ loopholeEventArr.data }  />
+                  <WithPagination total={ loopholeEventArr.total } 
+                                  current={ loopholeEventPage }
+                                  limit={ limit }
+                                  onChange={ this.fetchLoopholeEvent } />
+                </Spin>
+            }
+            </div>
           </Tabs.TabPane>
           <Tabs.TabPane key={ SelectArr[1] } tab={ SelectArr[1] } >
-          {
-            type===typeArr[0] ? 
-              <Spin spinning={ familyAssetsLoading } >
-                <FamilyAssetsTable tableData={ familyAssetsArr.data }  />
-                <WithPagination total={ familyAssetsArr.total } 
-                                current={ familyAssetsPage }
-                                limit={ limit }
-                                onChange={ this.fetchFamilyAssets } />
-              </Spin>
-              : 
-              <Spin spinning={ loopholeAssetsLoading } >
-                <LoopholeAssetsTable tableData={ loopholeAssetsArr.data }  />
-                <WithPagination total={ loopholeAssetsArr.total } 
-                                current={ loopholeAssetsPage }
-                                limit={ limit }
-                                onChange={ this.fetchLoopholeAssets } />
-              </Spin>
-          }
+          <div className={ styles.table } >
+            {
+              type===typeArr[0] ? 
+                <Spin spinning={ familyAssetsLoading } >
+                  <FamilyAssetsTable tableData={ familyAssetsArr.data }  />
+                  <WithPagination total={ familyAssetsArr.total } 
+                                  current={ familyAssetsPage }
+                                  limit={ limit }
+                                  onChange={ this.fetchFamilyAssets } />
+                </Spin>
+                : 
+                <Spin spinning={ loopholeAssetsLoading } >
+                  <LoopholeAssetsTable tableData={ loopholeAssetsArr.data }  />
+                  <WithPagination total={ loopholeAssetsArr.total } 
+                                  current={ loopholeAssetsPage }
+                                  limit={ limit }
+                                  onChange={ this.fetchLoopholeAssets } />
+                </Spin>
+            }
+            </div>
           </Tabs.TabPane>
           <Tabs.TabPane key={ SelectArr[2] } tab={ SelectArr[2] } >
-          {
-            type===typeArr[0] ? 
-              <Spin spinning={ familyCCLoading } >
-                <FamilyCcTable tableData={ familyCcArr.data }  />
-                <WithPagination total={ familyCcArr.total } 
-                                current={ familyCcPage }
-                                limit={ limit }
-                                onChange={ this.fetchFamilyCc } />
-              </Spin>
-              : 
-              <Spin spinning={ loopholeCCLoading } >
-                <LoopholeCcTable tableData={ loopholeCcArr.data }  />
-                <WithPagination total={ loopholeCcArr.total } 
-                                current={ loopholeCcPage }
-                                limit={ limit }
-                                onChange={ this.fetchLoopholeCc } />
-              </Spin>
-          }
+            <div className={ styles.table } >
+            {
+              type===typeArr[0] ? 
+                <Spin spinning={ familyCCLoading } >
+                  <FamilyCcTable tableData={ familyCcArr.data }  />
+                  <WithPagination total={ familyCcArr.total } 
+                                  current={ familyCcPage }
+                                  limit={ limit }
+                                  onChange={ this.fetchFamilyCc } />
+                </Spin>
+                : 
+                <Spin spinning={ loopholeCCLoading } >
+                  <LoopholeCcTable tableData={ loopholeCcArr.data }  />
+                  <WithPagination total={ loopholeCcArr.total } 
+                                  current={ loopholeCcPage }
+                                  limit={ limit }
+                                  onChange={ this.fetchLoopholeCc } />
+                </Spin>
+            }
+            </div>
           </Tabs.TabPane>
         </Tabs>
       </div>
