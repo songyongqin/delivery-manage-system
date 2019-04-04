@@ -114,7 +114,7 @@ const columnsAddRender = arr => {
       i['render'] = text =>  <div style={{ color: `${text===1 ? '#52c41a' : "red"}` }} >{ `${ text===1 ? "连接成功" : '连接失败' }` }</div>
     }
     else if(i.dataIndex==='nodeIp'){
-      i['render'] = (text, record) => <a href={ record['url'] ? record['url'] : `http://${text}` } style={{ textDecoration:"none" }} >{text}</a>
+      i['render'] = (text, record) => <a target='blank' href={ record['url'] ? record['url'] : `http://${text}` } style={{ textDecoration:"none" }} >{text}</a>
     }
     return i
   })

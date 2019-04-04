@@ -17,7 +17,7 @@ class AnalyseDetail extends React.Component<any, any> {
       <div>
         {
           this.props.animateRender([
-            <div key="node-monitor">
+            <div key="node-monitor" style={{ padding:25, backgroundColor:'#fff' }} >
               <Table  path={ path.layoutConfig.NodeMonitor } type={ 'fetch' } />
             </div>
           ])
