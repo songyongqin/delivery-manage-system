@@ -1,6 +1,5 @@
 import React from 'react'
-import styles from './styles.css'
-import { Menu, Button, Tabs, Icon } from 'antd'
+import { Menu, Button, Tabs, Icon, Col, Row } from 'antd'
 import {
   RECEIVE_EMAIL_CONFIG_TITLE,
   SEND_CONFIG_TITLE,
@@ -15,8 +14,11 @@ import EmailSend from './components/EmailSend'
 import NetConfig from './components/NetConfig'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import WhitList from '../WhiteList'
-
+const styles = require('./index.less')
 const TabPane = Tabs.TabPane
+
+
+const Wrap = props => <div className={ styles.container } >{ props.children }</div>
 
 @WithCommonProps
 @WithAnimateRender
@@ -27,18 +29,29 @@ class Page extends React.Component<any, any>{
       this.props.animateRender([
         <Tabs key="tab"  defaultActiveKey={ WARN_LCONFIG } >
           <TabPane tab={WARN_LCONFIG} key={ WARN_LCONFIG } >
-          <span><Icon type="mail"></Icon> &nbsp; 接收告警邮箱配置</span>
-            <EmailReceive readonly={!admin} />
-            {
-            admin
-              ?
-              <div>
-                <span><Icon type="setting"></Icon> &nbsp;发送告警邮箱配置</span>
-                <EmailSend />
-              </div>
-              :
-              null
-          }
+            <Row gutter={ 20 } >
+              <Col span={ 12 }  >
+                <Wrap>
+                  <span><Icon type="mail"></Icon> &nbsp; 接收告警邮箱配置</span>
+                  <EmailReceive readonly={!admin} />
+                </Wrap>
+              </Col>
+              <Col span={ 12 }>
+                <Wrap>
+                  {
+                    admin
+                    ?
+                    <div>
+                      <span><Icon type="setting"></Icon> &nbsp;发送告警邮箱配置</span>
+                      <EmailSend />
+                    </div>
+                    :
+                    null
+                  }
+                </Wrap>
+              </Col>
+            </Row>
+          
           </TabPane>
           <TabPane tab={ NET_CONFIG }  key={ NET_CONFIG } >
             <NetConfig  />
