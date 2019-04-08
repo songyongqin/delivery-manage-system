@@ -72,7 +72,7 @@ export default class SystemLogLogin extends React.Component<any, any>{
   render() {
     return (
       <div style={{ position: "relative" }}>
-        <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
+        <div style={{ float: "right", position: "absolute", right: "0", top: "-55px" }}>
           <DateRangePicker
             value={this.state.initialFilters.timestampRange}
             onChange={this.timestampRangeOnChange}>
@@ -81,7 +81,7 @@ export default class SystemLogLogin extends React.Component<any, any>{
         <div style={{ overflow: "hidden" }}>
           <Button
             loading={this.props.exportLoading}
-            type="primary" style={{ float: "right" }}
+            type="primary" style={{ float: "right", borderRadius: 5 }}
             onClick={this.onExportClick}>
             导出日志
           </Button>
