@@ -5,6 +5,7 @@ import {
   putDeviceIDSStandaloneDisk,
   postLicence,
   postDisk,
+  fetchDeviceInfoSStandalone,
   updateByLocalIDS,
   fetchVersionInfoByLocalIDS,
   updateByRemoteIDS,
@@ -47,6 +48,7 @@ export default {
   },
   effects: {
     fetch: commonEffectCreator(fetchDeviceIDSStandalone),
+    fetchDeviceInfo: commonEffectCreator(fetchDeviceInfoSStandalone),
     fetchDeviceDisk: commonEffectCreator(fetchDeviceIDSStandaloneDisk),
     putDeviceDisk: commonEffectCreator(putDeviceIDSStandaloneDisk, 500),
     postLicence: commonEffectCreator(postLicence, 500),

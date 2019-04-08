@@ -63,6 +63,8 @@ const HttpApiConfig = {
   DEVICE_IDS_STANDALONE: "/device/node-ids",
   DEVICE_IDS_STANDALONE_DISK: "/device/disk/ids",
 
+  DEVICE_IDS_INFO: "/device/info",
+
   DEVICE_UPDATE_ONLINE: "/device/update/online",
   DEVICE_UPDATE_LOCAL: "/device/update/local",
   DEVICE_UPDATE_INFO_ONLINE: "/device/update-info/online",

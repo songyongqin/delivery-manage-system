@@ -4,7 +4,7 @@ import { getColumns } from '../../tableConfig'
 import TableWithRemote from 'domainComponents/TableWithRemote'
 const styles = require('./styles.less')
 import DiskClear from './DiskClear'
-import { Modal, Icon, Menu, Dropdown } from 'antd'
+import { Modal, Icon,Tag, Menu, Dropdown, Col, Row, Card, Progress, Tooltip } from 'antd'
 import WithModal from 'components/WithModal'
 import Licence from './Licence'
 import Update from './Update'
@@ -16,6 +16,7 @@ import WithCommonProps from 'domainComponents/WithCommonProps'
 import { isLicenceOverdue } from 'domain/licence'
 import { debounce } from 'utils'
 import { MANAGER_DEVICE_IDS_STANDALONE_NAMESPACE } from 'constants/model'
+import moment from 'moment';
 
 /*
 * 该组件参数如下
@@ -44,7 +45,8 @@ const mapStateToProps = state => {
   return {
     progressState,
     effectsLoading: state.loading.effects,
-    overdueTipVisible: state.layout.overdueTipVisible
+    overdueTipVisible: state.layout.overdueTipVisible,
+    state
   }
 }
 
@@ -82,7 +84,32 @@ export default class DeviceInfo extends React.Component<any, any>{
       update: false
     },
     refreshDataOnClose: false,
-    expanded: true
+    expanded: true,
+    deviceInfo: {
+      deviceName: '安天态势感知平台',
+      hostIp: '172.31.50.167',
+      mac: 'ssg-ggs-hsasdh-sg-32',
+      diskPer:1,
+      diskSurplus: '452G',
+      memoryPer: 39,
+      memorySurplus: '3.2G',
+      cpuPer: 100,
+      applicationVersion: 'v4.5.2',
+      libraryVersionList:[{
+        name: '规划库',
+        version: 'v3.2.1'
+      }],
+      engineVersionList:[{
+        name: '规划库',
+        version: 'v3.2.1'
+      }],
+      deviceId: 'tu3kkzkq6guhcunbgpq66zti9',
+      licenceStatus: {
+        value:1,
+        expiration: 1503642697,
+        code: 'fsjgkljsdflhkujao9sudaojslkgjlejr5tj3iwufaoisfjpjerty3e4sa;flk'
+      }
+    },
   }
   componentDidMount() {
     if (this.props.overdueTipVisible && this.props.mainDevice) {
@@ -90,7 +117,17 @@ export default class DeviceInfo extends React.Component<any, any>{
     }
     this.initExpandedListener()
     this.adjustExpanded()
+    this.getInit()
   }
+
+  //
+  getInit =() => {
+   this.getDiskItem().then(data=> this.setState({deviceInfo: { ...this.state.deviceInfo, ...data[0]} }) )
+  }
+
+
+  getDiskItem = () => this.props.dispatch({ type: `${this.props.remoteNamespace}/fetchDeviceInfo` }).then(res => res&&res.data&& res.data)
+
   componentWillUnmount() {
     this.removeExpandedListener()
   }
@@ -289,9 +326,12 @@ export default class DeviceInfo extends React.Component<any, any>{
       payload
     })
   }
+
+  showModal = key => this.props.switchModal(key)
+
   render() {
     const { pagination, remoteNamespace, multiple, modalVisible, switchModal, disk, effectsLoading, masterIP, shouldHideCols } = this.props
-    const { modalReload, lastReqTime } = this.state
+    const { modalReload, lastReqTime, deviceInfo } = this.state
 
     const readonly = (!this.props.admin) || this.props.readonly
 
@@ -330,48 +370,122 @@ export default class DeviceInfo extends React.Component<any, any>{
       }
     }
 
+    let deviceStateArr = [
+      {value:deviceInfo.cpuPer, types: 'CPU'}, 
+      {value:deviceInfo.memoryPer, types: '内存', surplus: deviceInfo.memorySurplus }, 
+      {value:deviceInfo.diskPer, types: '磁盘', surplus: deviceInfo.diskSurplus }
+    ]
+
     return (
-      <div className={styles["device-info-wrapper"]}>
+      <div >
         <div style={{ marginBottom: "10px", overflow: "hidden" }}>
-          <If condition={masterIP}>
-            <div style={{ float: "left", marginRight: "15px" }}>
-              <MasterIP remoteNamespace={remoteNamespace}></MasterIP>
-            </div>
-          </If>
-
-          <If condition={disk}>
-            <div style={{ float: "left", marginRight: "15px" }}>
-              <DiskClear
-                readonly={readonly}
-                remoteNamespace={remoteNamespace}>
-              </DiskClear>
-            </div>
-          </If>
-
-          <If condition={multiple}>
-            <div style={{ float: "left" }}>
-              <Dropdown.Button
-                overlay={<Menu onClick={({ key }) => {
-                  this.props.setModalVisible(key, true)
-                }}>
-                  <Menu.Item key="clean">批量磁盘清理</Menu.Item>
-                  <Menu.Item key="update">批量检查更新</Menu.Item>
-                </Menu>}
-                disabled={this.state.activeItems.length === 0 || readonly}
-                onClick={_ => switchModal("licence")}
-                type="primary">
-                批量授权
-                </Dropdown.Button>
-            </div>
-          </If>
-
         </div>
+
+        <Row gutter={ 20 } >
+          <Col span={ 12 } >
+            <Wrap>
+              <Card title={'设备信息'} style={{ height: 290 }} >
+                <div style={{ margin: '20px 15px' }} >
+                  <span>设备名称：</span>
+                  <span>{deviceInfo.deviceName}</span>
+                </div>
+                <div  style={{ margin: '20px 15px'  }}>
+                  <span>主机IP地址：</span>
+                  <span>{deviceInfo.hostIp}</span>
+                </div>
+                <div  style={{ margin: '20px 15px'  }}>
+                  <span>设备MAC地址：</span>
+                  <span>{deviceInfo.mac}</span>
+                </div>
+              </Card>
+            </Wrap>
+          </Col>
+          <Col span={ 12 } >
+            <Wrap>
+              <Card title={
+                <div style={{ display:'flex', justifyContent: 'space-between', alignItems:'center' }} >
+                      设备运行状态
+                 <If condition={disk}>
+                        <div style={{  marginRight: "15px" }}>
+                          <DiskClear
+                            readonly={readonly}
+                            remoteNamespace={remoteNamespace}>
+                          </DiskClear>
+                        </div>
+                      </If>
+                    </div>} 
+                    style={{ height: 290 }}  >
+                <div style={{ display:'flex', justifyContent: 'space-between' }} >
+                  {
+                    deviceStateArr.map((i, index) => 
+                      <ProgressWrap num={ i.value } key={ index } types={ i.types } surplus={ i.surplus } onClick={_ => this.onCleanClick([deviceInfo]) } />)
+                  }
+                </div>
+              </Card>
+            </Wrap>
+          </Col>
+        </Row>
+
+        <Row gutter={ 20 }  style={{ marginTop: 20 }} >
+          <Col span={ 12 } >
+            <Wrap>
+              <Card title={<div style={{  display:'flex', justifyContent: 'space-between', alignItems:'center' }} >
+                              <div>软件版本信息</div>
+                              <div style={{ color: '#5297FE', cursor:'pointer' }} onClick={ _ => this.onUpdateClick([deviceInfo])  }  >检查升级</div>
+                            </div>}  >
+                <div style={{ margin: '20px 15px' }} >
+                  <span>程序版本号：</span>
+                  <span>{deviceInfo.applicationVersion}</span>
+                </div>
+                <div  style={{ margin: '20px 15px'  }}>
+                  <span>规则库版本号：</span>
+                  <span>
+                    {
+                      deviceInfo.libraryVersionList.map(i => <Tag color="blue" key={i.name}>{i.name}&nbsp;&nbsp;{i.version}</Tag> )
+                    }
+                  </span>
+                </div>
+                <div  style={{ margin: '20px 15px'  }}>
+                  <span>引擎版本号：</span>
+                  <span>
+                    {
+                      deviceInfo.engineVersionList.map(i  => <Tag color="blue" key={i.name}>{i.name}&nbsp;&nbsp;{i.version}</Tag> )
+                    }
+                  </span>
+                </div>
+              </Card>
+            </Wrap>
+          </Col>
+          <Col span={ 12 } >
+            <Wrap>
+              <Card title={<div style={{  display:'flex', justifyContent: 'space-between', alignItems:'center' }} >
+                              <div>授权信息</div>
+                              <div style={{ color: readonly ? 'rgba(0,0,0,0.35)' : '#5297FE', cursor:'pointer' }} onClick={ _ => this.onLicenceClick([deviceInfo]) } >授权</div>
+                            </div>} >
+                <div style={{ margin: '20px 15px' }} >
+                  <span>设备唯一标识：</span>
+                  <span>{deviceInfo.deviceId}</span>
+                </div>
+                <div  style={{ margin: '20px 15px'  }}>
+                  <span>授权状态：</span>
+                  <AuthWrap value={deviceInfo.licenceStatus.value  } expiration={ deviceInfo.licenceStatus.expiration }   />
+                </div>
+                <div  style={{ margin: '20px 15px'  }}>
+                  <span>授权码：</span>
+                  <Tooltip title={ deviceInfo.licenceStatus.code } >
+                    { deviceInfo.licenceStatus.code.substr(0, 20) }
+                  </Tooltip>
+                </div>
+              </Card>
+            </Wrap>
+          </Col>
+        </Row>
 
 
         {/* 设备信息列表 */}
-        <TableWithRemote
+        {/* <TableWithRemote
           {...props}>
-        </TableWithRemote>
+        </TableWithRemote> */}
 
 
         {/* 授权的Modal*/}
@@ -442,4 +556,49 @@ export default class DeviceInfo extends React.Component<any, any>{
       </div>
     )
   }
+}
+
+
+const Wrap = props => <div className={ styles.container } >{ props.children }</div>
+
+const getProgressColor = num =>  num <= 30 ? '#5297FE' : num <= 70 ? '#FFDD68' : '#FE4545'
+
+const AuthWrap = ({ value=1, expiration= 1503642697 })=>{
+  const color = value===1 ? '#53e453' : 'rgba(0,0,0,0.35)'
+  const text = value===1 ? '已授权' : '未授权'
+  return(
+    <Tooltip title={ `有效期至  ${moment(expiration*1000).format('YYYYMMDD')}` } >
+      <div style={{ display:'inline-flex', alignItems: 'center' }} >
+        <div style={{ width: 12, height: 12, borderRadius: '50%', background:color, margin: '0 10px' }} ></div>
+        <div>{text}</div>
+      </div>
+    </Tooltip>
+  )
+}
+
+const ProgressWrap = ({ num, types, surplus='', onClick }) => {
+  if(types==='CPU'){
+    return (
+      <div>
+        <Progress type="circle" percent={ num } strokeColor={ getProgressColor(num) } status='normal' />
+        <div style={{ textAlign: 'center', marginTop:15, fontWeight: 600 }}>{ types+ '占用率' }</div>
+      </div>
+    )
+  }
+  else return (
+    
+      <div>
+        <Tooltip title={ `剩余${types==='内存' ? '内存  ' :'磁盘空间  ' }${surplus}` } >
+          <Progress type="circle" percent={ num } strokeColor={ getProgressColor(num) } status='normal' />
+        </Tooltip>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop:15, fontWeight: 600 }} >
+          { types+ '占用率' }
+          {  
+            types!=='内存'&& <span style={{ margin:'0 15px', color: '#5297FE', cursor: 'pointer' }} onClick={ onClick } >手动清理</span> 
+          }
+        </div>
+      </div>
+
+  )
+  
 }

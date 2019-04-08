@@ -99,6 +99,8 @@ export const fetchDeviceIDSStandaloneDisk = payload => {
 
 export const putDeviceIDSStandaloneDisk = commonRequestCreator.put(httpApi.DEVICE_IDS_STANDALONE_DISK)
 
+export const fetchDeviceInfoSStandalone = commonRequestCreator.get(httpApi.DEVICE_IDS_INFO)
+
 
 /*
 * Common
