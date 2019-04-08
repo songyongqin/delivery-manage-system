@@ -196,7 +196,8 @@ class Page extends React.Component<any, any> {
               </Spin>
               </Col>
               <Col span={12}>
-              <Wrap style={{  height: lineHeight,  overflowY:'scroll', overflowX:'hidden' }} >
+              <div >
+              <Wrap style={{  height: lineHeight,   overflowY:'auto', overflowX:'hidden' }} >
                 <div>
                   <h2 style={{ display:'inline-block', fontWeight: 900,padding:15, fontSize:"14px", fontFamily:"Arial" }} >最新高危事件</h2>
                   <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:40, marginTop:10}} >{ `查看全部威胁事件 >` }</a>
@@ -205,6 +206,7 @@ class Page extends React.Component<any, any> {
                   <WithTable tableData={ table.data } config={ cloumns } />
                 </Spin>
               </Wrap>
+              </div>
               </Col>
             </Row>
           ])
