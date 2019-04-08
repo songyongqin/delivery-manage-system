@@ -115,6 +115,8 @@ export default class UserManager extends React.Component<any, any>{
         <Button
           icon="plus"
           type="primary"
+          ghost
+          style={{ borderRadius:5, marginBottom:10 }}
           onClick={_ => this.props.setModalVisible("create", true)}>
           创建用户
         </Button>

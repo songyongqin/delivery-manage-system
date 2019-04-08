@@ -26,18 +26,21 @@ const tipTextConfig = {
 
 const roleRenderer = value => (
   <Tooltip title={tipTextConfig[value]}>
-    <Tag >{tableTextConfig.enums.role[value]}</Tag>
+    {/* <Tag >{tableTextConfig.enums.role[value]}</Tag> */}
+    <div>{tableTextConfig.enums.role[value]}</div>
   </Tooltip>
 )
 
 
 const freezeRenderer = value => {
-  if (value === IS_FREEZE) {
-    return <Tag color="blue">{tableTextConfig.enums.freeze[value]}</Tag>
-  }
-  if (value === IS_NOT_FREEZE) {
-    return <Tag color="green">{tableTextConfig.enums.freeze[value]}</Tag>
-  }
+  // if (value === IS_FREEZE) {
+  //   return <Tag color="blue">{tableTextConfig.enums.freeze[value]}</Tag>
+  // }
+  // if (value === IS_NOT_FREEZE) {
+  //   return <Tag color="green">{tableTextConfig.enums.freeze[value]}</Tag>
+  // }
+  
+  return <div style={{ color: `${ value === IS_FREEZE ? 'red': 'green' }` }} >{tableTextConfig.enums.freeze[value]}</div>
 }
 
 const getOperationColumn = ({ handle = {} } = {}) => {
