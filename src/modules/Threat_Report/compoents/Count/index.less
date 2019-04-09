@@ -1,0 +1,32 @@
+@import '~themes/vars';
+
+
+.count{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+
+
+.container{
+  background: #ffffff;
+  width: 150px;
+  height: 108px;
+  .common-container;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #4F5DCA;
+}
+
+@media screen and (max-width:1300px) {
+  .count{
+    justify-content: center;
+  }
+
+  .container{
+    margin: 15px;
+  }
+}

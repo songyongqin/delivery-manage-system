@@ -28,6 +28,7 @@ export const HTTP = 'HTTP',
   DNS = "DNS",
   FTP = "FTP",
   SMTP = "SMTP",
+  SMB = 'SMB',
   SSH = "SSH";
 
 export const protocolTypeList = [HTTP, TCP, DNS, FTP, SMTP, SSH];

@@ -4,10 +4,13 @@ import React from 'react'
 import extraConnect from 'domainUtils/extraConnect'
 import { THREAT_REPORT_COUNT_NAMESPACE } from 'constants/model'
 import CountItem from 'components/CountItem'
-import { Icon } from 'antd'
+import { Icon, Col, Row } from 'antd'
 import Spin from 'domainComponents/Spin'
 import { idArr } from '../../constants'
 import $ from 'jquery'
+import { ThreatEvent, HightEvent, AttackSource, AttackAsset, ThreatIoc, AttackGroup, ThreatFamliy }  from 'components/IconSvg'
+const styles = require('./index.less')
+
 
 const mapStateToProps = state =>{
   return {
@@ -51,57 +54,59 @@ const getArr = obj => {
       text: idArr[0].text,
       id: idArr[0].value,
       count: obj.threatEventCount ||0 , 
-      icon: <Icon type="file-text" style={{ fontSize:21 }} />,
-      style: { backgroundColor: '#2D97CE' } 
+      icon: <ThreatEvent />,
+      unit: '起',
     },
     { 
       // text:'威胁高危事件', 
       text: idArr[1].text,
       id: idArr[1].value,
       count: obj.threatHightEventCount ||0 , 
-      icon: <Icon type="file-excel" style={{ fontSize:21 }} />,
-      style: { backgroundColor: '#BFB520' } 
-    },
-    { 
-      // text:'威胁组织', 
-      text: idArr[2].text,
-      id: idArr[2].value,
-      count: obj.threatGroup ||0 , 
-      icon: <Icon type="api"  style={{ fontSize:21 }}/>,
-      style: { backgroundColor: '#8E8726' } 
-    },
-    { 
-      // text:'威胁家族', 
-      text: idArr[3].text,
-      id: idArr[3].value,
-      count: obj.family ||0 , 
-      icon: <Icon type="team" style={{ fontSize:21 }} />,
-      style: { backgroundColor: '#160A55' } 
+      icon: <HightEvent />,
+      unit: '起',
     },
     { 
       // text:'攻击来源', 
       text: idArr[4].text,
       id: idArr[4].value,
       count: obj.attackSource ||0 , 
-      icon: <Icon type="shrink" style={{ fontSize:21 }} />,
-      style: { backgroundColor: '#3B17F3' } 
+      icon: <AttackSource />,
+      unit: '个',
     },
     { 
       // text:'受攻击资产', 
       text: idArr[5].text,
       id: idArr[5].value,
       count: obj.attackedAssets ||0 , 
-      icon: <Icon type="pay-circle-o" style={{ fontSize:21 }} />,
-      style: { backgroundColor: 'rgb(16, 119, 18)' } 
+      icon: <AttackAsset />,
+      unit: '台',
     },
     { 
       // text:'威胁情报', 
       text: idArr[6].text,
       id: idArr[6].value,
       count: obj.threatIntelligence ||0 , 
-      icon: <Icon type="line-chart" style={{ fontSize:21 }} />,
-      style: { backgroundColor: '#900D1D' } 
+      icon: <ThreatIoc />,
+      unit: '条',
     },
+    { 
+      // text:'威胁组织', 
+      text: idArr[2].text,
+      id: idArr[2].value,
+      count: obj.threatGroup ||0 , 
+      icon: <AttackGroup/>,
+      unit: '个',
+    },
+    { 
+      // text:'威胁家族', 
+      text: idArr[3].text,
+      id: idArr[3].value,
+      count: obj.family ||0 , 
+      icon: <ThreatFamliy  />,
+      unit: '个',
+    },
+
+
   ]
 }
 
@@ -155,17 +160,17 @@ class Count extends React.Component<props, state>{
     return (
       <div style={{ marginTop: 10 }} >
       <Spin  spinning={ this.props.loading }  >
-        {
-          arr.map((item, index)=> 
-          <div key={ index } style={{ marginLeft: 30, marginRight:30,  display:'inline-block', cursor:"pointer" }} 
-          data-id={ item.id } onClick={ this.scroll } >
-            <CountItem  title={ item.text } count={ item.count } key={index}
-                        style={ item.style }  >
-              { item.icon }
-            </CountItem>
-          </div>
-          )
-        }
+        <div className={ styles.count } >
+          {
+            arr.map((item, index)=> 
+            <div key={ index } 
+            data-id={ item.id } onClick={ this.scroll } >
+              <ItemCount Icon={ item.icon } title={ item.text } count={ item.count } unit={ item.unit }  />
+            </div>
+            )
+          }
+        </div>
+
       </Spin>
       </div>
     )
@@ -174,3 +179,17 @@ class Count extends React.Component<props, state>{
 
 
 export default Count
+
+
+const ItemCount = ({ Icon, title, count, unit }) => {
+  return (
+    <div className={ styles.container }  >
+      { Icon }
+      <div style={{  color: 'rgba(0,0,0,0.65)' }} >{ title }</div>
+      <div>
+        <span style={{ fontSize: 16 }} >{ count }</span>
+        <span style={{  color: 'rgba(0,0,0,0.65)' }}  >{ unit }</span>
+      </div>
+    </div>
+  )
+}

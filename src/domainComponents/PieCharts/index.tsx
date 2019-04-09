@@ -9,6 +9,7 @@ import 'echarts/lib/component/legendScroll'
 import wrapStr from 'utils/wrapStr'
 import addComma from 'utils/addComma'
 import dataSetName from 'utils/dataSetName'
+import mergeWith from 'lodash/mergeWith'
 
 const DARK_THEME = 'dark'
 const LIGHT_THEME = 'light'
@@ -114,7 +115,8 @@ const color = ['#89A6FF','#7371E8', '#A27CFF', '#71AEE8', '#7DE1FF','#CCCCCC']
 
 const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) => {
   const datas = dataSetName(data)
-  let option = { ...getOption({data:datas, theme, titles}), ...config, color }
+  // let option = { ...getOption({data:datas, theme, titles}), ...config, color }
+  let option = { ...mergeWith(getOption({data:datas, theme, titles}), config), color }
   if(Array.isArray(data) ){
     if(onEvents){
       return (

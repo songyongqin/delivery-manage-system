@@ -8,7 +8,8 @@ import Pie from '../Pie'
 import PieTwo from '../PieTwo'
 import Bar from '../Bar'
 import { idArr } from '../../constants'
-
+import { Icon } from 'antd';
+const styles = require('./index.less')
 
 
 const mapStateToProps = state => {
@@ -77,8 +78,8 @@ interface arrItem{
   value: number
 }
 
-const Wrap =( { spinning,children, keys=0 }) => 
-  <div style={{ display:'inline-block', width:605, margin:5 }}  >
+const Wrap =( { spinning,children, keys=0, style={  } }) => 
+  <div style={style} className={ styles.wrap }  >
     <span className={ keys%2===0 ?'not-break': 'html2pdf__page-break' } ></span>
     <Spin spinning={ spinning } >{ children }</Spin>
   </div>
@@ -160,13 +161,13 @@ class NewChart extends React.Component<props,state>{
         total: data.groupTotal, 
         unit: '个' 
       },
-      { 
-        data: data.attackedAssets, 
-        // title: '受攻击资产', 
-        title: idArr[5].text, 
-        total: data.attackedAssetsTotal, 
-        unit: '台' 
-      },
+      // { 
+      //   data: data.attackedAssets, 
+      //   // title: '受攻击资产', 
+      //   title: idArr[5].text, 
+      //   total: data.attackedAssetsTotal, 
+      //   unit: '台' 
+      // },
       { 
         data: data.family, 
         // title: '威胁家族', 
@@ -189,10 +190,6 @@ class NewChart extends React.Component<props,state>{
         title: '威胁来源国家排行TOP10' 
       },
       { 
-        data: rank.threatSourceProvince.data, 
-        title: '威胁来源国内省份排行TOP10' 
-      },
-      { 
         data: rank.attackerIp.data, 
         title: '攻击者IP排行TOP10' 
       },
@@ -201,42 +198,85 @@ class NewChart extends React.Component<props,state>{
         title: '威胁事件类型排行TOP10' 
       },
       { 
-        data: rank.attackedAssets.data, 
-        title: '受攻击资产IP排行TOP10' 
+        data: rank.threatSourceProvince.data, 
+        title: '威胁来源国内省份排行TOP10' 
       },
+      
+      
+      // { 
+      //   data: rank.attackedAssets.data, 
+      //   title: '受攻击资产IP排行TOP10' 
+      // },
     ]
+
+    const titleStyle = {
+      fontSize:16,
+      fontWeight: 700,
+      fontFamily: 'Arial',
+      marginTop:20
+    }
 
     return(
       <div>
-        <Wrap spinning={ detailLoading } keys={ 2 } >
+        <h4 style={{ textAlign: 'left' , ...titleStyle }} >威胁统计</h4>
+        <div className={ styles.threatcount } >
+        <Wrap spinning={ detailLoading } keys={ 2 } style={{ width: 500 }}  >
           <PieTwo  data={ data.level } onClick={ this.clickTitle } 
                 title={ '威胁事件' }
                 data2={ data.threatEvent }
                 total={ data.threatEventTotal }
                 unit={ '起' } 
+                className={ styles.threatitem }
                 id={ idArr[0].value }
                  />
         </Wrap>
           {
             arrPie.map((item, index) => 
-            <Wrap spinning={ detailLoading } key={ index } keys={ index+1 } >
+            <Wrap spinning={ detailLoading } key={ index } keys={ index+1 } style={{ width: 500, marginLeft:15 }}   >
               <Pie  data={ item.data } onClick={ this.clickTitle } 
                   title={ item.title }
                   total={ item.total }
                   unit={ item.unit }
+                  className={ styles.threatitem }
                   id={ idArr.filter(i => i.text===item.title )[0].value }
                    />
             </Wrap>
           )
           }
-          {
-          arrRank.map((item, index) => 
-          <Wrap spinning={ loading } key={ index } keys={ index+1 } >
-            <Bar data={ item.data } title={ item.title } key={ index } /> 
+        </div>
+        <div className={ styles.rankcontainer } >
+          {/* {
+            arrRank.map((item, index) => 
+            <Wrap spinning={ loading } key={ index } keys={ index+1 } >
+              <Bar data={ item.data } title={ item.title } key={ index } className={ styles.rankitem }  /> 
+            </Wrap>
+          )
+          } */}
+          <div className={ styles.commonrank } >
+          <Wrap spinning={ loading } keys={ 1 } style={{ width: '100%' }}  >
+              <Bar data={ rank.threatSourceCountry.data } title={ '威胁来源国家排行TOP10'  }  className={ styles.rankitem }  /> 
           </Wrap>
-         )
-        }
-        
+          </div>
+          <div className={ styles.commonrank } >
+          <Wrap spinning={ loading } keys={ 2 } style={{ width: '100%' }}  >
+              <Bar data={ rank.attackerIp.data } title={ '攻击者IP排行TOP10'  }  className={ styles.rankitem }  /> 
+          </Wrap>
+          </div>
+        </div>
+        <div className={ styles.rankcontainer } >
+          <div className={ styles.commonrank } >
+            <Wrap spinning={ loading } keys={ 1 } style={{ width: '100%' }}  >
+                <Bar data={ rank.threatEvent.data } title={ '威胁事件类型排行TOP10'   }  className={ styles.rankitem }  /> 
+            </Wrap>
+          </div>
+          <div className={ styles.commonrank } >
+            <Wrap spinning={ loading } keys={ 2 } style={{ width: '100%' }}  >
+                <Bar data={ rank.threatSourceProvince.data } title={ '威胁来源国内省份排行TOP10'  }  className={ styles.rankitem }  /> 
+            </Wrap>
+          </div>
+        </div>
+        <h4 style={{ textAlign: 'left' , ...titleStyle }} >资产统计</h4>
+        <AssetCount data={ data } rank={ rank } loading={ loading } detailLoading={ detailLoading } />
       </div>
     )
   }
@@ -244,3 +284,42 @@ class NewChart extends React.Component<props,state>{
 
 
 export default NewChart
+
+
+const AssetCount = ({ detailLoading, data, rank, loading }) => {
+  return (
+    <div className={ styles.assetcount } >
+        <div className={ styles.assetitem } >
+          <AssetIcon title={ '资产总数' } count={ rank.assetsCount|| 0 } icon={ <Icon  type={'database'} style={{ color: '#4F5DCA' }} /> } />
+          <AssetIcon title={ '新增资产' } count={rank.newAssets|| 0 } icon={ <Icon  type={'file-add'} style={{ color: '#4F5DCA' }} />} />
+        </div>
+        <div className={ styles.assetitem }  >
+          <Spin spinning={ detailLoading } >
+                <Pie  data={ data.attackedAssets } onClick={ this.clickTitle } 
+                    title={ '受攻击资产' }
+                    total={ data.attackedAssetsTotal }
+                    unit={ '台' }
+                    className={ styles.assetpie }
+                    id={ idArr.filter(i => i.text==='受攻击资产' )[0].value }
+                    />
+          </Spin>
+        </div>
+
+        <div className={ styles.assetitem }  >
+        <Wrap spinning={ loading } keys={ 2 } style={{ width: '100%' }}  >
+                <Bar data={ rank.attackedAssets.data} title={ '受攻击资产IP排行TOP10'  }  className={ styles.assetrankitem }  /> 
+        </Wrap>
+        </div>
+    </div>
+  )
+}
+
+const AssetIcon = ({ icon, title, count }) => {
+  return (
+    <div className={ styles.asseticon } >
+      <div>{icon}</div>
+      <div>{title}</div>
+      <div style={{ fontSize: 20,  fontWeight: 600 }} >{count + '台' }</div>
+    </div>
+  )
+}

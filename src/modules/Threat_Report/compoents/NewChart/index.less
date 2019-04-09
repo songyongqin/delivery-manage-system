@@ -1,0 +1,102 @@
+
+@import '~themes/vars';
+
+@piewidth: 265px;
+
+.threatcount{
+  display: flex;
+  justify-content: space-between;
+}
+
+.threatitem{
+  width: @piewidth;
+  height: 150px;
+}
+
+.rankcontainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.rankitem{
+  height: 300px;
+}
+
+.commonrank{
+  width:  calc(~"(100% - 15px)/2");
+}
+
+.assetcount{
+  display: flex;
+  justify-content: space-between;
+}
+
+.assetitem{
+  width: calc(~'100%/3 - 20px');
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.asseticon{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 25px 100px;
+  .common-container;
+}
+
+.assetpie{
+  // width: calc(~'100%/3 - 20px');
+  height: 200px;
+}
+
+.assetrankitem{
+  height: 200px;
+}
+
+@media screen and (max-width:1359px){
+  .threatcount{
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .threatitem{
+    width: 500px;
+    height: 250px;
+  }
+
+  .rankcontainer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .commonrank{
+    width:  500px;
+  }
+
+  .wrap{
+    margin-bottom: 15px;
+  }
+  
+  .rankitem{
+    width: 500px;
+    height: 300px;
+  }
+
+  .assetcount{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .assetitem{
+    width: 500px;
+    min-height: 200px;
+    margin-bottom: 15px;
+  }
+}

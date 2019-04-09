@@ -78,7 +78,7 @@ const WithBarChart = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents 
     if(onEvents){
       return (
         // <div style={{ width: "100%", height: "400px" }}>
-        <div style={{ width: "100%", height:300 }}>
+        <div style={{ width: "100%", height: "100%"}}>
           <ReactEcharts
             style={{ height: "100%" }}
             option={ option }
@@ -90,7 +90,7 @@ const WithBarChart = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents 
     else {
       return (
         // <div style={{ width: "100%", height: "400px" }}>
-        <div style={{ width: "100%", height:300 }}>
+        <div style={{ width: "100%", height:"100%" }}>
           <ReactEcharts
             style={{ height: "100%" }}
             option={ option }>

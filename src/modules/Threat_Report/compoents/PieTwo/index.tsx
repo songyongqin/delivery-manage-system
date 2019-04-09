@@ -9,18 +9,20 @@ import wrapStr from 'utils/wrapStr'
 import dataSetName from 'utils/dataSetName'
 const css = require('./index.less')
 
-const PieTwo = ({ data, data2, title, onClick, total, unit, id  }) => {
+const PieTwo = ({ data, data2, title, onClick, total, unit, id,className  }) => {
   if(data.length){
     data[0]['selected'] = true
   }
   return(
-    <div className={ css.card } id={ id } >
+    <div className={ css.card} id={ id } >
       <div className={ css.title } onClick={() => onClick(title) } >
         <Icon type="pie-chart" style={{ fontSize:22, display:'inline-block', marginRight:5 }} />
-        { title}
+        <span className={ css.text } >{ title }</span>
         <span style={{ fontSize:15 }} >{' -' + total + ' ' + unit }</span>
       </div>
-      <PieCharts data={ dataSetName(data) }  config={ getConfig(dataSetName(data), dataSetName(data2)) }  />
+      <div className={ className } >
+        <PieCharts data={ dataSetName(data) }  config={ getConfig(dataSetName(data), dataSetName(data2)) }  />
+      </div>
     </div>
   )
 }
@@ -61,12 +63,12 @@ const getConfig = (data, data2) => ({
     orient: 'vertical',
     right: 'right',
     bottom: '10',
-    height:'90%',
+    height:'80%',
     type:'scroll',
     data: Array.isArray(data2) ? data2.map(i => i.name) : [],
     formatter: function (name) {
       // return   name +'  ' + transformNum(getNum(name, data))
-      return   wrapStr(name) +'  ' + transformNum(getNum(name, data2))
+      return   wrapStr(name, 6) +'  ' + transformNum(getNum(name, data2))
   },
     tooltip: {
       show: true
@@ -76,8 +78,8 @@ const getConfig = (data, data2) => ({
   series: [
     {
       type: 'pie',
-      radius: [0,'30%'],
-      center: ['40%', '40%'],
+      radius: [0,'40%'],
+      center: ['25%', '60%'],
       selectedMode: 'single',
       // data: data => {
       //   let str = JSON.stringify(data)
@@ -109,8 +111,8 @@ const getConfig = (data, data2) => ({
     },
     {
       type: 'pie',
-      radius: ['40%','60%'],
-      center: ['40%', '40%'],
+      radius: ['45%','55%'],
+      center: ['25%', '60%'],
       data: data2,
       minAngle:5,
       label: {

@@ -61,14 +61,20 @@ class Pages extends Component<props,state>{
     const { timestampRange } = this.props
     const { modal } = this.state
     let str = getStr(timestampRange)
+    const titleStyle = {
+      fontSize:16,
+      fontWeight: 700,
+      fontFamily: 'Arial'
+    }
+
     return(
       <div  >
         <div style={{ textAlign:'center' }} >
-          <h2  >威胁报告</h2>
+          <h2 style={{  ...titleStyle }} >威胁报告</h2>
           <div>统计日期：{str}</div>
-          
         </div>
         <div className={ css.container } >
+        <h4 style={{ textAlign: 'left' , ...titleStyle }} >总体趋势</h4>
         <Count  timestampRange={ timestampRange } 
                 key={ timestampRange[0] + timestampRange[1]+'count' } />
         <NewChart timestampRange={ timestampRange } 

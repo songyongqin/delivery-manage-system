@@ -9,16 +9,19 @@ import wrapStr from 'utils/wrapStr'
 import dataSetName from 'utils/dataSetName'
 const css = require('./index.less')
 
-const Pie = ({ data, title, onClick, total, unit, id  }) => {
+const Pie = ({ data, title, onClick, total, unit, id, className  }) => {
   const datas = dataSetName(data)
   return(
-    <div className={ css.card } id={ id }  >
+    <div className={ css.card  } id={ id }  >
       <div className={ css.title } onClick={() => onClick(title) } >
         <Icon type="pie-chart" style={{ fontSize:22, display:'inline-block', marginRight:5 }} />
-        { title}
+        <span className={ css.text } >{ title }</span>
         <span style={{ fontSize:15 }} >{' -' + total + ' ' + unit }</span>
       </div>
+      <div className={ className } >
       <PieCharts data={ datas }  config={ getConfig(datas) }  />
+      </div>
+      
     </div>
   )
 }
@@ -60,12 +63,12 @@ const getConfig = data => ({
     orient: 'vertical',
     right: 'right',
     bottom: '10',
-    height:'90%',
+    height:'80%',
     type:'scroll',
     data: Array.isArray(data) ? data.map(i => i.name) : [],
     formatter: function (name) {
       // return   name +'  ' + transformNum(getNum(name, data))
-      return   wrapStr(name) +'  ' + transformNum(getNum(name, data))
+      return   wrapStr(name, 6) +'  ' + transformNum(getNum(name, data))
   },
     tooltip: {
       show: true
@@ -75,8 +78,8 @@ const getConfig = data => ({
   series: [
     {
       type: 'pie',
-      radius: ['0','60%'],
-      center: ['40%', '40%'],
+      radius: ['0','55%'],
+      center: ['25%', '60%'],
       data: Array.isArray(data) ? data.filter(i => i.value) : [],
       minAngle:5,
       label: {
