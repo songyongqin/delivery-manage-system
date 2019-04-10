@@ -80,7 +80,7 @@ interface arrItem{
 
 const Wrap =( { spinning,children, keys=0, style={  } }) => 
   <div style={style} className={ styles.wrap }  >
-    <span className={ keys%2===0 ?'not-break': 'html2pdf__page-break' } ></span>
+    {/* <span className={ keys%2===0 ?'not-break': 'html2pdf__page-break' } ></span> */}
     <Spin spinning={ spinning } >{ children }</Spin>
   </div>
 
@@ -276,7 +276,7 @@ class NewChart extends React.Component<props,state>{
           </div>
         </div>
         <h4 style={{ textAlign: 'left' , ...titleStyle }} >资产统计</h4>
-        <AssetCount data={ data } rank={ rank } loading={ loading } detailLoading={ detailLoading } />
+        <AssetCount data={ data } rank={ rank } loading={ loading } detailLoading={ detailLoading } onClick={ this.clickTitle }  />
       </div>
     )
   }
@@ -286,7 +286,7 @@ class NewChart extends React.Component<props,state>{
 export default NewChart
 
 
-const AssetCount = ({ detailLoading, data, rank, loading }) => {
+const AssetCount = ({ detailLoading, data, rank, loading, onClick }) => {
   return (
     <div className={ styles.assetcount } >
         <div className={ styles.assetitem } >
@@ -295,7 +295,7 @@ const AssetCount = ({ detailLoading, data, rank, loading }) => {
         </div>
         <div className={ styles.assetitem }  >
           <Spin spinning={ detailLoading } >
-                <Pie  data={ data.attackedAssets } onClick={ this.clickTitle } 
+                <Pie  data={ data.attackedAssets } onClick={ onClick } 
                     title={ '受攻击资产' }
                     total={ data.attackedAssetsTotal }
                     unit={ '台' }
@@ -319,7 +319,7 @@ const AssetIcon = ({ icon, title, count }) => {
     <div className={ styles.asseticon } >
       <div>{icon}</div>
       <div>{title}</div>
-      <div style={{ fontSize: 20,  fontWeight: 600 }} >{count + '台' }</div>
+      <div style={{ fontSize: 20,  fontWeight: 600 }} >{count }<span>台</span></div>
     </div>
   )
 }

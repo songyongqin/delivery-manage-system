@@ -128,7 +128,7 @@ class Count extends React.Component<any,state>{
             <AnalysePie data={ threatEventStatistics } text={ '威胁类型统计' }  />
           </Col>
           <Col span={ 6 }  style={{ height: pieHeight }}>
-            <AnalysePie data={ threatLevelStatistics } text={ '威胁类型统计' }  />
+            <AnalysePie data={ threatLevelStatistics } text={ '威胁等级统计' }  />
           </Col>
         </Row>
       </Spin>

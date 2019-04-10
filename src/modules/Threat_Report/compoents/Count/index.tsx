@@ -184,7 +184,7 @@ export default Count
 const ItemCount = ({ Icon, title, count, unit }) => {
   return (
     <div className={ styles.container }  >
-      { Icon }
+      <div style={{ color: "#4F5DCA" }} >{ Icon }</div>
       <div style={{  color: 'rgba(0,0,0,0.65)' }} >{ title }</div>
       <div>
         <span style={{ fontSize: 16 }} >{ count }</span>

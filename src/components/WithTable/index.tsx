@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { Table } from 'antd'
 import { getColumns } from './config'
 import classnames from 'classnames'
+import { Tooltip  } from 'antd';
 const style = require('./index.less')
 
 interface props {
@@ -141,6 +142,9 @@ class WithTable extends Component<props, any>{
     let classes = 
     columns = columns.map(i => {
       i['className'] =  classnames(style.default)
+      if(!i['render']){
+        i['render'] = text => ( text + '' ).length>15 ? <Tooltip  title={ text } >{ text }</Tooltip > : text
+      }
       return i
     } )
     

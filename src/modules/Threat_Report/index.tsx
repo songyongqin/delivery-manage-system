@@ -8,10 +8,11 @@ import { getTodayTime } from 'utils/getInitTime'
 import Pages from './compoents/Pages'
 import html2canvas from 'html2canvas'
 // import { download } from 'utils'
-import downloadjs from 'downloadjs'
+// import downloadjs from 'downloadjs'
 import moment from 'moment'
+import jspdf from 'jspdf';
 
-import html2pdf from 'html2pdf.js'
+// import html2pdf from 'html2pdf.js'
 
 class ThreatReport extends Component<any,any>{
   constructor(props){
@@ -28,62 +29,47 @@ class ThreatReport extends Component<any,any>{
   }
 
   export = () => {
-    // this.setState({ isLoading: true })
-    // html2canvas(document.getElementById('threat-report'))
-    // .then(canvas => {
-    //   let time = this.getTimeStr()
-    //   // const name = `威胁报告(${time}).jpg`
-    //   let dataurl = canvas.toDataURL('image/jpeg')
-    //   // let dataurl = canvas.toBlob()
-    //   this.setState({ isLoading: false })
-    //   // downloadjs(dataurl, name, 'image/jpeg')
-
-      
-    // //   canvas.toBlob(function(blob) {
-    // //     downloadjs(blob, 'xx.pdf', 'application/pdf')
-    // // })
-
-
-    // } )
-    // .catch(err => console.error(err) )
-
-
-    // const isFirFox = !!(window['navigator']['userAgent'].toLowerCase().indexOf('firefox')!==-1)
-    let isFirFox = true
-    try {
-      isFirFox = !!(window['navigator']['userAgent'].toLowerCase().indexOf('firefox')!==-1)
-    }
-    catch(err){
-
-    }
-
-    let time = this.getTimeStr()
-    const name = `威胁报告(${time}).pdf`
-    let opt = {
-      // margin:       20,
-      filename:     name,
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' }
-    }
-    if(!isFirFox){
-      opt['margin'] = 20
-    }
-    // html2pdf(document.getElementById('threat-report')).set(opt).save()
-    let dom = document.getElementById('threat-report')
-    console.log(dom)
     this.setState({ isLoading: true })
-    html2pdf()
-    .from(dom)
-    .set(opt)
-    .save()
-    .then(res =>{
-      this.setState({ isLoading: false })
+    let doms = document.getElementById('threat-report')
+    const scale = 2,
+      margin= [20, 20],
+      type= 'jpeg',
+      pageSize = [doms.clientWidth|| 1190.55, doms.clientHeight||1683.78 ]
+    html2canvas(doms, { scale })
+    .then(canvas => {
+      let time = this.getTimeStr()
+      const name = `威胁报告(${time}).pdf`
+      let dataurl = canvas.toDataURL('image/' + 'jpeg', 0.98)
+      console.log(doms.clientWidth)
+
+      img2pdf({ dataurl, type, margin, name, scale, pageSize })
+      .then(() => this.setState({ isLoading: false }) )
+      .catch(() => this.setState({ isLoading: false }) )
+
     } )
-    .catch(err => {
-      this.setState({ isLoading: false })
-      console.error('err',err)} 
-    )
+    .catch(err => console.error(err) )
+
+    //img to pdf
+    const img2pdf = ({ dataurl, type, margin=[0,0], name, scale=1, pageSize }) => {
+      return new Promise((resolve, reject) => {
+        // const a2 = [1190.55, 1683.78];
+        const innerPage = [  ]
+        let doc = new jspdf({ unit: 'mm', format: pageSize, orientation: 'portrait' });
+        // this.prop.pdf.addImage(imgData, opt.image.type, opt.margin[1], opt.margin[0],
+          // this.prop.pageSize.inner.width, pageHeight)
+          //查询jspdf源码获取常数
+          
+          let k = 72 / 25.4;
+          let width = (pageSize[0] )/k - margin[0]*scale
+          let height = (pageSize[1])/k - margin[1]*scale
+        // doc.addImage(dataurl, type, margin[1], margin[0], (1190.55-113)/k, 1683.78/k )
+        doc.addImage(dataurl, type, margin[1], margin[0], width, height )
+        doc.save(name)
+        resolve()
+      })
+
+    } 
+
   }
 
   getTimeStr =() => {
@@ -92,14 +78,14 @@ class ThreatReport extends Component<any,any>{
       return '全部'
     }
     else {
-      return moment(timestampRange[0]).format('YYYY-MM-DD') + ' 到 ' + moment(timestampRange[1]).format('YYYY-MM-DD')
+      return moment(timestampRange[0]).format('YYYY-MM-DD')  + `  到  ` + moment(timestampRange[1]).format('YYYY-MM-DD')
     }
   }
 
   render(){
     const { timestampRange,isLoading } = this.state
     return(
-      <div style={{ position: "relative" }} >
+      <div style={{ position: "relative", }} >
         <div style={{ float: "right", position:'absolute', right:10 }}>
           <DateRangePicker
             value={timestampRange}
@@ -108,7 +94,7 @@ class ThreatReport extends Component<any,any>{
           </DateRangePicker>
           <Button type={ 'primary' } style={{ marginLeft: 20 }} onClick={ this.export } loading={ isLoading } >导出</Button>
         </div>
-        <div id='threat-report'  >
+        <div id='threat-report' style={{  fontVariant: 'small-caps' }} >
           <Pages timestampRange={ timestampRange }  />
         </div>
       </div>

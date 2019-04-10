@@ -63,7 +63,7 @@ const getConfig = (data, data2) => ({
     orient: 'vertical',
     right: 'right',
     bottom: '10',
-    height:'80%',
+    height:'90%',
     type:'scroll',
     data: Array.isArray(data2) ? data2.map(i => i.name) : [],
     formatter: function (name) {

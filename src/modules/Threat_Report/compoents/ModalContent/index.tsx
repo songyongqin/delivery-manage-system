@@ -182,13 +182,13 @@ class ModalContent extends React.Component<props, state>{
     const { init, data, total, reqArg } = this.state
     return(
       <div>
-        <div style={{ marginTop:25 }} >
+        <div style={{ marginTop:25}} >
           <Icon type={ init.icon } style={{ fontSize:21 }} />
           <h2 style={{ display:'inline-block', marginLeft:5 }} >{ type==='威胁事件' ? '攻击事件' : type }</h2>
           <Button type='primary' style={{ float:'right' }} 
               onClick={ this.export } loading={ this.state.isLoading } >导出</Button>
         </div>
-        <Spin spinning={ effects[this.state.init.fetch] } >
+        <Spin spinning={ effects[this.state.init.fetch] }   >
           <WithTable config={ init.config } tableData={ data } /> 
           <WithPagination total={ total } 
                   current={ reqArg.page }
