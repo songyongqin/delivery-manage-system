@@ -5106,13 +5106,6 @@ html2canvas@1.0.0-alpha.12, html2canvas@^1.0.0-alpha.12:
   dependencies:
     css-line-break "1.0.1"
 
-html2canvas@^1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "http://registry.npm.taobao.org/html2canvas/download/html2canvas-1.0.0-rc.1.tgz#422222d21332d05ca55d86954e5f413e17fae6fb"
-  integrity sha1-QiIi0hMy0FylXYaVTl9BPhf65vs=
-  dependencies:
-    css-line-break "1.0.1"
-
 html2pdf.js@^0.9.1:
   version "0.9.1"
   resolved "http://registry.npm.taobao.org/html2pdf.js/download/html2pdf.js-0.9.1.tgz#144fbe972848cebaa1cf6f8fa66395422d9aad55"

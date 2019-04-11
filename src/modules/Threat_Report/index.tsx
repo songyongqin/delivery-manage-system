@@ -30,17 +30,19 @@ class ThreatReport extends Component<any,any>{
 
   export = () => {
     this.setState({ isLoading: true })
-    let doms = document.getElementById('threat-report')
+    let doms = document.getElementById('threat-report-page')
     const scale = 2,
       margin= [20, 20],
-      type= 'jpeg',
-      pageSize = [doms.clientWidth|| 1190.55, doms.clientHeight||1683.78 ]
+      type= 'jpeg'
+      // pageSize = [doms.clientWidth|| 1190.55, doms.clientHeight||1683.78 ]
     html2canvas(doms, { scale })
     .then(canvas => {
       let time = this.getTimeStr()
       const name = `威胁报告(${time}).pdf`
       let dataurl = canvas.toDataURL('image/' + 'jpeg', 0.98)
-      console.log(doms.clientWidth)
+      const pageSize = [canvas.width/scale|| 1190.55, canvas.height/scale||1683.78 ]
+      // const pageSize = [doms.clientWidth|| 1190.55, canvas.height/scale||1683.78 ]
+      console.log(doms.clientWidth, doms.clientHeight, pageSize, canvas , canvas.width, canvas.height )
 
       img2pdf({ dataurl, type, margin, name, scale, pageSize })
       .then(() => this.setState({ isLoading: false }) )
@@ -60,8 +62,8 @@ class ThreatReport extends Component<any,any>{
           //查询jspdf源码获取常数
           
           let k = 72 / 25.4;
-          let width = (pageSize[0] )/k - margin[0]*scale
-          let height = (pageSize[1])/k - margin[1]*scale
+          let width = (pageSize[0] )/k - margin[0]*2
+          let height = (pageSize[1])/k - margin[1]*2
         // doc.addImage(dataurl, type, margin[1], margin[0], (1190.55-113)/k, 1683.78/k )
         doc.addImage(dataurl, type, margin[1], margin[0], width, height )
         doc.save(name)
@@ -94,7 +96,7 @@ class ThreatReport extends Component<any,any>{
           </DateRangePicker>
           <Button type={ 'primary' } style={{ marginLeft: 20 }} onClick={ this.export } loading={ isLoading } >导出</Button>
         </div>
-        <div id='threat-report' style={{  fontVariant: 'small-caps' }} >
+        <div id='threat-report' style={{  fontVariant: 'small-caps', maxWidth: 1340, marginLeft:'auto', marginRight: 'auto' }} >
           <Pages timestampRange={ timestampRange }  />
         </div>
       </div>
