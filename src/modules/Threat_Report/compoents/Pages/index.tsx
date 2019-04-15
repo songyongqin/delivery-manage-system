@@ -68,7 +68,7 @@ class Pages extends Component<props,state>{
     }
 
     return(
-      <div id='threat-report-page'  >
+      <div id='threat-reports' style={{ margin:0, padding:0 }} >
         <div style={{ textAlign:'center' }} >
           <div style={{  ...titleStyle }} >威胁报告</div>
           <div >统计日期：{str}</div>

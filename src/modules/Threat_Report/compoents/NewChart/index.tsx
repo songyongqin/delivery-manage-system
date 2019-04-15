@@ -220,7 +220,7 @@ class NewChart extends React.Component<props,state>{
       <div>
         <h4 style={{ textAlign: 'left' , ...titleStyle }} >威胁统计</h4>
         <div className={ styles.threatcount } >
-        <Wrap spinning={ detailLoading } keys={ 2 } style={{ width: 500 }}  >
+        <Wrap spinning={ detailLoading } keys={ 2 } style={{ width:500 }}  >
           <PieTwo  data={ data.level } onClick={ this.clickTitle } 
                 title={ '威胁事件' }
                 data2={ data.threatEvent }
@@ -232,7 +232,7 @@ class NewChart extends React.Component<props,state>{
         </Wrap>
           {
             arrPie.map((item, index) => 
-            <Wrap spinning={ detailLoading } key={ index } keys={ index+1 } style={{ width: 500, marginLeft:15 }}   >
+            <Wrap spinning={ detailLoading } key={ index } keys={ index+1 } style={{ width:500, marginLeft:15 }}   >
               <Pie  data={ item.data } onClick={ this.clickTitle } 
                   title={ item.title }
                   total={ item.total }

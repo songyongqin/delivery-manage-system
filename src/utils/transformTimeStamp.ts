@@ -13,7 +13,8 @@ const transformTimeStamp = (arr:Array<any> ) => {
     return arr
   }
   else if(arr.length===0){
-    return [ 0, moment().endOf('days').unix() ]
+    // return [ 0, moment().endOf('days').unix() ]
+    return [  moment().hour(0).minute(0).second(0).unix(), moment().endOf('days').unix() ]
   }
   else if(arr.length===2) {
     return [ getFirstTime(arr[0]),  getSencondTime(arr[1]) ]

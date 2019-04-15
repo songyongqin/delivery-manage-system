@@ -3,7 +3,7 @@
   "secret": false,
   "heartBeat": false,
   "host":"",
-  "analyseReportStatic": true,
+  "analyseReportStatic": false,
   "routerRegister": {
     "/overview": true,
     "/analyse": true,
