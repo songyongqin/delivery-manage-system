@@ -6,14 +6,28 @@
 @bg: #1C222E;
 @color: #999999;
 
+
+.title{
+  display: flex;
+  height:@header-height;
+  align-items: center;
+  // color: @active-color;
+  color: #fffff5;
+  margin-left: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .nav{
   width: @nav-bar-width;
   position: fixed;
-  top:@header-height;
+  // top:@header-height;
+  top: 0;
   left:0;
   bottom:0;
   font-size: 12px;
-  z-index: 888;
+  z-index: 999;
   *{
     transition: none;
   }

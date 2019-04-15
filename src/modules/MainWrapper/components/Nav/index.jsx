@@ -13,6 +13,8 @@ import { CONFIG_DEVICE_MANAGER_URL } from 'routes/config/path'
 import { getAppInstance } from 'domain/instance'
 import { isLicenceOverdue, showOverdueTipModal } from 'domain/licence'
 import { routerRedux } from 'dva/router'
+// import Antiy from './Antiy'
+import antiy from './antiy.png'
 const getItemLink = config => {
   if( "items" in config ){
     return  getItemLink(config.items[0])
@@ -245,8 +247,14 @@ export default class extends React.Component {
 
     }, [])
     // const selectedKeys =[ active]
+    const title = getAppConfig().title
     return (
       <nav className={wrapperClasses} ref={con => this.con = con}>
+        <div  className={ styles.title }  >
+          {/* <Antiy />  */}
+          <img src={ antiy } width={ 40 } height={ 30 } style={{ marginRight:5 }}  />
+          { mini? '' : title  } 
+        </div>
         <Menu
           // openKeys={ mini ? this.state.openKeys : selectedKeys }
           openKeys={mini ? this.state.openKeys : selectedKeys}

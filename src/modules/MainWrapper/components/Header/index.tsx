@@ -86,12 +86,12 @@ export default class Header extends React.PureComponent<Props, any>{
       <header className={wrapperClasses} style={style}>
         <Choose>
           <When condition={mini}>
-            <a style={expandBtnStyle} onClick={() => onChange && onChange(false)}>
+            <a style={{...expandBtnStyle, paddingLeft: 70 }} onClick={() => onChange && onChange(false)}>
               <Icon type="menu-unfold" />
             </a>
           </When>
           <Otherwise>
-            <a style={expandBtnStyle} onClick={() => onChange && onChange(true)}>
+            <a style={{...expandBtnStyle, paddingLeft:180 }} onClick={() => onChange && onChange(true)}>
               <Icon type="menu-fold" />
             </a>
           </Otherwise>
@@ -136,9 +136,9 @@ export default class Header extends React.PureComponent<Props, any>{
             </Tooltip>
           </span>
         </If>
-        <h1 className={styles['title']}>
+        {/* <h1 className={styles['title']}>
           {(getAppConfig() as any).title}
-        </h1>
+        </h1> */}
       </header>
     )
   }

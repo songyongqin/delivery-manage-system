@@ -217,6 +217,12 @@ class IndexPage extends React.Component<any, any>{
 
     return (
       <div className={pageClasses}>
+        <Nav
+          active={activeRoute}
+          isAdmin={isAdmin}
+          theme={theme}
+          mini={navMini}>
+        </Nav>
         <Header
           theme={theme}
           mini={navMini}
@@ -228,12 +234,7 @@ class IndexPage extends React.Component<any, any>{
           admin={this.props.admin}
           onChange={changeNavStatus}>
         </Header>
-        <Nav
-          active={activeRoute}
-          isAdmin={isAdmin}
-          theme={theme}
-          mini={navMini}>
-        </Nav>
+
         <div
           className={contentWrapperClasses}>
           <Spin spinning={moduleLoading && !activeRouteBuilding}>
