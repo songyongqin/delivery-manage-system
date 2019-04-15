@@ -477,7 +477,7 @@ class Licence extends React.Component<any, any>{
 
     return (
       <div>
-        {this.getHeader()}
+        {/* {this.getHeader()} */}
         {this.getInfoPanel()}
         {this.getOperationPanel()}
         {this.getUploadPanel()}

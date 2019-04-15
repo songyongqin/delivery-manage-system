@@ -637,17 +637,17 @@ class UpdateForm extends React.Component<any, any> {
           key: `${i[ID_DATAINDEX]}-item`,
         })),
       columns: [
-        {
-          dataIndex: DEVICE_ID_DATAINDEX,
-          title: <p style={{ textAlign: "center" }}>设备唯一标识</p>,
-          width: "140px"
-        },
-        {
-          dataIndex: HOST_IP_DATAINDEX,
-          title: <p style={{ textAlign: "center" }}>主机IP</p>,
-          width: "140px",
-          render: value => <CommonCell value={value}></CommonCell>
-        },
+        // {
+        //   dataIndex: DEVICE_ID_DATAINDEX,
+        //   title: <p style={{ textAlign: "center" }}>设备唯一标识</p>,
+        //   width: "140px"
+        // },
+        // {
+        //   dataIndex: HOST_IP_DATAINDEX,
+        //   title: <p style={{ textAlign: "center" }}>主机IP</p>,
+        //   width: "140px",
+        //   render: value => <CommonCell value={value}></CommonCell>
+        // },
         ...(haveUpdateResult ? resultColumns : versionColumns)
       ]
     }
@@ -686,7 +686,7 @@ class UpdateForm extends React.Component<any, any> {
 
     return (
       <Form>
-        <div style={{ marginBottom: "15px" }}>
+        {/* <div style={{ marginBottom: "15px" }}>
           <span className={lblClasses}>
             隐藏无法操作的设备 &nbsp;
           </span>
@@ -696,7 +696,7 @@ class UpdateForm extends React.Component<any, any> {
             checkedChildren={<Icon type="check" />}
             unCheckedChildren={<Icon type="cross" />}>
           </Switch>
-        </div>
+        </div> */}
         <div style={{ marginBottom: "15px" }}>
           <Table
             tableProps={tableProps}
