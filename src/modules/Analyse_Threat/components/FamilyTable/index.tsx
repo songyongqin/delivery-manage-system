@@ -30,11 +30,11 @@ class FamilyTable extends React.Component<props, any>{
   render(){
     // console.log(this.props.timestampRange)
     let columns = [
-      { title:<ResetIcon onClick={ this.props.reset } /> , 
-        dataIndex:'index',
-        render: ( text, record, index ) => <div>{ index+1 }</div>
-        },
-      { title:'首次发现时间', 
+      // { title:<ResetIcon onClick={ this.props.reset } /> , 
+      //   dataIndex:'index',
+      //   render: ( text, record, index ) => <div>{ index+1 }</div>
+      //   },
+      { title:<ResetIcon onClick={ this.props.reset } >首次受攻击时间</ResetIcon >, 
         dataIndex:'firstTime',
         render: text => <TimeTag num={ text } />
       },
@@ -68,7 +68,7 @@ class FamilyTable extends React.Component<props, any>{
           <div style={{ textAlign:'center' }}  >
           
             <a  href={ `/#${ANALYSE_THREAT_FAMILY_DETAIL_URL}?threatFamily=${record.threatFamily}` }
-                  style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >查看</a>
+                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >查看</a>
           </div>
       },
     ]

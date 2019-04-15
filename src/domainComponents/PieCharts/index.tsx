@@ -58,6 +58,7 @@ let getOption = ({ data ,theme, titles }) =>  ({
     height:'75%',
     width:50,
     itemWidth: 5,
+    pageIconSize: 8,
     itemHeight:5,
     type:'scroll',
     data: Array.isArray(data) ? data.map(i => i.name) : [],

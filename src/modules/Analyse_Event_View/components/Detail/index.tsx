@@ -5,8 +5,10 @@ import { Tag, Tooltip  } from 'antd'
 
 const ArrTag = ({ text }) => 
           <Tooltip title={ text } >
-            <Tag color='#1890ff'  style={{ borderRadius:15, paddingLeft:10, paddingRight:10 ,maxWidth:300, display:'inline-block', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'  }} >{ text }
-            </Tag>
+            {/* <Tag color='#4F5DCA'  style={{ borderRadius:15, paddingLeft:10, paddingRight:10 ,maxWidth:300, display:'inline-block', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'  }} >{ text }
+            </Tag> */}
+            <div   style={{ borderRadius:5, paddingLeft:10, paddingRight:10 ,maxWidth:300, display:'inline-block', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis', border: 'solid 1px #4F5DCA' , marginRight: 10, color: '#4F5DCA'  }} >{ text }
+            </div>
           </Tooltip>
 
 
@@ -25,7 +27,7 @@ const ArrTag = ({ text }) =>
 //             Array.isArray(item.value) ? 
 //             item.value.map((items,index) =>
 //               <span key={ index }>
-//                 { items ? <Tag color='#1890ff'  style={{ borderRadius:15, paddingLeft:10, paddingRight:10 }} >{ items }
+//                 { items ? <Tag color='#4F5DCA'  style={{ borderRadius:15, paddingLeft:10, paddingRight:10 }} >{ items }
 //                 </Tag> : items}
 //               </span>) : item.value
 //            }</span>

@@ -13,7 +13,7 @@ export default ({ defaultValue = [], onChange, disabled = false }) => {
         defaultValue= { defaultValue }
         onChange={timestampRange => onChange && onChange({ timestampRange })}
         placeholder={["今天", "今天"]}
-        suffixIcon={ <Calendar style={{ color: '#1890ff', verticalAlign: 'text-top', width:18 }} /> }
+        suffixIcon={ <Calendar style={{ color: '#4F5DCA', verticalAlign: 'text-top', width:18 }} /> }
         allowClear={true}
         size="large"
         ranges={{

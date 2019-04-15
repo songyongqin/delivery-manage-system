@@ -26,7 +26,7 @@ class BarCharts extends React.Component<any, any>{
       <ReactEcharts
         style={{ height: "100%" }}
         option={{
-          color: ["#73d13d", "#f5222d", "#1890ff"],
+          color: ["#73d13d", "#f5222d", "#4F5DCA"],
           grid: {
             left: '20px',
             right: '20px',

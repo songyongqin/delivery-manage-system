@@ -242,13 +242,13 @@ class Page extends React.Component<any, any> {
     const filterConfig = { ...this.props.config.constants.filter, eventType: threatTypeArr, threatenBehavior:threatActionArr }
 
     const columns = [
+      // {
+      //   title:<ResetIcon onClick={ this.reset } /> ,
+      //   dataIndex: 'index',
+      //   render: ( text, record, index ) => <div>{ index +1}</div>
+      // },
       {
-        title:<ResetIcon onClick={ this.reset } /> ,
-        dataIndex: 'index',
-        render: ( text, record, index ) => <div>{ index +1}</div>
-      },
-      {
-        title:'首次发生时间',
+        title:<ResetIcon onClick={ this.reset } >首次受攻击时间</ResetIcon >,
         dataIndex: 'firstTime',
         render: text => <TimeTag num={ text } />
       },
@@ -264,7 +264,7 @@ class Page extends React.Component<any, any> {
       {
         title:'详细描述',
         dataIndex: 'detailDescription',
-        render: (text,record) => <div>{text}<a href={ `/#${ANALYSE_REPORT_URL}?md5=${text}` } style={{ textDecoration:"none" , color:'#1890ff',marginLeft:5 }} >{record.md5}</a></div>  
+        render: (text,record) => <div>{text}<a href={ `/#${ANALYSE_REPORT_URL}?md5=${text}` } className={ styles.table }  style={{ textDecoration:"none" ,marginLeft:5 }} >{record.md5}</a></div>  
       },
       {
         title:'威胁类型',
@@ -274,13 +274,13 @@ class Page extends React.Component<any, any> {
         title:'攻击者IP',
         dataIndex: 'attackerIP',
         searchRule: 'ip',
-        render: text =>  <a href={ `/#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` } style={{ textDecoration:"none" , color:'#1890ff'}} >{text}</a>
+        render: text =>  <a href={ `/#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` } className={ styles.table }  style={{ textDecoration:"none" }} >{text}</a>
       },
       {
         title:'受攻击资产IP',
         dataIndex: 'attatcedAssetIp',
         searchRule: 'ip',
-        render: text =>  <a href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${text}` } style={{ textDecoration:"none", color:'#1890ff' }} >{text}</a>
+        render: text =>  <a href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${text}` }  className={ styles.table }  style={{ textDecoration:"none" }} >{text}</a>
       },
       // {
       //   title:'资产状态',

@@ -23,11 +23,11 @@ class FamilyTable extends React.Component<props, any>{
   render(){
 
     let columns = [
-      { title: <ResetIcon onClick={ this.props.reset } />, 
-        dataIndex:'index',
-        render: ( text, record, index ) => <div>{ index+1 }</div>
-        },
-      { title:'首次发现时间', 
+      // { title: <ResetIcon onClick={ this.props.reset } />, 
+      //   dataIndex:'index',
+      //   render: ( text, record, index ) => <div>{ index+1 }</div>
+      //   },
+      { title:<ResetIcon onClick={ this.props.reset } >首次受攻击时间</ResetIcon >, 
         dataIndex:'firstTime',
         render: text => <TimeTag num={ text } />
       },
@@ -59,7 +59,7 @@ class FamilyTable extends React.Component<props, any>{
           <div style={{ textAlign:'center' }}  >
           {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
             <a  href={ `/#${ANALYSE_THREAT_LOOPHOLE_DETAIL_URL}?loophole=${record.loophole}` }
-                  style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >查看</a>
+                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >查看</a>
           </div>
       },
     ]

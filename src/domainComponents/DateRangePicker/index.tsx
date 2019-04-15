@@ -29,7 +29,7 @@ export default class DateRangePicker extends React.Component<any, any> {
         onChange={this.onChange}
         allowClear={true}
         value={value}
-        suffixIcon={ <Calendar style={{ color: '#1890ff', verticalAlign: 'text-top', width:18 }} /> }
+        suffixIcon={ <Calendar style={{ color: '#4F5DCA', verticalAlign: 'text-top', width:18 }} /> }
         disabledDate={disabledDate}
         placeholder={["今天", "今天"]}
         ranges={{

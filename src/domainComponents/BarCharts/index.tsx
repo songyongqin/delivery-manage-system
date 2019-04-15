@@ -68,7 +68,7 @@ const BarCharts = ({ data, title = "", theme = DARK_THEME }) => {
             data: data.map(i => i.value),
             itemStyle: {
               normal: {
-                borderColor: "#1890ff",
+                borderColor: "#4F5DCA",
                 borderWidth: 2,
                 color: "rgba(46,136,252,0.6)"
               }

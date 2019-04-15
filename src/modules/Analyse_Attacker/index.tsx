@@ -174,11 +174,11 @@ class Page extends React.Component<any, any> {
     const {  tableData, timestampRange } = this.state
 
     let columns = [
-      { title:<ResetIcon onClick={ this.reset } />, 
-        dataIndex:'index',
-        render: ( text, record, index ) => <div>{ index+1 }</div>
-        },
-      { title:'首次攻击时间', 
+      // { title:<ResetIcon onClick={ this.reset } />, 
+      //   dataIndex:'index',
+      //   render: ( text, record, index ) => <div>{ index+1 }</div>
+      //   },
+      { title:<ResetIcon onClick={ this.reset } >首次受攻击时间</ResetIcon >,
         dataIndex:'attackFirstTime',
         render: text => <TableTime num={ text } />
         },
@@ -214,7 +214,7 @@ class Page extends React.Component<any, any> {
           <div style={{ textAlign:'center' }}  >
           {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
             <a  href={ `/#${ANALYSE_ATTACK_DETAL_URL}?attackerIP=${record.attackerIP}` }
-                  style={{ cursor:'pointer', marginBottom:10, color:'#1890ff' }} >查看</a>
+                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} >查看</a>
           </div>
       },
     ]

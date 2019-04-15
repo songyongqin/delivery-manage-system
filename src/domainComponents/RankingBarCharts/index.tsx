@@ -93,7 +93,7 @@ export default class RankingBarCharts extends React.Component<any, any>{
                         data: yData,
                         itemStyle: {
                           normal: {
-                            borderColor: "#1890ff",
+                            borderColor: "#4F5DCA",
                             borderWidth: 2,
                             color: "rgba(46,136,252,0.6)"
                           }

@@ -26,7 +26,7 @@ const Content = ({ data }) => {
         data.map((item, index) => 
           <div key={ index+'tip' } style={ { marginTop:5, marginBottom:5, textAlign:'center' } } >
             {
-              item ?<Tag color={ '#1890ff' } >{ item }</Tag>:
+              item ?<Tag color={ '#4F5DCA' } >{ item }</Tag>:
                     item
             }
           </div>
@@ -45,7 +45,7 @@ const ArrayTag = ({data}) => {
         arr[1].length ? 
         <div style={ { textAlign:'center' } } >
           <Popover content={ <Content data={ arr[1] } /> }  placement="right" >
-            <Tag color={ '#1890ff' } style={ { width:100, textAlign:'center' } } >...</Tag>
+            <Tag color={ '#4F5DCA' } style={ { width:100, textAlign:'center' } } >...</Tag>
           </Popover>
         </div>
         : <div></div>
