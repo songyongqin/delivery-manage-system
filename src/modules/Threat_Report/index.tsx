@@ -73,7 +73,7 @@ class ThreatReport extends Component<any,any>{
       // const pageSize = [canvas.width/2, canvas.height/2]
       const pageSize = [canvas.width/2, canvas.height/2]      
 
-      downloadjs(dataurl,'xxx.jpg' , 'image/jpeg')
+      // downloadjs(dataurl,'xxx.jpg' , 'image/jpeg')
 
       img2pdf({ dataurl, type, margin, name, scale, pageSize })
       .then(() => this.setState({ isLoading: false }) )
