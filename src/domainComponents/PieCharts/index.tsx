@@ -55,7 +55,7 @@ let getOption = ({ data ,theme, titles }) =>  ({
     orient: 'vertical',
     right: 'right',
     bottom: '10',
-    height:'80%',
+    height:'75%',
     width:50,
     itemWidth: 5,
     itemHeight:5,

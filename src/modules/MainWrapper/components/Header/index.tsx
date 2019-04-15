@@ -59,7 +59,7 @@ export default class Header extends React.PureComponent<Props, any>{
       <Menu>
         <Menu.ItemGroup key="message" title={
           <div style={{ padding: "5px" }}>
-            <span style={{ color: "#108ee9", fontWeight: 900 }}>{userData["userAccount"]}</span>
+            <span style={{ color: "#4F5DCA", fontWeight: 900 }}>{userData["userAccount"]}</span>
             &nbsp;&nbsp;
             <span>{admin ? "管理员" : "普通用户"}</span>
             <div style={{

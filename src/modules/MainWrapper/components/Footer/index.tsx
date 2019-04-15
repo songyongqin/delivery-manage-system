@@ -8,7 +8,7 @@ const Footer = ({ modalVisible, setModalVisible }) => {
     <footer style={{
       height: "40px",
       lineHeight: "40px",
-      position: "fixed",
+      // position: "fixed",
       bottom: 0,
       left: 0,
       right: 0,

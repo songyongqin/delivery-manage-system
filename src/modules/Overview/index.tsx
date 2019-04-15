@@ -15,6 +15,7 @@ import WithTable from 'components/WithTable'
 import Tree from './components/Tree'
 import { getTodayTime } from 'utils/getInitTime'
 import debounce from 'lodash/debounce'
+const css = require('./index.less')
 
 const MapStateToProps = state => {
   return{
@@ -184,7 +185,7 @@ class Page extends React.Component<any, any> {
             <Spin key='pie-charts' spinning={ countLoading } style={{ height:pieHeight }} >
               <Pie data={ this.state.count } />
             </Spin>,
-            <Row key='overview-row' justify={ 'space-between' } gutter={ 20 } style={{ marginTop: 30 ,height:'100%' }} >
+            <Row key='overview-row' justify={ 'space-between' } gutter={ 20 } style={{ marginTop: '1em' ,height:'100%' }} >
             <Col span={12}  style={{ height:pieHeight }} >
               <Spin key='pie-charts-line' spinning={ flowLoading } style={{ height:'100%' }} >
                 {/* <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10,  padding:10 }} >
@@ -220,7 +221,7 @@ export default Page
 
 const Wrap = props => {
   return(
-    <div style={{ width:'100%', ...props.style, display:'inline-block',  border:'1px solid #E9EBEB', borderRadius:6, padding:10 , backgroundColor: 'rgb(255,255,255)' }} >
+    <div className={ css.wrap}  style={{ width:'100%', ...props.style, display:'inline-block',   borderRadius:6, padding:10 , backgroundColor: 'rgb(255,255,255)' }} >
       {
         props.children
       }
