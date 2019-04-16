@@ -169,7 +169,7 @@ export default class DeviceInfo extends React.Component<any, any>{
         tipModalRef = null
         this.props.saveOverdueTipVisible(false)
         if (modalType === "confirm") {
-          this.onLicenceClick(this.state.items)
+          this.onLicenceClick([this.state.deviceInfo])
         }
       },
       onCancel: () => {

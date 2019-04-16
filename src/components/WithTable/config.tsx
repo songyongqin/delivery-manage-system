@@ -50,6 +50,7 @@ export const getColumns = (props: props) => {
       item['filterDropdown']=(<Search tableSearch={handle['preTableSearch']} 
       getValue={ handle['getTableSearchValue'] }  searchRule={ item['searchRule'] } type={ item['dataIndex']  } />)
     }
+    delete item['types']
     return item
   })
   return arr

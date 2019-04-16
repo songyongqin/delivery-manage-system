@@ -345,7 +345,7 @@ class Licence extends React.Component<any, any>{
 
     return (
       <div style={{ marginBottom: "15px" }}>
-        <span>
+        {/* <span>
           隐藏无法操作的设备 &nbsp;
       </span>
         <Switch
@@ -353,7 +353,7 @@ class Licence extends React.Component<any, any>{
           checkedChildren={<Icon type="check" />}
           unCheckedChildren={<Icon type="cross" />}
           checked={hideNotValidItem}>
-        </Switch>
+        </Switch> */}
       </div>
     )
   }
@@ -477,7 +477,7 @@ class Licence extends React.Component<any, any>{
 
     return (
       <div>
-        {/* {this.getHeader()} */}
+        {this.getHeader()}
         {this.getInfoPanel()}
         {this.getOperationPanel()}
         {this.getUploadPanel()}
