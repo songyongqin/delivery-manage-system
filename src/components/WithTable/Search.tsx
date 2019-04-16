@@ -51,7 +51,7 @@ class Search extends Component<props, any> {
 
   render(){
     return (
-      <div style={{ backgroundColor:'aliceblue' }} >
+      <div style={{ backgroundColor:'aliceblue', padding: 5, background: '#fff', zIndex:999 }} >
         <div style={{ marginBottom:10 }} >请输入要搜索的内容</div>
         <Input onChange={ this.getInputValue } onPressEnter={ this.enterSearch }
                 style={{ width:200, display:'block', marginBottom:10 }} />

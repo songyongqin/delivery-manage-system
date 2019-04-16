@@ -12,6 +12,7 @@ interface props {
   minPadding?: boolean,
   config: Array<object>,
   tableData: Array<object>,
+  // whichSelect: boolean,
   Detail?: any,
   tableBeforeFetch?: (any) => any
 }
@@ -41,7 +42,8 @@ class WithTable extends Component<props, any>{
   }
 
   setTableState = obj => {
-    this.setState(obj)
+    console.log('set')
+    this.setState({...obj,})
   }
 
   getTableState = () => {
@@ -130,6 +132,7 @@ class WithTable extends Component<props, any>{
     let columns = getColumns({
       config: this.props.config,
       filters: this.props.constants ? this.props.constants['filter'] : [],
+      whichSelect: this.state.whichSelect,
       handle: {
         preTableSearch: this.preTableSearch,
         getTableSearchValue: this.getSearchValue,
@@ -140,7 +143,7 @@ class WithTable extends Component<props, any>{
       }
     })
     
-    let classes = 
+    // let classes = 
     columns = columns.map(i => {
       i['className'] =  classnames(style.default)
       if(!i['render']){
@@ -148,12 +151,10 @@ class WithTable extends Component<props, any>{
       }
       return i
     } )
-    
-    // console.log('columns', columns)
-    // console.log(this.state.isSearchValue)
+    console.log(columns)
     return (
       // <div style={{ minWidth:1300, overflow:'auto' }} >
-      <div  className={ minPadding ? style['min-situation-table'] : {} } >
+      <div  className={ minPadding ? style['min-situation-table'] : {} }  >
         {
           this.props.Detail ?
             <Table dataSource={tableData} columns={columns}
