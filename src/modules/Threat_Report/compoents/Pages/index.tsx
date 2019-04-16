@@ -25,7 +25,8 @@ const transform = num => moment(num).format('YYYY-MM-DD')
 const getStr = timestampRange => {
 
   if(!timestampRange.length){
-     return '全部'
+    let timestr = moment().format('YYYY-MM-DD')
+     return `${timestr} 到 ${timestr}`
     }
   else {
     let str = transform(timestampRange[0])

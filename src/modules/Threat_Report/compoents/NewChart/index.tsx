@@ -254,7 +254,7 @@ class NewChart extends React.Component<props,state>{
           } */}
           <div className={ styles.commonrank } >
           <Wrap spinning={ loading } keys={ 1 } style={{ width: '100%' }}  >
-              <Bar data={ rank.threatSourceCountry.data } title={ '威胁来源国家排行TOP10'  }  className={ styles.rankitem }  /> 
+            <Bar data={ rank.threatEvent.data } title={ '威胁事件类型排行TOP10'   }  className={ styles.rankitem }  /> 
           </Wrap>
           </div>
           <div className={ styles.commonrank } >
@@ -266,7 +266,7 @@ class NewChart extends React.Component<props,state>{
         <div className={ styles.rankcontainer } >
           <div className={ styles.commonrank } >
             <Wrap spinning={ loading } keys={ 1 } style={{ width: '100%' }}  >
-                <Bar data={ rank.threatEvent.data } title={ '威胁事件类型排行TOP10'   }  className={ styles.rankitem }  /> 
+              <Bar data={ rank.threatSourceCountry.data } title={ '威胁来源国家排行TOP10'  }  className={ styles.rankitem }  /> 
             </Wrap>
           </div>
           <div className={ styles.commonrank } >

@@ -21,6 +21,6 @@ export default ({ data }) => {
     md5: data['md5']
   }
 
-  return <a href={'/#'+ANALYSE_REPORT_DETAIL_URL + domainQueryStringParse(payload)} target="_blank">查看报告</a>
+  return <a href={'/#'+ANALYSE_REPORT_DETAIL_URL + domainQueryStringParse(payload)} style={{  textDecoration: "underline" }}  target="_blank">查看</a>
 }
 

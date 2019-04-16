@@ -21,7 +21,7 @@ const config = {
 }
 
 let getOption = ({ data ,theme, titles }) =>  ({
-  color: ['#3398DB'],
+  color: ['#4F5DCA'],
   tooltip : {
       trigger: 'axis',
       axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -32,7 +32,7 @@ let getOption = ({ data ,theme, titles }) =>  ({
       left: '3%',
       right: '4%',
       bottom: '3%',
-      top:'4%',
+      top:'10%',
       containLabel: true
   },
   xAxis : [
@@ -57,13 +57,16 @@ let getOption = ({ data ,theme, titles }) =>  ({
       {
           // name:'直接访问',
           type:'bar',
-          barWidth: '60%',
+          barWidth: 20,
           // data:[10, 52, 200, 334, 390, 330, 220],
           data: data.length ?  data.map(i =>  i.value ): [] ,
           label: {
             normal: {
                 show: true,
-                position: 'insideBottom'
+                // position: 'top'
+                position: 'inside',
+                offset: [0, -5],
+                rotate: 90
             }
         },
       }

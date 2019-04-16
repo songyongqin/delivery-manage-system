@@ -173,7 +173,8 @@ class ThreatReport extends Component<any,any>{
   getTimeStr =() => {
     let  timestampRange = this.state.timestampRange
     if(!timestampRange.length){
-      return '全部'
+      let timestr = moment().format('YYYY-MM-DD')
+     return `${timestr} 到 ${timestr}`
     }
     else {
       return moment(timestampRange[0]).format('YYYY-MM-DD')  + `  到  ` + moment(timestampRange[1]).format('YYYY-MM-DD')

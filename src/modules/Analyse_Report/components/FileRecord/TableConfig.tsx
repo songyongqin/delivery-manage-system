@@ -72,8 +72,8 @@ export const getColumns = ({
     [THREAT_LEVEL_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
     // [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tag  style={{ marginRight: "0px"}}><ReportLink data={record}></ReportLink></Tag>|<Tag ><a onClick={() => exportReportByTaskId(record.md5)}>下载</a></Tag></div>,
     // [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tag ><a href={getAuthURL(record.sampleUrl)} download>下载</a></Tag></div>
-    [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tags  style={{ marginRight: "0px"}}><ReportLink data={record}></ReportLink></Tags>|<Tags ><a onClick={() => exportReportByTaskId(record.md5)}>下载</a></Tags></div>,
-    [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tags ><a href={getAuthURL(record.sampleUrl)} download>下载</a></Tags></div>
+    [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tags  style={{ marginRight: "0px"}}><ReportLink data={record}></ReportLink></Tags>|<Tags ><a onClick={() => exportReportByTaskId(record.md5)} style={{  textDecoration: "underline" }} >下载</a></Tags></div>,
+    [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tags ><a href={getAuthURL(record.sampleUrl)} style={{  textDecoration: "underline" }}  download>下载</a></Tags></div>
   
   }
 

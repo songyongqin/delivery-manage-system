@@ -94,7 +94,7 @@ const getMenuContent = ({ navConfig = [], mini = true, selectedKeys, innerItem =
             payload: true
           })
         }
-      }}>
+      }} target={ link.includes('http') ? '_blank' : '_self' } >
         <Choose>
           <When condition={i["icon"]} >
             {i.icon}

@@ -45,7 +45,7 @@ export const getColumns = ({ handle = {} }) => {
       [IP_RANGE_DATAINDEX]: (value, records) => (
         <div style={{ textAlign: "center", overflow: "hidden" }}>
           {value.map((i, index) => (
-            <Tag color={"#108ee9"}
+            <Tag color={"#4F5DCA"}
               style={{ marginBottom: "5px" }}
               key={`${index}-tag`}>
               {i}
