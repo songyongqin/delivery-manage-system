@@ -183,7 +183,7 @@ class Page extends React.Component<any, any> {
         types:['filters'],
         render: text => <LevelTag text={text} />
       },
-      { title:'操作', 
+      { title:'详情', 
         dataIndex:'actions', 
         render: (text,record,index) =>
           <div style={{ textAlign:'center' }}  >

@@ -33,14 +33,14 @@ const config = {
   }
 }
 
-let getOption = ({ data ,theme, titles }) =>  ({
+let getOption = ({ data ,theme, titles={} }) =>  ({
   title: {
-    text: titles.text ||'',
+    text: '',
     x: 'center',
-    link: titles.link,
     padding: 15,
     target:'self',
-    textStyle: {...config[theme], fontSize: 14 }
+    textStyle: {...config[theme], fontSize: 14 },
+    ...titles,
   },
   tooltip: {
     trigger: 'item',
@@ -53,7 +53,7 @@ let getOption = ({ data ,theme, titles }) =>  ({
   },
   legend: {
     orient: 'vertical',
-    right: 'right',
+    left: '50%',
     bottom: '10',
     height:'75%',
     width:50,
@@ -64,7 +64,7 @@ let getOption = ({ data ,theme, titles }) =>  ({
     data: Array.isArray(data) ? data.map(i => i.name) : [],
     textStyle: config[theme],
     formatter: function (name) {
-      return   `{a|${wrapStr(name, 10)}}`
+      return   `{a|${wrapStr(name, 15)}}`
     },
   //   formatter: [
   //     '{a|这段文本采用样式a}',
@@ -118,6 +118,7 @@ const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) 
   const datas = dataSetName(data)
   // let option = { ...getOption({data:datas, theme, titles}), ...config, color }
   let option = { ...mergeWith(getOption({data:datas, theme, titles}), config), color }
+  console.log(option)
   if(Array.isArray(data) ){
     if(onEvents){
       return (

@@ -201,7 +201,7 @@ class Page extends React.Component<any, any> {
               <Wrap style={{  height: lineHeight,   overflowY:'auto', overflowX:'hidden' }} >
                 <div>
                   <h2 style={{ display:'inline-block', fontWeight: 900,padding:15, fontSize:"14px", fontFamily:"Arial" }} >最新高危事件</h2>
-                  <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:40, marginTop:10}} >{ `查看全部威胁事件 >` }</a>
+                  <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:40, marginTop:10}} >{ `查看更多威胁事件 >` }</a>
                 </div>
                 <Spin spinning={ eventLoading }  >
                   <WithTable tableData={ table.data } config={ cloumns } />

@@ -296,7 +296,7 @@ class Page extends React.Component<any, any> {
         render: text => <LevelTag text={text} />
       },
       {
-        title:'详情查看',
+        title:'详情',
         dataIndex: 'action',
         render: (text, record, index) => 
         <div style={{ textAlign:'center', cursor:'pointer' }} onClick={() =>this.getCilck(index)  } >

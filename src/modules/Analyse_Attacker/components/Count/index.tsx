@@ -98,7 +98,7 @@ class Count extends Component<any, any>{
               </CountItem>
             </Col>
             <Col span={ 6 }  push={ 3 }  style={{ height: pieHeight }} >
-              <AnalysePie data={ attackerWhereArr } text={ '攻击者所在地统计'} /> 
+              <AnalysePie data={ attackerWhereArr } text={ '攻击者所在地分布'} /> 
             </Col>
             <Col span={ 6 }  push={ 6 }  style={{ height: pieHeight }} >
               <AnalysePie data={ attackerGroupArr } text={ '攻击者组织统计'} /> 

@@ -20,7 +20,7 @@ import columnsCreator from 'domainUtils/columnsCreator'
 const titleConfig = {}
 
 Object.keys(textConfig).forEach(i => {
-  titleConfig[i] = <div style={{ textAlign: "center" }}>{textConfig[i]}</div>
+  titleConfig[i] = <div style={{ textAlign: "left" }}>{textConfig[i]}</div>
 })
 
 const extraProps = {
@@ -41,9 +41,9 @@ export const getColumns = ({ handle = {} }) => {
     dataIndexes: dataIndexes,
     titleConfig: titleConfig,
     renderer: {
-      [ROLE_DATAINDEX]: value => <div style={{ textAlign: "center" }}>{tools.getKeyText(value, roleTextConfig)}</div>,
+      [ROLE_DATAINDEX]: value => <div style={{ textAlign: "left" }}>{tools.getKeyText(value, roleTextConfig)}</div>,
       [IP_RANGE_DATAINDEX]: (value, records) => (
-        <div style={{ textAlign: "center", overflow: "hidden" }}>
+        <div style={{ textAlign: "left", overflow: "hidden" }}>
           {value.map((i, index) => (
             <Tag color={"#4F5DCA"}
               style={{ marginBottom: "5px" }}
@@ -60,7 +60,7 @@ export const getColumns = ({ handle = {} }) => {
         </div>
       ),
       [OPERATION_KEY]: (value, records) => (
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "left" }}>
           <Button icon="plus" type="primary" onClick={_ => handle["add"] && handle["add"](records)}>
             添加
           </Button>

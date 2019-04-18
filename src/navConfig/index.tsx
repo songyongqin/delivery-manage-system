@@ -270,7 +270,7 @@ export const _navConfig = [
   {
     link: AUDIT_URL,
     title: "审计记录",
-    icon: <Icon type="setting" />,
+    icon: <Icon type="file-text" />,
     items: [
       {
         link: AUDIT_EVENT_URL,
@@ -428,7 +428,7 @@ export const _navConfig = [
   {
     link: CONFIG_URL,
     title: "配置管理",
-    icon: <Icon type="database" />,
+    icon: <Icon type="setting" />,
     items: [
       {
         link: CONFIG_NODE_MONITOR_URL,

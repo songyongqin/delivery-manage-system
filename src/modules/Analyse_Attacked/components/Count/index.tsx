@@ -107,7 +107,7 @@ class Count extends Component<any, any>{
             </Col>
             <Col span={ 6 }  push={ 6 }  style={{ height: pieHeight }} >
               {/* <Pie data={ attackedAssetsArr } title={ '资产状态统计'}  /> */}
-              <AnalysePie data={ attackedAssetsArr } text={ '资产状态统计'} /> 
+              <AnalysePie data={ attackedAssetsArr } text={ '受攻击资产状态分布'} /> 
             </Col>
           </Row>
         </Spin>

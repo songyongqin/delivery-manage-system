@@ -169,7 +169,7 @@ export const textConfig = {
   [TARGET_PORT_DATA_INDEX]: "目的Port",
   [URL_DATA_INDEX]: "URL",
   [HOST_DATA_INDEX]: "主机名",
-  [METHOD_DATA_INDEX]: "方法名",
+  [METHOD_DATA_INDEX]: "请求方法",
   [CONTENT_TYPE_DATA_INDEX]: "内容类型",
   [PROTOCOL_TYPE_DATA_INDEX]: "传输层协议",
   [REQUEST_DOMAIN_DATA_INDEX]: "请求域名",

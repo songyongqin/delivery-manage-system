@@ -178,7 +178,7 @@ class Page extends React.Component<any, any> {
       //   dataIndex:'index',
       //   render: ( text, record, index ) => <div>{ index+1 }</div>
       //   },
-      { title:<ResetIcon onClick={ this.reset } >首次受攻击时间</ResetIcon >,
+      { title:<ResetIcon onClick={ this.reset } >首次攻击时间</ResetIcon >,
         dataIndex:'attackFirstTime',
         render: text => <TableTime num={ text } />
         },
@@ -208,7 +208,7 @@ class Page extends React.Component<any, any> {
         dataIndex:'family', 
         types:['search']
       },
-      { title:'详细信息', 
+      { title:'详情', 
         dataIndex:'actions', 
         render: (text,record,index) =>
           <div style={{ textAlign:'center' }}  >

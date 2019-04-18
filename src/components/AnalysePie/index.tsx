@@ -24,7 +24,7 @@ const getTotal = (arr) => {
 
 const Total = ({ num }) => {
   const needAddComma = num >1000000;
-  let str = needAddComma ? `${addComma(Math.round(num/1000))}万` : addComma(Math.round(num))
+  let str = needAddComma ? `${addComma(Math.round(num/10000))}万` : addComma(Math.round(num))
   return (
     <div  className={ styles.total } >
       { str }
@@ -37,7 +37,7 @@ const addComma = num => (num+'').replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g,'$1,')
 const AnalysePie = ({ data, text, link='#'  }) => {
   return (
     <Wrap>
-        <PieCharts data={ data } titles={{ text, link }}   />
+        <PieCharts data={ data } titles={{ text, link }} config={{ title: { x:'left' } }}   />
         <Total num={ getTotal(data) } />
     </Wrap>
   )

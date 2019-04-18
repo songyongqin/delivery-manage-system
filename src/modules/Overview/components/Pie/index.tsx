@@ -20,7 +20,7 @@ const getThreatEventConfig = (eventBehaviorCount, threatLevelCount) => {
         // name:'访问来源',
         type:'pie',
         selectedMode: 'single',
-        radius: [0, '30%'],
+        radius: [0, '25%'],
         center: ['25%', '60%'],
         minAngle:5,
         label: {
@@ -89,17 +89,17 @@ const Pie = ({ data}) => {
     <Row justify={ 'space-between' } gutter={ 20 } style={{ height: "100%" }} >
       <Col span={6} style={{ height: "100%" }}>
         <Wrap>
-          <PieCharts data={ data.eventBehaviorCount } titles={{ text:'威胁事件统计', link: '/#/analyse/event' }} config={getThreatEventConfig( data.eventBehaviorCount, data.threatLevelCount )}  />
+          <PieCharts data={ data.eventBehaviorCount } titles={{ text:'威胁事件', link: '/#/analyse/event', textAlign: 'left' }} config={{...getThreatEventConfig( data.eventBehaviorCount, data.threatLevelCount ), title: { x:'left' } }}  />
         </Wrap>
       </Col>
       <Col span={6} style={{ height: "100%" }}>
-      <AnalysePie data={ data.attackTypeCount } text={ '威胁类型统计' } link={ '/#/analyse/attacker' } />
+      <AnalysePie data={ data.attackTypeCount } text={ '威胁类型' } link={ '/#/analyse/attacker' } />
       </Col>
       <Col span={6} style={{ height: "100%" }}>
-        <AnalysePie data={ data.assetsTypeCount } text={ '资产类型统计' } link={ '/#/analyse/attacked-assets' } />
+        <AnalysePie data={ data.assetsTypeCount } text={ '受攻击资产状态' } link={ '/#/analyse/attacked-assets' } />
       </Col>
       <Col span={6} style={{ height: "100%" }}>
-        <AnalysePie data={ data.familyCount } text={ '病毒家族攻击统计' } link={ '/#/analyse/threat' } />
+        <AnalysePie data={ data.familyCount } text={ '威胁家族' } link={ '/#/analyse/threat' } />
       </Col>
     </Row>
   )
