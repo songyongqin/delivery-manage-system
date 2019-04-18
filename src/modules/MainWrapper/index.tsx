@@ -82,6 +82,8 @@ class IndexPage extends React.Component<any, any>{
       modifyPasswordVisible: false
     }
   }
+
+
   showModifyPassword = () => {
     this.setState({
       modifyPasswordVisible: true
@@ -216,7 +218,7 @@ class IndexPage extends React.Component<any, any>{
     }
 
     return (
-      <div className={pageClasses}>
+      <div className={pageClasses} >
         <Nav
           active={activeRoute}
           isAdmin={isAdmin}
@@ -236,7 +238,8 @@ class IndexPage extends React.Component<any, any>{
         </Header>
 
         <div
-          className={contentWrapperClasses}>
+          className={contentWrapperClasses}  >
+          <div id='page-container'  >
           <Spin spinning={moduleLoading && !activeRouteBuilding}>
           </Spin>
           <Breadcrumb route={activeRoute}></Breadcrumb>
@@ -247,6 +250,7 @@ class IndexPage extends React.Component<any, any>{
               :
               children
           }
+          </div>
         </div>
         <Footer></Footer>
         <BackTop style={{ right: "30px" }} />

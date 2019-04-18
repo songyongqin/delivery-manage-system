@@ -42,7 +42,7 @@ class WithTable extends Component<props, any>{
   }
 
   setTableState = obj => {
-    console.log('set')
+    // console.log('set')
     this.setState({...obj,})
   }
 
@@ -69,7 +69,7 @@ class WithTable extends Component<props, any>{
     //添加上多条搜索的值
     let objs = this.state.searchValue
     objs.page = 1
-    console.log(objs)
+
     this.props.tableBeforeFetch && this.props.tableBeforeFetch(objs)
     this.hiddenSearch()
   }
@@ -82,7 +82,6 @@ class WithTable extends Component<props, any>{
     const {  searchType, searchValue } = obj
     let isSearchValue = this.state.isSearchValue
     let arr = [...new Set([...isSearchValue, searchType ])]
-    console.log(this.state.searchValue)
     if(!searchValue){
       arr = arr.filter(i => i!==searchType)
     }
@@ -151,7 +150,7 @@ class WithTable extends Component<props, any>{
       }
       return i
     } )
-    console.log(columns)
+    // console.log(columns)
     return (
       // <div style={{ minWidth:1300, overflow:'auto' }} >
       <div  className={ minPadding ? style['min-situation-table'] : {} }  >

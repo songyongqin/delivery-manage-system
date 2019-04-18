@@ -26,7 +26,7 @@ import  debounce  from 'lodash/debounce'
 
 import {
   limit,
-  canMultipleDetail
+  maxTableExpanded
 } from './constants'
 import Detail from './components/Detail'
 import TimeTag from 'components/TimeTag'
@@ -216,11 +216,19 @@ class Page extends React.Component<any, any> {
       let array = arr.filter(item => item!==str )
       this.setState({ clicked: array })
     }
-    else if(canMultipleDetail){
-      this.setState({ clicked: [ ...arr, str ] })
-    }
+    // else if(maxTableExpanded){
+    //   this.setState({ clicked: [ ...arr, str ] })
+    // }
+    // else {
+    //   this.setState({ clicked: [str] })
+    // }
     else {
-      this.setState({ clicked: [str] })
+      let array = [ ...arr, str ]
+      if(array.length> maxTableExpanded ){
+        let len = array.length
+        array = array.slice(len-maxTableExpanded,len)
+      }
+      this.setState({ clicked: array })
     }
     // this.setState({ clicked: index+'' })
   }

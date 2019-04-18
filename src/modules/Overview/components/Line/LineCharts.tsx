@@ -99,8 +99,9 @@ class BarCharts extends React.Component<props, any>{
             }
         },
         legend: {
-            top:'10%',
-            data:getLegend(series)
+            top:'12%',
+            data:getLegend(series),
+            type:'scroll',
         },
         // toolbox: {
         //     feature: {
@@ -111,7 +112,7 @@ class BarCharts extends React.Component<props, any>{
             left: '4%',
             right: '4%',
             bottom: '3%',
-            top:'20%',
+            top:'27%',
             containLabel: true
         },
         xAxis : [

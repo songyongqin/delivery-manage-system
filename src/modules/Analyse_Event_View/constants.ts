@@ -4,4 +4,4 @@
 export const limit =15
 
 
-export const canMultipleDetail = false
+export const maxTableExpanded = 3

@@ -61,35 +61,17 @@ const Wrap = props => {
   )
 }
 
-// const getTotal = (arr) => {
-//   if(!isArray(arr)||(isArray(arr)&&arr.length===0)){
-//     return '0'
-//   }
-//   else {
-//     let array = arr.map(i => typeof i.value ==='number' ? i.value : 0 )
-//     return `${sum(array)}`
-//   }
-// }
 
-// const Total = ({ num }) => {
-//   const needAddComma = num >1000000;
-//   let str = needAddComma ? `${addComma(Math.round(num/1000))}万` : addComma(Math.round(num))
-//   return (
-//     <div style={{ position: "absolute",bottom: "40%", marginBottom: "-6px", width:'100%', textAlign:'center', fontSize: "12px",marginLeft: "-25%", }} >
-//       { str }
-//     </div>
-//   )
-// }
-
-
-// const addComma = num => (num+'').replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g,'$1,')
 
 const Pie = ({ data}) => {
+  
+  let obj = getThreatEventConfig( data.eventBehaviorCount, data.threatLevelCount )
+  let series = obj&&obj['series']&&obj['series']
   return (
     <Row justify={ 'space-between' } gutter={ 20 } style={{ height: "100%" }} >
       <Col span={6} style={{ height: "100%" }}>
         <Wrap>
-          <PieCharts data={ data.eventBehaviorCount } titles={{ text:'威胁事件', link: '/#/analyse/event', textAlign: 'left' }} config={{...getThreatEventConfig( data.eventBehaviorCount, data.threatLevelCount ), title: { x:'left' } }}  />
+          <PieCharts data={ data.eventBehaviorCount } titles={{ text:'威胁事件', link: '/#/analyse/event', textAlign: 'left' }} config={{series, title: { x:'left' } }}  />
         </Wrap>
       </Col>
       <Col span={6} style={{ height: "100%" }}>

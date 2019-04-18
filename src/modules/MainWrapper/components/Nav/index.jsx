@@ -252,7 +252,7 @@ export default class extends React.Component {
       <nav className={wrapperClasses} ref={con => this.con = con}>
         <div  className={ styles.title }  >
           {/* <Antiy />  */}
-          <img src={ antiy } width={ 40 } height={ 30 } style={{ marginRight:5 }}  />
+          <img src={ antiy } width={ 30 } height={ 40 } style={{ marginRight:5 }}  />
           { mini? '' : title  } 
         </div>
         <Menu
