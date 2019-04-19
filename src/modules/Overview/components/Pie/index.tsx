@@ -21,7 +21,7 @@ const getThreatEventConfig = (eventBehaviorCount, threatLevelCount) => {
         type:'pie',
         selectedMode: 'single',
         radius: [0, '25%'],
-        center: ['25%', '60%'],
+        center: ['25%', '55%'],
         minAngle:5,
         label: {
           normal: {
@@ -37,7 +37,7 @@ const getThreatEventConfig = (eventBehaviorCount, threatLevelCount) => {
         // name:'威胁类型',
         type:'pie',
         radius: ['35%','45%'],
-        center: ['25%', '60%'],
+        center: ['25%', '55%'],
         minAngle:5,
         label: {
           normal: {
@@ -71,7 +71,7 @@ const Pie = ({ data}) => {
     <Row justify={ 'space-between' } gutter={ 20 } style={{ height: "100%" }} >
       <Col span={6} style={{ height: "100%" }}>
         <Wrap>
-          <PieCharts data={ data.eventBehaviorCount } titles={{ text:'威胁事件', link: '/#/analyse/event', textAlign: 'left' }} config={{series, title: { x:'left' } }}  />
+          <PieCharts data={ data.eventBehaviorCount } titles={{ text:'威胁事件', link: '/#/analyse/event', textAlign: 'left', x:'left'  }} config={{series }}  />
         </Wrap>
       </Col>
       <Col span={6} style={{ height: "100%" }}>

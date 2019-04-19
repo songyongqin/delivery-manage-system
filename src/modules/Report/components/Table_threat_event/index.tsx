@@ -10,6 +10,7 @@ import { NAMESPACE_THREATEVENT } from '../../ConstConfig'
 import classnames from 'classnames'
 import TimesLabel from 'components/TimeLabel'
 import JoTag from 'components/Tag'
+import LevelTag from 'components/LevelTag'
 // import { levelTextConfig, actionStatusTextConfig, attackStageTextConfig } from 'configs/ConstConfig'
 
 const levelTextConfig = {}, actionStatusTextConfig = {}, attackStageTextConfig = {}
@@ -74,9 +75,10 @@ class Tableevent extends React.Component<any, any> {
       title: '威胁等级',
       dataIndex: 'level',
       key: 'level',
-      render: (record) => {
-        return getKeyText(record, levelTextConfig)
-      }
+      // render: (record) => {
+      //   return getKeyText(record, levelTextConfig)
+      // }
+      render: text => <LevelTag text={text} />
     }, {
       title: '攻击状态',
       dataIndex: 'actionStatus',

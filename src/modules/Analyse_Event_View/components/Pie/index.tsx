@@ -39,10 +39,8 @@ const getConfig = data => {
       // name:'访问来源',
       type:'pie',
       selectedMode: 'single',
-      // radius: [0, '60%'],
-      // center: ['35%', '50%'],
       radius: ['0','45%'],
-      center: ['25%', '60%'],
+      center: ['25%', '55%'],
       minAngle:5,
       label: {
         normal: {

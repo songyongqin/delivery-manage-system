@@ -185,7 +185,7 @@ class Page extends React.Component<any, any> {
             <Spin key='pie-charts' spinning={ countLoading } style={{ height:pieHeight }} >
               <Pie data={ this.state.count } />
             </Spin>,
-            <Row key='overview-row' justify={ 'space-between' } gutter={ 20 } style={{ marginTop: '1em' ,height:'100%' }} >
+            <Row key='overview-row' justify={ 'space-between' } gutter={ 20 } style={{ marginTop: 20 ,height:'100%' }} >
             <Col span={12}  style={{ height:pieHeight }} >
               <Spin key='pie-charts-line' spinning={ flowLoading } style={{ height:'100%' }} >
                 {/* <span style={{ width:1020, display:'inline-block',  border:'1px solid rgba(0,0,0,0.3)', borderRadius:10, margin:10,  padding:10 }} >

@@ -91,6 +91,12 @@ class BarCharts extends React.Component<props, any>{
       ],
         tooltip : {
             trigger: 'axis',
+            position: function (pos, params, dom, rect, size) {
+              var obj = {top: 60};
+                let x =  pos[0] < (size.viewSize[0] / 2) ?pos[0] : pos[0]-size.contentSize[0];
+                let arr = [ x,10 ]
+              return arr;
+          },
             axisPointer: {
                 type: 'cross',
                 label: {

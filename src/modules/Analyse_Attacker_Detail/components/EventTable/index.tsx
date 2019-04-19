@@ -6,7 +6,7 @@ import { ANALYSE_ATTACK_DETAIL_URL } from 'routes/config/path'
 import { Tag } from 'antd'
 import tranformTime from 'utils/tranformTime'
 import TableTime from 'components/TableTime'
-
+import LevelTag from 'components/LevelTag'
 
 let tranformColor = text => {
   if(text==='低危') return '#fccb00'
@@ -49,7 +49,7 @@ let columns = [
   },
   { title:'威胁等级', 
     dataIndex:'level',
-    render: text => <Tag color={ tranformColor(text) } >{text}</Tag>
+    render: text => <LevelTag text={text} />
   }
 ]
 

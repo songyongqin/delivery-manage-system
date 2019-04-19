@@ -6,7 +6,7 @@ import React from 'react'
 import { Tag } from 'antd'
 
 let tranformColor = text => {
-  if(text==='低危') return '#FFDD68'
+  if(text==='低危') return '#F9C700'
   if(text==='中危') return '#FE9D45'
   else return '#FE4545'
 }

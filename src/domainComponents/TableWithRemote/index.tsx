@@ -4,6 +4,7 @@ import { connect } from 'dva'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
 const styles = require('./index.less')
+import { Tooltip } from 'antd';
 // interface OnChange {
 //   (filters: object): void
 // }
@@ -153,6 +154,13 @@ class TableWithRemote extends React.Component<any, any>{
       filters: this.state.filters,
       ...tableProps
     }
+    finalTableProps.columns = finalTableProps.columns.map(i => {
+      i['className'] =  styles.default
+      if(!i['render']){
+        i['render'] = text => ( text + '' ).length>15 ? <Tooltip  title={ text } >{ text }</Tooltip > : text
+      }
+      return i
+    } )
 
     return (
       <Spin spinning={loading}>

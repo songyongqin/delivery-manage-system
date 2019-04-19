@@ -306,8 +306,9 @@ class Page extends React.Component<any, any> {
       {
         title:'详情',
         dataIndex: 'action',
+        width: 30,
         render: (text, record, index) => 
-        <div style={{ textAlign:'center', cursor:'pointer' }} onClick={() =>this.getCilck(index)  } >
+        <div style={{  cursor:'pointer' }} onClick={() =>this.getCilck(index)  } >
           <Icon type={ this.state.clicked.indexOf(index+'')>-1  ? "caret-up" : "caret-down"} />
         </div>
       },

@@ -92,7 +92,7 @@ let getOption = ({ data ,theme, titles={} }) =>  ({
     {
       type: 'pie',
       radius: ['35%','45%'],
-      center: ['25%', '60%'],
+      center: ['25%', '55%'],
       data: Array.isArray(data) ? data.filter(i => i.value) : [],
       minAngle:5,
       label: {
@@ -117,7 +117,7 @@ const color = ['#89A6FF','#7371E8', '#A27CFF', '#71AEE8', '#7DE1FF','#CCCCCC']
 const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) => {
   const datas = dataSetName(data)
   // let option = { ...getOption({data:datas, theme, titles}), ...config, color }
-  let isPieTwo = config&&config.series&&config.series.length===2 || false
+  let isPieTwo = config&&config['series']&&config['series'].length===2 || false
   let option = isPieTwo ? { ...getOption({data:datas, theme, titles}), ...config, color } : { ...mergeWith(getOption({data:datas, theme, titles}), config), color }
   if(Array.isArray(data) ){
     if(onEvents){

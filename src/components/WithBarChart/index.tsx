@@ -64,8 +64,10 @@ let getOption = ({ data ,theme, titles }) =>  ({
             normal: {
                 show: true,
                 // position: 'top'
-                position: 'inside',
-                offset: [0, -5],
+                position: 'insideBottom',
+                offset: [7, 0],
+                distance: 10,
+                align: 'left',
                 rotate: 90
             }
         },

@@ -36,7 +36,7 @@ const getConfig = data => {
       type:'pie',
       // selectedMode: 'single',
       radius: [0, '60%'],
-      center: ['35%', '50%'],
+      center: ['35%', '55%'],
       // avoidLabelOverlap: true,
       minAngle:5,
       label: {

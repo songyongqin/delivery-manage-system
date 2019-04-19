@@ -79,7 +79,7 @@ const getConfig = data => ({
     {
       type: 'pie',
       radius: ['0','55%'],
-      center: ['25%', '60%'],
+      center: ['25%', '55%'],
       data: Array.isArray(data) ? data.filter(i => i.value) : [],
       minAngle:5,
       label: {

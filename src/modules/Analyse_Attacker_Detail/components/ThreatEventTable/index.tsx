@@ -6,12 +6,7 @@ import WithTable from 'components/WithTable'
 import { Tag } from 'antd'
 import tranformTime from 'utils/tranformTime'
 import TableTime from 'components/TableTime'
-
-let tranformColor = text => {
-  if(text==='低危') return '#fccb00'
-  if(text==='中危') return '#db3e00'
-  else return '#b80000'
-}
+import LevelTag from 'components/LevelTag'
 
 const thratColumns = [
   { title:'序号', 
@@ -49,7 +44,7 @@ const thratColumns = [
   },
   { title:'威胁等级', 
     dataIndex:'level',
-    render: text => <Tag color={ tranformColor(text) } >{text}</Tag>
+    render: text => <LevelTag text={text} />
   },
 
 ]

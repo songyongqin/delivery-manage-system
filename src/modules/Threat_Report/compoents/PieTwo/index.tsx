@@ -61,9 +61,13 @@ const getConfig = (data, data2) => ({
   },
   legend: {
     orient: 'vertical',
-    right: 'right',
+    left: '50%',
     bottom: '10',
-    height:'90%',
+    height:'75%',
+    width:50,
+    itemWidth: 5,
+    pageIconSize: 8,
+    itemHeight:5,
     type:'scroll',
     data: Array.isArray(data2) ? data2.map(i => i.name) : [],
     formatter: function (name) {
@@ -79,7 +83,7 @@ const getConfig = (data, data2) => ({
     {
       type: 'pie',
       radius: [0,'40%'],
-      center: ['25%', '60%'],
+      center: ['25%', '55%'],
       selectedMode: 'single',
       // data: data => {
       //   let str = JSON.stringify(data)
@@ -112,7 +116,7 @@ const getConfig = (data, data2) => ({
     {
       type: 'pie',
       radius: ['45%','55%'],
-      center: ['25%', '60%'],
+      center: ['25%', '55%'],
       data: data2,
       minAngle:5,
       label: {

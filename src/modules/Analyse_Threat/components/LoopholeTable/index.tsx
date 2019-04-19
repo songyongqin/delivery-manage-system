@@ -27,11 +27,11 @@ class FamilyTable extends React.Component<props, any>{
       //   dataIndex:'index',
       //   render: ( text, record, index ) => <div>{ index+1 }</div>
       //   },
-      { title:<ResetIcon onClick={ this.props.reset } >首次受攻击时间</ResetIcon >, 
+      { title:<ResetIcon onClick={ this.props.reset } >首次发生时间</ResetIcon >, 
         dataIndex:'firstTime',
         render: text => <TimeTag num={ text } />
       },
-      { title:'最近发现时间', 
+      { title:'最近发生时间', 
         dataIndex:'latelyTime',
         render: text => <TimeTag num={ text } />
       },
