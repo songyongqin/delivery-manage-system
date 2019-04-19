@@ -253,7 +253,7 @@ class IndexPage extends React.Component<any, any>{
           </div>
         </div>
         <Footer></Footer>
-        <BackTop style={{ right: "30px" }} />
+        <BackTop style={{ right: "30px", zIndex: 12 }} />
         <Modal
           footer={null}
           onCancel={this.hideModifyPassword}
