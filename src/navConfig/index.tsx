@@ -109,7 +109,7 @@ import {
 
 import { getAppConfig } from 'domain/app'
 // import router from 'router';
-import { Situation  } from 'components/IconSvg'
+import { Situation , ThreatReport } from 'components/IconSvg'
 
 
 const Indent = ({ space = 0 }) =>
@@ -292,7 +292,7 @@ export const _navConfig = [
   {
     link: REPORT_URL,
     title: "威胁报告",
-    icon: <Icon type="file-text"></Icon>
+    icon: <ThreatReport style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }} />
   },
   {
     link: STRATEGY_URL,

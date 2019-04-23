@@ -57,38 +57,44 @@ class Page extends React.Component<any, any> {
     const { data, page, limit, fileType, threatType, judge, md5, fileName } = this.props;
     const { changeFilename, onInputChangeMD5, searchFilename, onSearchMD5, downFile, downMD5 } = this;
     const { filterDropdownName, filterDropdownMD5, searchName, searchMD5 } = this.state;
+    let columns = TableConfig.getColumns({
+
+      searchName,
+      searchMD5,
+
+      changeFilename,
+      onInputChangeMD5,
+
+      md5,
+      fileName,
+
+      searchFilename,
+      onSearchMD5,
+
+      filterDropdownName,
+      filterDropdownMD5,
+
+      downFile,
+      downMD5,
+
+      page,
+      limit,
+      fileType,
+      threatType,
+      judge
+    })
+    console.log(columns)
+    columns = columns.map(i => {
+      i['className'] =  styles.default
+      return i
+    } )
     const tableProps = {
       onChange: (pagination, filters) => {
         this.props.toSave(filters);
         this.props.toFetch({ limit })
       },
       className: styles["titleCenter"],
-      columns: TableConfig.getColumns({
-
-        searchName,
-        searchMD5,
-
-        changeFilename,
-        onInputChangeMD5,
-
-        md5,
-        fileName,
-
-        searchFilename,
-        onSearchMD5,
-
-        filterDropdownName,
-        filterDropdownMD5,
-
-        downFile,
-        downMD5,
-
-        page,
-        limit,
-        fileType,
-        threatType,
-        judge
-      }),
+      columns,
       dataSource: data.map((i, index) => {
         return {
           ...i,

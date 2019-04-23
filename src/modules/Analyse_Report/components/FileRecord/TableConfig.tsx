@@ -25,7 +25,9 @@ import {
   MD5_NAME_SEARCH,
   JUDGE_DATA_INDEX,
   JUDGE_TEXT_TYPE,
-  JUDGE_TYPE
+  JUDGE_TYPE,
+  SOURCE_INDEX,
+  SOURCE_ID_INDEX,
 
 } from '../../ConstConfig'
 import Judge from '../../judge'
@@ -67,6 +69,8 @@ export const getColumns = ({
     [MD5_DATA_INDEX]: (md5) => { return <OverflowTextWrapper style={{ textAlign: "center" }}>{md5}</OverflowTextWrapper> },
     [FILE_TYPE_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
     [JUDGE_DATA_INDEX]: (value) => <Judge value={value}></Judge>,
+    [SOURCE_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
+    [SOURCE_ID_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
     [THREAT_TYPE_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
     [TIME_DATA_INDEX]: (time) => <div style={{ textAlign: "center" }}><TimesLabel value={[time]}></TimesLabel></div>,
     [THREAT_LEVEL_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
