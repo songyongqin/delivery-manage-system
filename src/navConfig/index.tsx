@@ -79,6 +79,7 @@ import {
   STRATEGY_URL,
 
   CONFIG_URL,
+  TYPICAL_CASE_URL,
 
   CONFIG_USER_MANAGER_URL,
 
@@ -469,6 +470,11 @@ export const _navConfig = [
         // ]
       },
     ]
+  },
+    {
+    link: TYPICAL_CASE_URL,
+    title:"典型案例",
+    // icon: <Indent space={1} />
   },
 ]
 

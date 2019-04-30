@@ -38,6 +38,8 @@ import getAuditCaughtPage from 'routes/Audit_Caught'
 import getThreatReportPage from 'routes/Threat_Report'
 import getSySConfigPage from 'routes/SysConfig'
 
+import getTypicalCasePage from 'routes/Typical_Case'
+
 import getAnalyseReportPage from 'routes/Analyse_Report'
 import getAnalyseReportDetail from 'routes/Analyse_Report_Detail'
 import getNodeMonitorPage from 'routes/Node_Monitor'
@@ -123,6 +125,7 @@ import {
   CONFIG_SYS_CONFIG_MONITOR_URL,
 
   CONFIG_SYS_CONFIG_WARN_URL,
+  TYPICAL_CASE_URL,
 
   CONFIG_WHITE_LIST, 
 } from 'routes/config/path'
@@ -386,6 +389,11 @@ export default ({ history, app }) => {
               exact
               component={getNodeMonitorPage(app, CONFIG_NODE_MONITOR_URL)}
               path={CONFIG_NODE_MONITOR_URL} >
+            </Route>
+            <Route
+              exact
+              component={getTypicalCasePage(app, TYPICAL_CASE_URL)}
+              path={TYPICAL_CASE_URL} >
             </Route>
           </Switch>
         </MainWrapper>

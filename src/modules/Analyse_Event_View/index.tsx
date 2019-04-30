@@ -256,7 +256,7 @@ class Page extends React.Component<any, any> {
       //   render: ( text, record, index ) => <div>{ index +1}</div>
       // },
       {
-        title:<ResetIcon onClick={ this.reset } >首次发生击时间</ResetIcon >,
+        title:<ResetIcon onClick={ this.reset } >首次发生时间</ResetIcon >,
         dataIndex: 'firstTime',
         render: text => <TimeTag num={ text } />
       },

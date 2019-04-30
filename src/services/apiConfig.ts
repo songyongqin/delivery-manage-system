@@ -256,7 +256,9 @@ const HttpApiConfig = {
 
   WHITE_LIST: '/whiteList',
 
-  WHITE_LIST_USE: '/whiteList/use'
+  WHITE_LIST_USE: '/whiteList/use',
+
+  TYPICAL_CASE_LIST: '/typical-case'
 
 }
 

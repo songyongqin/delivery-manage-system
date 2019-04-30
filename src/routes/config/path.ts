@@ -99,7 +99,9 @@ export const ROOT_URL = "/",
 
   CONFIG_SYS_CONFIG_WARN_URL = '/config/sys-config/warn',
 
-  CONFIG_NODE_MONITOR_URL = '/config/node/monitor'
+  CONFIG_NODE_MONITOR_URL = '/config/node/monitor',
+
+  TYPICAL_CASE_URL = '/typical/case'
 
 
 

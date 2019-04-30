@@ -31,7 +31,8 @@
     "/file-restore": true
   },
   "hiddenRouter":[
-    "/topo"
+    "/topo",
+    "/audit/assets"
   ],
   "adminOnly": [
     "/sys-config",
