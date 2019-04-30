@@ -9,17 +9,28 @@ export const TIME_DATA_INDEX = "time",
   SOURCE_PORT_DATA_INDEX = "sourcePort",
   TARGET_IP_DATA_INDEX = "targetIP",
   TARGET_PORT_DATA_INDEX = "targetPort",
-  URL_DATA_INDEX = "url",
-  HOST_DATA_INDEX = "host",
-  METHOD_DATA_INDEX = "method",
+  URL_DATA_INDEX = "httpUrl",
+  HOST_DATA_INDEX = "httpHost",
+  METHOD_DATA_INDEX = "httpMethod",
   CONTENT_TYPE_DATA_INDEX = "contentType",
   PROTOCOL_TYPE_DATA_INDEX = "protocolType",
-  REQUEST_DOMAIN_DATA_INDEX = "requestDomain",
-  REQUEST_IP_DATA_INDEX = "requestIP",
-  PACKAGE_TYPE_DATA_INDEX = "packageType",
-  SENDER_DATA_INDEX = "sender",
-  RECEIVE_DATA_INDEX = "receiver",
-  PROTOCOL_VERSION_DATA_INDEX = "protocolVersion"
+  REQUEST_DOMAIN_DATA_INDEX = "dnsRequestDomain",
+  REQUEST_IP_DATA_INDEX = "dnsRequestIP",
+  PACKAGE_TYPE_DATA_INDEX = "dnsPackageType",
+  SENDER_DATA_INDEX = "smtpSender",
+  RECEIVE_DATA_INDEX = "smtpReceiver",
+  PROTOCOL_VERSION_DATA_INDEX = "sshProtocolVersion",
+
+
+  FTP_DIRECTION_DATA_INDEX = 'ftpDirection',
+  FTP_CURRENT_LINE_DATA_INDEX = 'ftpCurrentLine',
+  FTP_PORT_LINE_DATA_INDEX = 'ftpPortLine',
+  SMB_NBSS_TYPE_DATA_INDEX = 'smbNbssType',
+  SMB_COMMAND_AND_CODE_DATA_INDEX = 'smbCommandAndCode',
+  DNP3_APP_FUNCTION_CODE_DATA_INDEX = 'dnp3AppFunctionCode',
+  DNP3_DATA_FUNCTION_CODE_DATA_INDEX = 'dnp3DataFunctionCode',
+  DNP3_TYPE_DATA_INDEX = 'dnp3Type',
+  MODBUS_FUNCTION_DATA_INDEX = 'modbusFunction'
 
 
 
@@ -28,10 +39,12 @@ export const HTTP = 'HTTP',
   DNS = "DNS",
   FTP = "FTP",
   SMTP = "SMTP",
+  SSH = "SSH",
   SMB = 'SMB',
-  SSH = "SSH";
+  DNP3 = 'DNP3',
+  MODBUS = 'modbus';
 
-export const protocolTypeList = [HTTP, TCP, DNS, FTP, SMTP, SSH];
+export const protocolTypeList = [HTTP, TCP, DNS, FTP, SMTP, SSH, SMB,DNP3, MODBUS ];
 
 export const dataIndexesConfig = {
   [HTTP]: [
@@ -74,6 +87,9 @@ export const dataIndexesConfig = {
     SOURCE_PORT_DATA_INDEX,
     TARGET_IP_DATA_INDEX,
     TARGET_PORT_DATA_INDEX,
+    FTP_DIRECTION_DATA_INDEX,
+    FTP_CURRENT_LINE_DATA_INDEX,
+    FTP_PORT_LINE_DATA_INDEX
   ],
   [SMTP]: [
     TIME_DATA_INDEX,
@@ -93,6 +109,36 @@ export const dataIndexesConfig = {
     TARGET_IP_DATA_INDEX,
     TARGET_PORT_DATA_INDEX,
     PROTOCOL_VERSION_DATA_INDEX
+  ],
+  [SMB]: [
+    TIME_DATA_INDEX,
+    THREATJUDGE_DATA_INDEX,
+    SOURCE_IP_DATA_INDEX,
+    SOURCE_PORT_DATA_INDEX,
+    TARGET_IP_DATA_INDEX,
+    TARGET_PORT_DATA_INDEX,
+    SMB_NBSS_TYPE_DATA_INDEX,
+    SMB_COMMAND_AND_CODE_DATA_INDEX
+  ],
+  [DNP3]: [
+    TIME_DATA_INDEX,
+    THREATJUDGE_DATA_INDEX,
+    SOURCE_IP_DATA_INDEX,
+    SOURCE_PORT_DATA_INDEX,
+    TARGET_IP_DATA_INDEX,
+    TARGET_PORT_DATA_INDEX,
+    DNP3_APP_FUNCTION_CODE_DATA_INDEX,
+    DNP3_DATA_FUNCTION_CODE_DATA_INDEX,
+    DNP3_TYPE_DATA_INDEX
+  ],
+  [MODBUS]: [
+    TIME_DATA_INDEX,
+    THREATJUDGE_DATA_INDEX,
+    SOURCE_IP_DATA_INDEX,
+    SOURCE_PORT_DATA_INDEX,
+    TARGET_IP_DATA_INDEX,
+    TARGET_PORT_DATA_INDEX,
+    MODBUS_FUNCTION_DATA_INDEX
   ]
 }
 export const dataLimitIndexesConfig = {
@@ -170,7 +216,18 @@ export const textConfig = {
   [PACKAGE_TYPE_DATA_INDEX]: "包类型",
   [SENDER_DATA_INDEX]: "发件人邮箱",
   [RECEIVE_DATA_INDEX]: "收件人邮箱",
-  [PROTOCOL_VERSION_DATA_INDEX]: "协议版本"
+  [PROTOCOL_VERSION_DATA_INDEX]: "协议版本",
+
+  [FTP_PORT_LINE_DATA_INDEX]: 'PORT命令',
+  [FTP_DIRECTION_DATA_INDEX]: '传输方向',
+  [FTP_CURRENT_LINE_DATA_INDEX]: 'FTP命令',
+
+  [SMB_NBSS_TYPE_DATA_INDEX]: 'NBSS消息类型',
+  [SMB_COMMAND_AND_CODE_DATA_INDEX]: 'SMB命令及状态',
+  [DNP3_APP_FUNCTION_CODE_DATA_INDEX]: '应用层功能码',
+  [DNP3_DATA_FUNCTION_CODE_DATA_INDEX]: '链路层功能码',
+  [DNP3_TYPE_DATA_INDEX]: '消息类型',
+  [MODBUS_FUNCTION_DATA_INDEX]: '功能码及其映射',
 }
 
 
