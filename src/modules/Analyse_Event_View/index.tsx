@@ -162,7 +162,7 @@ class Page extends React.Component<any, any> {
     reqArg.timestampRange = transformTimeStamp(reqArg.timestampRange)
     this.props.post(reqArg)
     .then(res => {
-      this.setState({ table: res, reqArg })
+      this.setState({ table: res, reqArg, clicked:[] })
     })
     .catch(err => console.error(err) )
   }
