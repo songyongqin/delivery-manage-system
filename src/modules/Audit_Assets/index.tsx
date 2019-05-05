@@ -29,7 +29,7 @@ class Page extends React.Component<any, any> {
 
     return (
       <div className={ styles.tabs } >
-        <Tabs>
+        <Tabs defaultActiveKey='assetsList' >
           <Tabs.TabPane tab="资产列表" key="assetsList">
             <Wrap >
               <AssetsList changeRecord={this.change}></AssetsList>

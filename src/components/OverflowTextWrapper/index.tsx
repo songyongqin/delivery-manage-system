@@ -23,6 +23,7 @@ export default class extends React.Component<Props, any>{
   render() {
     const { style = {}, children, trigger = "hover", content } = this.props
     return (
+      <div className={styles['popover']} >
       <Popover
         trigger={trigger}
         content={content || children}
@@ -43,6 +44,7 @@ export default class extends React.Component<Props, any>{
           {children}
         </p>
       </Popover>
+      </div>
     )
   }
 }

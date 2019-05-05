@@ -62,13 +62,14 @@ const renderer = {
     const leg = Math.ceil(value.length / (value.length <= 500 ? 3 : 3 * n));
     const arr = length => Array.from({ length }).map((v, k) => k);
     const content = (
-      <div>
+      <div  >
         {
-          arr(3 * n).map((i) => <span key={i}>{value.substring(leg * i, leg * (i + 1))}</span>)
+          arr(3 * n).map((i) => <span key={i} style={{ wordBreak: 'break-all' }}  >{value.substring(leg * i, leg * (i + 1))}</span>)
         }
       </div>
     );
-    return value.length <= 100 ? value : <OverflowTextWrapper content={content}>{value}</OverflowTextWrapper>
+    return value.length <= 100 ? <div  >{value}</div> : <OverflowTextWrapper content={content} >{value}</OverflowTextWrapper>
+    // return <div style={{ maxHeight: '4.5em', lineHeight:'1.5em', overflow:'hidden', breakAfter:'left'  }} >{ value }</div>
   }
 }
 const extraProps = {

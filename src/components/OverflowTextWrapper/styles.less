@@ -8,6 +8,7 @@
     /* 3 times the line-height to show 3 lines */
     height:4.2em;
     overflow:hidden;
+    word-break: break-all;
 }
 .overflow-text::after {
     content:"...";
@@ -19,4 +20,11 @@
     // padding:0 20px 1px 45px;
     // background:url(http://newimg88.b0.upaiyun.com/newimg88/2014/09/ellipsis_bg.png) repeat-y;
 }
+
+:global{
+  .ant-popover{
+    max-width: 80%;
+  }
+}
+
 
