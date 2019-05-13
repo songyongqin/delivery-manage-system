@@ -221,6 +221,8 @@ const HttpApiConfig = {
 
   ANALYSE_EVENT_VIEW: '/analyse/event-search',
 
+  ANALYSE_EVENT_SEARCH_PARMAS: '/analyse/event/search/params',
+
   ANALYSE_REPORT_FILE: "/analyse/report/file",
   ANALYSE_REPORT_MAIL: "/analyse/report/mail",
   ANALYSE_REPORT_URL: "/analyse/report/url",

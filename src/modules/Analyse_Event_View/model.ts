@@ -3,6 +3,7 @@ import {
     // fetchAnalyseView,
     getThreatAction,
     getThreatType,
+    getAnalyseTableParmas,
     postAnalyseView  } from './services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
 
@@ -12,6 +13,7 @@ export default {
     // fetch: commonEffectCreator(fetchAnalyseView),
     post: commonEffectCreator(postAnalyseView),
     get: commonEffectCreator(getThreatType),
+    getParmas:  commonEffectCreator(getAnalyseTableParmas),
     getThreatAction: commonEffectCreator(getThreatAction) 
   }
 }

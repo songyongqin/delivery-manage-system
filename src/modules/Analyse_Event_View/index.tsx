@@ -58,6 +58,10 @@ const mapDispatchToProps = dispatch => {
       type: `${ANALYSE_EVENT_VIEW}/getThreatAction`,
       payload
      }),
+     getParmas: payload => dispatch({
+      type: `${ANALYSE_EVENT_VIEW}/getParmas`,
+      payload
+     }),
     post: payload => dispatch({
       type: `${ANALYSE_EVENT_VIEW}/post`,
       payload
@@ -96,6 +100,7 @@ class Page extends React.Component<any, any> {
         page:1,
         timestampRange:getTodayTime()|| []
       },
+      tableParam:{},
       table:{
         total:0,
         data: []
@@ -109,9 +114,19 @@ class Page extends React.Component<any, any> {
 
   componentDidMount(){
     this.fetch({page:1})
-    this.getThretType()
-    this.getThreatAction()
+    // this.getThretType()
+    // this.getThreatAction()
+    this.getParmas(this.state.reqArg.timestampRange)
     window.onresize = debounce(this.resetHeight, 100)
+  }
+
+  getParmas = (timestampRange) => {
+    this.props.getParmas({ timestampRange }).then(res => {
+      this.setState({ tableParam: {
+        threatenBehavior: res.behaviors||[],
+        eventType: res.categorys ||[]
+      } })
+    })
   }
 
   resetHeight = () => {
@@ -245,9 +260,9 @@ class Page extends React.Component<any, any> {
 
   render() {
     
-    const {  filters, lastChangeTime, table, reqArg, tableKey, threatTypeArr, threatActionArr, pieHeight } = this.state
+    const {  filters, lastChangeTime, table, reqArg, tableKey, threatTypeArr, threatActionArr, pieHeight, tableParam } = this.state
 
-    const filterConfig = { ...this.props.config.constants.filter, eventType: threatTypeArr, threatenBehavior:threatActionArr }
+    const filterConfig = { ...this.props.config.constants.filter, eventType: threatTypeArr, threatenBehavior:threatActionArr, ...tableParam }
 
     const columns = [
       // {

@@ -26,17 +26,17 @@ const styles = require('./index.less')
 
 const initState = {
   data: [
-    {preReportUrl: '/static/',
-      img: '/static/1.png',
-      title: 'WannCryin',
-      abstract: `WannaCry（又叫Wanna Decryptor），一种“蠕虫式”的勒索病毒软件，大小3.3MB，由不法分子利用NSA（National Security Agency，美国国家安全局）泄露的危险漏洞“EternalBlue”（永恒之蓝）进行传播  。最新统计数据显示，100多个国家和地区超过10万台电脑遭到了勒索病毒攻击、感染。 勒索病毒是自熊猫烧香以来影响力最大的病毒之一。WannaCry勒索病毒全球大爆发，至少150个国家、30万名用户中招，造成损失达80亿美元，已经影响到金融，能源，医疗等众多行业，造成严重的危机管理问题。`,
-      report: ['1.pdf', '1.pdf'],
-      videoUrl: '/static/1.mp4',
-      download: {
-        url: '/static/1.mp4',
-        name: '1.mp4'
-      }
-    }
+    // {preReportUrl: '/static/',
+    //   img: '/static/1.png',
+    //   title: 'WannCryin',
+    //   abstract: `WannaCry（又叫Wanna Decryptor），一种“蠕虫式”的勒索病毒软件，大小3.3MB，由不法分子利用NSA（National Security Agency，美国国家安全局）泄露的危险漏洞“EternalBlue”（永恒之蓝）进行传播  。最新统计数据显示，100多个国家和地区超过10万台电脑遭到了勒索病毒攻击、感染。 勒索病毒是自熊猫烧香以来影响力最大的病毒之一。WannaCry勒索病毒全球大爆发，至少150个国家、30万名用户中招，造成损失达80亿美元，已经影响到金融，能源，医疗等众多行业，造成严重的危机管理问题。`,
+    //   report: ['1.pdf', '1.pdf'],
+    //   videoUrl: '/static/1.mp4',
+    //   download: {
+    //     url: '/static/1.mp4',
+    //     name: '1.mp4'
+    //   }
+    // }
   ]
 }
 
