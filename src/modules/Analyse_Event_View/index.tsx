@@ -203,6 +203,7 @@ class Page extends React.Component<any, any> {
       lastChangeTime: new Date().getTime()
     })
     this.fetch({ page:1, timestampRange: filters.timestampRange })
+    this.getParmas(filters.timestampRange)
   }
 
   pieSelect = obj => {

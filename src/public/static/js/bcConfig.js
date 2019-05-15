@@ -6,7 +6,7 @@ require.config({
 });
 define(['jquery'], function ($) {
   //动态是1，静态是0
-  let conf = 0;
+  let conf = 1;
   let data;
   if (conf == 0) {
     data = {
