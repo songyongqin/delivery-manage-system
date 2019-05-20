@@ -2,6 +2,7 @@ import { LAYOUT_NAMESPACE } from 'constants/model'
 import { DARK_THEME, LIGHT_THEME } from 'constants/theme'
 import { getCache, setCache, throttle } from 'utils'
 import combineNamespace from 'domainUtils/combineNamespace'
+import { getTodayTime } from 'utils/getInitTime'
 
 const LAYOUT_CACHE_NAMESPACE = combineNamespace("@@__layout__@@")
 
@@ -20,7 +21,9 @@ const getInitState = () => {
     return {
       ...layout,
       initRoutes: [],
-      overdueTipVisible: false
+      overdueTipVisible: false,
+
+      timestampRange: getTodayTime()
     }
   } catch (e) {
     return defaultInitState
@@ -56,6 +59,10 @@ const reducers = {
       ...preState,
       overdueTipVisible: payload
     }
+  },
+
+  changeSelectTime: (state, { payload }) => {
+    return { ...state, timestampRange: payload }
   }
 }
 

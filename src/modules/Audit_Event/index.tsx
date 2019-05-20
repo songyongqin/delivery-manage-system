@@ -7,10 +7,11 @@ import { last } from 'utils'
 import { getAppConfig } from 'domain/app'
 import { get } from 'utils'
 import { If, Choose, When, Otherwise } from 'components/ControlStatements'
-import { AUDIT_EVENT_NAMESPACE } from 'constants/model'
+import { AUDIT_EVENT_NAMESPACE , LAYOUT_NAMESPACE} from 'constants/model'
 @extraConnect(
   state => {
     return {
+      state,
       initialFilters: state[AUDIT_EVENT_NAMESPACE].initialFilters
     }
   },
@@ -30,7 +31,7 @@ class Page extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
-      initialFilters: this.props.initialFilters,
+      initialFilters: {...this.props.initialFilters, ...this.props.state[LAYOUT_NAMESPACE].timestampRange|| []},
       lastReqTime: 0,
       // activeKey: "net-basic"
     }
@@ -57,7 +58,8 @@ class Page extends React.Component<any, any> {
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
           <DateRangePicker
-            value={initialFilters.timestampRange}
+            value={this.props.state[LAYOUT_NAMESPACE].timestampRange|| []}
+            global
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
         </div>

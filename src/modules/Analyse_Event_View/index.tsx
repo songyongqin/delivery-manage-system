@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import WithAnimateRender from 'components/WithAnimateRender'
-import { ANALYSE_EVENT_VIEW } from 'constants/model'
+import { ANALYSE_EVENT_VIEW, LAYOUT_NAMESPACE } from 'constants/model'
 import DateRangePicker from 'domainComponents/DateRangePicker'
 import Count from './components/Count'
 import WithTable from 'components/WithTable'
@@ -92,13 +92,13 @@ class Page extends React.Component<any, any> {
       threatActionArr: [],
       lastChangeTime: 0,
       filters: {
-        timestampRange:getTodayTime()|| []
+        timestampRange:this.props.state[LAYOUT_NAMESPACE].timestampRange|| []
       },
       reqArg:{
         ...initArg,
         searchValue:'',
         page:1,
-        timestampRange:getTodayTime()|| []
+        timestampRange:this.props.state[LAYOUT_NAMESPACE].timestampRange|| []
       },
       tableParam:{},
       table:{
@@ -342,6 +342,7 @@ class Page extends React.Component<any, any> {
           <DateRangePicker
             value={filters.timestampRange}
             key={ +new Date() }
+            global
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
         </div>

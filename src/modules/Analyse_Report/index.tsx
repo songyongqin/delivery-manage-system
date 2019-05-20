@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import WithAnimateRender from 'components/WithAnimateRender'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import TimestampPicker from 'components/TimestampPicker'
+import {  LAYOUT_NAMESPACE } from 'constants/model'
 import { NAMESPACE, NAMESPACE_FILE, NAMESPACE_MAIL, NAMESPACE_URL, TAB_FILE, TAB_URL } from './ConstConfig'
 import FileRecord from './components/FileRecord'
 import Spin from 'domainComponents/Spin'
@@ -26,7 +27,7 @@ class Page extends React.Component<any, any> {
     super(props);
     this.state = {
       keyValue: "file",
-      timestampRange: getTodayTime()|| []
+      timestampRange: this.props.state[LAYOUT_NAMESPACE].timestampRange|| []
     }
   }
   componentDidMount() {

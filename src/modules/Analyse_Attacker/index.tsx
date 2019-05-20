@@ -3,7 +3,7 @@ import WithAnimateRender from 'components/WithAnimateRender'
 import DateRangePicker from 'domainComponents/DateRangePicker'
 import WithTable from 'components/WithTable'
 import Count from './components/Count'
-import { ANALYSE_ATTACKER_VIEW } from 'constants/model'
+import { ANALYSE_ATTACKER_VIEW, LAYOUT_NAMESPACE } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
 import { Pagination ,Tag, Input } from 'antd'
@@ -71,11 +71,11 @@ class Page extends React.Component<any, any> {
     this.state = {
       lastChangeTime: 0,
       tableData:[],
-      reqArg: {...initArg, page:1, searchValue:'', timestampRange:getTodayTime()||[] },
+      reqArg: {...initArg, page:1, searchValue:'', timestampRange:this.props.state[LAYOUT_NAMESPACE].timestampRange|| [] },
       tableKey: '0attacked',
       countKey: 'oattackercount',
       total:0,
-      timestampRange:getTodayTime()||[],
+      timestampRange:this.props.state[LAYOUT_NAMESPACE].timestampRange|| [],
       tableLoading: false,
       pieHeight:200
     }
@@ -228,6 +228,7 @@ class Page extends React.Component<any, any> {
           <DateRangePicker
             value={timestampRange}
             key={ +new Date() }
+            global
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
         </div>

@@ -2,8 +2,9 @@ import { DatePicker } from 'antd'
 import * as React from 'react'
 import moment from 'moment'
 import { Calendar } from 'components/IconSvg'
+import { LAYOUT_NAMESPACE } from 'constants/model'
 import { getOtherSenconds } from 'utils/getInitTime'
-
+import extraConnect from 'domainUtils/extraConnect'
 const disabledDate = (current) => {
   return current && (current.valueOf()) > Date.now()
 }
@@ -11,13 +12,16 @@ const disabledDate = (current) => {
 // const getDayNum = num => num*24*60*60
 
 // const getOtherSenconds = num => moment().second( -getDayNum(num))
-
+@extraConnect()
 export default class DateRangePicker extends React.Component<any, any> {
   constructor(props) {
     super(props)
   }
   onChange = (timestampRange) => {
     const { onChange } = this.props
+    if(this.props.global){
+      this.props.dispatch({ type: `${LAYOUT_NAMESPACE}/changeSelectTime`, payload: timestampRange })
+    }
     onChange && onChange({ timestampRange })
   }
   render() {
@@ -48,7 +52,8 @@ export default class DateRangePicker extends React.Component<any, any> {
           "过去7天": [moment().subtract(6, "days"), moment().subtract(0, 'days')],
           "过去14天": [moment().subtract(13, "days"), moment().subtract(0, 'days')],
           "过去30天": [moment().subtract(29, "days"), moment().subtract(0, 'days')],
-          "过去三个月": [moment().subtract(89, "days"), moment().subtract(0, 'days')]
+          "过去三个月": [moment().subtract(89, "days"), moment().subtract(0, 'days')],
+          // "全部": [moment(0),moment().subtract(0, 'days')]
         }} />
     )
   }

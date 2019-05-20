@@ -2,7 +2,7 @@ import * as React from 'react'
 import WithAnimateRender from 'components/WithAnimateRender'
 import DateRangePicker from 'domainComponents/DateRangePicker'
 import CountItem from 'components/CountItem'
-import { ANALYSE_THREAT_VIEW } from 'constants/model'
+import { ANALYSE_THREAT_VIEW, LAYOUT_NAMESPACE } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
 import Spin from 'domainComponents/Spin'
 import { Icon ,Tabs, Input, Row, Col } from 'antd'
@@ -84,7 +84,7 @@ class Page extends React.Component<any, any> {
     super(props);
     this.state = {
       filters: {
-        timestampRange:getTodayTime()|| []
+        timestampRange:this.props.state[LAYOUT_NAMESPACE].timestampRange|| []
       },
       // tableData:[],
       // // reqArg: {...initArg},
@@ -95,9 +95,9 @@ class Page extends React.Component<any, any> {
       familyCount:0,
       loopholeCount:0,
       connectC2Count:0,
-      reqFamily:{ ...initReqFamily, searchValue:'',page:1, timestampRange:getTodayTime()|| [] },
+      reqFamily:{ ...initReqFamily, searchValue:'',page:1, timestampRange:this.props.state[LAYOUT_NAMESPACE].timestampRange|| [] },
       familyTableKey:0,
-      reqloophole:{ ...initReqloophole, searchValue:'', page:1, timestampRange:getTodayTime()|| [] },
+      reqloophole:{ ...initReqloophole, searchValue:'', page:1, timestampRange:this.props.state[LAYOUT_NAMESPACE].timestampRange|| [] },
       loopholeTableKey:0,
       familyTotal:0,
       familyData:[],
@@ -251,6 +251,7 @@ class Page extends React.Component<any, any> {
           <DateRangePicker
             value={filters.timestampRange}
             key={ +new Date() }
+            global
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
         </div>
