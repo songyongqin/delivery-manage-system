@@ -101,12 +101,12 @@ const Item = ({ data }) => {
           <Col  span={6} style={{  textAlign:'right', fontWeight:'bold', whiteSpace:'pre' }} >
             { data? data.name+':   ' : '' }
           </Col >
-          <Col span={18}  >{ 
+          <Col span={18}  style={{ overflow:'hidden', whiteSpace:'normal' }} >{ 
             Array.isArray(data.value) ? 
             data.value.map((items,index) =>
               <span  key={ index }  >
                 { items ? <ArrTag text={ items } /> : items}
-              </span >) : data.value
+              </span >) : <Tooltip title={ data.value } >{data.value}</Tooltip>
            }</Col >
         </Row>
   )
