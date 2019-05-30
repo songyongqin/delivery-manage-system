@@ -53,7 +53,7 @@ export default class DateRangePicker extends React.Component<any, any> {
           "过去14天": [moment().subtract(13, "days"), moment().subtract(0, 'days')],
           "过去30天": [moment().subtract(29, "days"), moment().subtract(0, 'days')],
           "过去三个月": [moment().subtract(89, "days"), moment().subtract(0, 'days')],
-          // "全部": [moment(0),moment().subtract(0, 'days')]
+          "全部": [moment(0),moment().subtract(0, 'days')]
         }} />
     )
   }
