@@ -431,7 +431,6 @@ export default class EmailSend extends React.Component<any, any>{
   render() {
     const { loading } = this.props
     const { data } = this.state
-    console.log(data)
     return (
       <Spin spinning={loading}>
         <WrappedForm

@@ -245,6 +245,10 @@
         {
           "value":"Intention",
           "text":"目的"
+        },
+        {
+          "value":"Install",
+          "text":"安装"
         }
       ]
     },
