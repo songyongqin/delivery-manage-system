@@ -16,7 +16,7 @@ export const threatEventConfig = [
     dataIndex: 'detailDescription'
    },
    {  
-    title:'攻击类型',
+    title:'威胁类型',
     dataIndex: 'attackType'
    },
    {  
@@ -28,7 +28,7 @@ export const threatEventConfig = [
     dataIndex: 'attackerIP'
    },
    {  
-    title:'受害资产ip',
+    title:'受攻击资产ip',
     dataIndex: 'attatcedAssetIp'
    },
    {  
