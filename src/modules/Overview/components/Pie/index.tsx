@@ -5,6 +5,7 @@ import React from 'react'
 import { Row, Col } from 'antd';
 // import { isArray, sum } from 'lodash'
 import AnalysePie from 'components/AnalysePie'
+import addComma from 'utils/addComma'
 const styles = require('./index.less')
 
 
@@ -67,11 +68,25 @@ const Pie = ({ data}) => {
   
   let obj = getThreatEventConfig( data.eventBehaviorCount, data.threatLevelCount )
   let series = obj&&obj['series']&&obj['series']
+  const tooltip = {
+    trigger: 'item',
+    // formatter: "{b} : {c} ({d}%)"
+    formatter: params => {
+      let num = addComma(params.value)
+      let str = `${params.name} :<br />${num} (${params.percent}%)`
+      return str
+    },
+    position: function (point, params, dom, rect, size) {
+      // 固定在顶部
+      console.log(point)
+      return [point[0]+10, point[1]+10];
+  }
+  }
   return (
     <Row justify={ 'space-between' } gutter={ 20 } style={{ height: "100%" }} >
       <Col span={6} style={{ height: "100%" }}>
         <Wrap>
-          <PieCharts addNum  data={ data.eventBehaviorCount } titles={{ text:'威胁事件', link: '/#/analyse/event', textAlign: 'left', x:'left'  }} config={{series }}  />
+          <PieCharts addNum  data={ data.eventBehaviorCount } titles={{ text:'威胁事件', link: '/#/analyse/event', textAlign: 'left', x:'left'  }} config={{series, tooltip }}  />
         </Wrap>
       </Col>
       <Col span={6} style={{ height: "100%" }}>
