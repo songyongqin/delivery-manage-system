@@ -5,6 +5,8 @@ import { Calendar } from 'components/IconSvg'
 import { LAYOUT_NAMESPACE } from 'constants/model'
 import { getOtherSenconds } from 'utils/getInitTime'
 import extraConnect from 'domainUtils/extraConnect'
+const styles = require('./index.less')
+
 const disabledDate = (current) => {
   return current && (current.valueOf()) > Date.now()
 }
@@ -31,9 +33,10 @@ export default class DateRangePicker extends React.Component<any, any> {
         style={{ width: "300px" }}
         disabled={loading}
         onChange={this.onChange}
+        className={ styles.clander }
         allowClear={true}
         value={value}
-        suffixIcon={ <Calendar style={{ color: '#4F5DCA', verticalAlign: 'text-top', width:18 }} /> }
+        suffixIcon={ <Calendar style={{ color: '#4F5DCA' }} /> }
         disabledDate={disabledDate}
         placeholder={["今天", "今天"]}
         ranges={{

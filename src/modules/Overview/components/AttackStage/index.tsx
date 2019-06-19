@@ -32,7 +32,8 @@ const getAixs = (data) => {
   ],
   xAxis : [
       {
-          type : 'value'
+          type : 'value',
+          name: '(次数)',
       }
   ],
   grid: {
@@ -60,8 +61,7 @@ const getAixs = (data) => {
               show: true,
               // position: 'top'
               position: 'right',
-              offset: [7, 0],
-              distance: 10,
+              color: 'rgba(0,0,0,0.65)',
               align: 'left',
               formatter: function(params){
                 let num = params.value || 0
@@ -70,6 +70,7 @@ const getAixs = (data) => {
               // rotate: 90
           }
       },
+
     }
 ]
   }
