@@ -45,14 +45,14 @@ export default {
     "development": {
       "extraBabelPlugins": [
         "dva-hmr",
-        "transform-decorators-legacy",
+        // "transform-decorators-legacy",
         // ["import", { "libraryName": "antd", "style": true }]
       ]
     },
     "production": {
       enableSourcemaps: true,
       "extraBabelPlugins": [
-        "transform-decorators-legacy",
+        // "transform-decorators-legacy",
         // ["import", { "libraryName": "antd", "style": true }]
       ]
     }
