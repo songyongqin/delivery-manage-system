@@ -43,7 +43,7 @@ const MapDispatchToProps = dispatch => {
      })
   }
 }
-const Num = 45
+const Num = 145
 const WrapStr = (text, num=Num) => text&&text.substr&&text.substr(0,num) + '...' || ''
 let cloumns = [
   {
@@ -54,7 +54,7 @@ let cloumns = [
   {
     dataIndex:'behaviorDescription',
     title:'行为描述',
-    width:180,
+    width:380,
     render: text => <div  style={{ wordWrap: 'break-word', wordBreak: 'break-all' }} >{ text&&text.length&&text.length>Num ? <Tooltip title={ text } >{WrapStr(text)}</Tooltip> : text }</div>
   },
   {
