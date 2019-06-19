@@ -71,17 +71,17 @@ const Pie = ({ data}) => {
     <Row justify={ 'space-between' } gutter={ 20 } style={{ height: "100%" }} >
       <Col span={6} style={{ height: "100%" }}>
         <Wrap>
-          <PieCharts data={ data.eventBehaviorCount } titles={{ text:'威胁事件', link: '/#/analyse/event', textAlign: 'left', x:'left'  }} config={{series }}  />
+          <PieCharts addNum  data={ data.eventBehaviorCount } titles={{ text:'威胁事件', link: '/#/analyse/event', textAlign: 'left', x:'left'  }} config={{series }}  />
         </Wrap>
       </Col>
       <Col span={6} style={{ height: "100%" }}>
-      <AnalysePie data={ data.attackTypeCount } text={ '威胁类型' } link={ '/#/analyse/attacker' } />
+      <AnalysePie data={ data.attackTypeCount } text={ '威胁类型' } link={ '/#/analyse/attacker' } addNum />
       </Col>
       <Col span={6} style={{ height: "100%" }}>
-        <AnalysePie data={ data.assetsTypeCount } text={ '受攻击资产状态' } link={ '/#/analyse/attacked-assets' } />
+        <AnalysePie data={ data.assetsTypeCount } text={ '受攻击资产状态' } link={ '/#/analyse/attacked-assets' } addNum />
       </Col>
       <Col span={6} style={{ height: "100%" }}>
-        <AnalysePie data={ data.familyCount } text={ '威胁家族' } link={ '/#/analyse/threat' } />
+        <AnalysePie data={ data.familyCount } text={ '威胁家族' } link={ '/#/analyse/threat' } addNum />
       </Col>
     </Row>
   )

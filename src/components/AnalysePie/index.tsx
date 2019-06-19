@@ -34,10 +34,11 @@ const Total = ({ num }) => {
 
 const addComma = num => (num+'').replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g,'$1,')
 
-const AnalysePie = ({ data, text, link='#'  }) => {
+const AnalysePie = ({ data, text, link='#' , addNum=false }) => {
+  console.log('xx', addNum)
   return (
     <Wrap>
-        <PieCharts data={ data } titles={{ text, link }} config={{ title: { x:'left' } }}   />
+        <PieCharts data={ data } titles={{ text, link }} config={{ title: { x:'left' } }} addNum={ addNum }   />
         <Total num={ getTotal(data) } />
     </Wrap>
   )

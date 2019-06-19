@@ -10,7 +10,7 @@ import wrapStr from 'utils/wrapStr'
 import addComma from 'utils/addComma'
 import dataSetName from 'utils/dataSetName'
 import mergeWith from 'lodash/mergeWith'
-
+import transfromNum from 'utils/transformNum'
 const DARK_THEME = 'dark'
 const LIGHT_THEME = 'light'
 
@@ -33,7 +33,16 @@ const config = {
   }
 }
 
-let getOption = ({ data ,theme, titles={} }) =>  ({
+const getNum =( arr, name )=> {
+  let num = 0
+  if(arr&&arr.length){
+    let obj = arr.find(i => i.name===name )
+    num = obj['value']
+  }
+  return num
+}
+
+let getOption = ({ data ,theme, titles={}, addNum=false }) =>  ({
   title: {
     text: '',
     x: 'center',
@@ -64,7 +73,8 @@ let getOption = ({ data ,theme, titles={} }) =>  ({
     data: Array.isArray(data) ? data.map(i => i.name) : [],
     textStyle: config[theme],
     formatter: function (name) {
-      return   `{a|${wrapStr(name, 15)}}`
+      let num = getNum(data, name) 
+      return  addNum ?  `{a|${wrapStr(name, 6)}  ${transfromNum(num)}}`: `{a|${wrapStr(name, 15)}}`
     },
   //   formatter: [
   //     '{a|这段文本采用样式a}',
@@ -114,11 +124,11 @@ let getOption = ({ data ,theme, titles={} }) =>  ({
 const color = ['#89A6FF','#7371E8', '#A27CFF', '#71AEE8', '#7DE1FF','#CCCCCC']
 
 
-const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents }) => {
+const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents, addNum=false }) => {
   const datas = dataSetName(data)
   // let option = { ...getOption({data:datas, theme, titles}), ...config, color }
   let isPieTwo = config&&config['series']&&config['series'].length===2 || false
-  let option = isPieTwo ? { ...getOption({data:datas, theme, titles}), ...config, color } : { ...mergeWith(getOption({data:datas, theme, titles}), config), color }
+  let option = isPieTwo ? { ...getOption({data:datas, theme, titles, addNum}), ...config, color } : { ...mergeWith(getOption({data:datas, theme, titles, addNum}), config), color }
   if(Array.isArray(data) ){
     if(onEvents){
       return (
