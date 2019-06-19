@@ -5,7 +5,7 @@ import * as React from 'react'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/graphic'
-
+import last from 'lodash/last'
 const DARK_THEME = 'dark'
 const LIGHT_THEME = 'light'
 
@@ -22,7 +22,7 @@ interface props{
   theme?: string
   title: string
   xAxis: Array<string>
-  series: seriesItem
+  series: seriesItem[]
   unit: string
 }
 
@@ -44,6 +44,7 @@ const getSeries = arr => {
     let array = arr.map(item =>{
        item['type'] = 'line'
        item['smooth']= true;
+       item['symbol'] = 'circle'
       //  item['stack'] = '总量'
       //  item['areaStyle'] = {normal:{}}
        return item
@@ -108,6 +109,19 @@ class BarCharts extends React.Component<props, any>{
             top:'12%',
             data:getLegend(series),
             type:'scroll',
+            itemGap: 20,
+            formatter: function(name){
+              let value = 0;
+              if(series&&series.length){
+                let obj = series.find(i => i.name===name)
+                if(obj.data&&obj.data.length){
+                  
+                  value = last(obj.data)
+                }
+              }
+              // return isSpeed ? `${name} ${value} ${unitL}`: name
+              return `${name}(${value})`
+            }
         },
         // toolbox: {
         //     feature: {

@@ -2,7 +2,7 @@ import 'babel-polyfill'
 import dva from 'dva'
 import createLoading from 'dva-loading'
 import createLastEffectTime from 'domainUtils/dvaLastEffectTime'
-import createHistory from 'history/createBrowserHistory'
+
 import LayoutModel from 'models/layout'
 import DomainUserModel from 'models/domainUser'
 import RecordOfCreateVMModel from 'modules/Manager_Virtual/models/recordOfCreateVM'
@@ -14,13 +14,14 @@ import * as React from 'react'
 const router = require('./router').default
 import { setAppInstance } from 'domain/instance'
 
+// const createHistory = require("history").createHashHistory
+
 //output versionInfo in Console panel
 initVersionInfo()
 
 
 // 1.history
 const app = dva({
-  // history: createHistory(),
   onError: onError
 })
 

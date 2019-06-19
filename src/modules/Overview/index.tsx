@@ -15,6 +15,8 @@ import WithTable from 'components/WithTable'
 import Tree from './components/Tree'
 import { getTodayTime } from 'utils/getInitTime'
 import debounce from 'lodash/debounce'
+import AttackState from './components/AttackStage'
+import 'echarts/lib/component/legendScroll'
 const css = require('./index.less')
 
 const MapStateToProps = state => {
@@ -94,6 +96,7 @@ class Page extends React.Component<any, any> {
       //   xAxis:[],
       //   unit:''
       // },
+      attackStageAnalyse:[], //攻击阶段分析
       applicationFlow:{
         series:[],
         xAxis:[],
@@ -169,7 +172,7 @@ class Page extends React.Component<any, any> {
   }
 
   render() {
-    const { applicationFlow, filters, table, pieHeight, lineHeight } = this.state
+    const { applicationFlow, filters, table, pieHeight, lineHeight, attackStageAnalyse } = this.state
     const { countLoading, flowLoading, eventLoading } = this.props
     return (
       <div style={{ position: "relative" }}>
@@ -198,18 +201,21 @@ class Page extends React.Component<any, any> {
               </Col>
               <Col span={12}>
               <div >
-              <Wrap style={{  height: lineHeight,   overflowY:'auto', overflowX:'hidden' }} >
-                <div>
-                  <h2 style={{ display:'inline-block', fontWeight: 900,padding:15, fontSize:"14px", fontFamily:"Arial" }} >最新高危事件</h2>
-                  <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:40, marginTop:10}} >{ `查看更多威胁事件 >` }</a>
-                </div>
-                <Spin spinning={ eventLoading }  >
-                  <WithTable tableData={ table.data } config={ cloumns } />
-                </Spin>
+              <Wrap style={{  height: lineHeight}} >
+                <AttackState data={ attackStageAnalyse } />
               </Wrap>
               </div>
               </Col>
-            </Row>
+            </Row>,
+            <Wrap style={{   overflowY:'auto', overflowX:'hidden', marginTop:20 }} key='threat-event' >
+              <div>
+                <h2 style={{ display:'inline-block', fontWeight: 900,padding:15, fontSize:"14px", fontFamily:"Arial" }} >最新高危事件</h2>
+                <a href='/#/analyse/event' style={{ textDecoration:'none', float:'right', marginRight:40, marginTop:10}} >{ `查看更多威胁事件 >` }</a>
+              </div>
+              <Spin spinning={ eventLoading }  >
+                <WithTable tableData={ table.data } config={ cloumns } />
+              </Spin>
+            </Wrap>
           ])
         }
       </div>
