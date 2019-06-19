@@ -7,7 +7,7 @@ import Pie from './components/Pie'
 import Spin from 'domainComponents/Spin'
 import { OVERVIEW_STATISTICS_COUNT } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
-import { Input, Row, Col  } from 'antd'
+import { Input, Row, Col, Tooltip  } from 'antd'
 import Line from './components/Line/AsyncLineCharts'
 import TimeTag from 'components/TimeTag'
 import LevelTag from 'components/LevelTag'
@@ -43,7 +43,8 @@ const MapDispatchToProps = dispatch => {
      })
   }
 }
-
+const Num = 45
+const WrapStr = (text, num=Num) => text&&text.substr&&text.substr(0,num) + '...' || ''
 let cloumns = [
   {
     dataIndex:'latelyTime',
@@ -53,6 +54,8 @@ let cloumns = [
   {
     dataIndex:'behaviorDescription',
     title:'行为描述',
+    width:180,
+    render: text => <div  style={{ wordWrap: 'break-word', wordBreak: 'break-all' }} >{ text&&text.length&&text.length>Num ? <Tooltip title={ text } >{WrapStr(text)}</Tooltip> : text }</div>
   },
   {
     dataIndex:'eventType',
