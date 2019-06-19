@@ -17,7 +17,6 @@ import {  ANALYSE_ATTACK_DETAIL_URL,
           ANALYSE_REPORT_URL,   
           ANALYSE_ATTACKED_ASSETS_DETAL_URL } from 'routes/config/path'
 import LevelTag from 'components/LevelTag'
-import { getTodayTime } from 'utils/getInitTime'
 import { momentToTimeStampRange } from 'utils/moment'
 import transformTimeStamp from 'utils/transformTimeStamp'
 import ResetIcon from 'components/ResetIcon' 

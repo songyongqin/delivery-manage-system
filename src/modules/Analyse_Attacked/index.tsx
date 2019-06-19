@@ -21,7 +21,6 @@ import {
   // levelFilter,
   limit
 } from './constants'
-import { getWeekTime, getTodayTime } from 'utils/getInitTime'
 import InputSearch from 'components/InputSearch'
 const styles = require('./index.less')
 

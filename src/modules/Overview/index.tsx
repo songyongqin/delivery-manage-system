@@ -13,7 +13,7 @@ import TimeTag from 'components/TimeTag'
 import LevelTag from 'components/LevelTag'
 import WithTable from 'components/WithTable'
 import Tree from './components/Tree'
-import { getTodayTime } from 'utils/getInitTime'
+import { getInitTimeMonent } from 'utils/getInitTime'
 import debounce from 'lodash/debounce'
 import AttackState from './components/AttackStage'
 import 'echarts/lib/component/legendScroll'
@@ -23,7 +23,8 @@ const MapStateToProps = state => {
   return{
     countLoading: state.loading.effects[`${OVERVIEW_STATISTICS_COUNT}/fetchCount`],
     flowLoading: state.loading.effects[`${OVERVIEW_STATISTICS_COUNT}/fetchFlow`],
-    eventLoading: state.loading.effects[`${OVERVIEW_STATISTICS_COUNT}/fetchEvent`]
+    eventLoading: state.loading.effects[`${OVERVIEW_STATISTICS_COUNT}/fetchEvent`],
+    state
   }
 }
 
@@ -92,7 +93,7 @@ class Page extends React.Component<any, any> {
         familyCount: [],
       },
       filters: {
-        timestampRange:getTodayTime()|| []
+        timestampRange:getInitTimeMonent(props)|| []
       },
       // networkFlow:{
       //   series:[],
@@ -177,6 +178,7 @@ class Page extends React.Component<any, any> {
   render() {
     const { applicationFlow, filters, table, pieHeight, lineHeight, attackStageAnalyse } = this.state
     const { countLoading, flowLoading, eventLoading } = this.props
+    console.log(this.props)
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>

@@ -13,7 +13,6 @@ import LoopholeTable from './components/LoopholeTable'
 import { SelectArr } from './constants'
 import tranformParmToObj from 'utils/tranformParmToObj' 
 import { limit } from './constants'
-import { getWeekTime, getTodayTime } from 'utils/getInitTime'
 import InputSearch from 'components/InputSearch'
 import { ThreatFamliy, Bug, Cc  } from 'components/IconSvg'
 const styles = require('./index.less')

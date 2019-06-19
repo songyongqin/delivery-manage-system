@@ -260,7 +260,9 @@ const HttpApiConfig = {
 
   WHITE_LIST_USE: '/whiteList/use',
 
-  TYPICAL_CASE_LIST: '/typical-case'
+  TYPICAL_CASE_LIST: '/typical-case',
+
+  CONFIG_TIME: '/config/time'
 
 }
 

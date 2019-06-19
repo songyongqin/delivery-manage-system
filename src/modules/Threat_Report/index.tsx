@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import WithAnimateRender from 'components/WithAnimateRender'
 import DateRangePicker from 'domainComponents/DateRangePicker'
 import { Button ,Tag, Input } from 'antd'
-import { getTodayTime } from 'utils/getInitTime'
+import { getInitTimeMonent } from 'utils/getInitTime'
 import Pages from './compoents/Pages'
 // import html2canvas from 'html2canvas'
 // import * as html2canvas from './compoents/html2canvs'
@@ -21,7 +21,8 @@ const h2c = require('./compoents/html2canvas.min.js')
 
 const mapStateProps = state => {
   return {
-      mini: state.layout.navMini
+      mini: state.layout.navMini,
+      state
     }
 }
 
@@ -30,7 +31,7 @@ class ThreatReport extends Component<any,any>{
   constructor(props){
     super(props)
     this.state={
-      timestampRange:getTodayTime()||[],
+      timestampRange:getInitTimeMonent(props),
       countKey:0,
       isLoading: false,
     }

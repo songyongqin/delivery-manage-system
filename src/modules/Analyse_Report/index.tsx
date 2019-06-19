@@ -11,7 +11,6 @@ import FileRecord from './components/FileRecord'
 import Spin from 'domainComponents/Spin'
 const styles = require("./styles.less")
 const TabPane = Tabs.TabPane
-import { getTodayTime } from 'utils/getInitTime'
 
 const getMd5 = str => {
   if(str&& typeof str==='string'&& str.indexOf('=')!==-1){

@@ -36,7 +36,8 @@ export default {
     "/strategy": proxyServer,
     "/node":proxyServer,
     "/whiteList": proxyServer,
-    "/typical-case": proxyServer
+    "/typical-case": proxyServer,
+    "/config": proxyServer
   },
   "extraBabelPlugins": [
     ["import", { "libraryName": "antd", "style": true }]

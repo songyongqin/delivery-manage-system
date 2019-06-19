@@ -19,7 +19,6 @@ import ResetIcon from 'components/ResetIcon'
 import {
   limit
 } from './constants'
-import { getWeekTime, getTodayTime } from 'utils/getInitTime'
 import TableTime from 'components/TableTime'
 import transformTimeStamp from 'utils/transformTimeStamp'
 import fetch from 'dva/fetch'
@@ -58,7 +57,7 @@ const initArg = {
   attackerIP:'',
   attackerDomainName:'',
   family:'',
-  timestampRange:getTodayTime()||[]
+  timestampRange:[]
 }
 
 @WithTableConfig(path.layoutConfig.analyseAttacker)
