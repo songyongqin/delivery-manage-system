@@ -300,10 +300,10 @@ class Page extends React.Component<any, any> {
         title:'攻击阶段',
         dataIndex: 'attackStage'
       },
-      {
-        title:'资产状态',
-        dataIndex: 'assetStates'
-      },
+      // {
+      //   title:'资产状态',
+      //   dataIndex: 'assetStates'
+      // },
       {
         title:'攻击者资产',
         dataIndex: 'attackerIP',
@@ -316,10 +316,10 @@ class Page extends React.Component<any, any> {
         searchRule: 'ip',
         render: text =>  <a href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${text}` }  className={ styles.table }  style={{ textDecoration:"none" }} >{text}</a>
       },
-      {
-        title: '事件次数',
-        dataIndex: 'eventMergeCount',
-      },
+      // {
+      //   title: '事件次数',
+      //   dataIndex: 'eventMergeCount',
+      // },
       {
         // title:<ResetIcon onClick={ this.reset } >首次发生时间</ResetIcon >,
         title:'首次发生时间',

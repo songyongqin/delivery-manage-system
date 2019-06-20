@@ -12,7 +12,9 @@ import {Icon, Col, Row } from 'antd'
 import CountItem from 'components/CountItem'
 import debounce from 'lodash/debounce'
 import AnalysePie from 'components/AnalysePie'
-import { AttackGroup, Attacker } from 'components/IconSvg'
+import { AttackGroup } from 'components/IconSvg'
+
+const attackerpng = require('./attacker.png')
 
 const mapStateToProps = state => {
   return {
@@ -91,10 +93,14 @@ class Count extends Component<any, any>{
         <Row>
             <Col span={ 6 } style={{ height: countHeight }} >
               <CountItem title={ '攻击者数量' } count={ attackerCount } style={{ marginBottom:20 }} >
-                <Attacker  />
+                {/* <Attacker  /> */}
+                <img src={ attackerpng } alt='attacker' style={{ width:20, height:20 }} />
               </CountItem>
               <CountItem title={ '攻击者组织' } count={ attackGroupCount } >
-                <AttackGroup  />
+                <div style={{ color: '#FE5F25' }} >
+                  <AttackGroup  />
+                </div>
+                
               </CountItem>
             </Col>
             <Col span={ 6 }  push={ 3 }  style={{ height: pieHeight }} >

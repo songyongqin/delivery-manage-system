@@ -27,6 +27,8 @@ import { getToken } from 'domain/user'
 import InputSearch from 'components/InputSearch'
 const styles = require('./index.less')
 
+const detailpng = require('../../public/static/icon/detail.png')
+
 
 const mapStateToprops = state => {
   return {
@@ -177,7 +179,20 @@ class Page extends React.Component<any, any> {
       //   dataIndex:'index',
       //   render: ( text, record, index ) => <div>{ index+1 }</div>
       //   },
-      { title:<ResetIcon onClick={ this.reset } >首次攻击时间</ResetIcon >,
+      { title:'', 
+        dataIndex:'actions', 
+        className: 'none',
+        render: (text,record,index) =>
+          <div  >
+          {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
+            <a  href={ `/#${ANALYSE_ATTACK_DETAL_URL}?attackerIP=${record.attackerIP}` }
+                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} >
+                    <img src={ detailpng } alt='查看' style={{ width:14, height:14 }} />
+                  </a>
+          </div>
+      },
+      { title:'首次攻击时间', 
+        // title:<ResetIcon onClick={ this.reset } >首次攻击时间</ResetIcon >,
         dataIndex:'attackFirstTime',
         render: text => <TableTime num={ text } />
         },
@@ -207,15 +222,7 @@ class Page extends React.Component<any, any> {
         dataIndex:'family', 
         types:['search']
       },
-      { title:'详情', 
-        dataIndex:'actions', 
-        render: (text,record,index) =>
-          <div style={{ textAlign:'center' }}  >
-          {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
-            <a  href={ `/#${ANALYSE_ATTACK_DETAL_URL}?attackerIP=${record.attackerIP}` }
-                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} >查看</a>
-          </div>
-      },
+      
     ]
 
     let constants = this.props.config.constants || { }
