@@ -1,6 +1,7 @@
 import { AUDIT_EVENT_NAMESPACE } from 'constants/model'
-import { fetchAuditEvent } from './services'
+import { fetchAuditEvent, postAuditEvent } from './services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
+import { download }from 'utils/download'
 
 export default {
   namespace: AUDIT_EVENT_NAMESPACE,
@@ -50,6 +51,15 @@ export default {
         reject && reject(res.message)
       }
     },
+    post: function* ({ resolve, reject, payload }, {select, call, put }){
+      const res = yield call(postAuditEvent, payload)
+      if(res.status===1){
+        const { url, fileName } = res.payload
+        download(url, fileName)
+        resolve&& resolve()
+      }
+      reject&&reject()
+    }
   },
   reducers: {
     save: (preState, { payload }) => {

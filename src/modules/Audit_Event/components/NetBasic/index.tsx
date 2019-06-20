@@ -7,6 +7,8 @@ import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import path from 'constants/path'
 import extraConnect from 'domainUtils/extraConnect'
 import { AUDIT_EVENT_NAMESPACE } from 'constants/model'
+import transformTimeStamp from 'utils/transformTimeStamp'
+
 @extraConnect(
   state => {
     return {
@@ -23,6 +25,13 @@ import { AUDIT_EVENT_NAMESPACE } from 'constants/model'
           payload
         }
       ),
+
+      post: payload => dispatch(
+        {
+          type: `${AUDIT_EVENT_NAMESPACE}/post`,
+          payload
+        }
+      )
     }
   }
 )
@@ -45,6 +54,11 @@ export default class System extends React.Component<any, any>{
       lastReqTime: new Date().getTime()
     })
   }
+
+  download = (obj) => {
+   return this.props.post({...obj, timestampRange: transformTimeStamp(this.props.timestampRange)})
+  }
+
   render() {
     const { initialFilters } = this.props;
     return <CommonItem
@@ -58,6 +72,7 @@ export default class System extends React.Component<any, any>{
       }
       initialFilters={{ ...this.props.initialFilters }}
       remoteNamespace={AUDIT_EVENT_NAMESPACE}
+      download = { this.download }
       getColumns={option => {
         return combineColumnsConfig(getColumns(option), this.props.config.columns)
       }}>
