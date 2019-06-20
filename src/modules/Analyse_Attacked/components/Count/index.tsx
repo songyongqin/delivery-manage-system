@@ -95,10 +95,14 @@ class Count extends Component<any, any>{
           <Row>
             <Col span={ 6 } style={{ height: countHeight }} >
               <CountItem title={ '受攻击资产' } count={ attackedAssetsCount } style={{ marginBottom:20 }} >
-                <AttackAsset />
+                <div style={{ color: '#D81E06' }} >
+                  <AttackAsset />
+                </div>
               </CountItem>
-              <CountItem title={ '失陷资产' } count={ fallAssetCount } >
-                <FallAsset />
+              <CountItem title={ '失陷资产' } count={ fallAssetCount }  >
+                <div style={{ color: '#F4EA2A' }} >
+                  <FallAsset />
+                </div>
               </CountItem>
             </Col>
             <Col span={ 6 }  push={ 3 }  style={{ height: pieHeight }} >

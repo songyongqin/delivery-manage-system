@@ -19,7 +19,8 @@ export const HIGH = "high",
 
 export const WARN_LCONFIG = '告警设置',
   NET_CONFIG = '网络设置',
-  WHITE_LIST = '白名单设置'
+  WHITE_LIST = '白名单设置',
+  TIME_CONFIG = '时间设置'
 
 
 export const levelTextConfig = {

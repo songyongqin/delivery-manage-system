@@ -15,3 +15,5 @@ export const fetchBaseInfo = commonRequestCreator.get(httpApi.BASE_INFO)
 export const postAdminHeartBeat = commonRequestCreator.post(httpApi.USER_HEART_BEAT)
 
 export const getTimeConfig = commonRequestCreator.get(httpApi.CONFIG_TIME)
+
+export const postTimeConfig = commonRequestCreator.post(httpApi.CONFIG_TIME)

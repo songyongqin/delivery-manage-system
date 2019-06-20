@@ -3,7 +3,8 @@ import { DARK_THEME, LIGHT_THEME } from 'constants/theme'
 import { getCache, setCache, throttle } from 'utils'
 import combineNamespace from 'domainUtils/combineNamespace'
 import { getOverTime } from 'utils/getInitTime'
-import { getTimeConfig } from '../services/user'
+import { getTimeConfig, postTimeConfig } from '../services/user'
+import { message } from 'antd'
 
 const LAYOUT_CACHE_NAMESPACE = combineNamespace("@@__layout__@@")
 
@@ -14,6 +15,7 @@ const defaultInitState = {
   navMini: true,
   animate: true,
   initTimeStampRange: getOverTime(initTimeConfigNum),
+  timeConfig: initTimeConfigNum,
   commonLayout: {
     darkTheme: false
   }
@@ -104,15 +106,18 @@ const effects = {
     if(res&&res.status===1){
       const { timeConfig=initTimeConfigNum } = res.payload
       const initTimeStampRange = getOverTime(timeConfig)
-      let obj = payload ? { initTimeStampRange, timestampRange: initTimeStampRange }: { initTimeStampRange } 
+      let obj = payload ? { initTimeStampRange, timestampRange: initTimeStampRange, timeConfig }: { initTimeStampRange, timeConfig } 
       yield put({
         type: "setInitConfig",
         payload: obj
       })
     }
-    
+  },
 
-
+  transfromTimeConfig: function* ({ payload }, { call, put, select }) {
+    const { timeConfig=1 } = payload
+    const initTimeStampRange = getOverTime(timeConfig)
+    yield put({ type: "getConfiForTime", payload: { initTimeStampRange, timeConfig }})
   },
 }
 

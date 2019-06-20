@@ -152,11 +152,13 @@ class Page extends React.Component<any, any> {
 
     const {  timestampRange, filters, tableData } = this.state
     let columns = [
-      // { title:<ResetIcon onClick={ this.reset } />, 
-      //   dataIndex:'index',
-      //   render:  (text, record, index) => <div>{index +1}</div>
-      //   },
-      { title:<ResetIcon onClick={ this.reset } >首次受攻击时间</ResetIcon >, 
+      { title:'威胁等级', 
+        dataIndex:'level', 
+        types:['filters'],
+        render: text => <LevelTag text={text} />
+      },
+      { title:'首次受攻击时间', 
+        // title:<ResetIcon onClick={ this.reset } >'首次受攻击时间'</ResetIcon >, 
         dataIndex:'attackedFirstTime',
         render: text => <TabelTime num={ text } />
         },
@@ -177,11 +179,7 @@ class Page extends React.Component<any, any> {
         dataIndex:'assetStates',
         types:['filters']
       },
-      { title:'威胁等级', 
-        dataIndex:'level', 
-        types:['filters'],
-        render: text => <LevelTag text={text} />
-      },
+      
       { title:'详情', 
         dataIndex:'actions', 
         render: (text,record,index) =>

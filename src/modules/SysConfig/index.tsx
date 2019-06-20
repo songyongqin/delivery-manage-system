@@ -6,6 +6,7 @@ import {
   WARN_LCONFIG, 
   NET_CONFIG,
   WHITE_LIST,
+  TIME_CONFIG,
 } from './ConstConfig';
 import WithAnimateRender from 'components/WithAnimateRender'
 import classnames from 'classnames'
@@ -13,6 +14,7 @@ import EmailReceive from './components/EmailReceive'
 import EmailSend from './components/EmailSend'
 import NetConfig from './components/NetConfig'
 import WithCommonProps from 'domainComponents/WithCommonProps'
+import TimeConfig from './components/TimeConfig'
 import WhitList from '../WhiteList'
 const styles = require('./index.less')
 const TabPane = Tabs.TabPane
@@ -58,6 +60,9 @@ class Page extends React.Component<any, any>{
           </TabPane>
           <TabPane tab={ WHITE_LIST }  key={ WHITE_LIST } >
             <WhitList  />
+          </TabPane>
+          <TabPane tab={ TIME_CONFIG }  key={ TIME_CONFIG } >
+            <TimeConfig  />
           </TabPane>
         </Tabs>
       ])
