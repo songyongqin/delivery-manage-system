@@ -17,6 +17,10 @@ import InputSearch from 'components/InputSearch'
 import { ThreatFamliy, Bug, Cc  } from 'components/IconSvg'
 const styles = require('./index.less')
 
+const bugpng = require('./bug.png')
+const ccpng = require('./cc.png')
+const familypng = require('./family.png')
+
 
 const mapStateToprops = state => {
   return {
@@ -260,17 +264,20 @@ class Page extends React.Component<any, any> {
             {/* 统计数据 */} 
               <Col span={ 6 }  style={{ height:125 }} >
                 <CountItem title={'威胁家族'} count={ familyCount } >
-                  <ThreatFamliy />
+                  {/* <ThreatFamliy /> */}
+                  <img src={ familypng } alt='png' width={ 16 } height={ 16 } />
                 </CountItem>
               </Col>
               <Col span={ 6 } push={ 3 }  style={{ height:125 }} >
                 <CountItem title={'攻击利用漏洞'} count={ loopholeCount } style={{ }} >
-                  <Bug />
+                  {/* <Bug /> */}
+                  <img src={ bugpng } alt='png' width={ 18 } height={ 18 } />
                 </CountItem>
               </Col>
               <Col span={ 6 } push={6}  style={{ height:125 }} >
                 <CountItem title={'关联C&C数'} count={ connectC2Count } style={{}} >
-                  <Cc />
+                  {/* <Cc /> */}
+                  <img src={ ccpng } alt='png' width={ 14 } height={ 14 } />
                 </CountItem>
               </Col>
             </Row>,

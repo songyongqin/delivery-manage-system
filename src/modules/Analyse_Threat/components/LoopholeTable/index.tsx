@@ -9,7 +9,7 @@ import TimeTag from 'components/TimeTag'
 import { ANALYSE_THREAT_LOOPHOLE_DETAIL_URL } from 'routes/config/path'
 import ResetIcon from 'components/ResetIcon'
 import { setCache } from 'utils/cache'
-
+const detailpng = require('../../../../public/static/icon/detail.png') 
 interface props{
   tableData: Array<object>
   tableBeforeFetch: (any) => any
@@ -23,18 +23,19 @@ class FamilyTable extends React.Component<props, any>{
   render(){
 
     let columns = [
-      // { title: <ResetIcon onClick={ this.props.reset } />, 
-      //   dataIndex:'index',
-      //   render: ( text, record, index ) => <div>{ index+1 }</div>
-      //   },
-      { title:<ResetIcon onClick={ this.props.reset } >首次发生时间</ResetIcon >, 
-        dataIndex:'firstTime',
-        render: text => <TimeTag num={ text } />
+      { title:'', 
+        className: 'none',
+        dataIndex:'actions', 
+        render: (text,record,index) =>
+          <div style={{ textAlign:'center' }}  >
+          {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
+            <a  href={ `/#${ANALYSE_THREAT_LOOPHOLE_DETAIL_URL}?loophole=${record.loophole}` }
+                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >
+                    <img src={ detailpng } alt='查看' style={{ width:14, height:14 }} />
+                  </a>
+          </div>
       },
-      { title:'最近发生时间', 
-        dataIndex:'latelyTime',
-        render: text => <TimeTag num={ text } />
-      },
+      
       { title:'攻击利用漏洞', 
         dataIndex:'loophole'
       },
@@ -53,14 +54,14 @@ class FamilyTable extends React.Component<props, any>{
       { title:'关联C&C数', 
         dataIndex:'connectC2Count', 
       },
-      { title:'详细信息', 
-        dataIndex:'actions', 
-        render: (text,record,index) =>
-          <div style={{ textAlign:'center' }}  >
-          {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
-            <a  href={ `/#${ANALYSE_THREAT_LOOPHOLE_DETAIL_URL}?loophole=${record.loophole}` }
-                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >查看</a>
-          </div>
+      { title:'首次发生时间', 
+        // title:<ResetIcon onClick={ this.props.reset } >首次发生时间</ResetIcon >, 
+        dataIndex:'firstTime',
+        render: text => <TimeTag num={ text } />
+      },
+      { title:'最近发生时间', 
+        dataIndex:'latelyTime',
+        render: text => <TimeTag num={ text } />
       },
     ]
 

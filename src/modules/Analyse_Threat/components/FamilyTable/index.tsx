@@ -11,7 +11,7 @@ import WithPopover from 'components/WithPopover'
 import OverflowTextWrapper from 'components/OverflowTextWrapper'
 import ResetIcon from 'components/ResetIcon'
 import { setCache } from 'utils/cache'
-
+const detailpng = require('../../../../public/static/icon/detail.png') 
 interface props{
   tableData: Array<object>
   tableBeforeFetch: (any) => any
@@ -30,17 +30,17 @@ class FamilyTable extends React.Component<props, any>{
   render(){
     // console.log(this.props.timestampRange)
     let columns = [
-      // { title:<ResetIcon onClick={ this.props.reset } /> , 
-      //   dataIndex:'index',
-      //   render: ( text, record, index ) => <div>{ index+1 }</div>
-      //   },
-      { title:<ResetIcon onClick={ this.props.reset } >首次发生时间</ResetIcon >, 
-        dataIndex:'firstTime',
-        render: text => <TimeTag num={ text } />
-      },
-      { title:'最近发生时间', 
-        dataIndex:'latelyTime',
-        render: text => <TimeTag num={ text } />
+      { title:'', 
+        dataIndex:'actions', 
+        className: 'none',
+        render: (text,record,index) =>
+          <div style={{ textAlign:'center' }}  >
+          
+            <a  href={ `/#${ANALYSE_THREAT_FAMILY_DETAIL_URL}?threatFamily=${record.threatFamily}` }
+                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >
+                    <img src={ detailpng } alt='查看' style={{ width:14, height:14 }} />
+                  </a>
+          </div>
       },
       { title:'威胁家族', 
         dataIndex:'threatFamily'
@@ -50,11 +50,9 @@ class FamilyTable extends React.Component<props, any>{
       },
       { title:'威胁家族介绍', 
         dataIndex:'threatFamilyIntroduce',
+        width:300,
         render: text => <WithPopover text={ text } style={{ maxWidth:300 }} />
         // render: text => <OverflowTextWrapper content={ text } >{text}</OverflowTextWrapper>
-      },
-      { title:'威胁事件次数',   
-        dataIndex:'threatEventCount', 
       },
       { title:'受攻击资产数', 
         dataIndex:'attackedAssetsCount', 
@@ -62,15 +60,25 @@ class FamilyTable extends React.Component<props, any>{
       { title:'关联C&C数', 
         dataIndex:'connectC2Count', 
       },
-      { title:'详细信息', 
-        dataIndex:'actions', 
-        render: (text,record,index) =>
-          <div style={{ textAlign:'center' }}  >
-          
-            <a  href={ `/#${ANALYSE_THREAT_FAMILY_DETAIL_URL}?threatFamily=${record.threatFamily}` }
-                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} onClick={ e => setCache('timestampRange', this.props.timestampRange ) } >查看</a>
-          </div>
+      { title:'威胁事件次数',   
+        dataIndex:'threatEventCount', 
       },
+      { title:'首次发生时间',
+        // title:<ResetIcon onClick={ this.props.reset } >首次发生时间</ResetIcon >, 
+        dataIndex:'firstTime',
+        render: text => <TimeTag num={ text } />
+      },
+      { title:'最近发生时间', 
+        dataIndex:'latelyTime',
+        render: text => <TimeTag num={ text } />
+      },
+      
+      
+      
+      
+      
+      
+      
     ]
 
     let constants = this.props['config']['constants'] || { }
