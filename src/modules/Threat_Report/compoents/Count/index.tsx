@@ -12,6 +12,9 @@ import { ThreatEvent, HightEvent, AttackSource, AttackAsset, ThreatIoc, AttackGr
 const styles = require('./index.less')
 
 
+const iocpng = require('./ioc.png')
+const familypng = require('./family.png')
+
 const mapStateToProps = state =>{
   return {
     state,
@@ -54,7 +57,8 @@ const getArr = obj => {
       text: idArr[0].text,
       id: idArr[0].value,
       count: obj.threatEventCount ||0 , 
-      icon: <ThreatEvent />,
+      icon: <div style={{ color:'#FF1818' }} ><ThreatEvent /></div>,
+      // icon: <ThreatEvent />,
       unit: '起',
     },
     { 
@@ -62,7 +66,8 @@ const getArr = obj => {
       text: idArr[1].text,
       id: idArr[1].value,
       count: obj.threatHightEventCount ||0 , 
-      icon: <HightEvent />,
+      // icon: <HightEvent />,
+      icon: <div style={{ color:'#4F5DCA' }} ><HightEvent /></div>,
       unit: '起',
     },
     { 
@@ -70,7 +75,8 @@ const getArr = obj => {
       text: idArr[4].text,
       id: idArr[4].value,
       count: obj.attackSource ||0 , 
-      icon: <AttackSource />,
+      // icon: <AttackSource />,
+      icon: <div style={{ color:'#8C77AC' }} ><AttackSource /></div>,
       unit: '个',
     },
     { 
@@ -78,7 +84,8 @@ const getArr = obj => {
       text: idArr[5].text,
       id: idArr[5].value,
       count: obj.attackedAssets ||0 , 
-      icon: <AttackAsset />,
+      // icon: <AttackAsset />,
+      icon: <div style={{ color:'#D81E06' }} ><AttackAsset /></div>,
       unit: '台',
     },
     { 
@@ -86,7 +93,8 @@ const getArr = obj => {
       text: idArr[6].text,
       id: idArr[6].value,
       count: obj.threatIntelligence ||0 , 
-      icon: <ThreatIoc />,
+      // icon: <ThreatIoc />,
+      icon: <img src={ iocpng } alt='情报' width={ 20 } height={ 20 } />,
       unit: '条',
     },
     { 
@@ -94,7 +102,8 @@ const getArr = obj => {
       text: idArr[2].text,
       id: idArr[2].value,
       count: obj.threatGroup ||0 , 
-      icon: <AttackGroup/>,
+      // icon: <AttackGroup/>,
+      icon: <div style={{ color:'#FE5F25' }} ><AttackGroup /></div>,
       unit: '个',
     },
     { 
@@ -102,7 +111,8 @@ const getArr = obj => {
       text: idArr[3].text,
       id: idArr[3].value,
       count: obj.family ||0 , 
-      icon: <ThreatFamliy  />,
+      // icon: <ThreatFamliy  />,
+      icon: <img src={ familypng } alt='家族' width={ 20 } height={ 20 } />,
       unit: '个',
     },
 
@@ -111,7 +121,7 @@ const getArr = obj => {
 }
 
 @extraConnect(mapStateToProps, mapDispatchToProps)
-class Count extends React.Component<props, state>{
+class Count extends React.Component<any, state>{
   constructor(props){
     super(props)
     this.state={
@@ -184,11 +194,11 @@ export default Count
 const ItemCount = ({ Icon, title, count, unit }) => {
   return (
     <div className={ styles.container }  >
-      <div style={{ color: "#4F5DCA" }} >{ Icon }</div>
-      <div style={{  color: 'rgba(0,0,0,0.65)' }} >{ title }</div>
+      <div >{ Icon }</div>
+      <div  >{ title }</div>
       <div>
-        <span style={{ fontSize: 16 }} >{ count }</span>
-        <span style={{  color: 'rgba(0,0,0,0.65)' }}  >{ unit }</span>
+        <span style={{ fontSize: 16, fontWeight: 700 }} >{ count }</span>
+        <span   >{ unit }</span>
       </div>
     </div>
   )
