@@ -15,7 +15,8 @@ import path from 'constants/path'
 import WithTableConfig from 'domainComponents/WithTableConfig'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import LevelTag from 'components/LevelTag'
-import ResetIcon from 'components/ResetIcon' 
+import ResetIcon from 'components/ResetIcon'
+const detailpng = require('../../public/static/icon/detail.png') 
 import {
   // assetStateFilter,
   // levelFilter,
@@ -152,19 +153,22 @@ class Page extends React.Component<any, any> {
 
     const {  timestampRange, filters, tableData } = this.state
     let columns = [
+      { title:'', 
+        dataIndex:'actions', 
+        className: 'none',
+        render: (text,record,index) =>
+          <div style={{ textAlign:'center' }}  >
+          {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
+            <a  href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${record.attatcedAssetIp}` }
+                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} >
+                    <img src={ detailpng } alt='查看' style={{ width:14, height:14 }} />
+                  </a>
+          </div>
+      },
       { title:'威胁等级', 
         dataIndex:'level', 
         types:['filters'],
         render: text => <LevelTag text={text} />
-      },
-      { title:'首次受攻击时间', 
-        // title:<ResetIcon onClick={ this.reset } >'首次受攻击时间'</ResetIcon >, 
-        dataIndex:'attackedFirstTime',
-        render: text => <TabelTime num={ text } />
-        },
-      { title:'最近受攻击时间', 
-        dataIndex:'attackedLatelyTime',
-        render: text => <TabelTime num={ text } />
       },
       { title:'受攻击资产IP', 
         dataIndex:'attatcedAssetIp',
@@ -179,16 +183,20 @@ class Page extends React.Component<any, any> {
         dataIndex:'assetStates',
         types:['filters']
       },
-      
-      { title:'详情', 
-        dataIndex:'actions', 
-        render: (text,record,index) =>
-          <div style={{ textAlign:'center' }}  >
-          {/* 此处通过dva router里面的link路由跳转将会强制转换，但是通过a标签就可以执行 */}
-            <a  href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${record.attatcedAssetIp}` }
-                  style={{ cursor:'pointer', marginBottom:10, color:'#4F5DCA' }} >查看</a>
-          </div>
+      { title:'首次受攻击时间', 
+        // title:<ResetIcon onClick={ this.reset } >'首次受攻击时间'</ResetIcon >, 
+        dataIndex:'attackedFirstTime',
+        render: text => <TabelTime num={ text } />
+        },
+      { title:'最近受攻击时间', 
+        dataIndex:'attackedLatelyTime',
+        render: text => <TabelTime num={ text } />
       },
+      
+      
+      
+      
+      
     ]
 
     let constants = this.props.config.constants
