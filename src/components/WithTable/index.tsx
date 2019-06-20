@@ -144,7 +144,9 @@ class WithTable extends Component<props, any>{
     
     // let classes = 
     columns = columns.map(i => {
-      i['className'] =  classnames(style.default)
+      if(!i['className']){
+        i['className'] =  classnames(style.default)
+      }
       if(!i['render']){
         i['render'] = text => ( text + '' ).length>15 ? <Tooltip  title={ text } >{ text }</Tooltip > : text
       }

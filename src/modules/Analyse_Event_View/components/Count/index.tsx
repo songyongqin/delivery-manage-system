@@ -10,6 +10,7 @@ import { Icon, Col, Row } from 'antd'
 import Pie from '../Pie'
 import { ThreatEvent, Attacker, HightEvent , FallAsset } from 'components/IconSvg'
 import AnalysePie from 'components/AnalysePie'
+const attackerPng = require('./attacker.png')
 
 const css = require('./index.less')
 
@@ -83,25 +84,26 @@ class Count extends React.Component<any,state>{
         title:'威胁事件',
         count:threatCount, 
         // Icon: <Icon type="warning" style={{ fontSize:22 }} />
-        Icon: <ThreatEvent />
+        Icon: <div style={{ color: '#FF1818' }} ><ThreatEvent /></div>
       },
       {
         title:'攻击者', 
         count:attackerCount, 
         // Icon: <ExtraIcon type={'eyedropper'} style={{ fontSize:22 }}  />
-        Icon: <Attacker />
+        // Icon: <Attacker />
+        Icon: <img src={ attackerPng } alt='attacker' style={{ width:20, height:20 }} />
       },
       {
         title:'高危事件', 
         count:hightCount, 
         // Icon: <Icon type="close-circle-o"  style={{ fontSize:22 }}/>
-        Icon: <HightEvent />
+        Icon: <div style={{ color:'#4f5dca' }} ><HightEvent /></div>
       },
       {
         title:'失陷资产', 
         count:attackedAssetsCount, 
         // Icon: <Icon type="file-excel" style={{ fontSize:22 }} />
-        Icon: <FallAsset />
+        Icon: <div style={{ color:'#F4EA2A' }} ><FallAsset /></div>
       },
     ]
     let itemHeight = (pieHeight-20)/2

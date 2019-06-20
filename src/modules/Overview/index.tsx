@@ -178,7 +178,6 @@ class Page extends React.Component<any, any> {
   render() {
     const { applicationFlow, filters, table, pieHeight, lineHeight, attackStageAnalyse } = this.state
     const { countLoading, flowLoading, eventLoading } = this.props
-    console.log(this.props)
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>

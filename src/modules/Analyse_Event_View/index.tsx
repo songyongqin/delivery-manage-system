@@ -33,7 +33,7 @@ import { getToken } from 'domain/user'
 // import { SearchIcon } from 'components/IconSvg'
 import InputSearch from 'components/InputSearch'
 const styles = require('./index.less')
-
+const arrowPng = require('./arrow.png')
 
 const mapStateToProps = state => {
   return {
@@ -265,20 +265,22 @@ class Page extends React.Component<any, any> {
     const filterConfig = { ...this.props.config.constants.filter, eventType: threatTypeArr, threatenBehavior:threatActionArr, ...tableParam }
 
     const columns = [
-      // {
-      //   title:<ResetIcon onClick={ this.reset } /> ,
-      //   dataIndex: 'index',
-      //   render: ( text, record, index ) => <div>{ index +1}</div>
-      // },
       {
-        title:<ResetIcon onClick={ this.reset } >首次发生时间</ResetIcon >,
-        dataIndex: 'firstTime',
-        render: text => <TimeTag num={ text } />
+        title:'',
+        dataIndex: 'action',
+        className: 'none',
+        width: 30,
+        render: (text, record, index) => 
+        <div style={{  cursor:'pointer' }} onClick={() =>this.getCilck(index)  } >
+          {/* <Icon type={ this.state.clicked.indexOf(index+'')>-1  ? "caret-up" : "caret-down"} /> */}
+          <img src={ arrowPng } alt='arrow' style={{ transform: `rotate(${this.state.clicked.indexOf(index+'')>-1 ? '90': '0' }deg)`, width:14, height:14 }} />
+        </div>
       },
       {
-        title:'最近发生时间',
-        dataIndex: 'latelyTime',
-        render: text => <TimeTag num={ text } />
+        title:'威胁等级',
+        // title: <ResetIcon onClick={ this.reset } >威胁等级</ResetIcon >,
+        dataIndex: 'level',
+        render: text => <LevelTag text={text} />
       },
       {
         title:'威胁行为',
@@ -287,6 +289,7 @@ class Page extends React.Component<any, any> {
       {
         title:'详细描述',
         dataIndex: 'detailDescription',
+        width: 200,
         render: (text,record) => <div>{text}<a href={ `/#${ANALYSE_REPORT_URL}?md5=${text}` } className={ styles.table }  style={{ textDecoration:"none" ,marginLeft:5 }} >{record.md5}</a></div>  
       },
       {
@@ -294,7 +297,15 @@ class Page extends React.Component<any, any> {
         dataIndex: 'eventType'
       },
       {
-        title:'攻击者IP',
+        title:'攻击阶段',
+        dataIndex: 'attackStage'
+      },
+      {
+        title:'资产状态',
+        dataIndex: 'assetStates'
+      },
+      {
+        title:'攻击者资产',
         dataIndex: 'attackerIP',
         searchRule: 'ip',
         render: text =>  <a href={ `/#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` } className={ styles.table }  style={{ textDecoration:"none" }} >{text}</a>
@@ -305,28 +316,22 @@ class Page extends React.Component<any, any> {
         searchRule: 'ip',
         render: text =>  <a href={ `/#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attatcedAssetIp=${text}` }  className={ styles.table }  style={{ textDecoration:"none" }} >{text}</a>
       },
-      // {
-      //   title:'资产状态',
-      //   dataIndex: 'assetStates'
-      // },
       {
-        title:'攻击阶段',
-        dataIndex: 'attackStage'
+        title: '事件次数',
+        dataIndex: 'eventMergeCount',
       },
       {
-        title:'威胁等级',
-        dataIndex: 'level',
-        render: text => <LevelTag text={text} />
+        // title:<ResetIcon onClick={ this.reset } >首次发生时间</ResetIcon >,
+        title:'首次发生时间',
+        dataIndex: 'firstTime',
+        render: text => <TimeTag num={ text } />
       },
       {
-        title:'详情',
-        dataIndex: 'action',
-        width: 30,
-        render: (text, record, index) => 
-        <div style={{  cursor:'pointer' }} onClick={() =>this.getCilck(index)  } >
-          <Icon type={ this.state.clicked.indexOf(index+'')>-1  ? "caret-up" : "caret-down"} />
-        </div>
+        title:'最近发生时间',
+        dataIndex: 'latelyTime',
+        render: text => <TimeTag num={ text } />
       },
+      
     ]
 
     const constants = {
