@@ -1,9 +1,13 @@
 const fs = require('fs')
+const moment = require('moment')
 const version = require('../package.json').version
+const { execSync } = require('child_process')
+const commitMsg =  execSync(`git log -1  --pretty=format:"%H %cd"`, { encoding:'utf-8' })
 
 const versionInfo = {
-  buildDate: new Date().getTime(),
-  version: version
+  buildDate: moment().format('YYYY-MM-DD HH:mm:ss'),
+  version: version,
+  commitMsg
 }
 
 module.exports = () => {
