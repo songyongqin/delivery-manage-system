@@ -23,7 +23,7 @@ export const getOverTime = (num=3) => {
     let nums = Number(num) -1 || 0
     return [moment().subtract(nums, "days"), moment().subtract(0, 'days')]
   }
-  else return []
+  else return [moment(0), moment().subtract(0, 'days')]
 
 }
 //从 obj为this.props  this.props.state.layout中取出initTimeStampRange
