@@ -49,7 +49,7 @@ export default class System extends React.Component<any, any>{
   onSubmit = filters => {
 
     const { initial } = this.props;
-    this.props.save({ ...initial, ...filters, })
+    this.props.save({ ...initial, ...filters, timestampRange: this.props.timestampRange })
     this.setState({
       lastReqTime: new Date().getTime()
     })

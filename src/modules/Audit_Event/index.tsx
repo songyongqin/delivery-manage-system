@@ -34,6 +34,7 @@ class Page extends React.Component<any, any> {
       initialFilters: {...this.props.initialFilters, ...this.props.state[LAYOUT_NAMESPACE].timestampRange|| []},
       lastReqTime: 0,
       // activeKey: "net-basic"
+      timestampRange: this.props.state[LAYOUT_NAMESPACE].timestampRange|| []
     }
   }
   timestampRangeOnChange = payload => {
@@ -46,25 +47,25 @@ class Page extends React.Component<any, any> {
       //   ...payload
       // },
       lastReqTime: new Date().getTime(),
+      timestampRange: payload.timestampRange
     })
 
   }
   render() {
-    const { lastReqTime } = this.state;
+    const { lastReqTime , timestampRange} = this.state;
     const { initialFilters } = this.props;
-
-
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
           <DateRangePicker
-            value={this.props.state[LAYOUT_NAMESPACE].timestampRange|| []}
+            value={timestampRange}
             global
             onChange={this.timestampRangeOnChange}>
           </DateRangePicker>
         </div>
         <NetBasic
           key={`${lastReqTime}-tabs`}
+          timestampRange = { timestampRange }
           initialFilters={{ ...initialFilters, protocolType: "HTTP" }}>
         </NetBasic>
       </div>
