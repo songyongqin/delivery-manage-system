@@ -7,7 +7,7 @@ import { Button, Tooltip  } from 'antd'
 @extraConnect(
   state => {
     return {
-      initialFilters: state[AUDIT_EVENT_NAMESPACE].initialFilters
+      // initialFilters: state[AUDIT_EVENT_NAMESPACE].initialFilters
     }
   },
   dispatch => {
@@ -49,7 +49,6 @@ export default class CommonItem extends React.Component<any, any>{
   }
 
   render() {
-    console.log(this.props.initialFilters)
     return (
       <div>
         <div style={{ overflow: "hidden" }}>
