@@ -111,7 +111,8 @@ const Item = ({ data }) => {
         </Row>
   )
 }
-const subStrValue = (str) => {
+const subStrValue = (value) => {
+  let str = String(value)
   return str&&str.substr&&str.substr(0,170) || ''
 }
 

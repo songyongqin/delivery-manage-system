@@ -72,5 +72,10 @@ export default {
         }
       }
     },
+  },
+  subscriptions: {
+    setup: ({dispatch}) => {
+
+    }
   }
 }

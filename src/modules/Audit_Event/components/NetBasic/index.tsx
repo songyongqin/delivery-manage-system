@@ -61,6 +61,7 @@ export default class System extends React.Component<any, any>{
 
   render() {
     const { initialFilters } = this.props;
+    const { timestampRange } = this.state
     return <CommonItem
       key={`${this.state.lastReqTime}-item`}
       expandPanel={
@@ -70,7 +71,7 @@ export default class System extends React.Component<any, any>{
         >
         </SelectForm>
       }
-      initialFilters={{ ...this.props.initialFilters }}
+      initialFilters={{ ...this.props.initialFilters, timestampRangexx:timestampRange }}
       remoteNamespace={AUDIT_EVENT_NAMESPACE}
       download = { this.download }
       getColumns={option => {

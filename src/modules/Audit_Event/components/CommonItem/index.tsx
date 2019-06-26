@@ -49,6 +49,7 @@ export default class CommonItem extends React.Component<any, any>{
   }
 
   render() {
+    console.log(this.props.initialFilters)
     return (
       <div>
         <div style={{ overflow: "hidden" }}>
