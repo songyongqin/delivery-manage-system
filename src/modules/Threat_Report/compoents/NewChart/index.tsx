@@ -191,7 +191,7 @@ class NewChart extends React.Component<props,state>{
       },
       { 
         data: rank.attackerIp.data, 
-        title: '攻击者IP排行TOP10' 
+        title: '攻击者资产排行TOP10' 
       },
       { 
         data: rank.threatEvent.data, 

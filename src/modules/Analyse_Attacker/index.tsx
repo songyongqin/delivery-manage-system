@@ -200,7 +200,7 @@ class Page extends React.Component<any, any> {
         dataIndex:'attackLatelyTime',
         render: text => <TableTime num={ text } />
       },
-      { title:'攻击者IP', 
+      { title:'攻击者资产', 
         dataIndex:'attackerIP', 
         types:['search'],
         searchRule: 'ip',
