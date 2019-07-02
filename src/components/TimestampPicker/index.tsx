@@ -23,11 +23,18 @@ export default ({ defaultValue = [], onChange, disabled = false }) => {
           // "本季度": [moment().startOf('quarter'), moment().subtract(0, 'days')],
           // "本年度": [moment().startOf("year"), moment().subtract(0, 'days')],
           // "全部": []
+          // "今天": [moment().subtract(0, "days"), moment().subtract(0, 'days')],
+          // "过去7天": [moment().subtract(6, "days"), moment().subtract(0, 'days')],
+          // "过去14天": [moment().subtract(13, "days"), moment().subtract(0, 'days')],
+          // "过去30天": [moment().subtract(29, "days"), moment().subtract(0, 'days')],
+          // "过去三个月": [moment().subtract(89, "days"), moment().subtract(0, 'days')]
           "今天": [moment().subtract(0, "days"), moment().subtract(0, 'days')],
+          "过去3天": [moment().subtract(2, "days"), moment().subtract(0, 'days')],
           "过去7天": [moment().subtract(6, "days"), moment().subtract(0, 'days')],
           "过去14天": [moment().subtract(13, "days"), moment().subtract(0, 'days')],
           "过去30天": [moment().subtract(29, "days"), moment().subtract(0, 'days')],
-          "过去三个月": [moment().subtract(89, "days"), moment().subtract(0, 'days')]
+          "过去三个月": [moment().subtract(89, "days"), moment().subtract(0, 'days')],
+          "全部": [moment(0),moment().subtract(0, 'days')]
         }}>
       </DatePicker.RangePicker>
     </div>
