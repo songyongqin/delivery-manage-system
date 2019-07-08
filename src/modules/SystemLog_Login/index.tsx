@@ -26,7 +26,8 @@ const initialFilters = {
   state => {
     const effectsLoading = state.loading.effects
     return {
-      exportLoading: effectsLoading[`${SYSTEM_LOG_LOGIN_NAMESPACE}/exportLoginLog`]
+      exportLoading: effectsLoading[`${SYSTEM_LOG_LOGIN_NAMESPACE}/exportLoginLog`],
+      state
     }
   },
   dispatch => {
@@ -46,7 +47,7 @@ export default class SystemLogLogin extends React.Component<any, any>{
     super(props)
     this.state = {
       lastReqTime: 0,
-      initialFilters,
+      initialFilters:{ ...initialFilters, timestampRange: this.props.state&&this.props.state.layout&&this.props.state.layout.initTimeStampRange ||[] },
       filters: initialFilters
     }
   }
