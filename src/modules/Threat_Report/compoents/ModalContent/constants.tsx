@@ -24,7 +24,7 @@ export const threatEventConfig = [
     dataIndex: 'eventMergeCount'
    },
    {  
-    title:'攻击者ip',
+    title:'攻击者资产',
     dataIndex: 'attackerIP'
    },
    {  

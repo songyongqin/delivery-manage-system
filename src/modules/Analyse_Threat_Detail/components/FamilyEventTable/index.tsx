@@ -43,7 +43,7 @@ class FamilyEventTable extends React.Component<props, any>{
       { title:'事件次数',   
         dataIndex:'eventMergeCount', 
       },
-      { title:'攻击者IP', 
+      { title:'攻击者资产', 
         dataIndex:'attackerIP',
         render: text => <a href={ `#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` }
               style={{ textDecoration:'none', color:'#4F5DCA' }} >{text}</a>

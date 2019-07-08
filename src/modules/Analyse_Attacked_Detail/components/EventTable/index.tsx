@@ -28,7 +28,7 @@ let columns = [
   { title:'威胁类型', 
     dataIndex:'eventType'
   },
-  { title:'攻击者IP', 
+  { title:'攻击者资产', 
     dataIndex:'attackerIP',
     render: text => <a href={ `#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` }
               style={{ textDecoration:'none' }} >{text}</a>
