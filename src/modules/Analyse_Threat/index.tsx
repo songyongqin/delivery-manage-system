@@ -277,7 +277,7 @@ class Page extends React.Component<any, any> {
               <Col span={ 6 } push={6}  style={{ height:125 }} >
                 <CountItem title={'关联C&C数'} count={ connectC2Count } style={{}} >
                   {/* <Cc /> */}
-                  <img src={ ccpng } alt='png' width={ 14 } height={ 14 } />
+                  <img src={ ccpng } alt='png' width={ 24 } height={ 14 } />
                 </CountItem>
               </Col>
             </Row>,
