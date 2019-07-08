@@ -224,7 +224,7 @@ class AnalyseDetail extends React.Component<any, any> {
         render: text => <a href={ `#${ANALYSE_ATTACKED_ASSETS_DETAL_URL}?attackedAssetsIP=${text}` }
               style={{ textDecoration:'none' }} >{text}</a>
       },
-      { title:'事件归并次数', 
+      { title:'事件次数', 
         dataIndex:'eventMergeCount'
       },
       { title:'资产状态', 

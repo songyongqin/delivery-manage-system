@@ -33,7 +33,7 @@ let columns = [
     render: text => <a href={ `#${ANALYSE_ATTACK_DETAIL_URL}?attackerIP=${text}` }
               style={{ textDecoration:'none' }} >{text}</a>
   },
-  { title:'事件归并次数', 
+  { title:'事件次数', 
     dataIndex:'eventMergeCount'
   },
   { title:'资产状态', 
