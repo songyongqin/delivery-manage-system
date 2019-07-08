@@ -144,7 +144,7 @@ class AnalyseDetail extends React.Component<any, any> {
     const { IPInfo, isHave,  threatInfo, whoisInfo, relationUrl, relationFile, relationIP, relationDomain, threatTotal, threatReq } = this.state
     const { ipLoading, threatLoading  } = this.props
     let IPInfoColumns = [
-      { title:'攻击者IP', 
+      { title:'攻击者资产', 
         dataIndex:'attackerIp'
         },
       { title:'IP所属组织', 

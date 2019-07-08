@@ -259,7 +259,7 @@ class NewChart extends React.Component<props,state>{
           </div>
           <div className={ styles.commonrank } >
           <Wrap spinning={ loading } keys={ 2 } style={{ width: '100%' }}  >
-              <Bar data={ rank.attackerIp.data } title={ '攻击者IP排行TOP10'  }  className={ styles.rankitem }  /> 
+              <Bar data={ rank.attackerIp.data } title={ '攻击者资产排行TOP10'  }  className={ styles.rankitem }  /> 
           </Wrap>
           </div>
         </div>
