@@ -20,7 +20,7 @@ export const threatEventConfig = [
     dataIndex: 'attackType'
    },
    {  
-    title:'事件归并次数',
+    title:'事件次数',
     dataIndex: 'eventMergeCount'
    },
    {  

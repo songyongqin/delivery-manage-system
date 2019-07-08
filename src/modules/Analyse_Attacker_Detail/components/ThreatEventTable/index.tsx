@@ -33,7 +33,7 @@ const thratColumns = [
   { title:'受攻击资产IP', 
     dataIndex:'attackedAssetsIP'
   },
-  { title:'事件归并次数', 
+  { title:'事件次数', 
     dataIndex:'eventMergeCount'
   },
   { title:'资产状态', 

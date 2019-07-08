@@ -51,7 +51,7 @@ export const tableTextConfig = {
 
 export const expandTextConfig = {
   [DESCRIPTION_DATAINDEX]: "事件详情描述:",
-  [ATTACK_COUNTS_DATAINDEX]: "事件归并次数:",
+  [ATTACK_COUNTS_DATAINDEX]: "事件次数:",
   [ATTACK_EVENT_TYPE_DATAINDEX]: "事件类型:",
   [ATTACKTIMES_DATAINDEX]: "事件时间范围:",
   [SOURCE_DATAINDEX]: "感知来源:"

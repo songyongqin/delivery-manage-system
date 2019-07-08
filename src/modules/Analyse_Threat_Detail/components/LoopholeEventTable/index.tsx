@@ -40,7 +40,7 @@ class LoopholeEventTable extends React.Component<props, any>{
       { title:'详细描述', 
         dataIndex:'detailDescription', 
       },
-      { title:'事件归并次数',   
+      { title:'事件次数',   
         dataIndex:'eventMergeCount', 
       },
       { title:'攻击者IP', 
