@@ -33,7 +33,7 @@ class Page extends React.Component<any, any> {
 
     let str = this.props.location.search
 
-    const { fileLastChangeTime, mailLastChangeTime, urlLastChangeTime, timestampRange, page,
+    const { fileLastChangeTime, mailLastChangeTime, urlLastChangeTime,  page,
       limit,
       total,
       emailTheme,
@@ -45,6 +45,8 @@ class Page extends React.Component<any, any> {
       receiverAccount,
       // receiverIp, 
     } = this.props;
+    let timestampRange =  this.props.state[LAYOUT_NAMESPACE].timestampRange|| []
+    console.log(timestampRange)
     const lastChangeTime = new Date().getTime();
     this.props.toMailSave({
       limit: 30,
@@ -71,7 +73,7 @@ class Page extends React.Component<any, any> {
         judge: [],
         threatType: [],
       })
-    this.props.toBaseSave({ timestampRange: [], lastChangeTime })
+    this.props.toBaseSave({ timestampRange, lastChangeTime })
     if (this.state.keyValue == 'url' && urlLastChangeTime != lastChangeTime) {
       this.props.toUrlSave({ lastChangeTime }); this.props.toUrlFetch({})
     } else if (this.state.keyValue == 'file' && fileLastChangeTime != lastChangeTime) {
@@ -249,7 +251,7 @@ const mapStateToProps = state => {
     // senderIp,
     receiverAccount,
     // receiverIp,
-    timestampRange,
+    timestampRange ,
     lastChangeTime,
     urlLastChangeTime,
     mailLastChangeTime,
