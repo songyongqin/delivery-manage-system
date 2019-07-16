@@ -37,6 +37,7 @@ import getAnalyseThreatDetalPage from 'routes/Analyse_Threat_detail'
 import getAuditCaughtPage from 'routes/Audit_Caught'
 import getThreatReportPage from 'routes/Threat_Report'
 import getSySConfigPage from 'routes/SysConfig'
+import getAnalyseThreatIntelligencePage from 'routes/Analyse_Threat_Information'
 
 import getTypicalCasePage from 'routes/Typical_Case'
 
@@ -128,6 +129,8 @@ import {
   TYPICAL_CASE_URL,
 
   CONFIG_WHITE_LIST, 
+
+  ANALYSE_THREAT_INTELLIGENCE_URL,
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
 
@@ -316,6 +319,12 @@ export default ({ history, app }) => {
               component={getManagerMirrorPage(app, MANAGER_MIRROR_URL)}
               path={MANAGER_MIRROR_URL} >
             </Route> */}
+            {/*威胁情报列表*/}
+            <Route
+              exact
+              component={getAnalyseThreatIntelligencePage(app, ANALYSE_THREAT_INTELLIGENCE_URL)}
+              path={ANALYSE_THREAT_INTELLIGENCE_URL} >
+            </Route>
             {/*用户管理*/}
             <Route
               exact

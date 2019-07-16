@@ -72,7 +72,7 @@ let cloumns = [
   },
   {
     dataIndex:'attackerIP',
-    title:'攻击IP'
+    title:'攻击者资产'
   },
   // {
   //   dataIndex:'level',

@@ -6,7 +6,6 @@ export const NAMESPACE: string = "analyse",
   NAMESPACE_MAIL: string = "analyseMail",
   NAMESPACE_URL: string = "analyseUrl",
   FILETYPE: string[] = [
-    "感染",
     "NULL",
     "7z",
     "arj",

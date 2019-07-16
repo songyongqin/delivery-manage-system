@@ -66,6 +66,8 @@ import {
 
   ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
 
+  ANALYSE_THREAT_INTELLIGENCE_URL,
+
   AUDIT_URL,
 
   TOPO_URL,
@@ -149,7 +151,12 @@ export const _navConfig = [
       },
       {
         link: ANALYSE_REPORT_URL,
-        title: "文件检测列表",
+        title: "文件检测列表",  //ANALYSE_THREAT_INTELLIGENCE_URL
+        icon: <Indent />,
+      },
+      {
+        link: ANALYSE_THREAT_INTELLIGENCE_URL,
+        title: "威胁情报列表", 
         icon: <Indent />,
       }
     ]
