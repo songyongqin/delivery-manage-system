@@ -1,0 +1,83 @@
+{
+  "columns": [
+    {
+      "dataIndex": "threatName",
+      "title": "威胁名称",
+      "conditionType": "input"
+    },
+    {
+      "dataIndex": "intelligenceType",
+      "title": "情报类型",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "IP", 
+          "value": "IP"
+        },
+        {
+          "text": "IPPORT",
+          "value": "IPPORT"
+        },
+        {
+          "text": "DOMAIN", 
+          "value": "DOMAIN"
+        },
+        {
+          "text": "MD5", 
+          "value": "MD5"
+        },
+        {
+          "text": "SHA256",
+           "value": "SHA256"
+        }
+      ]
+    },
+    {
+      "dataIndex": "dataSource",
+      "title": "数据来源",
+      "conditionType": "selector",
+      "filters": [
+        {
+          "text": "C2",
+          "value": "C2"
+        },
+        {
+          "text": "APT",
+          "value": "APT"
+        },
+        {
+          "text": "Honeynet",
+          "value": "Honeynet"
+        },
+        {
+          "text": "DDoS",
+          "value": "DDoS"
+        },
+        {
+          "text": "IDS",
+          "value": "IDS"
+        },
+        {
+          "text": "Honetpot",
+          "value": "Honetpot"
+        }
+      ]
+    },
+    {
+      "dataIndex": "intelligenceContent",
+      "title": "情报内容"
+    },
+    {
+      "dataIndex": "intelligenceDetail",
+      "title": "情报详情"
+    },
+    {
+      "dataIndex": "intelligenceOccurrenceTime",
+      "title": "情报生成时间"
+    },
+    {
+      "dataIndex": "detail",
+      "title": "详情"
+    }
+  ]
+}

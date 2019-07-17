@@ -262,7 +262,9 @@ const HttpApiConfig = {
 
   TYPICAL_CASE_LIST: '/typical-case',
 
-  CONFIG_TIME: '/config/time'
+  CONFIG_TIME: '/config/time',
+
+  ANALYSE_THREAT_INTELLIGENCE_COUNT: '/analyse-threat-intelligence/count'
 
 }
 

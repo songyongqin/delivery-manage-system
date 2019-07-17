@@ -31,8 +31,7 @@
     "/file-restore": true
   },
   "hiddenRouter":[
-    "/topo",
-    "/analyse/threat-intelligence"
+    "/topo"
   ],
   "adminOnly": [
     "/sys-config",

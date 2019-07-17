@@ -1,13 +1,13 @@
-import { ANALYSE_THREAT_VIEW } from 'constants/model'
-import {  fetchAnalyseThreatCount,
+import { ANALYSE_THREAT_INTELLIGENCE } from 'constants/model'
+import {  fetchAnalyseThreatIntelligenceCount,
           fetchAnalyseThreatFamily,
           fetchAnalyseThreatLoophole  } from './services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
 
 export default {
-  namespace: ANALYSE_THREAT_VIEW,
+  namespace: ANALYSE_THREAT_INTELLIGENCE,
   effects: {
-    fetchCount: commonEffectCreator(fetchAnalyseThreatCount),
+    fetchCount: commonEffectCreator(fetchAnalyseThreatIntelligenceCount),
     fetchFamily:commonEffectCreator(fetchAnalyseThreatFamily),
     fetchLoophole: commonEffectCreator(fetchAnalyseThreatLoophole),
   }

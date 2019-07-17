@@ -34,7 +34,6 @@ export const getColumns = (props: props) => {
     let obj = {}
     obj['whichSelect'] = visible ? str : ''
     handle['setTableState'](obj)
-    this.select = obj['whichSelect']
   }
 
 

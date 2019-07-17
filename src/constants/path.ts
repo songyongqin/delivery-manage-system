@@ -23,7 +23,8 @@ export const layoutConfig = {
   simpleFeature: '/static/config/layout/simpleFeature.json',
   snortFeature: '/static/config/layout/snortFeature.json',
   SysConfigMonitor: '/static/config/layout/SysConfigMonitor.json',
-  NodeMonitor:"/static/config/layout/nodeMonitorData.json"
+  NodeMonitor:"/static/config/layout/nodeMonitorData.json",
+  analyseThreatIntelligenceTable: '/static/config/layout/analyseThreatIntelligenceTable.json',
 }
 
 export default {
