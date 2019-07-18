@@ -268,9 +268,11 @@ const HttpApiConfig = {
 
   ANALYSE_THREAT_INTELLIGENCE_TABLE: '/analyse-threat-intelligence/table',
 
-  // ANALYSE_THREAT_INTELLINGENCE_UPLOAD: '/analyse-threat-intelligence/upload',
+  ANALYSE_THREAT_INTELLINGENCE_UPLOAD: '/analyse-threat-intelligence/upload',
 
-  ANALYSE_THREAT_INTELLINGENCE_UPLOAD: '/mock/uploads',
+  // ANALYSE_THREAT_INTELLINGENCE_UPLOAD: '/mock/uploads', //模拟
+
+  ANALYSE_THREAT_INTELLIGENCE_INFO: '/analyse-threat-intelligence/info',
 
 }
 

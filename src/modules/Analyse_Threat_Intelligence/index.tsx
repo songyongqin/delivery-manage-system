@@ -4,7 +4,7 @@ import DateRangePicker from 'domainComponents/DateRangePicker'
 import CountItem from 'components/CountItem'
 import { ANALYSE_THREAT_INTELLIGENCE, LAYOUT_NAMESPACE } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
-import { Button, Row, Col, Icon, Dropdown , Menu, Upload, message, Modal} from 'antd'
+import { Button, Row, Col, Icon, Dropdown , Menu, Upload, message, Modal, Popconfirm} from 'antd'
 import WithPagination from 'components/WithPagination'
 import WithTable from 'components/WithTable'
 import { MaxDownloadTotal } from './constants'
@@ -17,6 +17,7 @@ import UploadMenu from './components/UploadMenu'
 import DownloadMenu from './components/DownloadMenu'
 import ApiConfig from 'services/apiConfig'
 import apiConfig from './../../services/apiConfig';
+import ThreatIntelligenceForm from './components/ThreatIntelligencForm'
 import TimeTag from 'components/TimeTag'
 import { download } from 'utils/download'
 import transformTimeStamp from 'utils/transformTimeStamp'
@@ -49,7 +50,19 @@ const mapDispatchToprops = dispatch => {
     postDownload: payload => dispatch({
       type: `${ANALYSE_THREAT_INTELLIGENCE}/postDownload`,
       payload
-    })
+    }),
+    addThreatIntelligence: payload => dispatch({
+      type: `${ANALYSE_THREAT_INTELLIGENCE}/addThreatIntelligence`,
+      payload
+    }), 
+    editThreatIntelligence: payload => dispatch({
+      type: `${ANALYSE_THREAT_INTELLIGENCE}/editThreatIntelligence`,
+      payload
+    }),
+    delThreatIntelligence: payload => dispatch({
+      type: `${ANALYSE_THREAT_INTELLIGENCE}/delThreatIntelligence`,
+      payload
+    })  
   }
 }
 //初始参数
@@ -78,7 +91,10 @@ class Page extends React.Component<any, any> {
       selectedRowKeys:[],
       selectedRows:[],
       modalTip: false,
-      downloadTypes: ''
+      modalInfo: false,
+      downloadTypes: '',
+      isNew: true, //是否新增
+      submitLoading: false,
     }
   }
 
@@ -189,13 +205,49 @@ class Page extends React.Component<any, any> {
     this.setState({ modalTip:false, downloadTypes: ''})
   }
 
+  hiddenInfoModal = () => {
+    this.setState({ modalInfo:false })
+  }
+
+  showInfoModal = () => {
+    this.setState({ modalInfo:true, isNew: true })
+  }
+
+  editInfoModal = () => {
+    this.setState({ modalInfo:true, isNew: false })
+  }
+
+  onSubmit = arg => {
+    let { isNew, selectedRows } = this.state
+    this.setState({ submitLoading: true })
+    let fnc = isNew ?  this.props.addThreatIntelligence : this.props.editThreatIntelligence
+    let obj = isNew ? arg : { ...arg, id: selectedRows[0].id }
+
+    fnc(obj).then(res => {
+      message.success(`${ isNew ?'新增': '修改' }成功`)
+      this.setState({ submitLoading: false })
+    }).catch(err => {
+      message.error(`${ isNew ?'新增': '修改' }失败`)
+      this.setState({ submitLoading: false })
+    })
+  }
+
+  delThreatInfo = () => {
+    let id = this.state.selectedRows.map(i => i.id).filter(i => i)
+    this.props.delThreatIntelligence({id}).then(res => {
+      message.success('删除成功')
+    })
+    .catch(err => {
+      message.error('删除失败')
+    })
+  }
+
   render() {
-    const { filters, data, threatFamily, intelligenceType, dataSource, selectedRowKeys, modalTip } = this.state
+    const { filters, data, threatFamily, intelligenceType, dataSource, selectedRowKeys, modalTip, modalInfo, isNew, selectedRows, submitLoading } = this.state
     const { current, total, limit  } = filters
     let constants = this.props['config']['constants'] || { }
     
     let columns = this.props.config&&this.props.config.columns ||  []
-
     columns.map(i => {
       if(i.dataIndex==='intelligenceOccurrenceTime'){
         i.render = text => <TimeTag num={ text } />
@@ -208,9 +260,16 @@ class Page extends React.Component<any, any> {
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
-          <Button type='primary' style={{ marginRight:15 }} icon='plus' >添加威胁情报</Button>
-          <Button type='primary' style={{ marginRight:15 }} >删除</Button>
-          <Button type='primary' style={{ marginRight:15 }} >编辑</Button>
+          <Button type='primary' style={{ marginRight:15 }} icon='plus' onClick={ this.showInfoModal } >添加威胁情报</Button>
+          <Popconfirm
+            title="是否删除所选威胁情报"
+            onConfirm={this.delThreatInfo}
+            okText="是"
+            cancelText="否"
+          >
+            <Button type='primary' style={{ marginRight:15 }} disabled={ selectedRows.length===0 } >删除</Button>
+          </Popconfirm>
+          <Button type='primary' style={{ marginRight:15 }} onClick={ this.editInfoModal } disabled={ selectedRows.length!==1 } >编辑</Button>
           <Dropdown overlay={menu}>
               <Button type='primary' style={{ marginRight:15 }}  >导入<Icon type="caret-down" /></Button>
           </Dropdown>
@@ -253,6 +312,14 @@ class Page extends React.Component<any, any> {
           onCancel={this.cancelDownload}
         >
           <p>{`导出数据量超过${MaxDownloadTotal}条，导出时间较长，是否确定导出?`}</p>
+        </Modal>
+        <Modal 
+          visible={modalInfo} 
+          footer={ null }
+          title={ isNew ? <div><Icon type="plus" style={{ marginRight:5 }} />添加威胁情报</div> : '编辑威胁情报' }
+          destroyOnClose
+          onCancel={this.hiddenInfoModal} >
+          <ThreatIntelligenceForm defaultValue={{}} onSubmit={ this.onSubmit } submitLoading={ submitLoading } />
         </Modal>
       </div>
     )
