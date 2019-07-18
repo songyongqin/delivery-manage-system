@@ -4,17 +4,22 @@ import DateRangePicker from 'domainComponents/DateRangePicker'
 import CountItem from 'components/CountItem'
 import { ANALYSE_THREAT_INTELLIGENCE, LAYOUT_NAMESPACE } from 'constants/model'
 import extraConnect from 'domainUtils/extraConnect'
-import Spin from 'domainComponents/Spin'
-import { Icon ,Tabs, Input, Row, Col } from 'antd'
+import { Button, Row, Col, Icon, Dropdown , Menu, Upload, message, Modal} from 'antd'
 import WithPagination from 'components/WithPagination'
 import WithTable from 'components/WithTable'
-import tranformParmToObj from 'utils/tranformParmToObj' 
+import { MaxDownloadTotal } from './constants'
 import AnalysePie from 'components/AnalysePie'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import WithTableConfig from 'domainComponents/WithTableConfig'
 import path from 'constants/path'
-
-
+import { uploadFile } from 'utils/fileSplitUpload'
+import UploadMenu from './components/UploadMenu'
+import DownloadMenu from './components/DownloadMenu'
+import ApiConfig from 'services/apiConfig'
+import apiConfig from './../../services/apiConfig';
+import TimeTag from 'components/TimeTag'
+import { download } from 'utils/download'
+import transformTimeStamp from 'utils/transformTimeStamp'
 const styles = require('./index.less')
 
 
@@ -23,8 +28,8 @@ const mapStateToprops = state => {
   return {
     state,
     countLoading: state.loading.effects[`${ANALYSE_THREAT_INTELLIGENCE}/fetchCount`],
-    familyLoading: state.loading.effects[`${ANALYSE_THREAT_INTELLIGENCE}/fetchFamily`],
-    loopholeLoading :state.loading.effects[`${ANALYSE_THREAT_INTELLIGENCE}/fetchLoophole`]
+    tableLoading: state.loading.effects[`${ANALYSE_THREAT_INTELLIGENCE}/fetchTable`],
+    uploadLoading :state.loading.effects[`${ANALYSE_THREAT_INTELLIGENCE}/postDownload`]
   }
 }
 
@@ -36,18 +41,24 @@ const mapDispatchToprops = dispatch => {
       payload
     }),
 
-    fetchFamily: payload => dispatch({
-      type: `${ANALYSE_THREAT_INTELLIGENCE}/fetchFamily`,
+    fetchTable: payload => dispatch({
+      type: `${ANALYSE_THREAT_INTELLIGENCE}/fetchTable`,
       payload
     }),
 
-    fetchLoophole: payload => dispatch({
-      type: `${ANALYSE_THREAT_INTELLIGENCE}/fetchLoophole`,
+    postDownload: payload => dispatch({
+      type: `${ANALYSE_THREAT_INTELLIGENCE}/postDownload`,
       payload
     })
   }
 }
 //初始参数
+
+const initFilter = {
+  total:0,
+  limit:10,
+  current:1,
+}
 
 @WithAnimateRender
 @WithTableConfig(path.layoutConfig.analyseThreatIntelligenceTable)
@@ -57,22 +68,27 @@ class Page extends React.Component<any, any> {
     super(props);
     this.state = {
       filters: {
-        timestampRange:this.props.state[LAYOUT_NAMESPACE].timestampRange|| []
+        timestampRange:this.props.state[LAYOUT_NAMESPACE].timestampRange|| [],
+        ...initFilter
       },
-
       dataSource:[],
       intelligenceType:[],
       threatFamily:[],
-      type: props.location
+      data:[],
+      selectedRowKeys:[],
+      selectedRows:[],
+      modalTip: false,
+      downloadTypes: ''
     }
   }
 
-  timestampRangeOnChange = filters => {
-    let timestampRange = filters.timestampRange
+  timestampRangeOnChange = obj => {
+    let timestampRange = obj.timestampRange
+    let filters = { ...this.state.filters, timestampRange }
     let time = this.getNowTime()
     this.setState({ filters })
     this.getThreatCount({timestampRange})
-    this.getTable({timestampRange})
+    this.getTable({filters})
   }
 
   componentDidMount(){
@@ -84,11 +100,18 @@ class Page extends React.Component<any, any> {
 
   
   getTable = obj => {
-
+    this.props.fetchTable(obj).then(res => {
+      const { data=[], total=0 } = res 
+      const filters = { ...this.state.filters, total}
+      this.setState({data, filters})
+      this.clearSelect()
+    })
   }
 
-  tableBeforeFetch = obj => {
-    this.getTable(obj)
+  tableBeforeFetch = arg => {
+    let filters = { ...this.state.filters, ...arg }
+    this.setState({ filters })
+    this.getTable(filters)
   }
 
   getThreatCount = obj => {
@@ -103,18 +126,97 @@ class Page extends React.Component<any, any> {
 
   getNowTime = () => new Date().getTime()
 
+  paginationChange = current =>{
+    const obj = { ...this.state.filters, current }
+    this.setState({ filters: obj })
+    this.getTable(obj)
+  }
 
+  clearSelect = () => {
+    this.setState({ selectedRows:[], selectedRowKeys:[] })
+  }
 
+  tableSelect = (selectedRowKeys, selectedRows) => {
+    this.setState({ selectedRows, selectedRowKeys })
+  }
 
+  uploadFiles = arg => {
+    let { file, onSuccess, onError, filename, data } = arg
+    let body = new FormData();
+    body.append('file', file);
+    body.append('type', data.types);
+    console.log(arg, body.get('file'), filename, data)
+    const headers={  }
+    const url = apiConfig.http.ANALYSE_THREAT_INTELLINGENCE_UPLOAD
+    uploadFile({ body, url,  headers }).then(res => {
+      onSuccess()
+      message.success("上传完成")
+      console.log(res)
+    }).catch(err => {
+      onError(err);
+      message.error("上传失败，重新上传")
+    } )
+  }
+
+  downloadFile = (types) => {
+    let obj = { ...this.state.filters, types, timestampRange: transformTimeStamp(this.state.filters.timestampRange) }
+    this.props.postDownload(obj).then(res => {
+      let { url=null } = res 
+      download(url)
+      this.setState({ downloadTypes:'' })
+    }).catch(err => {
+      this.setState({ downloadTypes:'' })
+    })
+  }
+
+  beforeDownload = (types:string):void => {
+    const { total } = this.state.filters
+    if(total>MaxDownloadTotal){
+      this.setState({ modalTip:true, downloadTypes: types })
+    }
+    else {
+      this.downloadFile(types)
+    }
+  }
+
+  continueDownload = () => {
+    this.setState({ modalTip:false})
+    let types = this.state.downloadTypes
+    this.downloadFile(types)
+  }
+
+  cancelDownload = () => {
+    this.setState({ modalTip:false, downloadTypes: ''})
+  }
 
   render() {
-    const { filters,   threatFamily, intelligenceType, dataSource } = this.state
+    const { filters, data, threatFamily, intelligenceType, dataSource, selectedRowKeys, modalTip } = this.state
+    const { current, total, limit  } = filters
     let constants = this.props['config']['constants'] || { }
     
     let columns = this.props.config&&this.props.config.columns ||  []
+
+    columns.map(i => {
+      if(i.dataIndex==='intelligenceOccurrenceTime'){
+        i.render = text => <TimeTag num={ text } />
+      }
+      return i
+    })
+
+    const menu = (
+      <UploadMenu uploadFiles={ this.uploadFiles } />)
     return (
       <div style={{ position: "relative" }}>
         <div style={{ float: "right", position: "absolute", right: "0", top: "-45px" }}>
+          <Button type='primary' style={{ marginRight:15 }} icon='plus' >添加威胁情报</Button>
+          <Button type='primary' style={{ marginRight:15 }} >删除</Button>
+          <Button type='primary' style={{ marginRight:15 }} >编辑</Button>
+          <Dropdown overlay={menu}>
+              <Button type='primary' style={{ marginRight:15 }}  >导入<Icon type="caret-down" /></Button>
+          </Dropdown>
+          <Dropdown overlay={<DownloadMenu beforeDownload={ this.beforeDownload } />}>
+              <Button type='primary' style={{ marginRight:15 }}  >导出<Icon type="caret-down" /></Button>
+          </Dropdown>
           <DateRangePicker
             value={filters.timestampRange}
             key={ +new Date() }
@@ -125,7 +227,6 @@ class Page extends React.Component<any, any> {
         {
           this.props.animateRender([
             <Row key='analyse-threat-count' >
-            {/* 统计数据 */} 
               <Col span={ 6 }  style={{ height:205 }} >
                 <AnalysePie data={ threatFamily } text={ '威胁家族统计' }  />
               </Col>
@@ -137,16 +238,46 @@ class Page extends React.Component<any, any> {
               </Col>
             </Row>,
             <div key="analyse-threat-table" className={ styles.tabs } >
-              <WithTable   tableData={ [] }
+              <WithTable   tableData={ data }
                     constants={ constants }
                     config={ combineColumnsConfig(columns,this.props['config']['columns']) }
+                    otherConfig={  { rowSelection: { selectedRowKeys:selectedRowKeys, onChange: this.tableSelect } } }
                     tableBeforeFetch={ this.tableBeforeFetch } /> 
+              <WithPagination current={ current }  total={ total } onChange={ this.paginationChange } limit={ limit } />
             </div>
           ])
         }
+        <Modal
+          visible={modalTip}
+          onOk={this.continueDownload}
+          onCancel={this.cancelDownload}
+        >
+          <p>{`导出数据量超过${MaxDownloadTotal}条，导出时间较长，是否确定导出?`}</p>
+        </Modal>
       </div>
     )
   }
 }
 
 export default Page
+
+interface MenuItemProps {
+  uploadFiles: (any:any )=> void;
+  types: string,
+  text:string,
+}
+
+class MenuItem extends React.Component<MenuItemProps,any>{
+  render(){
+    const { uploadFiles, types, text } = this.props
+    return(
+      <Menu.Item>
+        <Upload  customRequest={ uploadFiles } fileList={[]} data={{ types }}  >
+          <div style={{ borderTop: '1px solid rgba(0,0,0,0.65)' }} >
+            { text }
+          </div>
+        </Upload>
+      </Menu.Item>
+    )
+  }
+}

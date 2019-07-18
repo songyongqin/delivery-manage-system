@@ -264,7 +264,13 @@ const HttpApiConfig = {
 
   CONFIG_TIME: '/config/time',
 
-  ANALYSE_THREAT_INTELLIGENCE_COUNT: '/analyse-threat-intelligence/count'
+  ANALYSE_THREAT_INTELLIGENCE_COUNT: '/analyse-threat-intelligence/count',
+
+  ANALYSE_THREAT_INTELLIGENCE_TABLE: '/analyse-threat-intelligence/table',
+
+  // ANALYSE_THREAT_INTELLINGENCE_UPLOAD: '/analyse-threat-intelligence/upload',
+
+  ANALYSE_THREAT_INTELLINGENCE_UPLOAD: '/mock/uploads',
 
 }
 

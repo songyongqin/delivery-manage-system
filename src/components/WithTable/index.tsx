@@ -14,6 +14,7 @@ interface props {
   tableData: Array<object>,
   // whichSelect: boolean,
   Detail?: any,
+  otherConfig?: object,
   tableBeforeFetch?: (any) => any
 }
 
@@ -123,7 +124,7 @@ class WithTable extends Component<props, any>{
 
   render() {
 
-    let { tableData, Detail, minPadding= true } = this.props
+    let { tableData, Detail, minPadding= true , otherConfig={}} = this.props
     tableData = tableData && tableData.map((item, index) => {
       item['key'] = index + ''
       return item
@@ -167,9 +168,11 @@ class WithTable extends Component<props, any>{
               // scroll={{ x:true} }
               expandedRowRender={
                 record => <Detail record={record} />
-              } /> :
+              }
+              {...otherConfig} /> :
             <Table dataSource={tableData} columns={columns}
               onChange={this.tableOnChange}
+              {...otherConfig} 
               pagination={false} />
         }
       </div>
