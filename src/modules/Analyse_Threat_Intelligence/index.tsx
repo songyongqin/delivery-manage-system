@@ -95,6 +95,7 @@ class Page extends React.Component<any, any> {
       downloadTypes: '',
       isNew: true, //是否新增
       submitLoading: false,
+      defaultValue: {},
     }
   }
 
@@ -149,11 +150,12 @@ class Page extends React.Component<any, any> {
   }
 
   clearSelect = () => {
-    this.setState({ selectedRows:[], selectedRowKeys:[] })
+    this.setState({ selectedRows:[], selectedRowKeys:[], defaultValue:{} })
   }
 
   tableSelect = (selectedRowKeys, selectedRows) => {
-    this.setState({ selectedRows, selectedRowKeys })
+    let defaultValue = selectedRows&&selectedRows[0]||{}
+    this.setState({ selectedRows, selectedRowKeys, defaultValue })
   }
 
   uploadFiles = arg => {
@@ -243,7 +245,7 @@ class Page extends React.Component<any, any> {
   }
 
   render() {
-    const { filters, data, threatFamily, intelligenceType, dataSource, selectedRowKeys, modalTip, modalInfo, isNew, selectedRows, submitLoading } = this.state
+    const { filters, data, threatFamily, intelligenceType, dataSource, selectedRowKeys, modalTip, modalInfo, isNew, selectedRows, submitLoading, defaultValue } = this.state
     const { current, total, limit  } = filters
     let constants = this.props['config']['constants'] || { }
     
@@ -319,7 +321,7 @@ class Page extends React.Component<any, any> {
           title={ isNew ? <div><Icon type="plus" style={{ marginRight:5 }} />添加威胁情报</div> : '编辑威胁情报' }
           destroyOnClose
           onCancel={this.hiddenInfoModal} >
-          <ThreatIntelligenceForm defaultValue={{}} onSubmit={ this.onSubmit } submitLoading={ submitLoading } />
+          <ThreatIntelligenceForm defaultValue={defaultValue} onSubmit={ this.onSubmit } submitLoading={ submitLoading } />
         </Modal>
       </div>
     )

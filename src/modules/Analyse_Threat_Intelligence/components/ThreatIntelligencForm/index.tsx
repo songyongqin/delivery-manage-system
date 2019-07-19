@@ -33,6 +33,11 @@ const getOtherItem = (value:string)=> {
   }
 }
 
+const transfromValue = (keys:string, arr:object[]) => {
+  let array = arr.filter(i =>  i['value']===keys)
+  return array&&array.length ? array['text'] : arr[0]['text']
+}
+
 class ThreatIntelligenceForm extends React.Component<any,any>{
   constructor(props){
     super(props)
@@ -100,7 +105,7 @@ class ThreatIntelligenceForm extends React.Component<any,any>{
         <Form.Item  label='数据来源' >
           {getFieldDecorator('dataSource', {
             rules: [{ required: true, message: '请选择数据来源' }],
-            initialValue: defaultValue.dataSource || dataSourceArr[0].value
+            initialValue: transfromValue(defaultValue.dataSource, dataSourceArr) || dataSourceArr[0].value
           })(
             <Select onChange={ this.handleChange } >
               {
