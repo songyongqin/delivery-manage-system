@@ -107,7 +107,7 @@ class Page extends React.Component<any, any> {
     let time = this.getNowTime()
     this.setState({ filters })
     this.getThreatCount({timestampRange})
-    this.getTable({filters})
+    this.getTable(filters)
   }
 
   componentDidMount(){
