@@ -29,7 +29,7 @@ const getOtherItem = (value:string)=> {
     return DDOSThreatIntelligence;
   }
   else {
-    return [];
+    return C2ThreatIntelligence;
   }
 }
 
@@ -42,7 +42,7 @@ class ThreatIntelligenceForm extends React.Component<any,any>{
   constructor(props){
     super(props)
     this.state={
-      otherItem: getOtherItem(this.props.defaultValue&&this.props.defaultValue.intelligenceContent&&this.props.defaultValue.intelligenceContent||'')
+      otherItem: getOtherItem(this.props.defaultValue&&this.props.defaultValue.intelligenceContent&&this.props.defaultValue.intelligenceContent||dataSourceArr[0].value)
     }
   }
 
