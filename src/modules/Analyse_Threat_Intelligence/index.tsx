@@ -71,7 +71,7 @@ const mapDispatchToprops = dispatch => {
 const initFilter = {
   total:0,
   limit:10,
-  current:1,
+  page:1,
 }
 
 @WithAnimateRender
@@ -146,8 +146,8 @@ class Page extends React.Component<any, any> {
 
   getNowTime = () => new Date().getTime()
 
-  paginationChange = current =>{
-    const obj = { ...this.state.filters, current }
+  paginationChange = page =>{
+    const obj = { ...this.state.filters, page }
     this.setState({ filters: obj })
     this.getTable(obj)
   }
@@ -267,7 +267,7 @@ class Page extends React.Component<any, any> {
 
   render() {
     const { filters, data, threatFamily, intelligenceType, dataSource, selectedRowKeys, modalTip, modalInfo, isNew, selectedRows, submitLoading, defaultValue } = this.state
-    const { current, total, limit  } = filters
+    const { page, total, limit  } = filters
     // let constants = this.props['config']['constants'] || { }
     const constants = {
       ...this.props['config']['constants'] ,
@@ -337,7 +337,7 @@ class Page extends React.Component<any, any> {
                     otherConfig={  { rowSelection: { selectedRowKeys:selectedRowKeys, onChange: this.tableSelect } } }
                     Detail={ Detail  }
                     tableBeforeFetch={ this.tableBeforeFetch } /> 
-              <WithPagination current={ current }  total={ total } onChange={ this.paginationChange } limit={ limit } />
+              <WithPagination current={ page }  total={ total } onChange={ this.paginationChange } limit={ limit } />
             </div>
           ])
         }
