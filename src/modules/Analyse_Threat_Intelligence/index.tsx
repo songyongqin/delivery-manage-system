@@ -114,7 +114,8 @@ class Page extends React.Component<any, any> {
     // this.fetchTable({})
     let timestampRange = this.state.filters.timestampRange
     this.getThreatCount({timestampRange})
-    this.getTable({timestampRange})
+    let filters = { ...this.state.filters, timestampRange }
+    this.getTable(filters)
   }
 
   
