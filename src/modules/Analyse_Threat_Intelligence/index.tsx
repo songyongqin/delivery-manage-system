@@ -7,7 +7,7 @@ import extraConnect from 'domainUtils/extraConnect'
 import { Button, Row, Col, Icon, Dropdown , Menu, Upload, message, Modal, Popconfirm} from 'antd'
 import WithPagination from 'components/WithPagination'
 import WithTable from 'components/WithTable'
-import { MaxDownloadTotal } from './constants'
+import { MaxDownloadTotal, maxTableExpanded } from './constants'
 import AnalysePie from 'components/AnalysePie'
 import combineColumnsConfig from 'domainUtils/combineColumnsConfig'
 import WithTableConfig from 'domainComponents/WithTableConfig'
@@ -21,8 +21,9 @@ import ThreatIntelligenceForm from './components/ThreatIntelligencForm'
 import TimeTag from 'components/TimeTag'
 import { download } from 'utils/download'
 import transformTimeStamp from 'utils/transformTimeStamp'
+import Detail from './components/Detail'
 const styles = require('./index.less')
-
+const arrowPng = require('./arrow.png')
 
 
 const mapStateToprops = state => {
@@ -96,6 +97,7 @@ class Page extends React.Component<any, any> {
       isNew: true, //是否新增
       submitLoading: false,
       defaultValue: {},
+      clicked:[]
     }
   }
 
@@ -120,7 +122,7 @@ class Page extends React.Component<any, any> {
     this.props.fetchTable(obj).then(res => {
       const { data=[], total=0 } = res 
       const filters = { ...this.state.filters, total}
-      this.setState({data, filters})
+      this.setState({data, filters, clicked:[]})
       this.clearSelect()
     })
   }
@@ -244,15 +246,44 @@ class Page extends React.Component<any, any> {
     })
   }
 
+  getCilck = index => {
+    let str = index +''
+    let arr = this.state.clicked
+    if(arr.indexOf(str)>-1){
+      let array = arr.filter(item => item!==str )
+      this.setState({ clicked: array })
+    }
+
+    else {
+      let array = [ ...arr, str ]
+      if(array.length> maxTableExpanded ){
+        let len = array.length
+        array = array.slice(len-maxTableExpanded,len)
+      }
+      this.setState({ clicked: array })
+    }
+  }
+
   render() {
     const { filters, data, threatFamily, intelligenceType, dataSource, selectedRowKeys, modalTip, modalInfo, isNew, selectedRows, submitLoading, defaultValue } = this.state
     const { current, total, limit  } = filters
-    let constants = this.props['config']['constants'] || { }
+    // let constants = this.props['config']['constants'] || { }
+    const constants = {
+      ...this.props['config']['constants'] ,
+      selectDetail: this.state.clicked
+    }
     
     let columns = this.props.config&&this.props.config.columns ||  []
     columns.map(i => {
       if(i.dataIndex==='intelligenceOccurrenceTime'){
         i.render = text => <TimeTag num={ text } />
+      }
+      if(i.dataIndex==='detail'){
+        i.width=30
+        i.render = (text, record, index) => 
+        <div style={{  cursor:'pointer' }} onClick={() =>this.getCilck(index)  } >
+          <img src={ arrowPng } alt='arrow' style={{ transform: `rotate(${this.state.clicked.indexOf(index+'')>-1 ? '90': '0' }deg)`, width:14, height:14 }} />
+        </div>
       }
       return i
     })
@@ -303,6 +334,7 @@ class Page extends React.Component<any, any> {
                     constants={ constants }
                     config={ combineColumnsConfig(columns,this.props['config']['columns']) }
                     otherConfig={  { rowSelection: { selectedRowKeys:selectedRowKeys, onChange: this.tableSelect } } }
+                    Detail={ Detail  }
                     tableBeforeFetch={ this.tableBeforeFetch } /> 
               <WithPagination current={ current }  total={ total } onChange={ this.paginationChange } limit={ limit } />
             </div>
