@@ -299,7 +299,7 @@ class Page extends React.Component<any, any> {
     let columns = this.props.config&&this.props.config.columns ||  []
     columns.map(i => {
       if(i.dataIndex==='intelligenceOccurrenceTime'){
-        i.render = text => <TimeTag num={ text } />
+        i.render = text => <TimeTag num={ text } str={ 'YYYY-MM-DD' } />
       }
       if(i.dataIndex==='detail'){
         i.width=30
