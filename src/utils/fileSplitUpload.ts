@@ -1,4 +1,10 @@
 import { isSecret, encrypt } from 'domain/secret'
+import { getToken } from 'domain/user'
+import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
+import setUrl from './setUrl'
+import UUID from 'uuid-js'
+const uuid = UUID.create().toString()
+
 /**
  *上传文件到服务器上 
  */
@@ -6,12 +12,20 @@ export const uploadFile = ({ url, headers, body, onProgress = null }) => {
 
   const xhr = new XMLHttpRequest();
 
-  xhr.open("PUT", url);
+  //增加常规请求头
+  let headerCommon = {
+    [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+        "user-uuid": uuid,
+    ...headers
+  }
+
+  let urls = encodeURI(setUrl(url)) 
+  xhr.open("PUT", urls);
   xhr.overrideMimeType("application/octet-stream");
   /**
    * 根据参数添加请求头
    */
-  Object.entries(headers).forEach(([key, value]) => {
+  Object.entries(headerCommon).forEach(([key, value]) => {
     xhr.setRequestHeader(key, value as any)
   })
 

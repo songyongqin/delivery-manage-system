@@ -34,7 +34,7 @@ export const intelligenceKeyObj = {
 const getArr = (arr:string[]) => {
   let array = arr.map(i => {
     let item = {}
-    item['key'] = [i]
+    item['key'] = i
     item['text'] = intelligenceKeyObj[i] 
     return item
   })

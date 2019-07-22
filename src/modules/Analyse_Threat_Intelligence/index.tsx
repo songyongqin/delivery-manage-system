@@ -120,6 +120,7 @@ class Page extends React.Component<any, any> {
 
   
   getTable = obj => {
+    let arg = { ...this.state.filters, ...obj }
     this.props.fetchTable(obj).then(res => {
       const { data=[], total=0 } = res 
       const filters = { ...this.state.filters, total}
@@ -171,7 +172,12 @@ class Page extends React.Component<any, any> {
     const url = apiConfig.http.ANALYSE_THREAT_INTELLINGENCE_UPLOAD
     uploadFile({ body, url,  headers }).then(res => {
       onSuccess()
-      message.success("上传完成")
+      if(res['status']===1){
+        message.success("上传完成")
+      }
+      else{
+        message.error(res['message']||"上传失败，重新上传")
+      }
       console.log(res)
     }).catch(err => {
       onError(err);
@@ -225,24 +231,40 @@ class Page extends React.Component<any, any> {
   onSubmit = arg => {
     let { isNew, selectedRows } = this.state
     this.setState({ submitLoading: true })
+    // this.addInfo(arg)
     let fnc = isNew ?  this.props.addThreatIntelligence : this.props.editThreatIntelligence
     let obj = isNew ? arg : { ...arg, id: selectedRows[0].id }
 
     fnc(obj).then(res => {
       message.success(`${ isNew ?'新增': '修改' }成功`)
+      this.getTable({})
       this.setState({ submitLoading: false })
     }).catch(err => {
       message.error(`${ isNew ?'新增': '修改' }失败`)
+      this.getTable({})
       this.setState({ submitLoading: false })
     })
   }
 
+  // addInfo = arg => {
+  //   this.props.addThreatIntelligence(arg).then(res => {
+  //     message.success(`新增成功`)
+  //     this.setState({ submitLoading: false })
+  //   }).catch(err => {
+  //     message.error(`新增失败`)
+  //     this.setState({ submitLoading: false })
+  //   })
+  // }
+
   delThreatInfo = () => {
     let id = this.state.selectedRows.map(i => i.id).filter(i => i)
+    let filters = this.state.filters
     this.props.delThreatIntelligence({id}).then(res => {
+    this.getTable(filters)
       message.success('删除成功')
     })
     .catch(err => {
+      this.getTable(filters)
       message.error('删除失败')
     })
   }
@@ -354,7 +376,7 @@ class Page extends React.Component<any, any> {
           title={ isNew ? <div><Icon type="plus" style={{ marginRight:5 }} />添加威胁情报</div> : '编辑威胁情报' }
           destroyOnClose
           onCancel={this.hiddenInfoModal} >
-          <ThreatIntelligenceForm defaultValue={defaultValue} onSubmit={ this.onSubmit } submitLoading={ submitLoading } />
+          <ThreatIntelligenceForm defaultValue={defaultValue} onSubmit={ this.onSubmit } submitLoading={ submitLoading } isNew={ isNew } />
         </Modal>
       </div>
     )

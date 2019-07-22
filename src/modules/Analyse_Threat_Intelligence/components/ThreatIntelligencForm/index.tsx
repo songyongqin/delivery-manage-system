@@ -2,7 +2,9 @@
 
 import * as React from 'react'
 import { Form, Input, Select, Button } from 'antd'
-import { APTThreatIntelligence, C2ThreatIntelligence, HoneynetThreatIntelligence,  DDOSThreatIntelligence  } from './constants'
+import { APTThreatIntelligence, C2ThreatIntelligence, HoneynetThreatIntelligence,  DDOSThreatIntelligence, intelligenceKeyObj  } from './constants'
+import flatten from 'lodash/flatten'
+
 
 const Option = Select.Option
 
@@ -38,6 +40,30 @@ const transfromValue = (keys:string, arr:object[]) => {
   return array&&array.length ? array['text'] : arr[0]['text']
 }
 
+const transfromDatasource = (str:string) => {
+  let array = dataSourceArr.filter(i =>  i['text']===str)
+  console.log(str, array)
+  return array&&array.length ?  array[0]['value'] : str
+}
+
+const detail = [[{name:"md5", value:"246sadggasd"}]]
+
+
+
+const getDetailValue = (keys,arr) => {
+  try{
+    if(arr&&arr.length){
+      let array = flatten(arr)
+      let arrays = array.filter(i => i.name===intelligenceKeyObj[keys])
+      console.log(keys, arr, array, arrays)
+      return arrays&&arrays.length ? arrays[0]['value'] : ''
+    }
+  }
+  catch(err){
+    return ''
+  }
+}
+
 class ThreatIntelligenceForm extends React.Component<any,any>{
   constructor(props){
     super(props)
@@ -61,7 +87,8 @@ class ThreatIntelligenceForm extends React.Component<any,any>{
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.onSubmit(values)
+        let obj = { ...values, dataSource: transfromDatasource(values['dataSource']) }
+        this.props.onSubmit(obj)
       }
     })
   }
@@ -119,7 +146,7 @@ class ThreatIntelligenceForm extends React.Component<any,any>{
             rules: [{ required: true, message: '请输入情报内容' }],
             initialValue: defaultValue.intelligenceContent || ''
           })(
-            <Input />,
+            <Input id='intelligenceContent' />,
           )}
         </Form.Item>
         {
@@ -127,15 +154,15 @@ class ThreatIntelligenceForm extends React.Component<any,any>{
             <Form.Item  label={ i.text } key={ i.key } >
           {getFieldDecorator(i.key, {
             rules: [{  message: `请输入${i.text}` }],
-            initialValue: defaultValue[i.key] || ''
+            initialValue: getDetailValue(i.key, defaultValue['detail'] )|| ''
           })(
-            <Input />,
+            <Input   />,
           )}
         </Form.Item>) : null
         }
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
           <Button type="primary" htmlType="submit"  loading={ submitLoading }>
-            添加
+            { this.props.isNew ? '添加' : '修改' }
           </Button>
         </Form.Item>
       </Form>
