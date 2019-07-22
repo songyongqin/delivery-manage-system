@@ -121,7 +121,7 @@ class Page extends React.Component<any, any> {
   
   getTable = obj => {
     let arg = { ...this.state.filters, ...obj }
-    this.props.fetchTable(obj).then(res => {
+    this.props.fetchTable(arg).then(res => {
       const { data=[], total=0 } = res 
       const filters = { ...this.state.filters, total}
       this.setState({data, filters, clicked:[]})
@@ -167,7 +167,7 @@ class Page extends React.Component<any, any> {
     let body = new FormData();
     body.append('file', file);
     body.append('type', data.types);
-    console.log(arg, body.get('file'), filename, data)
+    // console.log(arg, body.get('file'), filename, data)
     const headers={  }
     const url = apiConfig.http.ANALYSE_THREAT_INTELLINGENCE_UPLOAD
     uploadFile({ body, url,  headers }).then(res => {
@@ -178,7 +178,7 @@ class Page extends React.Component<any, any> {
       else{
         message.error(res['message']||"上传失败，重新上传")
       }
-      console.log(res)
+      // console.log(res)
     }).catch(err => {
       onError(err);
       message.error("上传失败，重新上传")

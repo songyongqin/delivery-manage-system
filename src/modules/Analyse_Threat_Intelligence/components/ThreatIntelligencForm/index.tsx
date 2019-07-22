@@ -37,12 +37,11 @@ const getOtherItem = (value:string)=> {
 
 const transfromValue = (keys:string, arr:object[]) => {
   let array = arr.filter(i =>  i['value']===keys)
-  return array&&array.length ? array['text'] : arr[0]['text']
+  return array&&array.length ? array[0]['text'] : arr[0]['text']
 }
 
 const transfromDatasource = (str:string) => {
   let array = dataSourceArr.filter(i =>  i['text']===str)
-  console.log(str, array)
   return array&&array.length ?  array[0]['value'] : str
 }
 
@@ -55,7 +54,6 @@ const getDetailValue = (keys,arr) => {
     if(arr&&arr.length){
       let array = flatten(arr)
       let arrays = array.filter(i => i.name===intelligenceKeyObj[keys])
-      console.log(keys, arr, array, arrays)
       return arrays&&arrays.length ? arrays[0]['value'] : ''
     }
   }
@@ -68,7 +66,7 @@ class ThreatIntelligenceForm extends React.Component<any,any>{
   constructor(props){
     super(props)
     this.state={
-      otherItem: getOtherItem(this.props.defaultValue&&this.props.defaultValue.intelligenceContent&&this.props.defaultValue.intelligenceContent||dataSourceArr[0].value)
+      otherItem: getOtherItem(this.props.defaultValue&&this.props.defaultValue.dataSource&&this.props.defaultValue.dataSource||dataSourceArr[0].value)
     }
   }
 
