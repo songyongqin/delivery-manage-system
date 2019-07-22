@@ -85,7 +85,8 @@ class ThreatIntelligenceForm extends React.Component<any,any>{
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        let obj = { ...values, dataSource: transfromDatasource(values['dataSource']) }
+
+        let obj = this.props.isNew ? { ...values, dataSource: transfromDatasource(values['dataSource']) } :  { ...values, dataSource: transfromDatasource(values['dataSource']), intelligenceOccurrenceTime: this.props.defaultValue.intelligenceOccurrenceTime }
         this.props.onSubmit(obj)
       }
     })
