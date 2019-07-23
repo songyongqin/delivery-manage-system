@@ -13,7 +13,7 @@ const dataSourceArr = [
   { value:"C2", text:"C2威胁情报" },
   { value:"APT", text:"APT威胁情报" },
   { value:"Honeynet", text:"Honeynet漏洞数据" },
-  { value:"DDOS", text:"DDOS威胁情报" },
+  { value:"DDoS", text:"DDoS威胁情报" },
   { value:"other", text:"其他" },
 ]
 
