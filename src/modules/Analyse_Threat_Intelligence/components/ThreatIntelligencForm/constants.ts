@@ -26,7 +26,7 @@ export const intelligenceKeyObj = {
   "attackedType":"被攻击者类型",
   "attackePort":"被攻击者端口",
   "attackerC2DomainName":"攻击者C2域名",
-  "attackerC2IP":"攻击者C2IP",
+  "attackerC2IP":"攻击者C2 IP",
   "attackerC2Protoaol":"攻击者C2协议",
   "attackerC2Port":"攻击者C2端口",
 }
