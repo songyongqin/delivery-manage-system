@@ -11,6 +11,10 @@
       "conditionType": "selector",
       "filters": [
         {
+          "text": "URL", 
+          "value": "URL"
+        },
+        {
           "text": "IP", 
           "value": "IP"
         },

@@ -8,7 +8,7 @@ import flatten from 'lodash/flatten'
 
 const Option = Select.Option
 
-const intelligenceTypeArr = ['IP', 'IPPORT', 'DOMAIN', 'MD5', 'SHA256']
+const intelligenceTypeArr = ['URL','IP', 'IPPORT', 'DOMAIN', 'MD5', 'SHA256']
 const dataSourceArr = [
   { value:"C2", text:"C2威胁情报" },
   { value:"APT", text:"APT威胁情报" },
