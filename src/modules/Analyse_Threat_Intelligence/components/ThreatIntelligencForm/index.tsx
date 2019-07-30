@@ -18,16 +18,16 @@ const dataSourceArr = [
 ]
 
 const getOtherItem = (value:string)=> {
-  if(value==='C2'){
+  if(value===dataSourceArr[0].value){
     return C2ThreatIntelligence;
   }
-  else if(value==='APT'){
+  else if(value===dataSourceArr[1].value){
     return APTThreatIntelligence;
   }
-  else if(value==='Honeynet'){
+  else if(value===dataSourceArr[2].value){
     return HoneynetThreatIntelligence;
   }
-  else if(value==='DDOS'){
+  else if(value===dataSourceArr[3].value){
     return DDOSThreatIntelligence;
   }
   else {
