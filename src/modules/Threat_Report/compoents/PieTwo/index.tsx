@@ -7,6 +7,7 @@ import transformNum from 'utils/transformNum'
 import addComma from 'utils/addComma'
 import wrapStr from 'utils/wrapStr'
 import dataSetName from 'utils/dataSetName'
+import getPieBottom  from 'utils/getPieBottom';
 const css = require('./index.less')
 
 const PieTwo = ({ data, data2, title, onClick, total, unit, id,className  }) => {
@@ -62,7 +63,7 @@ const getConfig = (data, data2) => ({
   legend: {
     orient: 'vertical',
     left: '50%',
-    bottom: '10',
+    bottom: getPieBottom(data2),
     height:'75%',
     width:50,
     itemWidth: 5,

@@ -7,6 +7,7 @@ import transformNum from 'utils/transformNum'
 import addComma from 'utils/addComma'
 import wrapStr from 'utils/wrapStr'
 import dataSetName from 'utils/dataSetName'
+import getPieBottom from 'utils/getPieBottom'
 const css = require('./index.less')
 
 const Pie = ({ data, title, onClick, total, unit, id, className  }) => {
@@ -48,55 +49,57 @@ const getNum = (name, data) => {
 // }
 
 
-const getConfig = data => ({
-  title: { },
-  tooltip: {
-    trigger: 'item',
-    // formatter: "{b} :<br /> {c} ({d}%)"
-    formatter: params => {
-      let num = addComma(params.value)
-      let str = `${params.name} :<br />${num} (${params.percent}%)`
-      return str
-    }
-  },
-  legend: {
-    orient: 'vertical',
-    right: 'right',
-    bottom: '10',
-    height:'90%',
-    type:'scroll',
-    data: Array.isArray(data) ? data.map(i => i.name) : [],
-    formatter: function (name) {
-      // return   name +'  ' + transformNum(getNum(name, data))
-      return   wrapStr(name, 6) +'  ' + transformNum(getNum(name, data))
-  },
+const getConfig = data => {
+  return {
+    title: { },
     tooltip: {
-      show: true
-  }
-  },
-
-  series: [
-    {
-      type: 'pie',
-      radius: ['0','55%'],
-      center: ['25%', '55%'],
-      data: Array.isArray(data) ? data.filter(i => i.value) : [],
-      minAngle:5,
-      label: {
-        normal: {
-          show: false,
-          position: "outside",
-          formatter: "{b} : {c} ({d}%)"
+      trigger: 'item',
+      // formatter: "{b} :<br /> {c} ({d}%)"
+      formatter: params => {
+        let num = addComma(params.value)
+        let str = `${params.name} :<br />${num} (${params.percent}%)`
+        return str
+      }
+    },
+    legend: {
+      orient: 'vertical',
+      right: 'right',
+      bottom: getPieBottom(data),
+      height:'90%',
+      type:'scroll',
+      data: Array.isArray(data) ? data.map(i => i.name) : [],
+      formatter: function (name) {
+        // return   name +'  ' + transformNum(getNum(name, data))
+        return   wrapStr(name, 6) +'  ' + transformNum(getNum(name, data))
+    },
+      tooltip: {
+        show: true
+    }
+    },
+  
+    series: [
+      {
+        type: 'pie',
+        radius: ['0','55%'],
+        center: ['25%', '55%'],
+        data: Array.isArray(data) ? data.filter(i => i.value) : [],
+        minAngle:5,
+        label: {
+          normal: {
+            show: false,
+            position: "outside",
+            formatter: "{b} : {c} ({d}%)"
+          },
+  
         },
-
-      },
-      itemStyle: {
-        emphasis: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        itemStyle: {
+          emphasis: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
         }
       }
-    }
-  ]
-})
+    ]
+  }
+} 

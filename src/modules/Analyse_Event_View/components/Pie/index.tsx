@@ -4,6 +4,7 @@ import React from 'react'
 import PieChart from 'domainComponents/PieCharts/async'
 import wrapStr from 'utils/wrapStr'
 import dataSetName from 'utils/dataSetName'
+import getPieBottom from 'utils/getPieBottom';
 const styles = require('./index.less')
 
 const Wrap = props =>{
@@ -20,10 +21,12 @@ const getConfig = data => {
   // if(arr&&arr.length){
   //   arr[0]['selected'] = true
   // }
+
+  const bottom = getPieBottom(data)
   obj['legend'] = {
     orient: 'vertical',
     right: 'right',
-    bottom: '10',
+    bottom: bottom,
     height:'80%',
     type:'scroll',
     data: Array.isArray(data) ? data.map(i => i.name) : [],
