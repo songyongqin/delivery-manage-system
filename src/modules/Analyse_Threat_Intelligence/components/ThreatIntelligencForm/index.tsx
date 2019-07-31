@@ -30,6 +30,9 @@ const getOtherItem = (value:string)=> {
   else if(value===dataSourceArr[3].value){
     return DDOSThreatIntelligence;
   }
+  else if(value===dataSourceArr[4].value){
+    return [];
+  }
   else {
     return C2ThreatIntelligence;
   }
