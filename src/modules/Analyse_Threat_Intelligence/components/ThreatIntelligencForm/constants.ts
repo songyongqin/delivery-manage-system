@@ -1,4 +1,7 @@
 
+import { ipReg, portReg } from 'utils/tools'
+
+
 export const intelligenceKeyObj = {
   "url": "URL",
   "md5": "MD5",
@@ -36,12 +39,17 @@ const getArr = (arr:string[]) => {
     let item = {}
     item['key'] = i
     item['text'] = intelligenceKeyObj[i] 
+    item['rules'] = needIpcheck.includes(i) ? ipReg : needPortCheck.includes(i) ? portReg : /.*/
     return item
   })
   return array
 }
 
 const C2Arr = ['url', 'md5']
+
+const needIpcheck = ['sourceIp', 'targetIp','attackedIP','attackerC2IP']
+
+const needPortCheck = ['sourcePort', 'targetPort', 'attackePort', 'attackerC2Port']
 
 export const C2ThreatIntelligence = getArr(C2Arr)
 

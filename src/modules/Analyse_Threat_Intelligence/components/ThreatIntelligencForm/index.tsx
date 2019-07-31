@@ -152,7 +152,7 @@ class ThreatIntelligenceForm extends React.Component<any,any>{
           otherItem&&otherItem.length ? otherItem.map(i => 
             <Form.Item  label={ i.text } key={ i.key } >
           {getFieldDecorator(i.key, {
-            rules: [{  message: `请输入${i.text}` }],
+            rules: [{  message: `请输入${i.text}`, pattern: i.rules }],
             initialValue: getDetailValue(i.key, defaultValue['detail'] )|| ''
           })(
             <Input   />,
