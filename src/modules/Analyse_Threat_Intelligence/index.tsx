@@ -240,7 +240,7 @@ class Page extends React.Component<any, any> {
       this.getTable({})
       this.setState({ submitLoading: false })
     }).catch(err => {
-      message.error(`${ isNew ?'新增': '修改' }失败`)
+      // message.error(`${ isNew ?'新增': '修改' }失败`)
       this.getTable({})
       this.setState({ submitLoading: false })
     })
