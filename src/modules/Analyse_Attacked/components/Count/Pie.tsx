@@ -19,7 +19,7 @@ const getConfig = data => {
   obj['legend'] = {
     orient: 'vertical',
     right: 'right',
-    bottom: bottom,
+    bottom: `${bottom}%`,
     height:'90%',
     type:'scroll',
     data: Array.isArray(data) ? data.map(i => i.name) : [],
