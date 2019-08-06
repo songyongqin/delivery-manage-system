@@ -1,5 +1,5 @@
 {
-  "title": "工控威胁检测平台",
+  "title": "安天网络安全态势感知与通报预警平台",
   "secret": false,
   "heartBeat": false,
   "host":"",
@@ -31,7 +31,10 @@
     "/file-restore": true
   },
   "hiddenRouter":[
-    "/topo"
+    "/topo",
+    "/typical/case",
+    "/audit/assets",
+    "/analyse/threat-intelligence"
   ],
   "adminOnly": [
     "/sys-config",
