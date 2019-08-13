@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Router, Route, Switch, Redirect } from 'dva/router'
-import zhCN from 'antd/lib/locale-provider/zh_CN'
+// import zhCN from 'antd/lib/locale-provider/zh_CN'
+import zhCN from 'antd/es/locale/zh_CN';
 import { LocaleProvider } from 'antd'
 import dynamic from 'dva/dynamic'
 import MainWrapper from 'modules/MainWrapper'
