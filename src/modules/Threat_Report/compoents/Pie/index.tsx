@@ -10,19 +10,19 @@ import dataSetName from 'utils/dataSetName'
 import getPieBottom from 'utils/getPieBottom'
 const css = require('./index.less')
 
-const Pie = ({ data, title, onClick, total, unit, id, className  }) => {
+const Pie = ({ data, title, onClick, total, unit, id, className }) => {
   const datas = dataSetName(data)
-  return(
-    <div className={ css.card  } id={ id }  >
-      <div className={ css.title } onClick={() => onClick(title) } >
-        <Icon type="pie-chart" style={{ fontSize:22, display:'inline-block', marginRight:5 }} />
-        <span className={ css.text } >{ title }</span>
-        <span style={{ fontSize:15 }} >{' -' + total + ' ' + unit }</span>
+  return (
+    <div className={css.card} id={id}  >
+      <div className={css.title} onClick={() => onClick(title)} >
+        <Icon type="pie-chart" style={{ fontSize: 22, display: 'inline-block', marginRight: 5 }} />
+        <span className={css.text} >{title}</span>
+        <span style={{ fontSize: 15 }} >{' -' + total + ' ' + unit}</span>
       </div>
-      <div className={ className } >
-      <PieCharts data={ datas }  config={ getConfig(datas) }  />
+      <div className={className} >
+        <PieCharts data={datas} config={getConfig(datas)} />
       </div>
-      
+
     </div>
   )
 }
@@ -32,7 +32,7 @@ export default Pie
 // const LONG = 15
 
 const getNum = (name, data) => {
-  let arr = data.filter(i=> i.name===name ) || data
+  let arr = data.filter(i => i.name === name) || data
   return arr[0].value
 }
 
@@ -51,7 +51,7 @@ const getNum = (name, data) => {
 
 const getConfig = data => {
   return {
-    title: { },
+    title: {},
     tooltip: {
       trigger: 'item',
       // formatter: "{b} :<br /> {c} ({d}%)"
@@ -65,32 +65,32 @@ const getConfig = data => {
       orient: 'vertical',
       right: 'right',
       bottom: getPieBottom(data),
-      height:'90%',
-      type:'scroll',
+      height: '90%',
+      type: 'scroll',
       data: Array.isArray(data) ? data.map(i => i.name) : [],
       formatter: function (name) {
         // return   name +'  ' + transformNum(getNum(name, data))
-        return   wrapStr(name, 6) +'  ' + transformNum(getNum(name, data))
-    },
+        return wrapStr(name, 5) + ' ' + transformNum(getNum(name, data))
+      },
       tooltip: {
         show: true
-    }
+      }
     },
-  
+
     series: [
       {
         type: 'pie',
-        radius: ['0','55%'],
+        radius: ['0', '55%'],
         center: ['25%', '55%'],
         data: Array.isArray(data) ? data.filter(i => i.value) : [],
-        minAngle:5,
+        minAngle: 5,
         label: {
           normal: {
             show: false,
             position: "outside",
             formatter: "{b} : {c} ({d}%)"
           },
-  
+
         },
         itemStyle: {
           emphasis: {

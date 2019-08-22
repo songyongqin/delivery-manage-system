@@ -7,22 +7,22 @@ import transformNum from 'utils/transformNum'
 import addComma from 'utils/addComma'
 import wrapStr from 'utils/wrapStr'
 import dataSetName from 'utils/dataSetName'
-import getPieBottom  from 'utils/getPieBottom';
+import getPieBottom from 'utils/getPieBottom';
 const css = require('./index.less')
 
-const PieTwo = ({ data, data2, title, onClick, total, unit, id,className  }) => {
-  if(data.length){
+const PieTwo = ({ data, data2, title, onClick, total, unit, id, className }) => {
+  if (data.length) {
     data[0]['selected'] = true
   }
-  return(
-    <div className={ css.card} id={ id } >
-      <div className={ css.title } onClick={() => onClick(title) } >
-        <Icon type="pie-chart" style={{ fontSize:22, display:'inline-block', marginRight:5 }} />
-        <span className={ css.text } >{ title }</span>
-        <span style={{ fontSize:15 }} >{' -' + total + ' ' + unit }</span>
+  return (
+    <div className={css.card} id={id} >
+      <div className={css.title} onClick={() => onClick(title)} >
+        <Icon type="pie-chart" style={{ fontSize: 22, display: 'inline-block', marginRight: 5 }} />
+        <span className={css.text} >{title}</span>
+        <span style={{ fontSize: 15 }} >{' -' + total + ' ' + unit}</span>
       </div>
-      <div className={ className } >
-        <PieCharts data={ dataSetName(data) }  config={ getConfig(dataSetName(data), dataSetName(data2)) }  />
+      <div className={className} >
+        <PieCharts data={dataSetName(data)} config={getConfig(dataSetName(data), dataSetName(data2))} />
       </div>
     </div>
   )
@@ -33,7 +33,7 @@ export default PieTwo
 const LONG = 15
 
 const getNum = (name, data) => {
-  let arr = data.filter(i=> i.name===name ) || data
+  let arr = data.filter(i => i.name === name) || data
   return arr[0].value
 }
 
@@ -64,26 +64,26 @@ const getConfig = (data, data2) => ({
     orient: 'vertical',
     left: '50%',
     bottom: getPieBottom(data2),
-    height:'75%',
-    width:50,
+    height: '75%',
+    width: 50,
     itemWidth: 5,
     pageIconSize: 8,
-    itemHeight:5,
-    type:'scroll',
+    itemHeight: 5,
+    type: 'scroll',
     data: Array.isArray(data2) ? data2.map(i => i.name) : [],
     formatter: function (name) {
       // return   name +'  ' + transformNum(getNum(name, data))
-      return   wrapStr(name, 6) +'  ' + transformNum(getNum(name, data2))
-  },
+      return wrapStr(name, 5) + ' ' + transformNum(getNum(name, data2))
+    },
     tooltip: {
       show: true
-  }
+    }
   },
 
   series: [
     {
       type: 'pie',
-      radius: [0,'40%'],
+      radius: [0, '40%'],
       center: ['25%', '55%'],
       selectedMode: 'single',
       // data: data => {
@@ -96,8 +96,8 @@ const getConfig = (data, data2) => ({
       data: Array.isArray(data) ? data.filter(i => i.value).map((item => {
         item.selected = false
         return item
-      } )) : [],
-      minAngle:5,
+      })) : [],
+      minAngle: 5,
       label: {
         normal: {
           show: false,
@@ -116,10 +116,10 @@ const getConfig = (data, data2) => ({
     },
     {
       type: 'pie',
-      radius: ['45%','55%'],
+      radius: ['45%', '55%'],
       center: ['25%', '55%'],
       data: data2,
-      minAngle:5,
+      minAngle: 5,
       label: {
         normal: {
           show: false,

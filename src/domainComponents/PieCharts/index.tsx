@@ -24,34 +24,34 @@ const config = {
     // color: "rgba(0, 0, 0, 0.65)",
     fontFamily: "Arial",
     rich: {
-      a:{
+      a: {
         // color: 'red',
         // backgroundColor: '#449933',
-        
+
       }
     },
-    widht:50,
+    widht: 50,
   }
 }
 
-const getNum =( arr, name )=> {
+const getNum = (arr, name) => {
   let num = 0
-  if(arr&&arr.length){
-    let obj = arr.find(i => i.name===name )
+  if (arr && arr.length) {
+    let obj = arr.find(i => i.name === name)
     num = obj['value']
   }
   return num
 }
 
-let getOption = ({ data ,theme, titles={}, addNum=false, offset=0 }) => {
+let getOption = ({ data, theme, titles = {}, addNum = false, offset = 0 }) => {
   const bottom = getPieBottom(data, offset)
   return {
     title: {
       text: '',
       x: 'center',
       padding: 15,
-      target:'self',
-      textStyle: {...config[theme], fontSize: 14 },
+      target: 'self',
+      textStyle: { ...config[theme], fontSize: 14 },
       ...titles,
     },
     tooltip: {
@@ -68,22 +68,22 @@ let getOption = ({ data ,theme, titles={}, addNum=false, offset=0 }) => {
       left: '50%',
       // bottom: '10',
       bottom: `${bottom}%`,
-      height:'75%',
-      width:50,
+      height: '75%',
+      width: 50,
       itemWidth: 5,
       pageIconSize: 8,
-      itemHeight:5,
-      type:'scroll',
+      itemHeight: 5,
+      type: 'scroll',
       data: Array.isArray(data) ? data.map(i => i.name) : [],
       textStyle: config[theme],
       formatter: function (name) {
-        let num = getNum(data, name) 
-        return  addNum ?  `{a|${wrapStr(name, 6)}  ${transfromNum(num)}}`: `{a|${wrapStr(name, 15)}}`
+        let num = getNum(data, name)
+        return addNum ? `{a|${wrapStr(name, 5)} ${transfromNum(num)}}` : `{a|${wrapStr(name, 15)}}`
       },
-    //   formatter: [
-    //     '{a|这段文本采用样式a}',
-    //     '{a|这段文本采用样式a}'
-    // ].join(''),
+      //   formatter: [
+      //     '{a|这段文本采用样式a}',
+      //     '{a|这段文本采用样式a}'
+      // ].join(''),
       tooltip: {
         show: true
       }
@@ -105,43 +105,43 @@ let getOption = ({ data ,theme, titles={}, addNum=false, offset=0 }) => {
     series: [
       {
         type: 'pie',
-        radius: ['35%','45%'],
+        radius: ['35%', '45%'],
         center: ['25%', '55%'],
         data: Array.isArray(data) ? data.filter(i => i.value) : [],
-        minAngle:5,
+        minAngle: 5,
         label: {
           normal: {
             show: false,
             position: "center"
-        },
-        itemStyle: {
-          emphasis: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          },
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
           }
         }
-      }
     ]
   }
-} 
+}
 
-const color = ['#89A6FF','#7371E8', '#A27CFF', '#71AEE8', '#7DE1FF','#CCCCCC']
+const color = ['#89A6FF', '#7371E8', '#A27CFF', '#71AEE8', '#7DE1FF', '#CCCCCC']
 
 
-const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents, addNum=false, offset=-5 }) => {
+const PieCharts = ({ data, theme = LIGHT_THEME, titles = {}, config = {}, onEvents, addNum = false, offset = -5 }) => {
   const datas = dataSetName(data)
   // let option = { ...getOption({data:datas, theme, titles}), ...config, color }
-  let isPieTwo = config&&config['series']&&config['series'].length===2 || false
-  let option = isPieTwo ? { ...getOption({data:datas, theme, titles, addNum, offset}), ...config, color } : { ...mergeWith(getOption({data:datas, theme, titles, addNum, offset}), config), color }
-  if(Array.isArray(data) ){
-    if(onEvents){
+  let isPieTwo = config && config['series'] && config['series'].length === 2 || false
+  let option = isPieTwo ? { ...getOption({ data: datas, theme, titles, addNum, offset }), ...config, color } : { ...mergeWith(getOption({ data: datas, theme, titles, addNum, offset }), config), color }
+  if (Array.isArray(data)) {
+    if (onEvents) {
       return (
         // <div style={{ width: "100%", height: "400px" }}>
         <div style={{ width: "100%", height: "100%" }}>
           <ReactEcharts
-            style={{width: "100%", height: "100%"  }}
-            option={ option }
+            style={{ width: "100%", height: "100%" }}
+            option={option}
             onEvents={onEvents}>
           </ReactEcharts>
         </div>
@@ -150,10 +150,10 @@ const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents, ad
     else {
       return (
         // <div style={{ width: "100%", height: "400px" }}>
-        <div style={{width: "100%", height: "100%"  }}>
+        <div style={{ width: "100%", height: "100%" }}>
           <ReactEcharts
-            style={{width: "100%", height: "100%"  }}
-            option={ option }>
+            style={{ width: "100%", height: "100%" }}
+            option={option}>
           </ReactEcharts>
         </div>
       )
@@ -169,7 +169,7 @@ const PieCharts = ({ data, theme=LIGHT_THEME, titles={}, config={}, onEvents, ad
 //     this.state = {
 //     }
 //   }
-  
+
 //   render(){
 //     const { data, theme, titles, config } = this.props
 //     let option = { ...getOption({data, theme, titles}), ...config }
