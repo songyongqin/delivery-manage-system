@@ -84,8 +84,6 @@ export const getFileName = (content) => {
 }
 
 const getBasicInfo = content => {
-  console.log(...content[TARGET_DATA_INDEX])
-  debugger
   try {
     return {
       ...content[TARGET_DATA_INDEX],
