@@ -1,0 +1,26 @@
+.table th{
+  padding: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  text-align: left;
+  font-size: 14px;
+  /* background-color: #4c4f53; */
+  /* color: #fff; */
+  /* border: 1px solid #ddd; */
+}
+.table td{
+  font-size: 12px;
+  /* background-color: #E9F3FB; */
+  /* border: 1px solid #ddd; */
+  padding: 8px;
+}
+.anttable tr:nth-child(odd){
+  background-color: #E9F3FB;
+}
+.anttable :global(.ant-table-thead > tr > th){
+ text-align: center;
+}
+.anttable :global(.ant-table-tbody > tr > td){
+  text-align: center;
+ }
+ 

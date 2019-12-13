@@ -103,8 +103,11 @@ export const ROOT_URL = "/",
 
   CONFIG_NODE_MONITOR_URL = '/config/node/monitor',
 
-  TYPICAL_CASE_URL = '/typical/case'
+  TYPICAL_CASE_URL = '/typical/case',
 
+  //syq
+  SAMPLE_NON_X86 = '/api/query/sample_non_x86_sandbox_report',
+  SAMPLE_X86 = '/api/query/sample_x86_sandbox_report'
 
 
 

@@ -20,12 +20,9 @@ export default (md5) => {
           download(getAuthURL(res.payload))
           resolve()
         }
-
       } catch (e) {
-
         reject(e.message)
       }
-
     })
 
   })

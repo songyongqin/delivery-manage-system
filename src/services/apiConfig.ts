@@ -274,6 +274,12 @@ const HttpApiConfig = {
 
   ANALYSE_THREAT_INTELLIGENCE_INFO: '/analyse/threat-intelligence/info',
 
+
+  non_x86_sandbox_report: "/api/query/sample_non_x86_sandbox_report",
+  //syq
+  "queryDetail": "/api/query/detail",
+  
+
 }
 
 

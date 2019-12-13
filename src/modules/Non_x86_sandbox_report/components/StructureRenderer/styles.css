@@ -1,0 +1,16 @@
+.table{
+  width:100%;
+}
+.table tbody{
+  width:100%
+}
+.table .title-cell{
+  width: 120px;
+  min-width: 120px;    
+  color:#40a9ff;
+}
+.table td {
+  padding:5px 15px;
+  vertical-align: top;
+}
+

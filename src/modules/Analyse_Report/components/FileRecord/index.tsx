@@ -54,7 +54,7 @@ class Page extends React.Component<any, any> {
     this.props.toFetch({ limit: value });
   }
   render() {
-    const { data, page, limit, fileType, threatType, judge, md5, fileName } = this.props;
+    const { data, page, limit, fileType, threatType, judge, md5, fileName,state } = this.props;
     const { changeFilename, onInputChangeMD5, searchFilename, onSearchMD5, downFile, downMD5 } = this;
     const { filterDropdownName, filterDropdownMD5, searchName, searchMD5 } = this.state;
     let columns = TableConfig.getColumns({
@@ -81,7 +81,8 @@ class Page extends React.Component<any, any> {
       limit,
       fileType,
       threatType,
-      judge
+      judge,
+      state
     })
     console.log(columns)
     columns = columns.map(i => {
@@ -90,6 +91,7 @@ class Page extends React.Component<any, any> {
     } )
     const tableProps = {
       onChange: (pagination, filters) => {
+        console.info(filters)
         this.props.toSave(filters);
         this.props.toFetch({ limit })
       },
@@ -110,14 +112,6 @@ class Page extends React.Component<any, any> {
     };
     return (
       <div style={{ minHeight: "600px", color: "#A3B2C1" }} className={ styles.file } >
-
-        {/* <span>每页条数：</span>
-        <Select defaultValue="30" style={{ width: "100px", margin: "15px" }} onChange={this.handleChange}>
-          {
-            PAGE_SIZE_RANGE.map((i, index) =>
-              <Option value={i} key={i}>{i}</Option>)
-          }
-        </Select> */}
         <EnhancedTable
           tableProps={tableProps}
           paginationProps={paginationProps}>

@@ -99,7 +99,8 @@ import {
 
   CONFIG_SYS_CONFIG_WARN_URL,
   CONFIG_WHITE_LIST,
-
+  SAMPLE_X86,
+  SAMPLE_NON_X86
 
 } from 'routes/config/path'
 // import {
@@ -478,10 +479,22 @@ export const _navConfig = [
       },
     ]
   },
-    {
+  {
     link: TYPICAL_CASE_URL,
     title:"典型案例",
     // icon: <Indent space={1} />
+  },
+  {
+    link: SAMPLE_X86,
+    title: "威胁报告xxxx",
+    hidden: true,
+    icon: <Icon type="file-text"></Icon>
+  },
+  {
+    link: SAMPLE_NON_X86,
+    title: "威胁报告xxxx",
+    hidden: true,
+    icon: <Icon type="file-text"></Icon>
   },
 ]
 

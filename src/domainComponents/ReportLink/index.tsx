@@ -4,7 +4,7 @@ import domainQueryStringParse from 'utils/domainQueryStringParse'
 
 // xx
 // import { TASK_ID_DATA_INDEX } from 'configs/ConstConfig'
-
+// 
 import { ANALYSE_REPORT_DETAIL_URL } from 'routes/config/path'
 
 // const REPORT_URL = "/report" 
@@ -21,6 +21,6 @@ export default ({ data }) => {
     md5: data['md5']
   }
 
-  return <a href={'/#'+ANALYSE_REPORT_DETAIL_URL + domainQueryStringParse(payload)} style={{  textDecoration: "underline" }}  target="_blank">查看</a>
+  return <a href={'/#'+ANALYSE_REPORT_DETAIL_URL + domainQueryStringParse(payload)} style={{  textDecoration: "underline" }}  target="_blank">查看报告</a>
 }
 

@@ -20,3 +20,26 @@ const isPort = (port = "") => {
     return false
   }
 }
+
+export const jsonToQueryString = (jsonObject) => {
+
+
+  let keys = Object.keys(jsonObject),
+    queryString = "?";
+  keys.forEach(k => {
+
+    let content = jsonObject[k]
+
+    try {
+      if (content.constructor === [].constructor) {
+        content = content.join(",")
+      }
+    } catch (e) {
+      console.warn(`jsonToQueryString:${e.message}`);
+    }
+
+    queryString += `${k}=${content}&`
+  });
+
+  return queryString.substring(0, queryString.length - 1);
+};
