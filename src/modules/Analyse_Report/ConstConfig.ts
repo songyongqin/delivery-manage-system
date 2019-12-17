@@ -143,7 +143,7 @@ export const dataIndexTextConfig = {
   [JUDGE_DATA_INDEX]: "威胁判定",
   [THREAT_TYPE_DATA_INDEX]: "威胁类型",
   [TIME_DATA_INDEX]: "提交时间",
-  [STATE_INDEX]: "状态",
+  // [STATE_INDEX]: "状态",
   [THREAT_LEVEL_DATA_INDEX]: "威胁等级",
   [OPERATION_COL_KEY]: "操作",
   // [SAMPLE_DOWNLOAD_INDEX]: "样本下载"
@@ -156,7 +156,7 @@ export const urlDataAllIndexes = [
   THREAT_TYPE_DATA_INDEX,
   THREAT_LEVEL_DATA_INDEX,
   URL_TIME_DATA_INDEX,
-  URL_STATE_INDEX,
+  // URL_STATE_INDEX,
   URL_SAMPLE_DOWNLOAD_INDEX
 ]
 export const dataAllIndexes = [
@@ -169,7 +169,7 @@ export const dataAllIndexes = [
   JUDGE_DATA_INDEX,
   // THREAT_TYPE_DATA_INDEX,
   TIME_DATA_INDEX,
-  STATE_INDEX,
+  // STATE_INDEX,
   // THREAT_LEVEL_DATA_INDEX,
 
   OPERATION_COL_KEY,

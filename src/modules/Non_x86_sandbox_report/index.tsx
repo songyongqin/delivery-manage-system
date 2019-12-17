@@ -96,7 +96,8 @@ class SideBar extends React.Component {
         <div>
           <Timeline>
             {
-              panelKeys.map(key => {
+              //隐藏网络分析
+              panelKeys.filter(key => key !== "network").map(key => {
                 return (
                   <Timeline.Item key={key}>
                     <a
@@ -317,10 +318,15 @@ class Page extends React.Component {
                     {
                       panelKeys.slice(0, this.state.canInitCount).map((key, index) => {
                         const data = panelDataHandleConfigs[key] && panelDataHandleConfigs[key]({ ...content }),
-                          renderer = rendererConfig[key]
+                        renderer = rendererConfig[key]
+                        //隐藏网络分析
+                        const isShow= {
+                          display: "none",
+                          fontSize:16
+                        }
 
                         return (
-                          <Panel forceRender={true} style={{fontSize:16}} header={<span id={key}>{panelTitleConfigs[key]}</span>} key={`${key}`}>
+                          <Panel style = {"network" === key ? isShow: {fontSize:16}}  forceRender={true}  header={<span id={key}>{panelTitleConfigs[key]}</span>} key={`${key}`}>
                             <PanelContent
                               renderer={renderer}
                               data={data}

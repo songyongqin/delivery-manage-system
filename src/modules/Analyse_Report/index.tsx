@@ -30,7 +30,6 @@ class Page extends React.Component<any, any> {
     }
   }
   componentDidMount() {
-    console.log(22,this.props.location)
     let str = this.props.location.search
 
     const { fileLastChangeTime, mailLastChangeTime, urlLastChangeTime,  page,

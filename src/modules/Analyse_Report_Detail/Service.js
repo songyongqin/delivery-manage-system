@@ -29,4 +29,6 @@ import ApiConfig from 'services/apiConfig'
 
 const httpApi = ApiConfig.http;
 export const queryDetail = commonRequestCreator.getWithQueryString(httpApi.queryDetail);
+export const x86_sandbox_report = commonRequestCreator.getWithQueryString(httpApi.get_x86_sandbox_report);
+export const non_x86_sandbox_report = commonRequestCreator.getWithQueryString(httpApi.get_non_x86_sandbox_report);
 

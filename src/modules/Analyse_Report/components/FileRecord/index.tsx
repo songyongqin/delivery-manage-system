@@ -82,9 +82,8 @@ class Page extends React.Component<any, any> {
       fileType,
       threatType,
       judge,
-      state
+      // state
     })
-    console.log(columns)
     columns = columns.map(i => {
       i['className'] =  styles.default
       return i

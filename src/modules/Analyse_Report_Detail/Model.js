@@ -34,6 +34,27 @@ export default {
       }
 
     },
+    *x86_sandbox_report({ payload, resolve, reject }, { call, put, select, callWithExtra, callWithStatusHandle }) {
+      const res = yield call(service.x86_sandbox_report, payload);
+      if (res.status === 1) {
+        // const data = res.payload.data[0].data;
+        resolve && resolve(res)
+      }
+      else {
+        reject && reject(res)
+      }
+
+    },
+    *non_x86_sandbox_report({ payload, resolve, reject }, { call, put, select, callWithExtra, callWithStatusHandle }) {
+      const res = yield call(service.non_x86_sandbox_report, payload);
+      if (res.status === 1) {
+        resolve && resolve(res)
+      }
+      else {
+        reject && reject(res)
+      }
+
+    },
     
 
     // *getResult({ payload, resolve, reject }, { call, put, select, callWithExtra, callWithStatusHandle }) {

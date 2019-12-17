@@ -100,7 +100,6 @@ const model: DvaModel<any> = {
       }
     },
     save(state, action) {
-      console.info(state,action)
       return { ...state, ...action.payload };
     },
   },

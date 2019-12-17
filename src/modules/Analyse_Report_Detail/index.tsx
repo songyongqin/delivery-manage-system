@@ -189,13 +189,19 @@ class Page extends React.Component<any, any>  {
     // document.title = this.props.layout.title;
   }
   componentDidMount = () => {
-    this.props.getReport(this.props.location.query).then(res => {
-      this.setState({ data: { ...res }, loading: false })
+    this.props.getReport(queryString.parse(this.props.location.search)).then(res => {
+      const {x86_status, non_x86_status} = res
+      this.setState({ data: { ...res }, loading: false, x86_analysis_status:x86_status, nox86_analysis_status:non_x86_status})
     }).catch(res => {
       this.setState({ loading: false, error_mes: res })
     })
     // this.props.getReport_x86({ md5: this.props.location.query.keyword }).then(res => this.setState({ x86_analysis_status: res.payload.content.analysis_status }))
-    this.props.getReport_nox86(queryString.parse(this.props.location.search)).then(res => this.setState({ nox86_analysis_status: res.payload.analysis_status }))
+    // this.props.getReport_nox86(queryString.parse(this.props.location.search)).then(res => {
+    //   this.setState({ nox86_analysis_status: res.payload.analysis_status })
+    // })
+    // this.props.getReport_x86(queryString.parse(this.props.location.search)).then(res => {
+    //   this.setState({ x86_analysis_status: res.payload.analysis_status })
+    // })
   }
   export = () => {
     let isFirFox = true
@@ -322,13 +328,13 @@ function mapDispatchToProps(dispatch) {
     },
     getReport_x86: (payload) => {
       return dispatch({
-        type: "x86_sandbox_report/getReport",
+        type: "report/x86_sandbox_report",
         payload
       })
     },
     getReport_nox86: (payload) => {
       return dispatch({
-        type: "non_x86_sandbox_report/getReport",
+        type: "report/non_x86_sandbox_report",
         payload
       })
     },
