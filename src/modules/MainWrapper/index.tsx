@@ -199,12 +199,12 @@ class IndexPage extends React.Component<any, any>{
     }
     //态势导出报告
     // console.log(activeRoute)
-    if (activeRoute ==='/analyse/report/detail') {
+    if (activeRoute ==='/analyse/report/detail'||activeRoute ==='/api/query/sample_x86_sandbox_report'||activeRoute ==='/api/query/sample_non_x86_sandbox_report') {
       return (
         <div className={pageClasses}>
           <div
             className={classnames({
-              [styles["content-wrapper"]]: true,
+              // [styles["content-wrapper"]]: true,
               [styles["animate"]]: true,
               [styles["loading"]]: moduleLoading
             })

@@ -227,7 +227,8 @@ const HttpApiConfig = {
   ANALYSE_REPORT_MAIL: "/analyse/report/mail",
   ANALYSE_REPORT_URL: "/analyse/report/url",
   ANALYSE_REPORT_EXPORT_URL: "/analyse/report/export",
-  ANALYSE_REPORT_DETAILT_URL: "/analyse/report/detailt",
+  // ANALYSE_REPORT_DETAILT_URL: "/analyse/report/detail",
+  ANALYSE_REPORT_DETAILT_URL: "/analyse/report/sample_x86_sandbox_report",
   ANALYSE_REPORT_DETAIL_EXPORT_URL: "/analyse/report/detail/export",
 
   REPORT_COUNT: '/report/count',
@@ -273,6 +274,15 @@ const HttpApiConfig = {
   // ANALYSE_THREAT_INTELLINGENCE_UPLOAD: '/mock/uploads', //模拟
 
   ANALYSE_THREAT_INTELLIGENCE_INFO: '/analyse/threat-intelligence/info',
+
+
+  non_x86_sandbox_report: "/analyse/report/sample_non_x86_sandbox_report",
+  //syq
+  // "queryDetail": "/api/query/detail",
+  "queryDetail": "/analyse/report/detail",
+  "get_x86_sandbox_report": "/api/query/get_x86_sandbox_report",
+  "get_non_x86_sandbox_report": "/api/query/get_non_x86_sandbox_report",
+  
 
 }
 

@@ -1,0 +1,18 @@
+:global .title-small {
+  margin-bottom: 10px;
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+:global .btn-red {
+  color: #fff;
+  background-color: #f04134;
+}
+
+:global .btn-red:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background-color: #f7f7f7;
+  border-color: #d9d9d9;
+}
+/*# sourceMappingURL=common.css.map */

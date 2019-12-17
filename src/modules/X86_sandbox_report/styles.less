@@ -1,0 +1,33 @@
+@import "~themes/vars";
+@side-nav-width:150px;
+
+.page{
+  overflow: hidden;
+  .content{
+    // width:calc(~"100% - @{side-nav-width}");
+    // padding-right:15px; 
+    // float:left;
+    // padding-bottom:100px;
+    margin-left: 150px;
+  }
+  .side-nav{
+    width: @side-nav-width;
+    float:left;
+  }
+}
+
+.side-nav-item{
+  &.dark{
+    color:@dark-txt-color;
+    
+  }
+  &.light{
+    color:@light-txt-color;
+  }
+  &.active{
+    color:@primary-color;
+  }
+  &:hover{
+    color:@primary-color;
+  }
+}

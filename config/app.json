@@ -28,7 +28,9 @@
     "/sys-log": true,
     "/sys-log/login": true,
     "/snort": true,
-    "/file-restore": true
+    "/file-restore": true,
+    "api/query/sample_x86_sandbox_report":true,
+    "api/query/sample_non_x86_sandbox_report":true
   },
   "hiddenRouter":[
     "/topo",

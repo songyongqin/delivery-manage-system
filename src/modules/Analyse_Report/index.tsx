@@ -30,7 +30,6 @@ class Page extends React.Component<any, any> {
     }
   }
   componentDidMount() {
-
     let str = this.props.location.search
 
     const { fileLastChangeTime, mailLastChangeTime, urlLastChangeTime,  page,
@@ -210,12 +209,6 @@ class Page extends React.Component<any, any> {
           <div style={{ clear: 'both' }} ></div>,
           <div style={{ width: "100%", overflow: "hidden", marginTop:10}} key="keyDiv">
             <Spin spinning={this.props.loading}>
-              {/* <Tabs defaultActiveKey="file" onChange={this.callback}>
-                <TabPane tab="文件记录" key="file"><FileRecord /></TabPane>
-                <TabPane tab="邮件记录" key="mail"><MailRecord /></TabPane>
-                <TabPane tab="URL记录" key="url"><UrlRecord /></TabPane>
-                
-              </Tabs> */}
               <FileRecord />
             </Spin>
           </div>,
@@ -224,8 +217,11 @@ class Page extends React.Component<any, any> {
     )
   }
 }
-const mapStateToProps = state => {
-  const { lastChangeTime, timestampRange } = state[NAMESPACE], urlLastChangeTime = state[NAMESPACE_URL].lastChangeTime, fileLastChangeTime = state[NAMESPACE_FILE].lastChangeTime, mailLastChangeTime = state[NAMESPACE_MAIL].lastChangeTime,
+const mapStateToProps = states => {
+  const { lastChangeTime, timestampRange } = states[NAMESPACE], 
+  urlLastChangeTime = states[NAMESPACE_URL].lastChangeTime, 
+  fileLastChangeTime = states[NAMESPACE_FILE].lastChangeTime,
+   mailLastChangeTime = states[NAMESPACE_MAIL].lastChangeTime,
     {
       page,
       limit,
@@ -234,11 +230,12 @@ const mapStateToProps = state => {
       fileMd5,
       threatType,
       judge,
+      state,
       senderAccount,
       // senderIp,
       receiverAccount,
       // receiverIp,
-    } = state[NAMESPACE_MAIL];
+    } = states[NAMESPACE_MAIL];
   return {
     page,
     limit,
@@ -247,6 +244,7 @@ const mapStateToProps = state => {
     fileMd5,
     threatType,
     judge,
+    state,
     senderAccount,
     // senderIp,
     receiverAccount,
@@ -256,7 +254,7 @@ const mapStateToProps = state => {
     urlLastChangeTime,
     mailLastChangeTime,
     fileLastChangeTime,
-    loading: state.loading.effects[`${NAMESPACE_FILE}/fetch`] || state.loading.effects[`${NAMESPACE_URL}/fetch`],
+    loading: states.loading.effects[`${NAMESPACE_FILE}/fetch`] || states.loading.effects[`${NAMESPACE_URL}/fetch`],
   }
 }
 const mapDispatchToProps = dispatch => {

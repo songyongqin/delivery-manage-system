@@ -44,10 +44,14 @@ import getTypicalCasePage from 'routes/Typical_Case'
 
 import getAnalyseReportPage from 'routes/Analyse_Report'
 import getAnalyseReportDetail from 'routes/Analyse_Report_Detail'
+// import getAnalyseReportDetails from 'routes/Analyse_Report_Details'
 import getNodeMonitorPage from 'routes/Node_Monitor'
 import getWhiteListPage from 'routes/WhiteList'
 import getSysLogPage from 'routes/SysLog'
 import getSituation from 'routes/Situation'
+
+import getX86 from 'routes/X86_sandbox_report'
+import getNonX86 from 'routes/Non_x86_sandbox_report'
 import {
   OVERVIEW_URL,
   LOGIN_URL,
@@ -132,6 +136,9 @@ import {
   CONFIG_WHITE_LIST, 
 
   ANALYSE_THREAT_INTELLIGENCE_URL,
+
+  SAMPLE_NON_X86,
+  SAMPLE_X86
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
 
@@ -404,6 +411,18 @@ export default ({ history, app }) => {
               exact
               component={getTypicalCasePage(app, TYPICAL_CASE_URL)}
               path={TYPICAL_CASE_URL} >
+            </Route>
+            {/* x86 */}
+            <Route
+              exact
+              component={getX86(app, SAMPLE_X86)}
+              path={SAMPLE_X86} >
+            </Route>
+            {/* non_x86 */}
+            <Route
+              exact
+              component={getNonX86(app, SAMPLE_NON_X86)}
+              path={SAMPLE_NON_X86} >
             </Route>
           </Switch>
         </MainWrapper>

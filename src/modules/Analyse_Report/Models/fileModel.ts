@@ -22,6 +22,7 @@ const model: DvaModel<any> = {
     fileType: [],
     threatType: [],
     judge: [],
+    sate:0,
     reportData: [],
     lastChangeTime: -1
   },
@@ -52,11 +53,12 @@ const model: DvaModel<any> = {
       const fileType = yield select(state => state[NAMESPACE_FILE].fileType);
       const threatType = yield select(state => state[NAMESPACE_FILE].threatType);
       const judge = yield select(state => state[NAMESPACE_FILE].judge);
+      const state = yield select(state => state[NAMESPACE_FILE].state);
       const timestampRange = yield select(state => state[NAMESPACE].timestampRange);
       const page = payload.page ? payload.page : 1;
       const limit = payload.limit ? payload.limit : yield select(state => state[NAMESPACE_FILE].limit);
       const addPayload = {
-        fileName, md5, fileType, threatType, judge, timestampRange, limit, page
+        fileName, md5, fileType, threatType, judge, timestampRange, limit, page, state
       };
       const result = yield call(Services.get, addPayload);
       const data = result.payload&&result.payload.data||[];

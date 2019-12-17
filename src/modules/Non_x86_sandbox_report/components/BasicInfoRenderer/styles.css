@@ -1,0 +1,18 @@
+
+
+.basic-info-table{
+  width: 100%;
+}
+.basic-info-table td{
+  padding:5px 15px;
+  vertical-align: top;
+  
+}
+.basic-info-table .title-cell{
+  width: 120px;
+  min-width: 120px;    
+  color:#40a9ff;
+}
+.basic-info-table tbody{
+  width: 100%;
+}

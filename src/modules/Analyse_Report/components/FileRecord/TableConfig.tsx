@@ -29,8 +29,13 @@ import {
   SOURCE_INDEX,
   SOURCE_ID_INDEX,
 
+  // STATE_INDEX,
+  // STATE_TYPE,
+  // STATE_TEXT_TYPE
+
 } from '../../ConstConfig'
 import Judge from '../../judge'
+import State from '../../state'
 const styles = require("./styles.less")
 
 const Tags = props => <span style={{ color: '4F5DCA' }} >{ props.children }</span>
@@ -59,7 +64,8 @@ export const getColumns = ({
   limit,
   fileType,
   threatType,
-  judge
+  judge,
+  // state
 
 }) => {
 
@@ -74,10 +80,12 @@ export const getColumns = ({
     [THREAT_TYPE_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
     [TIME_DATA_INDEX]: (time) => <div style={{ textAlign: "center" }}><TimesLabel value={[time]}></TimesLabel></div>,
     [THREAT_LEVEL_DATA_INDEX]: (value) => <div style={{ textAlign: "center" }}>{value}</div>,
+    //syq
+    // [STATE_INDEX]: (value) => <State value={value}></State>,
     // [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tag  style={{ marginRight: "0px"}}><ReportLink data={record}></ReportLink></Tag>|<Tag ><a onClick={() => exportReportByTaskId(record.md5)}>下载</a></Tag></div>,
     // [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tag ><a href={getAuthURL(record.sampleUrl)} download>下载</a></Tag></div>
-    [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tags  style={{ marginRight: "0px"}}><ReportLink data={record}></ReportLink></Tags>|<Tags ><a onClick={() => exportReportByTaskId(record.md5)} style={{  textDecoration: "underline" }} >下载</a></Tags></div>,
-    [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tags ><a href={getAuthURL(record.sampleUrl)} style={{  textDecoration: "underline" }}  download>下载</a></Tags></div>
+    [OPERATION_COL_KEY]: (taskId, record) => <div style={{ textAlign: "center" }}><Tags  style={{ marginRight: "0px"}}><ReportLink data={record}></ReportLink></Tags>|<Tags ><a href={getAuthURL(record.sampleUrl)} style={{  textDecoration: "underline" }}  download>下载样本</a></Tags></div>,
+    // [SAMPLE_DOWNLOAD_INDEX]: (sampleUrl, record) => <div style={{ textAlign: "center" }}><Tags ><a href={getAuthURL(record.sampleUrl)} style={{  textDecoration: "underline" }}  download>下载</a></Tags></div>
   
   }
 
@@ -119,18 +127,23 @@ export const getColumns = ({
       filtersTextConfig: {
         [FILE_TYPE_DATA_INDEX]: FILETYPE,
         [THREAT_TYPE_DATA_INDEX]: THREAT_TYPE,
-        [JUDGE_DATA_INDEX]: JUDGE_TEXT_TYPE
+        [JUDGE_DATA_INDEX]: JUDGE_TEXT_TYPE,
+
+        // [STATE_INDEX]: STATE_TEXT_TYPE,
 
       },
       filtersConfig: {
         [FILE_TYPE_DATA_INDEX]: FILETYPE,
         [THREAT_TYPE_DATA_INDEX]: THREAT_TYPE,
-        [JUDGE_DATA_INDEX]: JUDGE_TYPE
+        [JUDGE_DATA_INDEX]: JUDGE_TYPE,
+
+        // [STATE_INDEX]: STATE_TYPE
       },
       filteredValue: {
         [FILE_TYPE_DATA_INDEX]: fileType,
         [THREAT_TYPE_DATA_INDEX]: threatType,
-        [JUDGE_DATA_INDEX]: judge
+        [JUDGE_DATA_INDEX]: judge,
+        // [STATE_INDEX]: state
       },
       extraProps: {
         [FILE_NAME_DATA_INDEX]: FilterAction(FILE_NAME_SEARCH, changeFilename, fileName, searchFilename, filterDropdownName, downFile),
@@ -143,7 +156,7 @@ export const getColumns = ({
         [TIME_DATA_INDEX]: { width: "150px" },
         [THREAT_LEVEL_DATA_INDEX]: { width: "100px" },
         [OPERATION_COL_KEY]: { width: "200px" },
-        [SAMPLE_DOWNLOAD_INDEX]: { width: "80px" }
+        // [SAMPLE_DOWNLOAD_INDEX]: { width: "80px" }
       }
     })
 }

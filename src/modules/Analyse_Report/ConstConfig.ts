@@ -71,7 +71,10 @@ export const NAMESPACE: string = "analyse",
 export const FETCH_FILE_REPORT_ACTION = "fetchFileReport",
   SAFE = "1",
   UN_SAFE = "-1",
-  UN_KNOWN = "0"
+  UN_KNOWN = "0",
+  FINISH = "1",
+  DOING = "0",
+  FAIL = "-1"
 export const JUDGE_TYPE = [
   SAFE,
   UN_SAFE,
@@ -83,6 +86,16 @@ export const JUDGE_TEXT_TYPE = {
   [UN_SAFE]: "威胁",
   [UN_KNOWN]: "未知"
 }
+export const STATE_TYPE = [
+  DOING,
+  FINISH,
+  FAIL
+]
+export const STATE_TEXT_TYPE = {
+  [DOING]: "分析中",
+  [FINISH]: "分析完成",
+  [FAIL]: "分析失败"
+}
 export const
   KEY_INDEX = "key",
   FILE_NAME_DATA_INDEX = "fileName",
@@ -92,6 +105,8 @@ export const
   TIME_DATA_INDEX = "time",
   THREAT_LEVEL_DATA_INDEX = "threatLevel",
   TASK_ID_DATA_INDEX = "taskId",
+
+  STATE_INDEX = "state",
   OPERATION_COL_KEY = "operation",
   SAMPLE_DOWNLOAD_INDEX = "SampleDownload",
 
@@ -102,6 +117,7 @@ export const
   URL_MD5_DATA_INDEX = "md5",
   JUDGE_DATA_INDEX = "judge",
   URL_TIME_DATA_INDEX = "time",
+  URL_STATE_INDEX = "state",
   URL_SAMPLE_DOWNLOAD_INDEX = "SampleDownload"
 
 export const urlDataIndexTextConfig = {
@@ -112,6 +128,7 @@ export const urlDataIndexTextConfig = {
   [THREAT_TYPE_DATA_INDEX]: "威胁类型",
   [THREAT_LEVEL_DATA_INDEX]: "威胁等级",
   [URL_TIME_DATA_INDEX]: "提交时间",
+  [URL_STATE_INDEX]: "状态",
   [URL_SAMPLE_DOWNLOAD_INDEX]: "样本报告"
 }
 
@@ -126,9 +143,10 @@ export const dataIndexTextConfig = {
   [JUDGE_DATA_INDEX]: "威胁判定",
   [THREAT_TYPE_DATA_INDEX]: "威胁类型",
   [TIME_DATA_INDEX]: "提交时间",
+  // [STATE_INDEX]: "状态",
   [THREAT_LEVEL_DATA_INDEX]: "威胁等级",
-  [OPERATION_COL_KEY]: "样本报告",
-  [SAMPLE_DOWNLOAD_INDEX]: "样本下载"
+  [OPERATION_COL_KEY]: "操作",
+  // [SAMPLE_DOWNLOAD_INDEX]: "样本下载"
 }
 export const urlDataAllIndexes = [
   KEY_INDEX,
@@ -138,6 +156,7 @@ export const urlDataAllIndexes = [
   THREAT_TYPE_DATA_INDEX,
   THREAT_LEVEL_DATA_INDEX,
   URL_TIME_DATA_INDEX,
+  // URL_STATE_INDEX,
   URL_SAMPLE_DOWNLOAD_INDEX
 ]
 export const dataAllIndexes = [
@@ -148,11 +167,13 @@ export const dataAllIndexes = [
   SOURCE_ID_INDEX,
   FILE_TYPE_DATA_INDEX,
   JUDGE_DATA_INDEX,
-  THREAT_TYPE_DATA_INDEX,
+  // THREAT_TYPE_DATA_INDEX,
   TIME_DATA_INDEX,
-  THREAT_LEVEL_DATA_INDEX,
+  // STATE_INDEX,
+  // THREAT_LEVEL_DATA_INDEX,
+
   OPERATION_COL_KEY,
-  SAMPLE_DOWNLOAD_INDEX
+  // SAMPLE_DOWNLOAD_INDEX
 ]
 export const dataIndexes = [
   FILE_NAME_DATA_INDEX,
