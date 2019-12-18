@@ -2,7 +2,16 @@ export const ROOT_URL = "/",
 
   LOGIN_URL = "/login",
 
-  OVERVIEW_URL = "/overview",
+  HOME_URL = "/home",
+  PROJECT_URL = "/project",
+  CUSTOMER_URL = "/customer",
+  FILE_URL = "/file",
+  SYSTEM_URL = "/system",
+  USER_URL = "/user",
+
+
+
+
 
   AITUATION_URL = '/situation',
 

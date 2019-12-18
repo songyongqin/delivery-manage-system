@@ -10,7 +10,7 @@ import { find, flattenDeep } from 'lodash'
 import {
   LOGIN_URL,
 
-  OVERVIEW_URL,
+  HOME_URL,
 
   AITUATION_URL,
 
@@ -103,16 +103,7 @@ import {
   SAMPLE_NON_X86
 
 } from 'routes/config/path'
-// import {
-//   shouldHoneypotNodeHide,
-//   shouldIdsNodeHide,
-//   shouldIdsStandAloneHide,
-//   adminOnly,
-//   openRouteList
-// } from 'routes/config/auth'
-
 import { getAppConfig } from 'domain/app'
-// import router from 'router';
 import { Situation , ThreatReport } from 'components/IconSvg'
 
 
@@ -121,50 +112,33 @@ const Indent = ({ space = 0 }) =>
 
 export const _navConfig = [
   {
-    link: OVERVIEW_URL,
-    title: "威胁概览",
+    link: HOME_URL,
+    title: "首页",
+    icon: <Icon type="home" />
+  },
+  {
+    link: HOME_URL,
+    title: "项目管理",
+    icon: <Icon type="home" />
+  },
+  {
+    link: HOME_URL,
+    title: "客户管理",
+    icon: <Icon type="home" />
+  },
+  {
+    link: HOME_URL,
+    title: "文档类型管理",
     icon: <Icon type="home" />
   },
   {
     link: ANALYSE_URL,
-    title: "威胁分析",
+    title: "系统日志",
     icon: <Icon type="fork" />,
-    items: [
-      {
-        title: "事件视图",
-        link: ANALYSE_EVENT_URL,
-        icon: <Indent />,
-      },
-      {
-        link: ANALYSE_ATTACKED_ASSETS_URL,
-        title: "受攻击资产视图",
-        icon: <Indent />,
-      },
-      {
-        link: ANALYSE_ATTACK_URL,
-        title: "攻击者视图",
-        icon: <Indent />,
-      },
-      {
-        link: ANALYSE_THREAT_URL,
-        title: "威胁视图",
-        icon: <Indent />,
-      },
-      {
-        link: ANALYSE_REPORT_URL,
-        title: "文件检测列表",  //ANALYSE_THREAT_INTELLIGENCE_URL
-        icon: <Indent />,
-      },
-      {
-        link: ANALYSE_THREAT_INTELLIGENCE_URL,
-        title: "威胁情报列表", 
-        icon: <Indent />,
-      }
-    ]
   },
   {
     link: AITUATION_URL,
-    title: "安全态势",
+    title: "用户管理",
     icon: <Situation  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
   },
   {
@@ -173,328 +147,9 @@ export const _navConfig = [
     icon: <Icon type="share-alt" />
   },
   {
-    link: ANALYSE_REPORT_DETAIL_URL,
-    title: "威胁报告xxxx",
-    hidden: true,
-    icon: <Icon type="file-text"></Icon>
-  },
-  {
-    // 受害资产详细情况
-    link: ANALYSE_URL + '?',
-    title: "威胁分析",
-    hidden: true,
-    icon: <Icon type="fork" />,
-    items: [
-      {
-        link: ANALYSE_ATTACKED_ASSETS_URL,
-        title: "受攻击资产视图",
-        hidden: true,
-        items: [{
-          link: ANALYSE_ATTACKED_ASSETS_DETAL_URL,
-          title: '受害资产详细情况',
-          hidden: true
-        }]
-      }
-    ]
-  },
-  {
-    // 攻击者详细情况
-    link: ANALYSE_URL + '?',
-    title: "威胁分析",
-    hidden: true,
-    icon: <Icon type="fork" />,
-    items: [
-      {
-        link: ANALYSE_ATTACK_URL,
-        title: "攻击者视图",
-        hidden: true,
-        items: [{
-          link: ANALYSE_ATTACK_DETAL_URL,
-          title: '攻击者视图详细情况',
-          hidden: true
-        }]
-      }
-    ]
-  },
-  {
-    // 威胁视图  威胁家族详细情况
-    link: ANALYSE_URL + '?',
-    title: "威胁分析",
-    hidden: true,
-    icon: <Icon type="fork" />,
-    items: [
-      {
-        link: ANALYSE_THREAT_URL,
-        title: "威胁视图",
-        hidden: true,
-        items: [{
-          link: ANALYSE_THREAT_URL + '?type=family',
-          title: '威胁家族',
-          hidden: true,
-          items: [{
-            link: ANALYSE_THREAT_FAMILY_DETAIL_URL,
-            title: '详细信息',
-            hidden: true
-          }]
-        }]
-      }
-    ]
-  },
-  {
-    // 威胁视图  攻击利用漏洞详细情况
-    link: ANALYSE_URL + '?',
-    title: "威胁分析",
-    hidden: true,
-    icon: <Icon type="fork" />,
-    items: [
-      {
-        link: ANALYSE_THREAT_URL,
-        title: "威胁视图",
-        hidden: true,
-        items: [{
-          link: ANALYSE_THREAT_URL + '?type=loophole',
-          title: '攻击利用漏洞',
-          hidden: true,
-          items: [{
-            link: ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
-            title: '详细信息',
-            hidden: true
-          }]
-        }]
-      }
-    ]
-  },
-  {
-    link: EARLY_WARNING_URL,
-    title: "威胁预警",
-    icon: <Icon type="bell" />,
-    hidden: true,
-    items: [
-      {
-        link: EARLY_WARNING_EMAIL_URL,
-        title: "邮箱通知"
-      }
-    ]
-  },
-  {
-    link: AUDIT_URL,
-    title: "审计记录",
-    icon: <Icon type="file-text" />,
-    items: [
-      {
-        link: AUDIT_EVENT_URL,
-        title: "基本事件审计",
-        icon: <Indent />,
-      },
-      {
-        link: AUDIT_ASSETS_URL,
-        title: "资产审计",
-        icon: <Indent />,
-      },
-      // {
-      //   link: AUDIT_CAUGHT_URL,
-      //   title: "抓包记录",
-      //   icon: <Indent />,
-      // }
-    ]
-  },
-  {
     link: REPORT_URL,
     title: "威胁报告",
     icon: <ThreatReport style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }} />
-  },
-  {
-    link: STRATEGY_URL,
-    title: "策略配置",
-    hidden: true,
-    icon: <Icon type="file-text"></Icon>
-  },
-  {
-    link: SYS_CONFIG_URL,
-    title: "系统配置",
-    icon: <Icon type="setting" />,
-    hidden: true,
-    items: [
-      {
-        link: SYS_CONFIG_NETWORK_URL,
-        title: "网络配置"
-      },
-      {
-        link: SYS_CONFIG_MONITOR_URL,
-        title: "自我监控",
-      },
-      {
-        link: SYS_CONFIG_STRATEGY_URL,
-        title: "策略配置"
-      }
-    ]
-  },
-  {
-    link: USER_MANAGER_URL,
-    title: "用户管理",
-    icon: <Icon type="team" />,
-    hidden: true
-  },
-  {
-    link: MANAGER_URL,
-    icon: <Icon type="database" />,
-    title: "蜜罐管理",
-    hidden: true,
-    items: [
-      {
-        link: CONFIG_DEVICE_MANAGER_URL,
-        title: "设备管理"
-      },
-      {
-        link: MANAGER_VM_URL,
-        title: "虚拟蜜罐管理"
-      },
-      {
-        link: MANAGER_MIRROR_URL,
-        title: "镜像管理"
-      }
-    ]
-  },
-  // {
-  //   link: SYS_LOG_URL,
-  //   icon: <Icon type="file-text"></Icon>,
-  //   title: "系统日志",
-  //   hidden: true,
-  //   items: [
-  //     {
-  //       link: SYS_LOG_LOGIN_URL,
-  //       title: "登录日志",
-  //       icon: <Indent  />,
-  //     }
-  //   ]
-  // },
-  {
-    link: SNORT_URL,
-    title: "Snort",
-    hidden: true
-  },
-  {
-    link: FILE_RESTORE,
-    title: "文件还原",
-    hidden: true
-  },
-  {
-    link: CONFIG_URL+'?',
-    title: "配置管理",
-    hidden: true, //ids，在态势中隐藏
-    icon: <Icon type="database" />,
-    items: [
-      {
-        link: CONFIG_USER_MANAGER_URL,
-        title: "用户管理",
-        icon: <Indent />,
-      },
-      {
-        link: CONFIG_DEVICE_MANAGER_URL,
-        icon: <Indent />,
-        title: "设备管理",
-      },
-      {
-        link: CONFIG_SYS_LOG_URL,
-        icon: <Indent />,
-        title: "系统日志",
-        items: [
-          {
-            link: CONFIG_SYS_LOG_LOGIN_URL,
-            title: "登录日志",
-            icon: <Indent space={1} />,
-          }
-        ]
-      }, {
-        link: CONFIG_SYS_CONFIG_URL,
-        title: "系统配置",
-        icon: <Indent />,
-        items: [
-          {
-            link: CONFIG_SYS_CONFIG_NETWORK_URL,
-            title: "网卡配置",
-            icon: <Indent space={1} />,
-          },
-          {
-            link: CONFIG_SYS_CONFIG_WARN_URL,
-            title: "告警配置",
-            icon: <Indent space={1} />,
-          },
-          {
-            link: CONFIG_SYS_CONFIG_MONITOR_URL,
-            title: "自我监控",
-            icon: <Indent space={1} />,
-          }
-        ]
-      },
-    ]
-  },
-  // {
-  //   link: CONFIG_WHITE_LIST,
-  //   title:"白名单",
-  //   hidden: true
-  // },
-  {
-    link: CONFIG_URL,
-    title: "配置管理",
-    icon: <Icon type="setting" />,
-    items: [
-      {
-        link: CONFIG_NODE_MONITOR_URL,
-        title: "节点监控",
-        icon: <Indent />,
-      },
-      {
-        link: CONFIG_USER_MANAGER_URL,
-        title: "用户管理",
-        icon: <Indent />,
-      },
-      {
-        link: CONFIG_DEVICE_MANAGER_URL,
-        icon: <Indent />,
-        title: "设备管理",
-      },
-      {
-        link: CONFIG_SYS_LOG_URL, 
-        icon: <Indent />,
-        title: "系统日志",
-        // items: [
-        //   {
-        //     link: CONFIG_SYS_LOG_LOGIN_URL,
-        //     title: "登录日志",
-        //     icon: <Indent space={1} />,
-        //   }
-        // ]
-      }, {
-        link:  CONFIG_SYS_CONFIG_URL,
-        title: "系统配置",
-        icon: <Indent />,
-        // items: [
-        //   {
-        //     link: CONFIG_SYS_CONFIG_WARN_URL,
-        //     title: "告警配置",
-        //     icon: <Indent space={1} />,
-        //   }
-        // ]
-      },
-    ]
-  },
-  {
-    link: TYPICAL_CASE_URL,
-    title:"典型案例",
-    // icon: <Indent space={1} />
-  },
-  {
-    link: SAMPLE_X86,
-    title: "威胁报告xxxx",
-    hidden: true,
-    icon: <Icon type="file-text"></Icon>
-  },
-  {
-    link: SAMPLE_NON_X86,
-    title: "威胁报告xxxx",
-    hidden: true,
-    icon: <Icon type="file-text"></Icon>
   },
 ]
 

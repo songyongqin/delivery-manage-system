@@ -1,6 +1,10 @@
 const baseUrl = ""
 // const baseUrl = ' http://172.31.50.41:7300/mock/5b3ae25f3a04b867a240d558/ids'
 const HttpApiConfig = {
+  //syq
+  HOME_COUNT: "/home",
+
+
 
   AUDIT_EVENT: "/audit/basic-event",
   AUDIT_ASSETS: "/audit/assets-statistics",

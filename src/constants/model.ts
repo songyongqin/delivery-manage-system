@@ -1,4 +1,18 @@
 export const LAYOUT_NAMESPACE = "layout",
+
+//syq
+HOME_NAMESPACE = "home",
+PROJECT_NAMESPACE = "project",
+FILE_NAMESPACE = "file",
+SYSTEM_NAMESPACE = "system",
+USER_NAMESPACE = "user",
+
+
+
+
+
+
+
   DOMAIN_USER_NAMESPACE = "domainUser",
   SET_UP_NAMESPACE = "setup",
   LAST_EVENT_NAMESPACE = "lastEvent",

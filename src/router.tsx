@@ -8,12 +8,21 @@ import MainWrapper from 'modules/MainWrapper'
 import getLoginPage from 'routes/Login'
 import getOverviewPage from 'routes/Overview'
 
+//syq
+import getHomePage from 'routes/Home'
+
+
 import {
-  OVERVIEW_URL,
   LOGIN_URL,
-  ANALYSE_EVENT_URL,
   ANALYSE_URL,
   ROOT_URL,
+
+  HOME_URL,
+  PROJECT_URL,
+  CUSTOMER_URL,
+  FILE_URL,
+  SYSTEM_URL,
+  USER_URL
 } from 'routes/config/path'
 import { getNavConfig, getDefaultRoute } from 'navConfig'
 
@@ -34,11 +43,34 @@ export default ({ history, app }) => {
               exact
               component={getLoginPage(app, LOGIN_URL)}>
             </Route>
-            {/* 威胁概览 */}
+            {/* 首页 */}
             <Route
-              path={OVERVIEW_URL}
+              path={HOME_URL}
               exact
-              component={getOverviewPage(app, OVERVIEW_URL)} />
+              component={getHomePage(app, HOME_URL)} />
+
+            {/* 项目管理 */}
+            <Route
+              path={PROJECT_URL}
+              exact
+              component={getOverviewPage(app, PROJECT_URL)} />
+            {/* 文档类型管理 */}
+            <Route
+              path={FILE_URL}
+              exact
+              component={getOverviewPage(app, FILE_URL)} />
+            {/* 系统日志 */}
+            <Route
+              path={SYSTEM_URL}
+              exact
+              component={getOverviewPage(app, SYSTEM_URL)} />
+            {/* 用户管理 */}
+            <Route
+              path={USER_URL}
+              exact
+              component={getOverviewPage(app, USER_URL)} />
+
+
             {/* 威胁分析 */}
             <Route
               exact
