@@ -3,6 +3,8 @@ const baseUrl = ""
 const HttpApiConfig = {
   //syq
   HOME_COUNT: "/home",
+  SYSTEM_TABLE:"/user/log-table",
+  SYSTEM_EXPORT:"/user/export-log",
 
 
 

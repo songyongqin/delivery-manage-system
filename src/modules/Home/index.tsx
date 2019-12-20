@@ -38,9 +38,7 @@ class Page extends React.Component<any, any> {
     situationCount:[
     ]
   }
-
   componentDidMount() {
-    console.log(111)
     this.props.fetchCount()
     .then(res => {
       console.log(res)
@@ -52,6 +50,7 @@ class Page extends React.Component<any, any> {
     console.log(this.state)
     const {proTotal, cusTotal, testTotal, situationCount} = this.state
     const { loading } = this.props
+    console.log(this.props.loading)
 
     const addComma = num => (num+'').replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g,'$1,')
     const Total = ({ num }) => {

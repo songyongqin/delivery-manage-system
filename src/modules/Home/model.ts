@@ -7,9 +7,4 @@ export default {
   effects: {
     fetchCount: commonEffectCreator(fetchCount),
   },
-  // subscriptions: {
-  //   setup: ({ dispatch }) => {
-  //     console.log(2222)
-  //   }
-  // }
 }
