@@ -31,7 +31,7 @@ import {
 
 } from 'routes/config/path'
 import { getAppConfig } from 'domain/app'
-import { SysIoc, Situation, ThreatReport } from 'components/IconSvg'
+import { SysIoc, Situation, ThreatReport, UserIoc } from 'components/IconSvg'
 
 
 const Indent = ({ space = 0 }) =>
@@ -64,9 +64,9 @@ export const _navConfig = [
     icon: <SysIoc  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
   },
   {
-    link: AITUATION_URL,
+    link: USER_URL,
     title: "用户管理",
-    icon: <SysIoc  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
+    icon: <UserIoc  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
   },
 ]
 

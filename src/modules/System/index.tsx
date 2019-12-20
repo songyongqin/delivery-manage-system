@@ -15,7 +15,7 @@ import { download } from 'utils'
 const mapStateToProps = state => {
   return {
     state,
-    loading: state.loading.effects[`${SYSTEM_NAMESPACE}/fetchTable`]
+    loading: state.loading.effects[`${SYSTEM_NAMESPACE}/fetchTable`] || state.loading.effects[`${SYSTEM_NAMESPACE}/fetchExport`]
   }
 }
 
@@ -124,6 +124,7 @@ class Page extends React.Component<any, any> {
     })
   }
   render() {
+    const { loading } = this.props
     const {data, total} = this.state
     const dataSource = data.map((i,index) => {
       i.key = index + 1
@@ -166,7 +167,8 @@ class Page extends React.Component<any, any> {
     ]
     const { timestampRange } = this.state.reqTable
     return (
-        <div>
+      <Spin spinning={ loading }>
+        <div key="system">
           <div className={styles['wrap']}>
             <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>,
             <div>
@@ -189,6 +191,7 @@ class Page extends React.Component<any, any> {
             total={total}
           />
         </div>
+      </Spin>
     )
   }
 }

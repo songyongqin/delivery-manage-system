@@ -11,6 +11,7 @@ import getOverviewPage from 'routes/Overview'
 //syq
 import getHomePage from 'routes/Home'
 import getSystemPage from 'routes/System'
+import getUserPage from 'routes/User'
 
 
 import {
@@ -66,10 +67,10 @@ export default ({ history, app }) => {
               exact
               component={getSystemPage(app, SYSTEM_URL)} />
             {/* 用户管理 */}
-            {/* <Route
+            <Route
               path={USER_URL}
               exact
-              component={getOverviewPage(app, USER_URL)} /> */}
+              component={getUserPage(app, USER_URL)} />
             {/* 威胁分析 */}
             <Route
               exact

@@ -47,7 +47,6 @@ class Page extends React.Component<any, any> {
   }
 
   render() {
-    console.log(this.state)
     const {proTotal, cusTotal, testTotal, situationCount} = this.state
     const { loading } = this.props
     console.log(this.props.loading)
@@ -74,7 +73,7 @@ class Page extends React.Component<any, any> {
 
     return (
       <Spin spinning={ loading }>
-        <div key="homes">
+        <div key="home">
           <Row >
             <ItemCount count = {proTotal} title="项目总数" icon = "ProIoc" />
             <ItemCount count = {cusTotal} title="客户总数" icon = "CusIoc"/>
