@@ -6,6 +6,7 @@ export default (app: any, url: string): React.Component => {
   return dynamic({
     app,
     models: () => [
+      
     ],
     component: () => System.import(/* webpackChunkName: "Login" */'modules/Login')
       .then(page => WithRouteInit(url)(page.default)),

@@ -11,100 +11,27 @@ import {
   LOGIN_URL,
 
   HOME_URL,
+  PROJECT_URL,
+  CUSTOMER_URL,
+  FILE_URL,
+  SYSTEM_URL,
+  USER_URL,
 
   AITUATION_URL,
 
-  ANALYSE_URL,
-  ANALYSE_EVENT_URL,
-  ANALYSE_ATTACK_CHAIN_URL,
-  ANALYSE_FALL_HOST_URL,
-  ANALYSE_RANKING_URL,
-  ANALYSE_THREAT_DIS_URL,
-  ANALYSE_OVERALL_URL,
-  CONFIG_NODE_MONITOR_URL,
-
-  EARLY_WARNING_URL,
-  EARLY_WARNING_EMAIL_URL,
+  
 
   REPORT_URL,
 
-  SYS_CONFIG_URL,
-  SYS_CONFIG_NETWORK_URL,
-  SYS_CONFIG_MONITOR_URL,
-  SYS_CONFIG_STRATEGY_URL,
-
-  USER_MANAGER_URL,
 
   MANAGER_URL,
-  // MANAGER_DEVICE_URL,
-  MANAGER_VM_URL,
-  MANAGER_MIRROR_URL,
-
-  SYS_LOG_URL,
-  SYS_LOG_LOGIN_URL,
-  ROOT_URL,
-  SNORT_URL,
-  FILE_RESTORE,
-
-  // ANALYSE_EVENT_URL,
-
-  ANALYSE_ATTACKED_ASSETS_URL,
-
-  ANALYSE_ATTACKED_ASSETS_DETAL_URL,
-
-  ANALYSE_ATTACK_URL,
-
-  ANALYSE_ATTACK_DETAL_URL,
-
-  ANALYSE_THREAT_URL,
-
-  ANALYSE_REPORT_URL,
-
-  ANALYSE_REPORT_DETAIL_URL,
-
-  ANALYSE_THREAT_FAMILY_DETAIL_URL,
-
-  ANALYSE_THREAT_LOOPHOLE_DETAIL_URL,
-
-  ANALYSE_THREAT_INTELLIGENCE_URL,
-
-  AUDIT_URL,
 
   TOPO_URL,
 
-  AUDIT_EVENT_URL,
-
-  AUDIT_ASSETS_URL,
-
-  AUDIT_CAUGHT_URL,
-
-  STRATEGY_URL,
-
-  CONFIG_URL,
-  TYPICAL_CASE_URL,
-
-  CONFIG_USER_MANAGER_URL,
-
-  CONFIG_DEVICE_MANAGER_URL,
-
-  CONFIG_SYS_LOG_URL,
-
-  CONFIG_SYS_LOG_LOGIN_URL,
-
-  CONFIG_SYS_CONFIG_URL,
-
-  CONFIG_SYS_CONFIG_NETWORK_URL,
-
-  CONFIG_SYS_CONFIG_MONITOR_URL,
-
-  CONFIG_SYS_CONFIG_WARN_URL,
-  CONFIG_WHITE_LIST,
-  SAMPLE_X86,
-  SAMPLE_NON_X86
 
 } from 'routes/config/path'
 import { getAppConfig } from 'domain/app'
-import { Situation , ThreatReport } from 'components/IconSvg'
+import { SysIoc, Situation, ThreatReport } from 'components/IconSvg'
 
 
 const Indent = ({ space = 0 }) =>
@@ -116,40 +43,30 @@ export const _navConfig = [
     title: "首页",
     icon: <Icon type="home" />
   },
+  // {
+  //   link: HOME_URL,
+  //   title: "项目管理",
+  //   icon: <Icon type="home" />
+  // },
+  // {
+  //   link: HOME_URL,
+  //   title: "客户管理",
+  //   icon: <Icon type="home" />
+  // },
+  // {
+  //   link: HOME_URL,
+  //   title: "文档类型管理",
+  //   icon: <Icon type="home" />
+  // },
   {
-    link: HOME_URL,
-    title: "项目管理",
-    icon: <Icon type="home" />
-  },
-  {
-    link: HOME_URL,
-    title: "客户管理",
-    icon: <Icon type="home" />
-  },
-  {
-    link: HOME_URL,
-    title: "文档类型管理",
-    icon: <Icon type="home" />
-  },
-  {
-    link: ANALYSE_URL,
+    link: SYSTEM_URL,
     title: "系统日志",
-    icon: <Icon type="fork" />,
+    icon: <SysIoc  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
   },
   {
     link: AITUATION_URL,
     title: "用户管理",
-    icon: <Situation  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
-  },
-  {
-    link: TOPO_URL,
-    title: "拓扑图",
-    icon: <Icon type="share-alt" />
-  },
-  {
-    link: REPORT_URL,
-    title: "威胁报告",
-    icon: <ThreatReport style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }} />
+    icon: <SysIoc  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
   },
 ]
 

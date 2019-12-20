@@ -53,6 +53,7 @@ class Page extends React.Component<any, any> {
   }
 
   postSign = payload => this.props.postSign(payload).then(res => {
+
     if (!isSuccess(res)) {
       this.setState({
         error: res.message

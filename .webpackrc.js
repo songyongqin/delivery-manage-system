@@ -10,9 +10,13 @@ const theme = require('./theme')
 // const proxyServer = "http://172.31.50.41:7300/mock/5b3ae25f3a04b867a240d558/ids"
 
 // const proxyServer = "http://172.31.50.41:3357/mock/5dedbe5890fac70d0f7e8260"
-const proxyServer = "http://172.31.50.232"
 
 // const proxyServer = "http://172.31.50.224:80"
+
+// const proxyServer = "http://172.31.50.232"
+
+const proxyServer = "http://172.31.50.41:3357/mock/5de8c6c990fac70d0f7e8242"
+
 
 const test = 'http://localhost:3366'
 
@@ -26,6 +30,7 @@ export default {
   "publicPath": '/',
   "outputPath": './__dist',
   "proxy": {
+    "/home": proxyServer,
     "/user": proxyServer,
     "/overview": proxyServer,
     "/analyse": proxyServer,

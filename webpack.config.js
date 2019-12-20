@@ -8,12 +8,9 @@ const CSSSplitWebpackPlugin = require('css-split-webpack-plugin').default
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = (webpackConfig, env) => {
-  
   const production = process.env.NODE_ENV === 'production'
   webpackConfig.output.filename = 'static/[name].[hash].bundle.js';
   webpackConfig.output.chunkFilename = 'static/[name].[chunkhash].async.js';
-
-
   webpackConfig.entry.vendor = [
     "babel-polyfill",
     "dva",
@@ -53,7 +50,6 @@ module.exports = (webpackConfig, env) => {
   // console.info(webpackConfig.module.rules[7].use[0].options.)
 
   // return
-
   webpackConfig.plugins.push(new CopyWebpackPlugin([
     {
       from: 'src/public',

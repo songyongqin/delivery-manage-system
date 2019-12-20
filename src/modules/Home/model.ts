@@ -6,5 +6,10 @@ export default {
   namespace: HOME_NAMESPACE,
   effects: {
     fetchCount: commonEffectCreator(fetchCount),
-  }
+  },
+  // subscriptions: {
+  //   setup: ({ dispatch }) => {
+  //     console.log(2222)
+  //   }
+  // }
 }

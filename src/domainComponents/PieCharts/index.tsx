@@ -51,7 +51,7 @@ let getOption = ({ data, theme, titles = {}, addNum = false, offset = 0 }) => {
       x: 'center',
       padding: 15,
       target: 'self',
-      textStyle: { ...config[theme], fontSize: 14 },
+      textStyle: { ...config[theme], fontSize: 18 },
       ...titles,
     },
     tooltip: {
@@ -68,10 +68,11 @@ let getOption = ({ data, theme, titles = {}, addNum = false, offset = 0 }) => {
       left: '50%',
       // bottom: '10',
       bottom: `${bottom}%`,
+      padding:40,
       height: '75%',
       width: 50,
       itemWidth: 5,
-      pageIconSize: 8,
+      pageIconSize: 10,
       itemHeight: 5,
       type: 'scroll',
       data: Array.isArray(data) ? data.map(i => i.name) : [],
@@ -106,7 +107,7 @@ let getOption = ({ data, theme, titles = {}, addNum = false, offset = 0 }) => {
       {
         type: 'pie',
         radius: ['35%', '45%'],
-        center: ['25%', '55%'],
+        center: ['30%', '55%'],
         data: Array.isArray(data) ? data.filter(i => i.value) : [],
         minAngle: 5,
         label: {

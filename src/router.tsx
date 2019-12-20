@@ -10,6 +10,7 @@ import getOverviewPage from 'routes/Overview'
 
 //syq
 import getHomePage from 'routes/Home'
+import getSystemPage from 'routes/System'
 
 
 import {
@@ -55,22 +56,20 @@ export default ({ history, app }) => {
               exact
               component={getOverviewPage(app, PROJECT_URL)} />
             {/* 文档类型管理 */}
-            <Route
+            {/* <Route
               path={FILE_URL}
               exact
-              component={getOverviewPage(app, FILE_URL)} />
+              component={getOverviewPage(app, FILE_URL)} /> */}
             {/* 系统日志 */}
             <Route
               path={SYSTEM_URL}
               exact
-              component={getOverviewPage(app, SYSTEM_URL)} />
+              component={getSystemPage(app, SYSTEM_URL)} />
             {/* 用户管理 */}
-            <Route
+            {/* <Route
               path={USER_URL}
               exact
-              component={getOverviewPage(app, USER_URL)} />
-
-
+              component={getOverviewPage(app, USER_URL)} /> */}
             {/* 威胁分析 */}
             <Route
               exact
