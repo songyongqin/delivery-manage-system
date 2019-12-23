@@ -5,7 +5,7 @@ import WithAnimateRender from 'components/WithAnimateRender'
 const styles = require("./styles.less")
 import { SYSTEM_NAMESPACE } from 'constants/model'
 import Spin from 'domainComponents/Spin'
-import {Table, Col,Icon,Input, Button, Select, Pagination} from 'antd'
+import {Icon,Input, Button, Select, Pagination} from 'antd'
 import ComTable from 'components/ComTable'
 import TimestampPicker from 'components/TimestampPicker'
 import moment from 'moment'
@@ -82,12 +82,12 @@ class Page extends React.Component<any, any> {
             })
           }
           }
-          onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+          onPressEnter={this.handleSearch}
           style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
           type="primary"
-          onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+          onClick={this.handleSearch}
           icon="search"
           size="small"
           style={{ width: 90, marginRight: 8 }}
@@ -108,7 +108,6 @@ class Page extends React.Component<any, any> {
     this.setState({reqTable},()=>{
       this.initTable()
     })
-
   }
   handleChangeSelect = (value) => {
     let reqTable = {...this.state.reqTable, limit: value}

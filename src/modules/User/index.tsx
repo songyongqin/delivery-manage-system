@@ -3,25 +3,30 @@ import extraConnect from 'domainUtils/extraConnect'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import WithAnimateRender from 'components/WithAnimateRender'
 const styles = require("./styles.less")
-import { SYSTEM_NAMESPACE } from 'constants/model'
+import { USER_NAMESPACE } from 'constants/model'
 import Spin from 'domainComponents/Spin'
-import {Table, Col,Icon,Input, Button, Select, Pagination} from 'antd'
+import TimestampPicker from 'components/TimestampPicker'
+import AddUser from './components/AddUser'
+import {Table, Col,Icon,Input, Button, Select, Pagination, Popconfirm, Input, message as Message} from 'antd'
+import ComTable from 'components/ComTable'
+import moment from 'moment'
+import Password from 'antd/lib/input/Password'
+const {Option} = Select
 
 const mapStateToProps = state => {
   return {
     state,
-    loading: state.loading.effects[`${SYSTEM_NAMESPACE}/fetchTable`]
+    loading: state.loading.effects[`${USER_NAMESPACE}/fetchTable`]
   }
 }
-
 const mapDispatchToProps = dispatch => {
   return {
     fetchTable: payload => dispatch({
-      type: `${SYSTEM_NAMESPACE}/fetchTable`,
+      type: `${USER_NAMESPACE}/fetchTable`,
       payload
     }),
-    fetchExport: payload => dispatch({
-      type: `${SYSTEM_NAMESPACE}/fetchExport`,
+    deleteUser: payload => dispatch({
+      type: `${USER_NAMESPACE}/deleteUser`,
       payload
     }),
   }
@@ -32,13 +37,209 @@ const mapDispatchToProps = dispatch => {
 @WithCommonProps
 class Page extends React.Component<any, any> {
 
- 
-  render() {
+  state = {
+    reqTable: {
+      timestampRange:[],
+      limit: 30,
+      page: 1,
+      accountName: '',
+      userType: '',
+    },
+    data: [],
+    total: 0,
+    popVisible: false,
+    passwordType:"password"
+  }
 
+  getTable = () => {
+    this.props.fetchTable(this.state.reqTable)
+    .then(res => {
+      const {total,data} = res
+      this.setState({total,data})
+    })
+  }
+  componentDidMount() {
+    this.getTable()
+  }
+  handleSearch = () => {
+    this.getTable()
+  };
+  getColumnSearchProps = (dataIndex,colunmName) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }} >
+        <Input
+          placeholder={`${colunmName}搜索`}
+          value = {this.state.reqTable[dataIndex]}
+          onChange = {e => {
+            let reqTable =  { ...this.state.reqTable, [dataIndex] : e.target.value }
+            this.setState({
+              reqTable
+            })
+          }
+          }
+          onPressEnter={this.handleSearch}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}
+        />
+        <Button
+          type="primary"
+          onClick={this.handleSearch}
+          icon="search"
+          size="small"
+          style={{ width: 90, marginRight: 8 }}
+        >
+          搜索
+        </Button>
+      </div>
+    ),
+    filterIcon: filtered => (
+      <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+    ),
+  });
+  confirm = (id)=>{
+    this.props.deleteUser({id})
+    .then(_ => {
+      Message.success('删除成功');
+    })
+  }
+  initTable = () => {
+    let reqTable = {...this.state.reqTable, page:1}
+    this.setState({
+      reqTable
+    },()=>{
+      this.getTable()
+    })
+  }
+  handleChangeSelect = (value) => {
+    let reqTable = {...this.state.reqTable, limit: value}
+    this.setState({
+      reqTable
+    },()=>{
+      this.initTable()
+    })
+  }
+  timestampRangeOnChange = ({ timestampRange }) => {
+    let timeArr = timestampRange.map(el => {
+      return moment(el, 'YYYY-MM-DD HH:mm:ss').valueOf();
+    })
+    let reqTable = {...this.state.reqTable,timestampRange:timeArr}
+    this.setState({reqTable},()=>{
+      this.initTable()
+    })
+  }
+  closePop = ()=> {
+    this.setState({
+      popVisible: false
+    })
+  }
+  openPop = ()=> {
+    this.setState({
+      popVisible: true
+    })
+  }
+  changeType = () => {
+    const {passwordType} = this.state
+    if (passwordType === "password") {
+      this.setState({passwordType:"text"})
+    }else{
+      this.setState({passwordType:"password"})
+    }
+  }
+  render() {
+    const { loading } = this.props
+    const {data, total, popVisible, passwordType} = this.state
+    const dataSource = data.map((i,index) => {
+      i.key = index + 1
+      return i
+    })
+    const columns = [
+      {
+        title: '序号',
+        dataIndex: 'key',
+        align:'center',
+        key:'key',
+        sorter: (a, b) => a.key - b.key,
+      },
+      {
+        title: '账号名称',
+        dataIndex: 'accountName',
+        align:'center',
+        key:'accountName',
+        ...this.getColumnSearchProps('accountName','账号名称')
+      },
+      {
+        title:(
+          <div>
+            <span>账号密码</span>
+            <span className={styles['password']} onClick = {this.changeType}></span>
+          </div>
+        ),
+        dataIndex: 'accountPassword',
+        align:'center',
+        key:'accountPassword',
+        render:(text, record) => {
+          let paassword = record.accountPassword.replace(/\d/g,'*')
+          return passwordType === "password" ? <div>{paassword}</div> : <div>{record.accountPassword}</div>
+        }
+      },
+      {
+        title: '用户类型',
+        dataIndex: 'userType',
+        align:'center',
+        key:'userType',
+        ...this.getColumnSearchProps('userType','用户类型')
+      },
+      {
+        title: '添加时间',
+        dataIndex: 'addTime',
+        align:'center',
+        key:'addTime'
+      },
+      {
+        title: '操作',
+        dataIndex: 'delete',
+        key: 'delete',
+        render: (text, record) => 
+          <Popconfirm
+        title={`是否删除用户${record.accountName}`}
+        onConfirm={_ => this.confirm(record.id)}
+        okText="Yes"
+        cancelText="No"
+      >
+        <a href="#">删除用户</a>
+      </Popconfirm>
+        
+        
+      }
+    ]
+    const { timestampRange } = this.state.reqTable
+    
     return (
-        <div>
-          111
+      <Spin spinning = {loading}>
+        <div key = "user">
+          <div className={styles['wrap']}>
+            <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>,
+            <div>
+              <span style={{fontSize:14,marginRight:10}}>每页条数:</span>
+              <Select defaultValue="30" style={{ width: 80 }} onChange={this.handleChangeSelect}>
+                <Option value="10">10</Option>
+                <Option value="15">15</Option>
+                <Option value="20">20</Option>
+                <Option value="30">30</Option>
+                <Option value="50">50</Option>
+              </Select>
+            </div>
+            <Button style={{marginLeft:400}} type='primary' onClick={this.openPop} >+添加新用户</Button>
+          </div>
+          <AddUser closePop = {this.closePop} popVisible={popVisible} />
+          <ComTable data = {dataSource} columns = {columns} />
+          <Pagination
+            style={{marginTop: 20}}
+            showTotal= {total => `共找到${total}个结果`}
+            defaultCurrent={1}
+            total={total}
+          />
         </div>
+      </Spin>   
     )
   }
 }
