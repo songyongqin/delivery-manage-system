@@ -46,10 +46,10 @@ class AddUser extends React.Component<any, any> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values)
         this.props.addUser(values)
         .then(_ => {
           this.props.closePop()
+          this.props.getTable()
         })
       }
     });
@@ -127,9 +127,9 @@ class AddUser extends React.Component<any, any> {
               initialValue: userType,
             })(
               <Select>
-              <Option value="管理员">管理员</Option>
-              <Option value="普通用户">普通用户</Option>
-              <Option value="权限用户">权限用户</Option>
+              <Option value="1">管理员</Option>
+              <Option value="2">普通用户</Option>
+              <Option value="3">权限用户</Option>
             </Select>
             )}
           </Item>

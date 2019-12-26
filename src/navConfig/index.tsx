@@ -31,7 +31,7 @@ import {
 
 } from 'routes/config/path'
 import { getAppConfig } from 'domain/app'
-import { SysIoc, Situation, ThreatReport, UserIoc } from 'components/IconSvg'
+import { SysIoc, Situation, ThreatReport, UserIoc, FileIoc } from 'components/IconSvg'
 
 
 const Indent = ({ space = 0 }) =>
@@ -53,11 +53,11 @@ export const _navConfig = [
   //   title: "客户管理",
   //   icon: <Icon type="home" />
   // },
-  // {
-  //   link: HOME_URL,
-  //   title: "文档类型管理",
-  //   icon: <Icon type="home" />
-  // },
+  {
+    link: FILE_URL,
+    title: "文档类型管理",
+    icon: <FileIoc  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
+  },
   {
     link: SYSTEM_URL,
     title: "系统日志",

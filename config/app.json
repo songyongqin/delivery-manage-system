@@ -35,21 +35,10 @@
   "hiddenRouter":[
     "/topo",
     "/typical/case",
-    "/audit/assets",
     "/analyse/threat-intelligence"
   ],
   "adminOnly": [
-    "/sys-config",
-    "/sys-config/network",
-    "/sys-config/monitor",
-    "/sys-config/strategy",
-    "/sys-log",
-    "/sys-log/login",
-    "/user-manager",
-    "/snort",
-    "/config/user-manager",
-    "/config/sys-log/login",
-    "/config/sys-log"
+    "/user"
   ],
   "routerTitleConfig": {
     "/manager": "流量监测管理"

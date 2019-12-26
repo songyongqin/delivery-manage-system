@@ -43,7 +43,7 @@ class Page extends React.Component<any, any> {
       limit: 30,
       page: 1,
       accountName: '',
-      userType: '',
+      userType: [],
     },
     data: [],
     total: 0,
@@ -98,7 +98,8 @@ class Page extends React.Component<any, any> {
   confirm = (id)=>{
     this.props.deleteUser({id})
     .then(_ => {
-      Message.success('删除成功');
+      Message.success('删除成功')
+      this.getTable()
     })
   }
   initTable = () => {
@@ -144,6 +145,14 @@ class Page extends React.Component<any, any> {
       this.setState({passwordType:"password"})
     }
   }
+  pageChange = (page) => {
+    let reqTable = {...this.state.reqTable, page}
+    this.setState({
+      reqTable
+    },()=>{
+      this.getTable()
+    })
+  }
   render() {
     const { loading } = this.props
     const {data, total, popVisible, passwordType} = this.state
@@ -186,7 +195,24 @@ class Page extends React.Component<any, any> {
         dataIndex: 'userType',
         align:'center',
         key:'userType',
-        ...this.getColumnSearchProps('userType','用户类型')
+        filters: [
+          {
+            text: '管理员',
+            value: 1,
+          },
+          {
+            text: '普通用户',
+            value: 2,
+          },
+          {
+            text: '权限用户',
+            value: 3,
+          }],
+          onFilter: (value, record) => record.userType === value ? 1 : 0,
+          render:(text, record) => {
+            let userType = record.userType
+            return <div>{ userType === 1 ? "管理员" : userType === 2 ? "普通用户" : "权限用户"}</div>
+          }
       },
       {
         title: '添加时间',
@@ -230,13 +256,14 @@ class Page extends React.Component<any, any> {
             </div>
             <Button style={{marginLeft:400}} type='primary' onClick={this.openPop} >+添加新用户</Button>
           </div>
-          <AddUser closePop = {this.closePop} popVisible={popVisible} />
-          <ComTable data = {dataSource} columns = {columns} />
+          <AddUser closePop = {this.closePop} popVisible={popVisible} getTable = {this.getTable} />
+          <ComTable data = {dataSource} columns = {columns}/>
           <Pagination
             style={{marginTop: 20}}
             showTotal= {total => `共找到${total}个结果`}
             defaultCurrent={1}
             total={total}
+            onChange = {this.pageChange}
           />
         </div>
       </Spin>   

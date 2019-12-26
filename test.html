@@ -7,6 +7,19 @@
   <title>Document</title>
 </head>
 <body>
+  <div class="box">
+    <span>11111</span>
+  </div>
+  <style>
+    .box{
+      /* width: 100px; */
+      max-width: 150px;
+      background-color: red;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
+  </style>
   <script>
     let str = "123456"
     let len= str.length

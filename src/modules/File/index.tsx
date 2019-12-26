@@ -3,32 +3,35 @@ import extraConnect from 'domainUtils/extraConnect'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import WithAnimateRender from 'components/WithAnimateRender'
 const styles = require("./styles.less")
-import { SYSTEM_NAMESPACE } from 'constants/model'
+import { FILE_NAMESPACE } from 'constants/model'
 import Spin from 'domainComponents/Spin'
-import {Icon,Input, Button, Select, Pagination} from 'antd'
+import {Icon,Input, Button, Select, Pagination, Popover} from 'antd'
 import ComTable from 'components/ComTable'
 import TimestampPicker from 'components/TimestampPicker'
 import moment from 'moment'
 const {Option} = Select
-import { download } from 'utils'
+import AddFile from './components/AddFile'
+import UpdateFile from './components/UpdateFile'
+import getAuthURL from 'utils/getAuthURL'
 
 const mapStateToProps = state => {
   return {
     state,
-    loading: state.loading.effects[`${SYSTEM_NAMESPACE}/fetchTable`] || state.loading.effects[`${SYSTEM_NAMESPACE}/fetchExport`]
+    loading: state.loading.effects[`${FILE_NAMESPACE}/fetchTable`] || state.loading.effects[`${FILE_NAMESPACE}/addFile`]
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchTable: payload => dispatch({
-      type: `${SYSTEM_NAMESPACE}/fetchTable`,
+      type: `${FILE_NAMESPACE}/fetchTable`,
       payload
     }),
-    fetchExport: payload => dispatch({
-      type: `${SYSTEM_NAMESPACE}/fetchExport`,
+    addFile: payload => dispatch({
+      type: `${FILE_NAMESPACE}/addFile`,
       payload
     }),
+    
   }
 }
 
@@ -39,14 +42,20 @@ class Page extends React.Component<any, any> {
 
   state = {
     reqTable:{
-      timestampRange:[],
       limit: 30,
       page: 1,
-      accountName: '',
-      loginIP: '',
+      fileName: '',
     },
     data:[],
-    total:0
+    total:0,
+    addPopVisible: false,
+    updatePopVisible: false,
+    updateData:{
+      fileName:'',
+      enclosures:[],
+      download:'',
+      
+    }
   }
   getTable = () => {
     this.props.fetchTable(this.state.reqTable)
@@ -117,9 +126,27 @@ class Page extends React.Component<any, any> {
       this.initTable()
     })
   }
-  onExportClick = () => {
-    this.props.fetchExport().then(res => {
-      download(res)
+  addFile = () => {
+    this.openAddPop()
+  }
+  closeAddPop = ()=> {
+    this.setState({
+      addPopVisible: false
+    })
+  }
+  openAddPop = ()=> {
+    this.setState({
+      addPopVisible: true
+    })
+  }
+  closeUpdatePop = ()=> {
+    this.setState({
+      updatePopVisible: false
+    })
+  }
+  openUpdatePop = ()=> {
+    this.setState({
+      updatePopVisible: true
     })
   }
   pageChange = (page) => {
@@ -130,9 +157,22 @@ class Page extends React.Component<any, any> {
       this.getTable()
     })
   }
+  download = () => {
+
+  }
+
+  update = (text,record) => {
+    console.log(text,record)
+    let updateData = {...this.state.updateData, ...record}
+    this.setState({
+      updateData
+    },()=>{
+      this.openUpdatePop()
+    })
+  }
   render() {
     const { loading } = this.props
-    const {data, total} = this.state
+    const {data, total, addPopVisible, updatePopVisible, updateData} = this.state
     const dataSource = data.map((i,index) => {
       i.key = index + 1
       return i
@@ -146,52 +186,55 @@ class Page extends React.Component<any, any> {
         sorter: (a, b) => a.key - b.key,
       },
       {
-        title: '账号名称',
-        dataIndex: 'accountName',
+        title: '文档名称',
+        dataIndex: 'fileName',
         align:'center',
-        key:'accountName',
-        ...this.getColumnSearchProps('accountName','账号名称')
+        key:'fileName',
+        ...this.getColumnSearchProps('fileName','文档名称')
       },
       {
-        title: '登录IP',
-        dataIndex: 'loginIP',
+        title: '附件',
+        dataIndex: 'enclosures',
         align:'center',
-        key:'loginIP',
-        ...this.getColumnSearchProps('loginIP','登录IP')
+        key:'enclosures',
+        render: (text, record) => {
+          return record.enclosures.map((obj, index) => {
+            const content = <img style={{width:500,height:500}} src={obj.enclosure} key={index}></img>
+            return  <Popover title={null} content={content}>
+                      <img src={obj.enclosure} className={styles['img']} key={index}></img>
+                    </Popover>
+          })
+        }
       },
       {
-        title: '登录时间',
-        dataIndex: 'loginTime',
+        title: '最新修改时间',
+        dataIndex: 'updateTime',
         align:'center',
-        key:'loginTime'
+        key:'updateTime'
       },
       {
         title: '操作行为',
         dataIndex: 'operationBehavior',
         align:'center',
-        key:'operationBehavior'
+        key:'operationBehavior',
+        render: (text, record) => 
+          <div>
+            <Button type='primary' disabled={ this.props.state.domainUser.userData.role===3 }>
+              <a href = {getAuthURL(record.download)} download>下载文档</a>
+            </Button>
+            <Button style={{marginLeft:15}} type='primary' disabled={ this.props.state.domainUser.userData.role===3 } onClick={_ => this.update(text, record)}>
+              修改文档
+            </Button>
+          </div>
       },
     ]
-    const { timestampRange } = this.state.reqTable
     const {role} = this.props.state.domainUser.userData
     return (
       <Spin spinning={ loading }>
         <div key="system">
-          <div className={styles['wrap']}>
-            <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>,
-            <div>
-              <span style={{fontSize:14,marginRight:10}}>每页条数:</span>
-              <Select defaultValue="30" style={{ width: 80 }} onChange={this.handleChangeSelect}>
-                <Option value="10">10</Option>
-                <Option value="15">15</Option>
-                <Option value="20">20</Option>
-                <Option value="30">30</Option>
-                <Option value="50">50</Option>
-              </Select>
-            </div>
-            
-            <Button style={{marginLeft:400}} disabled={ role===3 } type='primary' onClick={this.onExportClick} >导出日志</Button>
-          </div>
+            <Button style={{marginBottom: 20}} disabled={ role===3 } type='primary' onClick={this.addFile}>+新增文档类型</Button>
+            <AddFile closeAddPop = {this.closeAddPop} addPopVisible={addPopVisible} getTable={this.getTable} />
+            <UpdateFile closeUpdatePop = {this.closeUpdatePop} data = {updateData} getTable={this.getTable} updatePopVisible={updatePopVisible} />
           <ComTable data = {dataSource} columns = {columns} />
           <Pagination
             style={{marginTop: 20}}

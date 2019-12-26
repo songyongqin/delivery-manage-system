@@ -230,5 +230,16 @@ export const UserIoc =  ({ style={ width:"20", height:"20" } })  => {
   )
 }
 
+export const FileIoc =  ({ style={ width:"20", height:"20" } })  => {
+  return (
+    <div style={ { ...style, display:"inline-block" }} >
+      <SvgComponents width={ style.width } height={ style.height }>
+        <path d="M512 1024H64a32 32 0 0 1-32-32V32A32 32 0 0 1 64 0h832a32 32 0 0 1 32 32v448a32 32 0 0 1-64 0V64h-768v896H512a32 32 0 0 1 0 64z" p-id="3521" fill="#ffffff"></path>
+        <path d="M704 320H256a32 32 0 0 1-32-32A32 32 0 0 1 256 256h448a32 32 0 0 1 32 32 32 32 0 0 1-32 32zM448 704H256a32 32 0 0 1 0-64h192a32 32 0 0 1 0 64zM704 512H256a32 32 0 0 1 0-64h448a32 32 0 0 1 0 64zM800 1024a32 32 0 0 1-32-32v-320a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" p-id="3522" fill="#ffffff"></path><path d="M960 864h-320a32 32 0 0 1 0-64h320a32 32 0 0 1 0 64z" p-id="3523" fill="#ffffff"></path>
+      </SvgComponents>
+    </div>
+  )
+}
+
 
 

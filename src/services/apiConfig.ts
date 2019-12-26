@@ -8,6 +8,9 @@ const HttpApiConfig = {
   USER_TABLE:"/user/user-table",
   USER_DELETE:"/user/usr-delete",
   USER_ADD:"/user/usr-add",
+  FILE_TABLE: "/file/file-table",
+  FILE_ADD:"/file/file-add",
+  FILE_UPDATE:"/file/file-update",
   
 
 

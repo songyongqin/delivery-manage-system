@@ -12,6 +12,7 @@ import getOverviewPage from 'routes/Overview'
 import getHomePage from 'routes/Home'
 import getSystemPage from 'routes/System'
 import getUserPage from 'routes/User'
+import getFilePage from 'routes/File'
 
 
 import {
@@ -57,10 +58,10 @@ export default ({ history, app }) => {
               exact
               component={getOverviewPage(app, PROJECT_URL)} />
             {/* 文档类型管理 */}
-            {/* <Route
+            <Route
               path={FILE_URL}
               exact
-              component={getOverviewPage(app, FILE_URL)} /> */}
+              component={getFilePage(app, FILE_URL)} />
             {/* 系统日志 */}
             <Route
               path={SYSTEM_URL}
@@ -76,7 +77,6 @@ export default ({ history, app }) => {
               exact
               path={ANALYSE_URL}
               render={() => (<Redirect to={getDefaultRoute(ANALYSE_URL)} />)} />
-            {/* 事件视图 */}
           </Switch>
         </MainWrapper>
       </LocaleProvider>

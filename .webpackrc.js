@@ -32,8 +32,10 @@ export default {
   "proxy": {
     "/home": proxyServer,
     "/user": proxyServer,
-    "/overview": proxyServer,
     "/analyse": proxyServer,
+    "/file": proxyServer,
+
+    "/overview": proxyServer,
     "/warning": proxyServer,
     "/sys-config": proxyServer,
     "/device": proxyServer,
