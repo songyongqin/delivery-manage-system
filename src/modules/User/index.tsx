@@ -7,10 +7,9 @@ import { USER_NAMESPACE } from 'constants/model'
 import Spin from 'domainComponents/Spin'
 import TimestampPicker from 'components/TimestampPicker'
 import AddUser from './components/AddUser'
-import {Table, Col,Icon,Input, Button, Select, Pagination, Popconfirm, Input, message as Message} from 'antd'
+import {Icon, Button, Select, Pagination, Popconfirm, Input, message as Message} from 'antd'
 import ComTable from 'components/ComTable'
 import moment from 'moment'
-import Password from 'antd/lib/input/Password'
 const {Option} = Select
 
 const mapStateToProps = state => {
@@ -50,7 +49,6 @@ class Page extends React.Component<any, any> {
     popVisible: false,
     passwordType:"password"
   }
-
   getTable = () => {
     this.props.fetchTable(this.state.reqTable)
     .then(res => {

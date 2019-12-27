@@ -34,6 +34,7 @@ export default {
     "/user": proxyServer,
     "/analyse": proxyServer,
     "/file": proxyServer,
+    "/project": proxyServer,
 
     "/overview": proxyServer,
     "/warning": proxyServer,

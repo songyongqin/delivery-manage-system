@@ -5,12 +5,16 @@ const HttpApiConfig = {
   HOME_COUNT: "/home",
   SYSTEM_TABLE:"/user/log-table",
   SYSTEM_EXPORT:"/user/export-log",
-  USER_TABLE:"/user/user-table",
-  USER_DELETE:"/user/usr-delete",
-  USER_ADD:"/user/usr-add",
+
+  USER_TABLE:"/user",
+  USER_DELETE:"/user",
+  USER_ADD:"/user",
+
   FILE_TABLE: "/file/file-table",
   FILE_ADD:"/file/file-add",
   FILE_UPDATE:"/file/file-update",
+  PROJECT_TABLE:"/project/project-table",
+  PROJECT_ADD:"/project/project-add",
   
 
 

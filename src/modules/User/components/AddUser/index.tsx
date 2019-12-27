@@ -50,6 +50,7 @@ class AddUser extends React.Component<any, any> {
         .then(_ => {
           this.props.closePop()
           this.props.getTable()
+          Message.success('添加成功');
         })
       }
     });

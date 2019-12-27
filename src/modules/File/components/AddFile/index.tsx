@@ -58,22 +58,14 @@ class AddFile extends React.Component<any, any> {
   change = e =>{
     console.log('change', e)
   }
-
-  changeType = () => {
-    const {inputType} = this.state
-    if (inputType === "password") {
-      this.setState({inputType:"text"})
-    }else{
-      this.setState({inputType:"password"})
-    }
-  }
   handleUpload = () => {
     const { fileList } = this.state;
     const formData = new FormData();
+    let arr = []
     for(let i =0; i<fileList.length; i++){
-      console.log(fileList[i])
-      formData.append('files', fileList[i]);
+      formData.append('files',fileList[i])
     }
+    
     this.props.form.validateFields((err, values) => {
       if (!err) {
         formData.append('fileName', values.fileName);
@@ -83,7 +75,6 @@ class AddFile extends React.Component<any, any> {
       uploading: true,
     });
     reqwest({
-      // url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
       url: httpApi.FILE_ADD,
       method: 'post',
       processData: false,
@@ -188,7 +179,7 @@ class AddFile extends React.Component<any, any> {
             }],
               initialValue: "",
             })(
-              <Upload {...upload} onChange={ this.change } >
+              <Upload {...upload} onChange={ this.change } multiple  >
                 <Button>
                   <Icon type="upload" /> Click to Upload
                 </Button>

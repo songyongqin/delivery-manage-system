@@ -57,9 +57,9 @@ class UpdateFile extends React.Component<any, any> {
   handleUpload = (values) => {
     const { fileList } = this.state;
     const formData = new FormData();
+    let arr = []
     for(let i =0; i<fileList.length; i++){
-      console.log(fileList[i])
-      formData.append('files', fileList[i]);
+      formData.append('files', fileList[i])
     }
     formData.append('id', this.props.data.id)
     formData.append('fileName', values.fileName)
