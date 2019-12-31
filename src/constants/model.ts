@@ -3,6 +3,7 @@ export const LAYOUT_NAMESPACE = "layout",
 //syq
 HOME_NAMESPACE = "home",
 PROJECT_NAMESPACE = "project",
+PROJECT_DETAIL_NAMESPACE = "projectDetail",
 FILE_NAMESPACE = "file",
 SYSTEM_NAMESPACE = "system",
 USER_NAMESPACE = "user",

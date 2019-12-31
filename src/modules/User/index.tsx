@@ -42,7 +42,6 @@ class Page extends React.Component<any, any> {
       limit: 30,
       page: 1,
       accountName: '',
-      userType: [],
     },
     data: [],
     total: 0,
@@ -117,10 +116,12 @@ class Page extends React.Component<any, any> {
     })
   }
   timestampRangeOnChange = ({ timestampRange }) => {
-    let timeArr = timestampRange.map(el => {
-      return moment(el, 'YYYY-MM-DD HH:mm:ss').valueOf();
-    })
-    let reqTable = {...this.state.reqTable,timestampRange:timeArr}
+    // let timeArr = timestampRange.map(el => {
+    //   return moment(el, 'YYYY-MM-DD HH:mm:ss').valueOf()
+    //   console.log(el)
+    //   return el
+    // })
+    let reqTable = {...this.state.reqTable,timestampRange}
     this.setState({reqTable},()=>{
       this.initTable()
     })

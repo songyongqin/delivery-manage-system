@@ -10,11 +10,13 @@ const HttpApiConfig = {
   USER_DELETE:"/user",
   USER_ADD:"/user",
 
-  FILE_TABLE: "/file/file-table",
-  FILE_ADD:"/file/file-add",
-  FILE_UPDATE:"/file/file-update",
-  PROJECT_TABLE:"/project/project-table",
-  PROJECT_ADD:"/project/project-add",
+  FILE_TABLE: "/file",
+  FILE_ADD:"/file",
+  FILE_UPDATE:"/file",
+  PROJECT_TABLE:"/project",
+  PROJECT_ADD:"/project",
+  PROJECT_STATE_CHANGE:"/project",
+  PROJECT_DETAIL_TABLE:"/project-detail",
   
 
 

@@ -11,6 +11,8 @@ import moment from 'moment'
 const {Option} = Select
 import AddProject from './components/AddProject'
 import ComTable from 'components/ComTable'
+import { PROJECT_DETAIL_URL } from 'routes/config/path'
+import domainQueryStringParse from 'utils/domainQueryStringParse'
 
 
 const mapStateToProps = state => {
@@ -24,6 +26,10 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTable: payload => dispatch({
       type: `${PROJECT_NAMESPACE}/fetchTable`,
+      payload
+    }),
+    changeState: payload => dispatch({
+      type: `${PROJECT_NAMESPACE}/changeState`,
       payload
     })
   }
@@ -41,7 +47,7 @@ class Page extends React.Component<any, any> {
       page: 1,
       proName: '',
       cusName: '',
-      prpMsg:''
+      proMsg:''
     },
     data: [],
     total: 0,
@@ -51,10 +57,7 @@ class Page extends React.Component<any, any> {
     this.getTable()
   }
   timestampRangeOnChange = ({ timestampRange }) => {
-    let timeArr = timestampRange.map(el => {
-      return moment(el, 'YYYY-MM-DD HH:mm:ss').valueOf();
-    })
-    let reqTable = {...this.state.reqTable,timestampRange:timeArr}
+    let reqTable = {...this.state.reqTable,timestampRange}
     this.setState({reqTable},()=>{
       this.initTable()
     })
@@ -126,7 +129,22 @@ class Page extends React.Component<any, any> {
       <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
   })
+  changeState = (projectState,id)=>{
+    this.props.changeState({projectState,id})
+    .then(res => {
+      Message.success('修改成功')
+      this.getTable()
+    })
 
+  }
+  pageChange = (page) => {
+    let reqTable = {...this.state.reqTable, page}
+    this.setState({
+      reqTable
+    },()=>{
+      this.getTable()
+    })
+  }
   render() {
     const { timestampRange } = this.state.reqTable
     const {data, total, popVisible} = this.state
@@ -172,28 +190,25 @@ class Page extends React.Component<any, any> {
       },
       {
         title: '产品信息',
-        dataIndex: 'prpMsg',
+        dataIndex: 'proMsg',
         align:'center',
-        key:'prpMsg',
-        ...this.getColumnSearchProps('prpMsg','产品信息'),
+        key:'proMsg',
+        ...this.getColumnSearchProps('proMsg','产品信息'),
         width:400,
         ellipsis: true,
         render: (text, record) => {
           return (
-            <div style={{overflow:'hidden'}}>
+            <div style={{display:'flex',justifyContent:'center'}}>
               {
-                record.prpMsg.map((el, index) => {
-                  return <Tooltip  title={el}>
-                            <span style={{marginRight:15}}>{el}</span>
+                record.proMsg.map((el, index) => {
+                  return <Tooltip  title={el} key={index}>
+                            <span className={styles['item']}>{el}</span>
                           </Tooltip>
                 })
               }
             </div>
           )
         }
-        // <Tooltip title={record.prpMsg}>
-        //   <span>{record.prpMsg}</span>
-        // </Tooltip>
       },
       {
         width:100,
@@ -215,9 +230,18 @@ class Page extends React.Component<any, any> {
         dataIndex: 'state',
         align:'center',
         key:'state',
-        ...this.getColumnSearchProps('state','项目状态'),
+        filters: [
+          {
+            text: '进行中',
+            value: 1,
+          },
+          {
+            text: '售后',
+            value: 2,
+          }],
+          onFilter: (value, record) => record.state === value ? 1 : 0,
         render: (text, record) => 
-          <Select defaultValue = {record.state}>
+          <Select defaultValue = {record.state} onChange={value=>this.changeState(value,record.id)}>
             <Option value={1}>进行中</Option>
             <Option value={2}>售后</Option>
           </Select>
@@ -227,8 +251,12 @@ class Page extends React.Component<any, any> {
         title: '操作',
         dataIndex: 'delete',
         key: 'delete',
-        render: (text, record) => 
-        <a href="#">查看详情</a>
+        render: (text, record) =>{
+          const payload = {
+            id: record.id
+          }
+          return <a href={'/#'+PROJECT_DETAIL_URL + domainQueryStringParse(payload)} style={{  textDecoration: "underline" }}>查看详情</a>
+        }
       }
     ]
     return (
@@ -251,6 +279,13 @@ class Page extends React.Component<any, any> {
         </div>
         <AddProject closePop={this.closePop} getTable={this.getTable}  popVisible={popVisible} />
         <ComTable className={styles['comTable']} data = {dataSource} columns = {columns}/>
+        <Pagination
+            style={{marginTop: 20}}
+            showTotal= {total => `共找到${total}个结果`}
+            defaultCurrent={1}
+            total={total}
+            onChange = {this.pageChange}
+          />
       </Spin>
     )
   }

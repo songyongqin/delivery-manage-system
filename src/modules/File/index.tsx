@@ -110,10 +110,7 @@ class Page extends React.Component<any, any> {
     ),
   });
   timestampRangeOnChange = ({ timestampRange }) => {
-    let timeArr = timestampRange.map(el => {
-      return moment(el, 'YYYY-MM-DD HH:mm:ss').valueOf();
-    })
-    let reqTable = {...this.state.reqTable,timestampRange:timeArr}
+    let reqTable = {...this.state.reqTable,timestampRange}
     this.setState({reqTable},()=>{
       this.initTable()
     })

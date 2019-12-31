@@ -14,6 +14,7 @@ import getSystemPage from 'routes/System'
 import getUserPage from 'routes/User'
 import getFilePage from 'routes/File'
 import getProjectPage from 'routes/Project'
+import getProjectDetailPage from 'routes/ProjectDetail'
 
 
 import {
@@ -23,6 +24,7 @@ import {
 
   HOME_URL,
   PROJECT_URL,
+  PROJECT_DETAIL_URL,
   CUSTOMER_URL,
   FILE_URL,
   SYSTEM_URL,
@@ -52,12 +54,16 @@ export default ({ history, app }) => {
               path={HOME_URL}
               exact
               component={getHomePage(app, HOME_URL)} />
-
             {/* 项目管理 */}
             <Route
               path={PROJECT_URL}
               exact
               component={getProjectPage(app, PROJECT_URL)} />
+            {/* 项目管理详情 */}
+            <Route
+              path={PROJECT_DETAIL_URL}
+              exact
+              component={getProjectDetailPage(app, PROJECT_DETAIL_URL)} />  
             {/* 文档类型管理 */}
             <Route
               path={FILE_URL}

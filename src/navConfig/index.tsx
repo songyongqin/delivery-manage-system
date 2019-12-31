@@ -12,14 +12,13 @@ import {
   ROOT_URL,
   HOME_URL,
   PROJECT_URL,
+  PROJECT_DETAIL_URL,
   CUSTOMER_URL,
   FILE_URL,
   SYSTEM_URL,
   USER_URL,
 
   AITUATION_URL,
-
-  
 
   REPORT_URL,
 
@@ -47,6 +46,12 @@ export const _navConfig = [
     link: PROJECT_URL,
     title: "项目管理",
     icon: <ProjectIoc  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
+  },
+  {
+    link: PROJECT_DETAIL_URL,
+    title: "项目管理详情",
+    hidden: true,
+    icon: <FileIoc  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
   },
   // {
   //   link: HOME_URL,

@@ -1,0 +1,97 @@
+
+import * as React from 'react'
+import { Collapse,Form, Button } from 'antd';
+const { Panel } = Collapse;
+const styles = require("./styles.less")
+import tranformTime from 'utils/tranformTime'
+import UpdateForm from '../UpdateForm'
+
+class ProjectDetails extends React.Component<any, any> {
+
+  state = {
+    popVisible: false,
+  }
+
+  openPop = () => {
+    this.setState({
+      popVisible: true
+    }) 
+  }
+  closePop = ()=> {
+    this.setState({
+      popVisible: false
+    })
+  }
+
+  render() {
+    const {proName, cusName, proMsg = [], startTime, state, remarks} = this.props.data
+    const {popVisible } = this.state
+    return (
+      <div>
+        <Collapse>
+          <Panel header="项目详情" key="1">
+            <div className = {styles['wrap']}>
+              <div className = {styles['item']}>
+                <div className = {styles['key']}>
+                  项目名称:
+                </div>
+                <div className = {styles['value']}>
+                  {proName}
+                </div>
+              </div>
+              <div className = {styles['item']}>
+                <div className = {styles['key']}>
+                  客户名称:
+                </div>
+                <div className = {styles['value']}>
+                  {cusName}
+                </div>
+              </div>
+              <div className = {styles['item']}>
+                <div className = {styles['key']}>
+                  产品名称:
+                </div>
+                <div className = {styles['value']}>
+                  {
+                    proMsg.map((el, index) => 
+                      <div key={index}>{el}</div>
+                    )
+                  }
+                </div>
+              </div>
+              <div className = {styles['item']}>
+                <div className = {styles['key']}>
+                  项目开始时间:
+                </div>
+                <div className = {styles['value']}>
+                  {tranformTime(startTime,"YYYY-MM-DD")}
+                </div>
+              </div>
+              <div className = {styles['item']}>
+                <div className = {styles['key']}>
+                  项目状态:
+                </div>
+                <div className = {styles['value']}>
+                  {state === 1 ? "进行中" : "售后"}
+                </div>
+              </div>
+              <div className = {styles['item']}>
+                <div className = {styles['key']}>
+                  备注:
+                </div>
+                <div className = {styles['value']}>
+                  {remarks}
+                </div>
+              </div>
+              <div>
+                <Button type="primary" className={styles['update']} onClick={this.openPop}>修改</Button>
+              </div>
+            </div>
+          </Panel>
+        </Collapse>
+        <UpdateForm closePop = {this.closePop} getTable={this.props.getTable} popVisible={popVisible} data = {this.props.data}/>
+      </div>
+    )
+  }
+}
+export default ProjectDetails

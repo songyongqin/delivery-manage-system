@@ -61,7 +61,6 @@ class AddProject extends React.Component<any, any> {
         for(let i=0;i<keyArr.length;i++) {
           let len = keyArr[i].length
           let key = keyArr[i].substring(len-1,len)
-          console.log()
           if(Number(key).toString() === 'NaN') {
             reqObj[keyArr[i]] = values[keyArr[i]]
           }

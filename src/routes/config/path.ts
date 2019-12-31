@@ -4,6 +4,7 @@ export const ROOT_URL = "/",
 
   HOME_URL = "/home",
   PROJECT_URL = "/project",
+  PROJECT_DETAIL_URL = "/project/detail",
   CUSTOMER_URL = "/customer",
   FILE_URL = "/file",
   SYSTEM_URL = "/system",
