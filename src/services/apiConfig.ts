@@ -17,6 +17,9 @@ const HttpApiConfig = {
   PROJECT_ADD:"/project",
   PROJECT_STATE_CHANGE:"/project",
   PROJECT_DETAIL_TABLE:"/project-detail",
+  PROJECT_DETAIL_TEST:"/project-detail/application-testing",
+  PROJECT_DETAIL_SCANNING:"/project-detail/authorization-canning",
+  
   
 
 

@@ -14,7 +14,6 @@ import ComTable from 'components/ComTable'
 import { PROJECT_DETAIL_URL } from 'routes/config/path'
 import domainQueryStringParse from 'utils/domainQueryStringParse'
 
-
 const mapStateToProps = state => {
   return {
     state,
@@ -215,14 +214,18 @@ class Page extends React.Component<any, any> {
         title: '开始时间',
         dataIndex: 'startTime',
         align:'center',
-        key:'startTime'
+        key:'startTime',
+        render: (text, record) => 
+          <span>{moment(record.startTime*1000).format("YYYY-MM-DD")}</span>
       },
       {
         width:150,
         title: '最新修改时间',
         dataIndex: 'updateTime',
         align:'center',
-        key:'updateTime'
+        key:'updateTime',
+        render: (text, record) => 
+          <span>{moment(record.updateTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
         width:150,

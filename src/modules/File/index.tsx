@@ -159,7 +159,6 @@ class Page extends React.Component<any, any> {
   }
 
   update = (text,record) => {
-    console.log(text,record)
     let updateData = {...this.state.updateData, ...record}
     this.setState({
       updateData
@@ -195,10 +194,10 @@ class Page extends React.Component<any, any> {
         align:'center',
         key:'enclosures',
         render: (text, record) => {
-          return record.enclosures.map((obj, index) => {
-            const content = <img style={{width:500,height:500}} src={obj.enclosure} key={index}></img>
-            return  <Popover title={null} content={content}>
-                      <img src={obj.enclosure} className={styles['img']} key={index}></img>
+          return record.enclosures.map((el, index) => {
+            const content = <img style={{width:500,height:500}} src={el} key={index}></img>
+            return  <Popover title={null} content={content} key={index}>
+                      <img src={el} className={styles['img']} ></img>
                     </Popover>
           })
         }
@@ -207,7 +206,9 @@ class Page extends React.Component<any, any> {
         title: '最新修改时间',
         dataIndex: 'updateTime',
         align:'center',
-        key:'updateTime'
+        key:'updateTime',
+        render: (text, record) => 
+          <span>{moment(record.updateTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
         title: '操作行为',

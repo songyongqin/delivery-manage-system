@@ -217,7 +217,9 @@ class Page extends React.Component<any, any> {
         title: '添加时间',
         dataIndex: 'addTime',
         align:'center',
-        key:'addTime'
+        key:'addTime',
+        render: (text, record) => 
+          <span>{moment(record.addTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
         title: '操作',

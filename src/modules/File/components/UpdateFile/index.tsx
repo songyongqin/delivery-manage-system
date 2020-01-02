@@ -37,18 +37,19 @@ class UpdateFile extends React.Component<any, any> {
   state = {
     fileList: [],
     uploading: false,
+    // formKey: 0
   }
 
   handleOk = () => {
     this.props.closePop()
   }
   handleCancel = () => {
+    // this.setState({ formKey: +new Date() }, this.props.closeUpdatePop)
     this.props.closeUpdatePop()
   }
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      
       if (!err) {
         this.handleUpload(values)
       }
@@ -137,10 +138,6 @@ class UpdateFile extends React.Component<any, any> {
       fileList,
     }
     const {fileName,id,enclosures} = this.props.data
-    let initArr = []
-    enclosures.map(i => initArr.push(i.id)
-    )
-    
     return (
       <Modal
         destroyOnClose = {true}
@@ -155,7 +152,7 @@ class UpdateFile extends React.Component<any, any> {
         onOk={this.handleOk}
         onCancel={this.handleCancel}
       >
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form {...formItemLayout} onSubmit={this.handleSubmit} key={ this.state.formKey } >
           <Item  label="文档名称">
             {getFieldDecorator('fileName', {
               rules: [{ required: true, message: '请输入文档名称'}],
@@ -164,9 +161,9 @@ class UpdateFile extends React.Component<any, any> {
           </Item>
           <Item  label="已上传附件">
             {getFieldDecorator('uploadFile', {
-              initialValue: initArr
+              initialValue: enclosures
             })(
-              <UploadList enclosures={ enclosures }   />
+              <UploadList enclosures={enclosures} />
             )}
           </Item>
           <Item  label="上传附件">
@@ -204,28 +201,55 @@ class UpdateFile extends React.Component<any, any> {
 }
 export default Form.create()(UpdateFile)
 
-const UploadList = (props) => {
-  const { enclosures, onChange , value=[]} = props
+// const UploadList = (props) => {
+//   const { enclosures, onChange, value = []} = props
+//   console.log(value,33333, enclosures)
+//    return (
+//     <div>
+//     {
+//       enclosures.map((el,index) => {
+//         const content = <img style={{width:500,height:500}} src={el}></img>
+//         return (
+//           <div key = {index}>
+//             <Popover title={null} content={content}>
+//               <img src={el} style={{width:20, height: 20}}></img>
+//             </Popover>
+//             <Checkbox defaultChecked onChange={e => {
+//               let add = e.target.checked
+//               let arr = add ? [...value, el] : value.filter(i => i!== el)
+//               onChange(arr)
+//             }} ></Checkbox>
+//           </div>
+//         )
+//       })
+//     }
+//   </div>
+//    )
+// }
 
-   return (
-    <div>
-    {
-      enclosures.map((el,index) => {
-        const content = <img style={{width:500,height:500}} src={el.enclosure}></img>
-        return (
-          <div key = {index}>
-            <Popover title={null} content={content}>
-              <img src={el.enclosure} style={{width:20, height: 20}}></img>
-            </Popover>
-            <Checkbox value={el.id} defaultChecked   onChange={ e=> {
-              let add = e.target.checked
-              let arr = add ? [...value, el.id] : value.filter(i => i!== el.id)
-              onChange(arr)
-            } } ></Checkbox>
-          </div>
-        )
-      })
-    }
-  </div>
-   )
+class UploadList extends React.Component<any,any>{
+  render(){
+    const { enclosures, onChange, value = []} = this.props
+    return(
+      <div>
+        {
+          enclosures.map((el,index) => {
+            const content = <img style={{width:500,height:500}} src={el}></img>
+            return (
+              <div key = {index}>
+                <Popover title={null} content={content}>
+                  <img src={el} style={{width:20, height: 20}}></img>
+                </Popover>
+                <Checkbox defaultChecked onChange={e => {
+                  let add = e.target.checked
+                  let arr = add ? [...value, el] : value.filter(i => i!== el)
+                  onChange(arr)
+                }} ></Checkbox>
+              </div>
+            )
+          })
+        }
+      </div>
+    )
+  }
 }

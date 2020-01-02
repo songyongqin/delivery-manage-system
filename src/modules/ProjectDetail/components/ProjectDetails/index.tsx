@@ -29,7 +29,7 @@ class ProjectDetails extends React.Component<any, any> {
     return (
       <div>
         <Collapse>
-          <Panel header="项目详情" key="1">
+          <Panel style={{fontSize:16}} header="项目详情" key="1">
             <div className = {styles['wrap']}>
               <div className = {styles['item']}>
                 <div className = {styles['key']}>

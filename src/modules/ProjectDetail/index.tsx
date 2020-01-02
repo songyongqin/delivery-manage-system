@@ -39,7 +39,9 @@ class Page extends React.Component<any, any> {
   state = {
     id: 0,
     data:{
-      project:{}
+      project:{},
+      products:[],
+      id:0
     }
   }
 
@@ -47,8 +49,8 @@ class Page extends React.Component<any, any> {
     this.getTable()
   }
   getTable = () => {
-    let id = queryString.parse(this.props.location.search)
-    id['id'] = Number(id['id'])
+    let idObj = queryString.parse(this.props.location.search)
+    let id = Number(idObj['id'])
     this.setState({id},()=>{
       this.props.fetchTable(this.state.id)
       .then(res => {
@@ -60,13 +62,18 @@ class Page extends React.Component<any, any> {
   }
 
   render() {
+    const {products, id} = this.state.data
     const {loading} = this.props
     // let obj = JSON.parse(JSON.stringify(this.state.data.project))
     return (
       <Spin spinning={loading}>
         <ProjectDetails data = {this.state.data.project} getTable={this.getTable} />
-        {/* <ProductDetails data = {this.state.data.project} getTable={this.getTable} /> */}
-        {/* <ProjectDetails data = {...obj} /> */}
+        {
+          products.map((el,index) => {
+            return <ProductDetails key={index} data = {el} id = {id} getTable={this.getTable} />
+          })
+        }
+        {/* <ProductDetails data = {this.state.data.products[0]} getTable={this.getTable} /> */}
       </Spin>
     )
   }
