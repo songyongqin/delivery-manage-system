@@ -101,6 +101,10 @@ class ApplicationTestingUpd extends React.Component<any, any> {
     const {popVisible} = this.props
     const { uploading, fileList } = this.state
     const {orderType, theDateOfIssuance, authorizedTimeLimit, deliveryMode, dateOfApplication, remarks, enclosures=[]} = this.props.data
+    let initArr = []
+    enclosures.map(el => {
+      initArr.push(el.id)
+    })
     const { getFieldDecorator } = this.props.form
     const formItemLayout = {
       labelCol: {
@@ -167,7 +171,7 @@ class ApplicationTestingUpd extends React.Component<any, any> {
           <Item  label="要求发货日期">
             {getFieldDecorator('theDateOfIssuance', {
               rules: [{ required: true, message: '请输入要求发货日期'}],
-              initialValue:moment(theDateOfIssuance*1000)
+              initialValue:moment(theDateOfIssuance)
             })(<DatePicker />)}
           </Item>
           <Item  label="授权时限">
@@ -185,7 +189,7 @@ class ApplicationTestingUpd extends React.Component<any, any> {
           <Item  label="要求申请日期">
             {getFieldDecorator('dateOfApplication', {
               rules: [{ required: true, message: '请输入要求申请日期'}],
-              initialValue:moment(dateOfApplication*1000)
+              initialValue:moment(dateOfApplication)
             })(<DatePicker />)}
           </Item>
           <Item  label="备注">
@@ -195,7 +199,7 @@ class ApplicationTestingUpd extends React.Component<any, any> {
           </Item>
           <Item  label="已上传附件">
             {getFieldDecorator('uploadFile', {
-              initialValue: enclosures
+              initialValue: initArr
             })(
               <UploadList enclosures={ enclosures }/>
             )}
@@ -242,15 +246,15 @@ class UploadList extends React.Component<any,any>{
       <div>
         {
           enclosures.map((el,index) => {
-            const content = <img style={{width:500,height:500}} src={el}></img>
+            const content = <img style={{width:500,height:500}} src={el.enclosure}></img>
             return (
               <div key = {index}>
                 <Popover title={null} content={content}>
-                  <img src={el} style={{width:20, height: 20}}></img>
+                  <img src={el.enclosure} style={{width:20, height: 20}}></img>
                 </Popover>
                 <Checkbox defaultChecked onChange={e => {
                   let add = e.target.checked
-                  let arr = add ? [...value, el] : value.filter(i => i!== el)
+                  let arr = add ? [...value, el.id] : value.filter(i => i!== el.id)
                   onChange(arr)
                 }} ></Checkbox>
               </div>

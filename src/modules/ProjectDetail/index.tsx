@@ -8,6 +8,8 @@ import { queryString } from 'utils'
 import Spin from 'domainComponents/Spin'
 import ProjectDetails from './components/ProjectDetails'
 import ProductDetails from './components/ProductDetails'
+import { Anchor } from 'antd'
+const { Link } = Anchor
 
 
 const mapStateToProps = state => {
@@ -52,7 +54,7 @@ class Page extends React.Component<any, any> {
     let idObj = queryString.parse(this.props.location.search)
     let id = Number(idObj['id'])
     this.setState({id},()=>{
-      this.props.fetchTable(this.state.id)
+      this.props.fetchTable({id:this.state.id})
       .then(res => {
         this.props.save({ data:res })
         this.setState({data:res})
@@ -64,16 +66,27 @@ class Page extends React.Component<any, any> {
   render() {
     const {products, id} = this.state.data
     const {loading} = this.props
-    // let obj = JSON.parse(JSON.stringify(this.state.data.project))
+    const {role} = this.props.state.domainUser.userData
     return (
       <Spin spinning={loading}>
-        <ProjectDetails data = {this.state.data.project} getTable={this.getTable} />
+        <div id="project" style={{marginRight: 150}}>
+          <ProjectDetails role={role} data = {this.state.data.project} id = {id} getTable={this.getTable} />
+        </div>
         {
-          products.map((el,index) => {
-            return <ProductDetails key={index} data = {el} id = {id} getTable={this.getTable} />
-          })
+          products.map((el,index) => 
+            <div id={index.toString()} key={index} style={{marginRight: 150}}>
+              <ProductDetails role={role}  data = {el} id = {id} getTable={this.getTable} />
+            </div>
+          )
         }
-        {/* <ProductDetails data = {this.state.data.products[0]} getTable={this.getTable} /> */}
+        <Anchor showInkInFixed={true} className={styles['scroll']} >
+          <Link href={location.hash+"#project"} title="项目详情" />
+          {
+            products.map((el,index) => {
+              return <Link key={index} href={location.hash+"#"+index} title={el.productName} />
+            })
+          }
+        </Anchor>
       </Spin>
     )
   }

@@ -13,6 +13,7 @@ import AddProject from './components/AddProject'
 import ComTable from 'components/ComTable'
 import { PROJECT_DETAIL_URL } from 'routes/config/path'
 import domainQueryStringParse from 'utils/domainQueryStringParse'
+import result from 'lodash/result'
 
 const mapStateToProps = state => {
   return {
@@ -46,7 +47,7 @@ class Page extends React.Component<any, any> {
       page: 1,
       proName: '',
       cusName: '',
-      proMsg:''
+      proMsg:[]
     },
     data: [],
     total: 0,
@@ -196,10 +197,11 @@ class Page extends React.Component<any, any> {
         width:400,
         ellipsis: true,
         render: (text, record) => {
+          let proMsg = result(record, 'proMsg', [])
           return (
             <div style={{display:'flex',justifyContent:'center'}}>
               {
-                record.proMsg.map((el, index) => {
+               proMsg.map((el, index) => {
                   return <Tooltip  title={el} key={index}>
                             <span className={styles['item']}>{el}</span>
                           </Tooltip>
@@ -216,7 +218,7 @@ class Page extends React.Component<any, any> {
         align:'center',
         key:'startTime',
         render: (text, record) => 
-          <span>{moment(record.startTime*1000).format("YYYY-MM-DD")}</span>
+          <span>{moment(record.startTime).format("YYYY-MM-DD")}</span>
       },
       {
         width:150,
@@ -225,7 +227,7 @@ class Page extends React.Component<any, any> {
         align:'center',
         key:'updateTime',
         render: (text, record) => 
-          <span>{moment(record.updateTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
+          <span>{moment(record.updateTime).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
         width:150,
@@ -262,6 +264,7 @@ class Page extends React.Component<any, any> {
         }
       }
     ]
+    const {role} = this.props.state.domainUser.userData
     return (
       <Spin spinning={ loading }>
         <div key="project">
@@ -277,7 +280,7 @@ class Page extends React.Component<any, any> {
                   <Option value="50">50</Option>
                 </Select>
               </div>
-              <Button style={{marginLeft:400}} type='primary' onClick={this.openPop} >+创建项目</Button>
+              <Button style={{marginLeft:400}} type='primary' disabled={ role===3 } onClick={this.openPop} >+创建项目</Button>
             </div>
         </div>
         <AddProject closePop={this.closePop} getTable={this.getTable}  popVisible={popVisible} />

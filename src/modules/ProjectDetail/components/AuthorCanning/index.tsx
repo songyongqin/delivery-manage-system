@@ -30,7 +30,7 @@ class AuthorCanning extends React.Component<any, any> {
   }
 
   render() {
-    const {data} = this.props
+    const {data, role} = this.props
     const {popVisible, reqData} = this.state
     return (
       <div>
@@ -98,19 +98,19 @@ class AuthorCanning extends React.Component<any, any> {
                       <div className = {styles['value']}>
                         {
                           el.enclosures.map((el,index) => {
-                            const content = <img style={{width:500,height:500}} src={el} ></img>
+                            const content = <img style={{width:500,height:500}} src={el.enclosure} ></img>
                             return  <Popover title={null} content={content} key={index}>
-                                      <img src={el} className={styles['img']} ></img>
+                                      <img src={el.enclosure} className={styles['img']} ></img>
                                     </Popover>
                           })
                         }
-                        <Button type="primary">
+                        <Button type="primary" disabled={ role===3 }>
                         <a href = {getAuthURL(el.download)} download>下载附件</a>
                         </Button>
                       </div>
                     </div>
                     <div>
-                      <Button type="primary" className={styles['update']} onClick={_ => this.openPop(el)}>修改</Button>
+                      <Button type="primary" disabled={ role===3 } className={styles['update']} onClick={_ => this.openPop(el)}>修改</Button>
                     </div>
                   </div>
                 )

@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => {
 class AddUser extends React.Component<any, any> {
 
   state = {
-    userType:"普通用户",
+    userType:2,
     inputType:"password"
   }
 
@@ -128,9 +128,9 @@ class AddUser extends React.Component<any, any> {
               initialValue: userType,
             })(
               <Select>
-              <Option value="1">管理员</Option>
-              <Option value="2">普通用户</Option>
-              <Option value="3">权限用户</Option>
+              <Option value={1}>管理员</Option>
+              <Option value={2}>普通用户</Option>
+              <Option value={3}>权限用户</Option>
             </Select>
             )}
           </Item>

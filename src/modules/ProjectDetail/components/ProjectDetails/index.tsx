@@ -24,11 +24,12 @@ class ProjectDetails extends React.Component<any, any> {
   }
 
   render() {
-    const {proName, cusName, proMsg = [], startTime, state, remarks} = this.props.data
+    const {proName, cusName, proMsgs = [], startTime, state, remarks} = this.props.data
     const {popVisible } = this.state
+    const {role} = this.props
     return (
       <div>
-        <Collapse>
+        <Collapse id="aaa" defaultActiveKey={['1']}>
           <Panel style={{fontSize:16}} header="项目详情" key="1">
             <div className = {styles['wrap']}>
               <div className = {styles['item']}>
@@ -53,8 +54,8 @@ class ProjectDetails extends React.Component<any, any> {
                 </div>
                 <div className = {styles['value']}>
                   {
-                    proMsg.map((el, index) => 
-                      <div key={index}>{el}</div>
+                    proMsgs.map((el, index) => 
+                      <div key={index}>{el.proMsg}</div>
                     )
                   }
                 </div>
@@ -84,12 +85,12 @@ class ProjectDetails extends React.Component<any, any> {
                 </div>
               </div>
               <div>
-                <Button type="primary" className={styles['update']} onClick={this.openPop}>修改</Button>
+                <Button type="primary" className={styles['update']} disabled={ role===3 } onClick={this.openPop}>修改</Button>
               </div>
             </div>
           </Panel>
         </Collapse>
-        <UpdateForm closePop = {this.closePop} getTable={this.props.getTable} popVisible={popVisible} data = {this.props.data}/>
+        <UpdateForm closePop = {this.closePop} getTable={this.props.getTable} popVisible={popVisible} id={this.props.id} data = {this.props.data}/>
       </div>
     )
   }

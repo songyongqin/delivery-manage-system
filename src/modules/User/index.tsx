@@ -219,7 +219,7 @@ class Page extends React.Component<any, any> {
         align:'center',
         key:'addTime',
         render: (text, record) => 
-          <span>{moment(record.addTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
+          <span>{moment(record.addTime).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
         title: '操作',

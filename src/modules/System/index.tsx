@@ -162,7 +162,7 @@ class Page extends React.Component<any, any> {
         align:'center',
         key:'loginTime',
         render: (text, record) => 
-          <span>{moment(record.loginTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
+          <span>{moment(record.loginTime).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
         title: '操作行为',

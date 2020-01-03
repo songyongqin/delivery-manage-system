@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => {
 @extraConnect(mapStateToProps, mapDispatchToProps)
 @WithAnimateRender
 @WithCommonProps
-class AddFile extends React.Component<any, any> {
+class ApplicationTestingAdd extends React.Component<any, any> {
 
   state = {
     fileList: [],
@@ -216,4 +216,4 @@ class AddFile extends React.Component<any, any> {
     )
   }
 }
-export default Form.create()(AddFile)
+export default Form.create()(ApplicationTestingAdd)

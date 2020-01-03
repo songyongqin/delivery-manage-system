@@ -39,8 +39,8 @@ class UpdateForm extends React.Component<any, any> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values)
         values['startTime'] = moment(values.startTime, 'YYYY-MM-DD').valueOf();
+        values = {...values, id:this.props.id}
         this.props.updateProjectDetail(values)
         .then(_ => {
           this.props.closePop()
@@ -78,7 +78,11 @@ class UpdateForm extends React.Component<any, any> {
       },
     }
     const {popVisible} = this.props
-    const {proName, cusName, proMsg = [], remarks, startTime, state} = this.props.data
+    const {proName, cusName, proMsgs = [], remarks, startTime, state} = this.props.data
+    let initArr = []
+    proMsgs.map(el => {
+      initArr.push(el.proMsg)
+    })
     return (
       <Modal
         destroyOnClose = {true}
@@ -106,9 +110,9 @@ class UpdateForm extends React.Component<any, any> {
           </Item>
           <Item  label="产品名称">
             {getFieldDecorator('proMsg', {
-              initialValue: proMsg,
+              initialValue: proMsgs,
             })(
-              <ProductList proMsg={proMsg} />
+              <ProductList proMsgs={proMsgs} />
             )}
           </Item>
           <Item  label="项目开始时间">
@@ -147,22 +151,42 @@ class UpdateForm extends React.Component<any, any> {
 }
 export default Form.create()(UpdateForm)
 
-const ProductList = (props) => {
-  const { proMsg, onChange , value=[]} = props
+class ProductList extends React.Component<any, any> {
 
-   return (
-    <div>
-    {
-      proMsg.map((el,index) => {
-        return (
-          <Input value={el} key ={index} onChange = { e => {
-            let val = e.target.value
-            value[index] = val
-            onChange(value)
-          }} />
-        )
-      })
-    }
-  </div>
-   )
+  render() {
+    const { proMsgs, onChange , value=[]} = this.props
+    return (
+      <div>
+        {
+          proMsgs.map((el,index) => {
+            return (
+              <Input value={el.proMsg} key ={index} onChange = { e => {
+                let val = e.target.value
+                value[index].proMsg = val
+                onChange(value)
+              }} />
+            )
+          })
+        }
+      </div>
+    )
+  }
 }
+
+// const ProductList = (props) => {
+//    return (
+//     <div>
+//     {
+//       proMsg.map((el,index) => {
+//         return (
+//           <Input value={el} key ={index} onChange = { e => {
+//             let val = e.target.value
+//             value[index] = val
+//             onChange(value)
+//           }} />
+//         )
+//       })
+//     }
+//   </div>
+//    )
+// }

@@ -8,16 +8,25 @@ import UpdateForm from '../UpdateForm'
 const { TabPane } = Tabs
 import ApplicationTesting from '../ApplicationTesting'
 import AuthorCanning from '../AuthorCanning'
+import DeliveryTesting from '../DeliveryTesting'
+import DeliveryChecklist from '../DeliveryChecklist'
+import AuthorizationRecord from '../AuthorizationRecord'
 import ApplicationTestingAdd from '../add/ApplicationTestingAdd'
 import AuthorCanningAdd from '../add/AuthorCanningAdd'
+import DeliveryTestingAdd from '../add/DeliveryTestingAdd'
+import DeliveryChecklistAdd from '../add/DeliveryChecklistAdd'
+import AuthorizationRecordAdd from '../add/AuthorizationRecordAdd'
+
 
 class ProjectDetails extends React.Component<any, any> {
 
   state = {
-    currentKey:'2',
+    currentKey:'3',
     popApplicationTestingAdd: false,
     popAuthorCanningAdd: false,
-
+    popDeliveryTestingAdd: false,
+    popDeliveryChecklistAdd: false,
+    popAuthorizationRecordAdd: false,
   }
   closeApplicationTestingAdd = () => {
     this.setState({
@@ -27,6 +36,21 @@ class ProjectDetails extends React.Component<any, any> {
   closeAuthorCanningAdd = () => {
     this.setState({
       popAuthorCanningAdd: false
+    })
+  }
+  closeDeliveryTestingAdd = () => {
+    this.setState({
+      popDeliveryTestingAdd: false
+    })
+  }
+  closeDeliveryChecklistAdd = () => {
+    this.setState({
+      popDeliveryChecklistAdd: false
+    })
+  }
+  closeAuthorizationRecordAdd = () => {
+    this.setState({
+      popAuthorizationRecordAdd: false
     })
   }
   tabChange = (key)=> {
@@ -39,11 +63,14 @@ class ProjectDetails extends React.Component<any, any> {
     switch(currentKey) {
       case "1": this.setState({popApplicationTestingAdd:true});break;
       case "2": this.setState({popAuthorCanningAdd:true});break;
+      case "3": this.setState({popDeliveryTestingAdd:true});break;
+      case "4": this.setState({popDeliveryChecklistAdd:true});break;
+      case "5": this.setState({popAuthorizationRecordAdd:true});break;
     }
   }
   render() {
-    const {currentKey, popApplicationTestingAdd, popAuthorCanningAdd} = this.state
-    const {productName, productVersion, deviceID, productNumber, productState,applicationTesting=[],authorizationAfterCanning=[],pid} = this.props.data
+    const {currentKey, popApplicationTestingAdd, popAuthorCanningAdd, popDeliveryTestingAdd, popDeliveryChecklistAdd, popAuthorizationRecordAdd} = this.state
+    const {productName, productVersion, deviceID, productNumber, productState,applicationTesting=[],authorizationAfterCanning=[], deliveryTestSheet =[],authorizationRecord=[], deliveryChecklist=[],pid} = this.props.data
     const headers = (
       <div>
         <span style={{fontSize:16}}>{productName}</span>
@@ -53,32 +80,36 @@ class ProjectDetails extends React.Component<any, any> {
         <span style={{fontSize:14,marginLeft:15}}>产品状态：<span style={{fontSize:12}}>{productState}</span></span>
       </div>
     )
+    const {role} = this.props
     return (
       <div>
-        <Collapse>
+        <Collapse >
           <Panel header = {headers} key="1" className={styles['tabs']}>
             <Tabs defaultActiveKey={currentKey} onChange={this.tabChange}>
               <TabPane tab="申请测试单" key="1">
-                <ApplicationTesting data = {applicationTesting} id={this.props.id} pid={pid} getTable={this.props.getTable} />
+                <ApplicationTesting role={role} data = {applicationTesting} id={this.props.id} pid={pid} getTable={this.props.getTable} />
               </TabPane>
               <TabPane tab="灌装后授权单" key="2">
-                <AuthorCanning data = {authorizationAfterCanning} id={this.props.id} pid={pid} getTable={this.props.getTable}/>
+                <AuthorCanning role={role} data = {authorizationAfterCanning} id={this.props.id} pid={pid} getTable={this.props.getTable}/>
               </TabPane>
               <TabPane tab="出货测试单" key="3">
-                Content of Tab Pane 3
+                <DeliveryTesting role={role} data = {deliveryTestSheet} id={this.props.id} pid={pid} getTable={this.props.getTable}/>
               </TabPane>
               <TabPane tab="出货检查单" key="4">
-                Content of Tab Pane 3
+                <DeliveryChecklist role={role} data = {deliveryChecklist} id={this.props.id} pid={pid} getTable={this.props.getTable}/>
               </TabPane>
               <TabPane tab="授权记录" key="5">
-                Content of Tab Pane 3
+                <AuthorizationRecord role={role} data = {authorizationRecord} id={this.props.id} pid={pid} getTable={this.props.getTable} />
               </TabPane>
             </Tabs>
             <span></span>
-            <Button type="primary" className={styles['addBtn']} onClick={this.handleAdd}>+创建文档</Button>
+            <Button type="primary" className={styles['addBtn']}  onClick={this.handleAdd} disabled={ role===3 }>+创建文档</Button>
           </Panel>
           <ApplicationTestingAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popApplicationTestingAdd} closePop={this.closeApplicationTestingAdd} />
           <AuthorCanningAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popAuthorCanningAdd} closePop={this.closeAuthorCanningAdd} />
+          <DeliveryTestingAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popDeliveryTestingAdd} closePop={this.closeDeliveryTestingAdd} />
+          <DeliveryChecklistAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popDeliveryChecklistAdd} closePop={this.closeDeliveryChecklistAdd} />
+          <AuthorizationRecordAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popAuthorizationRecordAdd} closePop={this.closeAuthorizationRecordAdd} />
         </Collapse>
       </div>
     )

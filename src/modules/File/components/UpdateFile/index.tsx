@@ -44,7 +44,6 @@ class UpdateFile extends React.Component<any, any> {
     this.props.closePop()
   }
   handleCancel = () => {
-    // this.setState({ formKey: +new Date() }, this.props.closeUpdatePop)
     this.props.closeUpdatePop()
   }
   handleSubmit = e => {
@@ -138,6 +137,10 @@ class UpdateFile extends React.Component<any, any> {
       fileList,
     }
     const {fileName,id,enclosures} = this.props.data
+    let initArr = []
+    enclosures.map(el => {
+      initArr.push(el.id)
+    })
     return (
       <Modal
         destroyOnClose = {true}
@@ -152,7 +155,7 @@ class UpdateFile extends React.Component<any, any> {
         onOk={this.handleOk}
         onCancel={this.handleCancel}
       >
-        <Form {...formItemLayout} onSubmit={this.handleSubmit} key={ this.state.formKey } >
+        <Form {...formItemLayout} onSubmit={this.handleSubmit} >
           <Item  label="文档名称">
             {getFieldDecorator('fileName', {
               rules: [{ required: true, message: '请输入文档名称'}],
@@ -161,7 +164,7 @@ class UpdateFile extends React.Component<any, any> {
           </Item>
           <Item  label="已上传附件">
             {getFieldDecorator('uploadFile', {
-              initialValue: enclosures
+              initialValue: initArr
             })(
               <UploadList enclosures={enclosures} />
             )}
@@ -234,15 +237,15 @@ class UploadList extends React.Component<any,any>{
       <div>
         {
           enclosures.map((el,index) => {
-            const content = <img style={{width:500,height:500}} src={el}></img>
+            const content = <img style={{width:500,height:500}} src={el.enclosure}></img>
             return (
               <div key = {index}>
                 <Popover title={null} content={content}>
-                  <img src={el} style={{width:20, height: 20}}></img>
+                  <img src={el.enclosure} style={{width:20, height: 20}}></img>
                 </Popover>
                 <Checkbox defaultChecked onChange={e => {
                   let add = e.target.checked
-                  let arr = add ? [...value, el] : value.filter(i => i!== el)
+                  let arr = add ? [...value, el.id] : value.filter(i => i!== el.id)
                   onChange(arr)
                 }} ></Checkbox>
               </div>

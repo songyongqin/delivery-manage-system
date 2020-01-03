@@ -16,10 +16,12 @@ const HttpApiConfig = {
   PROJECT_TABLE:"/project",
   PROJECT_ADD:"/project",
   PROJECT_STATE_CHANGE:"/project",
-  PROJECT_DETAIL_TABLE:"/project-detail",
-  PROJECT_DETAIL_TEST:"/project-detail/application-testing",
-  PROJECT_DETAIL_SCANNING:"/project-detail/authorization-canning",
-  
+  PROJECT_DETAIL_TABLE:"/project/project-detail",
+  PROJECT_DETAIL_TEST:"/project/project-detail/application-testing",
+  PROJECT_DETAIL_SCANNING:"/project/project-detail/authorization-canning",
+  PROJECT_DETAIL_DELIVERY:"/project/project-detail/delivery-testing",
+  PROJECT_DETAIL_CHECKLIST:"/project/project-detail/checklist",
+  PROJECT_DETAIL_RECORD:"/project/project-detail/record",
   
 
 
