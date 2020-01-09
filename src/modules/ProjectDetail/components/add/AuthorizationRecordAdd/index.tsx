@@ -12,8 +12,7 @@ import reqwest from 'reqwest';
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
 import moment from 'moment'
-
-
+import {getTime} from 'utils/getTime'
 
 const mapStateToProps = state => {
   return {
@@ -47,7 +46,8 @@ class AuthorizationRecordAdd extends React.Component<any, any> {
       if (!err) {
         console.log(values)
         let obj = {id:this.props.id, pid: this.props.pid}
-        values['latestDueDate'] = moment(values.latestDueDate, 'YYYY-MM-DD').valueOf()
+        // values['latestDueDate'] = moment(values.latestDueDate*1000, 'YYYY-MM-DD').valueOf()
+        values['latestDueDate'] = Number(getTime(values.latestDueDate))
         values = {...values, ...obj}
         this.props.addUser(values)
         .then(res => {
@@ -105,6 +105,7 @@ class AuthorizationRecordAdd extends React.Component<any, any> {
           </Item>
           <Item  label="备注">
             {getFieldDecorator('remarks', {
+              initialValue: "",
             })(<TextArea rows={4} />)}
           </Item>
           <div style={{display:'flex', justifyContent:'space-around'}}>

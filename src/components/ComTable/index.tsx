@@ -7,7 +7,7 @@ class ComTable extends React.Component<any, any> {
   render() {
     const {data,columns} = this.props
     return (
-      <Table dataSource={data} columns={columns} pagination={false} />
+      <Table onChange={this.props.handleChange} className = {styles['comTable']} dataSource={data} columns={columns} pagination={false} />
     )
   }
 }

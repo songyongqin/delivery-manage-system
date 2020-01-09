@@ -117,7 +117,7 @@ class UpdateForm extends React.Component<any, any> {
           </Item>
           <Item  label="项目开始时间">
             {getFieldDecorator('startTime', {
-              initialValue: moment(startTime),
+              initialValue: moment(startTime*1000),
             })(<DatePicker />)}
           </Item>
           <Item  label="项目状态">

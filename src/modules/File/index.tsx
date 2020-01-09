@@ -75,7 +75,8 @@ class Page extends React.Component<any, any> {
   componentDidMount() {
     this.getTable()
   }
-  handleSearch = () => {
+  handleSearch = (confirm) => {
+    confirm()
     this.getTable()
   };
   getColumnSearchProps = (dataIndex,colunmName) => ({
@@ -91,12 +92,12 @@ class Page extends React.Component<any, any> {
             })
           }
           }
-          onPressEnter={this.handleSearch}
+          onPressEnter={_ => this.handleSearch(confirm)}
           style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
           type="primary"
-          onClick={this.handleSearch}
+          onClick={_ => this.handleSearch(confirm)}
           icon="search"
           size="small"
           style={{ width: 90, marginRight: 8 }}
@@ -168,9 +169,10 @@ class Page extends React.Component<any, any> {
   }
   render() {
     const { loading } = this.props
-    const {data, total, addPopVisible, updatePopVisible, updateData} = this.state
+    const {data, total, addPopVisible, updatePopVisible, updateData, reqTable} = this.state
+    const {page, limit} = reqTable
     const dataSource = data.map((i,index) => {
-      i.key = index + 1
+      i.key = ++index + (page - 1) * limit
       return i
     })
     const columns = [
@@ -179,7 +181,6 @@ class Page extends React.Component<any, any> {
         dataIndex: 'key',
         align:'center',
         key:'key',
-        sorter: (a, b) => a.key - b.key,
       },
       {
         title: '文档名称',
@@ -207,11 +208,12 @@ class Page extends React.Component<any, any> {
         dataIndex: 'updateTime',
         align:'center',
         key:'updateTime',
+        sorter: (a, b) => a.updateTime - b.updateTime,
         render: (text, record) => 
-          <span>{moment(record.updateTime).format("YYYY-MM-DD HH:mm:ss")}</span>
+          <span>{moment(record.updateTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
-        title: '操作行为',
+        title: '操作',
         dataIndex: 'operationBehavior',
         align:'center',
         key:'operationBehavior',
@@ -236,8 +238,9 @@ class Page extends React.Component<any, any> {
           <ComTable data = {dataSource} columns = {columns} />
           <Pagination
             style={{marginTop: 20}}
-            showTotal= {total => `共找到${total}个结果`}
+            showTotal = {total => <span>共找到<span style={{fontWeight:'bold',fontSize:16,paddingRight:5,paddingLeft:5}}>{total}</span>个结果</span>}
             defaultCurrent={1}
+            pageSize = {limit}
             total={total}
             onChange = {this.pageChange}
           />

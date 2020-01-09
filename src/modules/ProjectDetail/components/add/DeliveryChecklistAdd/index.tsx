@@ -12,7 +12,9 @@ import reqwest from 'reqwest';
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
 import moment from 'moment'
-
+import {getTime} from 'utils/getTime'
+import { getToken } from 'domain/user'
+import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
 
 
 const mapStateToProps = state => {
@@ -68,8 +70,10 @@ class DeliveryTestingAdd extends React.Component<any, any> {
         formData.append('pid', this.props.pid)
         formData.append('expirationDate', values.expirationDate)
         formData.append('examiner', values.examiner)
-        let inspectionTime = moment(values.inspectionTime, 'YYYY-MM-DD').valueOf()
-        formData.append('inspectionTime', inspectionTime.toString())
+        // let inspectionTime = moment(values.inspectionTime*1000, 'YYYY-MM-DD').valueOf()
+        // formData.append('inspectionTime', inspectionTime.toString())
+        let inspectionTime = getTime(values.inspectionTime)
+        formData.append('inspectionTime', inspectionTime)
         formData.append('remarks', values.remarks)
       }
     })
@@ -81,6 +85,9 @@ class DeliveryTestingAdd extends React.Component<any, any> {
       method: 'post',
       processData: false,
       'Content-Type': 'multipart/form-data',
+      headers:{
+        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+      },
       data: formData,
       success: () => {
         this.setState({
@@ -180,6 +187,7 @@ class DeliveryTestingAdd extends React.Component<any, any> {
           </Item>
           <Item  label="备注">
             {getFieldDecorator('remarks', {
+              initialValue: "",
             })(<TextArea rows={4} />)}
           </Item>
           <Item  label="上传附件">
@@ -197,7 +205,7 @@ class DeliveryTestingAdd extends React.Component<any, any> {
             })(
               <Upload {...upload} multiple  >
                 <Button>
-                  <Icon type="upload" /> Click to Upload
+                  <Icon type="upload" /> 上传附件
                 </Button>
               </Upload>
             )}

@@ -13,6 +13,9 @@ import tranformTime from 'utils/tranformTime'
 import reqwest from 'reqwest'
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
+import {getTime} from 'utils/getTime'
+import { getToken } from 'domain/user'
+import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
 
 const mapStateToProps = state => {
   return {
@@ -64,10 +67,14 @@ class ApplicationTestingUpd extends React.Component<any, any> {
     formData.append('cid', this.props.data.cid)
     formData.append('salesman', values.salesman)
     formData.append('remarks', values.remarks)
-    let deploymentTime = moment(values.deploymentTime, 'YYYY-MM-DD').valueOf()
-    formData.append('deploymentTime', deploymentTime.toString())
-    let authorityExpirationTime = moment(values.authorityExpirationTime, 'YYYY-MM-DD').valueOf()
-    formData.append('authorityExpirationTime', authorityExpirationTime.toString())
+    // let deploymentTime = moment(values.deploymentTime, 'YYYY-MM-DD').valueOf()
+    // formData.append('deploymentTime', deploymentTime.toString())
+    let deploymentTime = getTime(values.deploymentTime)
+    formData.append('deploymentTime', deploymentTime)
+    // let authorityExpirationTime = moment(values.authorityExpirationTime, 'YYYY-MM-DD').valueOf()
+    // formData.append('authorityExpirationTime', authorityExpirationTime.toString())
+    let authorityExpirationTime = getTime(values.authorityExpirationTime)
+    formData.append('authorityExpirationTime', authorityExpirationTime)
     formData.append('enclosures', values.uploadFile)
     this.setState({
       uploading: true,
@@ -77,6 +84,9 @@ class ApplicationTestingUpd extends React.Component<any, any> {
       method: 'put',
       processData: false,
       'Content-Type': 'multipart/form-data',
+      headers:{
+        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+      },
       data: formData,
       success: () => {
         this.setState({
@@ -169,13 +179,13 @@ class ApplicationTestingUpd extends React.Component<any, any> {
           <Item  label="部署时间">
             {getFieldDecorator('deploymentTime', {
               rules: [{ required: true, message: '请输入部署时间'}],
-              initialValue:moment(deploymentTime)
+              initialValue:moment(Number(deploymentTime)*1000)
             })(<DatePicker />)}
           </Item>
           <Item  label="授权到期时间">
             {getFieldDecorator('authorityExpirationTime', {
               rules: [{ required: true, message: '请输入授权到期时间'}],
-              initialValue:moment(authorityExpirationTime)
+              initialValue:moment(Number(authorityExpirationTime)*1000)
             })(<DatePicker />)}
           </Item>
           <Item  label="备注">
@@ -205,7 +215,7 @@ class ApplicationTestingUpd extends React.Component<any, any> {
             })(
               <Upload {...upload} >
                 <Button>
-                  <Icon type="upload" /> Click to Upload
+                  <Icon type="upload" /> 上传附件
                 </Button>
               </Upload>
             )}

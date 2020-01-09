@@ -39,7 +39,7 @@ class Page extends React.Component<any, any> {
 
   state = {
     reqTable:{
-      timestampRange:[],
+      timestampRange:[moment(0), moment()],
       limit: 30,
       page: 1,
       accountName: '',
@@ -66,7 +66,8 @@ class Page extends React.Component<any, any> {
   componentDidMount() {
     this.getTable()
   }
-  handleSearch = () => {
+  handleSearch = (confirm) => {
+    confirm()
     this.getTable()
   };
   getColumnSearchProps = (dataIndex,colunmName) => ({
@@ -82,12 +83,12 @@ class Page extends React.Component<any, any> {
             })
           }
           }
-          onPressEnter={this.handleSearch}
+          onPressEnter={_ => this.handleSearch(confirm)}
           style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
           type="primary"
-          onClick={this.handleSearch}
+          onClick={_ => this.handleSearch(confirm)}
           icon="search"
           size="small"
           style={{ width: 90, marginRight: 8 }}
@@ -128,10 +129,12 @@ class Page extends React.Component<any, any> {
     })
   }
   render() {
+    const { timestampRange } = this.state.reqTable
     const { loading } = this.props
-    const {data, total} = this.state
+    const {data, total, reqTable} = this.state
+    const {page, limit} = reqTable
     const dataSource = data.map((i,index) => {
-      i.key = index + 1
+      i.key = ++index + (page - 1) * limit
       return i
     })
     const columns = [
@@ -140,7 +143,6 @@ class Page extends React.Component<any, any> {
         dataIndex: 'key',
         align:'center',
         key:'key',
-        sorter: (a, b) => a.key - b.key,
       },
       {
         title: '账号名称',
@@ -161,23 +163,23 @@ class Page extends React.Component<any, any> {
         dataIndex: 'loginTime',
         align:'center',
         key:'loginTime',
+        sorter: (a, b) => a.loginTime - b.loginTime,
         render: (text, record) => 
-          <span>{moment(record.loginTime).format("YYYY-MM-DD HH:mm:ss")}</span>
+          <span>{moment(record.loginTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
-        title: '操作行为',
+        title: '操作',
         dataIndex: 'operationBehavior',
         align:'center',
         key:'operationBehavior'
       },
     ]
-    const { timestampRange } = this.state.reqTable
     const {role} = this.props.state.domainUser.userData
     return (
       <Spin spinning={ loading }>
         <div key="system">
           <div className={styles['wrap']}>
-            <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>,
+          <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>
             <div>
               <span style={{fontSize:14,marginRight:10}}>每页条数:</span>
               <Select defaultValue="30" style={{ width: 80 }} onChange={this.handleChangeSelect}>
@@ -194,9 +196,10 @@ class Page extends React.Component<any, any> {
           <ComTable data = {dataSource} columns = {columns} />
           <Pagination
             style={{marginTop: 20}}
-            showTotal= {total => `共找到${total}个结果`}
+            showTotal = {total => <span>共找到<span style={{fontWeight:'bold',fontSize:16,paddingRight:5,paddingLeft:5}}>{total}</span>个结果</span>}
             defaultCurrent={1}
             total={total}
+            pageSize = {limit}
             onChange = {this.pageChange}
           />
         </div>

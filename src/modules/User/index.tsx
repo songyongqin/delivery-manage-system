@@ -38,7 +38,7 @@ class Page extends React.Component<any, any> {
 
   state = {
     reqTable: {
-      timestampRange:[],
+      timestampRange:[moment(0), moment()],
       limit: 30,
       page: 1,
       accountName: '',
@@ -58,7 +58,8 @@ class Page extends React.Component<any, any> {
   componentDidMount() {
     this.getTable()
   }
-  handleSearch = () => {
+  handleSearch = (confirm) => {
+    confirm()
     this.getTable()
   };
   getColumnSearchProps = (dataIndex,colunmName) => ({
@@ -74,12 +75,12 @@ class Page extends React.Component<any, any> {
             })
           }
           }
-          onPressEnter={this.handleSearch}
+          onPressEnter={_ => this.handleSearch(confirm)}
           style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
           type="primary"
-          onClick={this.handleSearch}
+          onClick={_ => this.handleSearch(confirm)}
           icon="search"
           size="small"
           style={{ width: 90, marginRight: 8 }}
@@ -154,9 +155,10 @@ class Page extends React.Component<any, any> {
   }
   render() {
     const { loading } = this.props
-    const {data, total, popVisible, passwordType} = this.state
+    const {data, total, popVisible, passwordType, reqTable} = this.state
+    const {page, limit} = reqTable
     const dataSource = data.map((i,index) => {
-      i.key = index + 1
+      i.key = ++index + (page - 1) * limit
       return i
     })
     const columns = [
@@ -165,7 +167,6 @@ class Page extends React.Component<any, any> {
         dataIndex: 'key',
         align:'center',
         key:'key',
-        sorter: (a, b) => a.key - b.key,
       },
       {
         title: '账号名称',
@@ -218,8 +219,9 @@ class Page extends React.Component<any, any> {
         dataIndex: 'addTime',
         align:'center',
         key:'addTime',
+        sorter: (a, b) => a.addTime - b.addTime,
         render: (text, record) => 
-          <span>{moment(record.addTime).format("YYYY-MM-DD HH:mm:ss")}</span>
+          <span>{moment(record.addTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
         title: '操作',
@@ -261,9 +263,10 @@ class Page extends React.Component<any, any> {
           <ComTable data = {dataSource} columns = {columns}/>
           <Pagination
             style={{marginTop: 20}}
-            showTotal= {total => `共找到${total}个结果`}
+            showTotal = {total => <span>共找到<span style={{fontWeight:'bold',fontSize:16,paddingRight:5,paddingLeft:5}}>{total}</span>个结果</span>}
             defaultCurrent={1}
             total={total}
+            pageSize = {limit}
             onChange = {this.pageChange}
           />
         </div>

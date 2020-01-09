@@ -12,7 +12,9 @@ import reqwest from 'reqwest';
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
 import moment from 'moment'
-
+import {getTime} from 'utils/getTime'
+import { getToken } from 'domain/user'
+import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
 
 
 const mapStateToProps = state => {
@@ -67,12 +69,16 @@ class AuthorCanningAdd extends React.Component<any, any> {
         formData.append('id', this.props.id)
         formData.append('pid', this.props.pid)
         formData.append('orderType', values.orderType)
-        let theDateOfIssuance = moment(values.theDateOfIssuance, 'YYYY-MM-DD').valueOf()
-        formData.append('theDateOfIssuance', theDateOfIssuance.toString())
+        // let theDateOfIssuance = moment(values.theDateOfIssuance*1000, 'YYYY-MM-DD').valueOf()
+        // formData.append('theDateOfIssuance', theDateOfIssuance.toString())
+        let theDateOfIssuance = getTime(values.theDateOfIssuance)
+        formData.append('theDateOfIssuance', theDateOfIssuance)
         formData.append('authorizedTimeLimit', values.authorizedTimeLimit)
         formData.append('deliveryMode', values.deliveryMode)
-        let dateOfApplication = moment(values.dateOfApplication, 'YYYY-MM-DD').valueOf()
-        formData.append('dateOfApplication', dateOfApplication.toString())
+        // let dateOfApplication = moment(values.dateOfApplication*1000, 'YYYY-MM-DD').valueOf()
+        // formData.append('dateOfApplication', dateOfApplication.toString())
+        let dateOfApplication = getTime(values.dateOfApplication)
+        formData.append('dateOfApplication', dateOfApplication)
         formData.append('remarks', values.remarks)
       }
     })
@@ -84,6 +90,9 @@ class AuthorCanningAdd extends React.Component<any, any> {
       method: 'post',
       processData: false,
       'Content-Type': 'multipart/form-data',
+      headers:{
+        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+      },
       data: formData,
       success: () => {
         this.setState({
@@ -195,6 +204,7 @@ class AuthorCanningAdd extends React.Component<any, any> {
           </Item>
           <Item  label="备注">
             {getFieldDecorator('remarks', {
+              initialValue: "",
             })(<TextArea rows={4} />)}
           </Item>
           <Item  label="上传附件">
@@ -212,7 +222,7 @@ class AuthorCanningAdd extends React.Component<any, any> {
             })(
               <Upload {...upload} multiple  >
                 <Button>
-                  <Icon type="upload" /> Click to Upload
+                  <Icon type="upload" /> 上传附件
                 </Button>
               </Upload>
             )}

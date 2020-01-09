@@ -49,7 +49,7 @@ export const _navConfig = [
   },
   {
     link: PROJECT_DETAIL_URL,
-    title: "项目管理详情",
+    title: "项目详情",
     hidden: true,
     icon: <FileIoc  style={{ width:'16', height:'16', verticalAlign:"middle",  marginRight: 10  }}  />
   },

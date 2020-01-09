@@ -13,6 +13,9 @@ import tranformTime from 'utils/tranformTime'
 import reqwest from 'reqwest'
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
+import {getTime} from 'utils/getTime'
+import { getToken } from 'domain/user'
+import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
 
 const mapStateToProps = state => {
   return {
@@ -64,11 +67,15 @@ class DeliveryTestingUpd extends React.Component<any, any> {
     formData.append('cid', this.props.data.cid)
     formData.append('expirationDate', values.expirationDate)
     formData.append('tester', values.tester)
-    let testTime = moment(values.testTime, 'YYYY-MM-DD').valueOf()
-    formData.append('testTime', testTime.toString())
+    // let testTime = moment(values.testTime, 'YYYY-MM-DD').valueOf()
+    // formData.append('testTime', testTime.toString())
+    let testTime = getTime(values.testTime)
+    formData.append('testTime', testTime)
     formData.append('inspector', values.inspector)
-    let inspectionTime = moment(values.inspectionTime, 'YYYY-MM-DD').valueOf()
-    formData.append('inspectionTime', inspectionTime.toString())
+    // let inspectionTime = moment(values.inspectionTime, 'YYYY-MM-DD').valueOf()
+    // formData.append('inspectionTime', inspectionTime.toString())
+    let inspectionTime = getTime(values.inspectionTime)
+    formData.append('inspectionTime', inspectionTime)
     formData.append('remarks', values.remarks)
     formData.append('enclosures', values.uploadFile)
     this.setState({
@@ -79,6 +86,9 @@ class DeliveryTestingUpd extends React.Component<any, any> {
       method: 'put',
       processData: false,
       'Content-Type': 'multipart/form-data',
+      headers:{
+        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+      },
       data: formData,
       success: () => {
         this.setState({
@@ -177,7 +187,7 @@ class DeliveryTestingUpd extends React.Component<any, any> {
           <Item  label="测试时间">
             {getFieldDecorator('testTime', {
               rules: [{ required: true, message: '请输入测试时间'}],
-              initialValue:moment(testTime)
+              initialValue:moment(Number(testTime)*1000)
             })(<DatePicker />)}
           </Item>
           <Item  label="检验人">
@@ -189,7 +199,7 @@ class DeliveryTestingUpd extends React.Component<any, any> {
           <Item  label="检验时间">
             {getFieldDecorator('inspectionTime', {
               rules: [{ required: true, message: '请输入检验时间'}],
-              initialValue:moment(inspectionTime)
+              initialValue:moment(Number(inspectionTime)*1000)
             })(<DatePicker />)}
           </Item>
           <Item  label="备注">
@@ -219,7 +229,7 @@ class DeliveryTestingUpd extends React.Component<any, any> {
             })(
               <Upload {...upload} >
                 <Button>
-                  <Icon type="upload" /> Click to Upload
+                  <Icon type="upload" /> 上传附件
                 </Button>
               </Upload>
             )}

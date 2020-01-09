@@ -5,6 +5,7 @@ const { Panel } = Collapse;
 const styles = require("./styles.less")
 import tranformTime from 'utils/tranformTime'
 import UpdateForm from '../UpdateForm'
+import moment from 'moment'
 
 class ProjectDetails extends React.Component<any, any> {
 
@@ -65,7 +66,8 @@ class ProjectDetails extends React.Component<any, any> {
                   项目开始时间:
                 </div>
                 <div className = {styles['value']}>
-                  {tranformTime(startTime,"YYYY-MM-DD")}
+                  {/* {tranformTime(startTime,"YYYY-MM-DD")} */}
+                  {moment(startTime*1000).format("YYYY-MM-DD")}
                 </div>
               </div>
               <div className = {styles['item']}>

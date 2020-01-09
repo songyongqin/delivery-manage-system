@@ -42,7 +42,7 @@ class Page extends React.Component<any, any> {
 
   state = {
     reqTable: {
-      timestampRange:[],
+      timestampRange:[moment(0), moment()],
       limit: 30,
       page: 1,
       proName: '',
@@ -95,7 +95,8 @@ class Page extends React.Component<any, any> {
       popVisible: true
     })
   }
-  handleSearch = () => {
+  handleSearch = (confirm) => {
+    confirm()
     this.getTable()
   };
   getColumnSearchProps = (dataIndex,colunmName) => ({
@@ -111,12 +112,12 @@ class Page extends React.Component<any, any> {
             })
           }
           }
-          onPressEnter={this.handleSearch}
+          onPressEnter={_=>this.handleSearch(confirm)}
           style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
           type="primary"
-          onClick={this.handleSearch}
+          onClick={_=>this.handleSearch(confirm)}
           icon="search"
           size="small"
           style={{ width: 90, marginRight: 8 }}
@@ -147,10 +148,11 @@ class Page extends React.Component<any, any> {
   }
   render() {
     const { timestampRange } = this.state.reqTable
-    const {data, total, popVisible} = this.state
     const { loading } = this.props
+    const {data, total, popVisible, reqTable} = this.state
+    const {page, limit} = reqTable
     const dataSource = data.map((i,index) => {
-      i.key = index + 1
+      i.key = ++index + (page - 1) * limit
       return i
     })
     const columns = [
@@ -160,7 +162,6 @@ class Page extends React.Component<any, any> {
         dataIndex: 'key',
         align:'center',
         key:'key',
-        sorter: (a, b) => a.key - b.key,
       },
       {
         title: '项目名称',
@@ -213,12 +214,12 @@ class Page extends React.Component<any, any> {
       },
       {
         width:100,
-        title: '开始时间',
+        title: '项目开始时间',
         dataIndex: 'startTime',
         align:'center',
         key:'startTime',
         render: (text, record) => 
-          <span>{moment(record.startTime).format("YYYY-MM-DD")}</span>
+          <span>{moment(record.startTime*1000).format("YYYY-MM-DD")}</span>
       },
       {
         width:150,
@@ -226,8 +227,9 @@ class Page extends React.Component<any, any> {
         dataIndex: 'updateTime',
         align:'center',
         key:'updateTime',
+        sorter: (a, b) => a.updateTime - b.updateTime,
         render: (text, record) => 
-          <span>{moment(record.updateTime).format("YYYY-MM-DD HH:mm:ss")}</span>
+          <span>{moment(record.updateTime*1000).format("YYYY-MM-DD HH:mm:ss")}</span>
       },
       {
         width:150,
@@ -246,7 +248,7 @@ class Page extends React.Component<any, any> {
           }],
           onFilter: (value, record) => record.state === value ? 1 : 0,
         render: (text, record) => 
-          <Select defaultValue = {record.state} onChange={value=>this.changeState(value,record.id)}>
+          <Select defaultValue = {record.state} disabled={ role===3 } onChange={value=>this.changeState(value,record.id)}>
             <Option value={1}>进行中</Option>
             <Option value={2}>售后</Option>
           </Select>
@@ -287,9 +289,10 @@ class Page extends React.Component<any, any> {
         <ComTable className={styles['comTable']} data = {dataSource} columns = {columns}/>
         <Pagination
             style={{marginTop: 20}}
-            showTotal= {total => `共找到${total}个结果`}
+            showTotal = {total => <span>共找到<span style={{fontWeight:'bold',fontSize:16,paddingRight:5,paddingLeft:5}}>{total}</span>个结果</span>}
             defaultCurrent={1}
             total={total}
+            pageSize = {limit}
             onChange = {this.pageChange}
           />
       </Spin>

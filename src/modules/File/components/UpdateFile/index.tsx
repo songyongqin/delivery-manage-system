@@ -11,7 +11,8 @@ const { TextArea } = Input;
 import reqwest from 'reqwest';
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
-
+import { getToken } from 'domain/user'
+import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
 
 
 const mapStateToProps = state => {
@@ -72,6 +73,9 @@ class UpdateFile extends React.Component<any, any> {
       method: 'put',
       processData: false,
       'Content-Type': 'multipart/form-data',
+      headers:{
+        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+      },
       data: formData,
       success: () => {
         this.setState({
@@ -184,7 +188,7 @@ class UpdateFile extends React.Component<any, any> {
             })(
               <Upload {...upload} >
                 <Button>
-                  <Icon type="upload" /> Click to Upload
+                  <Icon type="upload" /> 上传附件
                 </Button>
               </Upload>
             )}

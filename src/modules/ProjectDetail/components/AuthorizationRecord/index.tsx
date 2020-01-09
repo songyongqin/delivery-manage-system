@@ -79,7 +79,7 @@ class Page extends React.Component<any, any> {
         align:'center',
         key:'lastDue',
         render: (text, record) => 
-          <span>{moment(record.lastDue).format("YYYY-MM-DD")}</span>
+          <span>{moment(record.lastDue*1000).format("YYYY-MM-DD")}</span>
       },
       {
         title: '授权时长',
@@ -93,7 +93,7 @@ class Page extends React.Component<any, any> {
         align:'center',
         key:'latestDueDate',
         render: (text, record) => 
-          <span>{moment(record.latestDueDate).format("YYYY-MM-DD")}</span>
+          <span>{moment(record.latestDueDate*1000).format("YYYY-MM-DD")}</span>
       },
       {
         title: '状态',
@@ -108,7 +108,7 @@ class Page extends React.Component<any, any> {
         key:'remarks',
       },
       {
-        title: '操作行为',
+        title: '操作',
         dataIndex: 'operationBehavior',
         align:'center',
         key:'operationBehavior',

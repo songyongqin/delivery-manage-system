@@ -12,8 +12,9 @@ import reqwest from 'reqwest';
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
 import moment from 'moment'
-
-
+import { getToken } from 'domain/user'
+import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
+import {getTime} from 'utils/getTime'
 
 const mapStateToProps = state => {
   return {
@@ -68,10 +69,14 @@ class ApplicationTestingAdd extends React.Component<any, any> {
         formData.append('pid', this.props.pid)
         formData.append('salesman', values.salesman)
         formData.append('remarks', values.remarks)
-        let deploymentTime = moment(values.deploymentTime, 'YYYY-MM-DD').valueOf()
-        formData.append('deploymentTime', deploymentTime.toString())
-        let authorityExpirationTime = moment(values.authorityExpirationTime, 'YYYY-MM-DD').valueOf()
-        formData.append('authorityExpirationTime', authorityExpirationTime.toString())
+        let deploymentTime = getTime(values.deploymentTime)
+        formData.append('deploymentTime', deploymentTime)
+        let authorityExpirationTime = getTime(values.authorityExpirationTime)
+        formData.append('authorityExpirationTime', authorityExpirationTime)
+        // let deploymentTime = moment(values.deploymentTime, 'YYYY-MM-DD').valueOf()
+        // formData.append('deploymentTime', (deploymentTime/1000).toString())
+        // let authorityExpirationTime = moment(values.authorityExpirationTime, 'YYYY-MM-DD').valueOf()
+        // formData.append('authorityExpirationTime', authorityExpirationTime.toString())
       }
     })
     this.setState({
@@ -82,6 +87,9 @@ class ApplicationTestingAdd extends React.Component<any, any> {
       method: 'post',
       processData: false,
       'Content-Type': 'multipart/form-data',
+      headers:{
+        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+      },
       data: formData,
       success: () => {
         this.setState({
@@ -181,6 +189,7 @@ class ApplicationTestingAdd extends React.Component<any, any> {
           </Item>
           <Item  label="备注">
             {getFieldDecorator('remarks', {
+              initialValue: "",
             })(<TextArea rows={4} />)}
           </Item>
           <Item  label="上传附件">
@@ -198,7 +207,7 @@ class ApplicationTestingAdd extends React.Component<any, any> {
             })(
               <Upload {...upload} multiple  >
                 <Button>
-                  <Icon type="upload" /> Click to Upload
+                  <Icon type="upload" /> 上传附件
                 </Button>
               </Upload>
             )}

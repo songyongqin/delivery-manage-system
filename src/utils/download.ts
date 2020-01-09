@@ -13,5 +13,4 @@ export const download = (
   link.style.display = "none";
   document.body.appendChild(link);
   link.click();
-
 }

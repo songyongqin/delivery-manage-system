@@ -94,7 +94,7 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
           <Item  label="上次到期时间">
             {getFieldDecorator('lastDue', {
               rules: [{ required: true, message: '请输入上次到期时间'}],
-              initialValue:moment(lastDue)
+              initialValue:moment(Number(lastDue)*1000)
             })(<DatePicker />)}
           </Item>
           <Item  label="授权时长">
@@ -106,7 +106,7 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
           <Item  label="最新到期时间">
             {getFieldDecorator('latestDueDate', {
               rules: [{ required: true, message: '请输入最新到期时间'}],
-              initialValue:moment(latestDueDate)
+              initialValue:moment(Number(latestDueDate)*1000)
             })(<DatePicker />)}
           </Item>
           <Item  label="状态">

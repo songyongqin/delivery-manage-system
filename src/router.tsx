@@ -59,7 +59,7 @@ export default ({ history, app }) => {
               path={PROJECT_URL}
               exact
               component={getProjectPage(app, PROJECT_URL)} />
-            {/* 项目管理详情 */}
+            {/* 项目详情 */}
             <Route
               path={PROJECT_DETAIL_URL}
               exact

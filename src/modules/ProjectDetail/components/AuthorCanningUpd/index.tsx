@@ -13,6 +13,9 @@ import tranformTime from 'utils/tranformTime'
 import reqwest from 'reqwest'
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
+import {getTime} from 'utils/getTime'
+import { getToken } from 'domain/user'
+import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
 
 const mapStateToProps = state => {
   return {
@@ -63,12 +66,16 @@ class ApplicationTestingUpd extends React.Component<any, any> {
     formData.append('pid', this.props.data.pid)
     formData.append('cid', this.props.data.cid)
     formData.append('orderType', values.orderType)
-    let theDateOfIssuance = moment(values.theDateOfIssuance, 'YYYY-MM-DD').valueOf()
-    formData.append('theDateOfIssuance', theDateOfIssuance.toString())
+    // let theDateOfIssuance = moment(values.theDateOfIssuance, 'YYYY-MM-DD').valueOf()
+    // formData.append('theDateOfIssuance', theDateOfIssuance.toString())
+    let theDateOfIssuance = getTime(values.theDateOfIssuance)
+    formData.append('theDateOfIssuance', theDateOfIssuance)
     formData.append('authorizedTimeLimit', values.authorizedTimeLimit)
     formData.append('deliveryMode', values.deliveryMode)
-    let dateOfApplication = moment(values.dateOfApplication, 'YYYY-MM-DD').valueOf()
-    formData.append('dateOfApplication', dateOfApplication.toString())
+    // let dateOfApplication = moment(values.dateOfApplication, 'YYYY-MM-DD').valueOf()
+    // formData.append('dateOfApplication', dateOfApplication.toString())
+    let dateOfApplication = getTime(values.dateOfApplication)
+    formData.append('dateOfApplication', dateOfApplication)
     formData.append('remarks', values.remarks)
     formData.append('enclosures', values.uploadFile)
     this.setState({
@@ -79,6 +86,9 @@ class ApplicationTestingUpd extends React.Component<any, any> {
       method: 'put',
       processData: false,
       'Content-Type': 'multipart/form-data',
+      headers:{
+        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+      },
       data: formData,
       success: () => {
         this.setState({
@@ -171,7 +181,7 @@ class ApplicationTestingUpd extends React.Component<any, any> {
           <Item  label="要求发货日期">
             {getFieldDecorator('theDateOfIssuance', {
               rules: [{ required: true, message: '请输入要求发货日期'}],
-              initialValue:moment(theDateOfIssuance)
+              initialValue:moment(Number(theDateOfIssuance)*1000)
             })(<DatePicker />)}
           </Item>
           <Item  label="授权时限">
@@ -189,7 +199,7 @@ class ApplicationTestingUpd extends React.Component<any, any> {
           <Item  label="要求申请日期">
             {getFieldDecorator('dateOfApplication', {
               rules: [{ required: true, message: '请输入要求申请日期'}],
-              initialValue:moment(dateOfApplication)
+              initialValue:moment(Number(dateOfApplication)*1000)
             })(<DatePicker />)}
           </Item>
           <Item  label="备注">
@@ -219,7 +229,7 @@ class ApplicationTestingUpd extends React.Component<any, any> {
             })(
               <Upload {...upload} >
                 <Button>
-                  <Icon type="upload" /> Click to Upload
+                  <Icon type="upload" /> 上传附件
                 </Button>
               </Upload>
             )}

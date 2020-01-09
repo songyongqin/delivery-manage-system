@@ -9,6 +9,7 @@ const {Item} = Form
 const {Option} = Select
 const { TextArea } = Input
 import moment from 'moment'
+import {getTime} from 'utils/getTime'
 
 
 
@@ -66,8 +67,11 @@ class AddProject extends React.Component<any, any> {
           }
         }
         reqObj['products'] = products
-        let time = moment(values.projectStartTime, 'YYYY-MM-DD').valueOf();
-        reqObj['projectStartTime'] = time
+        // let time = moment(values.projectStartTime, 'YYYY-MM-DD').valueOf();
+        // reqObj['projectStartTime'] = time/1000
+        let time = getTime(values.projectStartTime)
+        reqObj['projectStartTime'] = Number(time)
+
         this.props.addProject(reqObj)
         .then(_ => {
           this.props.closePop()
@@ -199,7 +203,6 @@ class AddProject extends React.Component<any, any> {
           </Item>
           <Item  label="项目开始时间">
             {getFieldDecorator('projectStartTime', {
-              initialValue:moment('2015/01/01', 'YYYY-MM-DD')
             })(<DatePicker />)}
           </Item>
           <Item  label="项目状态">

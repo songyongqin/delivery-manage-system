@@ -68,6 +68,7 @@ class ProjectDetails extends React.Component<any, any> {
       case "5": this.setState({popAuthorizationRecordAdd:true});break;
     }
   }
+
   render() {
     const {currentKey, popApplicationTestingAdd, popAuthorCanningAdd, popDeliveryTestingAdd, popDeliveryChecklistAdd, popAuthorizationRecordAdd} = this.state
     const {productName, productVersion, deviceID, productNumber, productState,applicationTesting=[],authorizationAfterCanning=[], deliveryTestSheet =[],authorizationRecord=[], deliveryChecklist=[],pid} = this.props.data
@@ -80,7 +81,24 @@ class ProjectDetails extends React.Component<any, any> {
         <span style={{fontSize:14,marginLeft:15}}>产品状态：<span style={{fontSize:12}}>{productState}</span></span>
       </div>
     )
-    const {role} = this.props
+    const {role, index} = this.props
+    let disabled = false 
+    if(role===3){
+      disabled = true
+    } else {
+      const xx = {
+        '1': applicationTesting,
+        '2': authorizationAfterCanning,
+        '3': deliveryTestSheet,
+        '4': deliveryChecklist,
+        '5': authorizationRecord
+      }
+      if(xx[currentKey]&&xx[currentKey].length!==0 && currentKey !== '5'){
+        disabled = true
+      }else {
+        disabled = false
+      }
+    }
     return (
       <div>
         <Collapse >
@@ -103,7 +121,7 @@ class ProjectDetails extends React.Component<any, any> {
               </TabPane>
             </Tabs>
             <span></span>
-            <Button type="primary" className={styles['addBtn']}  onClick={this.handleAdd} disabled={ role===3 }>+创建文档</Button>
+            <Button type="primary" className={styles['addBtn']} onClick={this.handleAdd} disabled={ disabled }>+创建文档</Button>
           </Panel>
           <ApplicationTestingAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popApplicationTestingAdd} closePop={this.closeApplicationTestingAdd} />
           <AuthorCanningAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popAuthorCanningAdd} closePop={this.closeAuthorCanningAdd} />

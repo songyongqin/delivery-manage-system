@@ -12,7 +12,9 @@ import reqwest from 'reqwest';
 import ApiConfig from 'services/apiConfig'
 const httpApi = ApiConfig.http
 import moment from 'moment'
-
+import {getTime} from 'utils/getTime'
+import { getToken } from 'domain/user'
+import { HTTP_HEADERS_TOKEN_DATA_INDEX } from 'constants/user'
 
 
 const mapStateToProps = state => {
@@ -66,13 +68,17 @@ class DeliveryTestingAdd extends React.Component<any, any> {
       if (!err) {
         formData.append('id', this.props.id)
         formData.append('pid', this.props.pid)
-        formData.append('orderType', values.orderType)
-        let theDateOfIssuance = moment(values.theDateOfIssuance, 'YYYY-MM-DD').valueOf()
-        formData.append('theDateOfIssuance', theDateOfIssuance.toString())
-        formData.append('authorizedTimeLimit', values.authorizedTimeLimit)
-        formData.append('deliveryMode', values.deliveryMode)
-        let dateOfApplication = moment(values.dateOfApplication, 'YYYY-MM-DD').valueOf()
-        formData.append('dateOfApplication', dateOfApplication.toString())
+        formData.append('expirationDate', values.expirationDate)
+        formData.append('tester', values.tester)
+        // let testTime = moment(values.testTime*1000, 'YYYY-MM-DD').valueOf()
+        // formData.append('testTime', testTime.toString())
+        let testTime = getTime(values.testTime)
+        formData.append('testTime', testTime)
+        formData.append('inspector', values.inspector)
+        // let inspectionTime = moment(values.inspectionTime*1000, 'YYYY-MM-DD').valueOf()
+        // formData.append('inspectionTime', inspectionTime.toString())
+        let inspectionTime = getTime(values.inspectionTime)
+        formData.append('inspectionTime', inspectionTime)
         formData.append('remarks', values.remarks)
       }
     })
@@ -80,10 +86,13 @@ class DeliveryTestingAdd extends React.Component<any, any> {
       uploading: true,
     });
     reqwest({
-      url: httpApi.PROJECT_DETAIL_SCANNING,
+      url: httpApi.PROJECT_DETAIL_DELIVERY,
       method: 'post',
       processData: false,
       'Content-Type': 'multipart/form-data',
+      headers:{
+        [HTTP_HEADERS_TOKEN_DATA_INDEX]: getToken(),
+      },
       data: formData,
       success: () => {
         this.setState({
@@ -156,7 +165,7 @@ class DeliveryTestingAdd extends React.Component<any, any> {
         title={
           <div>
             <Icon type='plus'/>
-            <span>新增灌装后授权单</span>
+            <span>新增出货测试单</span>
           </div>
         }
         footer = {null}
@@ -165,36 +174,38 @@ class DeliveryTestingAdd extends React.Component<any, any> {
         onCancel={this.handleCancel}
       >
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-          <Item  label="订单类型">
-            {getFieldDecorator('orderType', {
-              rules: [{ required: true, message: '请输入订单类型'}],
+          <Item  label="过期时长">
+            {getFieldDecorator('expirationDate', {
+              rules: [{ required: true, message: '请输入过期时长'}],
               initialValue: "",
             })(<Input />)}
           </Item>
-          <Item  label="要求发货日期">
-            {getFieldDecorator('theDateOfIssuance', {
-              rules: [{ required: true, message: '请输入要求发货日期'}],
+          <Item  label="测试人">
+            {getFieldDecorator('tester', {
+              rules: [{ required: true, message: '请输入测试人'}],
+              initialValue: "",
+            })(<Input />)}
+          </Item>
+          <Item  label="测试时间">
+            {getFieldDecorator('testTime', {
+              rules: [{ required: true, message: '请输入测试时间'}],
             })(<DatePicker />)}
           </Item>
-          <Item  label="授权时限">
-            {getFieldDecorator('authorizedTimeLimit', {
-              rules: [{ required: true, message: '请输入授权时限'}],
-              initialValue: "",
-            })(<Input placeholder="例如：1年" />)}
-          </Item>
-          <Item  label="交付方式">
-            {getFieldDecorator('deliveryMode', {
-              rules: [{ required: true, message: '请输入交付方式'}],
+
+          <Item  label="检验人">
+            {getFieldDecorator('inspector', {
+              rules: [{ required: true, message: '请输入检验人'}],
               initialValue: "",
             })(<Input />)}
           </Item>
-          <Item  label="申请日期">
-            {getFieldDecorator('dateOfApplication', {
-              rules: [{ required: true, message: '请输入申请日期'}],
+          <Item  label="检验时间">
+            {getFieldDecorator('inspectionTime', {
+              rules: [{ required: true, message: '请输入检验时间'}],
             })(<DatePicker />)}
           </Item>
           <Item  label="备注">
             {getFieldDecorator('remarks', {
+              initialValue: "",
             })(<TextArea rows={4} />)}
           </Item>
           <Item  label="上传附件">
@@ -212,7 +223,7 @@ class DeliveryTestingAdd extends React.Component<any, any> {
             })(
               <Upload {...upload} multiple  >
                 <Button>
-                  <Icon type="upload" /> Click to Upload
+                  <Icon type="upload" /> 上传附件
                 </Button>
               </Upload>
             )}
