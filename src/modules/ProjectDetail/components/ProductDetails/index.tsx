@@ -16,12 +16,14 @@ import AuthorCanningAdd from '../add/AuthorCanningAdd'
 import DeliveryTestingAdd from '../add/DeliveryTestingAdd'
 import DeliveryChecklistAdd from '../add/DeliveryChecklistAdd'
 import AuthorizationRecordAdd from '../add/AuthorizationRecordAdd'
+import ProductUpd from '../ProductUpd'
 
 
 class ProjectDetails extends React.Component<any, any> {
 
   state = {
     currentKey:'3',
+    popProductUpd: false,
     popApplicationTestingAdd: false,
     popAuthorCanningAdd: false,
     popDeliveryTestingAdd: false,
@@ -53,6 +55,12 @@ class ProjectDetails extends React.Component<any, any> {
       popAuthorizationRecordAdd: false
     })
   }
+  closePopProductUpd = () => {
+    this.setState({
+      popProductUpd: false
+    })
+  }
+  
   tabChange = (key)=> {
     this.setState({
       currentKey: key
@@ -68,9 +76,12 @@ class ProjectDetails extends React.Component<any, any> {
       case "5": this.setState({popAuthorizationRecordAdd:true});break;
     }
   }
+  popOpenUpd = () => {
+    this.setState({popProductUpd: true})
+  }
 
   render() {
-    const {currentKey, popApplicationTestingAdd, popAuthorCanningAdd, popDeliveryTestingAdd, popDeliveryChecklistAdd, popAuthorizationRecordAdd} = this.state
+    const {currentKey, popProductUpd, popApplicationTestingAdd, popAuthorCanningAdd, popDeliveryTestingAdd, popDeliveryChecklistAdd, popAuthorizationRecordAdd} = this.state
     const {productName, productVersion, deviceID, productNumber, productState,applicationTesting=[],authorizationAfterCanning=[], deliveryTestSheet =[],authorizationRecord=[], deliveryChecklist=[],pid} = this.props.data
     const headers = (
       <div>
@@ -120,9 +131,10 @@ class ProjectDetails extends React.Component<any, any> {
                 <AuthorizationRecord role={role} data = {authorizationRecord} id={this.props.id} pid={pid} getTable={this.props.getTable} />
               </TabPane>
             </Tabs>
-            <span></span>
+            <Button type="primary" className={styles['updBtn']} onClick={this.popOpenUpd} disabled={role === 3} >修改产品</Button>
             <Button type="primary" className={styles['addBtn']} onClick={this.handleAdd} disabled={ disabled }>+创建文档</Button>
           </Panel>
+          <ProductUpd  id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popProductUpd} closePop={this.closePopProductUpd} data={this.props.data}/>
           <ApplicationTestingAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popApplicationTestingAdd} closePop={this.closeApplicationTestingAdd} />
           <AuthorCanningAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popAuthorCanningAdd} closePop={this.closeAuthorCanningAdd} />
           <DeliveryTestingAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popDeliveryTestingAdd} closePop={this.closeDeliveryTestingAdd} />

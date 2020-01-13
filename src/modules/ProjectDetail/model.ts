@@ -1,5 +1,5 @@
 import { PROJECT_DETAIL_NAMESPACE } from 'constants/model'
-import { fetchTable,updateProjectDetail, addRecord, updRecord } from './services'
+import { fetchTable,updateProjectDetail, addRecord, updRecord, updProduct, addProduct } from './services'
 import commonEffectCreator from 'domainUtils/commonEffectCreator'
 import commonRequestCreator from 'domainUtils/commonRequestCreator'
 
@@ -26,5 +26,7 @@ export default {
     updateProjectDetail: commonEffectCreator(updateProjectDetail),
     addRecord: commonEffectCreator(addRecord),
     updRecord: commonEffectCreator(updRecord),
+    updProduct: commonEffectCreator(updProduct),
+    addProduct: commonEffectCreator(addProduct)
   },
 }

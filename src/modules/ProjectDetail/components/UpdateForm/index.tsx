@@ -9,6 +9,7 @@ import moment from 'moment'
 import extraConnect from 'domainUtils/extraConnect'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import WithAnimateRender from 'components/WithAnimateRender'
+import {getTime} from 'utils/getTime'
 
 const mapStateToProps = state => {
   return {
@@ -39,7 +40,7 @@ class UpdateForm extends React.Component<any, any> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        values['startTime'] = moment(values.startTime, 'YYYY-MM-DD').valueOf();
+        values.startTime = getTime(values.startTime)
         values = {...values, id:this.props.id}
         this.props.updateProjectDetail(values)
         .then(_ => {

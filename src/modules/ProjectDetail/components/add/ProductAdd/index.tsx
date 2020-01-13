@@ -1,24 +1,24 @@
+
 import * as React from 'react'
 const styles = require("./styles.less")
+import {Modal, Icon, Form, Input,DatePicker, Button, message as Message, Select} from 'antd'
 import extraConnect from 'domainUtils/extraConnect'
 import WithCommonProps from 'domainComponents/WithCommonProps'
 import WithAnimateRender from 'components/WithAnimateRender'
 import { PROJECT_DETAIL_NAMESPACE } from 'constants/model'
-import {Modal, Icon, Form, Input,DatePicker, Button, message as Message, Select, Upload, Checkbox, Popover} from 'antd'
 const {Item} = Form
-import moment from 'moment'
-import {getTime} from 'utils/getTime'
+const {Option} = Select
 
 const mapStateToProps = state => {
   return {
     state,
-    loading: state.loading.effects[`${PROJECT_DETAIL_NAMESPACE}/updRecord`]
+    loading: state.loading.effects[`${PROJECT_DETAIL_NAMESPACE}/addProduct`]
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    updRecord: payload => dispatch({
-      type: `${PROJECT_DETAIL_NAMESPACE}/updRecord`,
+    addProduct: payload => dispatch({
+      type: `${PROJECT_DETAIL_NAMESPACE}/addProduct`,
       payload
     }),
   }
@@ -26,8 +26,12 @@ const mapDispatchToProps = dispatch => {
 @extraConnect(mapStateToProps, mapDispatchToProps)
 @WithAnimateRender
 @WithCommonProps
-class AuthorizationRecordUpd extends React.Component<any, any> {
+class ProductAdd extends React.Component<any, any> {
 
+  state = {
+    popVisible: false,
+    reqData:{}
+  }
   handleOk = () => {
     this.props.closePop()
   }
@@ -38,15 +42,9 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        let obj = {id:this.props.id, pid: this.props.pid,cid :this.props.data.cid}
-        
-        // values.lastDue = moment(values.lastDue, 'YYYY-MM-DD').valueOf()
-        // values.latestDueDate = moment(values.latestDueDate, 'YYYY-MM-DD').valueOf()
-
-        values.lastDue = getTime(values.lastDue)
-        values.latestDueDate = getTime(values.latestDueDate)
+        let obj = {id:this.props.id}
         let req = {...values,...obj}
-        this.props.updRecord({...req})
+        this.props.addProduct({...req})
         .then(res => {
           this.props.closePop()
           this.props.getTable()
@@ -55,7 +53,9 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
       }
     });
   }
+
   render() {
+    const {popVisible} = this.props
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -79,15 +79,13 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
       },
     }
     const { getFieldDecorator } = this.props.form
-    const {popVisible} = this.props
-    const {id, lastDue, authorizedTime, latestDueDate, state, remarks} = this.props.data
     return (
       <Modal
         destroyOnClose = {true}
         title={
           <div>
             <Icon type='plus'/>
-            <span>修改授权记录</span>
+            <span>新增产品</span>
           </div>
         }
         footer = {null}
@@ -96,35 +94,33 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
         onCancel={this.handleCancel}
       >
         <Form {...formItemLayout} onSubmit={this.handleSubmit} >
-          <Item  label="上次到期时间">
-            {getFieldDecorator('lastDue', {
-              rules: [{ required: true, message: '请输入上次到期时间'}],
-              initialValue:moment(Number(lastDue)*1000)
-            })(<DatePicker />)}
-          </Item>
-          <Item  label="授权时长">
-            {getFieldDecorator('authorizedTime', {
-              rules: [{ required: true, message: '请输入授权时长'}],
-              initialValue: authorizedTime,
+          <Item  label="产品名称">
+            {getFieldDecorator('productName', {
+              rules: [{ required: true, message: '请输入产品名称'}],
             })(<Input />)}
           </Item>
-          <Item  label="最新到期时间">
-            {getFieldDecorator('latestDueDate', {
-              rules: [{ required: true, message: '请输入最新到期时间'}],
-              initialValue:moment(Number(latestDueDate)*1000)
-            })(<DatePicker />)}
-          </Item>
-          <Item  label="状态">
-            {getFieldDecorator('state', {
-              rules: [{ required: true, message: '请输入状态'}],
-              initialValue: state,
+          <Item  label="产品版本号">
+            {getFieldDecorator('productVersion', {
             })(<Input />)}
           </Item>
-          <Item  label="备注">
-            {getFieldDecorator('remarks', {
-              rules: [{ required: true, message: '请输入备注'}],
-              initialValue: remarks,
+          <Item  label="设备ID">
+            {getFieldDecorator('deviceID', {
             })(<Input />)}
+          </Item>
+          <Item  label="产品编号">
+            {getFieldDecorator('productNumber', {
+            })(<Input />)}
+          </Item>
+          <Item  label="产品状态">
+            {getFieldDecorator('productState', {
+            })(
+              <Select>
+                <Option value={1}>硬件采购</Option>
+                <Option value={2}>灌装测试</Option>
+                <Option value={3}>产品检验</Option>
+                <Option value={4}>出货</Option>
+              </Select>
+            )}
           </Item>
           <Item {...tailFormItemLayout}>
             <Button  type="primary"
@@ -139,4 +135,5 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
     )
   }
 }
-export default Form.create()(AuthorizationRecordUpd)
+
+export default Form.create()(ProductAdd)

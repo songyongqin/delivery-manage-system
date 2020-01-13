@@ -46,7 +46,7 @@ class AuthorizationRecordAdd extends React.Component<any, any> {
       if (!err) {
         console.log(values)
         let obj = {id:this.props.id, pid: this.props.pid}
-        // values['latestDueDate'] = moment(values.latestDueDate*1000, 'YYYY-MM-DD').valueOf()
+        values['lastDue'] = Number(getTime(values.lastDue))
         values['latestDueDate'] = Number(getTime(values.latestDueDate))
         values = {...values, ...obj}
         this.props.addUser(values)
@@ -92,6 +92,11 @@ class AuthorizationRecordAdd extends React.Component<any, any> {
         onCancel={this.handleCancel}
       >
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+          <Item  label="上次到期时间">
+            {getFieldDecorator('lastDue', {
+              rules: [{ required: true, message: '请输入上次到期时间'}],
+            })(<DatePicker />)}
+          </Item>
           <Item  label="授权时长">
             {getFieldDecorator('authorizedTime', {
               rules: [{ required: true, message: '请输入授权时长'}],

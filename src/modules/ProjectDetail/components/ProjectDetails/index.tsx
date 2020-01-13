@@ -5,12 +5,14 @@ const { Panel } = Collapse;
 const styles = require("./styles.less")
 import tranformTime from 'utils/tranformTime'
 import UpdateForm from '../UpdateForm'
+import ProductAdd from '../add/ProductAdd'
 import moment from 'moment'
 
 class ProjectDetails extends React.Component<any, any> {
 
   state = {
     popVisible: false,
+    popAddVisible: false,
   }
 
   openPop = () => {
@@ -18,15 +20,25 @@ class ProjectDetails extends React.Component<any, any> {
       popVisible: true
     }) 
   }
+  openPopAdd = () => {
+    this.setState({
+      popAddVisible: true
+    })
+  }
   closePop = ()=> {
     this.setState({
       popVisible: false
     })
   }
+  closePopAdd = ()=> {
+    this.setState({
+      popAddVisible: false
+    })
+  }
 
   render() {
     const {proName, cusName, proMsgs = [], startTime, state, remarks} = this.props.data
-    const {popVisible } = this.state
+    const {popVisible, popAddVisible } = this.state
     const {role} = this.props
     return (
       <div>
@@ -87,12 +99,14 @@ class ProjectDetails extends React.Component<any, any> {
                 </div>
               </div>
               <div>
+                <Button type="primary" className={styles['add']} disabled={ role===3 } onClick={this.openPopAdd}>新增产品</Button>
                 <Button type="primary" className={styles['update']} disabled={ role===3 } onClick={this.openPop}>修改</Button>
               </div>
             </div>
           </Panel>
         </Collapse>
         <UpdateForm closePop = {this.closePop} getTable={this.props.getTable} popVisible={popVisible} id={this.props.id} data = {this.props.data}/>
+        <ProductAdd closePop = {this.closePopAdd} getTable={this.props.getTable} popVisible={popAddVisible} id={this.props.id} />
       </div>
     )
   }

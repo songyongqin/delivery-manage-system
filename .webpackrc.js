@@ -14,9 +14,9 @@ const theme = require('./theme')
 // const proxyServer = "http://172.31.50.224:80"
 
 
-const proxyServer = "http://172.31.50.140:5207"
+// const proxyServer = "http://172.31.50.140:5207"
 
-// const proxyServer = "http://172.31.50.41:3357/mock/5de8c6c990fac70d0f7e8242"
+const proxyServer = "http://172.31.50.41:3357/mock/5de8c6c990fac70d0f7e8242"
 
 
 const test = 'http://localhost:3366'

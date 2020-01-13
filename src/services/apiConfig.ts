@@ -22,6 +22,8 @@ const HttpApiConfig = {
   PROJECT_DETAIL_DELIVERY:"/project/project-detail/delivery-testing",
   PROJECT_DETAIL_CHECKLIST:"/project/project-detail/checklist",
   PROJECT_DETAIL_RECORD:"/project/project-detail/record",
+  PROJECT_UPDATE_PRODUCT:"/project/project-detail/product",
+  PROJECT_ADD_PRODUCT: "/project/project-detail/product",
   
 
 
