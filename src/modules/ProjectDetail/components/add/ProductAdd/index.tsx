@@ -53,7 +53,7 @@ class ProductAdd extends React.Component<any, any> {
       }
     });
   }
-
+  
   render() {
     const {popVisible} = this.props
     const formItemLayout = {
@@ -101,18 +101,22 @@ class ProductAdd extends React.Component<any, any> {
           </Item>
           <Item  label="产品版本号">
             {getFieldDecorator('productVersion', {
+              rules: [{ required: true, message: '请输入产品版本号'}],
             })(<Input />)}
           </Item>
           <Item  label="设备ID">
             {getFieldDecorator('deviceID', {
+              rules: [{ required: true, message: '请输入设备ID'}],
             })(<Input />)}
           </Item>
           <Item  label="产品编号">
             {getFieldDecorator('productNumber', {
+              rules: [{ required: true, message: '请输入产品编号'}],
             })(<Input />)}
           </Item>
           <Item  label="产品状态">
             {getFieldDecorator('productState', {
+              rules: [{ required: true, message: '请输入产品状态'}],
             })(
               <Select>
                 <Option value={1}>硬件采购</Option>

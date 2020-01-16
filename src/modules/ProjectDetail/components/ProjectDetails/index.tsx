@@ -100,7 +100,7 @@ class ProjectDetails extends React.Component<any, any> {
               </div>
               <div>
                 <Button type="primary" className={styles['add']} disabled={ role===3 } onClick={this.openPopAdd}>新增产品</Button>
-                <Button type="primary" className={styles['update']} disabled={ role===3 } onClick={this.openPop}>修改</Button>
+                <Button type="primary" className={styles['update']} disabled={ role===3 } onClick={this.openPop}>修改项目</Button>
               </div>
             </div>
           </Panel>

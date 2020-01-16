@@ -49,7 +49,6 @@ class Page extends React.Component<any, any> {
   render() {
     const {proTotal, cusTotal, testTotal, situationCount} = this.state
     const { loading } = this.props
-    console.log(this.props.loading)
 
     const addComma = num => (num+'').replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g,'$1,')
     const Total = ({ num }) => {
@@ -77,7 +76,7 @@ class Page extends React.Component<any, any> {
           <Row >
             <ItemCount count = {proTotal} title="项目总数" icon = "ProIoc" />
             <ItemCount count = {cusTotal} title="客户总数" icon = "CusIoc"/>
-            <ItemCount count = {testTotal} title="测试中的项目数" icon = "TesIoc"/>
+            <ItemCount count = {testTotal} title="进行中的项目数" icon = "TesIoc"/>
           </Row>
           <Row className={styles['pieWrap']}>
             <Pie data={situationCount}></Pie>

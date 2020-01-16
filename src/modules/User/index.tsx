@@ -186,7 +186,7 @@ class Page extends React.Component<any, any> {
         align:'center',
         key:'accountPassword',
         render:(text, record) => {
-          let paassword = record.accountPassword.replace(/\d/g,'*')
+          let paassword = record.accountPassword.replace(/\w/g,'*')
           return passwordType === "password" ? <div>{paassword}</div> : <div>{record.accountPassword}</div>
         }
       },

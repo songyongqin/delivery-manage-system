@@ -75,6 +75,14 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
     }
     const { getFieldDecorator } = this.props.form
     const {productName, productVersion, deviceID, productNumber, productState} = this.props.data
+    let forProductState = 0
+    switch(productState) {
+      case "硬件采购": forProductState = 1;break;
+      case "灌装测试": forProductState = 2;break;
+      case "产品检验": forProductState = 3;break;
+      case "出货": forProductState = 4;break;
+    }
+    console.log(productState,111111)
     const {popVisible} = this.props
     return (
       <Modal
@@ -114,7 +122,7 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
           </Item>
           <Item  label="产品状态">
             {getFieldDecorator('productState', {
-              initialValue: productState,
+              initialValue: forProductState,
             })(
               <Select>
                 <Option value={1}>硬件采购</Option>

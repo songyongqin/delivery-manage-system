@@ -1,6 +1,6 @@
 
 import * as React from 'react'
-import { Collapse,Form, Button, Tabs } from 'antd';
+import { Collapse,Form, Button, Tabs, Icon } from 'antd';
 const { Panel } = Collapse;
 const styles = require("./styles.less")
 import tranformTime from 'utils/tranformTime'
@@ -110,24 +110,33 @@ class ProjectDetails extends React.Component<any, any> {
         disabled = false
       }
     }
+    const testHeader = (name,data)=>{
+      if(data.length > 0) {
+        return <span >{name}<Icon type="check" /></span>
+      } else {
+        return <span >{name}</span>
+      }
+    }
+
+    
     return (
       <div>
         <Collapse >
           <Panel header = {headers} key="1" className={styles['tabs']}>
             <Tabs defaultActiveKey={currentKey} onChange={this.tabChange}>
-              <TabPane tab="申请测试单" key="1">
+              <TabPane tab={testHeader("申请测试单",applicationTesting)} key="1">
                 <ApplicationTesting role={role} data = {applicationTesting} id={this.props.id} pid={pid} getTable={this.props.getTable} />
               </TabPane>
-              <TabPane tab="灌装后授权单" key="2">
+              <TabPane tab={testHeader("灌装后授权单",authorizationAfterCanning)} key="2">
                 <AuthorCanning role={role} data = {authorizationAfterCanning} id={this.props.id} pid={pid} getTable={this.props.getTable}/>
               </TabPane>
-              <TabPane tab="出货测试单" key="3">
+              <TabPane tab={testHeader("出货测试单",deliveryTestSheet)} key="3">
                 <DeliveryTesting role={role} data = {deliveryTestSheet} id={this.props.id} pid={pid} getTable={this.props.getTable}/>
               </TabPane>
-              <TabPane tab="出货检查单" key="4">
+              <TabPane tab={testHeader("出货检查单",deliveryChecklist)} key="4">
                 <DeliveryChecklist role={role} data = {deliveryChecklist} id={this.props.id} pid={pid} getTable={this.props.getTable}/>
               </TabPane>
-              <TabPane tab="授权记录" key="5">
+              <TabPane tab={testHeader("授权记录",authorizationRecord)} key="5">
                 <AuthorizationRecord role={role} data = {authorizationRecord} id={this.props.id} pid={pid} getTable={this.props.getTable} />
               </TabPane>
             </Tabs>
