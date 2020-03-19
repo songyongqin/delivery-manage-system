@@ -179,19 +179,22 @@ class Page extends React.Component<any, any> {
       <Spin spinning={ loading }>
         <div key="system">
           <div className={styles['wrap']}>
-          <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>
-            <div>
-              <span style={{fontSize:14,marginRight:10}}>每页条数:</span>
-              <Select defaultValue="30" style={{ width: 80 }} onChange={this.handleChangeSelect}>
-                <Option value="10">10</Option>
-                <Option value="15">15</Option>
-                <Option value="20">20</Option>
-                <Option value="30">30</Option>
-                <Option value="50">50</Option>
-              </Select>
+            <div style={{display: 'flex'}}>
+              <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> 
+                <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker>
+              </div>
+              <div>
+                <span style={{fontSize:14,marginRight:10}}>每页条数:</span>
+                <Select defaultValue="30" style={{ width: 80 }} onChange={this.handleChangeSelect}>
+                  <Option value="10">10</Option>
+                  <Option value="15">15</Option>
+                  <Option value="20">20</Option>
+                  <Option value="30">30</Option>
+                  <Option value="50">50</Option>
+                </Select>
+              </div>
             </div>
-            
-            <Button style={{marginLeft:400}} disabled={ role===3 } type='primary' onClick={this.onExportClick} >导出日志</Button>
+            <Button style={{marginRight:40}} disabled={ role===3 } type='primary' onClick={this.onExportClick} >导出日志</Button>
           </div>
           <ComTable data = {dataSource} columns = {columns} />
           <Pagination

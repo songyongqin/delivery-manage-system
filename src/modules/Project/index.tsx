@@ -214,6 +214,13 @@ class Page extends React.Component<any, any> {
       },
       {
         width:100,
+        title: '项目负责人',
+        dataIndex: 'chargeName',
+        align:'center',
+        key:'chargeName',
+      },
+      {
+        width:100,
         title: '项目开始时间',
         dataIndex: 'startTime',
         align:'center',
@@ -270,20 +277,24 @@ class Page extends React.Component<any, any> {
     return (
       <Spin spinning={ loading }>
         <div key="project">
-        <div className={styles['wrap']}>
-            <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>,
-              <div>
-                <span style={{fontSize:14,marginRight:10}}>每页条数:</span>
-                <Select defaultValue="30" style={{ width: 80 }} onChange={this.handleChangeSelect}>
-                  <Option value="10">10</Option>
-                  <Option value="15">15</Option>
-                  <Option value="20">20</Option>
-                  <Option value="30">30</Option>
-                  <Option value="50">50</Option>
-                </Select>
-              </div>
-              <Button style={{marginLeft:400}} type='primary' disabled={ role===3 } onClick={this.openPop} >+创建项目</Button>
+          <div className={styles['wrap']}>
+            <div style={{display: 'flex'}}>
+                <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> 
+                  <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker>
+                </div>
+                <div>
+                  <span style={{fontSize:14,marginRight:10}}>每页条数:</span>
+                  <Select defaultValue="30" style={{ width: 80 }} onChange={this.handleChangeSelect}>
+                    <Option value="10">10</Option>
+                    <Option value="15">15</Option>
+                    <Option value="20">20</Option>
+                    <Option value="30">30</Option>
+                    <Option value="50">50</Option>
+                  </Select>
+                </div>
             </div>
+            <Button style={{marginRight:40}} type='primary' disabled={ role===3 } onClick={this.openPop} >+创建项目</Button>
+          </div>
         </div>
         <AddProject closePop={this.closePop} getTable={this.getTable}  popVisible={popVisible} />
         <ComTable className={styles['comTable']} data = {dataSource} columns = {columns}/>

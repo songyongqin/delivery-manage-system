@@ -37,7 +37,7 @@ class ProjectDetails extends React.Component<any, any> {
   }
 
   render() {
-    const {proName, cusName, proMsgs = [], startTime, state, remarks} = this.props.data
+    const {proName, cusName, chargeName, proMsgs = [], startTime, state, remarks} = this.props.data
     const {popVisible, popAddVisible } = this.state
     const {role} = this.props
     return (
@@ -59,6 +59,14 @@ class ProjectDetails extends React.Component<any, any> {
                 </div>
                 <div className = {styles['value']}>
                   {cusName}
+                </div>
+              </div>
+              <div className = {styles['item']}>
+                <div className = {styles['key']}>
+                  项目负责人:
+                </div>
+                <div className = {styles['value']}>
+                  {chargeName}
                 </div>
               </div>
               <div className = {styles['item']}>

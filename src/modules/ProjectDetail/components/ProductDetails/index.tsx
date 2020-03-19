@@ -1,6 +1,6 @@
 
 import * as React from 'react'
-import { Collapse,Form, Button, Tabs, Icon } from 'antd';
+import { Collapse,Form, Button, Tabs, Icon, Popconfirm } from 'antd';
 const { Panel } = Collapse;
 const styles = require("./styles.less")
 import tranformTime from 'utils/tranformTime'
@@ -17,8 +17,24 @@ import DeliveryTestingAdd from '../add/DeliveryTestingAdd'
 import DeliveryChecklistAdd from '../add/DeliveryChecklistAdd'
 import AuthorizationRecordAdd from '../add/AuthorizationRecordAdd'
 import ProductUpd from '../ProductUpd'
+import extraConnect from 'domainUtils/extraConnect'
+import { PROJECT_DETAIL_NAMESPACE } from 'constants/model'
 
-
+const mapStateToProps = state => {
+  return {
+    state,
+    loading: state.loading.effects[`${PROJECT_DETAIL_NAMESPACE}/delProduct`]
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    delProduct: payload => dispatch({
+      type: `${PROJECT_DETAIL_NAMESPACE}/delProduct`,
+      payload
+    }),
+  }
+}
+@extraConnect(mapStateToProps, mapDispatchToProps)
 class ProjectDetails extends React.Component<any, any> {
 
   state = {
@@ -76,6 +92,11 @@ class ProjectDetails extends React.Component<any, any> {
       case "5": this.setState({popAuthorizationRecordAdd:true});break;
     }
   }
+
+  handleDel = () => {
+    this.props.delProduct({id:this.props.id, pid: this.props.data.pid})
+  }
+
   popOpenUpd = () => {
     this.setState({popProductUpd: true})
   }
@@ -140,8 +161,18 @@ class ProjectDetails extends React.Component<any, any> {
                 <AuthorizationRecord role={role} data = {authorizationRecord} id={this.props.id} pid={pid} getTable={this.props.getTable} />
               </TabPane>
             </Tabs>
-            <Button type="primary" className={styles['updBtn']} onClick={this.popOpenUpd} disabled={role === 3} >修改产品</Button>
             <Button type="primary" className={styles['addBtn']} onClick={this.handleAdd} disabled={ disabled }>+创建文档</Button>
+            <Button type="primary" className={styles['updBtn']} onClick={this.popOpenUpd} disabled={role === 3} >修改产品</Button>
+
+            <Popconfirm
+              title={'是否删除产品' + productName}
+              onConfirm={this.handleDel}
+              okText="是"
+              cancelText="否"
+            >
+              <Button type="primary" className={styles['delBtn']} disabled={role === 3} >删除产品</Button>
+            </Popconfirm>
+            
           </Panel>
           <ProductUpd  id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popProductUpd} closePop={this.closePopProductUpd} data={this.props.data}/>
           <ApplicationTestingAdd id={this.props.id} pid={pid} getTable={this.props.getTable} popVisible={popApplicationTestingAdd} closePop={this.closeApplicationTestingAdd} />

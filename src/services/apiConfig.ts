@@ -24,6 +24,7 @@ const HttpApiConfig = {
   PROJECT_DETAIL_RECORD:"/project/project-detail/record",
   PROJECT_UPDATE_PRODUCT:"/project/project-detail/product",
   PROJECT_ADD_PRODUCT: "/project/project-detail/product",
+  PROJECT_DEL_PRODUCT: "/project/project-detail/product",
   
 
 

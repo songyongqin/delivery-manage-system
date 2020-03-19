@@ -175,7 +175,6 @@ class AddFile extends React.Component<any, any> {
             {getFieldDecorator('uploadFiles', {
               rules: [{ required: true, message: '请上传附件',
               validator: function(rule, value, cb){
-                console.log(value)
                 if(value&&value.fileList&&value.fileList.length){
                   cb()
                 }

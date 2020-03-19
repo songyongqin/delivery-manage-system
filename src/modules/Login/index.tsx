@@ -71,12 +71,12 @@ class Page extends React.Component<any, any> {
     }
   })
   componentDidMount() {
+    console.log(this.props)
     this.requestCode()
   }
   shakeModal = () => {
   }
   render() {
-
     const {
       theme,
       postSignLoading

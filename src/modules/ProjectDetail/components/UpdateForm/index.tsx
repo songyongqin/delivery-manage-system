@@ -79,7 +79,7 @@ class UpdateForm extends React.Component<any, any> {
       },
     }
     const {popVisible} = this.props
-    const {proName, cusName, proMsgs = [], remarks, startTime, state} = this.props.data
+    const {proName, cusName, chargeName, proMsgs = [], remarks, startTime, state} = this.props.data
     let initArr = []
     proMsgs.map(el => {
       initArr.push(el.proMsg)
@@ -107,6 +107,11 @@ class UpdateForm extends React.Component<any, any> {
           <Item  label="客户名称">
             {getFieldDecorator('cusName', {
               initialValue: cusName,
+            })(<Input />)}
+          </Item>
+          <Item  label="项目负责人">
+            {getFieldDecorator('chargeName', {
+              initialValue: chargeName,
             })(<Input />)}
           </Item>
           <Item  label="产品名称">

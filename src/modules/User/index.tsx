@@ -246,18 +246,20 @@ class Page extends React.Component<any, any> {
       <Spin spinning = {loading}>
         <div key = "user">
           <div className={styles['wrap']}>
-            <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>,
-            <div>
-              <span style={{fontSize:14,marginRight:10}}>每页条数:</span>
-              <Select defaultValue="30" style={{ width: 80 }} onChange={this.handleChangeSelect}>
-                <Option value="10">10</Option>
-                <Option value="15">15</Option>
-                <Option value="20">20</Option>
-                <Option value="30">30</Option>
-                <Option value="50">50</Option>
-              </Select>
+            <div style={{display: 'flex'}}>
+              <div style={{width:300, marginRight:20}} className={styles["timestampPicker"]} key="timestampPicker"> <TimestampPicker onChange={this.timestampRangeOnChange} defaultValue={ timestampRange } ></TimestampPicker></div>,
+              <div>
+                <span style={{fontSize:14,marginRight:10}}>每页条数:</span>
+                <Select defaultValue="30" style={{ width: 80 }} onChange={this.handleChangeSelect}>
+                  <Option value="10">10</Option>
+                  <Option value="15">15</Option>
+                  <Option value="20">20</Option>
+                  <Option value="30">30</Option>
+                  <Option value="50">50</Option>
+                </Select>
+              </div>
             </div>
-            <Button style={{marginLeft:400}} type='primary' onClick={this.openPop} >+添加新用户</Button>
+            <Button style={{marginRight:40}} type='primary' onClick={this.openPop} >+添加新用户</Button>
           </div>
           <AddUser closePop = {this.closePop} popVisible={popVisible} getTable = {this.getTable} />
           <ComTable data = {dataSource} columns = {columns}/>

@@ -107,21 +107,25 @@ class AuthorizationRecordUpd extends React.Component<any, any> {
           </Item>
           <Item  label="产品版本号">
             {getFieldDecorator('productVersion', {
+              rules: [{ required: true, message: '请输入产品版本号'}],
               initialValue: productVersion,
             })(<Input />)}
           </Item>
           <Item  label="设备ID">
             {getFieldDecorator('deviceID', {
+              rules: [{ required: true, message: '请输入设备ID'}],
               initialValue: deviceID,
             })(<Input />)}
           </Item>
           <Item  label="产品编号">
             {getFieldDecorator('productNumber', {
+              rules: [{ required: true, message: '请输入产品编号'}],
               initialValue: productNumber,
             })(<Input />)}
           </Item>
           <Item  label="产品状态">
             {getFieldDecorator('productState', {
+              rules: [{ required: true, message: '请输入产品状态'}],
               initialValue: forProductState,
             })(
               <Select>
