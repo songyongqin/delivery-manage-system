@@ -50,6 +50,7 @@ module.exports = (webpackConfig, env) => {
   // console.info(webpackConfig.module.rules[7].use[0].options.)
 
   // return
+
   webpackConfig.plugins.push(new CopyWebpackPlugin([
     {
       from: 'src/public',
