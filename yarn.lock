@@ -901,6 +901,14 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
+"@babel/runtime-corejs3@^7.9.6":
+  version "7.13.10"
+  resolved "https://registry.npm.taobao.org/@babel/runtime-corejs3/download/@babel/runtime-corejs3-7.13.10.tgz#14c3f4c85de22ba88e8e86685d13e8861a82fe86"
+  integrity sha1-FMP0yF3iK6iOjoZoXRPohhqC/oY=
+  dependencies:
+    core-js-pure "^3.0.0"
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@7.0.0-beta.46":
   version "7.0.0-beta.46"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.0.0-beta.46.tgz#466a9c0498f6d12d054a185981eef742d59d4871"
@@ -1023,6 +1031,11 @@
   version "15.7.1"
   resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
   integrity sha1-8aEee6uww8rWgQC+OB0eBkxo8fY=
+
+"@types/raf@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.npm.taobao.org/@types/raf/download/@types/raf-3.4.0.tgz#2b72cbd55405e071f1c4d29992638e022b20acc2"
+  integrity sha1-K3LL1VQF4HHxxNKZkmOOAisgrMI=
 
 "@types/react-router-redux@^5.0.13":
   version "5.0.18"
@@ -1709,7 +1722,7 @@ asynckit@^0.4.0:
   resolved "https://registry.npm.taobao.org/asynckit/download/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
-atob@^2.1.1:
+atob@^2.1.1, atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.npm.taobao.org/atob/download/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha1-bZUX654DDSQ2ZmZR6GvZ9vE1M8k=
@@ -2423,6 +2436,11 @@ bser@^2.0.0:
   dependencies:
     node-int64 "^0.4.0"
 
+btoa@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npm.taobao.org/btoa/download/btoa-1.2.1.tgz#01a9909f8b2c93f6bf680ba26131eb30f7fa3d73"
+  integrity sha1-AamQn4ssk/a/aAuiYTHrMPf6PXM=
+
 buffer-from@^1.0.0:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/buffer-from/download/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
@@ -2609,6 +2627,18 @@ canvg@1.5.3:
     rgbcolor "^1.0.1"
     stackblur-canvas "^1.4.1"
     xmldom "^0.1.22"
+
+canvg@^3.0.6:
+  version "3.0.7"
+  resolved "https://registry.npm.taobao.org/canvg/download/canvg-3.0.7.tgz#e45b87a64116af906917f7cad57d370ea372d682"
+  integrity sha1-5FuHpkEWr5BpF/fK1X03DqNy1oI=
+  dependencies:
+    "@babel/runtime-corejs3" "^7.9.6"
+    "@types/raf" "^3.4.0"
+    raf "^3.4.1"
+    rgbcolor "^1.0.1"
+    stackblur-canvas "^2.0.0"
+    svg-pathdata "^5.0.5"
 
 capture-exit@^1.2.0:
   version "1.2.0"
@@ -3175,6 +3205,11 @@ copy@^0.3.1:
     resolve-dir "^0.1.0"
     to-file "^0.2.0"
 
+core-js-pure@^3.0.0:
+  version "3.9.1"
+  resolved "https://registry.npm.taobao.org/core-js-pure/download/core-js-pure-3.9.1.tgz#677b322267172bd490e4464696f790cbc355bec5"
+  integrity sha1-Z3syImcXK9SQ5EZGlveQy8NVvsU=
+
 core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.npm.taobao.org/core-js/download/core-js-1.2.7.tgz?cache=0&sync_timestamp=1560599811627&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
@@ -3189,6 +3224,11 @@ core-js@^3.0.0:
   version "3.1.4"
   resolved "https://registry.npm.taobao.org/core-js/download/core-js-3.1.4.tgz?cache=0&sync_timestamp=1560599811627&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-3.1.4.tgz#3a2837fc48e582e1ae25907afcd6cf03b0cc7a07"
   integrity sha1-Oig3/EjlguGuJZB6/NbPA7DMegc=
+
+core-js@^3.6.0:
+  version "3.9.1"
+  resolved "https://registry.npm.taobao.org/core-js/download/core-js-3.9.1.tgz#cec8de593db8eb2a85ffb0dbdeb312cb6e5460ae"
+  integrity sha1-zsjeWT246yqF/7Db3rMSy25UYK4=
 
 core-util-is@1.0.2, core-util-is@^1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -3895,6 +3935,11 @@ domhandler@^2.3.0:
   integrity sha1-iAUJfpM9ZehVRvcm1g9euItE+AM=
   dependencies:
     domelementtype "1"
+
+dompurify@^2.2.0:
+  version "2.2.7"
+  resolved "https://registry.npm.taobao.org/dompurify/download/dompurify-2.2.7.tgz#a5f055a2a471638680e779bd08fc334962d11fd8"
+  integrity sha1-pfBVoqRxY4aA53m9CPwzSWLRH9g=
 
 domutils@1.5.1:
   version "1.5.1"
@@ -4876,6 +4921,11 @@ fbjs@^0.8.0, fbjs@^0.8.15, fbjs@^0.8.16, fbjs@^0.8.9:
     promise "^7.1.1"
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
+
+fflate@^0.4.8:
+  version "0.4.8"
+  resolved "https://registry.npm.taobao.org/fflate/download/fflate-0.4.8.tgz#f90b82aefbd8ac174213abb338bd7ef848f0f5ae"
+  integrity sha1-+QuCrvvYrBdCE6uzOL1++Ejw9a4=
 
 figures@^1.3.5:
   version "1.7.0"
@@ -5889,10 +5939,10 @@ html2canvas@1.0.0-alpha.12:
   dependencies:
     css-line-break "1.0.1"
 
-html2canvas@^1.0.0-alpha.12:
-  version "1.0.0-rc.3"
-  resolved "https://registry.npm.taobao.org/html2canvas/download/html2canvas-1.0.0-rc.3.tgz#1de88b073f6bcaa6954ca1edfb46da13b258b038"
-  integrity sha1-HeiLBz9ryqaVTKHt+0baE7JYsDg=
+html2canvas@^1.0.0-alpha.12, html2canvas@^1.0.0-rc.5:
+  version "1.0.0-rc.7"
+  resolved "https://registry.npm.taobao.org/html2canvas/download/html2canvas-1.0.0-rc.7.tgz#70c159ce0e63954a91169531894d08ad5627ac98"
+  integrity sha1-cMFZzg5jlUqRFpUxiU0IrVYnrJg=
   dependencies:
     css-line-break "1.1.1"
 
@@ -7281,7 +7331,7 @@ jsonpointer@^4.0.0:
   resolved "https://registry.npm.taobao.org/jsonpointer/download/jsonpointer-4.0.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjsonpointer%2Fdownload%2Fjsonpointer-4.0.1.tgz#4fd92cb34e0e9db3c89c8622ecf51f9b978c6cb9"
   integrity sha1-T9kss04OnbPInIYi7PUfm5eMbLk=
 
-jspdf@^1.4.1, jspdf@^1.5.3:
+jspdf@^1.4.1:
   version "1.5.3"
   resolved "https://registry.npm.taobao.org/jspdf/download/jspdf-1.5.3.tgz#5a12c011479defabef5735de55c913060ed219f2"
   integrity sha1-WhLAEUed76vvVzXeVckTBg7SGfI=
@@ -7292,6 +7342,20 @@ jspdf@^1.4.1, jspdf@^1.5.3:
     omggif "1.0.7"
     promise-polyfill "8.1.0"
     stackblur-canvas "2.2.0"
+
+jspdf@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npm.taobao.org/jspdf/download/jspdf-2.3.1.tgz#313d117234b546469694a1fd81a1e02411647576"
+  integrity sha1-MT0RcjS1RkaWlKH9gaHgJBFkdXY=
+  dependencies:
+    atob "^2.1.2"
+    btoa "^1.2.1"
+    fflate "^0.4.8"
+  optionalDependencies:
+    canvg "^3.0.6"
+    core-js "^3.6.0"
+    dompurify "^2.2.0"
+    html2canvas "^1.0.0-rc.5"
 
 jsprim@^1.2.2:
   version "1.4.1"
@@ -10424,6 +10488,11 @@ regenerator-runtime@^0.13.2:
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
   integrity sha1-MuWcmm+5saSv8JtJMMotRHc0NEc=
 
+regenerator-runtime@^0.13.4:
+  version "0.13.7"
+  resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
+  integrity sha1-ysLazIoepnX+qrrriugziYrkb1U=
+
 regenerator-transform@^0.14.0:
   version "0.14.0"
   resolved "https://registry.npm.taobao.org/regenerator-transform/download/regenerator-transform-0.14.0.tgz#2ca9aaf7a2c239dd32e4761218425b8c7a86ecaf"
@@ -11444,6 +11513,11 @@ stackblur-canvas@^1.4.1:
   resolved "https://registry.npm.taobao.org/stackblur-canvas/download/stackblur-canvas-1.4.1.tgz#849aa6f94b272ff26f6471fa4130ed1f7e47955b"
   integrity sha1-hJqm+UsnL/JvZHH6QTDtH35HlVs=
 
+stackblur-canvas@^2.0.0:
+  version "2.5.0"
+  resolved "https://registry.npm.taobao.org/stackblur-canvas/download/stackblur-canvas-2.5.0.tgz#aa87bbed1560fdcd3138fff344fc6a1c413ebac4"
+  integrity sha1-qoe77RVg/c0xOP/zRPxqHEE+usQ=
+
 stackframe@^0.3.1:
   version "0.3.1"
   resolved "https://registry.npm.taobao.org/stackframe/download/stackframe-0.3.1.tgz#33aa84f1177a5548c8935533cbfeb3420975f5a4"
@@ -11698,6 +11772,11 @@ supports-color@^5.1.0, supports-color@^5.3.0, supports-color@^5.4.0:
   integrity sha1-4uaaRKyHcveKHsCzW2id9lMO/I8=
   dependencies:
     has-flag "^3.0.0"
+
+svg-pathdata@^5.0.5:
+  version "5.0.5"
+  resolved "https://registry.npm.taobao.org/svg-pathdata/download/svg-pathdata-5.0.5.tgz#65e8d765642ba15fe15434444087d082bc526b29"
+  integrity sha1-ZejXZWQroV/hVDREQIfQgrxSayk=
 
 svgo@^0.7.0:
   version "0.7.2"
