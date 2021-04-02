@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
     theme: ownProps.theme || state[LAYOUT_NAMESPACE].theme,
     userData: state[DOMAIN_USER_NAMESPACE].userData,
     login: state[DOMAIN_USER_NAMESPACE].isLogin,
-    admin: state[DOMAIN_USER_NAMESPACE].userData["role"] === ADMIN_ROLE
+    admin: state[DOMAIN_USER_NAMESPACE].userData["role"] === ADMIN_ROLE,
   }
 }
 

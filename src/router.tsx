@@ -87,7 +87,6 @@ export default ({ history, app }) => {
           </Switch>
         </MainWrapper>
       </LocaleProvider>
-
     </Router>
   );
 }

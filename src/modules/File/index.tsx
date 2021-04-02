@@ -64,6 +64,7 @@ class Page extends React.Component<any, any> {
       this.setState({total,data})
     })
   }
+
   initTable = () => {
     let reqTable = {...this.state.reqTable, page:1}
     this.setState({
